@@ -1,0 +1,29 @@
+Login button
+#ff8b92
+#feb683
+
+dashboard background grey
+#f5f5f5
+
+new order and select tab
+#c693f9
+#ac65f4
+
+Delivery order
+#6aa4e3
+#6869e9
+
+
+Revenue
+#feb683
+#ff8a93
+
+Active text menu and notification count
+#ff8b92
+
+
+Previous button
+#e2e6ec
+border
+#878787
+
