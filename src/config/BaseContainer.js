@@ -1,6 +1,6 @@
 import React,{ Component } from 'react';  
-import  logo  from '../assets/images/logo.png' 
-// import  logo_white  from '../assets/images/logo_white.png' 
+// import  logo  from '../assets/images/logo.png' 
+import  logo_black  from '../assets/images/Agro_logo.png' 
 import  avatar  from '../assets/images/avatar.png' 
 // import '../assets/css/header.css';
 import { toastr } from '../services'; 
@@ -86,52 +86,30 @@ export class BaseContainer extends Component{
             {
                 auth() ?      
                 <div className="main-content">
-                    <div className="main-header">
-                        <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
-                            <div className="top-header">
-                                <div className="container-fluid">
-                                    {/* <div className="header-logo">
-                                        <img alt="Brand" className="wt-logo" src={logo_white} />
-                                    </div> */}
-                                    <div className="right-menu">
-                                        <ul>
-                                            <li className="user-det">       
-                                        <div className="dropdown profile-drp notification">
-                                            <div className="dropdown-toggle drp-toggle" type="button" data-toggle="dropdown"> 
-                                            <i className="fa fa-bell" aria-hidden="true"></i>
-                                            </div>
-                                            <div className="dropdown-menu">
-                                            <div className="drop-title">Notifications  <a href="" className="read-more">View More</a></div>
-                                            <ul className="profile-menu dropdown-notifications clearfix">
-                                            </ul>
-                                        
-                                            </div>
-                                        </div>
-                                    
-                                            </li>
-                                            <li className="user-det">
-                                            <div className="dropdown profile-drp">
-                                            <div className="dropdown-toggle drp-toggle" type="button" data-toggle="dropdown"> <div className="stg-optn"><img alt="Brand" src={avatar} /></div>
-                                            <span className="caret"></span></div>
-                                            <ul className="dropdown-menu profile-menu clearfix">
-
-                                            <li className="profile-li"> 
-                                                <span onClick={ this.onProfile } className=""><i className="fa fa-user-circle" aria-hidden="true"></i> Profile</span>
-                                            </li>
-                                            {/* {settingsontrol && <li className="profile-li"> 
-                                                <span onClick={ this.clickSettings } className=""><i className="fa fa-cog" aria-hidden="true"></i> Settings</span>
-                                            </li>} */}
-                                            <li className="logout-txt profile-li"> 
-                                                <span onClick={ this.onLogout } className=""><i className="fa fa-power-off" aria-hidden="true"></i> Logout</span>
-                                            </li>
-                                            </ul>
-                                        </div>
-                                            </li>
-                                        </ul>   
-                                    </div>
-                                </div>
-                            </div>
-                        </nav>   
+                    <div className="main-header container-fluid">
+                        
+<nav className="navbar navbar-expand-lg">
+  
+  <a className="navbar-brand header-logo"><img alt="Brand" className="wt-logo" src={logo_black} /></a>
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="navbarNavDropdown">
+ 
+    
+    <div className="dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown link
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+    </div>
+</div>
+</nav>
+                          
                     </div>
                     <div className="routerView col-md-12">
                         <div className = "sideBarmenu col-md-4">

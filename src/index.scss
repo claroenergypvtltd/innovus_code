@@ -21,6 +21,18 @@ padding: 0;
 
 .form-control{
   background-color: #fff;
+  font-family: 'Open Sans', sans-serif;
+}
+.leftWidget {
+  float:left;
+}
+.rightWidget {
+  float:right;
+}
+.login-box{
+  margin: 0 110px;
+  float: none;
+
 }
 
 /****************************Login Page************************/
@@ -47,7 +59,7 @@ background-size: cover;}
   border-radius: .25rem;
 }
 .input-group {
-  border-bottom: 1px solid #878787;
+  border-bottom: 1px solid #d7d7d7;
   color: #4b4b4b;
   box-shadow: 0 1px 0px 0px #dcdcdc
 }
@@ -68,45 +80,51 @@ color:#fff;
 }
 .login-sec{
 height: calc(100vh - 0px);
-display: table-cell;
 vertical-align: middle;
 width: calc(100vw - 0px) !important;
+align-items: center;
 }
 .loader-hide{
 display: none;
 }
 
 .forget-pwd a{ 
-color: #9c9c9c;
-font-size: 15px;
-margin-top: 5px;
-display: block;
+
+    color: #b5b5b5;
+    font-size: 18px;
+    margin-top: 10px;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
 }
 /* .logo-img img{width: 100px;} */
 input:-webkit-autofill {
 -webkit-background-fill-color: #fff;
--webkit-box-shadow: 0 0 0px 1000px white inset;
+-webkit-box-shadow: 0 0 0px 1000px white inset !important;
+-webkit-text-fill-color:#707070;
 }
 input:-moz-autofill {
 -moz-background-fill-color: #fff;
--moz-box-shadow: 0 0 0px 1000px white inset;
+-moz-box-shadow: 0 0 0px 1000px white inset !important;
+-webkit-text-fill-color: #707070;
 }
 input:-o-autofill {
 -o-background-fill-color: #fff;
--o-box-shadow: 0 0 0px 1000px white inset;
+-o-box-shadow: 0 0 0px 1000px white inset !important;
+-webkit-text-fill-color: #707070;
 }
 input:-khtml-autofill {
 -khtml-background-fill-color:#fff;
--khtml-box-shadow: 0 0 0px 1000px white inset;
+-khtml-box-shadow: 0 0 0px 1000px white inset !important;
+-webkit-text-fill-color: #707070;
 }
 /****************************Button Section************************/
 
 .btn{
-border-radius:20px !important;
-padding:8px 20px !important;
+border-radius:50px !important;
+padding:10px 20px  !important;
 height: auto !important;
-font-size: 15px;
 border: none !important;
+font-family: 'Open Sans', sans-serif;
 }
 .btn-primary{
 background-color: #ff8b92; /* For browsers that do not support gradients */

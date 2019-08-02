@@ -106,10 +106,10 @@ body, html {
     /* background-color: #4d90fe; */
     /* background-color: rgb(104, 145, 162); */
     padding: 0px;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 15px; 
-    width:130px;
-    padding: 10px 20px;
+    width:155px;
+    padding: 9px 20px;
 
     -o-transition: all 0.218s;
     -moz-transition: all 0.218s;
@@ -147,10 +147,10 @@ body, html {
 }
 
 .loginForm{
-    box-shadow:-1px 5px 8px 2px rgba(90, 89, 89, .5);
-    -webkit-box-shadow:-1px 5px 8px 2px rgba(90, 89, 89, .5);
+    box-shadow:-1px 5px 8px 2px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow:-1px 5px 8px 2px rgba(0, 0, 0, 0.05);
     padding: 20px 30px 25px;
-    width: 430px;
+    width: 470px;
     margin: 0 auto;
     background-color: #fff;
     border-radius: 0;
@@ -177,4 +177,13 @@ body, html {
     .form-group {
       margin-bottom: 1.5rem;
   }
+  }
+  .mandatory{
+      text-align: right;
+      margin-top: 3px;
+      font-size: 13px;
+  }
+  .s-text{font-size: 24px;}
+  .btn{
+      font-size: 20px;
   }
