@@ -70,18 +70,19 @@ class Login extends Component {
         console.log("err", errors);
         return(
             <div className="clearfix loginAlign">
-                <div className = "col-md-12 login-sec clearfix">
-                    <div className = "col-md-6 leftWidget clearfix pull-left">
+                <div className = "row login-sec clearfix">
+                    <div className="col-md-10 login-box">
+                    <div className = "col-md-5 leftWidget clearfix">
                         <div className="logo-img">
                             <img src={logo} className="img-rounded"  alt="img" />
-                            <h3 className="s-text">{window.strings['LOGO_SUB_TEXT']}</h3>
+                            <h3 className="s-text pt-4">{window.strings['LOGO_SUB_TEXT']}</h3>
                         </div>
                     </div>
-                    <div className="col-md-6 rightWidget pull-right">
+                    <div className="col-md-6 rightWidget">
                         <div className="loginForm p-5 clearfix">
                             <div className="login-widget">
                                 <form onSubmit={this.handleSubmit.bind(this)} noValidate>
-                                    <div className="form-group">
+                                    <div className="form-group pt-3">
                                     <div class="form-input-grp input-group">
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text" id="basic-addon1">                                           
@@ -103,7 +104,7 @@ class Login extends Component {
                                         </div>
                                         { this.state.submitted && !this.state.email && <div className="mandatory">{window.strings['PLACEHOLDER']['EMAIL_ADDRESS']}</div>}
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group pt-3">
                                     <div class="form-input-grp input-group">
                                     <div className="input-group-prepend">
                                                 <span className="input-group-text" id="basic-addon1">                                           
@@ -125,7 +126,7 @@ class Login extends Component {
                                         </div>
                                         { this.state.submitted && !this.state.password && <div className="mandatory">{window.strings['PLACEHOLDER']['CUSTOMER_PASSWORD']}</div>}
                                     </div>
-                                    <div className="col-md-12 p-0">
+                                    <div className="col-md-12 pt-3 p-0">
                                         <div className="form-group forget-pwd float-left">
                                             <a href="#">Forget Password?</a>
                                         </div>
@@ -134,10 +135,12 @@ class Login extends Component {
                                         <button type="submit" className="btn btn-primary" disabled={this.state.loading}>{/*<i className="fa fa-sign-in mr15" aria-hidden="true"></i>*/} {this.state.loading ? window.strings['LOADING'] : window.strings['LOGIN'] }</button>
                                     </div>
                                     </div>
+                                    
                                 </form> 
                             </div>        
                         </div>
-                    </div>    
+                    </div>  
+                    </div>  
                 </div>
              </div>
          )
