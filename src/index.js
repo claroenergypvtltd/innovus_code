@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import NotificationSystem from 'react-notification-system';
-// import './index.scss';
+import './index.scss';
 import App from './App';
 import { toastr } from './services';
 import { Store } from './store/store.js';

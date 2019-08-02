@@ -102,23 +102,21 @@ body, html {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
 }
 
-.btn.btn-signin {
+.btn-primary {
     /* background-color: #4d90fe; */
     /* background-color: rgb(104, 145, 162); */
-    background-color: #800080;
     padding: 0px;
     font-weight: 700;
-    font-size: 14px;
-    height: 36px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border: none;
+    font-size: 15px; 
+    width:130px;
+    padding: 10px 20px;
+
     -o-transition: all 0.218s;
     -moz-transition: all 0.218s;
     -webkit-transition: all 0.218s;
     transition: all 0.218s;
 }
+
 
 /*.btn.btn-signin:hover,
 .btn.btn-signin:active,
@@ -147,3 +145,36 @@ body, html {
 .simple-page-footer a{
     color: #000;
 }
+
+.loginForm{
+    box-shadow:-1px 5px 8px 2px rgba(90, 89, 89, .5);
+    -webkit-box-shadow:-1px 5px 8px 2px rgba(90, 89, 89, .5);
+    padding: 20px 30px 25px;
+    width: 430px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0;
+    .input-group-text{
+      background: none;
+      border:none;
+      color: #878787;
+      font-size: 18px;
+    }
+    .form-control{
+      border:none;
+      color: #878787;
+      font-size: 18px;
+    }
+    .form-control:focus{
+      border:none;
+      box-shadow: none;
+    }
+    input:-internal-autofill-selected { 
+    font-size: 18px;
+    color: #878787 !important;
+    background-color: #fff !important;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+  }
+  }
