@@ -1,6 +1,7 @@
 export const Translation = {
     "en": {
         "AGRO": "Agro Farm",
+        "LOGO_SUB_TEXT": "Welcome to admin Dashboard",
         "INFORMATION": "Information",
         "LOADING": "Loading...",
         "UPDATED_SUCCESSFULLY": "Updated Successfully",
@@ -268,6 +269,7 @@ export const Translation = {
             "RRP": "Enter a RRP",
             "EMAIL_ADDRESS": "Enter a Email Address"
         },
+      
     }
 
 }

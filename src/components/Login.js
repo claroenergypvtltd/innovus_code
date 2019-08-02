@@ -5,7 +5,9 @@ import { loginUser } from '../actions/authentication';
 import  logo  from '../assets/images/logo.png';
 import classnames from 'classnames';
 // import {path} from '../constants';
-import '../assets/css/login.css';
+import '../assets/css/login.scss';
+import  user  from '../../src/assets/images/user_icon.png';
+import  lock  from '../../src/assets/images/password_icon.png';
 
 class Login extends Component {
 
@@ -68,7 +70,7 @@ class Login extends Component {
         console.log("err", errors);
         return(
             <div className="clearfix loginAlign">
-                <div className = "col-md-12 clearfix">
+                <div className = "col-md-12 login-sec clearfix">
                     <div className = "col-md-6 leftWidget clearfix pull-left">
                         <div className="logo-img">
                             <img src={logo} className="img-rounded"  alt="img" />
@@ -76,10 +78,48 @@ class Login extends Component {
                         </div>
                     </div>
                     <div className="col-md-6 pull-right">
-                        <div className="loginForm clearfix">
+                        <div className="loginForm p-5 clearfix">
                             <div className="login-widget">
                                 <form onSubmit={this.handleSubmit.bind(this)} noValidate>
-                                    <div className="form-group">
+                                <div className="form-group">
+                                            {/* <label>{window.strings.EMAIL}</label> */}
+                                            <div class="form-input-grp input-group">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text" id="basic-addon1">                                           
+                                                <img src={user} className="icon_img" />
+                                                </span>
+                                            </div>
+                                         
+                                        <input
+                                        type="email"
+                                        placeholder="Email"
+                                        className={classnames('form-control form-control-lg', {
+                                            'is-invalid': errors.email
+                                        })}
+                                        name="email"
+                                        onChange={ this.handleInputChange }
+                                        value={ this.state.email }
+                                        required
+
+                                        />
+                                        {/* { this.state.submitted && !this.state.email && <div className="mandatory">{window.strings['PLACEHOLDER']['EMAIL_ADDRESS']}</div>} */}
+                                    
+                                                                                    
+                                            {/* <input type="email" onChange={this.onhandleChange} name="email" id="inputEmail" className={classnames('form-control form-control-lg', {
+                                            'is-invalid': errors.email})} placeholder="Email Id" /> */}
+                                                {/* {this.state.enableForgetPassword && <div className="simpleText">{window.strings.FORGETPASSWORDMESSEGE}</div>} */}
+                                               
+                                            </div>
+                                            { this.state.submitted && !this.state.email && <div className="mandatory">{window.strings['PLACEHOLDER']['EMAIL_ADDRESS']}</div>}
+                                            
+                                        </div>
+
+
+
+
+
+
+                                    {/* <div className="form-group">
                                         <input
                                         type="email"
                                         placeholder="Email"
@@ -93,8 +133,14 @@ class Login extends Component {
 
                                         />
                                         { this.state.submitted && !this.state.email && <div className="mandatory">{window.strings['PLACEHOLDER']['EMAIL_ADDRESS']}</div>}
-                                    </div>
+                                    </div> */}
                                     <div className="form-group">
+                                    <div class="form-input-grp input-group">
+                                    <div className="input-group-prepend">
+                                                <span className="input-group-text" id="basic-addon1">  
+                                                <img src={lock} className="icon_img" />
+                                                </span>
+                                            </div>
                                         <input
                                         type="password"
                                         placeholder="Password"
@@ -107,11 +153,18 @@ class Login extends Component {
                                         required
 
                                         />
-                                        { this.state.submitted && !this.state.password && <div className="mandatory">{window.strings['PLACEHOLDER']['CUSTOMER_PASSWORD']}</div>}
+                                       
                                     </div>
-                                    <div className="login-btn">
+                                    { this.state.submitted && !this.state.password && <div className="mandatory">{window.strings['PLACEHOLDER']['CUSTOMER_PASSWORD']}</div>}
+                                    </div>
+                                    <div className="col-md-12 pt-3 p-0">
+                                        <div className="form-group forget-pwd float-left">
+                                            <a href="#">Forget Password?</a>
+                                        </div>
+                                        <div className="login-btn float-right">
                                         
-                                        <button type="submit" className="btn btn-lg btn-primary btn-block" disabled={this.state.loading}>{/*<i className="fa fa-sign-in mr15" aria-hidden="true"></i>*/} {this.state.loading ? window.strings['LOADING'] : window.strings['LOGIN'] }</button>
+                                        <button type="submit" className="btn btn-primary" disabled={this.state.loading}>{/*<i className="fa fa-sign-in mr15" aria-hidden="true"></i>*/} {this.state.loading ? window.strings['LOADING'] : window.strings['LOGIN'] }</button>
+                                    </div>
                                     </div>
                                 </form> 
                             </div>        
