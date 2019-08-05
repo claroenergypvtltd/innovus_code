@@ -1,7 +1,7 @@
 import {utils} from '../services';
 import React from 'react';
 // import {labelResources} from '../constants/labelResources.js'
-import {labelResources, path} from '../constants'
+import {Translation,labelResources, path} from '../constants'
 
 
 import  dashboard  from '../assets/images/Dashboard/Dashboard_icon.png'
@@ -15,47 +15,55 @@ let Label = labelResources.Header;
 export const HeaderJSON = [
     
     {
-        "name" : <div className="clearfix"><div className="menu-img"><img alt="Dashboard" className="menu-icon" src={dashboard} /><img alt="Dashboard" className="menu-icon-hov" src={dashboard_sel} /></div> <span className="menu-list">{Label.dashboard}</span></div>,
+        "name" : <span className="menu-list dashboard"><i></i>{Label.dasboard}</span>,
         "path"  : path.dashboard
     },    
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name":  <span className="menu-list user_manag"><i></i>{Label.userLabel}</span>,
         "path"  : path.user
     },
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name": <span className="menu-list prdt_cate"><i></i>{Label.categoryLabel}</span>,
         "path"  : path.category
-    },
+
+    }, 
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name":  <span className="menu-list product"><i></i>{Label.productLabel}</span>,
         "path"  : path.products
-    },
-    {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
-        "path"  : path.coupons
+
+        
     },  
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name": <span className="menu-list order"><i></i>{Label.orderLabel}</span>,
         "path"  : path.order
+        
     }, 
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name":  <span className="menu-list coupon"><i></i>{Label.couponLabel}</span>,
+        "path"  : path.coupons
+
+    }, 
+    {
+        "name":  <span className="menu-list pay_manag"><i></i>{Label.paymentLabel}</span>,
         "path"  : path.payments
-    }, 
+
+    },
+
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name": <span className="menu-list report_manag"><i></i>{Label.reportLabel}</span>,
         "path"  : path.reports
-    }, 
+    },   
+    
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name":  <span className="menu-list faq"><i></i>{Label.FAQLabel}</span>,
         "path"  : path.faq
     }, 
     {
-        "name": <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={user_icon} /><img alt="Brand" className="menu-icon-hov" src={user_icon_sel} /></div> <span className="menu-list">{Label.userLabel}</span></div>,
+        "name":  <span className="menu-list static"><i></i>{Label.staticTemplate}</span>,
         "path"  : path.staticTemplate
     }, 
     // {
-    //     "name" : <div className="clearfix"><div className="menu-img"><img alt="Brand" className="menu-icon" src={bulk_icon} /><img alt="Brand" className="menu-icon-hov" src={bulk_icon_sel } /></div> <span className="menu-list">BulkUpload </span></div>,
+    //     "name" : <div className="menu-img"><img alt="Brand" className="menu-icon" src={bulk_icon} /><img alt="Brand" className="menu-icon-hov" src={bulk_icon_sel } /></div> <span className="menu-list">BulkUpload </span></div>,
     //     "path"  : process.env.PUBLIC_URL+Label.BulkUpload,
     // },
 ]

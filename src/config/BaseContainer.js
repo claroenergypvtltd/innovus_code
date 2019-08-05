@@ -1,6 +1,6 @@
 import React,{ Component } from 'react';  
 // import  logo  from '../assets/images/logo.png' 
-import  logo_black  from '../assets/images/Agro_logo.png' 
+import  logo_black  from '../assets/images/Agro_logo.png' ;
 import  avatar  from '../assets/images/avatar.png' 
 // import '../assets/css/header.css';
 import { toastr } from '../services'; 
@@ -9,6 +9,10 @@ import {userData} from '../libraries';
 import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
 import {path} from '../constants';
+import {Dropdown} from 'react-bootstrap/Dropdown';
+import notifi from '../assets/images/notification_icon.png';
+import user from '../assets/images/Dashboard/avatar.png'
+
 
 
 export class BaseContainer extends Component{
@@ -86,7 +90,7 @@ export class BaseContainer extends Component{
             {
                 auth() ?      
                 <div className="main-content">
-                    <div className="main-header container-fluid">
+                    <div className="main-header container-fluid p-0">
                         
 <nav className="navbar navbar-expand-lg">
   
@@ -95,26 +99,52 @@ export class BaseContainer extends Component{
     <span className="navbar-toggler-icon"></span>
   </button>
   <div className="collapse navbar-collapse" id="navbarNavDropdown">
- 
+                <ul className="header-right ml-auto">
+                    <li className="notify-sec"><a><img src={notifi} /></a></li>
+                    <li className="profile-sec"><a><img src={user} />
+                        <span className="user-name">Avanthika</span>
+                     </a></li>
+                </ul>
+                
     
-    <div className="dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown link
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-    </div>
+    {/* <div className="dropdown"> */}
+        {/* <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        
+        </a> */}
+        {/* <button
+        className="btn btn-primary dropdown-toggle mr-1"
+        data-toggle="dropdown"
+        type="button"
+      >
+         Dropdown link
+      </button>
+    
+        <div  className="dropdown-menu" id="dropdown">
+          <a className="dropdown-item" href="#">Action</a>
+          <a className="dropdown-item" href="#">Another action</a>
+          <a className="dropdown-item" href="#">Something else here</a>
+        </div> */}
+    {/* </div> */}
+    <Dropdown className=" ml-auto">
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    Dropdown Button
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+ 
 </div>
 </nav>
                           
                     </div>
-                    <div className="routerView col-md-12">
-                        <div className = "sideBarmenu col-md-4">
-                            <div className="col-md-8">
-                                <div className="menu-w collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div className="routerView">
+                        <div className = "sideBarmenu">
+                            <nav className="">
+                                {/* <div className="menu-w collapse navbar-collapse" id="bs-example-navbar-collapse-1"> */}
                                     <ul className="nav navbar-nav clearfix">
                                     {
                                         HeaderJSON && HeaderJSON.map((item,index) => {                                                                               
@@ -200,11 +230,11 @@ export class BaseContainer extends Component{
                                         })
                                     }  
                                     </ul>
-                                </div>  
-                            </div>
+                                {/* </div>   */}
+                            </nav>
 
                         </div>
-                        <div className="container-fluid">
+                        <div className="main-container container-fluid">
                             {this.props.children}
                         </div>
                     </div>  
