@@ -9,7 +9,7 @@ import {userData} from '../libraries';
 import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
 import {path} from '../constants';
-import {Dropdown} from 'react-bootstrap/Dropdown';
+// import {Dropdown} from 'react-bootstrap/Dropdown';
 import notifi from '../assets/images/notification_icon.png';
 import user from '../assets/images/Dashboard/avatar.png'
 
@@ -125,7 +125,7 @@ export class BaseContainer extends Component{
           <a className="dropdown-item" href="#">Something else here</a>
         </div> */}
     {/* </div> */}
-    <Dropdown className=" ml-auto">
+    {/* <Dropdown className=" ml-auto">
   <Dropdown.Toggle variant="success" id="dropdown-basic">
     Dropdown Button
   </Dropdown.Toggle>
@@ -135,7 +135,7 @@ export class BaseContainer extends Component{
     <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
     <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
   </Dropdown.Menu>
-</Dropdown>
+</Dropdown> */}
  
 </div>
 </nav>
