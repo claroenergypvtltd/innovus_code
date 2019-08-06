@@ -19,14 +19,25 @@ padding: 0;
 }
 
 $primary-color: #707070;
-$white-bg:#fff;
+$white:#ffffff;
 $font-open: 'Open Sans', sans-serif;
 $font-sans: 'Source Sans Pro', sans-serif;
 $active-font-color:#ff8b92;
+$h1:30px;
+$h2:28px;
+$h3:24px;
+$h4:20px;
+$h5:18px;
+$h6:16px;
+$font-wt-600:600;
+$gradient-1:linear-gradient(to right, #ff8b92 , #feb683);
+$gradient-2:linear-gradient(140deg, #c693f9 , #ac65f4);
+$gradient-3:linear-gradient(140deg, #6aa4e3 , #6869e9);
+$gradient-4:linear-gradient(to right, #feb683,#ff8b92);
 
 
 .form-control{
-  background-color: #fff;
+  background-color: $white;
   font-family: 'Open Sans', sans-serif;
 }
 .leftWidget {
@@ -44,7 +55,7 @@ body{
   background: #f5f5f5;
 }
 .sideBarmenu,.main-header {
-  background: #fff;
+  background:$white;
 }
 .routerView{
   display: flex;
@@ -54,8 +65,7 @@ body{
 .sideBarmenu{
   min-width: 252px;
     max-width: 202x;
-    background: $white-bg;
-    color: #fff;
+    background: $white;
     transition: all 0.3s;
 }
 .main-container{
@@ -69,6 +79,12 @@ body{
 ul{
   margin-bottom: 0 !important;
 }
+h1{font-size: $h1}
+h2{font-size: $h2}
+h3{font-size: $h3}
+h4{font-size: $h4}
+h5{font-size: $h5}
+h6{font-size: $h6}
 /****************************Login Page************************/
 
 .loginAlign{      background-image: url(../src/assets/images/dashboard_bg.png);
@@ -107,10 +123,10 @@ background-size: cover;}
 .leftWidget {
   text-align: center;
 }
-.header-txt {font-family: 'Source Sans Pro', sans-serif;}
+.header-txt {font-family: $font-sans;}
 
 .s-text{
-color:#fff;
+color:$white;
 }
 .login-sec{
 height: calc(100vh - 0px);
@@ -132,22 +148,22 @@ display: none;
 }
 /* .logo-img img{width: 100px;} */
 input:-webkit-autofill {
--webkit-background-fill-color: #fff;
+-webkit-background-fill-color: $white;
 -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 -webkit-text-fill-color:#707070;
 }
 input:-moz-autofill {
--moz-background-fill-color: #fff;
+-moz-background-fill-color: $white;
 -moz-box-shadow: 0 0 0px 1000px white inset !important;
 -webkit-text-fill-color: #707070;
 }
 input:-o-autofill {
--o-background-fill-color: #fff;
+-o-background-fill-color: $white;
 -o-box-shadow: 0 0 0px 1000px white inset !important;
 -webkit-text-fill-color: #707070;
 }
 input:-khtml-autofill {
--khtml-background-fill-color:#fff;
+-khtml-background-fill-color:$white;
 -khtml-box-shadow: 0 0 0px 1000px white inset !important;
 -webkit-text-fill-color: #707070;
 }
@@ -158,7 +174,7 @@ border-radius:50px !important;
 padding:10px 20px  !important;
 height: auto !important;
 border: none !important;
-font-family: 'Open Sans', sans-serif;
+font-family: $font-open;
 }
 .btn-primary{
 background-color: #ff8b92; /* For browsers that do not support gradients */
@@ -167,71 +183,17 @@ background-image: linear-gradient(to right, #ff8b92 , #feb683);
 
 /****************************Header Section************************/
 li {
-list-style: none;
+  list-style: none;
 }
 .right-menu ul {
-    padding: 0;
-margin: 0;
+  padding: 0;
+  margin: 0;
 }
 .right-menu ul li.user-det {
-    float: left;
-margin-left: 20px;
-}
-.drp-toggle .fa-bell {
-line-height: 30px;
-}
-.dropdown-notifications li a span.notification-badge {
-width: 30px;
-height: 30px;
-line-height: 30px;
-text-align: center;
-border-radius: 100%;
-display: inline-block;
-vertical-align: top;
-margin-top: 10px;
-}
-.drop-title {
-display: block;
-border-top-left-radius: 5px;
-border-top-right-radius: 5px;
-border-bottom: 1px solid #e5e9ec;
-background: #F5F5F5;
-padding: 12px;
-color: #6a6a6a;
-margin: 0;
-font-weight: 600;
-font-size: 16px;
-line-height: 20px;
-}
-.dropdown-notifications li a span.notification-info {
-padding: 0px 5px;
-display: inline-block;
-vertical-align: middle;
-font-weight: 400;
-word-break: break-word;
-white-space: normal;
-line-height: 22px;
-}
-.dropdown-notifications li a span.notification-info small {
-color: #aaa;
-}
-.dropdown-notifications li a {
-padding: 3px 0px;
-color: #5f5f5f;
-font-size: 14px;
-display: block;
-padding-right: 0;
-border-bottom: 1px solid #e5e9ec;
-}
-.dropdown-notifications {
-    width: 340px;
-height: 300px;
-overflow-y: auto;
+  float: left;
+  margin-left: 20px;
 }
 
-.dropdown-notifications li a span .notification-date {
-    padding: 0 5px;
-}
 .header-right li{
   float: left;
 }
@@ -293,6 +255,59 @@ li:hover .menu-link{
 li:hover .menu-list i{
   background-position-x: -59px;
 }
+}
+/****************************DashBoard page************************/
+.dashboard-bx{
+  a{
+    color: $white;
+    font-family: $font-open;
+  }
+  a:hover{
+    color: $white;
+    text-decoration: none;
+  }
+  span{
+    font-size: $h1;
+    display: block;
+    font-weight: $font-wt-600;
+    margin-top:5px;
+  }
+  .card{
+    padding: 35px 25px 0;
+    border:none;    
+    border-radius: 7px;
+    margin-top: 0;
+  }
+  .box{
+    background-position: 173px -3px;
+    padding-bottom: 35px;
+  }
+
+}
+
+.new-order .card{
+  background-image: $gradient-2;
+  .box{
+    background-image: url(../src/assets/images/Dashboard/neworders-icon.png);
+    background-repeat: no-repeat;
+    
+  }
+}
+.delivery-order .card{
+  background-image: $gradient-3;
+  .box{
+    background-image: url(../src/assets/images/Dashboard/deliveryorders-icon.png);
+    background-repeat: no-repeat;
+    
+  }
+}
+.revenue .card{
+  background-image: $gradient-1;
+  .box{
+    background-image: url(../src/assets/images/Dashboard/revenue-icon.png);
+    background-repeat: no-repeat;
+    
+  }
 }
 
 
