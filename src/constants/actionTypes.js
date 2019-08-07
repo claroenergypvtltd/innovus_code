@@ -1,2 +1,12 @@
 export const GET_ERRORS = 'GET_ERRORS';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+
+export const CATEGORY_FETCH = 'getCategoryList';
+
+
+
+
+// export const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS';
+// export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
+// export const USER_DELETE_SUCCESS = 'USER_DELETE_SUCCESS';
+// export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS';

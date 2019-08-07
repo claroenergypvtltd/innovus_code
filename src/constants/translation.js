@@ -269,6 +269,12 @@ export const Translation = {
             "RRP": "Enter a RRP",
             "EMAIL_ADDRESS": "Enter a Email Address"
         },
+
+        "CATEGORY":{
+            "CATE_NAME" : "Category Name",
+            "DESCRIPTION" : "Description",
+            "IMAGE" : "Image"
+        }
       
     }
 

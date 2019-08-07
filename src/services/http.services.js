@@ -17,7 +17,11 @@ httpServices.uploadImage = uploadImage;
 const toast = toastr;
 
 axios.defaults.baseURL = baseUrl;
+
 axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
+axios.defaults.headers.common["Accept"] = "application/json;multipart/form-data";
+// axios.defaults.headers.common["Content-Type"] = "multipart/form-data";
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*"
 
 axios.interceptors.response.use(
   function (response) {
@@ -43,7 +47,7 @@ axios.interceptors.response.use(
     } else if (error.request.status === 422) {
       toast.error(error.response.message);
       return Promise.reject(error);
-    }else if (error.request.status === 400) {
+    } else if (error.request.status === 400) {
       toast.error(error.response.data.message);
       return Promise.reject(error);
     }
@@ -77,15 +81,15 @@ function get(url) {
   PubSub.publish('msg', true);
   debugger;
   return axios.get(url).then(response => {
-      if(response.data && response.data.count > window.constant.ONE){
-        setTimeout(function(){
-          PubSub.publish('msg', false);       
-        },1000)
-      }else{
+    if (response.data) {
+      setTimeout(function () {
         PubSub.publish('msg', false);
-      }
-      
-      return response;
+      }, 1000)
+    } else {
+      PubSub.publish('msg', false);
+    }
+
+    return response;
   }).catch((error) => {
     console.error("GetError", error);
     PubSub.publish('msg', false);
@@ -95,7 +99,7 @@ function get(url) {
 
 function post(url, params) {
   PubSub.publish('msg', true);
-  return axios.post(url, params).then(response => {
+  return axios.post(url, params, { headers: { 'Content-Type': 'multipart/form-data;boundary=--------------------------932852210221574920076806' } }).then(response => {
     PubSub.publish('msg', false);
     return response;
   }).catch(e => {
@@ -106,7 +110,7 @@ function post(url, params) {
 
 function remove(url, data) {
   PubSub.publish('msg', true);
-  return axios.delete(url, { data }).then(response => {
+  return axios.delete(url, data).then(response => {
     PubSub.publish('msg', false);
     return response;
   }).catch((error) => {

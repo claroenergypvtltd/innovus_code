@@ -4,54 +4,54 @@ import setAuthToken from '../setAuthToken';
 import jwt_decode from 'jwt-decode';
 import { endPoint } from '../constants';
 import { phaseKey } from "../config/LocalConfig";
-import {toastr} from 'react-redux-toastr';
-import {path} from '../constants';
+import { toastr } from 'react-redux-toastr';
+import { path } from '../constants';
 import CryptoJS from 'crypto-js';
 
 import { history } from '../store/history';
-import  store  from '../store/store';
+import store from '../store/store';
 // import { httpServices } from '../services';
 
-debugger;
+
 
 
 export const registerUser = (user, history) => dispatch => {
     axios.post('/api/users/register', user)
-            .then(res => history.push('/login'))
-            .catch(err => {
-                dispatch({
-                    type: GET_ERRORS,
-                    payload: err.response
-                });
+        .then(res => history.push('/login'))
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response
             });
+        });
 }
 
 
 export const loginUser = (user) => dispatch => {
-    debugger;
+
     console.log(user);
     axios.post(endPoint.login, user).then(res => {
-        debugger;
-        console.log(res);
-            const token  = res.data.token.accessToken;
-            localStorage.setItem('jwtToken', token);
-            setAuthToken(token);
-            const decoded = jwt_decode(token);
 
-            let Details  =  res ?  Object.assign({},res) : {};
-            // //encrypt the data 
-            var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(Details), phaseKey);
-            // //set encrypted in localstorage
-            localStorage.setItem("user",(ciphertext));                        
-            toastr.success(window.strings.LOGGEDIN_SUCCESSFULLY);
-            
-            // console.log(path.dashboard.list);
-            // debugger;
-            dispatch(setCurrentUser(decoded));
-            history.push('/'); 
-        })
+        console.log(res);
+        const token = res.data.token.accessToken;
+        localStorage.setItem('jwtToken', token);
+        setAuthToken(token);
+        const decoded = jwt_decode(token);
+
+        let Details = res ? Object.assign({}, res) : {};
+        // //encrypt the data 
+        var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(Details), phaseKey);
+        // //set encrypted in localstorage
+        localStorage.setItem("user", (ciphertext));
+        toastr.success(window.strings.LOGGEDIN_SUCCESSFULLY);
+
+        // console.log(path.dashboard.list);
+        // 
+        dispatch(setCurrentUser(decoded));
+        history.push('/');
+    })
         .catch(err => {
-          console.log(err);
+            console.log(err);
             dispatch({
                 type: GET_ERRORS,
                 payload: err
@@ -73,7 +73,7 @@ export const logoutUser = (history) => dispatch => {
 
     // console.log(store.getState().router );
     // if(location.pathname !== process.env.PUBLIC_URL+'/login')
-        history.push('/login');
+    history.push('/login');
 
 }
 
