@@ -17,7 +17,7 @@ export const Translation = {
         "RESET": "Reset",
         "SEARCHPLACEHOLDER": "Search....",
         "ADVANCESEARCH": "Advance Search",
-        "BASIC":"Basic Search",
+        "BASIC": "Basic Search",
         "FIELDREQUIRED": "This field is Required*",
         "ISREQUIRED": " is required",
         "BROWSE": "Browse",
@@ -54,26 +54,29 @@ export const Translation = {
             "CONFORMATION": "Do you want to delete this ",
             "OPTIONAL": "Are you sure want to delete this parent category along with sub categories ?",
         },
-        "SHOW":"Show",
-        "SORTING":"sorting",
-        "SORT_AESEND":"sorting sort_asend",
-        "SORT_DESEND":"sorting sort_desend",
-        "SORTABLEKEY":["productCode","categoryName","orderNumber","dealerName", "catalogueName", "assignBy","validatedBy",'userName','email','mobileNumber','location','price','certificateName','currencyName', 'categoryName', 'status'],
-        "ASSIGNVIEWS" : "Maximum allowed views",
-        "CATEGORY":{   
-            "LISTTITLE" : "Category List",
-            "ADDBUTTON" : "Add Category",
-            "CREATETITLE" : "Create Category",
-            "EDITTITLE" : "Edit Category",
-            "DELETE_CATEGORY" : "category",
-            "NAME" : "Category Name",
-            "CATEGORY_CODE" : "Category Code",
-            "IMAGE" : "Category Image",
-            "TYPE" : "Category Type",
-            "CHILD" : "Sub Category",
-            "PARENT" : "Parent Category",
-            "SELECTCATEGORY" : "Select a category",
-        	"TABLEHEAD":{'categoryName' : 'Category Name','categoryImage' : 'Category Image','parentCategory ':'Parent Category'}
+        "SHOW": "Show",
+        "SORTING": "sorting",
+        "SORT_AESEND": "sorting sort_asend",
+        "SORT_DESEND": "sorting sort_desend",
+        "SORTABLEKEY": ["productCode", "categoryName", "orderNumber", "dealerName", "catalogueName", "assignBy", "validatedBy", 'userName', 'email', 'mobileNumber', 'location', 'price', 'certificateName', 'currencyName', 'categoryName', 'status'],
+        "ASSIGNVIEWS": "Maximum allowed views",
+        "CATEGORY": {
+            "LISTTITLE": "Category List",
+            "ADDBUTTON": "Add Category",
+            "CREATETITLE": "Create Category",
+            "EDITTITLE": "Edit Category",
+            "DELETE_CATEGORY": "category",
+            "NAME": "Category Name",
+            "CATEGORY_CODE": "Category Code",
+            "IMAGE": "Category Image",
+            "TYPE": "Category Type",
+            "CHILD": "Sub Category",
+            "PARENT": "Parent Category",
+            "SELECTCATEGORY": "Select a category",
+            "CATE_NAME": "Category Name",
+            "DESCRIPTION": "Description",
+            "IMAGE": "Image",
+            "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
         "CERTIFICATE": {
             "DELETE_CERTIFICATE": "Certificate",
@@ -126,7 +129,7 @@ export const Translation = {
             "WEB": "web",
             "APP": "app",
         },
-       
+
         "SUBMIT": "Save",
         "NEXT_TAB": "Next",
         "CREATED_SUCCESSFULLY": "Created Successfully",
@@ -143,11 +146,11 @@ export const Translation = {
         "DELETEMESSAGE": "Are you sure you wish to delete this item?",
         "ROLEPERMISSIONTITLE": "Role Permission",
         "PASSWORDFORMAT": "(Should contains minimum 8 characters, one letter should be alpha-numeric values)",
-       
+
         "PRICE": {
             "LISTTITLE": "Price Master",
         },
-       
+
         "ORDER": {
             "DELETE_ORDER": "Order?",
             "LISTTITLE": "Order List",
@@ -171,7 +174,7 @@ export const Translation = {
             "TABLEHEAD": { 'orderNumber': 'Order Number', 'dealerName': 'Dealer Name', 'storeName': 'Store Name', 'quantity': 'Quantity', 'price': 'Total price', 'viewDetails': 'View details' },
             "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
         },
-       
+
         "USER": {
             "DELETE_USER": "User?",
             "LISTTITLE": "User List",
@@ -220,9 +223,9 @@ export const Translation = {
             "OF": " of ",
             "TO": " to ",
             "ENTRIES": " entries"
-        }, 
-        "LOGINS":{
-            "PERMISSION_DENIED" : "Permission denied to view access" 
+        },
+        "LOGINS": {
+            "PERMISSION_DENIED": "Permission denied to view access"
         },
         "ADD": "Add",
 
@@ -237,7 +240,7 @@ export const Translation = {
 
         "INVALID_PASS": "Invalid password format*",
         "REQUIRED_FIELD": " is required",
-       
+
         "IMAGE_REMOVE_ERROR": "Image removed unsuccessfull",
         "LIST_EMPTY": "-",
         "EMAIL": "Email",
@@ -247,10 +250,10 @@ export const Translation = {
         "LABEL_TEXT": "text",
         "LABEL_NUMBER": "number",
         "LABEL_SELECT": "select",
-        "ID_LABEL":"id",
-        "OPTIONAL_LABEL":"(Optional)",
-        "INVALID_EMAIL":"Invalid Email Format",
-        "INVALID_MOBILE":"Invalid Mobile Format",
+        "ID_LABEL": "id",
+        "OPTIONAL_LABEL": "(Optional)",
+        "INVALID_EMAIL": "Invalid Email Format",
+        "INVALID_MOBILE": "Invalid Mobile Format",
 
         "PLACEHOLDER": {
             "CUSTOMER_NAME": "Enter a Customer Name",
@@ -270,12 +273,12 @@ export const Translation = {
             "EMAIL_ADDRESS": "Enter a Email Address"
         },
 
-        "CATEGORY":{
-            "CATE_NAME" : "Category Name",
-            "DESCRIPTION" : "Description",
-            "IMAGE" : "Image"
-        }
-      
+        // "CATEGORY":{
+        //     "CATE_NAME" : "Category Name",
+        //     "DESCRIPTION" : "Description",
+        //     "IMAGE" : "Image"
+        // }
+
     }
 
 }

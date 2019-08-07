@@ -41,7 +41,7 @@ class CategoryList extends Component {
 
     itemEdit = (catId) => {
         debugger;
-        this.props.history.push({ pathname: '/category/' + catId, state: { categoryId: catId } });
+        this.props.history.push({ pathname: '/category/edit/' + catId, state: { categoryId: catId } });
     }
 
     customConfirm(message, props, title) {
@@ -69,23 +69,20 @@ class CategoryList extends Component {
 
 
     handleDelete = (data) => {
-        let message = "Are u Sure Want to delete";
+        let message = window.strings.DELETEMESSAGE;
         const toastrConfirmOptions = {
             onOk: () => { this.itemDelete(data) },
             onCancel: () => console.log('CANCEL: clicked')
         };
-        this.customConfirm(message, toastrConfirmOptions, "Delete");
+        this.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
 
     itemDelete = (id) => {
         CategoryAction.DeleteCategory(id);
-
-        // this.CategoryDatas(this.state.page);
-
     }
 
     formPath = () => {
-        this.props.history.push('/category');
+        this.props.history.push('/category/add');
     }
 
 
@@ -101,7 +98,7 @@ class CategoryList extends Component {
         return (
             <div>
                 <div>
-                    <button onClick={this.formPath}>Add Category</button>
+                    <button onClick={this.formPath}>{window.strings.CATEGORY.ADDBUTTON}</button>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />

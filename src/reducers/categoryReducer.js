@@ -5,16 +5,12 @@ export default function (state = initialstate, action) {
 
     switch (action.type) {
         case "getCategoryList":
-            return {
+
+            state = {
                 ...state,
                 Lists: action.List,
                 count: action.count
             }
-            // state = {
-            //     ...state,
-            //     Lists: action.List,
-            //     count: action.count
-            // }
             break;
 
         case "GET_Category_SEARCH_LISTS":

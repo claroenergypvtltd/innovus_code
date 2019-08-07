@@ -64,23 +64,20 @@ export const routesPath = [
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/category/:categoryId?',
+                path: process.env.PUBLIC_URL + '/category/add',
                 component: CreateCategory,
-                exact: true,
-                // permissionData: "master"
+                exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/categoryList',
+                path: process.env.PUBLIC_URL + '/category',
                 component: FetchCategory,
-                exact: true,
-                // permissionData: "master"
+                exact: true
             },
-            // {
-            //     path: process.env.PUBLIC_URL + '/category/update/:categoryId?',
-            //     component: Category,
-            //     exact: true,
-            //     // permissionData: "master"
-            // },
+            {
+                path: process.env.PUBLIC_URL + '/category/edit/:categoryId?',
+                component: CreateCategory,
+                exact: true
+            },
             // {
             //     path: process.env.PUBLIC_URL + '/user/update/:id?',
             //     component: RollAuthenticaion(CreateUser),

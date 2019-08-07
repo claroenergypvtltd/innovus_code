@@ -6,10 +6,10 @@ import { CATEGORY_FETCH } from '../constants/actionTypes';
 export const CategoryAction = {}
 
 CategoryAction.getCategoryList = getCategoryList;
-CategoryAction.AddCategory = AddCategory;
+CategoryAction.SubmitCategory = SubmitCategory;
 CategoryAction.fileUpload = fileUpload;
 CategoryAction.DeleteCategory = DeleteCategory;
-CategoryAction.editCategory = editCategory;
+CategoryAction.getSpecificCategory = getSpecificCategory;
 
 export function getCategoryList(params) {
 	const { itemPerPage, current_page } = params;
@@ -42,29 +42,27 @@ function fileUpload(params) {
 
 }
 
-export function AddCategory(category, Id) {
-	return (dispatch) => {
+export function SubmitCategory(category, Id) {
 
-		if (Id) {
-			httpServices.put('category', category).then(resp => {
-				if (resp) {
-					toastr.success(resp.message);
-				} else {
-					toastr.warning(resp.message);
-				}
-			})
+	if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
+		httpServices.put('category', category).then(resp => {
+			if (resp) {
+				toastr.success(resp.message);
+			} else {
+				toastr.warning(resp.message);
+			}
+		})
 
-		} else {
-			httpServices.post('category', category).then(resp => {
-				if (resp) {
-					toastr.success(resp.message);
-				} else {
-					toastr.warning(resp.message);
-				}
-			})
-		}
-
+	} else {
+		httpServices.post('category', category).then(resp => {
+			if (resp) {
+				toastr.success(resp.message);
+			} else {
+				toastr.warning(resp.message);
+			}
+		})
 	}
+
 }
 
 function DeleteCategory(id) {
@@ -79,7 +77,7 @@ function DeleteCategory(id) {
 
 
 
-function editCategory(id) {
+function getSpecificCategory(id) { //getSpecificCategory
 	return httpServices.get('categoryDetails?categoryId=' + id).then(resp => {
 		if (resp.data) {
 			return resp;

@@ -57,25 +57,7 @@ axios.interceptors.response.use(
   }
 );
 
-// axios.interceptors.request.use(
-//   function (config) {
-//     let user = userData();
-//     debugger;
-//     console.log(user);
-//     let token = (user && user.data && user.data.token) ? user.data.token.tokenType +' '+ user.data.token.accessToken : '';
 
-//     config.headers = Object.assign(
-//       {
-//         Authorization: token
-//       },
-//       config.headers
-//     );
-//     return config;
-//   },
-//   function (error) {
-//     return Promise.reject(error);
-//   }
-// );
 
 function get(url) {
   PubSub.publish('msg', true);
