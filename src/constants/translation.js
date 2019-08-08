@@ -76,58 +76,8 @@ export const Translation = {
             "CATE_NAME": "Category Name",
             "DESCRIPTION": "Description",
             "IMAGE": "Image",
+            "DESCRIPTION": "Description",
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
-        },
-        "CERTIFICATE": {
-            "DELETE_CERTIFICATE": "Certificate",
-            "JEWELMESSAGE": "also related to this certificate jewels ?",
-            "LISTTITLE": "Certificate List",
-            "ADDBUTTON": "Add Certificate",
-            "CREATETITLE": "Create Certificate",
-            "EDITTITLE": "Edit Certificate",
-            "NAME": "Certificate Name",
-            "IMAGE": "Certificate Image",
-            "TYPE": "Certificate Type",
-            "TABLEHEAD": { "certificateName": 'Certificate Name', "CertificateImage": 'Certificate Image' }
-        },
-        "LICENSE": {
-            "LISTTITLE": "License List",
-            "ADDBUTTON": "Add License",
-            "CREATELICENSE": "Create License",
-            "EDITLICENSE": "Edit License",
-            "LICENSETYPE": "License Type",
-            "TABLEHEAD": { "deviceName": 'Device Name', "deviceUDID": 'Device UDID', "installedDate": 'Installed Date', "expiryDate": 'Expiry Date' }
-        },
-        "PLANS": {
-            "LISTTITLE": "Subscription Plans",
-            "EDITTITLE": "EDIT",
-            "DELETETITLE": "DELETE",
-            "ADDBUTTON": "Add Plan",
-            "CREATEPLAN": "Create Plan",
-            "EDITPLAN": "Edit Plan",
-            "NOOFJEWELS": "No Of Jewels",
-            "NOOFLICENSES": "noOfLicenses",
-            "GST": "gst",
-            "B2B": "Business To Business",
-            "B2C": "Business To Consumer",
-            "b2b": "b2b",
-            "b2c": "b2c",
-            "STORAGESPACE": "Storage Space",
-            "PER": "Per ",
-            "FOR": "For ",
-            "MONTHS": " Months",
-            "MONTH": " Month",
-            "DAYS": " Days",
-            "DAY": " Day",
-            "DOLLAR": "$ "
-        },
-        "PLANPRICE": {
-            "TABLEHEAD": { "appType": 'App Type', "businessType": 'Business Type', "Price": 'Price' },
-            "ADDBUTTON": "Add Plan Price",
-            "CREATEPRICE": "Create Plan Price",
-            "EDITPRICE": "Edit Plan Price",
-            "WEB": "web",
-            "APP": "app",
         },
 
         "SUBMIT": "Save",
@@ -147,33 +97,7 @@ export const Translation = {
         "ROLEPERMISSIONTITLE": "Role Permission",
         "PASSWORDFORMAT": "(Should contains minimum 8 characters, one letter should be alpha-numeric values)",
 
-        "PRICE": {
-            "LISTTITLE": "Price Master",
-        },
 
-        "ORDER": {
-            "DELETE_ORDER": "Order?",
-            "LISTTITLE": "Order List",
-            "DETAILTITLE": "View Order Details",
-            "ADDBUTTON": "Add Order",
-            "CREATETITLE": "Create Order",
-            "EDITTITLE": "Edit Order",
-            "NAME": "Order Name",
-            "COMMENTS": "Comments",
-            "DELIVERYDATE": "deliveryDate",
-            "CHANGESTATUS": "changeStatus",
-            "SELECTSTATUS": "Select Status",
-            "STATUS": "Status",
-            "DATE": "dd/mm/yyyy",
-            "DELIVERY_UPDATED": "Delivery Date Updated",
-            "STATUS_UPDATE": "Status Updated successfully",
-            "DELIVERYDATE_ERROR": "Delivery Date must be greater than Order Date",
-            "VIEWDETAILS": "View  details",
-            "IMAGE": "Product Image",
-            "REMARKS": "Remarks",
-            "TABLEHEAD": { 'orderNumber': 'Order Number', 'dealerName': 'Dealer Name', 'storeName': 'Store Name', 'quantity': 'Quantity', 'price': 'Total price', 'viewDetails': 'View details' },
-            "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
-        },
 
         "USER": {
             "DELETE_USER": "User?",
@@ -191,33 +115,21 @@ export const Translation = {
             "ROLE": "Role",
             "EMAIL": "Email",
         },
-        "ABOUTUS": {
-            "TITLE": "About Us",
-            "ADDBUTTON": "Add ABOUTUS",
-            "EDITBUTTON": "Edit ABOUTUS",
-            "CREATETITLE": "Create Details",
-            "EDITTITLE": "Edit Details",
-            "NAME": "Title",
-            "DESCRIPTION": "Description",
+
+        "FARMERS": {
+            "FIRST_NAME": "First Name",
+            "LAST_NAME": "Last Name",
+            "ADDR_1": "Address 1",
+            "ADDR_2": "Address 2",
+            "IMAGE": "Image",
+            "EMAIL": "Email",
+            "PHON_NO": "Phone Number",
+            "AREA": "Area",
+            "CITY": "City",
+            "STATE": "State",
+            "POST_CODE": "Post Code"
         },
-        "CONTACTUS": {
-            "TITLE": "Contact Us",
-            "ADDBUTTON": "Add CONTACTUS",
-            "EDITBUTTON": "Edit CONTACTUS",
-            "CREATETITLE": "Create Details",
-            "EDITTITLE": "Edit Details",
-            "NAME": "Title",
-            "DESCRIPTION": "Description",
-        },
-        "LOCATION": {
-            "DELETE_LOCATION": "Location",
-            "JEWELMESSAGE": "also related to this location jewels ?",
-            "LISTTITLE": "Location Master",
-            "ADDBUTTON": "Add Location",
-            "INPUTLABEL": "Location",
-            "CREATETITLE": "Create Location",
-            "EDITTITLE": "Edit Location",
-        },
+
         "PAGE_COUNT": {
             "SHOWING": "Showing ",
             "OF": " of ",
@@ -228,7 +140,6 @@ export const Translation = {
             "PERMISSION_DENIED": "Permission denied to view access"
         },
         "ADD": "Add",
-
         "LOGOUT_CONFIRMATION": "Are you sure want to Logout ?",
         "EXIT_CONFIRMATION": "Are you sure you want to exit ?",
         "LOGIN": "Login",
@@ -237,10 +148,8 @@ export const Translation = {
         "INVALID_CURRENT_PASSWORD": "Invalid current password",
         "IMAGE_REMOVE": "Image removed successfully",
         "USER_IMAGE_NAME": "user",
-
         "INVALID_PASS": "Invalid password format*",
         "REQUIRED_FIELD": " is required",
-
         "IMAGE_REMOVE_ERROR": "Image removed unsuccessfull",
         "LIST_EMPTY": "-",
         "EMAIL": "Email",
@@ -273,11 +182,6 @@ export const Translation = {
             "EMAIL_ADDRESS": "Enter a Email Address"
         },
 
-        // "CATEGORY":{
-        //     "CATE_NAME" : "Category Name",
-        //     "DESCRIPTION" : "Description",
-        //     "IMAGE" : "Image"
-        // }
 
     }
 

@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux'
 
-import { CategoryAction } from '../../actions/CategoryAction';
+import { getCategoryList, DeleteCategory } from '../../actions/CategoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
+import { resorceJSON } from '../../libraries'
+import { ReactPagination, SearchBar } from '../../shared'
+import { path } from '../../constants';
 
 class CategoryList extends Component {
 
@@ -13,12 +16,14 @@ class CategoryList extends Component {
         super(props);
         this.state = {
             page: {
-                "itemPerPage": 5,
-                "current_page": 1
+                "itemPerPage": window.constant.FIVE,
+                "current_page": window.constant.ONE
             },
             TableHead: ["Name", "Description", "Image"],
             CategoryListDatas: props.getLists,
             CategoryCount: props.getCount,
+            currentPage: resorceJSON.TablePageData.currentPage,
+            itemPerPage: resorceJSON.TablePageData.itemPerPage,
         }
     }
 
@@ -36,12 +41,12 @@ class CategoryList extends Component {
     }
 
     CategoryDatas(pageDetails) {
-        this.props.dispatch(CategoryAction.getCategoryList(pageDetails));
+        this.props.dispatch(getCategoryList(pageDetails));
     }
 
     itemEdit = (catId) => {
         debugger;
-        this.props.history.push({ pathname: '/category/edit/' + catId, state: { categoryId: catId } });
+        this.props.history.push({ pathname: path.category.edit + catId, state: { categoryId: catId } });
     }
 
     customConfirm(message, props, title) {
@@ -78,11 +83,11 @@ class CategoryList extends Component {
     }
 
     itemDelete = (id) => {
-        CategoryAction.DeleteCategory(id);
+        DeleteCategory(id);
     }
 
     formPath = () => {
-        this.props.history.push('/category/add');
+        this.props.history.push(path.category.add);
     }
 
 
@@ -100,8 +105,14 @@ class CategoryList extends Component {
                 <div>
                     <button onClick={this.formPath}>{window.strings.CATEGORY.ADDBUTTON}</button>
                 </div>
+                {/* <div className="search-widget clearfix">
+                    <div className="col-md-6 s-left">
+                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    </div>
+                </div> */}
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>
         );
     }

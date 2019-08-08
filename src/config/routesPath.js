@@ -3,16 +3,9 @@ import { renderRoutes } from 'react-router-config';
 import Login from '../components/Login';
 import CreateCategory from '../components/CategoryModule/CreateCategory';
 import FetchCategory from '../components/CategoryModule/FetchCategory';
-// import { CreateUser, CreateStore, CreateAboutUs, CreateContactUs, CreateBanner, CreateGram, CreateStatusMaster, CreateDiamondMaster, CreateGemstoneMaster, CreateDealer, CreateCustomer, CreateCutMaster, CreatePurity, CreateMetal, CreateCollection, CreateColorMaster, CreateShapeMaster, CreateClarityMaster, CreateCertificate, CreateCurrency, CreateOrder, CreateLicense,CreateBulkUpload } from '../component/create';
+import CreateFarmers from '../components/FarmersModule/CreateFarmers';
 
-// import { Location, Category, Size, Karigar } from '../component/masters';
-// import { AboutUs, ContactUs } from '../component/Ecom';
-// import { ManageCatalogue } from '../component/form'
-// import { DealerList, CatalogueList, ManageCatalogueList, SizeList, BannerList, UserList, KarigarList, LocationList, CategoryList, PriceList, CertificateList, StoreList, PurityList, MetalList, CollectionList, GramList, GemStoneList, DimensionList, JewelList, DiamondList, StatusList, CurrencyList, OrderList, CustomerList, OrderDetailsList } from '../component/list';
-// import { JewelForm, JewelGramForm, JewelGemstoneForm, JewelDiamondForm, JewelDiamondList, CreateJewel } from '../component/jewel';
 import Home from '../components/Home';
-// import { RollAuthenticaion } from './RollAuthenticaion';
-// import { Settings, Profile, License } from '../component/settings';
 
 import { path } from '../constants';
 
@@ -78,12 +71,11 @@ export const routesPath = [
                 component: CreateCategory,
                 exact: true
             },
-            // {
-            //     path: process.env.PUBLIC_URL + '/user/update/:id?',
-            //     component: RollAuthenticaion(CreateUser),
-            //     exact: true,
-            //     permissionData: "user"
-            // },
+            {
+                path: process.env.PUBLIC_URL + '/user/farmers/add',
+                component: CreateFarmers,
+                exact: true
+            },
 
             // {
             //     path: process.env.PUBLIC_URL + '/karigar/update/:id?',

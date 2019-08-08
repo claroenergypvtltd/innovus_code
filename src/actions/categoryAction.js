@@ -2,22 +2,14 @@ import { httpServices } from '../services/http.services'
 import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
 import { CATEGORY_FETCH } from '../constants/actionTypes';
-
-export const CategoryAction = {}
-
-CategoryAction.getCategoryList = getCategoryList;
-CategoryAction.SubmitCategory = SubmitCategory;
-CategoryAction.fileUpload = fileUpload;
-CategoryAction.DeleteCategory = DeleteCategory;
-CategoryAction.getSpecificCategory = getSpecificCategory;
+import { endPoint } from "../shared";
 
 export function getCategoryList(params) {
 	const { itemPerPage, current_page } = params;
 	return (dispatch) => {
-		httpServices.get('category?itemsPerPage=' + itemPerPage + '&page=' + current_page).then(resp => {
-			if (resp.data) {
-				//alert("Success");
-				dispatch(getlist(resp.data, resp.status))
+		httpServices.get(endPoint.category).then(resp => {
+			if (resp && resp.data) {
+				dispatch(getlist(resp.data.datas, resp.data.totalCount))
 			} else {
 				console.log("Error when getting CategoryList");
 			}
@@ -28,13 +20,13 @@ export function getCategoryList(params) {
 	}
 }
 
-function fileUpload(params) {
+export function fileUpload(params) {
 	const { type, file, storeId } = params;
 	var formData = new FormData();
 	formData.append("image", file);
 	axios.defaults.headers.common['type'] = type;
 	axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
-	return httpServices.post('uploadFiles', formData).then(resp => {
+	return httpServices.post(endPoint.uploadFiles, formData).then(resp => {
 
 		return resp.data;
 
@@ -45,7 +37,7 @@ function fileUpload(params) {
 export function SubmitCategory(category, Id) {
 
 	if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
-		httpServices.put('category', category).then(resp => {
+		httpServices.put(endPoint.category, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
 			} else {
@@ -54,7 +46,7 @@ export function SubmitCategory(category, Id) {
 		})
 
 	} else {
-		httpServices.post('category', category).then(resp => {
+		httpServices.post(endPoint.category, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
 			} else {
@@ -65,8 +57,8 @@ export function SubmitCategory(category, Id) {
 
 }
 
-function DeleteCategory(id) {
-	return httpServices.remove('category?categoryId=' + id).then(response => {
+export function DeleteCategory(id) {
+	return httpServices.remove(endPoint.categoryWithId + id).then(response => {
 		if (response) {
 			toastr.success(response.message);
 		}
@@ -77,8 +69,8 @@ function DeleteCategory(id) {
 
 
 
-function getSpecificCategory(id) { //getSpecificCategory
-	return httpServices.get('categoryDetails?categoryId=' + id).then(resp => {
+export function getSpecificCategory(id) { //getSpecificCategory
+	return httpServices.get(endPoint.categoryDetailsWId + id).then(resp => {
 		if (resp.data) {
 			return resp;
 		}

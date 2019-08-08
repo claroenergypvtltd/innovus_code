@@ -1,5 +1,8 @@
 
-const initialstate = {}
+const initialstate = {
+    Lists: [],
+    count: 0
+}
 
 export default function (state = initialstate, action) {
 

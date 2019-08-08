@@ -47,6 +47,11 @@ export const path = {
         add: process.env.PUBLIC_URL + '/user/add',
         edit: process.env.PUBLIC_URL + '/user/update/',
     },
+    farmer: {
+        // list: process.env.PUBLIC_URL + '/user',
+        add: process.env.PUBLIC_URL + '/user/farmers/add',
+        // edit: process.env.PUBLIC_URL + '/user/update/',
+    },
     aboutUs: {
         list: process.env.PUBLIC_URL + '/aboutus',
         template: process.env.PUBLIC_URL + '/template/aboutus/update/'

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { loginUser } from '../../actions/authentication';
-import { CategoryAction } from '../../actions/CategoryAction';
+import { SubmitCategory, getSpecificCategory } from '../../actions/CategoryAction';
 // AddCategory
 import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
-// import {path} from '../constants';
+import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import { Link } from 'react-router-dom'
 
@@ -52,8 +52,8 @@ class CategoryForm extends Component {
             formData.append("image", this.state.image);
             formData.append("categoryId", this.state.categoryId);
 
-            CategoryAction.SubmitCategory(formData, this.state.categoryId);
-            this.props.history.push('/category');
+            SubmitCategory(formData, this.state.categoryId);
+            this.props.history.push(path.category.list);
         }
     }
 
@@ -66,7 +66,7 @@ class CategoryForm extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             let cId = this.props.location.state.categoryId;
             this.setState({ categoryId: cId });
-            CategoryAction.getSpecificCategory(this.props.location.state.categoryId).then(resp => {
+            getSpecificCategory(this.props.location.state.categoryId).then(resp => {
                 debugger;
                 let Data = resp.data;
                 this.setState({ description: Data.description, name: Data.name });
@@ -77,7 +77,7 @@ class CategoryForm extends Component {
     componentWillReceiveProps(nextProps) {
 
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push('/');
+            this.props.history.push(path.login.add);
         }
         if (nextProps.errors) {
             this.setState({
@@ -87,7 +87,7 @@ class CategoryForm extends Component {
     }
 
     listPath = () => {
-        this.props.history.push('/category');
+        this.props.history.push(path.category.list);
     }
 
     render() {
@@ -97,19 +97,14 @@ class CategoryForm extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-10">
-                        {/* <div className="col-md-5 leftWidget clearfix">
-                            <div className="logo-img">
-                                <img src={logo} className="img-rounded" alt="img" />
-                                <h3 className="s-text pt-4">{window.strings['LOGO_SUB_TEXT']}</h3>
-                            </div>
-                        </div> */}
+
                         <div className="col-md-6 ">
                             <div className="p-5 clearfix">
                                 <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
                                         <div className="form-group pt-3">
 
-                                            <label> Category</label>
+                                            <label>{window.strings.CATEGORY.NAME}</label>
 
                                             <input
                                                 type="text"
@@ -128,7 +123,7 @@ class CategoryForm extends Component {
                                         </div>
                                         <div className="form-group pt-3">
 
-                                            <label>Description</label>
+                                            <label>{window.strings.CATEGORY.DESCRIPTION}</label>
 
                                             <input
                                                 type="text"
@@ -148,7 +143,7 @@ class CategoryForm extends Component {
 
                                         <div className="form-group pt-3">
 
-                                            <label>Image</label>
+                                            <label>{window.strings.CATEGORY.IMAGE}</label>
 
                                             <input
                                                 type="file"
@@ -170,8 +165,8 @@ class CategoryForm extends Component {
 
                                             <div className="login-btn float-right">
 
-                                                <button type="submit" className="btn btn-info" disabled={this.state.loading}>Save</button>
-                                                <button type="button" className="btn btn-info" onClick={this.listPath}>Cancel</button>
+                                                <button type="submit" className="btn btn-info" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
+                                                <button type="button" className="btn btn-info" onClick={this.listPath}>{window.strings.CANCEL}</button>
                                             </div>
                                         </div>
 

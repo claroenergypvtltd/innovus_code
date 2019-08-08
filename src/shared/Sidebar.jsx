@@ -20,7 +20,8 @@ export const Sidebar = [
     },
     {
         "name": <span className="menu-list user_manag"><i></i>{Label.userLabel}</span>,
-        "path": path.user
+        // "path": path.user.add
+        "path": path.farmer.add
     },
     {
         "name": <span className="menu-list prdt_cate"><i></i>{Label.categoryLabel}</span>,
