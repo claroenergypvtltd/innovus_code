@@ -11,5 +11,6 @@ export const endPoint = {
     "orderStatus" :"/orderStatus",
     "master/order" : "/master/order/",
     "order" : "/order",
-    "orderList" : "/ordersList"
+    "orderList" : "/ordersList",
+    "user" : "/user"
 }
