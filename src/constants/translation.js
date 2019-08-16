@@ -144,13 +144,13 @@ export const Translation = {
             "TABLEHEAD": { 'orderNumber': 'Order Number', 'dealerName': 'Dealer Name', 'storeName': 'Store Name', 'quantity': 'Quantity', 'price': 'Total price', 'viewDetails': 'View details' },
             "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
         },
-
+       
         "USERMANAGEMENT": {
-            "USER": "USER MANAGEMENT",
-            "FARMER": "Farmer",
-            "RETAILER": "Retailer",
-            "ADDFARMER": "Add Farmer",
-            "ADDRETAIL": "Add Retailer"
+        "USER": "USER MANAGEMENT",
+        "FARMER" : "Farmer",
+        "RETAILER": "Retailer",
+        "ADDFARMER" : "Add Farmer",
+        "ADDRETAIL" : "Add Retailer"
         },
         "ABOUTUS": {
             "TITLE": "About Us",

@@ -92,7 +92,7 @@ function post(url, params) {
 
 function remove(url, data) {
   PubSub.publish('msg', true);
-  return axios.delete(url + '/' + data).then(response => {
+  return axios.delete(url+'/'+data).then(response => {
     PubSub.publish('msg', false);
     return response;
   }).catch((error) => {

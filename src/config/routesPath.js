@@ -7,6 +7,18 @@ import CreateFarmers from '../components/FarmersModule/CreateFarmers';
 import FetchUser from '../components/UserManagement/FetchUser';
 import User from '../components/UserManagement/User'
 import Home from '../components/Home';
+// import { CreateCategory } from '../component/CreateCategory';
+// import { Category, CategoryList } from '../component/category';
+// import { CreateUser, CreateStore, CreateAboutUs, CreateContactUs, CreateBanner, CreateGram, CreateStatusMaster, CreateDiamondMaster, CreateGemstoneMaster, CreateDealer, CreateCustomer, CreateCutMaster, CreatePurity, CreateMetal, CreateCollection, CreateColorMaster, CreateShapeMaster, CreateClarityMaster, CreateCertificate, CreateCurrency, CreateOrder, CreateLicense,CreateBulkUpload } from '../component/create';
+
+// import { Location, Category, Size, Karigar } from '../component/masters';
+// import { AboutUs, ContactUs } from '../component/Ecom';
+// import { ManageCatalogue } from '../component/form'
+// import { DealerList, CatalogueList, ManageCatalogueList, SizeList, BannerList, UserList, KarigarList, LocationList, CategoryList, PriceList, CertificateList, StoreList, PurityList, MetalList, CollectionList, GramList, GemStoneList, DimensionList, JewelList, DiamondList, StatusList, CurrencyList, OrderList, CustomerList, OrderDetailsList } from '../component/list';
+// import { JewelForm, JewelGramForm, JewelGemstoneForm, JewelDiamondForm, JewelDiamondList, CreateJewel } from '../component/jewel';
+import  Home  from '../components/Home';
+// import { RollAuthenticaion } from './RollAuthenticaion';
+// import { Settings, Profile, License } from '../component/settings';
 import { path } from '../constants';
 
 

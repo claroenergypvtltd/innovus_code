@@ -4,7 +4,6 @@ import authReducer from './authReducer';
 import categoryReducer from './categoryReducer';
 import UserManagementReducer from './userManagementReducer'
 import FarmerReducer from './FarmerReducer'
-
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 export default combineReducers({

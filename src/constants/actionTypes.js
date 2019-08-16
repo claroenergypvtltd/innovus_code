@@ -6,3 +6,4 @@ export const CONTACT_DETAILS = "CONTACT_DETAILS";
 export const FARM_DETAILS = "FARM_DETAILS";
 export const CROP_DETAILS = "CROP_DETAILS";
 export const SET_USERS_LIST = 'SET_USERS_LIST';
+
