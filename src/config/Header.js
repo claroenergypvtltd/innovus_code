@@ -18,9 +18,9 @@ export const HeaderJSON = [
         "name" : <span className="menu-list dashboard"><i></i>{Label.dasboard}</span>,
         "path"  : path.dashboard
     },    
-    {
+    {    
         "name":  <span className="menu-list user_manag"><i></i>{Label.userLabel}</span>,
-        "path"  : path.user
+        "path"  : path.user.list
     },
     {
         "name": <span className="menu-list prdt_cate"><i></i>{Label.categoryLabel}</span>,

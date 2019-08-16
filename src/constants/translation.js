@@ -172,21 +172,12 @@ export const Translation = {
             "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
         },
        
-        "USER": {
-            "DELETE_USER": "User?",
-            "LISTTITLE": "User List",
-            "ADDBUTTON": "Add User",
-            "CREATETITLE": "Create User",
-            "EDITTITLE": "Edit User",
-            "USERNAME": "User Name",
-            "EMAILID": "Email id",
-            "PASSWORD": "Password",
-            "CONFIRMPASSWORD": "Confirm Password",
-            "ISACTIVE": "Active",
-            "ISAUTHORIZED": "Authorized",
-            "USERIMAGE": "User Image",
-            "ROLE": "Role",
-            "EMAIL": "Email",
+        "USERMANAGEMENT": {
+        "USER": "USER MANAGEMENT",
+        "FARMER" : "Farmer",
+        "RETAILER": "Retailer",
+        "ADDFARMER" : "Add Farmer",
+        "ADDRETAIL" : "Add Retailer"
         },
         "ABOUTUS": {
             "TITLE": "About Us",

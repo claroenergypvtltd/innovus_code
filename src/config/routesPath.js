@@ -1,6 +1,8 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
 import  Login from '../components/Login';
+import FetchUser from '../components/UserManagement/FetchUser';
+import User from '../components/UserManagement/User'
 // import { CreateCategory } from '../component/CreateCategory';
 // import { Category, CategoryList } from '../component/category';
 // import { CreateUser, CreateStore, CreateAboutUs, CreateContactUs, CreateBanner, CreateGram, CreateStatusMaster, CreateDiamondMaster, CreateGemstoneMaster, CreateDealer, CreateCustomer, CreateCutMaster, CreatePurity, CreateMetal, CreateCollection, CreateColorMaster, CreateShapeMaster, CreateClarityMaster, CreateCertificate, CreateCurrency, CreateOrder, CreateLicense,CreateBulkUpload } from '../component/create';
@@ -62,6 +64,11 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/',
                 component: Home,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/user',
+                component: User,
                 exact: true
             },
             // {
