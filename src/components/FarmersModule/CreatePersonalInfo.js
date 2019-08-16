@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
+// import ReactDropzone from "react-dropzone";
+import { render } from "react-dom";
+import { SubmitPersonalInformation } from '../../actions/FarmersAction'
+import { toastr } from 'react-redux-toastr'
+import { DragAndDrop } from '../../shared'
+//  ./DragAndDrop'
+
 
 class CreatePersonalInfo extends Component {
 
@@ -12,13 +19,33 @@ class CreatePersonalInfo extends Component {
         this.state = {
             submitted: false,
             firstName: '',
+            name: '',
             lastName: '',
             address1: '',
             address2: '',
             image: '',
-            errors: {}
+            errors: {},
+            tabKey: 1,
+            file: {},
+            errors: {},
+            files: [
+                'nice.pdf',
+                'verycool.jpg',
+            ]
         }
+
     }
+
+
+    handleDrop = (files) => {
+        let fileList = this.state.files
+        for (var i = 0; i < files.length; i++) {
+            if (!files[i].name) return
+            fileList.push(files[i].name)
+        }
+        this.setState({ files: fileList })
+    }
+
 
     handleInputChange = (e) => {
         this.setState({
@@ -26,14 +53,38 @@ class CreatePersonalInfo extends Component {
         })
     }
 
-    handleSubmit = (e) => {
+    onhandleChangeImage = (e) => {
+        debugger;
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                image: file.name
+            })
+        }
+        reader.readAsDataURL(file);
+    }
 
+    handleSubmit = (e) => {
+        debugger;
+        let stateForm = this.state;
         e.preventDefault();
         this.setState({
             submitted: true
         })
+        if (stateForm.name && stateForm.address1 && stateForm.address2 && stateForm.image) {
+            this.props.dispatch(SubmitPersonalInformation(this.state));
+            this.props.childData(1)
+        } else {
+            toastr.error(window.strings.MANDATORYFIELDSTEXT);
+        }
+
+
 
     }
+
 
     componentDidMount() {
     }
@@ -42,14 +93,6 @@ class CreatePersonalInfo extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push('/');
-        }
-        if (nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
-        }
     }
 
 
@@ -61,31 +104,32 @@ class CreatePersonalInfo extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-10">
-                        <h3>Personal Information</h3>
+                        <h3>{window.strings['FARMERS']['PERSONAL_INFORMATION']}</h3>
                         <div className="col-md-6 ">
                             <div className="p-5 clearfix">
                                 <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['FIRST_NAME']}</label>
+                                            <label>{window.strings['FARMERS']['NAME']}</label>
+
 
                                             <input
                                                 type="text"
-                                                placeholder={window.strings['FARMERS']['FIRST_NAME']}
+                                                placeholder={window.strings['FARMERS']['NAME']}
                                                 className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.firstName
+                                                    'is-invalid': errors.name
                                                 })}
-                                                name="firstName"
+                                                name="name"
                                                 onChange={this.handleInputChange}
-                                                value={this.state.firstName}
+                                                value={this.state.name}
                                                 required
 
                                             />
+                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['FARMERS']['NAME'] + window.strings['ISREQUIRED']}</div>}
 
-                                            {this.state.submitted && !this.state.firstName && <div className="mandatory">{window.strings['FARMERS']['FIRST_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        <div className="form-group pt-3">
+                                        {/* <div className="form-group pt-3">
 
                                             <label>{window.strings['FARMERS']['LAST_NAME']}</label>
 
@@ -102,7 +146,7 @@ class CreatePersonalInfo extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.lastName && <div className="mandatory">{window.strings['FARMERS']['LAST_NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
+                                        </div> */}
 
                                         <div className="form-group pt-3">
 
@@ -162,6 +206,23 @@ class CreatePersonalInfo extends Component {
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
+
+
+                                        {/* <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['IMAGE']}</label>
+
+                                            <DragAndDrop handleDrop={this.handleDrop}>
+                                                <div style={{ height: 300, width: 250 }} onClick="">
+                                                    {this.state.files.map((file) =>
+                                                        <div>{file}</div>
+                                                        // <div key={i}>{file}</div>
+                                                    )}
+                                                </div>
+                                            </DragAndDrop>
+
+
+                                        </div> */}
 
 
                                         <div className="col-md-12 pt-3 p-0">

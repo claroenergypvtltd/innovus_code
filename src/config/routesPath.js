@@ -4,9 +4,9 @@ import Login from '../components/Login';
 import CreateCategory from '../components/CategoryModule/CreateCategory';
 import FetchCategory from '../components/CategoryModule/FetchCategory';
 import CreateFarmers from '../components/FarmersModule/CreateFarmers';
-
+import FetchUser from '../components/UserManagement/FetchUser';
+import User from '../components/UserManagement/User'
 import Home from '../components/Home';
-
 import { path } from '../constants';
 
 
@@ -76,6 +76,35 @@ export const routesPath = [
                 component: CreateFarmers,
                 exact: true
             },
+            {
+                path: process.env.PUBLIC_URL + '/user',
+                component: User,
+                exact: true
+            },
+            // {
+            //     path: process.env.PUBLIC_URL + '/category',
+            //     component: CategoryList,
+            //     exact: true,
+            //     // permissionData: "master"
+            // },
+            // {
+            //     path: process.env.PUBLIC_URL + '/category/add',
+            //     component: { CreateCategory },
+            //     exact: true,
+            //     // permissionData: "master"
+            // },
+            // {
+            //     path: process.env.PUBLIC_URL + '/category/update/:categoryId?',
+            //     component: Category,
+            //     exact: true,
+            //     // permissionData: "master"
+            // },
+            // {
+            //     path: process.env.PUBLIC_URL + '/user/update/:id?',
+            //     component: RollAuthenticaion(CreateUser),
+            //     exact: true,
+            //     permissionData: "user"
+            // },
 
             // {
             //     path: process.env.PUBLIC_URL + '/karigar/update/:id?',

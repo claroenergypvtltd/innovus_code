@@ -9,6 +9,7 @@ import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import { Link } from 'react-router-dom'
+import { history } from '../../store/history'
 
 class CategoryForm extends Component {
 
@@ -16,7 +17,7 @@ class CategoryForm extends Component {
 
         super();
         this.state = {
-            submitted: false,
+            submitted: false, 
             name: '',
             description: '',
             image: '',
@@ -53,7 +54,7 @@ class CategoryForm extends Component {
             formData.append("categoryId", this.state.categoryId);
 
             SubmitCategory(formData, this.state.categoryId);
-            this.props.history.push(path.category.list);
+            history.push(path.category.list);
         }
     }
 

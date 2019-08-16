@@ -3,25 +3,24 @@ import { connect } from 'react-redux';
 import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
-import { SubmitContactInfo } from '../../actions/FarmersAction'
-import { toastr } from 'react-redux-toastr'
+import { SubmitFarmDetails } from '../../actions/FarmersAction'
 
-
-class CreateContactInfo extends Component {
+class CreateFarmDetails extends Component {
 
     constructor(props) {
 
         super(props);
         this.state = {
             submitted: false,
-            email: '',
-            mobileNumber: '',
-            area: '',
+            name: '',
+            address1: '',
+            address2: '',
+            taluk: '',
+            village: '',
             city: '',
             state: '',
-            postCode: '',
             errors: {},
-            personalInfoData: this.props.getPersonalInfoData
+            getContactData: this.props.getContactData
         }
     }
 
@@ -32,45 +31,38 @@ class CreateContactInfo extends Component {
     }
 
     handleSubmit = (e) => {
-
         debugger;
         e.preventDefault();
         this.setState({
             submitted: true
         }, () => {
+
             const formData = new FormData();
 
-            formData.append("area", this.state.area);
+            formData.append("name", this.state.name);
+            formData.append("address1", this.state.address1);
+            formData.append("address2", this.state.address2);
+            formData.append("taluk", this.state.taluk);
+            formData.append("village", this.state.village);
             formData.append("city", this.state.city);
-            formData.append("emailId", this.state.email);
-            formData.append("mobileNumber", this.state.mobileNumber);
             formData.append("state", this.state.state);
-            formData.append("postCode", this.state.postCode);
-            formData.append("role", "farmer");
+            formData.append("userId", this.state.getContactData.id);
+            formData.append("location", "[{9.86,9.99},{9.86,9.99},{9.86,9.99},{9.86,9.99}]");
 
-            formData.append("name", this.state.personalInfoData.name);
-            formData.append("address1", this.state.personalInfoData.address1);
-            formData.append("address2", this.state.personalInfoData.address2);
-            formData.append("image", this.state.personalInfoData.file);
+            this.props.dispatch(SubmitFarmDetails(formData)).then(resp => {
+                if (resp && resp.data) {
+                    this.props.childData(3); //4 th tab
+                }
+            })
 
-            let stateForm = this.state;
-            let statepersonalInfoData = this.state.personalInfoData;
-            let self = this;
 
-            if (stateForm.area && stateForm.city && stateForm.email && stateForm.mobileNumber && stateForm.state && stateForm.postCode && statepersonalInfoData.name &&
-                statepersonalInfoData.address1 && statepersonalInfoData.address2 && statepersonalInfoData.file) {
-                this.props.dispatch(SubmitContactInfo(formData)).then(resp => {
-                    if (resp) {
-                        self.props.childData(2);
-                    }
-                })
-            } else {
-                toastr.error(window.strings.MANDATORYFIELDSTEXT_PERSONAL_INFO);
-            }
+
+
         })
 
-    }
 
+
+    }
 
     componentDidMount() {
     }
@@ -79,6 +71,14 @@ class CreateContactInfo extends Component {
 
     componentWillReceiveProps(nextProps) {
 
+        // if (nextProps.auth.isAuthenticated) {
+        //     this.props.history.push('/');
+        // }
+        // if (nextProps.errors) {
+        //     this.setState({
+        //         errors: nextProps.errors
+        //     });
+        // }
     }
 
 
@@ -90,66 +90,108 @@ class CreateContactInfo extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-10">
-                        <h3>{window.strings['FARMERS']['CONTACT_INFORMATION']}</h3>
+                        <h3>{window.strings['FARMERS']['FARM_DETAILS']}</h3>
                         <div className="col-md-6 ">
                             <div className="p-5 clearfix">
                                 <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['EMAIL']}</label>
-
-                                            <input
-                                                type="email"
-                                                placeholder={window.strings['FARMERS']['EMAIL']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.email
-                                                })}
-                                                name="email"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.email}
-                                                required
-
-                                            />
-
-                                            {this.state.submitted && !this.state.email && <div className="mandatory">{window.strings['FARMERS']['EMAIL'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-                                        <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['PHON_NO']}</label>
+                                            <label>{window.strings['FARMERS']['FARM_NAME']}</label>
 
                                             <input
                                                 type="text"
-                                                placeholder={window.strings['FARMERS']['PHON_NO']}
+                                                placeholder={window.strings['FARMERS']['FARM_NAME']}
                                                 className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.mobileNumber
+                                                    'is-invalid': errors.name
                                                 })}
-                                                name="mobileNumber"
+                                                name="name"
                                                 onChange={this.handleInputChange}
-                                                value={this.state.mobileNumber}
+                                                value={this.state.name}
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
+
+                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['FARMERS']['FARM_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['ADDR_1']}</label>
+
+                                            <input
+                                                type="text"
+                                                placeholder={window.strings['FARMERS']['ADDR_1']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.address1
+                                                })}
+                                                name="address1"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.address1}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.address1 && <div className="mandatory">{window.strings['FARMERS']['ADDR_1'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['ADDR_2']}</label>
+
+                                            <input
+                                                type="text"
+                                                placeholder={window.strings['FARMERS']['ADDR_2']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.address2
+                                                })}
+                                                name="address2"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.address2}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.address2 && <div className="mandatory">{window.strings['FARMERS']['ADDR_2'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['AREA']}</label>
+                                            <label>{window.strings['FARMERS']['TALUK']}</label>
 
                                             <input
                                                 type="text"
-                                                placeholder={window.strings['FARMERS']['AREA']}
+                                                placeholder={window.strings['FARMERS']['TALUK']}
                                                 className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.area
+                                                    'is-invalid': errors.taluk
                                                 })}
-                                                name="area"
+                                                name="taluk"
                                                 onChange={this.handleInputChange}
-                                                value={this.state.area}
+                                                value={this.state.taluk}
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.area && <div className="mandatory">{window.strings['FARMERS']['AREA'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.taluk && <div className="mandatory">{window.strings['FARMERS']['TALUK'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['VILLAGE']}</label>
+
+                                            <input
+                                                type="text"
+                                                placeholder={window.strings['FARMERS']['VILLAGE']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.village
+                                                })}
+                                                name="village"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.village}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.village && <div className="mandatory">{window.strings['FARMERS']['VILLAGE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
 
@@ -196,24 +238,26 @@ class CreateContactInfo extends Component {
 
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['POST_CODE']}</label>
+                                            <label>{window.strings['FARMERS']['TOTAL_AREA']}</label>
 
                                             <input
                                                 type="text"
-                                                placeholder={window.strings['FARMERS']['POST_CODE']}
+                                                placeholder={window.strings['FARMERS']['TOTAL_AREA']}
                                                 className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.postCode
+                                                    'is-invalid': errors.totalArea
                                                 })}
-                                                name="postCode"
+                                                name="totalArea"
                                                 onChange={this.handleInputChange}
-                                                value={this.state.postCode}
+                                                value={this.state.totalArea}
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.postCode && <div className="mandatory">{window.strings['FARMERS']['POST_CODE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.totalArea && <div className="mandatory">{window.strings['FARMERS']['TOTAL_AREA'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
+                                        <h3>Map</h3>
 
+                                        <h3>Image Upload</h3>
 
                                         <div className="col-md-12 pt-3 p-0">
 
@@ -236,10 +280,9 @@ class CreateContactInfo extends Component {
 
 function mapStateToProps(state) {
     return {
-        getPersonalInfoData: state && state.farmer && state.farmer.formDatas ? state.farmer.formDatas : []
+        getContactData: state && state.farmer && state.farmer.contactDatas ? state.farmer.contactDatas : []
     };
 }
 
 
-
-export default connect(mapStateToProps)(CreateContactInfo)
+export default connect(mapStateToProps)(CreateFarmDetails)

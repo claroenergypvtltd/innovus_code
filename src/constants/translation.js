@@ -12,6 +12,7 @@ export const Translation = {
         "PAGEFAILTOLOAD": "Something went wrong .... the page doesn't exist.",
         "RESETPASSWORDTITLE": "Enter the password",
         "MANDATORYFIELDSTEXT": "Mandatory fields are missing",
+        "MANDATORYFIELDSTEXT_PERSONAL_INFO": "Personal Information Needed",
         "SELECTOPTION": "Select an option",
         "SEARCH": "Search",
         "RESET": "Reset",
@@ -113,10 +114,55 @@ export const Translation = {
             "ISAUTHORIZED": "Authorized",
             "USERIMAGE": "User Image",
             "ROLE": "Role",
-            "EMAIL": "Email",
+            "EMAIL": "Email"
+        },
+
+        "PRICE": {
+            "LISTTITLE": "Price Master",
+        },
+
+        "ORDER": {
+            "DELETE_ORDER": "Order?",
+            "LISTTITLE": "Order List",
+            "DETAILTITLE": "View Order Details",
+            "ADDBUTTON": "Add Order",
+            "CREATETITLE": "Create Order",
+            "EDITTITLE": "Edit Order",
+            "NAME": "Order Name",
+            "COMMENTS": "Comments",
+            "DELIVERYDATE": "deliveryDate",
+            "CHANGESTATUS": "changeStatus",
+            "SELECTSTATUS": "Select Status",
+            "STATUS": "Status",
+            "DATE": "dd/mm/yyyy",
+            "DELIVERY_UPDATED": "Delivery Date Updated",
+            "STATUS_UPDATE": "Status Updated successfully",
+            "DELIVERYDATE_ERROR": "Delivery Date must be greater than Order Date",
+            "VIEWDETAILS": "View  details",
+            "IMAGE": "Product Image",
+            "REMARKS": "Remarks",
+            "TABLEHEAD": { 'orderNumber': 'Order Number', 'dealerName': 'Dealer Name', 'storeName': 'Store Name', 'quantity': 'Quantity', 'price': 'Total price', 'viewDetails': 'View details' },
+            "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
+        },
+
+        "USERMANAGEMENT": {
+            "USER": "USER MANAGEMENT",
+            "FARMER": "Farmer",
+            "RETAILER": "Retailer",
+            "ADDFARMER": "Add Farmer",
+            "ADDRETAIL": "Add Retailer"
         },
 
         "FARMERS": {
+            "PERSONAL_INFORMATION": "Personal Information",
+            "CONTACT_INFORMATION": "Contact Information",
+            "FARM_DETAILS": "Farm Details",
+            "CROP_DETAILS": "Crop Details",
+            "NEW_IRRIGATION_SCHEDULE": "New Irregation Schedule",
+            "KYC_DETAILS": "KYC Details",
+
+            "NAME": "Name",
+
             "FIRST_NAME": "First Name",
             "LAST_NAME": "Last Name",
             "ADDR_1": "Address 1",
@@ -127,7 +173,20 @@ export const Translation = {
             "AREA": "Area",
             "CITY": "City",
             "STATE": "State",
-            "POST_CODE": "Post Code"
+            "POST_CODE": "Post Code",
+            "FARM_NAME": "Farm Name",
+            "TALUK": "Taluk",
+            "VILLAGE": "Village",
+            "TOTAL_AREA": "Total Area",
+            "CROP_NAME": "Crop Name",
+            "TYPE": "Type",
+            "HARVEST_DATE": "Harvest Date",
+            "QUANTITY": "Quantity",
+            "SELLING_PRICE": "Selling Price",
+            "TOTAL_VALUE": "Total Value",
+            "DESCRIPTION": "Description",
+            "SHOWING_DATE": "Showing Date"
+
         },
 
         "PAGE_COUNT": {

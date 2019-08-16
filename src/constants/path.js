@@ -9,7 +9,7 @@ export const path = {
     category: {
         add: process.env.PUBLIC_URL + '/category/add',
         list: process.env.PUBLIC_URL + '/category',
-        edit: process.env.PUBLIC_URL + '/category/edit',
+        edit: process.env.PUBLIC_URL + '/category/edit/',
     },
     products: {
         add: process.env.PUBLIC_URL + '/products/add',

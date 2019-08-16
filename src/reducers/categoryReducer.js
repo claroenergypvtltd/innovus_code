@@ -7,7 +7,7 @@ const initialstate = {
 export default function (state = initialstate, action) {
 
     switch (action.type) {
-        case "getCategoryList":
+        case "GET_CATEGORYLIST":
 
             state = {
                 ...state,
@@ -16,15 +16,8 @@ export default function (state = initialstate, action) {
             }
             break;
 
-        case "GET_Category_SEARCH_LISTS":
-
-            state = {
-                ...state,
-                Lists: action.lists,
-                count: action.count,
-
-            }
-            break;
+        default:
+            return state;
 
 
     }

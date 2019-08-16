@@ -4,15 +4,31 @@ import "react-tabs/style/react-tabs.css";
 
 import CreatePersonalInfo from './CreatePersonalInfo';
 import CreateContactInfo from './CreateContactInfo';
-import FarmDetails from './FarmDetails';
+import CreateFarmDetails from './CreateFarmDetails';
+import CreateCropDetails from './CreateCropDetails';
+import CreateIrrigationSchedule from './CreateIrrigationSchedule';
+import KYCDetails from './KYCDetails';
+
 
 export default class CreateFarmers extends Component {
+
+    constructor() {
+        super();
+        this.state = { tabIndex: 0 };
+    }
+
+    check = (tabKey) => {
+        debugger;
+        this.setState({ tabIndex: tabKey })
+    }
+
+
 
     render() {
         return (
             <div className="widget-section dashboard-page">
 
-                <Tabs>
+                <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex: tabIndex })} >
                     <TabList>
                         <Tab> 1</Tab>
                         <Tab> 2</Tab>
@@ -23,24 +39,25 @@ export default class CreateFarmers extends Component {
                     </TabList>
 
                     <TabPanel>
-                        <CreatePersonalInfo></CreatePersonalInfo>
+                        <CreatePersonalInfo childData={this.check}></CreatePersonalInfo>
                     </TabPanel>
                     <TabPanel>
-                        <CreateContactInfo></CreateContactInfo>
+                        <CreateContactInfo childData={this.check}></CreateContactInfo>
                     </TabPanel>
 
                     <TabPanel>
-                        <FarmDetails></FarmDetails>
+                        <CreateFarmDetails childData={this.check}></CreateFarmDetails>
                     </TabPanel>
                     <TabPanel>
-                        <h5>InProgress</h5>
+                        <CreateCropDetails childData={this.check}></CreateCropDetails>
                     </TabPanel>
                     <TabPanel>
-                        <h5>InProgress</h5>
+                        <CreateIrrigationSchedule childData={this.check}></CreateIrrigationSchedule>
                     </TabPanel>
                     <TabPanel>
-                        <h5>InProgress</h5>
+                        <KYCDetails childData={this.check}></KYCDetails>
                     </TabPanel>
+
                 </Tabs>
 
             </div>

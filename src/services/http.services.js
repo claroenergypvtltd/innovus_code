@@ -19,8 +19,8 @@ const toast = toastr;
 axios.defaults.baseURL = baseUrl;
 
 axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
-axios.defaults.headers.common["Accept"] = "application/json;multipart/form-data";
-// axios.defaults.headers.common["Content-Type"] = "multipart/form-data";
+axios.defaults.headers.common["Accept"] = "application/json;multipart/form-data"
+axios.defaults.headers.common["Content-Type"] = "multipart/form-data";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*"
 
 axios.interceptors.response.use(
@@ -81,7 +81,7 @@ function get(url) {
 
 function post(url, params) {
   PubSub.publish('msg', true);
-  return axios.post(url, params, { headers: { 'Content-Type': 'multipart/form-data;boundary=--------------------------932852210221574920076806' } }).then(response => {
+  return axios.post(url, params).then(response => {
     PubSub.publish('msg', false);
     return response;
   }).catch(e => {
@@ -92,7 +92,7 @@ function post(url, params) {
 
 function remove(url, data) {
   PubSub.publish('msg', true);
-  return axios.delete(url, data).then(response => {
+  return axios.delete(url + '/' + data).then(response => {
     PubSub.publish('msg', false);
     return response;
   }).catch((error) => {

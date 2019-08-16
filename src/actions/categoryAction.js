@@ -2,10 +2,9 @@ import { httpServices } from '../services/http.services'
 import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
 import { CATEGORY_FETCH } from '../constants/actionTypes';
-import { endPoint } from "../shared";
+import { endPoint } from "../constants";
 
 export function getCategoryList(params) {
-	const { itemPerPage, current_page } = params;
 	return (dispatch) => {
 		httpServices.get(endPoint.category).then(resp => {
 			if (resp && resp.data) {
@@ -69,8 +68,17 @@ export function DeleteCategory(id) {
 
 
 
-export function getSpecificCategory(id) { //getSpecificCategory
-	return httpServices.get(endPoint.categoryDetailsWId + id).then(resp => {
+export function getSpecificCategory(id, isSubCategory) { //getSpecificCategory
+
+	let IdText = "";
+	if (isSubCategory) {
+		IdText = endPoint.categoryId;
+	} else {
+		IdText = endPoint.id;
+	}
+
+	return httpServices.get(endPoint.category + endPoint.question + IdText + endPoint.equalTo + id).then(resp => {
+
 		if (resp.data) {
 			return resp;
 		}

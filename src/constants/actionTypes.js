@@ -1,12 +1,8 @@
 export const GET_ERRORS = 'GET_ERRORS';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-
-export const CATEGORY_FETCH = 'getCategoryList';
-
-
-
-
-// export const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS';
-// export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
-// export const USER_DELETE_SUCCESS = 'USER_DELETE_SUCCESS';
-// export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS';
+export const CATEGORY_FETCH = "GET_CATEGORYLIST";
+export const PERSONAL_INFO = "GET_PERSONAL_INFORMATION";
+export const CONTACT_DETAILS = "CONTACT_DETAILS";
+export const FARM_DETAILS = "FARM_DETAILS";
+export const CROP_DETAILS = "CROP_DETAILS";
+export const SET_USERS_LIST = 'SET_USERS_LIST';
