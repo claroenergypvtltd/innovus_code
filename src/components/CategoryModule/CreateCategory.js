@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { loginUser } from '../../actions/authentication';
-import { SubmitCategory, getSpecificCategory } from '../../actions/CategoryAction';
+import { SubmitCategory, getSpecificCategory } from '../../actions/categoryAction';
 // AddCategory
 import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
@@ -17,7 +17,7 @@ class CategoryForm extends Component {
 
         super();
         this.state = {
-            submitted: false, 
+            submitted: false,
             name: '',
             description: '',
             image: '',

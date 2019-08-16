@@ -152,6 +152,15 @@ export const Translation = {
             "ADDFARMER": "Add Farmer",
             "ADDRETAIL": "Add Retailer"
         },
+        "ABOUTUS": {
+            "TITLE": "About Us",
+            "ADDBUTTON": "Add ABOUTUS",
+            "EDITBUTTON": "Edit ABOUTUS",
+            "CREATETITLE": "Create Details",
+            "EDITTITLE": "Edit Details",
+            "NAME": "Title",
+            "DESCRIPTION": "Description",
+        },
 
         "FARMERS": {
             "PERSONAL_INFORMATION": "Personal Information",

@@ -4,7 +4,7 @@ import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitCropDetails } from '../../actions/FarmersAction'
-import { getCategoryList, getSpecificCategory } from '../../actions/CategoryAction';
+import { getCategoryList, getSpecificCategory } from '../../actions/categoryAction';
 
 class CreateCropDetails extends Component {
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux'
 
-import { getCategoryList, DeleteCategory } from '../../actions/CategoryAction';
+import { getCategoryList, DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'

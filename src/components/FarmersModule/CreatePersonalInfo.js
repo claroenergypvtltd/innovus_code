@@ -199,8 +199,7 @@ class CreatePersonalInfo extends Component {
                                                     'is-invalid': errors.image
                                                 })}
                                                 name="image"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.image}
+                                                onChange={this.onhandleChangeImage}
                                                 required
 
                                             />
