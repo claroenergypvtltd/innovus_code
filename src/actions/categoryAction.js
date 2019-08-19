@@ -36,30 +36,37 @@ export function fileUpload(params) {
 export function SubmitCategory(category, Id) {
 
 	if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
-		httpServices.put(endPoint.category, category).then(resp => {
+		return httpServices.put(endPoint.category, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
+				return resp;
 			} else {
 				toastr.warning(resp.message);
 			}
+		}).catch((error) => {
+			console.log("error", error);
 		})
 
 	} else {
-		httpServices.post(endPoint.category, category).then(resp => {
+		return httpServices.post(endPoint.category, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
+				return resp;
 			} else {
 				toastr.warning(resp.message);
 			}
+		}).catch((error) => {
+			console.log("error", error);
 		})
 	}
 
 }
 
 export function DeleteCategory(id) {
-	return httpServices.remove(endPoint.categoryWithId + id).then(response => {
+	return httpServices.remove(endPoint.category, id).then(response => {
 		if (response) {
 			toastr.success(response.message);
+			return response;
 		}
 	}).catch((error) => {
 		console.log("Delete :", error.response);

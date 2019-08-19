@@ -78,6 +78,8 @@ export const Translation = {
             "DESCRIPTION": "Description",
             "IMAGE": "Image",
             "DESCRIPTION": "Description",
+            "CATEGORY_NAME": "Category",
+            "SUB_CATEGORY": "Sub Catgeory",
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
 

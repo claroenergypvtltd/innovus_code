@@ -9,6 +9,8 @@ import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 
+
+
 class CategoryList extends Component {
 
     constructor(props) {
@@ -19,7 +21,7 @@ class CategoryList extends Component {
                 "itemPerPage": window.constant.FIVE,
                 "current_page": window.constant.ONE
             },
-            TableHead: ["Name", "Description", "Image"],
+            TableHead: ["Name", "Description"],
             CategoryListDatas: props.getLists,
             CategoryCount: props.getCount,
             currentPage: resorceJSON.TablePageData.currentPage,
@@ -83,7 +85,11 @@ class CategoryList extends Component {
     }
 
     itemDelete = (id) => {
-        DeleteCategory(id);
+        DeleteCategory(id).then(resp => {
+            if (resp) {
+                this.CategoryDatas(this.state.page);
+            }
+        });
     }
 
     formPath = () => {
@@ -97,13 +103,13 @@ class CategoryList extends Component {
 
         let CategoryData = this.state.CategoryListDatas ? this.state.CategoryListDatas : [];
         let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
-            return { "itemList": [item.name, item.description, item.image], "itemId": item.id }
+            return { "itemList": [item.name, item.description], "itemId": item.id }
         })
 
         return (
             <div>
                 <div>
-                    <button onClick={this.formPath}>{window.strings.CATEGORY.ADDBUTTON}</button>
+                    <button className="btn btn-warning" onClick={this.formPath}>{window.strings.CATEGORY.ADDBUTTON}</button>
                 </div>
                 {/* <div className="search-widget clearfix">
                     <div className="col-md-6 s-left">

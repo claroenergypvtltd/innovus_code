@@ -21,6 +21,9 @@ export default class CreateFarmers extends Component {
         debugger;
         this.setState({ tabIndex: tabKey })
     }
+    tabSelect = (tabIndex, eventKey, activeKey) => {
+        this.setState({ tabIndex: tabIndex });
+    }
 
 
 
@@ -28,18 +31,18 @@ export default class CreateFarmers extends Component {
         return (
             <div className="widget-section dashboard-page">
 
-                <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex: tabIndex })} >
+                <Tabs selectedIndex={this.state.tabIndex} onSelect={(tabIndex, eventKey, activeKey) => this.tabSelect(tabIndex, eventKey, activeKey)} >
                     <TabList>
-                        <Tab> 1</Tab>
-                        <Tab> 2</Tab>
-                        <Tab> 3</Tab>
-                        <Tab> 4</Tab>
-                        <Tab> 5</Tab>
-                        <Tab> 6</Tab>
+                        <Tab eventKey={1} disabled={this.state.tabIndex < 0}> 1</Tab>
+                        <Tab eventKey={2} disabled={this.state.tabIndex < 1}> 2</Tab>
+                        <Tab eventKey={3} disabled={this.state.tabIndex < 2}> 3</Tab>
+                        <Tab eventKey={4} disabled={this.state.tabIndex < 3}> 4</Tab>
+                        <Tab eventKey={5} disabled={this.state.tabIndex < 4}> 5</Tab>
+                        <Tab eventKey={6} disabled={this.state.tabIndex < 5}> 6</Tab>
                     </TabList>
 
                     <TabPanel>
-                        <CreatePersonalInfo childData={this.check}></CreatePersonalInfo>
+                        <CreatePersonalInfo childData={this.check} ></CreatePersonalInfo>
                     </TabPanel>
                     <TabPanel>
                         <CreateContactInfo childData={this.check}></CreateContactInfo>

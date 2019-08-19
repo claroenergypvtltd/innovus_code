@@ -4,8 +4,14 @@ import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitKYCDetails } from '../../actions/FarmersAction'
+import PropTypes from "prop-types";
+import { path } from '../../constants'
 
 class KYCDetails extends Component {
+
+    static contextTypes = {
+        router: PropTypes.object
+    }
 
     constructor(props) {
 
@@ -47,49 +53,20 @@ class KYCDetails extends Component {
         this.setState({
             submitted: true
         }, () => {
-
-            // let obj = {
-            //     "userId": this.state.userData.id,
-            //     "name": this.state.kycName,
-            //     "description": this.state.description
-            // }
-
-            // cropDetails
-
-
             const formData = new FormData();
 
-            // formData.append("userId",this.state.userData.id);
-            formData.append("userId", 44);
+            formData.append("userId", this.state.userData.id);
             formData.append("name", this.state.kycName);
             formData.append("image", this.state.file);
             formData.append("description", this.state.description);
 
-
-
             SubmitKYCDetails(formData).then(resp => {
                 if (resp) {
-                    debugger;
+                    this.context.router.history.push(path.user.list);
                 }
             })
-
-            // params:  image, userId, name, description
-
-
         })
-
     }
-
-    componentDidMount() {
-    }
-
-
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-
 
     render() {
         const { errors } = this.state;

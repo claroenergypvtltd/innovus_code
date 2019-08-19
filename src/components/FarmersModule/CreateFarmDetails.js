@@ -31,12 +31,10 @@ class CreateFarmDetails extends Component {
     }
 
     handleSubmit = (e) => {
-        debugger;
         e.preventDefault();
         this.setState({
             submitted: true
         }, () => {
-
             const formData = new FormData();
 
             formData.append("name", this.state.name);
@@ -54,34 +52,8 @@ class CreateFarmDetails extends Component {
                     this.props.childData(3); //4 th tab
                 }
             })
-
-
-
-
         })
-
-
-
     }
-
-    componentDidMount() {
-    }
-
-
-
-    componentWillReceiveProps(nextProps) {
-
-        // if (nextProps.auth.isAuthenticated) {
-        //     this.props.history.push('/');
-        // }
-        // if (nextProps.errors) {
-        //     this.setState({
-        //         errors: nextProps.errors
-        //     });
-        // }
-    }
-
-
 
     render() {
         const { errors } = this.state;

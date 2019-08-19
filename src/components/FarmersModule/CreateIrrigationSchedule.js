@@ -32,12 +32,11 @@ class CreateIrrigationSchedule extends Component {
             submitted: true
         }, () => {
 
-            let obj = {
+            let obj = [{
                 "cropId": this.state.cropDetails && this.state.cropDetails.id,
-                // "cropId": 9,
                 "name": this.state.cropName,
                 "irrigationDateStr": this.state.showingDate
-            }
+            }]
 
             // cropDetails
             SubmitIrregationSchedule(obj).then(resp => {
@@ -46,19 +45,7 @@ class CreateIrrigationSchedule extends Component {
                 }
             })
         })
-
     }
-
-    componentDidMount() {
-    }
-
-
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-
 
     render() {
         const { errors } = this.state;
@@ -109,14 +96,6 @@ class CreateIrrigationSchedule extends Component {
                                             />
                                             {this.state.submitted && !this.state.showingDate && <div className="mandatory">{window.strings['FARMERS']['SHOWING_DATE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
-
-                                        <h4>Select Full Screen</h4>
-
-
-
-
-
 
                                         <div className="col-md-12 pt-3 p-0">
 

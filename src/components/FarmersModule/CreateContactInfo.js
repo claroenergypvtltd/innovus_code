@@ -32,8 +32,6 @@ class CreateContactInfo extends Component {
     }
 
     handleSubmit = (e) => {
-
-        debugger;
         e.preventDefault();
         this.setState({
             submitted: true
@@ -47,7 +45,6 @@ class CreateContactInfo extends Component {
             formData.append("state", this.state.state);
             formData.append("postCode", this.state.postCode);
             formData.append("role", "farmer");
-
             formData.append("name", this.state.personalInfoData.name);
             formData.append("address1", this.state.personalInfoData.address1);
             formData.append("address2", this.state.personalInfoData.address2);
@@ -71,21 +68,8 @@ class CreateContactInfo extends Component {
 
     }
 
-
-    componentDidMount() {
-    }
-
-
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-
-
     render() {
         const { errors } = this.state;
-        console.log("err", errors);
         return (
             <div className="clearfix ">
                 <div className="row clearfix">

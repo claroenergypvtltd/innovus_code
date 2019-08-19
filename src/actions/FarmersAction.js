@@ -8,9 +8,7 @@ import { endPoint } from "../constants";
 export function SubmitPersonalInformation(farmer) {
 
     return (dispatch) => {
-
         dispatch(setData(farmer));
-
     }
 
     function setData(farmer) {
@@ -27,6 +25,8 @@ export function SubmitContactInfo(formData) {
                 dispatch(contactInfo(resp.data))
                 return resp;
             }
+        }).catch((error) => {
+            console.log("error", error);
         })
     }
 
@@ -46,6 +46,8 @@ export function SubmitFarmDetails(formData) {
                 dispatch(farmInfo(resp.data));
                 return resp
             }
+        }).catch((error) => {
+            console.log("error", error);
         })
     }
 
@@ -65,6 +67,8 @@ export function SubmitCropDetails(formData) {
                 dispatch(cropInfo(resp.data));
                 return resp
             }
+        }).catch((error) => {
+            console.log(error);
         })
     }
 
@@ -77,19 +81,14 @@ export function SubmitCropDetails(formData) {
 
 export function SubmitIrregationSchedule(formData) {
 
-    // return (dispatch) => {
     return httpServices.post(endPoint.irrigation, formData).then(resp => {
         if (resp) {
             toastr.success(resp && resp.message);
-            // dispatch(cropInfo(resp.data));
             return resp
         }
+    }).catch((error) => {
+        console.log("error", error);
     })
-    // }
-
-    // function cropInfo(crop) {
-    //     return { type: CROP_DETAILS, crop }
-    // }
 
 }
 
@@ -100,6 +99,8 @@ export function SubmitKYCDetails(formData) {
             toastr.success(resp && resp.message);
             return resp
         }
+    }).catch((error) => {
+        console.log("error", error);
     })
 
 }
