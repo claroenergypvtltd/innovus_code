@@ -4,6 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import FetchUser from './FetchUser';
 import { Constant } from '../../constants'
 import { Form, Row, Col, } from 'react-bootstrap'
+import { path } from '../../constants'
 
 class User extends React.Component {
    constructor(props) {
@@ -25,8 +26,9 @@ class User extends React.Component {
    }
    handlePageChange = (e) => {
       e.preventDefault();
-
+      this.props.history.push(path.farmer.add);
    }
+
    handleSearch = (e) => {
       e.preventDefault();
       console.log("this.refs", this.refs);

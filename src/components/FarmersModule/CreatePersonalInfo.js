@@ -8,14 +8,19 @@ import { render } from "react-dom";
 import { SubmitPersonalInformation } from '../../actions/FarmersAction'
 import { toastr } from 'react-redux-toastr'
 import { DragAndDrop } from '../../shared'
-//  ./DragAndDrop'
+import { path } from '../../constants'
+import PropTypes from "prop-types";
 
 
 class CreatePersonalInfo extends Component {
 
-    constructor() {
+    static contextTypes = {
+        router: PropTypes.object
+    }
 
-        super();
+    constructor(props) {
+
+        super(props);
         this.state = {
             submitted: false,
             firstName: '',
@@ -54,7 +59,7 @@ class CreatePersonalInfo extends Component {
     }
 
     onhandleChangeImage = (e) => {
-        debugger;
+
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];
@@ -68,7 +73,7 @@ class CreatePersonalInfo extends Component {
     }
 
     handleSubmit = (e) => {
-        debugger;
+
         let stateForm = this.state;
         e.preventDefault();
         this.setState({
@@ -80,26 +85,16 @@ class CreatePersonalInfo extends Component {
         } else {
             toastr.error(window.strings.MANDATORYFIELDSTEXT);
         }
-
-
-
     }
 
 
-    componentDidMount() {
+    listPage = () => {
+        this.context.router.history.push(path.user.list)
     }
-
-
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
 
 
     render() {
         const { errors } = this.state;
-        console.log("err", errors);
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -227,6 +222,7 @@ class CreatePersonalInfo extends Component {
                                         <div className="col-md-12 pt-3 p-0">
 
                                             <div className="login-btn float-right">
+                                                <button type="button" className="btn btn-warning" onClick={this.listPage}>Cancel</button>
                                                 <button type="submit" className="btn btn-primary">Next Step</button>
                                             </div>
                                         </div>

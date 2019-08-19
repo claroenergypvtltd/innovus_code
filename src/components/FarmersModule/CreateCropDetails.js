@@ -32,28 +32,24 @@ class CreateCropDetails extends Component {
     }
 
     onChangeCategory = (e) => {
-        debugger;
         this.setState({ categoryId: e.target.value }, () => {
             getSpecificCategory(this.state.categoryId, true).then(resp => {
-                debugger;
                 if (resp) {
                     this.setState({ subCategoryData: resp.data && resp.data.datas })
                 }
-
             })
         })
     }
 
     handleSubmit = (e) => {
-        debugger;
+
         e.preventDefault();
         this.setState({
             submitted: true
         }, () => {
-
             let obj = {
-                // "farmId": this.state.farmDatas && this.state.farmDatas.id,
-                "farmId": 27,
+                "farmId": this.state.farmDatas && this.state.farmDatas.id,
+                // "farmId": 27,
                 "categoryId": this.state.categoryId,
                 "cropType": this.state.type,
                 "expectedHarvestDateStr": this.state.harvestDate,
@@ -78,7 +74,6 @@ class CreateCropDetails extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        debugger;
         this.setState({ categoryData: nextProps.getCategory })
     }
 
@@ -86,7 +81,6 @@ class CreateCropDetails extends Component {
 
     render() {
         const { errors } = this.state;
-
 
         const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
             return <option key={index}
@@ -127,15 +121,9 @@ class CreateCropDetails extends Component {
                                             {this.state.submitted && !this.state.cropName && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-
-
-
-
-
-
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['CROP_NAME']} Catgeoryyyyyy</label>
+                                            <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
 
                                             <select required name="categoryId" className="form-control col-xs-6 col-sm-4 " value={this.state.categoryId} onChange={this.onChangeCategory}>
                                                 <option value="0">Select Category</option>
@@ -148,7 +136,7 @@ class CreateCropDetails extends Component {
 
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['CROP_NAME']} Sub Catgeoryyyyyy</label>
+                                            <label>{window.strings['CATEGORY']['SUB_CATEGORY']}</label>
 
                                             <select required name="subCategoryId" className="form-control col-xs-6 col-sm-4 " value={this.state.subCategoryId} onChange={this.handleInputChange}>
                                                 <option value="0">Select Sub Category</option>
@@ -157,12 +145,6 @@ class CreateCropDetails extends Component {
 
                                             {this.state.submitted && !this.state.subCategoryId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
-
-
-
-
-
 
                                         <div className="form-group pt-3">
 

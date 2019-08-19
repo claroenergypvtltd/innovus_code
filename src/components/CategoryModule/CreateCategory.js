@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { loginUser } from '../../actions/authentication';
-import { SubmitCategory, getSpecificCategory } from '../../actions/categoryAction';
+import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
 // AddCategory
 import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import { Link } from 'react-router-dom'
-import { history } from '../../store/history'
 
 class CategoryForm extends Component {
 
-    constructor() {
+    constructor(props) {
 
-        super();
+        super(props);
         this.state = {
             submitted: false,
             name: '',
             description: '',
-            image: '',
+            // image: '',
             categoryId: '',
+            farmDatas: this.props.getFarmData,
             errors: {}
         }
     }
@@ -40,51 +40,43 @@ class CategoryForm extends Component {
         })
         console.log(this.state);
         if (this.state.name && this.state.description) {
-            // const user = {
-            //     name: this.state.name,
-            //     description: this.state.description,
-            //     // image: this.state.image
-            // }
 
             const formData = new FormData();
 
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);
-            formData.append("image", this.state.image);
+            // formData.append("image", this.state.image);
             formData.append("categoryId", this.state.categoryId);
 
-            SubmitCategory(formData, this.state.categoryId);
-            history.push(path.category.list);
+            SubmitCategory(formData, this.state.categoryId).then(resp => {
+                if (resp) {
+                    this.props.history.push(path.category.list);
+                }
+            });
+
         }
     }
 
     componentDidMount() {
         this.getSpecificCategory();
+        this.props.dispatch(getCategoryList())
     }
 
     getSpecificCategory() {
-        debugger;
+
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             let cId = this.props.location.state.categoryId;
             this.setState({ categoryId: cId });
             getSpecificCategory(this.props.location.state.categoryId).then(resp => {
-                debugger;
-                let Data = resp.data;
+
+                let Data = resp.data.datas[0];
                 this.setState({ description: Data.description, name: Data.name });
             });
         }
     }
 
     componentWillReceiveProps(nextProps) {
-
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push(path.login.add);
-        }
-        if (nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
-        }
+        this.setState({ categoryData: nextProps.getCategory })
     }
 
     listPath = () => {
@@ -93,12 +85,17 @@ class CategoryForm extends Component {
 
     render() {
         const { errors } = this.state;
-        console.log("err", errors);
+
+        const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
+            return <option key={index}
+                value={item.id}> {item.name}</option>
+        });
+
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-10">
-
+                        <h3>{window.strings['CATEGORY']['CREATETITLE']}</h3>
                         <div className="col-md-6 ">
                             <div className="p-5 clearfix">
                                 <div className="">
@@ -122,6 +119,25 @@ class CategoryForm extends Component {
 
                                             {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
+
+
+
+
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
+
+                                            <select required name="categoryId" className="form-control col-xs-6 col-sm-4 " value={this.state.categoryId} onChange={this.onChangeCategory}>
+                                                <option value="0">Select Category</option>
+                                                {categoryDropDown}
+                                            </select>
+
+                                            {/* {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>} */}
+                                        </div>
+
+
+
                                         <div className="form-group pt-3">
 
                                             <label>{window.strings.CATEGORY.DESCRIPTION}</label>
@@ -142,7 +158,7 @@ class CategoryForm extends Component {
                                         </div>
 
 
-                                        <div className="form-group pt-3">
+                                        {/* <div className="form-group pt-3">
 
                                             <label>{window.strings.CATEGORY.IMAGE}</label>
 
@@ -159,7 +175,7 @@ class CategoryForm extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
+                                        </div> */}
 
 
                                         <div className="col-md-12 pt-3 p-0">
@@ -182,18 +198,9 @@ class CategoryForm extends Component {
     }
 }
 
-// CategoryForm.propTypes = {
-//     // loginUser: PropTypes.func.isRequired,
-//     // auth: PropTypes.object.isRequired,
-//     // errors: PropTypes.object.isRequired
-
-//     CategoryReducerList : state.CategoryDetails.Lists,
-//     CategoryReducerCount : state.CategoryDetails.count
-// }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth,
-    errors: state.errors
+    getCategory: state.category && state.category.Lists ? state.category.Lists : []
 })
 
 
