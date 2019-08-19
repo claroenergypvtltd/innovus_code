@@ -41,6 +41,7 @@ export default class CreateFarmers extends Component {
                         <Tab eventKey={6} disabled={this.state.tabIndex < 5}> 6</Tab>
                     </TabList>
 
+
                     <TabPanel>
                         <CreatePersonalInfo childData={this.check} ></CreatePersonalInfo>
                     </TabPanel>
