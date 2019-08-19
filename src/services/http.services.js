@@ -17,7 +17,11 @@ httpServices.uploadImage = uploadImage;
 const toast = toastr;
 
 axios.defaults.baseURL = baseUrl;
+
 axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
+axios.defaults.headers.common["Accept"] = "application/json;multipart/form-data"
+axios.defaults.headers.common["Content-Type"] = "multipart/form-data";
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*"
 
 axios.interceptors.response.use(
   function (response) {
@@ -43,7 +47,7 @@ axios.interceptors.response.use(
     } else if (error.request.status === 422) {
       toast.error(error.response.message);
       return Promise.reject(error);
-    }else if (error.request.status === 400) {
+    } else if (error.request.status === 400) {
       toast.error(error.response.data.message);
       return Promise.reject(error);
     }
@@ -53,39 +57,21 @@ axios.interceptors.response.use(
   }
 );
 
-// axios.interceptors.request.use(
-//   function (config) {
-//     let user = userData();
-//     debugger;
-//     console.log(user);
-//     let token = (user && user.data && user.data.token) ? user.data.token.tokenType +' '+ user.data.token.accessToken : '';
 
-//     config.headers = Object.assign(
-//       {
-//         Authorization: token
-//       },
-//       config.headers
-//     );
-//     return config;
-//   },
-//   function (error) {
-//     return Promise.reject(error);
-//   }
-// );
 
 function get(url) {
   PubSub.publish('msg', true);
   debugger;
   return axios.get(url).then(response => {
-      if(response.data && response.data.count > window.constant.ONE){
-        setTimeout(function(){
-          PubSub.publish('msg', false);       
-        },1000)
-      }else{
+    if (response.data) {
+      setTimeout(function () {
         PubSub.publish('msg', false);
-      }
-      
-      return response;
+      }, 1000)
+    } else {
+      PubSub.publish('msg', false);
+    }
+
+    return response;
   }).catch((error) => {
     console.error("GetError", error);
     PubSub.publish('msg', false);

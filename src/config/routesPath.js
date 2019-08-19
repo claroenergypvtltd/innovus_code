@@ -1,8 +1,12 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
-import  Login from '../components/Login';
+import Login from '../components/Login';
+import CreateCategory from '../components/CategoryModule/CreateCategory';
+import FetchCategory from '../components/CategoryModule/FetchCategory';
+import CreateFarmers from '../components/FarmersModule/CreateFarmers';
 import FetchUser from '../components/UserManagement/FetchUser';
 import User from '../components/UserManagement/User'
+import Home from '../components/Home';
 // import { CreateCategory } from '../component/CreateCategory';
 // import { Category, CategoryList } from '../component/category';
 // import { CreateUser, CreateStore, CreateAboutUs, CreateContactUs, CreateBanner, CreateGram, CreateStatusMaster, CreateDiamondMaster, CreateGemstoneMaster, CreateDealer, CreateCustomer, CreateCutMaster, CreatePurity, CreateMetal, CreateCollection, CreateColorMaster, CreateShapeMaster, CreateClarityMaster, CreateCertificate, CreateCurrency, CreateOrder, CreateLicense,CreateBulkUpload } from '../component/create';
@@ -15,7 +19,6 @@ import User from '../components/UserManagement/User'
 import  Home  from '../components/Home';
 // import { RollAuthenticaion } from './RollAuthenticaion';
 // import { Settings, Profile, License } from '../component/settings';
-
 import { path } from '../constants';
 
 
@@ -37,7 +40,6 @@ const permissionDenied = () => (
         <center>Something went wrong .... Permission Denied</center>
     </div>
 )
-debugger;
 
 console.log(path.dashboard.name);
 
@@ -64,6 +66,26 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/',
                 component: Home,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/category/add',
+                component: CreateCategory,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/category',
+                component: FetchCategory,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/category/edit/:categoryId?',
+                component: CreateCategory,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/user/farmers/add',
+                component: CreateFarmers,
                 exact: true
             },
             {
@@ -95,7 +117,7 @@ export const routesPath = [
             //     exact: true,
             //     permissionData: "user"
             // },
-            
+
             // {
             //     path: process.env.PUBLIC_URL + '/karigar/update/:id?',
             //     component: RollAuthenticaion(Karigar),
@@ -269,7 +291,7 @@ export const routesPath = [
             //     exact: true,
             //     permissionData: "master"
             // },
-            
+
             // {
             //     path: process.env.PUBLIC_URL + '/metal/add',
             //     component: RollAuthenticaion(CreateMetal),
@@ -544,7 +566,7 @@ export const routesPath = [
             //     component: CreateAboutUs,
             //     exact: true
             // },
-            
+
             // {
             //     path: process.env.PUBLIC_URL + '/settings',
             //     component: Settings,

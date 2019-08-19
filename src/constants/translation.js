@@ -12,12 +12,13 @@ export const Translation = {
         "PAGEFAILTOLOAD": "Something went wrong .... the page doesn't exist.",
         "RESETPASSWORDTITLE": "Enter the password",
         "MANDATORYFIELDSTEXT": "Mandatory fields are missing",
+        "MANDATORYFIELDSTEXT_PERSONAL_INFO": "Personal Information Needed",
         "SELECTOPTION": "Select an option",
         "SEARCH": "Search",
         "RESET": "Reset",
         "SEARCHPLACEHOLDER": "Search....",
         "ADVANCESEARCH": "Advance Search",
-        "BASIC":"Basic Search",
+        "BASIC": "Basic Search",
         "FIELDREQUIRED": "This field is Required*",
         "ISREQUIRED": " is required",
         "BROWSE": "Browse",
@@ -54,79 +55,32 @@ export const Translation = {
             "CONFORMATION": "Do you want to delete this ",
             "OPTIONAL": "Are you sure want to delete this parent category along with sub categories ?",
         },
-        "SHOW":"Show",
-        "SORTING":"sorting",
-        "SORT_AESEND":"sorting sort_asend",
-        "SORT_DESEND":"sorting sort_desend",
-        "SORTABLEKEY":["productCode","categoryName","orderNumber","dealerName", "catalogueName", "assignBy","validatedBy",'userName','email','mobileNumber','location','price','certificateName','currencyName', 'categoryName', 'status'],
-        "ASSIGNVIEWS" : "Maximum allowed views",
-        "CATEGORY":{   
-            "LISTTITLE" : "Category List",
-            "ADDBUTTON" : "Add Category",
-            "CREATETITLE" : "Create Category",
-            "EDITTITLE" : "Edit Category",
-            "DELETE_CATEGORY" : "category",
-            "NAME" : "Category Name",
-            "CATEGORY_CODE" : "Category Code",
-            "IMAGE" : "Category Image",
-            "TYPE" : "Category Type",
-            "CHILD" : "Sub Category",
-            "PARENT" : "Parent Category",
-            "SELECTCATEGORY" : "Select a category",
-        	"TABLEHEAD":{'categoryName' : 'Category Name','categoryImage' : 'Category Image','parentCategory ':'Parent Category'}
+        "SHOW": "Show",
+        "SORTING": "sorting",
+        "SORT_AESEND": "sorting sort_asend",
+        "SORT_DESEND": "sorting sort_desend",
+        "SORTABLEKEY": ["productCode", "categoryName", "orderNumber", "dealerName", "catalogueName", "assignBy", "validatedBy", 'userName', 'email', 'mobileNumber', 'location', 'price', 'certificateName', 'currencyName', 'categoryName', 'status'],
+        "ASSIGNVIEWS": "Maximum allowed views",
+        "CATEGORY": {
+            "LISTTITLE": "Category List",
+            "ADDBUTTON": "Add Category",
+            "CREATETITLE": "Create Category",
+            "EDITTITLE": "Edit Category",
+            "DELETE_CATEGORY": "category",
+            "NAME": "Category Name",
+            "CATEGORY_CODE": "Category Code",
+            "IMAGE": "Category Image",
+            "TYPE": "Category Type",
+            "CHILD": "Sub Category",
+            "PARENT": "Parent Category",
+            "SELECTCATEGORY": "Select a category",
+            "CATE_NAME": "Category Name",
+            "DESCRIPTION": "Description",
+            "IMAGE": "Image",
+            "DESCRIPTION": "Description",
+            "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
-        "CERTIFICATE": {
-            "DELETE_CERTIFICATE": "Certificate",
-            "JEWELMESSAGE": "also related to this certificate jewels ?",
-            "LISTTITLE": "Certificate List",
-            "ADDBUTTON": "Add Certificate",
-            "CREATETITLE": "Create Certificate",
-            "EDITTITLE": "Edit Certificate",
-            "NAME": "Certificate Name",
-            "IMAGE": "Certificate Image",
-            "TYPE": "Certificate Type",
-            "TABLEHEAD": { "certificateName": 'Certificate Name', "CertificateImage": 'Certificate Image' }
-        },
-        "LICENSE": {
-            "LISTTITLE": "License List",
-            "ADDBUTTON": "Add License",
-            "CREATELICENSE": "Create License",
-            "EDITLICENSE": "Edit License",
-            "LICENSETYPE": "License Type",
-            "TABLEHEAD": { "deviceName": 'Device Name', "deviceUDID": 'Device UDID', "installedDate": 'Installed Date', "expiryDate": 'Expiry Date' }
-        },
-        "PLANS": {
-            "LISTTITLE": "Subscription Plans",
-            "EDITTITLE": "EDIT",
-            "DELETETITLE": "DELETE",
-            "ADDBUTTON": "Add Plan",
-            "CREATEPLAN": "Create Plan",
-            "EDITPLAN": "Edit Plan",
-            "NOOFJEWELS": "No Of Jewels",
-            "NOOFLICENSES": "noOfLicenses",
-            "GST": "gst",
-            "B2B": "Business To Business",
-            "B2C": "Business To Consumer",
-            "b2b": "b2b",
-            "b2c": "b2c",
-            "STORAGESPACE": "Storage Space",
-            "PER": "Per ",
-            "FOR": "For ",
-            "MONTHS": " Months",
-            "MONTH": " Month",
-            "DAYS": " Days",
-            "DAY": " Day",
-            "DOLLAR": "$ "
-        },
-        "PLANPRICE": {
-            "TABLEHEAD": { "appType": 'App Type', "businessType": 'Business Type', "Price": 'Price' },
-            "ADDBUTTON": "Add Plan Price",
-            "CREATEPRICE": "Create Plan Price",
-            "EDITPRICE": "Edit Plan Price",
-            "WEB": "web",
-            "APP": "app",
-        },
-       
+
         "SUBMIT": "Save",
         "NEXT_TAB": "Next",
         "CREATED_SUCCESSFULLY": "Created Successfully",
@@ -143,11 +97,30 @@ export const Translation = {
         "DELETEMESSAGE": "Are you sure you wish to delete this item?",
         "ROLEPERMISSIONTITLE": "Role Permission",
         "PASSWORDFORMAT": "(Should contains minimum 8 characters, one letter should be alpha-numeric values)",
-       
+
+
+
+        "USER": {
+            "DELETE_USER": "User?",
+            "LISTTITLE": "User List",
+            "ADDBUTTON": "Add User",
+            "CREATETITLE": "Create User",
+            "EDITTITLE": "Edit User",
+            "USERNAME": "User Name",
+            "EMAILID": "Email id",
+            "PASSWORD": "Password",
+            "CONFIRMPASSWORD": "Confirm Password",
+            "ISACTIVE": "Active",
+            "ISAUTHORIZED": "Authorized",
+            "USERIMAGE": "User Image",
+            "ROLE": "Role",
+            "EMAIL": "Email"
+        },
+
         "PRICE": {
             "LISTTITLE": "Price Master",
         },
-       
+
         "ORDER": {
             "DELETE_ORDER": "Order?",
             "LISTTITLE": "Order List",
@@ -188,35 +161,53 @@ export const Translation = {
             "NAME": "Title",
             "DESCRIPTION": "Description",
         },
-        "CONTACTUS": {
-            "TITLE": "Contact Us",
-            "ADDBUTTON": "Add CONTACTUS",
-            "EDITBUTTON": "Edit CONTACTUS",
-            "CREATETITLE": "Create Details",
-            "EDITTITLE": "Edit Details",
-            "NAME": "Title",
+
+        "FARMERS": {
+            "PERSONAL_INFORMATION": "Personal Information",
+            "CONTACT_INFORMATION": "Contact Information",
+            "FARM_DETAILS": "Farm Details",
+            "CROP_DETAILS": "Crop Details",
+            "NEW_IRRIGATION_SCHEDULE": "New Irregation Schedule",
+            "KYC_DETAILS": "KYC Details",
+
+            "NAME": "Name",
+
+            "FIRST_NAME": "First Name",
+            "LAST_NAME": "Last Name",
+            "ADDR_1": "Address 1",
+            "ADDR_2": "Address 2",
+            "IMAGE": "Image",
+            "EMAIL": "Email",
+            "PHON_NO": "Phone Number",
+            "AREA": "Area",
+            "CITY": "City",
+            "STATE": "State",
+            "POST_CODE": "Post Code",
+            "FARM_NAME": "Farm Name",
+            "TALUK": "Taluk",
+            "VILLAGE": "Village",
+            "TOTAL_AREA": "Total Area",
+            "CROP_NAME": "Crop Name",
+            "TYPE": "Type",
+            "HARVEST_DATE": "Harvest Date",
+            "QUANTITY": "Quantity",
+            "SELLING_PRICE": "Selling Price",
+            "TOTAL_VALUE": "Total Value",
             "DESCRIPTION": "Description",
+            "SHOWING_DATE": "Showing Date"
+
         },
-        "LOCATION": {
-            "DELETE_LOCATION": "Location",
-            "JEWELMESSAGE": "also related to this location jewels ?",
-            "LISTTITLE": "Location Master",
-            "ADDBUTTON": "Add Location",
-            "INPUTLABEL": "Location",
-            "CREATETITLE": "Create Location",
-            "EDITTITLE": "Edit Location",
-        },
+
         "PAGE_COUNT": {
             "SHOWING": "Showing ",
             "OF": " of ",
             "TO": " to ",
             "ENTRIES": " entries"
-        }, 
-        "LOGINS":{
-            "PERMISSION_DENIED" : "Permission denied to view access" 
+        },
+        "LOGINS": {
+            "PERMISSION_DENIED": "Permission denied to view access"
         },
         "ADD": "Add",
-
         "LOGOUT_CONFIRMATION": "Are you sure want to Logout ?",
         "EXIT_CONFIRMATION": "Are you sure you want to exit ?",
         "LOGIN": "Login",
@@ -225,10 +216,8 @@ export const Translation = {
         "INVALID_CURRENT_PASSWORD": "Invalid current password",
         "IMAGE_REMOVE": "Image removed successfully",
         "USER_IMAGE_NAME": "user",
-
         "INVALID_PASS": "Invalid password format*",
         "REQUIRED_FIELD": " is required",
-       
         "IMAGE_REMOVE_ERROR": "Image removed unsuccessfull",
         "LIST_EMPTY": "-",
         "EMAIL": "Email",
@@ -238,10 +227,10 @@ export const Translation = {
         "LABEL_TEXT": "text",
         "LABEL_NUMBER": "number",
         "LABEL_SELECT": "select",
-        "ID_LABEL":"id",
-        "OPTIONAL_LABEL":"(Optional)",
-        "INVALID_EMAIL":"Invalid Email Format",
-        "INVALID_MOBILE":"Invalid Mobile Format",
+        "ID_LABEL": "id",
+        "OPTIONAL_LABEL": "(Optional)",
+        "INVALID_EMAIL": "Invalid Email Format",
+        "INVALID_MOBILE": "Invalid Mobile Format",
 
         "PLACEHOLDER": {
             "CUSTOMER_NAME": "Enter a Customer Name",
@@ -260,7 +249,8 @@ export const Translation = {
             "RRP": "Enter a RRP",
             "EMAIL_ADDRESS": "Enter a Email Address"
         },
-      
+
+
     }
 
 }
