@@ -16,7 +16,7 @@ import Home from '../components/Home';
 // import { ManageCatalogue } from '../component/form'
 // import { DealerList, CatalogueList, ManageCatalogueList, SizeList, BannerList, UserList, KarigarList, LocationList, CategoryList, PriceList, CertificateList, StoreList, PurityList, MetalList, CollectionList, GramList, GemStoneList, DimensionList, JewelList, DiamondList, StatusList, CurrencyList, OrderList, CustomerList, OrderDetailsList } from '../component/list';
 // import { JewelForm, JewelGramForm, JewelGemstoneForm, JewelDiamondForm, JewelDiamondList, CreateJewel } from '../component/jewel';
-import  Home  from '../components/Home';
+
 // import { RollAuthenticaion } from './RollAuthenticaion';
 // import { Settings, Profile, License } from '../component/settings';
 import { path } from '../constants';
