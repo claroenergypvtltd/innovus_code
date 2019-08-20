@@ -1,4 +1,4 @@
-import { SET_USERS_LIST } from '../constants/actionTypes';
+import { SET_USERS_LIST,SET_FARMS_LIST,SET_FARMS_DETAILS} from '../constants/actionTypes';
 
 const initialState = {
   userList:[],
@@ -14,6 +14,17 @@ export default function(state = initialState, action ) {
                 ...state,
                 userList:action.payload
                 
+            }
+        case SET_FARMS_LIST:
+                return {
+                    ...state,
+                    farmsList:action.payload       
+                }
+
+        case SET_FARMS_DETAILS:
+            return {
+                ...state,
+                farmDetails:action.payload
             }
         default: 
             return state;

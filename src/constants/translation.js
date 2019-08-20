@@ -152,7 +152,9 @@ export const Translation = {
         "FARMER" : "Farmer",
         "RETAILER": "Retailer",
         "ADDFARMER" : "Add Farmer",
-        "ADDRETAIL" : "Add Retailer"
+        "ADDRETAIL" : "Add Retailer",
+        "FAMS" : "Farm",
+        "KYC": "KYC Details"
         },
         "ABOUTUS": {
             "TITLE": "About Us",

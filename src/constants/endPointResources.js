@@ -53,5 +53,7 @@ export const endPoint = {
     "master/order" : "/master/order/",
     "order" : "/order",
     "orderList" : "/ordersList",
-    "user" : "/user"
+    "user" : "/user",
+    "farm": "/farm",
+    "farmDetails" :"/getFarmDetails",
 }

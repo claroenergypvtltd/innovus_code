@@ -1,5 +1,5 @@
 import axios from "axios";
-import baseUrl from "../config/config";
+import {baseUrl} from "../config/config";
 import { userData } from '../libraries/userData';
 import { history } from '../store/history';
 import PubSub from 'pubsub-js';

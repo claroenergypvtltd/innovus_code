@@ -9,22 +9,27 @@ class DataTableDynamic extends React.Component {
       tableDatas: [],
     };
   }
-
   componentDidMount() {
     let buttonActions = [
       {
         name: 'Actions',
         cell: row => (
           <div>
-            <button onClick={() => this.handleView(row)}>
-              <i className="fal fa-eye" />
-            </button>
-            <button onClick={() => this.handleEdit(row)}>
-              <i className="fal fa-edit" />
-            </button>
-            <button onClick={() => this.handleDelete(row)}>
-              <i className="fas fa-trash-alt" />
-            </button>
+            {this.props.handleView && (
+              <button onClick={e => this.handleView(e, row)}>
+                <i className="fa fa-eye" aria-hidden="true" />
+              </button>
+            )}
+            {this.props.handleEdit && (
+              <button onClick={() => this.handleEdit(row)}>
+                <i className="fal fa-pencil-square-o edit_icon" />
+              </button>
+            )}
+            {this.props.handleDelete && (
+              <button onClick={() => this.handleDelete(row)}>
+                <i className="fas fa-trash-alt" />
+              </button>
+            )}
           </div>
         ),
         ignoreRowClick: true,
@@ -41,19 +46,30 @@ class DataTableDynamic extends React.Component {
   handleEdit(row) {
     this.props.handleEdit();
   }
-  handleView(row) {
-    this.props.handleView();
+  handleView(e, row) {
+    console.log('row', row);
+    this.props.handleView(e, row);
   }
   handleDelete(row) {
     this.props.handleDelete(row);
+  }
+  expandableComponent(row) {
+    this.props.expandableComponent(row);
   }
 
   render() {
     let tableHeader = this.state.tableHead;
     let tableDatas = this.props.tableDatas;
+    console.log('tableDatas', tableDatas);
     return (
       <div>
-        <DataTable columns={tableHeader} data={tableDatas} pagination />
+        <DataTable
+          columns={tableHeader}
+          data={tableDatas}
+          pagination={this.props.pagination}
+          expandableRows={this.props.expandable}
+          expandableRowsComponent={this.expandableComponent}
+        />
       </div>
     );
   }

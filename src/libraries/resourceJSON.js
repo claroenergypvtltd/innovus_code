@@ -125,4 +125,12 @@ export const resorceJSON = {
     { name: 'PhoneNumber', selector: 'mobileNumber', sortable: true },
     { name: 'EmailAddress', selector: 'emailId', sortable: true },
   ],
+  CropList: [
+    { name: 'Crop Name', selector: 'cropName', sortable: true },
+    { name: 'Crop Variety', selector: 'cropVariety', sortable: true },
+    { name: 'Sow Date', selector: 'sowDate', sortable: true },
+    { name: 'Harvest Date', selector: 'harvestDate', sortable: true },
+    { name: 'Expected Qty', selector: 'expectedQty', sortable: true },
+    { name: 'Price(ton)', selector: 'price', sortable: true },
+  ],
 };

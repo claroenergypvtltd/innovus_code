@@ -13,6 +13,7 @@ import { path } from '../constants';
 // import {Dropdown} from 'react-bootstrap/Dropdown';
 import notifi from '../assets/images/notification_icon.png';
 import user from '../assets/images/Dashboard/avatar.png'
+import { history } from '../store/history';
 
 
 
@@ -40,6 +41,15 @@ export class BaseContainer extends Component {
     //     }
     //     toastr.customConfirm(window.strings['LOGOUT_CONFIRMATION'],toastrConfirmation,window.strings.SUBMIT_CONFIRM);
     // }
+
+    handleClick = () =>{
+        localStorage.removeItem('user');
+        localStorage.removeItem('jwtToken');
+        this.context.router.history.push('/login');
+
+    }
+
+
 
     clickSettings = () => {
         this.context.router.history.push(path.setting.list)
@@ -91,7 +101,7 @@ export class BaseContainer extends Component {
                 {
                     auth() ?
                         <div className="main-content">
-                            <Header></Header>
+                            <Header logOut = {this.handleClick}></Header>
                             <div className="routerView">
                                 <div className="sideBarmenu">
                                     <nav className="">

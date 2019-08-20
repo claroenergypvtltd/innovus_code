@@ -1,5 +1,4 @@
-// import axios from 'axios';
-import { GET_ERRORS, SET_USERS_LIST } from '../constants/actionTypes';
+import { GET_ERRORS, SET_USERS_LIST,SET_FARMS_LIST,SET_FARMS_DETAILS } from '../constants/actionTypes';
 import { endPoint } from '../constants';
 import {httpServices} from '../services/http.services'
 import { toastr } from 'react-redux-toastr';
@@ -32,5 +31,68 @@ export const setUserList = userData => {
         payload: userData
     }
 }
+
+export const fetchFarmList = (farmerId)=>  (dispatch) =>{
+    if(farmerId){
+let params = endPoint.farm + '?userId=' + farmerId;
+  return  httpServices.get(params).then(res => {
+        let farmerListData = res.data;
+        console.log("farmerListData",farmerListData);
+            dispatch(setFarmerList(farmerListData));
+            return farmerListData;
+        })
+        .catch(err => {
+          console.log(err);
+            dispatch({
+                type: GET_ERRORS,
+                payload: err
+            });
+        });
+    }
+}
+
+export const setFarmerList = farmsData =>{
+    return {
+        type: SET_FARMS_LIST,
+        payload: farmsData
+    }
+}
+
+export const getFarmDetailData = (farmId)=>  (dispatch) =>{
+    debugger;
+    if(farmId){
+let params = endPoint.farmDetails + '?farmId=' + farmId;
+  return  httpServices.get(params).then(res => {
+      console.log("res",res);
+         let getFarmDetailData = res.data;
+        // console.log("farmerListData",farmerListData);
+             dispatch(setFarmDetails(getFarmDetailData));
+        //     return farmerListData;
+        })
+        .catch(err => {
+          console.log(err);
+            dispatch({
+                type: GET_ERRORS,
+                payload: err
+            });
+        });
+    }
+
+}
+
+export const setFarmDetails = formDetails => {
+  return {
+    type: SET_FARMS_DETAILS,
+    payload: formDetails
+
+  }
+}
+
+
+
+
+
+
+
 
 
