@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr'
 import { CATEGORY_FETCH } from '../constants/actionTypes';
 import { endPoint } from "../constants";
 
-export function getCategoryList(params) {
+export const getCategoryList = (params) => {
 	return (dispatch) => {
 		httpServices.get(endPoint.category).then(resp => {
 			if (resp && resp.data) {
@@ -12,14 +12,17 @@ export function getCategoryList(params) {
 			} else {
 				console.log("Error when getting CategoryList");
 			}
+		}).catch((error) => {
+			console.log("error", error);
 		})
-	}
-	function getlist(List, count) {
-		return { type: CATEGORY_FETCH, List, count }
 	}
 }
 
-export function fileUpload(params) {
+export const getlist = (List, count) => {
+	return { type: CATEGORY_FETCH, List, count }
+}
+
+export const fileUpload = (params) => {
 	const { type, file, storeId } = params;
 	var formData = new FormData();
 	formData.append("image", file);
@@ -33,7 +36,7 @@ export function fileUpload(params) {
 
 }
 
-export function SubmitCategory(category, Id) {
+export const SubmitCategory = (category, Id) => {
 
 	if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
 		return httpServices.put(endPoint.category, category).then(resp => {
@@ -62,7 +65,7 @@ export function SubmitCategory(category, Id) {
 
 }
 
-export function DeleteCategory(id) {
+export const DeleteCategory = (id) => {
 	return httpServices.remove(endPoint.category, id).then(response => {
 		if (response) {
 			toastr.success(response.message);
@@ -75,7 +78,7 @@ export function DeleteCategory(id) {
 
 
 
-export function getSpecificCategory(id, isSubCategory) { //getSpecificCategory
+export const getSpecificCategory = (id, isSubCategory) => { //getSpecificCategory
 
 	let IdText = "";
 	if (isSubCategory) {

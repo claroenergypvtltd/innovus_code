@@ -5,18 +5,19 @@ import { toastr } from 'react-redux-toastr'
 import { PERSONAL_INFO, CONTACT_DETAILS, FARM_DETAILS, CROP_DETAILS } from '../constants/actionTypes';
 import { endPoint } from "../constants";
 
-export function SubmitPersonalInformation(farmer) {
+export const SubmitPersonalInformation = (farmer) => {
 
     return (dispatch) => {
         dispatch(setData(farmer));
     }
 
-    function setData(farmer) {
-        return { type: PERSONAL_INFO, farmerData: farmer }
-    }
 }
 
-export function SubmitContactInfo(formData) {
+export const setData = (farmer) => {
+    return { type: PERSONAL_INFO, farmerData: farmer }
+}
+
+export const SubmitContactInfo = (formData) => {
 
     return (dispatch) => {
         return httpServices.post(endPoint.signup, formData).then(resp => {
@@ -30,14 +31,13 @@ export function SubmitContactInfo(formData) {
         })
     }
 
-    function contactInfo(contact) {
-        return { type: CONTACT_DETAILS, contact }
-    }
-
 }
 
+export const contactInfo = (contact) => {
+    return { type: CONTACT_DETAILS, contact }
+}
 
-export function SubmitFarmDetails(formData) {
+export const SubmitFarmDetails = (formData) => {
 
     return (dispatch) => {
         return httpServices.post(endPoint.farm, formData).then(resp => {
@@ -50,15 +50,15 @@ export function SubmitFarmDetails(formData) {
             console.log("error", error);
         })
     }
-
-    function farmInfo(farm) {
-        return { type: FARM_DETAILS, farm }
-    }
-
 }
 
 
-export function SubmitCropDetails(formData) {
+export const farmInfo = (farm) => {
+    return { type: FARM_DETAILS, farm }
+}
+
+
+export const SubmitCropDetails = (formData) => {
 
     return (dispatch) => {
         return httpServices.post(endPoint.crop, formData).then(resp => {
@@ -71,15 +71,16 @@ export function SubmitCropDetails(formData) {
             console.log(error);
         })
     }
-
-    function cropInfo(crop) {
-        return { type: CROP_DETAILS, crop }
-    }
-
 }
 
 
-export function SubmitIrregationSchedule(formData) {
+export const cropInfo = (crop) => {
+    return { type: CROP_DETAILS, crop }
+}
+
+
+
+export const SubmitIrregationSchedule = (formData) => {
 
     return httpServices.post(endPoint.irrigation, formData).then(resp => {
         if (resp) {
@@ -93,7 +94,7 @@ export function SubmitIrregationSchedule(formData) {
 }
 
 
-export function SubmitKYCDetails(formData) {
+export const SubmitKYCDetails = (formData) => {
     return httpServices.post(endPoint.kyc, formData).then(resp => {
         if (resp) {
             toastr.success(resp && resp.message);
