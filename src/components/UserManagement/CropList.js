@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DataTableDynamic from '../../shared/DataTableDynamic';
 import { resorceJSON } from '../../libraries';
-import moment from 'moment';
 import { utils } from '../../services/utils.services';
 
 class CropList extends React.Component {
@@ -33,7 +32,8 @@ class CropList extends React.Component {
   };
 
   render() {
-    const expandableComponent = <div>{'Irrication Schedule'}</div>;
+    const expandableComponent = <ExpandedSection />;
+
     const data =
       this.state.cropList &&
       this.state.cropList.map((item, index) => {
@@ -65,6 +65,19 @@ class CropList extends React.Component {
     );
   }
 }
+
+const ExpandedSection = ({ data }) =>
+  data.irrigation.map((item, index) => {
+    // console.log('time', utils.dateConvertion(item.sowDate));
+    return (
+      <div key={index}>
+        <div>{item.name}</div>
+        <div>{utils.dateConvertion(item.irrigationDate)}</div>
+        <i className="fa fa-check" aria-hidden="true" />
+        <button>{!item.isBooked ? 'Book' : 'Booked'} </button>
+      </div>
+    );
+  });
 
 const mapStateToProps = state => ({
   farmDataDetail: state.user.farmDetails,

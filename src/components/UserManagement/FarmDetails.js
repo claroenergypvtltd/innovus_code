@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Image, Button, Grid } from 'react-bootstrap';
+import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import { connect } from 'react-redux';
 import CropList from './CropList';
@@ -24,7 +24,7 @@ class FarmDetails extends React.Component {
     console.log('this.state.farmData', this.state.farmData);
     let farmData = this.state.farmData;
     return (
-      <Grid>
+      <Container>
         <Row className="show-grid">
           <Col sm={6} md={3} className="ticket_block">
             <Image
@@ -51,10 +51,14 @@ class FarmDetails extends React.Component {
             <h5>{farmData.areaSize ? farmData.areaSize : '-'}</h5>
           </Col>
         </Row>
+
+        <Row>
+          <Button>{'Add Crop'}</Button>
+        </Row>
         <Row>
           <CropList />
         </Row>
-      </Grid>
+      </Container>
     );
   }
 }
