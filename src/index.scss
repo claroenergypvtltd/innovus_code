@@ -349,8 +349,39 @@ li:hover .menu-list i{
 .pdr0{padding-right:0px !important; }
 
 
+.pagination {
+  margin: 0 0 1.3rem 0;
+    float: right;
+}
 
+a,p,small,span{font-family: open sans;}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, 
+.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover
+{
+  background-image: linear-gradient(to right,#cd5200,#b35700);
+  background-image: -webkit-linear-gradient(to right,#cd5200,#b35700);
+  background-image: -moz-linear-gradient(to right,#cd5200,#b35700);
+  border-color: #cd6d00;
+}
 
+.mr15{
+  margin-right: 15px;
+}
 
+.mrl10{
+  margin-left:10px
+}
+.pdl0{padding-left:0px !important; }
+.pdr0{padding-right:0px !important; }
+.mrr5{margin-right: 5px;}
+
+.search-widget .pt-search-box{
+  width: 215px;
+  float: left;
+}
+
+.t-srch {
+  padding: 0 0px 0 5px;
+}
 
 

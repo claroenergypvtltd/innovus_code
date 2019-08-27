@@ -1,12 +1,13 @@
 import React from 'react';
-import Pagination from "react-js-pagination";
+// import Pagination from "react-js-pagination";
 import { resorceJSON } from '../libraries'
+import ReactPaginate from 'react-paginate';
 
 export function ReactPagination(props) {
   return (
     <div>
 
-      <Pagination
+      {/* <Pagination
         prevPageText={"previous"}
         nextPageText={"next"}
         activePage={props.PageDetails.activePage}
@@ -15,8 +16,20 @@ export function ReactPagination(props) {
         totalItemsCount={props.PageDetails.pageCount}
         onChange={props.PageDetails.onPageChange}
         activeClassName={"active"}
-      />
+      /> */}
 
-    </div>
+      <ReactPaginate previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={<a href="">...</a>}
+        breakClassName={"break-me"}
+        pageCount={props.PageDetails.pageCount}
+        marginPagesDisplayed={2}
+        onPageChange={props.PageDetails.onPageChange}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"} />
+
+
+    </div >
   )
 }

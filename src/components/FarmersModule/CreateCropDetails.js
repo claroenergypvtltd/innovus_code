@@ -33,7 +33,12 @@ class CreateCropDetails extends Component {
 
     onChangeCategory = (e) => {
         this.setState({ categoryId: e.target.value }, () => {
-            getSpecificCategory(this.state.categoryId, true).then(resp => {
+
+            let obj = {
+                "categoryId" : this.state.categoryId
+            }
+
+            getSpecificCategory(obj, true).then(resp => {
                 if (resp) {
                     this.setState({ subCategoryData: resp.data && resp.data.datas })
                 }

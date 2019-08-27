@@ -10,6 +10,12 @@ export const path = {
         add: process.env.PUBLIC_URL + '/category/add',
         list: process.env.PUBLIC_URL + '/category',
         edit: process.env.PUBLIC_URL + '/category/edit/',
+        view: process.env.PUBLIC_URL + '/category/view/'
+    },
+    crop: {
+        add: process.env.PUBLIC_URL + '/crop/add',
+        list: process.env.PUBLIC_URL + '/crop',
+        edit: process.env.PUBLIC_URL + '/crop/edit/',
     },
     products: {
         add: process.env.PUBLIC_URL + '/products/add',

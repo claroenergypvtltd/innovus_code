@@ -44,7 +44,7 @@ class DataTableDynamic extends React.Component {
   }
 
   handleEdit(row) {
-    this.props.handleEdit();
+    this.props.handleEdit(row);
   }
   handleView(e, row) {
     console.log('row', row);

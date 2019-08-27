@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+// import { loginUser } from '../../actions/authentication';
 import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
+// AddCategory
 import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
+import { Link } from 'react-router-dom'
 
-class CategoryForm extends Component {
+class CreateCrop extends Component {
 
     constructor(props) {
+
         super(props);
         this.state = {
             submitted: false,
@@ -16,8 +21,25 @@ class CategoryForm extends Component {
             description: '',
             image: '',
             categoryId: '',
+            parentId: '',
+            file: {},
+            cropId: '',
             farmDatas: this.props.getFarmData,
             errors: {}
+        }
+    }
+
+    // componentDidMount() {
+    //     debugger;
+    //     console.log("this.props.location", this.props.location);
+    //     if (this.props && this.props.location && this.props.location.state && this.props.location.state.cropId) {
+    //         this.setState({ cropId: this.props.location.state.cropId })
+    //     }
+    // }
+
+    componentWillMount() {
+        if (this.props && this.props.location && this.props.location.state && this.props.location.state.cropId) {
+            this.setState({ cropId: this.props.location.state.cropId })
         }
     }
 
@@ -37,9 +59,12 @@ class CategoryForm extends Component {
             this.setState({
                 file: file,
                 image: file.name
+
             })
         }
         reader.readAsDataURL(file)
+
+
     }
 
     handleSubmit = (e) => {
@@ -47,27 +72,34 @@ class CategoryForm extends Component {
         this.setState({
             submitted: true
         })
-        console.log(this.state);
         if (this.state.name && this.state.description) {
-
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);
             formData.append("image", this.state.file);
             formData.append("categoryId", this.state.categoryId);
+            if (this.state.cropId) {
+                formData.append("parentId", this.state.cropId);
+            } else {
+                formData.append("parentId", this.state.parentId);
+            }
 
-            this.props.dispatch(SubmitCategory(formData, this.state.categoryId)).then(resp => {
+
+            this.props.SubmitCategory(formData, this.state.categoryId).then(resp => {
                 if (resp) {
-                    this.props.history.push(path.category.list);
+                    if (this.state.cropId) {
+                        this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
+                    } else {
+                        this.props.history.push(path.crop.list);
+                    }
                 }
             });
-
         }
     }
 
     componentDidMount() {
         this.getSpecificCategory();
-        this.props.dispatch(getCategoryList())
+        this.props.getCategoryList();
     }
 
     getSpecificCategory() {
@@ -81,9 +113,10 @@ class CategoryForm extends Component {
             }
 
             getSpecificCategory(obj).then(resp => {
+                debugger;
                 if (resp && resp.data && resp.data.datas && resp.data.datas[0]) {
                     let Data = resp.data.datas[0];
-                    this.setState({ description: Data.description, name: Data.name, image: Data.image });
+                    this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId });
                 }
             });
         }
@@ -94,21 +127,45 @@ class CategoryForm extends Component {
     }
 
     listPath = () => {
-        this.props.history.push(path.category.list);
+        if (this.state.cropId) {
+            this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
+        } else {
+            this.props.history.push(path.crop.list);
+        }
     }
 
     render() {
         const { errors } = this.state;
 
+        const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
+            return <option key={index}
+                value={item.id}> {item.name}</option>
+        });
+
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-10">
-                        <h3>{this.state.categoryId ? window.strings['CATEGORY']['EDITTITLE'] : window.strings['CATEGORY']['CREATETITLE']}</h3>
+                        <h3>{this.state.categoryId ? window.strings['CROP']['EDITTITLE'] : window.strings['CROP']['CREATETITLE']}</h3>
                         <div className="col-md-6 ">
                             <div className="p-5 clearfix">
                                 <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
+
+
+                                        {!this.state.cropId && <div className="form-group pt-3">
+
+                                            <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
+
+                                            <select required name="parentId" className="form-control col-xs-6 col-sm-4 " value={this.state.parentId} onChange={this.handleInputChange}>
+                                                <option value="0">Select Category</option>
+                                                {categoryDropDown}
+                                            </select>
+
+                                            {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>}
+
+
                                         <div className="form-group pt-3">
 
                                             <label>{window.strings.CATEGORY.NAME}</label>
@@ -149,6 +206,7 @@ class CategoryForm extends Component {
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
+
                                         <div className="form-group pt-3">
 
                                             <label>{window.strings.CATEGORY.DESCRIPTION}</label>
@@ -167,6 +225,7 @@ class CategoryForm extends Component {
                                             ></textarea>
                                             {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
+
 
                                         <div className="col-md-12 pt-3 p-0">
 
@@ -194,4 +253,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps)(CategoryForm)
+export default connect(mapStateToProps, { SubmitCategory, getCategoryList })(CreateCrop)

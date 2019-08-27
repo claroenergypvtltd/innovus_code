@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import categoryReducer from './categoryReducer';
 import UserManagementReducer from './userManagementReducer'
 import FarmerReducer from './FarmerReducer'
+import cropReducer from './cropReducer'
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 export default combineReducers({
@@ -12,6 +13,7 @@ export default combineReducers({
     toastr: toastrReducer,
     category: categoryReducer,
     farmer: FarmerReducer,
-    user: UserManagementReducer
+    user: UserManagementReducer,
+    crop: cropReducer
 });
 

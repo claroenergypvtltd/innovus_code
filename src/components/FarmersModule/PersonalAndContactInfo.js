@@ -5,23 +5,36 @@ import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitPersonalAndContactInfo } from '../../actions/FarmersAction'
 import { toastr } from 'react-redux-toastr'
+import { path } from '../../constants'
+import PropTypes from "prop-types";
 
+class PersonalAndContactInfo extends Component {
 
-class CreateContactInfo extends Component {
+    static contextTypes = {
+        router: PropTypes.object
+    }
 
     constructor(props) {
 
         super(props);
         this.state = {
             submitted: false,
+            firstName: '',
+            name: '',
+            lastName: '',
+            address1: '',
+            address2: '',
+            image: '',
+            errors: {},
+            tabKey: 1,
+            file: {},
             email: '',
             mobileNumber: '',
             area: '',
             city: '',
             state: '',
             postCode: '',
-            errors: {},
-            personalInfoData: this.props.getPersonalInfoData
+            errors: {}
         }
     }
 
@@ -30,6 +43,25 @@ class CreateContactInfo extends Component {
             [e.target.name]: e.target.value
         })
     }
+
+    onhandleChangeImage = (e) => {
+
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                image: file.name
+            })
+        }
+        reader.readAsDataURL(file);
+    }
+
+    listPage = () => {
+        this.context.router.history.push(path.user.list)
+    }
+
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -45,20 +77,22 @@ class CreateContactInfo extends Component {
             formData.append("state", this.state.state);
             formData.append("postCode", this.state.postCode);
             formData.append("role", "farmer");
-            formData.append("name", this.state.personalInfoData.name);
-            formData.append("address1", this.state.personalInfoData.address1);
-            formData.append("address2", this.state.personalInfoData.address2);
-            formData.append("image", this.state.personalInfoData.file);
+            formData.append("name", this.state.name);
+            formData.append("address1", this.state.address1);
+            formData.append("address2", this.state.address2);
+            formData.append("image", this.state.file);
 
             let stateForm = this.state;
-            let statepersonalInfoData = this.state.personalInfoData;
+            // let statepersonalInfoData = this.state.personalInfoData;
             let self = this;
 
-            if (stateForm.area && stateForm.city && stateForm.email && stateForm.mobileNumber && stateForm.state && stateForm.postCode && statepersonalInfoData.name &&
-                statepersonalInfoData.address1 && statepersonalInfoData.address2 && statepersonalInfoData.file) {
-                this.props.dispatch(SubmitPersonalAndContactInfo(formData)).then(resp => {
+            if (stateForm.area && stateForm.city && stateForm.email && stateForm.mobileNumber && stateForm.state && stateForm.postCode && stateForm.name &&
+                stateForm.address1 && stateForm.address2 && stateForm.file) {
+                // this.props.dispatch(SubmitPersonalAndContactInfo(formData)).then(resp => {
+                this.props.SubmitPersonalAndContactInfo(formData).then(resp => {
                     if (resp) {
-                        self.props.childData(2);
+                        // self.props.childData(2);
+                        this.listPage();
                     }
                 })
             } else {
@@ -74,11 +108,87 @@ class CreateContactInfo extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-10">
-                        <h3>{window.strings['FARMERS']['CONTACT_INFORMATION']}</h3>
+                        <h3>{window.strings['FARMERS']['PERS_AND_CONTACT']}</h3>
                         <div className="col-md-6 ">
                             <div className="p-5 clearfix">
                                 <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
+                                        <div className="form-group pt-3">
+                                            <label>{window.strings['FARMERS']['NAME']}</label>
+                                            <input
+                                                type="text"
+                                                placeholder={window.strings['FARMERS']['NAME']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.name
+                                                })}
+                                                name="name"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.name}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['FARMERS']['NAME'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['ADDR_1']}</label>
+
+                                            <input
+                                                type="text"
+                                                placeholder={window.strings['FARMERS']['ADDR_1']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.address1
+                                                })}
+                                                name="address1"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.address1}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.address1 && <div className="mandatory">{window.strings['FARMERS']['ADDR_1'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['ADDR_2']}</label>
+
+                                            <input
+                                                type="text"
+                                                placeholder={window.strings['FARMERS']['ADDR_2']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.address2
+                                                })}
+                                                name="address2"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.address2}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.address2 && <div className="mandatory">{window.strings['FARMERS']['ADDR_2'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['IMAGE']}</label>
+
+                                            <input
+                                                type="file"
+                                                placeholder={window.strings['FARMERS']['IMAGE']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.image
+                                                })}
+                                                name="image"
+                                                onChange={this.onhandleChangeImage}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
                                         <div className="form-group pt-3">
 
                                             <label>{window.strings['FARMERS']['EMAIL']}</label>
@@ -202,7 +312,8 @@ class CreateContactInfo extends Component {
                                         <div className="col-md-12 pt-3 p-0">
 
                                             <div className="login-btn float-right">
-                                                <button type="submit" className="btn btn-primary">Next Step</button>
+                                                <button type="button" className="btn btn-warning" onClick={this.listPage}>{window.strings.CANCEL}</button>
+                                                <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
                                             </div>
                                         </div>
 
@@ -220,10 +331,10 @@ class CreateContactInfo extends Component {
 
 function mapStateToProps(state) {
     return {
-        getPersonalInfoData: state && state.farmer && state.farmer.formDatas ? state.farmer.formDatas : []
+
     };
 }
 
 
 
-export default connect(mapStateToProps)(CreateContactInfo)
+export default connect(mapStateToProps, { SubmitPersonalAndContactInfo })(PersonalAndContactInfo)
