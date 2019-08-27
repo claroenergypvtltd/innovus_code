@@ -1,9 +1,6 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
-import {
-  fetchFarmList,
-  getFarmDetailData,
-} from '../../actions/UserManagementAction';
+import { Image, Button } from 'react-bootstrap';
+import { fetchFarmList, getFarmDetailData } from '../../actions/UserAction';
 import { connect } from 'react-redux';
 import { imageBaseUrl } from '../../config/config';
 import FarmDetails from './FarmDetails';
@@ -66,6 +63,7 @@ class FarmList extends React.Component {
     return (
       <div className="white-bg">
         {this.state.farmId ? <FarmDetails /> : Farms}
+        {<Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
       </div>
     );
   }

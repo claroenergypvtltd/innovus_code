@@ -1,6 +1,6 @@
 import React from 'react';
 import DataTableDynamic from '../../shared/DataTableDynamic';
-import { fetchUsers, deleteUser } from '../../actions/UserManagementAction';
+import { fetchUsers, deleteUser } from '../../actions/UserAction';
 import { connect } from 'react-redux';
 import { resorceJSON } from '../../libraries';
 import PropTypes from 'prop-types';
@@ -64,6 +64,7 @@ class FetchUser extends React.Component {
           handleEdit={this.itemEdit}
           handleView={this.itemView}
           handleDelete={this.itemDelete}
+          pagination={true}
         />
       </div>
     );

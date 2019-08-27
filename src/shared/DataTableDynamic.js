@@ -53,10 +53,6 @@ class DataTableDynamic extends React.Component {
   handleDelete(row) {
     this.props.handleDelete(row);
   }
-  expandableComponent(row) {
-    this.props.expandableComponent(row);
-  }
-
   render() {
     let tableHeader = this.state.tableHead;
     let tableDatas = this.props.tableDatas;
@@ -68,7 +64,7 @@ class DataTableDynamic extends React.Component {
           data={tableDatas}
           pagination={this.props.pagination}
           expandableRows={this.props.expandable}
-          expandableRowsComponent={this.expandableComponent}
+          expandableRowsComponent={this.props.expandableComponent}
         />
       </div>
     );

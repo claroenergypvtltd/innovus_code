@@ -1,17 +1,7 @@
-import { utils } from '../services';
 import React, { Component } from 'react';
-// import {labelResources} from '../constants/labelResources.js'
-import { Translation, labelResources, path } from '../constants';
 import logo_black from '../assets/images/Agro_logo.png';
-
-import dashboard from '../assets/images/Dashboard/Dashboard_icon.png';
-import dashboard_sel from '../assets/images/Dashboard/Dashboard_icon.png';
-import user_icon from '../assets/images/Dashboard/user_management.png';
-import user_icon_sel from '../assets/images/Dashboard/user_management-active.png';
 import notifi from '../assets/images/notification_icon.png';
 import user from '../assets/images/Dashboard/avatar.png';
-
-let Label = labelResources.Header;
 
 export class Header extends Component {
   render() {
