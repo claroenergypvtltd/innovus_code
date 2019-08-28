@@ -4,6 +4,7 @@ import { fetchUsers, deleteUser } from '../../actions/UserAction';
 import { connect } from 'react-redux';
 import { resorceJSON } from '../../libraries';
 import PropTypes from 'prop-types';
+// import GoogleMapPage from '../../shared/GoogleMapPage';
 
 class FetchUser extends React.Component {
   static contextTypes = {
@@ -66,6 +67,7 @@ class FetchUser extends React.Component {
           handleDelete={this.itemDelete}
           pagination={true}
         />
+        {/* <GoogleMapPage /> */}
       </div>
     );
   }
