@@ -64,6 +64,7 @@ export const Translation = {
         "CATEGORY": {
             "LISTTITLE": "Category List",
             "ADDBUTTON": "Add Category",
+            "VIEWTITLE": "View Category",
             "CREATETITLE": "Create Category",
             "EDITTITLE": "Edit Category",
             "DELETE_CATEGORY": "category",
@@ -81,6 +82,10 @@ export const Translation = {
             "CATEGORY_NAME": "Category",
             "SUB_CATEGORY": "Sub Catgeory",
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
+        },
+        "CROP": {
+            "CREATETITLE": "Create Crop",
+            "EDITTITLE": "Edit Crop",
         },
 
         "SUBMIT": "Save",
@@ -146,15 +151,15 @@ export const Translation = {
             "TABLEHEAD": { 'orderNumber': 'Order Number', 'dealerName': 'Dealer Name', 'storeName': 'Store Name', 'quantity': 'Quantity', 'price': 'Total price', 'viewDetails': 'View details' },
             "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
         },
-       
+
         "USERMANAGEMENT": {
-        "USER": "USER MANAGEMENT",
-        "FARMER" : "Farmer",
-        "RETAILER": "Retailer",
-        "ADDFARMER" : "Add Farmer",
-        "ADDRETAIL" : "Add Retailer",
-        "FAMS" : "Farm",
-        "KYC": "KYC Details"
+            "USER": "USER MANAGEMENT",
+            "FARMER": "Farmer",
+            "RETAILER": "Retailer",
+            "ADDFARMER": "Add Farmer",
+            "ADDRETAIL": "Add Retailer",
+            "FAMS": "Farm",
+            "KYC": "KYC Details"
         },
         "ABOUTUS": {
             "TITLE": "About Us",
@@ -169,6 +174,7 @@ export const Translation = {
         "FARMERS": {
             "PERSONAL_INFORMATION": "Personal Information",
             "CONTACT_INFORMATION": "Contact Information",
+            "PERS_AND_CONTACT": "Personal and Contact Information",
             "FARM_DETAILS": "Farm Details",
             "CROP_DETAILS": "Crop Details",
             "NEW_IRRIGATION_SCHEDULE": "New Irregation Schedule",

@@ -8,7 +8,7 @@ const initialState = {
   userList: [],
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   console.log('action', action);
   console.log('action.type', action.type);
   debugger;

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux'
-
+import DataTableDynamic from '../../shared/DataTableDynamic';
 import { getCategoryList, DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
-
-
+import { imageBaseUrl } from '../../config'
 
 class CategoryList extends Component {
 
@@ -17,38 +16,51 @@ class CategoryList extends Component {
 
         super(props);
         this.state = {
-            page: {
-                "itemPerPage": window.constant.FIVE,
-                "current_page": window.constant.ONE
-            },
-            TableHead: ["Name", "Description"],
-            CategoryListDatas: props.getLists,
-            CategoryCount: props.getCount,
-            currentPage: resorceJSON.TablePageData.currentPage,
-            itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            columns: resorceJSON.CategoryList,
+            data: [],
         }
     }
 
     componentDidMount() {
-        debugger;
-        this.CategoryDatas(this.state.page);
+        this.getCategoryList();
     }
 
-    componentWillUpdate(newProps, newState) {
-        this.state.CategoryListDatas = newProps.getLists;
+    // componentWillUpdate(newProps, newState) {
+    //     this.state.CategoryListDatas = newProps.getLists;
+    // }
+
+    viewCrop(Data) {
+        let ViewPage = <button onClick={() => this.itemView(Data)}>View Crop</button>
+        return ViewPage;
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.state.CategoryListDatas = nextProps.getLists;
+    componentWillReceiveProps(newProps) {
+
+        if (newProps.getLists) {
+            let Lists = newProps.getLists.map(item => {
+                item.cropButton = this.viewCrop(item);
+                item.image = <img src={imageBaseUrl + item.image} height="30px" width="30px" />
+                return item;
+            })
+
+            this.setState({ data: Lists });
+        }
     }
 
-    CategoryDatas(pageDetails) {
-        this.props.dispatch(getCategoryList(pageDetails));
+
+    getCategoryList = () => {
+        let user = {};
+        user.search = this.props.searchText;
+        this.props.getCategoryList(user);
     }
 
-    itemEdit = (catId) => {
-        debugger;
-        this.props.history.push({ pathname: path.category.edit + catId, state: { categoryId: catId } });
+
+    itemEdit = (Data) => {
+        this.props.history.push({ pathname: path.category.edit + Data.id, state: { categoryId: Data.id } });
+    }
+
+    itemView = (Data) => {
+        this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id } });
     }
 
     customConfirm(message, props, title) {
@@ -78,16 +90,16 @@ class CategoryList extends Component {
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
         const toastrConfirmOptions = {
-            onOk: () => { this.itemDelete(data) },
+            onOk: () => { this.itemDelete(data.id) },
             onCancel: () => console.log('CANCEL: clicked')
         };
         this.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
 
     itemDelete = (id) => {
-        DeleteCategory(id).then(resp => {
+        this.props.DeleteCategory(id).then(resp => {
             if (resp) {
-                this.CategoryDatas(this.state.page);
+                this.getCategoryList();
             }
         });
     }
@@ -98,28 +110,14 @@ class CategoryList extends Component {
 
 
     render() {
-
-
-
-        let CategoryData = this.state.CategoryListDatas ? this.state.CategoryListDatas : [];
-        let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
-            return { "itemList": [item.name, item.description], "itemId": item.id }
-        })
-
         return (
             <div>
                 <div>
                     <button className="btn btn-warning" onClick={this.formPath}>{window.strings.CATEGORY.ADDBUTTON}</button>
                 </div>
-                {/* <div className="search-widget clearfix">
-                    <div className="col-md-6 s-left">
-                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    </div>
-                </div> */}
-                <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
-                    handleEdit={this.itemEdit} />
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} handleDelete={this.handleDelete} pagination={true} />
             </div>
+
         );
     }
 }
@@ -142,4 +140,4 @@ CategoryList.defaultProps = defaultProps;
 
 
 
-export default connect(mapStateToProps)(CategoryList);
+export default connect(mapStateToProps, { getCategoryList, DeleteCategory })(CategoryList);

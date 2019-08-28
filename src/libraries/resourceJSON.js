@@ -1,6 +1,8 @@
+import { imageBaseUrl } from '../config'
+
 export const resorceJSON = {
   TablePageData: {
-    itemPerPage: 10,
+    itemPerPage: 3,
     currentPage: 1,
     pageCount: 1,
     paginationLength: 10,
@@ -132,5 +134,13 @@ export const resorceJSON = {
     { name: 'Harvest Date', selector: 'harvestDate', sortable: true },
     { name: 'Expected Qty', selector: 'expectedQty', sortable: true },
     { name: 'Price(ton)', selector: 'price', sortable: true },
+  ],
+  CategoryList: [
+    { name: 'Category Name', selector: 'name', sortable: true },
+    { name: 'Image', selector: 'image', sortable: true },
+    // imageBaseUrl
+
+    { name: 'Description', selector: 'description', sortable: true },
+    { name: 'Crop', selector: 'cropButton', sortable: true },
   ],
 };

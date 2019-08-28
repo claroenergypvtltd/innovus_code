@@ -34,7 +34,6 @@ class KYCDetails extends Component {
     }
 
     onhandleChangeImage = (e) => {
-        debugger;
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];

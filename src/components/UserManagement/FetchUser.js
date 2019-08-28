@@ -36,7 +36,7 @@ class FetchUser extends React.Component {
   }
   itemDelete = item => {
     let self = this;
-    deleteUser(item.id).then(function(resp) {
+    deleteUser(item.id).then(function (resp) {
       if (resp) {
         self.getUserList();
       }

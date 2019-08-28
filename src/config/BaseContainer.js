@@ -22,7 +22,6 @@ export class BaseContainer extends Component {
         router: PropTypes.object
     }
     constructor(props, context) {
-        debugger;
         super(props, context);
         this.state = {
             extension: false,
@@ -42,7 +41,7 @@ export class BaseContainer extends Component {
     //     toastr.customConfirm(window.strings['LOGOUT_CONFIRMATION'],toastrConfirmation,window.strings.SUBMIT_CONFIRM);
     // }
 
-    handleClick = () =>{
+    handleClick = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('jwtToken');
         this.context.router.history.push('/login');
@@ -101,7 +100,7 @@ export class BaseContainer extends Component {
                 {
                     auth() ?
                         <div className="main-content">
-                            <Header logOut = {this.handleClick}></Header>
+                            <Header logOut={this.handleClick}></Header>
                             <div className="routerView">
                                 <div className="sideBarmenu">
                                     <nav className="">

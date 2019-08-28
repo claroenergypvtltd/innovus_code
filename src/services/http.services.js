@@ -1,5 +1,5 @@
 import axios from "axios";
-import {baseUrl} from "../config/config";
+import { baseUrl } from "../config/config";
 import { userData } from '../libraries/userData';
 import { history } from '../store/history';
 import PubSub from 'pubsub-js';
@@ -61,7 +61,6 @@ axios.interceptors.response.use(
 
 function get(url) {
   PubSub.publish('msg', true);
-  debugger;
   return axios.get(url).then(response => {
     if (response.data) {
       setTimeout(function () {
@@ -92,7 +91,7 @@ function post(url, params) {
 
 function remove(url, data) {
   PubSub.publish('msg', true);
-  return axios.delete(url+'/'+data).then(response => {
+  return axios.delete(url + '/' + data).then(response => {
     PubSub.publish('msg', false);
     return response;
   }).catch((error) => {
