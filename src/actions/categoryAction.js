@@ -1,10 +1,10 @@
 import { httpServices } from '../services/http.services'
 import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
-import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS } from '../constants/actionTypes';
+import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS,CATEGORY_SPECIFIC_DATA_SUCCESS } from '../constants/actionTypes';
 import { endPoint } from "../constants";
 
-export const getCategoryList = (params) => dispatch => {
+export const getCategoryList = () => dispatch => {
 	httpServices.get(endPoint.category).then(resp => {
 		if (resp && resp.data) {
 			dispatch({ type: CATEGORY_FETCH_SUCCESS, List: resp.data.datas, count: resp.data.totalCount })
@@ -52,7 +52,7 @@ export const DeleteCategory = (id) => dispatch => {
 	return httpServices.remove(endPoint.category, id).then(response => {
 		if (response) {
 			toastr.success(response.message);
-			dispatch({ type: CATEGORY_DELETE_SUCCESS })
+			dispatch({ type: CATEGORY_DELETE_SUCCESS, response })
 			return response;
 		}
 	}).catch((error) => {
@@ -62,7 +62,7 @@ export const DeleteCategory = (id) => dispatch => {
 
 
 
-export const getSpecificCategory = (Data, isSubCategory) => { //getSpecificCategory
+export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getSpecificCategory
 
 	let IdText = "";
 	if (isSubCategory) {
@@ -78,9 +78,10 @@ export const getSpecificCategory = (Data, isSubCategory) => { //getSpecificCateg
 		searchData = Data.search ? '&search=' + Data.search : '';
 	}
 
-	return httpServices.get(endPoint.category + endPoint.question + IdText + endPoint.equalTo + Data.categoryId + searchData + page + rows).then(resp => {
+	return httpServices.get(endPoint.category + '?' + IdText + '=' + Data.categoryId + searchData + page + rows).then(resp => {
 
 		if (resp.data) {
+			dispatch({ type : CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
 			return resp;
 		}
 	}).catch((error) => {

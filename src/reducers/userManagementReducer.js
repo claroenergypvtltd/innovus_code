@@ -9,9 +9,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  console.log('action', action);
-  console.log('action.type', action.type);
-  debugger;
+
   switch (action.type) {
     case USER_FETCH_SUCCESS:
       return {

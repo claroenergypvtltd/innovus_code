@@ -25,6 +25,13 @@ export const deleteUser = (deleteId) => {
     });
 }
 
+export const deleteIrrigation = (deleteId) => {
+    return httpServices.remove(endPoint.irrigation, deleteId).then(res => {
+        toastr.success(res.message);
+        return res;
+    });
+}
+
 export const setUserList = userData => {
     return {
         type: SET_USERS_LIST,

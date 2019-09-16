@@ -7,6 +7,7 @@ import { SubmitPersonalAndContactInfo } from '../../actions/FarmersAction'
 import { toastr } from 'react-redux-toastr'
 import { path } from '../../constants'
 import PropTypes from "prop-types";
+import { fetchUsers } from '../../actions/UserAction';
 
 class PersonalAndContactInfo extends Component {
 
@@ -19,24 +20,43 @@ class PersonalAndContactInfo extends Component {
         super(props);
         this.state = {
             submitted: false,
-            firstName: '',
             name: '',
-            lastName: '',
             address1: '',
             address2: '',
             image: '',
-            errors: {},
             tabKey: 1,
             file: {},
             email: '',
             mobileNumber: '',
-            area: '',
             city: '',
             state: '',
-            postCode: '',
+            pinCode: '',
             errors: {}
         }
     }
+
+    componentDidMount() {
+        this.getUserList();
+    }
+
+    getUserList = () => {
+        if (this.props.location && this.props.location.state && this.props.location.state.farmerId) {
+            let user = {};
+            user.userId = this.props.location.state.farmerId;
+            user.isEdit = true;
+            this.props.fetchUsers(user).then(resp => {
+                if (resp && resp.data && resp.data.address) {
+                    let resData = resp.data;
+                    let resAddr = resp.data.address;
+                    this.setState({
+                        userId: resData.id, name: resData.name, email: resData.emailId, address1: resAddr.address1,
+                        address2: resAddr.address2, image: resData.image, mobileNumber: resData.mobileNumber,
+                        city: resAddr.city, state: resAddr.state, pinCode: resAddr.zipcode
+                    })
+                }
+            });
+        }
+    };
 
     handleInputChange = (e) => {
         this.setState({
@@ -45,7 +65,6 @@ class PersonalAndContactInfo extends Component {
     }
 
     onhandleChangeImage = (e) => {
-
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];
@@ -59,9 +78,8 @@ class PersonalAndContactInfo extends Component {
     }
 
     listPage = () => {
-        this.context.router.history.push(path.user.list)
+        this.context.router.history.goBack();
     }
-
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -70,31 +88,36 @@ class PersonalAndContactInfo extends Component {
         }, () => {
             const formData = new FormData();
 
-            formData.append("area", this.state.area);
+            formData.append("userId", this.state.userId);
             formData.append("city", this.state.city);
             formData.append("emailId", this.state.email);
             formData.append("mobileNumber", this.state.mobileNumber);
             formData.append("state", this.state.state);
-            formData.append("postCode", this.state.postCode);
+            formData.append("pincode", this.state.pinCode);
             formData.append("role", "farmer");
             formData.append("name", this.state.name);
             formData.append("address1", this.state.address1);
             formData.append("address2", this.state.address2);
-            formData.append("image", this.state.file);
+            if (this.state.file) {
+                formData.append("image", this.state.file);
+            }
 
             let stateForm = this.state;
-            // let statepersonalInfoData = this.state.personalInfoData;
-            let self = this;
-
-            if (stateForm.area && stateForm.city && stateForm.email && stateForm.mobileNumber && stateForm.state && stateForm.postCode && stateForm.name &&
+            if (stateForm.city && stateForm.email && stateForm.mobileNumber && stateForm.state && stateForm.pinCode && stateForm.name &&
                 stateForm.address1 && stateForm.address2 && stateForm.file) {
-                // this.props.dispatch(SubmitPersonalAndContactInfo(formData)).then(resp => {
-                this.props.SubmitPersonalAndContactInfo(formData).then(resp => {
-                    if (resp) {
-                        // self.props.childData(2);
-                        this.listPage();
-                    }
-                })
+                if (stateForm.userId) {
+                    this.props.fetchUsers(formData, stateForm.userId).then(resp => {
+                        if (resp) {
+                            this.listPage();
+                        }
+                    })
+                } else {
+                    this.props.SubmitPersonalAndContactInfo(formData).then(resp => {
+                        if (resp) {
+                            this.listPage();
+                        }
+                    })
+                }
             } else {
                 toastr.error(window.strings.MANDATORYFIELDSTEXT_PERSONAL_INFO);
             }
@@ -213,7 +236,7 @@ class PersonalAndContactInfo extends Component {
                                             <label>{window.strings['FARMERS']['PHON_NO']}</label>
 
                                             <input
-                                                type="text"
+                                                type="number"
                                                 placeholder={window.strings['FARMERS']['PHON_NO']}
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.mobileNumber
@@ -227,7 +250,7 @@ class PersonalAndContactInfo extends Component {
                                             {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group pt-3">
+                                        {/* <div className="form-group pt-3">
 
                                             <label>{window.strings['FARMERS']['AREA']}</label>
 
@@ -244,7 +267,7 @@ class PersonalAndContactInfo extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.area && <div className="mandatory">{window.strings['FARMERS']['AREA'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
+                                        </div> */}
 
 
 
@@ -293,18 +316,18 @@ class PersonalAndContactInfo extends Component {
                                             <label>{window.strings['FARMERS']['POST_CODE']}</label>
 
                                             <input
-                                                type="text"
+                                                type="number"
                                                 placeholder={window.strings['FARMERS']['POST_CODE']}
                                                 className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.postCode
+                                                    'is-invalid': errors.pinCode
                                                 })}
-                                                name="postCode"
+                                                name="pinCode"
                                                 onChange={this.handleInputChange}
-                                                value={this.state.postCode}
+                                                value={this.state.pinCode}
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.postCode && <div className="mandatory">{window.strings['FARMERS']['POST_CODE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.pinCode && <div className="mandatory">{window.strings['FARMERS']['POST_CODE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
 
@@ -329,12 +352,11 @@ class PersonalAndContactInfo extends Component {
 }
 
 
-function mapStateToProps(state) {
+function mapStateToProps() {
     return {
-
     };
 }
 
 
 
-export default connect(mapStateToProps, { SubmitPersonalAndContactInfo })(PersonalAndContactInfo)
+export default connect(mapStateToProps, { SubmitPersonalAndContactInfo, fetchUsers })(PersonalAndContactInfo)

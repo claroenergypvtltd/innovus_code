@@ -37,7 +37,7 @@ class ViewCategory extends Component {
                 "categoryId": this.props.location.state.categoryId
             }
 
-            getSpecificCategory(obj, true).then(resp => {
+            this.props.getSpecificCategory(obj, true).then(resp => {
                 if (resp && resp.data) {
                     this.setState({ CategoryListDatas: resp.data.datas, pageCount: resp.data.totalCount / this.state.itemPerPage })
                 }
@@ -142,4 +142,4 @@ ViewCategory.defaultProps = defaultProps;
 
 
 
-export default connect(mapStateToProps, { DeleteCategory })(ViewCategory);
+export default connect(mapStateToProps, { DeleteCategory, getSpecificCategory })(ViewCategory);

@@ -9,6 +9,7 @@ import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
+import { toastr } from '../../services/toastr.services'
 
 class CategoryList extends Component {
 
@@ -63,29 +64,6 @@ class CategoryList extends Component {
         this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id } });
     }
 
-    customConfirm(message, props, title) {
-        confirmAlert({
-            customUI: ({ onClose }) => {
-                return (
-                    <div className='deletepopup'>
-                        <h4 className="delete_popup_header">{title}</h4>
-                        <div className="delete_popup_message">
-                            <p>{message}</p>
-                            <button className="btn btn-default pull-right mrr10" onClick={() => {
-                                props.onCancel()
-                                onClose()
-                            }}><i className="fa fa-close mr15"></i>{window.strings.CANCEL}</button>
-                            <button className="btn btn-primary pull-right mrr10" onClick={() => {
-                                props.onOk()
-                                onClose()
-                            }}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button>
-                        </div>
-                    </div>
-                )
-            }
-        })
-    }
-
 
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
@@ -93,7 +71,7 @@ class CategoryList extends Component {
             onOk: () => { this.itemDelete(data.id) },
             onCancel: () => console.log('CANCEL: clicked')
         };
-        this.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
 
     itemDelete = (id) => {
@@ -107,7 +85,6 @@ class CategoryList extends Component {
     formPath = () => {
         this.props.history.push(path.category.add);
     }
-
 
     render() {
         return (

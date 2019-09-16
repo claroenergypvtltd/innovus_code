@@ -8,30 +8,45 @@ import { endPoint } from '../constants';
 import { httpServices } from '../services/http.services';
 import { toastr } from 'react-redux-toastr';
 
-export const fetchUsers = user => dispatch => {
+export const fetchUsers = (user, userId) => dispatch => {
   console.log('endPoint.userList', endPoint.userList);
-  httpServices
-    .post(endPoint.user, user)
+  // user.search = "Agro_123"
+
+  let httpMethod = "";
+
+  if (user.isEdit) {
+    httpMethod = httpServices.get(endPoint.user + '?userId=' + user.userId);
+  } else {
+    if (userId) {
+      httpMethod = httpServices.put(endPoint.user, user);
+    } else {
+      httpMethod = httpServices.post(endPoint.user, user);
+    }
+
+  }
+
+  return httpMethod
     .then(res => {
-      let userListData = res.data.datas;
-      dispatch({
-        type: USER_FETCH_SUCCESS,
-        payload: userListData,
-      });
-    })
-    .catch(err => {
+      if (res) {
+        res.message && toastr.success(res.message);
+        let userListData = res.data && res.data.datas;
+        dispatch({ type: USER_FETCH_SUCCESS, payload: userListData });
+        return res
+      }
+    }).catch(err => {
       console.log(err);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err,
-      });
+      dispatch({ type: GET_ERRORS, payload: err });
     });
 };
 
-export const deleteUser = deleteId => {
+export const deleteUser = (deleteId) => {
   return httpServices.remove(endPoint.user, deleteId).then(res => {
-    toastr.success(res.message);
-    return res;
+    if (res) {
+      toastr.success(res.message);
+      return res;
+    }
+  }).catch((e) => {
+    console.log(e);
   });
 };
 
@@ -60,21 +75,24 @@ export const fetchFarmList = farmerId => dispatch => {
 };
 
 export const getFarmDetailData = farmId => dispatch => {
-  debugger;
+
   if (farmId) {
     let params = endPoint.farmDetails + '?farmId=' + farmId;
     return httpServices
       .get(params)
       .then(res => {
-        console.log('res', res);
-        let getFarmDetailData = res.data;
-        // console.log("farmerListData",farmerListData);
-        dispatch({
-          type: FETCH_FARMS_DETAILS,
-          payload: getFarmDetailData,
-        });
-        //     return farmerListData;
+        if (res) {
+          console.log('res', res);
+          let getFarmDetailData = res.data;
+          // console.log("farmerListData",farmerListData);
+          dispatch({
+            type: FETCH_FARMS_DETAILS,
+            payload: getFarmDetailData,
+          });
+          return getFarmDetailData;
+        }
       })
+
       .catch(err => {
         console.log(err);
         dispatch({
@@ -84,3 +102,26 @@ export const getFarmDetailData = farmId => dispatch => {
       });
   }
 };
+
+
+// export const fetchUsers = user => dispatch => {
+//   console.log('endPoint.userList', endPoint.userList);
+//   // user.search = "Agro_123"
+//   return httpServices
+//     .post(endPoint.user, user)
+//     .then(res => {
+//       let userListData = res.data.datas;
+//       dispatch({
+//         type: USER_FETCH_SUCCESS,
+//         payload: userListData,
+//       });
+//       return res
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       dispatch({
+//         type: GET_ERRORS,
+//         payload: err,
+//       });
+//     });
+// };

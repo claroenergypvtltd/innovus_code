@@ -3,23 +3,40 @@ import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import { connect } from 'react-redux';
 import CropList from './CropList';
+import PropTypes from "prop-types";
 
 class FarmDetails extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       farmData: '',
+      farmDetails: {},
+      AddCropButton: true,
     };
   }
 
   componentDidMount() {
-    console.log('this.props', this.props);
+    if (this.props.farmDataDetail && this.props.farmDataDetail.crops && this.props.farmDataDetail.crops.length >= 1) {
+      this.setState({ AddCropButton: false, farmDetails: this.props.farmDataDetail });
+    }
   }
 
   componentWillReceiveProps(newProps) {
     console.log('newProps', newProps);
     this.setState({ farmData: newProps.farmDataDetail });
   }
+
+  pageRedirect = () => {
+    console.log("test");
+    // this.props.history.push('crop/add');
+    this.context.router.history.push({ pathname: '/cropDetails/add', state: { farmId: this.state.farmData.id } });
+  }
+
   render() {
     console.log('this.state.farmData', this.state.farmData);
     let farmData = this.state.farmData;
@@ -53,10 +70,10 @@ class FarmDetails extends React.Component {
         </Row>
 
         <Row>
-          <Button>{'Add Crop'}</Button>
+          {!this.state.AddCropButton && <Button onClick={this.pageRedirect}>{'Add Crop'}</Button>}
         </Row>
         <Row>
-          <CropList />
+          <CropList farmDetails={this.state.farmDetails} />
         </Row>
       </Container>
     );

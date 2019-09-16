@@ -6,7 +6,7 @@ export default class DummyFile extends Component {
     render() {
         return (
             <div>
-                Working
+                <h1>Working</h1>
             </div>
         );
     }

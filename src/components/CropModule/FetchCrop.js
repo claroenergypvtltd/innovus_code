@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux'
 
-import { getCategoryList, DeleteCategory } from '../../actions/categoryAction';
+import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
@@ -83,7 +83,7 @@ class FetchCrop extends Component {
     }
 
     itemDelete = (id) => {
-        DeleteCategory(id).then(resp => {
+        this.props.DeleteCategory(id).then(resp => {
             if (resp) {
                 this.getCropList();
             }
@@ -147,4 +147,4 @@ FetchCrop.defaultProps = defaultProps;
 
 
 
-export default connect(mapStateToProps, { getCropList })(FetchCrop);
+export default connect(mapStateToProps, { getCropList, DeleteCategory })(FetchCrop);

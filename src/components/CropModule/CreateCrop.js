@@ -90,7 +90,8 @@ class CreateCrop extends Component {
                     if (this.state.cropId) {
                         this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
                     } else {
-                        this.props.history.push(path.crop.list);
+                        // this.props.history.push(path.crop.list);
+                        this.props.history.goBack();
                     }
                 }
             });
@@ -112,8 +113,7 @@ class CreateCrop extends Component {
                 "categoryId": this.props.location.state.categoryId
             }
 
-            getSpecificCategory(obj).then(resp => {
-                debugger;
+            this.props.getSpecificCategory(obj).then(resp => {
                 if (resp && resp.data && resp.data.datas && resp.data.datas[0]) {
                     let Data = resp.data.datas[0];
                     this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId });
@@ -130,7 +130,8 @@ class CreateCrop extends Component {
         if (this.state.cropId) {
             this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
         } else {
-            this.props.history.push(path.crop.list);
+            // this.props.history.push(path.crop.list);
+            this.props.history.goBack();
         }
     }
 
@@ -253,4 +254,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, { SubmitCategory, getCategoryList })(CreateCrop)
+export default connect(mapStateToProps, { SubmitCategory, getCategoryList, getSpecificCategory })(CreateCrop)

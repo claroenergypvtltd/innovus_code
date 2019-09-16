@@ -26,7 +26,7 @@ class DataTableDynamic extends React.Component {
               </button>
             )}
             {this.props.handleDelete && (
-              <button onClick={() => this.handleDelete(row)}>
+              <button onClick={e => this.handleDelete(row, e)}>
                 <i className="fas fa-trash-alt" />
               </button>
             )}
@@ -50,8 +50,8 @@ class DataTableDynamic extends React.Component {
     console.log('row', row);
     this.props.handleView(e, row);
   }
-  handleDelete(row) {
-    this.props.handleDelete(row);
+  handleDelete(row, e) {
+    this.props.handleDelete(row, e);
   }
   render() {
     let tableHeader = this.state.tableHead;

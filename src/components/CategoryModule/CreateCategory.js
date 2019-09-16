@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
-import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
@@ -56,7 +55,7 @@ class CategoryForm extends Component {
             formData.append("image", this.state.file);
             formData.append("categoryId", this.state.categoryId);
 
-            this.props.dispatch(SubmitCategory(formData, this.state.categoryId)).then(resp => {
+            this.props.SubmitCategory(formData, this.state.categoryId).then(resp => {
                 if (resp) {
                     this.props.history.push(path.category.list);
                 }
@@ -67,7 +66,7 @@ class CategoryForm extends Component {
 
     componentDidMount() {
         this.getSpecificCategory();
-        this.props.dispatch(getCategoryList())
+        this.props.getCategoryList();
     }
 
     getSpecificCategory() {
@@ -80,7 +79,7 @@ class CategoryForm extends Component {
                 "categoryId": this.props.location.state.categoryId
             }
 
-            getSpecificCategory(obj).then(resp => {
+            this.props.getSpecificCategory(obj).then(resp => {
                 if (resp && resp.data && resp.data.datas && resp.data.datas[0]) {
                     let Data = resp.data.datas[0];
                     this.setState({ description: Data.description, name: Data.name, image: Data.image });
@@ -94,7 +93,8 @@ class CategoryForm extends Component {
     }
 
     listPath = () => {
-        this.props.history.push(path.category.list);
+        // this.props.history.push(path.category.list);
+        this.props.history.goBack();
     }
 
     render() {
@@ -194,4 +194,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps)(CategoryForm)
+export default connect(mapStateToProps, { getSpecificCategory, getCategoryList, SubmitCategory })(CategoryForm)

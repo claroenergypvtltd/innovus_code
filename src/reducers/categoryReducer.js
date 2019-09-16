@@ -1,8 +1,9 @@
-import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_DELETE_SUCCESS } from '../constants/actionTypes'
+import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../constants/actionTypes'
 
 const initialstate = {
     Lists: [],
     count: 0,
+    specificData: [],
     createdData: [],
     updatedData: [],
     deletedData: []
@@ -17,6 +18,12 @@ export default function (state = initialstate, action) {
                 ...state,
                 Lists: action.List,
                 count: action.count
+            }
+
+        case CATEGORY_SPECIFIC_DATA_SUCCESS:
+            return state = {
+                ...state,
+                specificData: action.resp
             }
 
         case CATEGORY_CREATE_SUCCESS:
@@ -39,7 +46,6 @@ export default function (state = initialstate, action) {
 
         default:
             return state;
-
 
     }
 }

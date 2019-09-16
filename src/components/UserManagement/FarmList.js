@@ -4,19 +4,27 @@ import { fetchFarmList, getFarmDetailData } from '../../actions/UserAction';
 import { connect } from 'react-redux';
 import { imageBaseUrl } from '../../config/config';
 import FarmDetails from './FarmDetails';
+import PropTypes from "prop-types";
 
 class FarmList extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       farmsData: [],
       farmId: '',
+      farmerId: ''
     };
   }
 
   componentDidMount() {
     let FarmerId = this.props.farmerId;
     if (FarmerId) {
+      this.setState({ farmerId: FarmerId })
       this.props.dispatch(fetchFarmList(FarmerId));
     }
   }
@@ -34,6 +42,19 @@ class FarmList extends React.Component {
     });
   };
 
+  // /user/farm/add
+
+  pageRedirect = () => {
+    if (this.state.farmerId) {
+      this.context.router.history.push({ pathname: '/farm/add', state: { farmerIdData: this.state.farmerId } });
+    }
+
+  }
+
+  editPage = (farmId) => {
+    this.context.router.history.push({ pathname: '/farm/edit/' + this.state.farmerId, state: { farmerEditId: farmId } });
+  }
+
   render() {
     const Farms =
       this.state.farmsData &&
@@ -50,6 +71,7 @@ class FarmList extends React.Component {
               roundedCircle
             />
             <div className="container">
+              <button onClick={() => this.editPage(item.id)}>Edit</button>
               <div className="centext">{item.name}</div>
               <div className="centext">{item.state}</div>
               <div className="centext">
@@ -63,14 +85,14 @@ class FarmList extends React.Component {
     return (
       <div className="white-bg">
         {this.state.farmId ? <FarmDetails /> : Farms}
-        {<Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
+        {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  list: state.user.farmsList,
+  list: state.user.farmsList
 });
 
 export default connect(mapStateToProps)(FarmList);
