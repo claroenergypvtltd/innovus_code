@@ -1,9 +1,3 @@
-// import React from 'react';
-// import * as moment from 'moment';
-
-
-// export const DateFormat = {};
-// DateFormat.formatDate = formatDate;
 
 export function formatDate(d) {
   var date = new Date(d)

@@ -22,7 +22,7 @@ export const SubmitPersonalAndContactInfo = (formData) => dispatch => {
             return resp;
         }
     }).catch((error) => {
-        console.log("error", error);
+        console.error("error", error);
     })
 }
 
@@ -34,23 +34,21 @@ export const SubmitFarmDetails = (formData, isEdit) => {
             return httpServices.put(endPoint.farm, formData).then(resp => {
                 if (resp) {
                     toastr.success(resp && resp.message);
-                    // dispatch(farmInfo(resp.data));
                     dispatch({ type: FARM_DETAILS, farm: resp.data });
                     return resp
                 }
             }).catch((error) => {
-                console.log("error", error);
+                console.error("error", error);
             })
         } else {
             return httpServices.post(endPoint.farm, formData).then(resp => {
                 if (resp) {
                     toastr.success(resp && resp.message);
-                    // dispatch(farmInfo(resp.data));
                     dispatch({ type: FARM_DETAILS, farm: resp.data });
                     return resp
                 }
             }).catch((error) => {
-                console.log("error", error);
+                console.error("error", error);
             })
         }
     }
@@ -67,7 +65,7 @@ export const SubmitCropDetails = (formData) => {
                 return resp
             }
         }).catch((error) => {
-            console.log(error);
+            console.error(error);
         })
     }
 }
@@ -75,15 +73,13 @@ export const SubmitCropDetails = (formData) => {
 
 
 export const SubmitIrregationSchedule = (formData) => {
-    // let irrigationData = { "irrigation": formData }
-
     return httpServices.post(endPoint.irrigation, formData).then(resp => {
         if (resp) {
             toastr.success(resp && resp.message);
             return resp
         }
     }).catch((error) => {
-        console.log("error", error);
+        console.error("error", error);
     })
 
 }
@@ -96,7 +92,7 @@ export const SubmitKYCDetails = (formData) => {
             return resp
         }
     }).catch((error) => {
-        console.log("error", error);
+        console.error("error", error);
     })
 
 }

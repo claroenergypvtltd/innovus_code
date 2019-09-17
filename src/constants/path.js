@@ -22,6 +22,13 @@ export const path = {
         list: process.env.PUBLIC_URL + '/products',
         edit: process.env.PUBLIC_URL + '/products/update/',
     },
+
+    price: {
+        add: process.env.PUBLIC_URL + '/price/add',
+        list: process.env.PUBLIC_URL + '/price',
+        edit: process.env.PUBLIC_URL + '/price/edit/',
+    },
+
     reports: {
         add: process.env.PUBLIC_URL + '/reports/add',
         list: process.env.PUBLIC_URL + '/reports',

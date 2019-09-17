@@ -29,10 +29,7 @@ class User extends Component {
         : Constant.CONSTANT.TWO;
     this.setState({ tabIndex: tabIndex, selectedRoleId: roleId });
   };
-  // onhandleChange = (e) => {
-  //    e.preventDefault();
-  //    this.setState({ search: e.target.value });
-  // }
+
   handlePageChange = e => {
     e.preventDefault();
     this.props.history.push(path.farmer.add);
@@ -67,9 +64,7 @@ class User extends Component {
             <Col xs={6} md={4}>
               <h3>{window.strings.USERMANAGEMENT.USER}</h3>
             </Col>
-            {/* <Col xs={6} md={4}>
-              <input type="text" className="form-control" placeholder="Search" name="search" value={this.state.search} onChange={this.onhandleChange} />
-            </Col> */}
+
             <Col xs={6} md={4}>
               <button
                 className="btn btn-warning"

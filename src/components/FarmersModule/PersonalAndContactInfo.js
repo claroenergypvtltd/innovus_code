@@ -250,27 +250,6 @@ class PersonalAndContactInfo extends Component {
                                             {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        {/* <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['AREA']}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['AREA']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.area
-                                                })}
-                                                name="area"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.area}
-                                                required
-
-                                            />
-                                            {this.state.submitted && !this.state.area && <div className="mandatory">{window.strings['FARMERS']['AREA'] + window.strings['ISREQUIRED']}</div>}
-                                        </div> */}
-
-
-
                                         <div className="form-group pt-3">
 
                                             <label>{window.strings['FARMERS']['CITY']}</label>

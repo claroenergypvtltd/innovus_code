@@ -93,7 +93,6 @@ class CategoryForm extends Component {
     }
 
     listPath = () => {
-        // this.props.history.push(path.category.list);
         this.props.history.goBack();
     }
 
@@ -142,7 +141,6 @@ class CategoryForm extends Component {
                                                 })}
                                                 name="image"
                                                 onChange={this.onhandleImageChange}
-                                                // value={this.state.image}
                                                 required
 
                                             />
@@ -154,7 +152,6 @@ class CategoryForm extends Component {
                                             <label>{window.strings.CATEGORY.DESCRIPTION}</label>
 
                                             <textarea
-                                                // type="textarea"
                                                 placeholder="description"
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.description

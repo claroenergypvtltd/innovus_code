@@ -52,6 +52,15 @@ export const Sidebar = [
     },
     {
         name: (
+            <span className="menu-list product">
+                <i />
+                {Label.priceLabel}
+            </span>
+        ),
+        path: path.price.list,
+    },
+    {
+        name: (
             <span className="menu-list order">
                 <i />
                 {Label.orderLabel}

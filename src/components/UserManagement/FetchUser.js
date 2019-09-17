@@ -16,8 +16,7 @@ class FetchUser extends React.Component {
     super(props);
     this.state = {
       roleId: props.roleId,
-      columns: resorceJSON.UserManagementList,
-      // data: this.props.data,
+      columns: resorceJSON.UserManagementList
     };
   }
 

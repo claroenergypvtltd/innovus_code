@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitFarmDetails } from '../../actions/FarmersAction'
 import { fetchFarmList, getFarmDetailData } from '../../actions/UserAction';
+import { link } from 'fs';
 
 class CreateFarmDetails extends Component {
 
@@ -23,12 +24,10 @@ class CreateFarmDetails extends Component {
             state: '',
             errors: {},
             userId: ''
-            // getContactData: this.props.getContactData
         }
     }
 
     componentDidMount() {
-        console.log(this, "this-----this");
         if (this.props.location && this.props.location.state && this.props.location.state.farmerIdData) {
             this.setState({ userId: this.props.location.state.farmerIdData })
         }
@@ -37,7 +36,7 @@ class CreateFarmDetails extends Component {
                 this.props.dispatch(getFarmDetailData(this.props.location.state.farmerEditId)).then(resp => {
                     if (resp) {
                         this.setState({
-                            id: resp.id, name: resp.name, address1: resp.address1, address2: resp.address2,
+                            id: resp.id, userId: resp.userId, name: resp.name, address1: resp.address1, address2: resp.address2,
                             taluk: resp.taulk, village: resp.village, city: resp.city, state: resp.state
                         })
                     }
@@ -244,25 +243,6 @@ class CreateFarmDetails extends Component {
                                         </div>
 
 
-                                        {/* <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['TOTAL_AREA']}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['TOTAL_AREA']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.totalArea
-                                                })}
-                                                name="totalArea"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.totalArea}
-                                                required
-
-                                            />
-                                            {this.state.submitted && !this.state.totalArea && <div className="mandatory">{window.strings['FARMERS']['TOTAL_AREA'] + window.strings['ISREQUIRED']}</div>}
-                                        </div> */}
-
                                         <h3>Map</h3>
 
                                         <h3>Image Upload</h3>
@@ -287,10 +267,7 @@ class CreateFarmDetails extends Component {
 }
 
 
-function mapStateToProps(state) {
-    return {
-        // getContactData: state && state.farmer && state.farmer.contactDatas ? state.farmer.contactDatas : []
-    };
+function mapStateToProps() {
 }
 
 

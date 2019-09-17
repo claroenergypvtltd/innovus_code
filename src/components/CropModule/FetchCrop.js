@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux'
-
 import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
@@ -114,7 +112,6 @@ class FetchCrop extends Component {
         return (
             <div>
                 <div>
-                    {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
                     <h2>List Crop</h2>
                     <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button>
                 </div>

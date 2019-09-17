@@ -22,7 +22,6 @@ class CropList extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('newProps', newProps.crops);
     this.setState({ cropList: newProps.farmDataDetail.crops });
   }
 
@@ -38,16 +37,8 @@ class CropList extends React.Component {
     console.log('rowrowrowrowrowrow', row);
   };
 
-  // bookingUpdate = (isBooked) => {
-  //   debugger;
-  //   this.setState({ isBooked: !isBooked })
-  //   // return isBokked = 1;
-  //   // this.ExpandedSection();
-  // }
-
   irrigationPage = (Data) => {
     this.context.router.history.push({ pathname: '/irrigation/edit/' + Data.id, state: { farmDetails: this.props.farmDetails } });
-    // this.props.history.push('/category')
   }
 
 
@@ -55,10 +46,6 @@ class CropList extends React.Component {
 
 
     data && data.irrigation && data.irrigation.map((item, index) => {
-
-      // console.log('time', utils.dateConvertion(item.sowDate));
-      // let self = this;
-      // console.log(self.bookingUpdate(), "self.bookingUpdate ===self.bookingUpdate");
       return (
         <div key={index}>
           {index <= 0 && <div><h1>Irigation Schedule</h1>
@@ -67,38 +54,17 @@ class CropList extends React.Component {
           <div>{utils.dateConvertion(item.irrigationDate)}</div>
           <i className="fa fa-check" aria-hidden="true" />
           <button>{!item.isBooked ? 'Book' : 'Booked'} </button>
-          {/* <button onClick={() => { item.isBooked = !item.isBooked ? 1 && this.setState({ isBooked: 1 }) : 0 }}>{!item.isBooked ? 'Book' : 'Booked'} </button> */}
-          {/* <button onClick={() => this.bookingUpdate(item.isBooked)}>{!item.isBooked ? 'Book' : 'Booked'} </button> */}
         </div>
       );
-
-
     });
-
-
-
-  // console.log("datagghghghghg", data);
-  // <div>
-  // <h4>Irrigation Schedule</h4>
-  // </div>
-
-  // let expandData = data;
-
-  // this.setState({  })
-
-
-
-
 
 
   render() {
     const expandableComponent = <this.ExpandedSection />
 
-
     const data =
       this.state.cropList &&
       this.state.cropList.map((item, index) => {
-        console.log('time', utils.dateConvertion(item.sowDate));
         return {
           cropName: item.category.description,
           cropVariety: item.cropType,
@@ -110,13 +76,11 @@ class CropList extends React.Component {
         };
       });
 
-    console.log('data', data);
     return (
       <div>
         <DataTableDynamic
           tableHead={this.state.columns}
           tableDatas={data}
-          // handleEdit={this.itemEdit}
           handleView={this.itemView}
           expandable={true}
           pagination={true}

@@ -16,6 +16,7 @@ import DummyFile from '../components/DummyFile'
 import CreateFarmDetails from '../components/FarmersModule/CreateFarmDetails'
 import CreateCropDetails from '../components/FarmersModule/CreateCropDetails'
 import CreateIrrigationSchedule from '../components/FarmersModule/CreateIrrigationSchedule'
+import FetchPrice from '../components/PriceModule/FetchPrice'
 
 const root = ({ route }) => (
     <div>
@@ -147,6 +148,12 @@ export const routesPath = [
                 component: CreateCrop,
                 exact: true
             },
+            {
+                path: process.env.PUBLIC_URL + '/price',
+                component: FetchPrice,
+                exact: true,
+            },
+            // FetchPrice
             {
                 path: process.env.PUBLIC_URL + '/inprogress',
                 component: DummyFile,

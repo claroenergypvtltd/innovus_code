@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { loginUser } from '../../actions/authentication';
 import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
-// AddCategory
 import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import { path } from '../../constants';
@@ -28,14 +26,6 @@ class CreateCrop extends Component {
             errors: {}
         }
     }
-
-    // componentDidMount() {
-    //     debugger;
-    //     console.log("this.props.location", this.props.location);
-    //     if (this.props && this.props.location && this.props.location.state && this.props.location.state.cropId) {
-    //         this.setState({ cropId: this.props.location.state.cropId })
-    //     }
-    // }
 
     componentWillMount() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.cropId) {
@@ -90,7 +80,6 @@ class CreateCrop extends Component {
                     if (this.state.cropId) {
                         this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
                     } else {
-                        // this.props.history.push(path.crop.list);
                         this.props.history.goBack();
                     }
                 }
@@ -130,7 +119,6 @@ class CreateCrop extends Component {
         if (this.state.cropId) {
             this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
         } else {
-            // this.props.history.push(path.crop.list);
             this.props.history.goBack();
         }
     }
@@ -200,7 +188,6 @@ class CreateCrop extends Component {
                                                 })}
                                                 name="image"
                                                 onChange={this.onhandleImageChange}
-                                                // value={this.state.image}
                                                 required
 
                                             />
@@ -213,7 +200,6 @@ class CreateCrop extends Component {
                                             <label>{window.strings.CATEGORY.DESCRIPTION}</label>
 
                                             <textarea
-                                                // type="textarea"
                                                 placeholder="description"
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.description

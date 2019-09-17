@@ -9,8 +9,6 @@ import { httpServices } from '../services/http.services';
 import { toastr } from 'react-redux-toastr';
 
 export const fetchUsers = (user, userId) => dispatch => {
-  console.log('endPoint.userList', endPoint.userList);
-  // user.search = "Agro_123"
 
   let httpMethod = "";
 
@@ -34,7 +32,7 @@ export const fetchUsers = (user, userId) => dispatch => {
         return res
       }
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       dispatch({ type: GET_ERRORS, payload: err });
     });
 };
@@ -46,7 +44,7 @@ export const deleteUser = (deleteId) => {
       return res;
     }
   }).catch((e) => {
-    console.log(e);
+    console.error(e);
   });
 };
 
@@ -57,7 +55,6 @@ export const fetchFarmList = farmerId => dispatch => {
       .get(params)
       .then(res => {
         let farmerListData = res.data;
-        console.log('farmerListData', farmerListData);
         dispatch({
           type: FARMS_FETCH_SUCCESS,
           payload: farmerListData,
@@ -65,7 +62,7 @@ export const fetchFarmList = farmerId => dispatch => {
         return farmerListData;
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         dispatch({
           type: GET_ERRORS,
           payload: err,
@@ -84,7 +81,6 @@ export const getFarmDetailData = farmId => dispatch => {
         if (res) {
           console.log('res', res);
           let getFarmDetailData = res.data;
-          // console.log("farmerListData",farmerListData);
           dispatch({
             type: FETCH_FARMS_DETAILS,
             payload: getFarmDetailData,
@@ -92,9 +88,8 @@ export const getFarmDetailData = farmId => dispatch => {
           return getFarmDetailData;
         }
       })
-
       .catch(err => {
-        console.log(err);
+        console.error(err);
         dispatch({
           type: GET_ERRORS,
           payload: err,
@@ -102,26 +97,3 @@ export const getFarmDetailData = farmId => dispatch => {
       });
   }
 };
-
-
-// export const fetchUsers = user => dispatch => {
-//   console.log('endPoint.userList', endPoint.userList);
-//   // user.search = "Agro_123"
-//   return httpServices
-//     .post(endPoint.user, user)
-//     .then(res => {
-//       let userListData = res.data.datas;
-//       dispatch({
-//         type: USER_FETCH_SUCCESS,
-//         payload: userListData,
-//       });
-//       return res
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err,
-//       });
-//     });
-// };

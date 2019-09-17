@@ -83,7 +83,6 @@ class CreateCropDetails extends Component {
             this.props.SubmitCropDetails(obj).then(resp => {
                 if (resp && resp.data) {
                     this.pageRedirect();
-                    // this.props.childData(4); //5 th tab
                 }
             })
         })
@@ -111,35 +110,14 @@ class CreateCropDetails extends Component {
                             <div className="p-5 clearfix">
                                 <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
-                                        {/* <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['CROP_NAME']}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['CROP_NAME']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.cropName
-                                                })}
-                                                name="cropName"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.cropName}
-                                                required
-
-                                            />
-
-                                            {this.state.submitted && !this.state.cropName && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div> */}
 
                                         <div className="form-group pt-3">
-
                                             <label>{window.strings['CATEGORY']['CATE_NAME']}</label>
 
                                             <select required name="categoryId" className="form-control col-xs-6 col-sm-4 " value={this.state.categoryId} onChange={this.onChangeCategory}>
                                                 <option value="0">{window.strings['CATEGORY']['CATE_NAME']}</option>
                                                 {categoryDropDown}
                                             </select>
-
                                             {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
@@ -147,7 +125,6 @@ class CreateCropDetails extends Component {
                                         <div className="form-group pt-3">
 
                                             <label>{window.strings['CROP']['CROP_NAME']}</label>
-
                                             <select required name="subCategoryId" className="form-control col-xs-6 col-sm-4 " value={this.state.subCategoryId} onChange={this.handleInputChange}>
                                                 <option value="0">{window.strings['CROP']['CROP_NAME']}</option>
                                                 {subCategoryDropDown}
@@ -276,30 +253,6 @@ class CreateCropDetails extends Component {
                                             />
                                             {this.state.submitted && !this.state.totalValue && <div className="mandatory">{window.strings['FARMERS']['TOTAL_VALUE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
-
-                                        {/* <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['DESCRIPTION']}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['DESCRIPTION']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.description
-                                                })}
-                                                name="description"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.description}
-                                                required
-
-                                            />
-                                            {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['FARMERS']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
-                                        </div> */}
-
-
-                                        {/* <h3>Image Upload</h3> */}
-
 
                                         <div className="col-md-12 pt-3 p-0">
 

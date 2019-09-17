@@ -27,18 +27,14 @@ class FarmDetails extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('newProps', newProps);
     this.setState({ farmData: newProps.farmDataDetail });
   }
 
   pageRedirect = () => {
-    console.log("test");
-    // this.props.history.push('crop/add');
     this.context.router.history.push({ pathname: '/cropDetails/add', state: { farmId: this.state.farmData.id } });
   }
 
   render() {
-    console.log('this.state.farmData', this.state.farmData);
     let farmData = this.state.farmData;
     return (
       <Container>
