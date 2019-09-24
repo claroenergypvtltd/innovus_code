@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 // import GoogleMapPage from '../../shared/GoogleMapPage';
 import { toastr } from '../../services/toastr.services';
 import { path } from '../../constants';
+import store from '../../store/store';
+import { FARMER_DELETE_SUCCESS } from '../../constants/actionTypes'
 
 class FetchUser extends React.Component {
   static contextTypes = {
@@ -38,17 +40,19 @@ class FetchUser extends React.Component {
   };
 
   componentWillReceiveProps(newProps) {
-    if (newProps.list) {
-      this.setState({ data: newProps.list });
+    debugger;
+    if (newProps.userData && newProps.userData.userList.datas) {
+      this.setState({ data: newProps.userData.userList.datas });
     }
+
+    if (newProps.userData.deletedStatus == "200") {
+      store.dispatch({ type: FARMER_DELETE_SUCCESS, resp: "" });
+      this.getUserList();
+    }
+
   }
   itemDelete = (item) => {
-    let self = this;
-    deleteUser(item).then(resp => {
-      if (resp) {
-        self.getUserList();
-      }
-    });
+    this.props.deleteUser(item)
   };
 
 
@@ -78,7 +82,7 @@ class FetchUser extends React.Component {
     })
   };
 
-  onChangepagination(e) {
+  onchangePagination(e) {
     e.preventDefault();
     return true
   }
@@ -92,7 +96,7 @@ class FetchUser extends React.Component {
           handleEdit={this.itemEdit}
           handleView={this.itemView}
           handleDelete={this.handleDelete}
-          pagination={this.onChangepagination}
+          pagination={this.onchangePagination}
         />
         {/* <GoogleMapPage /> */}
       </div>
@@ -101,10 +105,10 @@ class FetchUser extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  list: state.user.userList,
+  userData: state.user
 });
 
 export default connect(
   mapStateToProps,
-  { fetchUsers },
+  { fetchUsers, deleteUser },
 )(FetchUser);

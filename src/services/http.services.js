@@ -79,13 +79,13 @@ function get(url) {
 }
 
 function post(url, params) {
-  PubSub.publish('msg', true);
+  // PubSub.publish('msg', true);
   return axios.post(url, params).then(response => {
-    PubSub.publish('msg', false);
+    // PubSub.publish('msg', false);
     return response;
   }).catch(e => {
     console.log(e);
-    PubSub.publish('msg', false);
+    // PubSub.publish('msg', false);
   })
 }
 

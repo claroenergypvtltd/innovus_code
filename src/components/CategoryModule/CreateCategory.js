@@ -4,9 +4,14 @@ import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../acti
 import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
+import PropTypes from "prop-types";
+import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
+import store from '../../store/store';
 
 class CategoryForm extends Component {
-
+    static contextTypes = {
+        router: PropTypes.object
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -16,8 +21,36 @@ class CategoryForm extends Component {
             image: '',
             categoryId: '',
             farmDatas: this.props.getFarmData,
+            categoryData: this.props.categoryData,
             errors: {}
         }
+    }
+
+    componentDidMount() {
+        if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
+            this.getSpecificCategory();
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.categoryData && nextProps.categoryData.createdStatus == "200") {
+            store.dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: "" })
+            this.props.history.goBack();
+        }
+        if (nextProps.categoryData && nextProps.categoryData.updatedStatus == "200") {
+            store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
+            this.props.history.goBack();
+        }
+        if (nextProps.getCategory) {
+            this.setState({ categoryData: nextProps.getCategory })
+        }
+        if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas && nextProps.categoryData.specificData.data.datas.length > 0) {
+
+            let Data = nextProps.categoryData.specificData.data.datas[0];
+            this.setState({ description: Data.description, name: Data.name, image: Data.image });
+        }
+
     }
 
     handleInputChange = (e) => {
@@ -41,34 +74,6 @@ class CategoryForm extends Component {
         reader.readAsDataURL(file)
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.setState({
-            submitted: true
-        })
-        console.log(this.state);
-        if (this.state.name && this.state.description) {
-
-            const formData = new FormData();
-            formData.append("name", this.state.name);
-            formData.append("description", this.state.description);
-            formData.append("image", this.state.file);
-            formData.append("categoryId", this.state.categoryId);
-
-            this.props.SubmitCategory(formData, this.state.categoryId).then(resp => {
-                if (resp) {
-                    this.props.history.push(path.category.list);
-                }
-            });
-
-        }
-    }
-
-    componentDidMount() {
-        this.getSpecificCategory();
-        this.props.getCategoryList();
-    }
-
     getSpecificCategory() {
 
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
@@ -78,18 +83,25 @@ class CategoryForm extends Component {
             let obj = {
                 "categoryId": this.props.location.state.categoryId
             }
-
-            this.props.getSpecificCategory(obj).then(resp => {
-                if (resp && resp.data && resp.data.datas && resp.data.datas[0]) {
-                    let Data = resp.data.datas[0];
-                    this.setState({ description: Data.description, name: Data.name, image: Data.image });
-                }
-            });
+            this.props.getSpecificCategory(obj)
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({ categoryData: nextProps.getCategory })
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({
+            submitted: true
+        })
+        if (this.state.name && this.state.description) {
+
+            const formData = new FormData();
+            formData.append("name", this.state.name);
+            formData.append("description", this.state.description);
+            formData.append("image", this.state.file);
+            formData.append("categoryId", this.state.categoryId);
+
+            this.props.SubmitCategory(formData, this.state.categoryId);
+        }
     }
 
     listPath = () => {
@@ -187,8 +199,9 @@ class CategoryForm extends Component {
 
 
 const mapStateToProps = (state) => ({
-    getCategory: state.category && state.category.Lists ? state.category.Lists : []
+    getCategory: state.category && state.category.Lists ? state.category.Lists : [],
+    categoryData: state.category
 })
 
 
-export default connect(mapStateToProps, { getSpecificCategory, getCategoryList, SubmitCategory })(CategoryForm)
+export default connect(mapStateToProps, { getSpecificCategory, SubmitCategory })(CategoryForm)

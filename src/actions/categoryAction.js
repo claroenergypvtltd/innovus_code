@@ -1,7 +1,7 @@
 import { httpServices } from '../services/http.services'
 import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
-import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS,CATEGORY_SPECIFIC_DATA_SUCCESS } from '../constants/actionTypes';
+import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../constants/actionTypes';
 import { endPoint } from "../constants";
 
 export const getCategoryList = () => dispatch => {
@@ -20,43 +20,40 @@ export const getCategoryList = () => dispatch => {
 export const SubmitCategory = (category, Id) => dispatch => {
 
 	if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
-		return httpServices.put(endPoint.category, category).then(resp => {
+		httpServices.put(endPoint.category, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
-				dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp })
-				return resp;
-			} else {
-				toastr.warning(resp.message);
+				dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: resp.status })
 			}
 		}).catch((error) => {
-			console.log("error", error);
+			console.error("error", error);
+			dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: error.status })
 		})
 
 	} else {
-		return httpServices.post(endPoint.category, category).then(resp => {
+		httpServices.post(endPoint.category, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
-				dispatch({ type: CATEGORY_CREATE_SUCCESS, resp })
-				return resp;
-			} else {
-				toastr.warning(resp.message);
+				dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: resp.status })
 			}
-		}).catch((error) => {
-			console.log("error", error);
+		}).catch(error => {
+			debugger;
+			dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: error.status })
+			console.error("error", error);
 		})
 	}
 
 }
 
 export const DeleteCategory = (id) => dispatch => {
-	return httpServices.remove(endPoint.category, id).then(response => {
+	httpServices.remove(endPoint.category, id).then(response => {
 		if (response) {
 			toastr.success(response.message);
-			dispatch({ type: CATEGORY_DELETE_SUCCESS, response })
-			return response;
+			dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: response.status })
 		}
 	}).catch((error) => {
 		console.log("Delete :", error.response);
+		dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: error.status })
 	})
 }
 
@@ -81,7 +78,7 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 	return httpServices.get(endPoint.category + '?' + IdText + '=' + Data.categoryId + searchData + page + rows).then(resp => {
 
 		if (resp.data) {
-			dispatch({ type : CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
+			dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
 			return resp;
 		}
 	}).catch((error) => {

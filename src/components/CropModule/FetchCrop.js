@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
-import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { getCropList } from '../../actions/cropAction'
 import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
+import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
+import store from '../../store/store';
 
 class FetchCrop extends Component {
 
@@ -29,6 +30,18 @@ class FetchCrop extends Component {
 
     componentDidMount() {
         this.getCropList();
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.categoryData.deletedStatus == "200") {
+            store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
+            this.getCropList();
+        }
+
+        if (newProps.cropData.List) {
+            let Data = newProps.cropData.List;
+            this.setState({ CropLists: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage })
+        }
     }
 
     handleChange = (e) => {
@@ -58,12 +71,7 @@ class FetchCrop extends Component {
             "limit": this.state.itemPerPage,
         }
 
-        this.props.getCropList(obj).then(resp => {
-            if (resp && resp.data && resp.data.datas) {
-                this.setState({ CropLists: resp.data.datas, pageCount: resp.data.totalCount / this.state.itemPerPage })
-            }
-
-        })
+        this.props.getCropList(obj);
     }
 
     itemEdit = (catId) => {
@@ -81,11 +89,7 @@ class FetchCrop extends Component {
     }
 
     itemDelete = (id) => {
-        this.props.DeleteCategory(id).then(resp => {
-            if (resp) {
-                this.getCropList();
-            }
-        });
+        this.props.DeleteCategory(id);
     }
 
     formPath = () => {
@@ -130,18 +134,11 @@ class FetchCrop extends Component {
 
 function mapStateToProps(state) {
     return {
+        categoryData: state.category,
+        cropData: state.crop,
         getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
         getCount: state && state.category && state.category.count ? state.category.count : 1
     };
 }
-
-const defaultProps = {
-    getLists: [],
-    getCount: 1
-}
-
-FetchCrop.defaultProps = defaultProps;
-
-
 
 export default connect(mapStateToProps, { getCropList, DeleteCategory })(FetchCrop);

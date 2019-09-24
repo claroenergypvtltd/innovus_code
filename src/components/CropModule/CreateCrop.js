@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
-import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
-import { Link } from 'react-router-dom'
+import store from '../../store/store';
+import { CATEGORY_CREATE_SUCCESS, CATEGORY_UPDATE_SUCCESS } from '../../constants/actionTypes';
 
 class CreateCrop extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
             submitted: false,
@@ -30,6 +27,37 @@ class CreateCrop extends Component {
     componentWillMount() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.cropId) {
             this.setState({ cropId: this.props.location.state.cropId })
+        }
+    }
+
+    componentDidMount() {
+        this.getSpecificCategory();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ categoryData: nextProps.getCategory })
+
+        if (nextProps && nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas && nextProps.categoryData.specificData.data.datas.length > 0) {
+            let Data = nextProps.categoryData.specificData.data.datas[0];
+            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId });
+        }
+
+
+        if (nextProps.categoryData.createdStatus == "200") {
+            store.dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: "" })
+            this.redirectPage();
+        }
+        if (nextProps.categoryData.updatedStatus == "200") {
+            store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
+            this.redirectPage();
+        }
+    }
+
+    redirectPage() {
+        if (this.state.cropId) {
+            this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
+        } else {
+            this.props.history.goBack();
         }
     }
 
@@ -73,24 +101,11 @@ class CreateCrop extends Component {
             } else {
                 formData.append("parentId", this.state.parentId);
             }
-
-
-            this.props.SubmitCategory(formData, this.state.categoryId).then(resp => {
-                if (resp) {
-                    if (this.state.cropId) {
-                        this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
-                    } else {
-                        this.props.history.goBack();
-                    }
-                }
-            });
+            this.props.SubmitCategory(formData, this.state.categoryId)
         }
     }
 
-    componentDidMount() {
-        this.getSpecificCategory();
-        this.props.getCategoryList();
-    }
+
 
     getSpecificCategory() {
 
@@ -102,18 +117,11 @@ class CreateCrop extends Component {
                 "categoryId": this.props.location.state.categoryId
             }
 
-            this.props.getSpecificCategory(obj).then(resp => {
-                if (resp && resp.data && resp.data.datas && resp.data.datas[0]) {
-                    let Data = resp.data.datas[0];
-                    this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId });
-                }
-            });
+            this.props.getSpecificCategory(obj);
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({ categoryData: nextProps.getCategory })
-    }
+
 
     listPath = () => {
         if (this.state.cropId) {
@@ -236,6 +244,7 @@ class CreateCrop extends Component {
 
 
 const mapStateToProps = (state) => ({
+    categoryData: state.category,
     getCategory: state.category && state.category.Lists ? state.category.Lists : []
 })
 

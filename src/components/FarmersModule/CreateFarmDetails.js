@@ -6,11 +6,11 @@ import '../../assets/css/login.scss';
 import { SubmitFarmDetails } from '../../actions/FarmersAction'
 import { fetchFarmList, getFarmDetailData } from '../../actions/UserAction';
 import { link } from 'fs';
+import { ADD_FARMDETAILS, UPDATE_FARMDETAILS } from '../../constants/actionTypes';
+import store from '../../store/store'
 
 class CreateFarmDetails extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
             submitted: false,
@@ -33,14 +33,28 @@ class CreateFarmDetails extends Component {
         }
         if (this.props.location && this.props.location.state && this.props.location.state.farmerEditId) {
             this.setState({ userId: this.props.location.state.farmerEditId }, () => {
-                this.props.dispatch(getFarmDetailData(this.props.location.state.farmerEditId)).then(resp => {
-                    if (resp) {
-                        this.setState({
-                            id: resp.id, userId: resp.userId, name: resp.name, address1: resp.address1, address2: resp.address2,
-                            taluk: resp.taulk, village: resp.village, city: resp.city, state: resp.state
-                        })
-                    }
-                });
+                this.props.dispatch(getFarmDetailData(this.props.location.state.farmerEditId))
+            })
+        }
+    }
+
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.farmerData.addFarmStatus == "200") {
+            store.dispatch({ type: ADD_FARMDETAILS, farm: "" });
+            this.backHandle();
+        }
+
+        if (newProps.farmerData.updateFarmStatus == "200") {
+            store.dispatch({ type: UPDATE_FARMDETAILS, farm: "" });
+            this.backHandle();
+        }
+
+        if (newProps.userData && newProps.userData.farmDetails) {
+            let resp = newProps.userData.farmDetails;
+            this.setState({
+                id: resp.id, userId: resp.userId, name: resp.name, address1: resp.address1, address2: resp.address2,
+                taluk: resp.taulk, village: resp.village, city: resp.city, state: resp.state
             })
         }
     }
@@ -73,26 +87,17 @@ class CreateFarmDetails extends Component {
             formData.append("userId", this.state.userId);
             formData.append("location", "[{9.86,9.99},{9.86,9.99},{9.86,9.99},{9.86,9.99}]");
 
+            let farmParam = false;
             if (this.state.id) {
-                this.props.dispatch(SubmitFarmDetails(formData, true)).then(resp => {
-                    if (resp && resp.status == "200") {
-                        this.backHandle();
-                    }
-                })
-            } else {
-                this.props.dispatch(SubmitFarmDetails(formData)).then(resp => {
-                    if (resp && resp.status == "200") {
-                        this.backHandle();
-                    }
-                })
+                farmParam = true
             }
 
+            this.props.dispatch(SubmitFarmDetails(formData, farmParam))
         })
     }
 
     render() {
         const { errors } = this.state;
-        console.log("err", errors);
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -267,7 +272,11 @@ class CreateFarmDetails extends Component {
 }
 
 
-function mapStateToProps() {
+function mapStateToProps(state) {
+    return {
+        farmerData: state.farmer,
+        userData: state.user ? state.user : {}
+    }
 }
 
 

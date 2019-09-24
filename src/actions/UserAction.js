@@ -3,33 +3,27 @@ import {
   USER_FETCH_SUCCESS,
   FARMS_FETCH_SUCCESS,
   FETCH_FARMS_DETAILS,
+  FARMER_DELETE_SUCCESS
 } from '../constants/actionTypes';
 import { endPoint } from '../constants';
 import { httpServices } from '../services/http.services';
 import { toastr } from 'react-redux-toastr';
 
-export const fetchUsers = (user, userId) => dispatch => {
+export const fetchUsers = (user) => dispatch => {
 
   let httpMethod = "";
 
   if (user.isEdit) {
     httpMethod = httpServices.get(endPoint.user + '?userId=' + user.userId);
   } else {
-    if (userId) {
-      httpMethod = httpServices.put(endPoint.user, user);
-    } else {
-      httpMethod = httpServices.post(endPoint.user, user);
-    }
-
+    httpMethod = httpServices.post(endPoint.user, user);
   }
 
-  return httpMethod
+  httpMethod
     .then(res => {
       if (res) {
         res.message && toastr.success(res.message);
-        let userListData = res.data && res.data.datas;
-        dispatch({ type: USER_FETCH_SUCCESS, payload: userListData });
-        return res
+        dispatch({ type: USER_FETCH_SUCCESS, payload: res.data });
       }
     }).catch(err => {
       console.error(err);
@@ -37,14 +31,18 @@ export const fetchUsers = (user, userId) => dispatch => {
     });
 };
 
-export const deleteUser = (deleteId) => {
-  return httpServices.remove(endPoint.user, deleteId).then(res => {
+export const deleteUser = (deleteId) => dispatch => {
+  httpServices.remove(endPoint.user, deleteId).then(res => {
     if (res) {
       toastr.success(res.message);
-      return res;
+      dispatch({ type: FARMER_DELETE_SUCCESS, resp: res.status })
     }
   }).catch((e) => {
     console.error(e);
+    dispatch({
+      type: GET_ERRORS,
+      payload: e,
+    });
   });
 };
 
@@ -97,3 +95,10 @@ export const getFarmDetailData = farmId => dispatch => {
       });
   }
 };
+
+export const deleteIrrigation = (deleteId) => {
+  return httpServices.remove(endPoint.irrigation, deleteId).then(res => {
+    toastr.success(res.message);
+    return res;
+  });
+}

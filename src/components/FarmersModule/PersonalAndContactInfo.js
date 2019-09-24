@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitPersonalAndContactInfo } from '../../actions/FarmersAction'
-import { toastr } from 'react-redux-toastr'
-import { path } from '../../constants'
 import PropTypes from "prop-types";
 import { fetchUsers } from '../../actions/UserAction';
+import store from '../../store/store'
+import { CONTACT_DETAILS, UPDATE_CONTACT_DETAILS } from '../../constants/actionTypes';
+
 
 class PersonalAndContactInfo extends Component {
 
@@ -36,25 +36,44 @@ class PersonalAndContactInfo extends Component {
     }
 
     componentDidMount() {
-        this.getUserList();
+        if (this.props.location && this.props.location.state && this.props.location.state.farmerId) {
+            this.getUserList();
+        }
+
     }
+
+    componentWillReceiveProps(newProps) {
+        debugger;
+        if (newProps.signUpData && newProps.signUpData.contactDatas == "200") {
+            store.dispatch({ type: CONTACT_DETAILS, contact: "" })
+            this.listPage();
+        }
+
+        if (newProps.signUpData && newProps.signUpData.updateContactDatas == "200") {
+            store.dispatch({ type: UPDATE_CONTACT_DETAILS, contact: "" })
+            this.listPage();
+        }
+
+        if (newProps.userData && newProps.userData.userList) {
+            let resData = newProps.userData.userList;
+            let resAddr = newProps.userData.userList.address;
+            if (resData && resAddr) {
+                this.setState({
+                    userId: resData.id, name: resData.name, email: resData.emailId, address1: resAddr.address1,
+                    address2: resAddr.address2, image: resData.image, mobileNumber: resData.mobileNumber,
+                    city: resAddr.city, state: resAddr.state, pinCode: resAddr.zipcode
+                })
+            }
+        }
+    }
+
 
     getUserList = () => {
         if (this.props.location && this.props.location.state && this.props.location.state.farmerId) {
             let user = {};
             user.userId = this.props.location.state.farmerId;
             user.isEdit = true;
-            this.props.fetchUsers(user).then(resp => {
-                if (resp && resp.data && resp.data.address) {
-                    let resData = resp.data;
-                    let resAddr = resp.data.address;
-                    this.setState({
-                        userId: resData.id, name: resData.name, email: resData.emailId, address1: resAddr.address1,
-                        address2: resAddr.address2, image: resData.image, mobileNumber: resData.mobileNumber,
-                        city: resAddr.city, state: resAddr.state, pinCode: resAddr.zipcode
-                    })
-                }
-            });
+            this.props.fetchUsers(user);
         }
     };
 
@@ -105,21 +124,12 @@ class PersonalAndContactInfo extends Component {
             let stateForm = this.state;
             if (stateForm.city && stateForm.email && stateForm.mobileNumber && stateForm.state && stateForm.pinCode && stateForm.name &&
                 stateForm.address1 && stateForm.address2 && stateForm.file) {
+
+                let updateUser = false;
                 if (stateForm.userId) {
-                    this.props.fetchUsers(formData, stateForm.userId).then(resp => {
-                        if (resp) {
-                            this.listPage();
-                        }
-                    })
-                } else {
-                    this.props.SubmitPersonalAndContactInfo(formData).then(resp => {
-                        if (resp) {
-                            this.listPage();
-                        }
-                    })
+                    updateUser = true;
                 }
-            } else {
-                toastr.error(window.strings.MANDATORYFIELDSTEXT_PERSONAL_INFO);
+                this.props.SubmitPersonalAndContactInfo(formData, updateUser)
             }
         })
 
@@ -331,8 +341,10 @@ class PersonalAndContactInfo extends Component {
 }
 
 
-function mapStateToProps() {
+function mapStateToProps(state) {
     return {
+        signUpData: state.farmer,
+        userData: state.user
     };
 }
 

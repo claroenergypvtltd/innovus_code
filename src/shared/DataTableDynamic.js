@@ -60,6 +60,7 @@ class DataTableDynamic extends React.Component {
     return (
       <div>
         <DataTable
+          noHeader={true}
           columns={tableHeader}
           data={tableDatas}
           pagination={this.props.pagination}

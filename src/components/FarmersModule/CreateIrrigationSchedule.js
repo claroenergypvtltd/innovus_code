@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitIrregationSchedule } from '../../actions/FarmersAction'
-import { deleteIrrigation } from '../../actions/UserManagementAction'
-import { thisExpression } from '@babel/types';
+import { deleteIrrigation } from '../../actions/UserAction'
 import { formatDate } from '../../shared/DateFormat'
+import store from '../../store/store'
+import { IRRIGATION_SCHEDULE } from '../../constants/actionTypes';
 
 class CreateIrrigationSchedule extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
             submitted: false,
@@ -33,6 +31,13 @@ class CreateIrrigationSchedule extends Component {
 
     componentDidMount() {
         this.editIrrigation();
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.farmerData && newProps.farmerData.irrigationStatus == "200") {
+            store.dispatch({ type: IRRIGATION_SCHEDULE, irrigationStatus: '' });
+            this.listPath();
+        }
     }
 
     editIrrigation() {
@@ -98,7 +103,7 @@ class CreateIrrigationSchedule extends Component {
             IrrigationDetails: this.state.IrrigationDetails.filter((s, sid) => id !== sid)
         })
         if (irriData.id) {
-            deleteIrrigation(irriData.id).then();
+            deleteIrrigation(irriData.id);
         }
     }
 
@@ -201,12 +206,7 @@ class CreateIrrigationSchedule extends Component {
                 }
                 irrayArray.push(obj);
             })
-
-            SubmitIrregationSchedule(irrayArray).then(resp => {
-                if (resp) {
-                    this.listPath();
-                }
-            })
+            this.props.SubmitIrregationSchedule(irrayArray);
         })
     }
 
@@ -357,9 +357,10 @@ class CreateIrrigationSchedule extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        cropDetails: state && state.user && state.user.farmDetails ? state.user.farmDetails : []
+        cropDetails: state && state.user && state.user.farmDetails ? state.user.farmDetails : [],
+        farmerData: state && state.farmer ? state.farmer : {}
     };
 }
 
 
-export default connect(mapStateToProps)(CreateIrrigationSchedule)
+export default connect(mapStateToProps, { SubmitIrregationSchedule })(CreateIrrigationSchedule)

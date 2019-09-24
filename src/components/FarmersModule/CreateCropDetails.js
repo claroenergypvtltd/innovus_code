@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitCropDetails } from '../../actions/FarmersAction'
 import { getCategoryList, getSpecificCategory } from '../../actions/categoryAction';
 
 class CreateCropDetails extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
             submitted: false,
@@ -26,7 +23,6 @@ class CreateCropDetails extends Component {
         }
     }
 
-
     componentDidMount() {
         if (this.props.location && this.props.location.state && this.props.location.state.farmId) {
             this.setState({ farmId: this.props.location.state.farmId })
@@ -37,6 +33,16 @@ class CreateCropDetails extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({ categoryData: nextProps.getCategory })
+
+        if (nextProps.farmerData.cropAddStatus == "200") {
+            this.pageRedirect();
+        }
+
+        if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas && nextProps.categoryData.specificData.data.datas.length > 0) {
+            let resp = nextProps.categoryData.specificData.data.datas
+            this.setState({ subCategoryData: resp })
+        }
+
     }
 
 
@@ -52,12 +58,7 @@ class CreateCropDetails extends Component {
             let obj = {
                 "categoryId": this.state.categoryId
             }
-
-            this.props.getSpecificCategory(obj, true).then(resp => {
-                if (resp) {
-                    this.setState({ subCategoryData: resp.data && resp.data.datas })
-                }
-            })
+            this.props.getSpecificCategory(obj, true)
         })
     }
 
@@ -80,11 +81,7 @@ class CreateCropDetails extends Component {
                 "expectedQuantity": this.state.quantity
             }
 
-            this.props.SubmitCropDetails(obj).then(resp => {
-                if (resp && resp.data) {
-                    this.pageRedirect();
-                }
-            })
+            this.props.SubmitCropDetails(obj);
         })
     }
 
@@ -258,7 +255,7 @@ class CreateCropDetails extends Component {
 
                                             <div className="login-btn float-right">
                                                 <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
-                                                <button className="btn btn-warning" onClick={this.pageRedirect}>{window.strings.CANCEL}</button>
+                                                <button type="button" className="btn btn-warning" onClick={this.pageRedirect}>{window.strings.CANCEL}</button>
                                             </div>
                                         </div>
 
@@ -276,7 +273,9 @@ class CreateCropDetails extends Component {
 
 function mapStateToProps(state) {
     return {
-        getCategory: state.category && state.category.Lists ? state.category.Lists : []
+        getCategory: state.category && state.category.Lists ? state.category.Lists : [],
+        farmerData: state.farmer ? state.farmer : {},
+        categoryData: state.category ? state.category : {}
     };
 }
 
