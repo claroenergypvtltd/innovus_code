@@ -9,7 +9,7 @@ import {
     UPDATE_FARMDETAILS
 } from '../constants/actionTypes';
 
-const initialstate = {
+const initialState = {
     formDatas: {},
     cropDetails: {},
     contactDatas: '',
@@ -22,7 +22,7 @@ const initialstate = {
 };
 
 
-export default function (state = initialstate, action) {
+export default function (state = initialState, action) {
     switch (action.type) {
         case CONTACT_DETAILS:
             return state = {

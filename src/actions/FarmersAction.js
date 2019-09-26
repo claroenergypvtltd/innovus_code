@@ -76,7 +76,6 @@ export const SubmitCropDetails = (formData) => {
             if (resp) {
                 toastr.success(resp && resp.message);
                 dispatch({ type: CROP_DETAILS, cropAddStatus: resp.status });
-                // return resp
             }
         }).catch((error) => {
             console.error(error);
@@ -96,7 +95,6 @@ export const SubmitIrregationSchedule = (formData) => dispatch => {
         if (resp) {
             toastr.success(resp && resp.message);
             dispatch({ type: IRRIGATION_SCHEDULE, irrigationStatus: resp.status })
-            // return resp
         }
     }).catch((error) => {
         console.error("error", error);

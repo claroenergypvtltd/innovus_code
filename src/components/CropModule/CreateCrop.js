@@ -37,17 +37,19 @@ class CreateCrop extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({ categoryData: nextProps.getCategory })
 
-        if (nextProps && nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas && nextProps.categoryData.specificData.data.datas.length > 0) {
+        if (nextProps && nextProps.categoryData && nextProps.categoryData.specificData
+            && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas
+            && nextProps.categoryData.specificData.data.datas.length > 0) {
             let Data = nextProps.categoryData.specificData.data.datas[0];
             this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId });
         }
 
 
-        if (nextProps.categoryData.createdStatus == "200") {
+        if (nextProps.categoryData && nextProps.categoryData.createdStatus == "200") {
             store.dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: "" })
             this.redirectPage();
         }
-        if (nextProps.categoryData.updatedStatus == "200") {
+        if (nextProps.categoryData && nextProps.categoryData.updatedStatus == "200") {
             store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
             this.redirectPage();
         }

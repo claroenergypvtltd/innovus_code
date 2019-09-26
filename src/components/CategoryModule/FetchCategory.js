@@ -39,7 +39,7 @@ class CategoryList extends Component {
             this.setState({ data: Lists });
         }
 
-        if (newProps.categoryData.deletedStatus == "200") {
+        if (newProps.categoryData && newProps.categoryData.deletedStatus == "200") {
             store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
             this.getCategoryList();
         }

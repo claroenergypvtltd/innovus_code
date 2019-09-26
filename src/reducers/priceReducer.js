@@ -1,6 +1,6 @@
-import { PRICE_FETCH_SUCCESS, PRICE_CREATE_SUCCESS, PRICE_DELETE_SUCCESS, PRICE_UPDATE_SUCCESS, PRICE_SPECIFIC_DATA_SUCCESS } from '../constants/actionTypes'; } from '../constants/actionTypes'
+import { PRICE_FETCH_SUCCESS, PRICE_CREATE_SUCCESS, PRICE_DELETE_SUCCESS, PRICE_UPDATE_SUCCESS, PRICE_SPECIFIC_DATA_SUCCESS } from '../constants/actionTypes';
 
-const initialstate = {
+const initialState = {
     Lists: [],
     count: 0,
     specificData: [],
@@ -9,39 +9,38 @@ const initialstate = {
     deletedData: []
 }
 
-export default function (state = initialstate, action) {
+export default function (state = initialState, action) {
 
     switch (action.type) {
 
         case PRICE_FETCH_SUCCESS:
             return state = {
                 ...state,
-                Lists: action.List,
-                count: action.count
+                Lists: action.List
             }
 
         case PRICE_SPECIFIC_DATA_SUCCESS:
             return state = {
                 ...state,
-                specificData: action.resp
+                specificData: action.specificData
             }
 
         case PRICE_CREATE_SUCCESS:
             return state = {
                 ...state,
-                createdData: action.resp
+                createdData: action.createdData
             }
 
         case PRICE_UPDATE_SUCCESS:
             return state = {
                 ...state,
-                updatedData: action.resp
+                updatedData: action.updatedData
             }
 
         case PRICE_DELETE_SUCCESS:
             return state = {
                 ...state,
-                deletedData: action.resp
+                deleteStatus: action.deleteStatus
             }
 
         default:

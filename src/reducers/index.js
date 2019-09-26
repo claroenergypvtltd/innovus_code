@@ -5,6 +5,7 @@ import categoryReducer from './categoryReducer';
 import UserManagementReducer from './userManagementReducer'
 import FarmerReducer from './FarmerReducer'
 import cropReducer from './cropReducer'
+import priceReducer from './priceReducer'
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 export default combineReducers({
@@ -14,6 +15,7 @@ export default combineReducers({
     category: categoryReducer,
     farmer: FarmerReducer,
     user: UserManagementReducer,
-    crop: cropReducer
+    crop: cropReducer,
+    price: priceReducer
 });
 

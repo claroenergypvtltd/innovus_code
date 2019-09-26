@@ -14,7 +14,7 @@ export const endPoint = {
     "irrigation": "/irrigation",
     "kyc": "/kyc",
 
-    "price": "/price",
+    "price": "/inventorys",
 
     "certificate": "/certificate",
     "settings": "/settings",

@@ -84,11 +84,18 @@ export const Translation = {
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
         "CROP": {
-            "CROP_NAME": "Crop Name",
-            "CROP_TYPE": "Type",
+            "WEIGHT": "Weight",
+            "PRICE": "Price",
 
             "CREATETITLE": "Create Crop",
             "EDITTITLE": "Edit Crop",
+        },
+
+        "PRICE": {
+            "CROP_NAME": "Crop Name",
+
+            "CREATETITLE": "Create Price",
+            "EDITTITLE": "Edit Price",
         },
 
         "SUBMIT": "Save",
