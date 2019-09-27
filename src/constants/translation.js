@@ -84,8 +84,18 @@ export const Translation = {
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
         "CROP": {
+            "WEIGHT": "Weight",
+            "PRICE": "Price",
+
             "CREATETITLE": "Create Crop",
             "EDITTITLE": "Edit Crop",
+        },
+
+        "PRICE": {
+            "CROP_NAME": "Crop Name",
+
+            "CREATETITLE": "Create Price",
+            "EDITTITLE": "Edit Price",
         },
 
         "SUBMIT": "Save",
@@ -126,6 +136,8 @@ export const Translation = {
 
         "PRICE": {
             "LISTTITLE": "Price Master",
+            "LIST_PRICE": "List Price",
+            "ADD_PRICE": "Add Price"
         },
 
         "ORDER": {
@@ -204,7 +216,8 @@ export const Translation = {
             "SELLING_PRICE": "Selling Price",
             "TOTAL_VALUE": "Total Value",
             "DESCRIPTION": "Description",
-            "SHOWING_DATE": "Showing Date"
+            "SOWING_DATE": "Sowing Date",
+            "SOW_DATE": "Sow Date"
 
         },
 

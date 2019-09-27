@@ -48,7 +48,16 @@ export const Sidebar = [
                 {Label.productLabel}
             </span>
         ),
-        path: "/inprogress",
+        path: path.products.list,
+    },
+    {
+        name: (
+            <span className="menu-list product">
+                <i />
+                {Label.priceLabel}
+            </span>
+        ),
+        path: path.price.list,
     },
     {
         name: (

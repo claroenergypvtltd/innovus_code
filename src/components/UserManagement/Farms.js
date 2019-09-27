@@ -13,10 +13,10 @@ class Farms extends React.Component {
         };
     }
     tabChange = (tabIndex) => {
-        this.setState({ tabIndex: tabIndex});
-     }
+        this.setState({ tabIndex: tabIndex });
+    }
     render() {
-        console.log("this.props",this.props);
+        console.log("this.props", this.props);
         return (
             <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.tabChange(tabIndex)}
             >
@@ -26,7 +26,7 @@ class Farms extends React.Component {
                 </TabList>
 
                 <TabPanel>
-                    <FarmList farmerId = {this.props.farmerId} />
+                    <FarmList farmerId={this.props.farmerId} />
                 </TabPanel>
 
                 <TabPanel>

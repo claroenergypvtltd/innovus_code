@@ -3,19 +3,25 @@ import { connect } from 'react-redux';
 import DataTableDynamic from '../../shared/DataTableDynamic';
 import { resorceJSON } from '../../libraries';
 import { utils } from '../../services/utils.services';
+import PropTypes from "prop-types";
 
 class CropList extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       cropList: [],
       columns: resorceJSON.CropList,
       data: [],
+      isBooked: true
     };
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('newProps', newProps.crops);
     this.setState({ cropList: newProps.farmDataDetail.crops });
   }
 
@@ -31,13 +37,34 @@ class CropList extends React.Component {
     console.log('rowrowrowrowrowrow', row);
   };
 
+  irrigationPage = (Data) => {
+    this.context.router.history.push({ pathname: '/irrigation/edit/' + Data.id, state: { farmDetails: this.props.farmDetails } });
+  }
+
+
+  ExpandedSection = ({ data }) =>
+
+
+    data && data.irrigation && data.irrigation.map((item, index) => {
+      return (
+        <div key={index}>
+          {index <= 0 && <div><h1>Irigation Schedule</h1>
+            <button className="fa fa-pencil-square-o edit_icon float-right" onClick={() => this.irrigationPage(item)}></button></div>}
+          <div>{item.name}</div>
+          <div>{utils.dateConvertion(item.irrigationDate)}</div>
+          <i className="fa fa-check" aria-hidden="true" />
+          <button>{!item.isBooked ? 'Book' : 'Booked'} </button>
+        </div>
+      );
+    });
+
+
   render() {
-    const expandableComponent = <ExpandedSection />;
+    const expandableComponent = <this.ExpandedSection />
 
     const data =
       this.state.cropList &&
       this.state.cropList.map((item, index) => {
-        console.log('time', utils.dateConvertion(item.sowDate));
         return {
           cropName: item.category.description,
           cropVariety: item.cropType,
@@ -49,13 +76,11 @@ class CropList extends React.Component {
         };
       });
 
-    console.log('data', data);
     return (
       <div>
         <DataTableDynamic
           tableHead={this.state.columns}
           tableDatas={data}
-          handleEdit={this.itemEdit}
           handleView={this.itemView}
           expandable={true}
           pagination={true}
@@ -66,18 +91,6 @@ class CropList extends React.Component {
   }
 }
 
-const ExpandedSection = ({ data }) =>
-  data.irrigation.map((item, index) => {
-    // console.log('time', utils.dateConvertion(item.sowDate));
-    return (
-      <div key={index}>
-        <div>{item.name}</div>
-        <div>{utils.dateConvertion(item.irrigationDate)}</div>
-        <i className="fa fa-check" aria-hidden="true" />
-        <button>{!item.isBooked ? 'Book' : 'Booked'} </button>
-      </div>
-    );
-  });
 
 const mapStateToProps = state => ({
   farmDataDetail: state.user.farmDetails,

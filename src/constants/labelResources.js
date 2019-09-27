@@ -28,12 +28,14 @@ export const labelResources = {
     "paymentLabel": "Payment Management",
     "reportLabel": "Report Management",
     "productLabel": "Products",
+    "priceLabel": "Price",
     "categoryLabel": "Category Management",
     "CropLabel": "Crop",
     "couponLabel": "Coupon",
     "FAQLabel": "FAQ",
     "orderLabel": "Orders",
     "staticTemplate": "Static Template",
+    "CartLabel": "Cart"
   }
 
 }

@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux'
 import DataTableDynamic from '../../shared/DataTableDynamic';
 import { getCategoryList, DeleteCategory } from '../../actions/categoryAction';
-import { TableData } from '../../shared/Table'
-import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
-import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
+import { toastr } from '../../services/toastr.services'
+import store from '../../store/store';
+import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
 
 class CategoryList extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
             columns: resorceJSON.CategoryList,
@@ -24,10 +21,6 @@ class CategoryList extends Component {
     componentDidMount() {
         this.getCategoryList();
     }
-
-    // componentWillUpdate(newProps, newState) {
-    //     this.state.CategoryListDatas = newProps.getLists;
-    // }
 
     viewCrop(Data) {
         let ViewPage = <button onClick={() => this.itemView(Data)}>View Crop</button>
@@ -44,6 +37,11 @@ class CategoryList extends Component {
             })
 
             this.setState({ data: Lists });
+        }
+
+        if (newProps.categoryData && newProps.categoryData.deletedStatus == "200") {
+            store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
+            this.getCategoryList();
         }
     }
 
@@ -63,29 +61,6 @@ class CategoryList extends Component {
         this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id } });
     }
 
-    customConfirm(message, props, title) {
-        confirmAlert({
-            customUI: ({ onClose }) => {
-                return (
-                    <div className='deletepopup'>
-                        <h4 className="delete_popup_header">{title}</h4>
-                        <div className="delete_popup_message">
-                            <p>{message}</p>
-                            <button className="btn btn-default pull-right mrr10" onClick={() => {
-                                props.onCancel()
-                                onClose()
-                            }}><i className="fa fa-close mr15"></i>{window.strings.CANCEL}</button>
-                            <button className="btn btn-primary pull-right mrr10" onClick={() => {
-                                props.onOk()
-                                onClose()
-                            }}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button>
-                        </div>
-                    </div>
-                )
-            }
-        })
-    }
-
 
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
@@ -93,21 +68,16 @@ class CategoryList extends Component {
             onOk: () => { this.itemDelete(data.id) },
             onCancel: () => console.log('CANCEL: clicked')
         };
-        this.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
 
     itemDelete = (id) => {
-        this.props.DeleteCategory(id).then(resp => {
-            if (resp) {
-                this.getCategoryList();
-            }
-        });
+        this.props.DeleteCategory(id);
     }
 
     formPath = () => {
         this.props.history.push(path.category.add);
     }
-
 
     render() {
         return (
@@ -127,17 +97,8 @@ class CategoryList extends Component {
 function mapStateToProps(state) {
     return {
         getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
-        getCount: state && state.category && state.category.count ? state.category.count : 1
+        categoryData: state.category
     };
 }
-
-const defaultProps = {
-    getLists: [],
-    getCount: 1
-}
-
-CategoryList.defaultProps = defaultProps;
-
-
 
 export default connect(mapStateToProps, { getCategoryList, DeleteCategory })(CategoryList);

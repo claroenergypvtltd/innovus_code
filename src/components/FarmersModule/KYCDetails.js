@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
-import { SubmitKYCDetails } from '../../actions/FarmersAction'
 import PropTypes from "prop-types";
-import { path } from '../../constants'
+import { KYC_DETAILS } from '../../constants/actionTypes';
+import store from '../../store/store'
 
 class KYCDetails extends Component {
-
     static contextTypes = {
         router: PropTypes.object
     }
 
     constructor(props) {
-
         super(props);
         this.state = {
             submitted: false,
@@ -25,6 +22,17 @@ class KYCDetails extends Component {
             userData: this.props.getUserData,
             errors: {}
         }
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.farmerData.kycStatus == "200") {
+            store.dispatch({ type: KYC_DETAILS, kycStatus: "" })
+            this.listPage();
+        }
+    }
+
+    listPage = () => {
+        this.context.router.history.goBack();
     }
 
     handleInputChange = (e) => {
@@ -59,17 +67,12 @@ class KYCDetails extends Component {
             formData.append("image", this.state.file);
             formData.append("description", this.state.description);
 
-            SubmitKYCDetails(formData).then(resp => {
-                if (resp) {
-                    this.context.router.history.push(path.user.list);
-                }
-            })
+            this.props.SubmitKYCDetails(formData)
         })
     }
 
     render() {
         const { errors } = this.state;
-        console.log("err", errors);
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -100,9 +103,6 @@ class KYCDetails extends Component {
                                         </div>
 
 
-
-
-
                                         <div className="form-group pt-3">
 
                                             <label>{window.strings['FARMERS']['DESCRIPTION']}</label>
@@ -121,8 +121,6 @@ class KYCDetails extends Component {
                                             />
                                             {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['FARMERS']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
-
 
                                         <div className="form-group pt-3">
 
@@ -165,7 +163,8 @@ class KYCDetails extends Component {
 
 function mapStateToProps(state) {
     return {
-        getUserData: state && state.farmer && state.farmer.contactDatas ? state.farmer.contactDatas : []
+        getUserData: state && state.farmer && state.farmer.contactDatas ? state.farmer.contactDatas : [],
+        farmerData: state.farmer ? state.farmer : {},
     };
 }
 

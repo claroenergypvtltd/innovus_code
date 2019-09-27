@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import FetchUser from './FetchUser';
 import { Constant } from '../../constants';
 import { Form, Row, Col } from 'react-bootstrap';
 import { path } from '../../constants';
+import { SearchBar } from '../../shared'
+import { connect } from 'react-redux';
+
+import { fetchUsers } from '../../actions/UserAction';
 
 
-class User extends React.Component {
+class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tabIndex: Constant.CONSTANT.ZERO,
       selectedRoleId: Constant.CONSTANT.THREE,
       search: '',
+      searchResponse: []
     };
   }
 
@@ -24,10 +29,7 @@ class User extends React.Component {
         : Constant.CONSTANT.TWO;
     this.setState({ tabIndex: tabIndex, selectedRoleId: roleId });
   };
-  // onhandleChange = (e) => {
-  //    e.preventDefault();
-  //    this.setState({ search: e.target.value });
-  // }
+
   handlePageChange = e => {
     e.preventDefault();
     this.props.history.push(path.farmer.add);
@@ -35,22 +37,34 @@ class User extends React.Component {
 
   handleSearch = e => {
     e.preventDefault();
-    console.log('this.refs', this.refs);
-    //  this.refs.fetchUser.getUserList();
+    this.setState({ search: e.target.value })
   };
+
+  searchResult = () => {
+    if (this.state.search) {
+      this.setState({ farmerSearch: this.state.search })
+    }
+  }
+
+  resetSearch = () => {
+    this.setState({ farmerSearch: '', search: '' })
+  }
+
 
   render() {
     let stateValue = this.state;
     return (
       <Form>
+        <div className="col-md-6 s-left">
+          <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+        </div>
+
         <div>
           <Row>
             <Col xs={6} md={4}>
               <h3>{window.strings.USERMANAGEMENT.USER}</h3>
             </Col>
-            {/* <Col xs={6} md={4}>
-                     <input type="text" className="form-control" placeholder="Search" name="search" value={this.state.search} onChange={this.onhandleChange} />
-                  </Col> */}
+
             <Col xs={6} md={4}>
               <button
                 className="btn btn-warning"
@@ -73,14 +87,12 @@ class User extends React.Component {
 
             <TabPanel>
               <FetchUser
-                ref="fetchUser"
                 roleId={this.state.selectedRoleId}
-                searchText={this.state.search}
+                searchText={this.state.farmerSearch}
               />
             </TabPanel>
             <TabPanel>
               <FetchUser
-                ref="fetchUser"
                 roleId={this.state.selectedRoleId}
                 searchText={this.state.search}
               />
@@ -91,5 +103,9 @@ class User extends React.Component {
     );
   }
 }
+const mapStateToProps = () => ({
 
-export default User;
+});
+
+export default connect(mapStateToProps, { fetchUsers })(User);
+

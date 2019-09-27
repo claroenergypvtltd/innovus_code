@@ -7,9 +7,10 @@ import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
+import store from '../../store/store';
+import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
 
 class ViewCategory extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -26,6 +27,18 @@ class ViewCategory extends Component {
         this.getSpecificData();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.categoryData.deletedStatus == "200") {
+            store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
+            this.getSpecificData();
+        }
+
+        if (nextProps.categoryData.specificData.data.datas) {
+            let Data = nextProps.categoryData.specificData.data;
+            this.setState({ CategoryListDatas: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage })
+        }
+    }
+
     getSpecificData() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             this.setState({ categoryId: this.props.location.state.categoryId });
@@ -37,11 +50,7 @@ class ViewCategory extends Component {
                 "categoryId": this.props.location.state.categoryId
             }
 
-            getSpecificCategory(obj, true).then(resp => {
-                if (resp && resp.data) {
-                    this.setState({ CategoryListDatas: resp.data.datas, pageCount: resp.data.totalCount / this.state.itemPerPage })
-                }
-            })
+            this.props.getSpecificCategory(obj, true);
         }
     }
 
@@ -80,11 +89,7 @@ class ViewCategory extends Component {
     }
 
     itemDelete = (id) => {
-        this.props.DeleteCategory(id).then(resp => {
-            if (resp) {
-                this.getSpecificData();
-            }
-        });
+        this.props.DeleteCategory(id);
     }
 
     formPath = () => {
@@ -109,7 +114,6 @@ class ViewCategory extends Component {
         return (
             <div>
                 <div>
-                    {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
                     <h2>List Crop</h2>
                     <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button>
                 </div>
@@ -128,8 +132,9 @@ class ViewCategory extends Component {
 
 function mapStateToProps(state) {
     return {
+        categoryData: state.category,
         getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
-        getCount: state && state.category && state.category.count ? state.category.count : 1
+        // getCount: state && state.category && state.category.count ? state.category.count : 1
     };
 }
 
@@ -142,4 +147,4 @@ ViewCategory.defaultProps = defaultProps;
 
 
 
-export default connect(mapStateToProps, { DeleteCategory })(ViewCategory);
+export default connect(mapStateToProps, { DeleteCategory, getSpecificCategory })(ViewCategory);

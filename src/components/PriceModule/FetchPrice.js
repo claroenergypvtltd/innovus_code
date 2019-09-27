@@ -1,46 +1,45 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux'
+
 import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
+import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
-import { getCropList } from '../../actions/cropAction'
+import { getPriceList } from '../../actions/priceAction'
 import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
-import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
-import store from '../../store/store';
+import CreatePrice from '../../components/PriceModule/Createprice'
+import Store from '../../store/store';
+import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
 
-class FetchCrop extends Component {
+class FetchPrice extends Component {
 
     constructor(props) {
 
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "Image", "Description"],
-            CropLists: props.getLists,
+            TableHead: ["Product ID", "Product Name", "Units", "Price"],
+            PriceLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
             currentPage: 1,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
-            limitValue: resorceJSON.TablePageData.paginationLength,
+            limitValue: resorceJSON.TablePageData.paginationLength
         }
     }
 
     componentDidMount() {
-        this.getCropList();
+        this.getPriceList();
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.categoryData.deletedStatus == "200") {
-            store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
-            this.getCropList();
-        }
-
-        if (newProps.cropData.List) {
-            let Data = newProps.cropData.List;
-            this.setState({ CropLists: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage })
+        if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
+            let respData = newProps.priceData.Lists.datas;
+            this.setState({ PriceLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
         }
     }
 
@@ -51,31 +50,34 @@ class FetchCrop extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            this.getCropList();
+            let serObj = {
+                "search": this.state.search
+            };
+            this.getPriceList(serObj);
         }
     }
 
     resetSearch = () => {
         if (this.state.search) {
             this.setState({ search: '' }, () => {
-                this.getCropList();
+                this.getPriceList();
             });
         }
     }
 
-    getCropList() {
+    getPriceList() {
         let obj = {
-            "isallcrop": true,
             "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
+            "categoryId": ""
         }
 
-        this.props.getCropList(obj);
+        this.props.getPriceList(obj)
     }
 
-    itemEdit = (catId) => {
-        this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId } });
+    itemEdit = (priceId) => {
+        this.props.history.push({ pathname: path.price.edit + priceId, state: { priceId: priceId } });
     }
 
 
@@ -89,35 +91,37 @@ class FetchCrop extends Component {
     }
 
     itemDelete = (id) => {
-        this.props.DeleteCategory(id);
+        this.props.DeleteCategory(id)
+            .then(resp => {
+                if (resp) {
+                    this.getPriceList();
+                }
+            });
     }
 
     formPath = () => {
-        this.props.history.push(path.crop.add);
+        this.props.history.push(path.price.add);
     }
 
     onChange = (data) => {
+
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
-                this.getCropList();
+                this.getPriceList();
             });
         }
     }
 
-
     render() {
-
-        let CategoryData = this.state.CropLists ? this.state.CropLists : [];
-        let CategoryList = this.state.CropLists && this.state.CropLists.map((item, index) => {
-            let catImg = <img src={imageBaseUrl + item.image} height="30px" width="30px" />
-            return { "itemList": [item.name, catImg, item.description], "itemId": item.id }
+        let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
+            return { "itemList": [item.categoryAmount && item.categoryAmount.id, item.name, item.categoryAmount && item.categoryAmount.discountUnit, item.categoryAmount && item.categoryAmount.amount], "itemId": item.id }
         })
 
         return (
             <div>
                 <div>
-                    <h2>List Crop</h2>
-                    <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button>
+                    <h2>{window.strings.PRICE.LIST_PRICE}</h2>
+                    <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button>
                 </div>
                 <div className="col-md-6 s-left">
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
@@ -134,11 +138,9 @@ class FetchCrop extends Component {
 
 function mapStateToProps(state) {
     return {
-        categoryData: state.category,
-        cropData: state.crop,
         getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
-        getCount: state && state.category && state.category.count ? state.category.count : 1
+        priceData: state.price ? state.price : {}
     };
 }
 
-export default connect(mapStateToProps, { getCropList, DeleteCategory })(FetchCrop);
+export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchPrice);

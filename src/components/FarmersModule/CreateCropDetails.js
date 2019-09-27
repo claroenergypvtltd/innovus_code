@@ -1,29 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitCropDetails } from '../../actions/FarmersAction'
 import { getCategoryList, getSpecificCategory } from '../../actions/categoryAction';
 
 class CreateCropDetails extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
             submitted: false,
             cropName: '',
             type: '',
+            sowDate: '',
             harvestDate: '',
             quantity: '',
             image: '',
             categoryId: '',
             subCategoryId: '',
-            farmDatas: this.props.getFarmData,
+            farmId: '',
             errors: {}
         }
     }
+
+    componentDidMount() {
+        if (this.props.location && this.props.location.state && this.props.location.state.farmId) {
+            this.setState({ farmId: this.props.location.state.farmId })
+        }
+        this.props.getCategoryList();
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ categoryData: nextProps.getCategory })
+
+        if (nextProps.farmerData.cropAddStatus == "200") {
+            this.pageRedirect();
+        }
+
+        if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas && nextProps.categoryData.specificData.data.datas.length > 0) {
+            let resp = nextProps.categoryData.specificData.data.datas
+            this.setState({ subCategoryData: resp })
+        }
+
+    }
+
 
     handleInputChange = (e) => {
         this.setState({
@@ -35,15 +56,14 @@ class CreateCropDetails extends Component {
         this.setState({ categoryId: e.target.value }, () => {
 
             let obj = {
-                "categoryId" : this.state.categoryId
+                "categoryId": this.state.categoryId
             }
-
-            getSpecificCategory(obj, true).then(resp => {
-                if (resp) {
-                    this.setState({ subCategoryData: resp.data && resp.data.datas })
-                }
-            })
+            this.props.getSpecificCategory(obj, true)
         })
+    }
+
+    pageRedirect = () => {
+        this.props.history.goBack();
     }
 
     handleSubmit = (e) => {
@@ -53,36 +73,17 @@ class CreateCropDetails extends Component {
             submitted: true
         }, () => {
             let obj = {
-                "farmId": this.state.farmDatas && this.state.farmDatas.id,
-                // "farmId": 27,
-                "categoryId": this.state.categoryId,
+                "farmId": this.state.farmId,
+                "categoryId": this.state.subCategoryId,
                 "cropType": this.state.type,
                 "expectedHarvestDateStr": this.state.harvestDate,
-                "sowDateStr": this.state.harvestDate,
+                "sowDateStr": this.state.sowDate,
                 "expectedQuantity": this.state.quantity
             }
 
-            this.props.dispatch(SubmitCropDetails(obj)).then(resp => {
-                if (resp && resp.data) {
-                    this.props.childData(4); //5 th tab
-                }
-            })
-
+            this.props.SubmitCropDetails(obj);
         })
-
     }
-
-    componentDidMount() {
-        this.props.dispatch(getCategoryList())
-    }
-
-
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({ categoryData: nextProps.getCategory })
-    }
-
-
 
     render() {
         const { errors } = this.state;
@@ -106,58 +107,36 @@ class CreateCropDetails extends Component {
                             <div className="p-5 clearfix">
                                 <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
-                                        <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['CROP_NAME']}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['CROP_NAME']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.cropName
-                                                })}
-                                                name="cropName"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.cropName}
-                                                required
-
-                                            />
-
-                                            {this.state.submitted && !this.state.cropName && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
 
                                         <div className="form-group pt-3">
-
-                                            <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
+                                            <label>{window.strings['CATEGORY']['CATE_NAME']}</label>
 
                                             <select required name="categoryId" className="form-control col-xs-6 col-sm-4 " value={this.state.categoryId} onChange={this.onChangeCategory}>
-                                                <option value="0">Select Category</option>
+                                                <option value="0">{window.strings['CATEGORY']['CATE_NAME']}</option>
                                                 {categoryDropDown}
                                             </select>
-
-                                            {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
 
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['CATEGORY']['SUB_CATEGORY']}</label>
-
+                                            <label>{window.strings['CROP']['CROP_NAME']}</label>
                                             <select required name="subCategoryId" className="form-control col-xs-6 col-sm-4 " value={this.state.subCategoryId} onChange={this.handleInputChange}>
-                                                <option value="0">Select Sub Category</option>
+                                                <option value="0">{window.strings['CROP']['CROP_NAME']}</option>
                                                 {subCategoryDropDown}
                                             </select>
 
-                                            {this.state.submitted && !this.state.subCategoryId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.subCategoryId && <div className="mandatory">{window.strings['CROP']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                         <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['TYPE']}</label>
+                                            <label>{window.strings['CROP']['CROP_TYPE']}</label>
 
                                             <input
                                                 type="text"
-                                                placeholder={window.strings['FARMERS']['TYPE']}
+                                                placeholder={window.strings['CROP']['CROP_TYPE']}
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.type
                                                 })}
@@ -167,7 +146,27 @@ class CreateCropDetails extends Component {
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.type && <div className="mandatory">{window.strings['FARMERS']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.type && <div className="mandatory">{window.strings['CROP']['CROP_TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['SOW_DATE']}</label>
+
+                                            <input
+                                                type="date"
+                                                placeholder={window.strings['FARMERS']['SOW_DATE']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.sowDate
+                                                })}
+                                                name="sowDate"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.sowDate}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.sowDate && <div className="mandatory">{window.strings['FARMERS']['SOW_DATE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                         <div className="form-group pt-3">
@@ -187,6 +186,26 @@ class CreateCropDetails extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.harvestDate && <div className="mandatory">{window.strings['FARMERS']['HARVEST_DATE'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
+                                        <div className="form-group pt-3">
+
+                                            <label>{window.strings['FARMERS']['SELLING_PRICE']}</label>
+
+                                            <input
+                                                type="number"
+                                                placeholder={window.strings['FARMERS']['SELLING_PRICE']}
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.sellingPrice
+                                                })}
+                                                name="sellingPrice"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.sellingPrice}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.sellingPrice && <div className="mandatory">{window.strings['FARMERS']['SELLING_PRICE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
 
@@ -210,24 +229,7 @@ class CreateCropDetails extends Component {
                                             {this.state.submitted && !this.state.quantity && <div className="mandatory">{window.strings['FARMERS']['QUANTITY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group pt-3">
 
-                                            <label>{window.strings['FARMERS']['SELLING_PRICE']}</label>
-
-                                            <input
-                                                type="number"
-                                                placeholder={window.strings['FARMERS']['SELLING_PRICE']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.sellingPrice
-                                                })}
-                                                name="sellingPrice"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.sellingPrice}
-                                                required
-
-                                            />
-                                            {this.state.submitted && !this.state.sellingPrice && <div className="mandatory">{window.strings['FARMERS']['SELLING_PRICE'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
 
 
                                         <div className="form-group pt-3">
@@ -249,34 +251,11 @@ class CreateCropDetails extends Component {
                                             {this.state.submitted && !this.state.totalValue && <div className="mandatory">{window.strings['FARMERS']['TOTAL_VALUE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-
-                                        <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['DESCRIPTION']}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['DESCRIPTION']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.description
-                                                })}
-                                                name="description"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.description}
-                                                required
-
-                                            />
-                                            {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['FARMERS']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-
-
-                                        <h3>Image Upload</h3>
-
-
                                         <div className="col-md-12 pt-3 p-0">
 
                                             <div className="login-btn float-right">
-                                                <button type="submit" className="btn btn-primary">Next Step</button>
+                                                <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+                                                <button type="button" className="btn btn-warning" onClick={this.pageRedirect}>{window.strings.CANCEL}</button>
                                             </div>
                                         </div>
 
@@ -294,10 +273,11 @@ class CreateCropDetails extends Component {
 
 function mapStateToProps(state) {
     return {
-        getFarmData: state && state.farmer && state.farmer.farmDetails ? state.farmer.farmDetails : [],
-        getCategory: state.category && state.category.Lists ? state.category.Lists : []
+        getCategory: state.category && state.category.Lists ? state.category.Lists : [],
+        farmerData: state.farmer ? state.farmer : {},
+        categoryData: state.category ? state.category : {}
     };
 }
 
 
-export default connect(mapStateToProps)(CreateCropDetails)
+export default connect(mapStateToProps, { getCategoryList, getSpecificCategory, SubmitCropDetails })(CreateCropDetails)

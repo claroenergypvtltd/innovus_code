@@ -17,11 +17,23 @@ export const path = {
         list: process.env.PUBLIC_URL + '/crop',
         edit: process.env.PUBLIC_URL + '/crop/edit/',
     },
+    cart: {
+        add: process.env.PUBLIC_URL + '/cart/add',
+        list: process.env.PUBLIC_URL + '/cart',
+        edit: process.env.PUBLIC_URL + '/cart/edit/',
+    },
     products: {
         add: process.env.PUBLIC_URL + '/products/add',
         list: process.env.PUBLIC_URL + '/products',
         edit: process.env.PUBLIC_URL + '/products/update/',
     },
+
+    price: {
+        add: process.env.PUBLIC_URL + '/price/add',
+        list: process.env.PUBLIC_URL + '/price',
+        edit: process.env.PUBLIC_URL + '/price/edit/',
+    },
+
     reports: {
         add: process.env.PUBLIC_URL + '/reports/add',
         list: process.env.PUBLIC_URL + '/reports',
@@ -56,7 +68,7 @@ export const path = {
     farmer: {
         list: process.env.PUBLIC_URL + '/user',
         add: process.env.PUBLIC_URL + '/user/farmers/add',
-        // edit: process.env.PUBLIC_URL + '/user/update/',
+        edit: process.env.PUBLIC_URL + '/user/farmers/edit/',
     },
     aboutUs: {
         list: process.env.PUBLIC_URL + '/aboutus',

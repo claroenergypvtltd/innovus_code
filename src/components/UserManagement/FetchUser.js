@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import { resorceJSON } from '../../libraries';
 import PropTypes from 'prop-types';
 // import GoogleMapPage from '../../shared/GoogleMapPage';
+import { toastr } from '../../services/toastr.services';
+import { path } from '../../constants';
+import store from '../../store/store';
+import { FARMER_DELETE_SUCCESS } from '../../constants/actionTypes'
 
 class FetchUser extends React.Component {
   static contextTypes = {
@@ -14,13 +18,18 @@ class FetchUser extends React.Component {
     super(props);
     this.state = {
       roleId: props.roleId,
-      columns: resorceJSON.UserManagementList,
-      data: [],
+      columns: resorceJSON.UserManagementList
     };
   }
 
   componentWillMount() {
     this.getUserList();
+  }
+
+  componentDidUpdate(preProps) {
+    if (preProps.searchText != this.props.searchText) {
+      this.getUserList();
+    }
   }
 
   getUserList = () => {
@@ -31,18 +40,31 @@ class FetchUser extends React.Component {
   };
 
   componentWillReceiveProps(newProps) {
-    if (newProps.list) {
-      this.setState({ data: newProps.list });
+    debugger;
+    if (newProps.userData && newProps.userData.userList.datas) {
+      this.setState({ data: newProps.userData.userList.datas });
     }
+
+    if (newProps.userData.deletedStatus == "200") {
+      store.dispatch({ type: FARMER_DELETE_SUCCESS, resp: "" });
+      this.getUserList();
+    }
+
   }
-  itemDelete = item => {
-    let self = this;
-    deleteUser(item.id).then(function (resp) {
-      if (resp) {
-        self.getUserList();
-      }
-    });
+  itemDelete = (item) => {
+    this.props.deleteUser(item)
   };
+
+
+  handleDelete = (data, e) => {
+    e.preventDefault();
+    let message = window.strings.DELETEMESSAGE;
+    const toastrConfirmOptions = {
+      onOk: () => { this.itemDelete(data.id) },
+      onCancel: () => console.log('CANCEL: clicked')
+    };
+    toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
+  }
 
   itemView = (e, item) => {
     let farmerId = item.id;
@@ -50,11 +72,20 @@ class FetchUser extends React.Component {
       pathname: '/user/view/' + farmerId,
       state: { farmerData: item },
     });
+
   };
 
-  itemEdit = () => {
-    console.log('itemEdit-------');
+  itemEdit = (Data) => {
+    this.context.router.history.push({
+      pathname: path.farmer.edit + Data.id,
+      state: { farmerId: Data.id }
+    })
   };
+
+  onchangePagination(e) {
+    e.preventDefault();
+    return true
+  }
 
   render() {
     return (
@@ -64,8 +95,8 @@ class FetchUser extends React.Component {
           tableDatas={this.state.data}
           handleEdit={this.itemEdit}
           handleView={this.itemView}
-          handleDelete={this.itemDelete}
-          pagination={true}
+          handleDelete={this.handleDelete}
+          pagination={this.onchangePagination}
         />
         {/* <GoogleMapPage /> */}
       </div>
@@ -74,10 +105,10 @@ class FetchUser extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  list: state.user.userList,
+  userData: state.user
 });
 
 export default connect(
   mapStateToProps,
-  { fetchUsers },
+  { fetchUsers, deleteUser },
 )(FetchUser);

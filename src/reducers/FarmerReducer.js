@@ -1,28 +1,39 @@
 import {
-    PERSONAL_INFO,
     CONTACT_DETAILS,
     FARM_DETAILS,
     CROP_DETAILS,
+    UPDATE_CONTACT_DETAILS,
+    KYC_DETAILS,
+    IRRIGATION_SCHEDULE,
+    ADD_FARMDETAILS,
+    UPDATE_FARMDETAILS
 } from '../constants/actionTypes';
 
-const initialstate = {
+const initialState = {
     formDatas: {},
     cropDetails: {},
+    contactDatas: '',
+    updateContactDatas: '',
+    cropAddStatus: '',
+    kycStatus: '',
+    irrigationStatus: '',
+    addFarmStatus: '',
+    updateFarmStatus: ''
 };
 
 
-export default function (state = initialstate, action) {
+export default function (state = initialState, action) {
     switch (action.type) {
-        // case PERSONAL_INFO:
-        //     return state = {
-        //         ...state,
-        //         formDatas: action.farmerData
-        //     }
-
         case CONTACT_DETAILS:
             return state = {
                 ...state,
                 contactDatas: action.contact
+            }
+
+        case UPDATE_CONTACT_DETAILS:
+            return state = {
+                ...state,
+                updateContactDatas: action.updateStatus
             }
 
         case FARM_DETAILS:
@@ -34,7 +45,31 @@ export default function (state = initialstate, action) {
         case CROP_DETAILS:
             return state = {
                 ...state,
-                cropDetails: action.crop
+                cropAddStatus: action.cropAddStatus
+            }
+
+        case KYC_DETAILS:
+            return state = {
+                ...state,
+                kycStatus: action.kycStatus
+            }
+
+        case IRRIGATION_SCHEDULE:
+            return state = {
+                ...state,
+                irrigationStatus: action.irrigationStatus
+            }
+
+        case ADD_FARMDETAILS:
+            return state = {
+                ...state,
+                addFarmStatus: action.addFarmStatus
+            }
+
+        case UPDATE_FARMDETAILS:
+            return state = {
+                ...state,
+                updateFarmStatus: action.updateFarmStatus
             }
 
         default:

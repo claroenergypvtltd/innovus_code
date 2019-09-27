@@ -4,14 +4,17 @@ import logo from '../../assets/images/logo.png';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import { SubmitFarmDetails } from '../../actions/FarmersAction'
+import { fetchFarmList, getFarmDetailData } from '../../actions/UserAction';
+import { link } from 'fs';
+import { ADD_FARMDETAILS, UPDATE_FARMDETAILS } from '../../constants/actionTypes';
+import store from '../../store/store'
 
 class CreateFarmDetails extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
             submitted: false,
+            id: '',
             name: '',
             address1: '',
             address2: '',
@@ -20,7 +23,39 @@ class CreateFarmDetails extends Component {
             city: '',
             state: '',
             errors: {},
-            getContactData: this.props.getContactData
+            userId: ''
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.location && this.props.location.state && this.props.location.state.farmerIdData) {
+            this.setState({ userId: this.props.location.state.farmerIdData })
+        }
+        if (this.props.location && this.props.location.state && this.props.location.state.farmerEditId) {
+            this.setState({ userId: this.props.location.state.farmerEditId }, () => {
+                this.props.dispatch(getFarmDetailData(this.props.location.state.farmerEditId))
+            })
+        }
+    }
+
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.farmerData.addFarmStatus == "200") {
+            store.dispatch({ type: ADD_FARMDETAILS, farm: "" });
+            this.backHandle();
+        }
+
+        if (newProps.farmerData.updateFarmStatus == "200") {
+            store.dispatch({ type: UPDATE_FARMDETAILS, farm: "" });
+            this.backHandle();
+        }
+
+        if (newProps.userData && newProps.userData.farmDetails) {
+            let resp = newProps.userData.farmDetails;
+            this.setState({
+                id: resp.id, userId: resp.userId, name: resp.name, address1: resp.address1, address2: resp.address2,
+                taluk: resp.taulk, village: resp.village, city: resp.city, state: resp.state
+            })
         }
     }
 
@@ -30,6 +65,10 @@ class CreateFarmDetails extends Component {
         })
     }
 
+    backHandle = () => {
+        this.props.history.goBack();
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
@@ -37,6 +76,7 @@ class CreateFarmDetails extends Component {
         }, () => {
             const formData = new FormData();
 
+            formData.append("id", this.state.id);
             formData.append("name", this.state.name);
             formData.append("address1", this.state.address1);
             formData.append("address2", this.state.address2);
@@ -44,20 +84,20 @@ class CreateFarmDetails extends Component {
             formData.append("village", this.state.village);
             formData.append("city", this.state.city);
             formData.append("state", this.state.state);
-            formData.append("userId", this.state.getContactData.id);
+            formData.append("userId", this.state.userId);
             formData.append("location", "[{9.86,9.99},{9.86,9.99},{9.86,9.99},{9.86,9.99}]");
 
-            this.props.dispatch(SubmitFarmDetails(formData)).then(resp => {
-                if (resp && resp.data) {
-                    this.props.childData(3); //4 th tab
-                }
-            })
+            let farmParam = false;
+            if (this.state.id) {
+                farmParam = true
+            }
+
+            this.props.dispatch(SubmitFarmDetails(formData, farmParam))
         })
     }
 
     render() {
         const { errors } = this.state;
-        console.log("err", errors);
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -208,25 +248,6 @@ class CreateFarmDetails extends Component {
                                         </div>
 
 
-                                        <div className="form-group pt-3">
-
-                                            <label>{window.strings['FARMERS']['TOTAL_AREA']}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['TOTAL_AREA']}
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.totalArea
-                                                })}
-                                                name="totalArea"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.totalArea}
-                                                required
-
-                                            />
-                                            {this.state.submitted && !this.state.totalArea && <div className="mandatory">{window.strings['FARMERS']['TOTAL_AREA'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-
                                         <h3>Map</h3>
 
                                         <h3>Image Upload</h3>
@@ -234,7 +255,8 @@ class CreateFarmDetails extends Component {
                                         <div className="col-md-12 pt-3 p-0">
 
                                             <div className="login-btn float-right">
-                                                <button type="submit" className="btn btn-primary">Next Step</button>
+                                                <button type="button" className="btn btn-warning" onClick={this.backHandle}>{window.strings.CANCEL}</button>
+                                                <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
                                             </div>
                                         </div>
 
@@ -252,8 +274,9 @@ class CreateFarmDetails extends Component {
 
 function mapStateToProps(state) {
     return {
-        getContactData: state && state.farmer && state.farmer.contactDatas ? state.farmer.contactDatas : []
-    };
+        farmerData: state.farmer,
+        userData: state.user ? state.user : {}
+    }
 }
 
 
