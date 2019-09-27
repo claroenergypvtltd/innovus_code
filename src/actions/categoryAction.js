@@ -9,10 +9,10 @@ export const getCategoryList = () => dispatch => {
 		if (resp && resp.data) {
 			dispatch({ type: CATEGORY_FETCH_SUCCESS, List: resp.data.datas, count: resp.data.totalCount })
 		} else {
-			console.log("Error when getting CategoryList");
+			console.error("Error when getting CategoryList");
 		}
 	}).catch((error) => {
-		console.log("error", error);
+		console.error("error", error);
 	})
 }
 
@@ -37,7 +37,6 @@ export const SubmitCategory = (category, Id) => dispatch => {
 				dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: resp.status })
 			}
 		}).catch(error => {
-			debugger;
 			dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: error.status })
 			console.error("error", error);
 		})
@@ -52,7 +51,7 @@ export const DeleteCategory = (id) => dispatch => {
 			dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: response.status })
 		}
 	}).catch((error) => {
-		console.log("Delete :", error.response);
+		console.error("Delete :", error.response);
 		dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: error.status })
 	})
 }
@@ -82,7 +81,7 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 			return resp;
 		}
 	}).catch((error) => {
-		console.log("error", error.resp);
+		console.error("error", error.resp);
 	})
 }
 

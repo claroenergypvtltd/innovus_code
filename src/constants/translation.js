@@ -136,6 +136,8 @@ export const Translation = {
 
         "PRICE": {
             "LISTTITLE": "Price Master",
+            "LIST_PRICE": "List Price",
+            "ADD_PRICE": "Add Price"
         },
 
         "ORDER": {

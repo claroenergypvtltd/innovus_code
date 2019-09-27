@@ -17,6 +17,11 @@ export const path = {
         list: process.env.PUBLIC_URL + '/crop',
         edit: process.env.PUBLIC_URL + '/crop/edit/',
     },
+    cart: {
+        add: process.env.PUBLIC_URL + '/cart/add',
+        list: process.env.PUBLIC_URL + '/cart',
+        edit: process.env.PUBLIC_URL + '/cart/edit/',
+    },
     products: {
         add: process.env.PUBLIC_URL + '/products/add',
         list: process.env.PUBLIC_URL + '/products',
