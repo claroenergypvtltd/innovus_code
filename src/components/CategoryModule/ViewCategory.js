@@ -113,13 +113,25 @@ class ViewCategory extends Component {
 
         return (
             <div>
-                <div>
+                <div className="title-section row">
+                <div className="title-card col-md-7">
+                    {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
+                    <h4 className="user-title">View Crop</h4>
+                    {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
+                </div>
+                <div className="right-title row col-md-5">
+                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button>
+
+                </div>
+            </div>
+                {/* <div>
                     <h2>List Crop</h2>
                     <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button>
                 </div>
                 <div className="col-md-6 s-left">
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                </div>
+                </div> */}
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
                 {this.state.CategoryListDatas && this.state.CategoryListDatas.length != 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />}
