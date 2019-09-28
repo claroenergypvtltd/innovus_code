@@ -112,7 +112,7 @@ class FarmList extends React.Component {
       <div className="row">
         {this.state.farmId ? <FarmDetails /> : Farms}   
       </div>
-      <div className="col-md-12">
+      {/* <div className="col-md-12">
           <div className="row">
             <div className="col-md-4">
             <div className="farm-card main-wrapper">
@@ -120,7 +120,7 @@ class FarmList extends React.Component {
                 <img src="" className="retailer-image" />
                 <div className="retailer-proof">
                    {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                   <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
+                   {/* <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
                 </div>
                 <div className="pl-2">
                   <p className="user-title m-0">upload</p>
@@ -134,9 +134,9 @@ class FarmList extends React.Component {
             <div className="farm-card main-wrapper">
             <div className="retailer-details">
                 <img src="" className="retailer-image" />
-                <div className="retailer-proof">
+                <div className="retailer-proof"> */} 
                    {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                   <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
+                   {/* <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
                 </div>
                 <div className="pl-2">
                   <p className="user-title m-0">upload</p>
@@ -152,7 +152,7 @@ class FarmList extends React.Component {
                 <img src="" className="retailer-image" />
                 <div className="retailer-proof">
                    {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                   <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
+                   {/* <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
                 </div>
                 <div className="pl-2">
                   <p className="user-title m-0">upload</p>
@@ -163,7 +163,7 @@ class FarmList extends React.Component {
           </div>
 </div>
 </div>
-</div>
+</div>  */}
       <div className="plus-btn"> 
          {/* <button type="submit" className="plus-icon">
          <i class="fa fa-plus"> Add Farm</i></button>  */}
