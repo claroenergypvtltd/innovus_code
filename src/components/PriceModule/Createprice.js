@@ -78,7 +78,7 @@ class CreatePrice extends Component {
 
 
     componentDidUpdate(preProps) {
-        debugger;
+
         if (preProps.priceData != this.props.priceData) {
             if (preProps.priceData && preProps.priceData.categoryAmount) {
                 this.setState({ weight: preProps.priceData.categoryAmount.rupeesize, price: preProps.priceData.categoryAmount.amount });
@@ -90,7 +90,7 @@ class CreatePrice extends Component {
         this.setState({ categoryData: nextProps.getCategory })
 
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
-            debugger;
+
             let Data = nextProps.categoryData.specificData.data;
             this.setState({ subCategoryDatas: Data.datas })
         }
@@ -125,7 +125,7 @@ class CreatePrice extends Component {
 
     handleSubCategory = (e) => {
         this.setState({ categoryId: e.target.value }, () => {
-            debugger;
+
             let obj = {
                 "categoryId": this.state.categoryId
             }

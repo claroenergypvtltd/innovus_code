@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux'
-
-// import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { getOrderList } from '../../actions/orderAction'
-// import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
-// import CreatePrice from '../../components/PriceModule/Createprice'
-import Store from '../../store/store';
-// import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
 import { Link } from 'react-router-dom'
 
 class FetchOrder extends Component {
@@ -38,7 +31,7 @@ class FetchOrder extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
+
         if (newProps.orderData && newProps.orderData.Lists && newProps.orderData.Lists.datas) {
             let respData = newProps.orderData.Lists.datas;
             this.setState({ OrderLists: respData, pageCount: newProps.orderData.Lists.totalCount / this.state.itemPerPage })
@@ -50,7 +43,7 @@ class FetchOrder extends Component {
     }
 
     searchResult = (e) => {
-        debugger;
+
         e.preventDefault();
         if (this.state.search) {
             let serObj = {
@@ -74,14 +67,8 @@ class FetchOrder extends Component {
             "search": this.state.search,
             "limit": this.state.itemPerPage
         }
-
         this.props.getOrderList(obj)
     }
-
-    // itemEdit = (priceId) => {
-    //     this.props.history.push({ pathname: 'price/edit/' + priceId, state: { priceId: priceId } });
-    // }
-
 
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
@@ -106,7 +93,7 @@ class FetchOrder extends Component {
     }
 
     onChange = (data) => {
-        debugger;
+
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
                 this.getOrderList();
@@ -117,7 +104,6 @@ class FetchOrder extends Component {
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = <Link to={path.order.list + "/" + item.id}>{window.strings.ORDER.VIEWDETAILS}</Link>
-
             return { "itemList": [item.id, '-', item.created, '-', item.status, link, ''], "itemId": item.id }
         })
 
@@ -131,8 +117,6 @@ class FetchOrder extends Component {
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
-                // handleDelete={this.handleDelete}
-                // handleEdit={this.itemEdit} 
                 />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>
@@ -144,7 +128,6 @@ class FetchOrder extends Component {
 
 function mapStateToProps(state) {
     return {
-        // getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
         orderData: state.order ? state.order : {}
     };
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux'
 
 import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
@@ -120,12 +119,12 @@ class FetchPrice extends Component {
         return (
             <div className="price">
                 <div className="clearfix title-section row">
-                <div className="title-card col-md-7">
-                    <h4 className="user-title">{window.strings.PRICE.LIST_PRICE}</h4>
-                    {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
-                </div>
-                <div className="right-title row col-md-5">
-                         <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <div className="title-card col-md-7">
+                        <h4 className="user-title">{window.strings.PRICE.LIST_PRICE}</h4>
+                        {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
+                    </div>
+                    <div className="right-title row col-md-5">
+                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                         <div className="col-md-4">
                             <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
                         </div>

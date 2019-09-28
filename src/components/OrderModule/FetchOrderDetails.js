@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux'
-
-// import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { getOrderList } from '../../actions/orderAction'
-// import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
-// import CreatePrice from '../../components/PriceModule/Createprice'
 import Store from '../../store/store';
-// import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
 import { Link } from 'react-router-dom'
 
 
@@ -39,7 +33,7 @@ class FetchOrderDetails extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
+
         if (newProps.orderDetails && newProps.orderDetails.DetailsList && newProps.orderDetails.DetailsList.datas) {
             let respData = newProps.orderDetails.DetailsList.datas;
             this.setState({ OrderLists: respData, pageCount: newProps.orderDetails.DetailsList.totalCount / this.state.itemPerPage })
@@ -51,7 +45,7 @@ class FetchOrderDetails extends Component {
     }
 
     searchResult = (e) => {
-        debugger;
+
         e.preventDefault();
         if (this.state.search) {
             let serObj = {
@@ -70,23 +64,17 @@ class FetchOrderDetails extends Component {
     }
 
     getOrderList() {
-        debugger;
+
         let obj = {
             "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
             "orderId": this.props.match.params.id
-            // "orderId": 172
 
         }
 
         this.props.getOrderList(obj)
     }
-
-    // itemEdit = (priceId) => {
-    //     this.props.history.push({ pathname: 'price/edit/' + priceId, state: { priceId: priceId } });
-    // }
-
 
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
@@ -106,12 +94,8 @@ class FetchOrderDetails extends Component {
             });
     }
 
-    // formPath = () => {
-    //     this.props.history.push('/price/add');
-    // }
-
     onChange = (data) => {
-        debugger;
+
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
                 this.getOrderList();
@@ -129,14 +113,11 @@ class FetchOrderDetails extends Component {
             <div>
                 <div>
                     <h2>List Order Details</h2>
-                    {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Price</button> */}
                 </div>
                 <div className="col-md-6 s-left">
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
-                // handleDelete={this.handleDelete}
-                // handleEdit={this.itemEdit} 
                 />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>
@@ -148,7 +129,6 @@ class FetchOrderDetails extends Component {
 
 function mapStateToProps(state) {
     return {
-        // getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
         orderDetails: state.order ? state.order : {}
     };
 }
