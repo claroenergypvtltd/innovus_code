@@ -33,8 +33,8 @@ class CropList extends React.Component {
     console.log('hgfghjd');
   };
 
-  expandableComponent = row => {
-    console.log('rowrowrowrowrowrow', row);
+  expandableComponent = rows => {
+    console.log('rowrowrowrowrowrow', rows);
   };
 
   irrigationPage = (Data) => {
@@ -85,8 +85,8 @@ class CropList extends React.Component {
           expandable={true}
           pagination={true}
           expandableComponent={expandableComponent}
-        />
-      </div>
+          />
+         </div>
     );
   }
 }

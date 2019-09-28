@@ -6,19 +6,20 @@ export function TableData(props){
   
    return (
 
-    <div>
-       <table className="table table-bordered table-striped">
+    <div className="main-wrapper">
+       <table className="table">
           <thead>
           <tr>
             {props.TableHead && props.TableHead.map((tableHead,index) =>  {
               return(
  
-                       <th key = {index} >{tableHead}</th>
-             
+                       <th key = {index} className="table-head">{tableHead}</th>
                     )
                    })}
                   <th> ACTION</th>
-           </tr>
+        
+          </tr>
+          
           </thead>
 
           <tbody>
@@ -32,10 +33,10 @@ export function TableData(props){
                                   )
                                 }
                                    <td>
-                                   <i className="fa fa-pencil-square-o edit_icon" aria-hidden="true" onClick = {() =>props.handleEdit(item.itemId)}></i>
-                                   <i className="fa fa-trash del_icon" aria-hidden="true" onClick = {() => props.handleDelete(item.itemId)}></i>
+                                    <i className="fa fa-pencil-square-o edit_icon" aria-hidden="true" onClick = {() =>props.handleEdit(item.itemId)}></i>
+                                    <i className="fa fa-trash del_icon" aria-hidden="true" onClick = {() => props.handleDelete(item.itemId)}></i>
                                   </td>
-                                  </tr>
+                                </tr>
                                
                               )
                           })

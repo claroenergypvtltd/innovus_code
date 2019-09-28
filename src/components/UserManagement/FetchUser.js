@@ -89,8 +89,8 @@ class FetchUser extends React.Component {
 
   render() {
     return (
-      <div>
-        <DataTableDynamic
+      <div className="fetch-user">
+        <DataTableDynamic 
           tableHead={this.state.columns}
           tableDatas={this.state.data}
           handleEdit={this.itemEdit}

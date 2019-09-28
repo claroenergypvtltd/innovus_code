@@ -55,37 +55,43 @@ class User extends Component {
     let stateValue = this.state;
     return (
       <Form>
-        <div className="col-md-6 s-left">
+        {/* <div className="col-md-6 s-left">
           <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-        </div>
+        </div> */}
 
         <div>
-          <Row>
-            <Col xs={6} md={4}>
-              <h3>{window.strings.USERMANAGEMENT.USER}</h3>
-            </Col>
-
-            <Col xs={6} md={4}>
-              <button
-                className="btn btn-warning"
-                onClick={this.handlePageChange}
-              >
-                {stateValue.tabIndex == 0
-                  ? window.strings.USERMANAGEMENT.ADDFARMER
-                  : window.strings.USERMANAGEMENT.ADDRETAIL}
-              </button>
-            </Col>
-          </Row>
-          <Tabs
+        <Row className="clearfix title-section">
+                  <Col md={5} className="title-card user-board">
+                     <h4 className="user-title">{window.strings.USERMANAGEMENT.USER}</h4>
+                  </Col>
+                  <Col md={7}  className="right-title row pr-0 pb-3">
+                  <Col md={6} className="user-board add-user">
+                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    {/* <i className="fa fa-search search-icon"></i><input type="text" className="search-btn" placeholder="Search.." />  */}
+                  </Col> 
+                  <Col md={3} className="user-board add-user">
+                     <button type="submit" className="filter-btn"><i className="fa fa-filter filter-icon"></i>Filter by</button>
+                  </Col>
+                  <Col md={3} className="user-board add-user">
+                     <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
+                        {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ADDRETAIL}
+                     </button>
+                  </Col>
+                  </Col>
+                  
+               </Row>
+          <div className="main-wrapper">
+          <Tabs className="main-tab"
             selectedIndex={this.state.tabIndex}
             onSelect={tabIndex => this.tabChange(tabIndex)}
           >
-            <TabList>
-              <Tab>{window.strings.USERMANAGEMENT.FARMER}</Tab>
-              <Tab>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
+          
+            <TabList className="change-tab">
+              <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab>
+              <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
             </TabList>
 
-            <TabPanel>
+            <TabPanel className="main-panel">
               <FetchUser
                 roleId={this.state.selectedRoleId}
                 searchText={this.state.farmerSearch}
@@ -98,6 +104,7 @@ class User extends Component {
               />
             </TabPanel>
           </Tabs>
+          </div>
         </div>
       </Form>
     );

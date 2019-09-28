@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import NotificationSystem from 'react-notification-system';
-import './index.scss';
 import App from './App';
 import { toastr } from './services';
 import { Store } from './store/store.js';
@@ -11,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import * as serviceWorker from './serviceWorker';
+import './index.scss';
 
 //ReactDOM.render(<App />, document.getElementById('root'));
 
