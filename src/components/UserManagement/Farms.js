@@ -20,9 +20,9 @@ class Farms extends React.Component {
         return (
             <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.tabChange(tabIndex)}
             >
-                <TabList>
-                    <Tab>{window.strings.USERMANAGEMENT.FAMS}</Tab>
-                    <Tab>{window.strings.USERMANAGEMENT.KYC}</Tab>
+                <TabList className="change-tab">
+                    <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.FAMS}</Tab>
+                    <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.KYC}</Tab>
                 </TabList>
 
                 <TabPanel>
@@ -30,7 +30,7 @@ class Farms extends React.Component {
                 </TabPanel>
 
                 <TabPanel>
-                    <FarmList />
+                      <FarmList />
                 </TabPanel>
 
             </Tabs>

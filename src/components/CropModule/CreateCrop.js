@@ -144,19 +144,19 @@ class CreateCrop extends Component {
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
-                    <div className="col-md-10">
+                    <div className="col-md-12">
                         <h3>{this.state.categoryId ? window.strings['CROP']['EDITTITLE'] : window.strings['CROP']['CREATETITLE']}</h3>
-                        <div className="col-md-6 ">
-                            <div className="p-5 clearfix">
-                                <div className="">
-                                    <form onSubmit={this.handleSubmit} noValidate>
+                        <div className="col-md-12 main-wrapper">
+                            <div className="">
+                                <div className="create-crop col-md-5">
+                                    <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
 
 
-                                        {!this.state.cropId && <div className="form-group pt-3">
+                                        {!this.state.cropId && <div className="form-group col-md-12">
 
                                             <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
 
-                                            <select required name="parentId" className="form-control col-xs-6 col-sm-4 " value={this.state.parentId} onChange={this.handleInputChange}>
+                                            <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleInputChange}>
                                                 <option value="0">Select Category</option>
                                                 {categoryDropDown}
                                             </select>
@@ -165,7 +165,7 @@ class CreateCrop extends Component {
                                         </div>}
 
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-12">
 
                                             <label>{window.strings.CATEGORY.NAME}</label>
 
@@ -186,7 +186,7 @@ class CreateCrop extends Component {
                                         </div>
 
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-12">
 
                                             <label>{window.strings.CATEGORY.IMAGE}</label>
 
@@ -202,10 +202,11 @@ class CreateCrop extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                        <img className="pre-view"></img>
                                         </div>
 
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-12">
 
                                             <label>{window.strings.CATEGORY.DESCRIPTION}</label>
 
@@ -224,14 +225,17 @@ class CreateCrop extends Component {
                                         </div>
 
 
-                                        <div className="col-md-12 pt-3 p-0">
-
+                                        {/* <div className="col-md-12 pt-3 p-0">
                                             <div className="login-btn float-right">
-
                                                 <button type="submit" className="btn btn-info" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
                                                 <button type="button" className="btn btn-info" onClick={this.listPath}>{window.strings.CANCEL}</button>
                                             </div>
+                                        </div> */}
+                                        <div className="col-md-12 bottom-section">
+                                                <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
+                                                <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>       
                                         </div>
+
 
                                     </form>
                                 </div>

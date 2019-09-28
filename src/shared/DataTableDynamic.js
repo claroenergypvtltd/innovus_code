@@ -16,18 +16,19 @@ class DataTableDynamic extends React.Component {
         cell: row => (
           <div>
             {this.props.handleView && (
-              <button onClick={e => this.handleView(e, row)}>
+              <button onClick={e => this.handleView(e, row)} className="btn-view">
                 <i className="fa fa-eye" aria-hidden="true" />
               </button>
             )}
             {this.props.handleEdit && (
-              <button onClick={() => this.handleEdit(row)}>
-                <i className="fal fa-pencil-square-o edit_icon" />
+              <button onClick={() => this.handleEdit(row)} className="btn-view">
+               {/* <i className="fal fa-pencil-square-o edit_icon" />*/}
+                <i className="fa fa-pencil-square-o" />
               </button>
             )}
             {this.props.handleDelete && (
-              <button onClick={e => this.handleDelete(row, e)}>
-                <i className="fas fa-trash-alt" />
+              <button onClick={e => this.handleDelete(row, e)} className="btn-view">
+                <i className="fa fa-trash" />
               </button>
             )}
           </div>
@@ -44,6 +45,7 @@ class DataTableDynamic extends React.Component {
   }
 
   handleEdit(row) {
+    console.log(row);
     this.props.handleEdit(row);
   }
   handleView(e, row) {
@@ -53,14 +55,21 @@ class DataTableDynamic extends React.Component {
   handleDelete(row, e) {
     this.props.handleDelete(row, e);
   }
+  expandableComponent(e, row) {
+    console.log('row', row);
+    this.props.expandableComponent(row);
+   // this.props.handleEdit(row);
+  }
+
   render() {
     let tableHeader = this.state.tableHead;
     let tableDatas = this.props.tableDatas;
     console.log('tableDatas', tableDatas);
     return (
-      <div>
-        <DataTable
+      <div className="tables">
+        <DataTable className="crop-table"
           noHeader={true}
+          data={tableDatas}
           columns={tableHeader}
           data={tableDatas}
           pagination={this.props.pagination}

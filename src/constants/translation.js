@@ -93,9 +93,11 @@ export const Translation = {
 
         "PRICE": {
             "CROP_NAME": "Crop Name",
-
-            "CREATETITLE": "Create Price",
+            "CREATETITLE": "Add Price",
             "EDITTITLE": "Edit Price",
+            "LISTTITLE": "Price Master",
+            "LIST_PRICE": "List Price",
+            "ADD_PRICE": "Add Price"
         },
 
         "SUBMIT": "Save",
@@ -134,11 +136,7 @@ export const Translation = {
             "EMAIL": "Email"
         },
 
-        "PRICE": {
-            "LISTTITLE": "Price Master",
-            "LIST_PRICE": "List Price",
-            "ADD_PRICE": "Add Price"
-        },
+      
 
         "ORDER": {
             "DELETE_ORDER": "Order?",

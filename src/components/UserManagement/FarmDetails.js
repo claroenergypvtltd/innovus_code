@@ -38,39 +38,43 @@ class FarmDetails extends React.Component {
     let farmData = this.state.farmData;
     return (
       <Container>
+      <div  className="farm-all">
         <Row className="show-grid">
-          <Col sm={6} md={3} className="ticket_block">
+          <Col sm={6} md={2} className="ticket_block1">
             <Image
               src={imageBaseUrl + farmData.image}
-              className="centext"
+              className="maincentext"
               roundedCircle
             />
-            <div className="centext">{farmData.name}</div>
-            <div className="centext">{'Farmer'}</div>
+            {/*<div className="centext">{farmData.name}</div>
+            <div className="centext">{'Farmer'}</div>*/}
           </Col>
-          <Col sm={6} md={3}>
-            <h5>{'Farm Name'}</h5>
-            <br />
-            <h5>{farmData.name}</h5>
+          <Col sm={6} md={2} className="farm-block">
+            <h5 className="farm-title">{'Farm Name'}</h5>
+            <p className="user-subtitle">{farmData.name}</p>
           </Col>
-          <Col sm={6} md={3}>
-            <h5>{'Place'}</h5>
-            <br />
-            <h5>{farmData.state}</h5>
+          <Col sm={6} md={2} className="farm-block">
+            <h5 className="farm-title">{'Place'}</h5>
+            <p className="user-subtitle">{farmData.state}</p>
           </Col>
-          <Col sm={6} md={3}>
-            <h5>{'Total Farm Area'}</h5>
-            <br />
-            <h5>{farmData.areaSize ? farmData.areaSize : '-'}</h5>
+          <Col sm={6} md={3} className="farm-block">
+            <h5 className="farm-title">{'Total Farm Area'}</h5>
+            <p className="user-subtitle">{farmData.areaSize ? farmData.areaSize : '-'}</p>
+          </Col>
+          <Col sm={6} md={3} className="farm-block">
+            <h5 className="farm-title">{'Total Farm Area'}</h5>
+            <p className="user-subtitle">{farmData.areaSize ? farmData.areaSize : '-'}</p>
           </Col>
         </Row>
+        </div>
+        <div class="crop-btn">
+        <h5 className="farm-title crop-title">Crop</h5>  
+        {!this.state.AddCropButton && <Button onClick={this.pageRedirect}>{'Add Crop'}</Button>}
 
-        <Row>
-          {!this.state.AddCropButton && <Button onClick={this.pageRedirect}>{'Add Crop'}</Button>}
-        </Row>
-        <Row>
-          <CropList farmDetails={this.state.farmDetails} />
-        </Row>
+        </div>
+        {/* <Row className="farm-set"> */}
+        <CropList farmDetails={this.state.farmDetails} />
+        {/* </Row> */}
       </Container>
     );
   }

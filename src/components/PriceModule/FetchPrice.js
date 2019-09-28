@@ -118,13 +118,18 @@ class FetchPrice extends Component {
         })
 
         return (
-            <div>
-                <div>
-                    <h2>{window.strings.PRICE.LIST_PRICE}</h2>
-                    <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button>
+            <div className="price">
+                <div className="clearfix title-section row">
+                <div className="title-card col-md-7">
+                    <h4 className="user-title">{window.strings.PRICE.LIST_PRICE}</h4>
+                    {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
                 </div>
-                <div className="col-md-6 s-left">
-                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                <div className="right-title row col-md-5">
+                         <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        <div className="col-md-4">
+                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
+                        </div>
+                    </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />

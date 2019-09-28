@@ -194,7 +194,7 @@ export class BaseContainer extends Component {
                                     </nav>
 
                                 </div>
-                                <div className="main-container container-fluid">
+                                <div className="main-container">
                                     {this.props.children}
                                 </div>
                             </div>
