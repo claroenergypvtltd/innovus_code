@@ -185,9 +185,9 @@ class CategoryForm extends Component {
                                                 <button type="button" className="filter-btn" onClick={this.listPath}>{window.strings.CANCEL}</button>
                                             </div>
                                         </div> */}
-                                       <div className="col-md-12 bottom-section">
-                                                <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
-                                                <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>       
+                                        <div className="col-md-12 bottom-section">
+                                            <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
                                         </div>
 
                                     </form>

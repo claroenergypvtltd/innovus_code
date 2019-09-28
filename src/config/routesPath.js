@@ -18,6 +18,10 @@ import CreateCropDetails from '../components/FarmersModule/CreateCropDetails'
 import CreateIrrigationSchedule from '../components/FarmersModule/CreateIrrigationSchedule'
 import FetchPrice from '../components/PriceModule/FetchPrice'
 import CreatePrice from '../components/PriceModule/Createprice'
+import FetchCart from '../components/CartModule/FetchCart'
+import FetchOrder from '../components/OrderModule/FetchOrder'
+import FetchOrderDetails from '../components/OrderModule/FetchOrderDetails'
+
 
 const root = ({ route }) => (
     <div>
@@ -166,6 +170,25 @@ export const routesPath = [
                 component: CreatePrice,
                 exact: true,
             },
+
+            {
+                path: process.env.PUBLIC_URL + '/cart',
+                component: FetchCart,
+                exact: true,
+            },
+
+            {
+                path: process.env.PUBLIC_URL + '/order',
+                component: FetchOrder,
+                exact: true,
+            },
+
+            {
+                path: process.env.PUBLIC_URL + '/order/:id?',
+                component: FetchOrderDetails,
+                exact: true,
+            },
+
 
             {
                 path: process.env.PUBLIC_URL + '/inprogress',

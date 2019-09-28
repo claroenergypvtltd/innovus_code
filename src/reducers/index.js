@@ -7,6 +7,7 @@ import FarmerReducer from './FarmerReducer'
 import cropReducer from './cropReducer'
 import priceReducer from './priceReducer'
 import { reducer as toastrReducer } from 'react-redux-toastr';
+import OrderReducer from './OrderReducer';
 
 export default combineReducers({
     errors: errorReducer,
@@ -16,6 +17,7 @@ export default combineReducers({
     farmer: FarmerReducer,
     user: UserManagementReducer,
     crop: cropReducer,
-    price: priceReducer
+    price: priceReducer,
+    order: OrderReducer
 });
 

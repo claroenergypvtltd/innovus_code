@@ -84,7 +84,7 @@ export const Translation = {
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
         "CROP": {
-            "WEIGHT": "Weight",
+            "WEIGHT": "Total Weight",
             "PRICE": "Price",
 
             "CREATETITLE": "Create Crop",
@@ -136,7 +136,7 @@ export const Translation = {
             "EMAIL": "Email"
         },
 
-      
+
 
         "ORDER": {
             "DELETE_ORDER": "Order?",
