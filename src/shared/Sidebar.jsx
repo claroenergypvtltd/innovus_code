@@ -32,15 +32,15 @@ export const Sidebar = [
         ),
         path: path.category.list,
     },
-    {
-        name: (
-            <span className="menu-list prdt_cate">
-                <i />
-                {Label.CropLabel}
-            </span>
-        ),
-        path: path.crop.list,
-    },
+    // {
+    //     name: (
+    //         <span className="menu-list prdt_cate">
+    //             <i />
+    //             {Label.CropLabel}
+    //         </span>
+    //     ),
+    //     path: path.crop.list,
+    // },
     {
         name: (
             <span className="menu-list product">
@@ -50,6 +50,15 @@ export const Sidebar = [
         ),
         path: path.products.list,
     },
+    // {
+    //     name: (
+    //         <span className="menu-list prdt_cate">
+    //             <i />
+    //             {Label.CartLabel}
+    //         </span>
+    //     ),
+    //     path: path.cart.list,
+    // },
     {
         name: (
             <span className="menu-list product">
@@ -66,7 +75,7 @@ export const Sidebar = [
                 {Label.orderLabel}
             </span>
         ),
-        path: "/inprogress",
+        path: path.order.list,
     },
     {
         name: (

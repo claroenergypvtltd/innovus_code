@@ -15,6 +15,8 @@ export const endPoint = {
     "kyc": "/kyc",
 
     "price": "/inventorys",
+    "inventory": "/inventory",
+
 
     "certificate": "/certificate",
     "settings": "/settings",

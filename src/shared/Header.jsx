@@ -34,7 +34,7 @@ export class Header extends Component {
                 <a>
                   <img src={user} />
                   <span className="user-name" onClick={this.props.logOut}>
-                    Syed
+                    SignOut
                   </span>
                 </a>
               </li>

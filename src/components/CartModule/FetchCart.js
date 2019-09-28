@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux'
 
 import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
@@ -14,7 +15,7 @@ import CreatePrice from '../../components/PriceModule/Createprice'
 import Store from '../../store/store';
 import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
 
-class FetchPrice extends Component {
+class FetchCart extends Component {
 
     constructor(props) {
 
@@ -36,6 +37,7 @@ class FetchPrice extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+        debugger;
         if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
             let respData = newProps.priceData.Lists.datas;
             this.setState({ PriceLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
@@ -47,6 +49,7 @@ class FetchPrice extends Component {
     }
 
     searchResult = (e) => {
+        debugger;
         e.preventDefault();
         if (this.state.search) {
             let serObj = {
@@ -76,7 +79,7 @@ class FetchPrice extends Component {
     }
 
     itemEdit = (priceId) => {
-        this.props.history.push({ pathname: path.price.edit + priceId, state: { priceId: priceId } });
+        this.props.history.push({ pathname: 'price/edit/' + priceId, state: { priceId: priceId } });
     }
 
 
@@ -99,11 +102,11 @@ class FetchPrice extends Component {
     }
 
     formPath = () => {
-        this.props.history.push(path.price.add);
+        this.props.history.push('/price/add');
     }
 
     onChange = (data) => {
-
+        debugger;
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
                 this.getPriceList();
@@ -117,18 +120,13 @@ class FetchPrice extends Component {
         })
 
         return (
-            <div className="price">
-                <div className="clearfix title-section row">
-                    <div className="title-card col-md-7">
-                        <h4 className="user-title">{window.strings.PRICE.LIST_PRICE}</h4>
-                        {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
-                    </div>
-                    <div className="right-title row col-md-5">
-                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <div className="col-md-4">
-                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
-                        </div>
-                    </div>
+            <div>
+                <div>
+                    <h2>List Price</h2>
+                    <button className="btn btn-warning float-right" onClick={this.formPath}>Add Price</button>
+                </div>
+                <div className="col-md-6 s-left">
+                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
@@ -147,4 +145,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchPrice);
+export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchCart);
