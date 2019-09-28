@@ -80,7 +80,7 @@ class KYCDetails extends Component {
                         <h3>{window.strings['FARMERS']['KYC_DETAILS']}</h3>
                         <div className="col-md-6 ">
                             <div className="p-5 clearfix">
-                                <div className="fgfjhhgj">
+                                <div className="">
                                     <form onSubmit={this.handleSubmit} noValidate>
                                         <div className="form-group pt-3">
 
