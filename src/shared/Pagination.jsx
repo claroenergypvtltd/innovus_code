@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 
 export function ReactPagination(props) {
   return (
-    <div>
+    <div className="page">
 
       {/* <Pagination
         prevPageText={"previous"}
@@ -18,8 +18,8 @@ export function ReactPagination(props) {
         activeClassName={"active"}
       /> */}
 
-      <ReactPaginate previousLabel={"previous"}
-        nextLabel={"next"}
+      <ReactPaginate previousLabel={"<"}
+        nextLabel={">"}
         breakLabel={<a href="">...</a>}
         breakClassName={"break-me"}
         pageCount={props.PageDetails.pageCount}
