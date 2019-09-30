@@ -435,6 +435,9 @@ a,p,small,span{font-family: open sans;}
 }
 .main-wrapper{
   background-color:#fff;
+  border-radius: 6px;
+  box-shadow: 2px 2px 3px 1px rgba(220, 220, 220, 0.5);
+
 }
 .tab-wrapper{
   margin-top: 10px;
@@ -618,39 +621,7 @@ margin-left: 0;
   background-color: #fff;
 
 }
-// .crop-table .rdt_TableHeader{
-//     margin:-18px;    
-// }
-// .crop-section .rdt_TableBody{
-//   border-top: 0px outset;
-//   border-bottom:0px inset;
-//   border-left:1px outset;
-//   border-right:1px inset;
-//   //border: 2px solid #F5F5F5;
-// }
-// // .fetch-user .rdt_TableBody{
-// //   border-left:0px ;
-// //   border-right:0px ;
-// // }
-// .crop-table .rdt_TableRow{
-//   color: #767676;
-// }
-// // .crop-table .rdt_TableHead{
-// //   padding: 10px;
-// // }
-// .crop-table .rdt_TableCol_Sortable{
-//   color: #000;
-//   font-size: 15px;
-// }
-// .crop-table .rdt_ExpanderRow {
-//   padding: 5px;
-// }
-.rdt_TableCol_Sortable{
-  font-size: 15px;
-}
-.rdt_TableCell{
-  font-size: 14px;
-}
+
 
 svg{
   color:#FFA5AB;
@@ -917,22 +888,54 @@ svg{
   background-repeat: no-repeat;
   background-position: 0px -1843px;
   text-align: right;
-  padding: 6px;
+  padding: 6px 20px;
 }
 .tick-light{
   background-image: url(/static/media/Sprite_image.e8549602.png);
   background-repeat: no-repeat;
   background-position: 10px -1883px;
   text-align: right;
-  padding: 6px;
+  padding: 6px 25px;
 }
-.sub-tick{
-  border-bottom: 1px solid #ddd;
-  width: 59px;
-  // height: 1px;
-  // text-indent: -2000em;
-  font-size: 0;
- // margin: 0 0 0 10px;
+
+.bs-stepper-header {
+  display: flex;
+  align-items: center;
+}
+.bs-stepper-label {
   display: inline-block;
+  margin: .25rem;
+}
+.bs-stepper-line {
+  -ms-flex: 1 0 32px;
+  flex: 1 0 32px;
+  min-width: 1px;
+  min-height: 1px;
+  margin: auto;
+  background-color: rgba(0,0,0,.12);
+}
+.step-trigger {
+  // display: -ms-inline-flexbox;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  
+  // font-weight: 700;
+  line-height: 1.5;
+  color: #6c757d;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
   vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: none;
+  border-radius: .25rem;
+  transition: background-color .15s ease-out,color .15s ease-out;
 }

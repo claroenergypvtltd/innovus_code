@@ -123,14 +123,57 @@ class FetchOrderDetails extends Component {
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 />
                 <div className="main-wrapper p-3">
-                    <div className="tick-section row m-0 pt-3">
-                     <span className="tick-color col-md-2"> Production<span className="sub-tick"></span></span>
-                     <span className="tick-color col-md-2">Shipped<span className="sub-tick"></span></span>
-                     <span className="tick-color col-md-2">In Transit<span className="sub-tick"></span></span>
-                     <span className="tick-color col-md-2">Shipped<span className="sub-tick"></span></span>
-                     <span className="tick-color col-md-2"> Production<span className="sub-tick"></span></span>
-                     <span className="tick-light col-md-2">Delivered<span className="sub-tick"></span></span>
+            <div class="bs-stepper-header">
+                
+                <div class="step active">
+                     <div className="step-trigger">
+                         <span class="tick-color"></span>
+                         <span class="bs-stepper-label">In Production</span>
                     </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+
+            <div class="step active">
+                    <div className="step-trigger">
+                         <span class="tick-color"></span>
+                        <span class="bs-stepper-label">Shipped</span>
+                    </div>
+            </div>
+            <div class="bs-stepper-line"></div>
+
+            <div class="step active">
+            <div className="step-trigger">
+                <span class="tick-color"></span>
+                <span class="bs-stepper-label">In Transit</span>
+              </div>
+            </div>
+            <div class="bs-stepper-line"></div>
+
+            <div class="step active">
+            <div className="step-trigger">
+                <span className="tick-color"></span>
+                <span class="bs-stepper-label">Email</span>
+              </div>
+            </div>
+            <div class="bs-stepper-line"></div>
+
+            <div class="step active">
+            <div className="step-trigger">
+                <span class="tick-color"></span>
+                <span class="bs-stepper-label">Email</span>
+              </div>
+            </div>
+            <div class="bs-stepper-line"></div>
+
+            <div class="step active">
+            <div className="step-trigger">
+                <span class="tick-light"></span>
+                <span class="bs-stepper-label">Email</span>
+              </div>
+            </div>
+            <div class="bs-stepper-line"></div>
+            </div>
+                
                     <table className="table table-borderless mt-3">
                         <thead>
                             <tr>
