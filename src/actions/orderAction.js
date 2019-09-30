@@ -10,8 +10,8 @@ export const getOrderList = (Data) => dispatch => {
     let rows = ''; let page = ''; let searchData = ''; let orderId = ''
 
     if (Data) {
-        // page = Data.page ? '&page=' + Data.page : '';
-        // rows = Data.limit ? '&rows=' + Data.limit : '';
+        page = Data.page ? '&page=' + (Data.page - 1) : '';
+        rows = Data.limit ? '&rows=' + Data.limit : '';
         searchData = Data.search ? '&search=' + Data.search : '';
         orderId = Data.orderId ? Data.orderId : ''
     }
