@@ -122,6 +122,7 @@ class FetchOrderDetails extends Component {
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 />
+             
                 <div className="main-wrapper p-3">
             <div class="bs-stepper-header">
                 
@@ -180,7 +181,7 @@ class FetchOrderDetails extends Component {
                                 <th>Date/Time</th>
                                 <th>Activity</th>
                                 <th>Location</th>
-                                
+                                    
                             </tr>
                         </thead>
                         <tbody>
@@ -207,6 +208,42 @@ class FetchOrderDetails extends Component {
                     </table>
                 </div>
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+        <div className="main-wrapper p-3">
+        <h4>Product List</h4>
+      <table className="table table-borderless mt-3">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Price</th>
+              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="" className="order-img"/>Product name</td>
+                                <td>act1</td>
+                                <td>loc1</td>
+                              
+                            </tr>
+                            <tr>
+                                <td><img src="" className="order-img"/>Product name</td>
+                                <td>1</td>
+                                <td>act1</td>
+                                <td>loc1</td>
+                              
+                            </tr>
+                            <tr>
+                                <td><img src="" className="order-img"/>Product name</td>
+                                <td>1</td>
+                                <td>act1</td>
+                                <td>loc1</td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
