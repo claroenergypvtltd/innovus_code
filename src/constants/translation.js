@@ -158,6 +158,7 @@ export const Translation = {
             "VIEWDETAILS": "View  details",
             "IMAGE": "Product Image",
             "REMARKS": "Remarks",
+            "TRACK": "Track",
             "TABLEHEAD": { 'orderNumber': 'Order Number', 'dealerName': 'Dealer Name', 'storeName': 'Store Name', 'quantity': 'Quantity', 'price': 'Total price', 'viewDetails': 'View details' },
             "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
         },

@@ -15,7 +15,7 @@ class FetchOrder extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["order No", "Product Items", "Order Date", "Order Amount", "Status", "View Order", "track Order"],
+            TableHead: ["order No", "Product Items", "Order Date", "Order Amount", "Status", "View Order"],
             OrderLists: props.orderData && props.orderData.Lists && props.orderData.Lists.datas ? props.orderData.Lists.datas : [],
             CategoryCount: props.getCount,
             search: '',
@@ -104,23 +104,23 @@ class FetchOrder extends Component {
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = <Link to={path.order.list + "/" + item.id}>{window.strings.ORDER.VIEWDETAILS}</Link>
-            return { "itemList": [item.id, '-', item.created, '-', item.status, link, ''], "itemId": item.id }
+            return { "itemList": [item.id, item.items && item.items.length, item.created, '-', item.status, link, ''], "itemId": item.id }
         })
 
         return (
             <div className="order">
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-8">
-                         <h4 className="user-title">List Order</h4>
+                        <h4 className="user-title">List Order</h4>
                     </div>
                     {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Order</button> */}
-        
-                <div className="right-title row col-md-4 pl-5">
-                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    {/* <div className="col-md-4">
+
+                    <div className="right-title row col-md-4 pl-5">
+                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        {/* <div className="col-md-4">
                         <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Order</button>
                     </div> */}
-                </div>
+                    </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 />
