@@ -398,7 +398,7 @@ a,p,small,span{font-family: open sans;}
 }
 .title{
   color: #767676;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0;
 }
 .color-title{
@@ -839,6 +839,10 @@ svg{
 }
 
 /****************************Retailer Section************************/
+.view-map{
+  text-align:center;
+
+}
 .retailer-image {
   width: 100%;
   height: 200px;
