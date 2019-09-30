@@ -910,3 +910,29 @@ svg{
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
+
+/****************************Order Section************************/
+.tick-color{
+  background-image: url(/static/media/Sprite_image.e8549602.png);
+  background-repeat: no-repeat;
+  background-position: 0px -1843px;
+  text-align: right;
+  padding: 6px;
+}
+.tick-light{
+  background-image: url(/static/media/Sprite_image.e8549602.png);
+  background-repeat: no-repeat;
+  background-position: 10px -1883px;
+  text-align: right;
+  padding: 6px;
+}
+.sub-tick{
+  border-bottom: 1px solid #ddd;
+  width: 59px;
+  // height: 1px;
+  // text-indent: -2000em;
+  font-size: 0;
+ // margin: 0 0 0 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
