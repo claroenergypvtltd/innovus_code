@@ -110,15 +110,59 @@ class FetchOrderDetails extends Component {
         })
 
         return (
-            <div>
-                <div>
-                    <h2>List Order Details</h2>
-                </div>
-                <div className="col-md-6 s-left">
+            <div className="order-details">
+                <div className="clearfix title-section row">
+                    <div className="title-card col-md-8">
+                         <h4 className="user-title">List Order Details</h4>
+                    </div>
+            
+                <div className="right-title row col-md-4 pl-5">
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 />
+                <div className="main-wrapper p-3">
+                    <div className="tick-section row m-0 pt-3">
+                     <span className="tick-color col-md-2"> Production<span className="sub-tick"></span></span>
+                     <span className="tick-color col-md-2">Shipped<span className="sub-tick"></span></span>
+                     <span className="tick-color col-md-2">In Transit<span className="sub-tick"></span></span>
+                     <span className="tick-color col-md-2">Shipped<span className="sub-tick"></span></span>
+                     <span className="tick-color col-md-2"> Production<span className="sub-tick"></span></span>
+                     <span className="tick-light col-md-2">Delivered<span className="sub-tick"></span></span>
+                    </div>
+                    <table className="table table-borderless mt-3">
+                        <thead>
+                            <tr>
+                                <th>Date/Time</th>
+                                <th>Activity</th>
+                                <th>Location</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>act1</td>
+                                <td>loc1</td>
+                              
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>act2</td>
+                                <td>loc2</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>act3</td>
+                                <td>loc3</td>
+                              
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+                </div>
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>
         );
