@@ -110,16 +110,16 @@ class FetchOrder extends Component {
         return (
             <div className="order">
                 <div className="clearfix title-section row">
-                    <div className="title-card col-md-7">
+                    <div className="title-card col-md-8">
                          <h4 className="user-title">List Order</h4>
                     </div>
                     {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Order</button> */}
         
-                <div className="right-title row col-md-5">
+                <div className="right-title row col-md-4 pl-5">
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                         <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Order</button>
-                    </div>
+                    </div> */}
                 </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}

@@ -112,11 +112,11 @@ class FetchOrderDetails extends Component {
         return (
             <div className="order-details">
                 <div className="clearfix title-section row">
-                    <div className="title-card col-md-7">
+                    <div className="title-card col-md-8">
                          <h4 className="user-title">List Order Details</h4>
                     </div>
             
-                <div className="right-title row col-md-5">
+                <div className="right-title row col-md-4 pl-5">
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 </div>
                 </div>
