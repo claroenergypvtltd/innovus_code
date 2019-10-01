@@ -24,6 +24,10 @@ import FetchCart from '../components/CartModule/FetchCart'
 import FetchOrder from '../components/OrderModule/FetchOrder'
 import FetchOrderDetails from '../components/OrderModule/FetchOrderDetails'
 
+import IrrigationSetting from '../components/SettingsModule/IrrigationSetting'
+import CreateCoupon from '../components/CouponModule/CreateCoupon'
+import FetchCoupon from '../components/CouponModule/FetchCoupon'
+
 
 const root = ({ route }) => (
     <div>
@@ -213,6 +217,23 @@ export const routesPath = [
                 exact: true,
             },
 
+            {
+                path: process.env.PUBLIC_URL + '/coupon',
+                component: FetchCoupon,
+                exact: true,
+            },
+
+            {
+                path: process.env.PUBLIC_URL + '/coupon/add',
+                component: CreateCoupon,
+                exact: true,
+            },
+
+            {
+                path: process.env.PUBLIC_URL + '/irrigationSetting',
+                component: IrrigationSetting,
+                exact: true,
+            },
 
             {
                 path: process.env.PUBLIC_URL + '/inprogress',
