@@ -9,16 +9,6 @@ body, html {
     max-width: 350px;
     padding: 40px 40px;
 }
-
-.btn {
-    font-weight: 700;
-    height: 36px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: default;
-}
-
 /*
  * Card component
  */
@@ -105,11 +95,11 @@ body, html {
 .btn-primary {
     /* background-color: #4d90fe; */
     /* background-color: rgb(104, 145, 162); */
-    padding: 0px;
-    font-weight: 500;
-    font-size: 15px; 
-    width:155px;
-    padding: 9px 20px;
+    // padding: 0px;
+    // font-weight: 500;
+    // font-size: 15px; 
+    // width:155px;
+    // padding: 9px 20px;
 
     -o-transition: all 0.218s;
     -moz-transition: all 0.218s;
@@ -179,11 +169,28 @@ body, html {
   }
   }
   .mandatory{
-      text-align: right;
+      text-align: left;
       margin-top: 3px;
       font-size: 13px;
   }
   .s-text{font-size: 24px;}
   .btn{
-      font-size: 20px;
+       font-size: 10px;
+       font-weight: 700;
+       height: auto;
+       -moz-user-select: none;
+       -webkit-user-select: none;
+       user-select: none;
+       cursor: default;
+  }
+  .RetpersonalInfo{ 
+      padding: 10px;
+      font-size: 18px;
+  }
+  .EditRetailerInfo{
+    position: relative;
+    left: 500px;
+  }
+  .react-tabs__tab-list{
+    margin: 21px 9px 1px !important
   }

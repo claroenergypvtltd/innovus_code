@@ -12,6 +12,8 @@ import { path } from '../constants';
 import FetchCrop from '../components/CropModule/FetchCrop'
 import CreateCrop from '../components/CropModule/CreateCrop'
 import PersonalAndContactInfo from '../components/FarmersModule/PersonalAndContactInfo'
+import RetailersInfo from '../components/RetailersModule/RetailersInfo'
+import RetailerDetailProfile from '../components/RetailersModule/RetailerDetailProfile'
 import DummyFile from '../components/DummyFile'
 import CreateFarmDetails from '../components/FarmersModule/CreateFarmDetails'
 import CreateCropDetails from '../components/FarmersModule/CreateCropDetails'
@@ -101,6 +103,28 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/user/farmers/edit/:id?',
                 component: PersonalAndContactInfo,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/user/retailer/add',
+                component: RetailersInfo,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/user/retailer/view/:retailerId',
+                component: RetailerDetailProfile,
+                exact: true,
+
+            },
+            {
+                path: process.env.PUBLIC_URL + '/user/retailer/edit/:retailerId',
+                component: RetailersInfo,
+                exact: true,
+
+            },
+            {
+                path: process.env.PUBLIC_URL + '/user',
+                component: User,
                 exact: true
             },
 

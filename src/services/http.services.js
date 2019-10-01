@@ -28,7 +28,6 @@ axios.interceptors.response.use(
     return Promise.resolve(response.data);
   },
   function (error) {
-    debugger;
     console.log(error);
     if (error.request.status === 403) {
       toast.warning(window.strings['INFORMATION'], error.response.message);
@@ -78,14 +77,24 @@ function get(url) {
   });
 }
 
+// function post(url, params) {
+//   PubSub.publish('msg', true);
+//   return axios.post(url, params).then(response => {
+//     PubSub.publish('msg', false);
+//     return response;
+//   }).catch(e => {
+//     console.log(e);
+//     PubSub.publish('msg', false);
+//   })
+// }
 function post(url, params) {
-  // PubSub.publish('msg', true);
+  PubSub.publish('msg', true);
   return axios.post(url, params).then(response => {
-    // PubSub.publish('msg', false);
+    PubSub.publish('msg', false);
     return response;
   }).catch(e => {
     console.log(e);
-    // PubSub.publish('msg', false);
+    PubSub.publish('msg', false);
   })
 }
 

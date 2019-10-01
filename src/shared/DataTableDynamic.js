@@ -22,7 +22,7 @@ class DataTableDynamic extends React.Component {
             )}
             {this.props.handleEdit && (
               <button onClick={() => this.handleEdit(row)} className="btn-view">
-               {/* <i className="fal fa-pencil-square-o edit_icon" />*/}
+                {/* <i className="fal fa-pencil-square-o edit_icon" />*/}
                 <i className="fa fa-pencil-square-o" />
               </button>
             )}
@@ -49,7 +49,6 @@ class DataTableDynamic extends React.Component {
     this.props.handleEdit(row);
   }
   handleView(e, row) {
-    console.log('row', row);
     this.props.handleView(e, row);
   }
   handleDelete(row, e) {
@@ -58,7 +57,7 @@ class DataTableDynamic extends React.Component {
   expandableComponent(e, row) {
     console.log('row', row);
     this.props.expandableComponent(row);
-   // this.props.handleEdit(row);
+    // this.props.handleEdit(row);
   }
 
   render() {

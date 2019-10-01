@@ -127,6 +127,13 @@ export const resorceJSON = {
     { name: 'PhoneNumber', selector: 'mobileNumber', sortable: true },
     { name: 'EmailAddress', selector: 'emailId', sortable: true },
   ],
+  RetailerList: [
+    { name: 'Name', selector: 'name', sortable: true },
+    { name: 'PhoneNumber', selector: 'mobileNumber', sortable: true },
+    { name: 'EmailAddress', selector: 'emailId', sortable: true },
+    { name: 'Status', selector: 'selectBox', sortable: true },
+    // { text: 'Actions', dataField: 'actions', sortable: true },
+  ],
   CropList: [
     { name: 'Crop Name', selector: 'cropName', sortable: true },
     { name: 'Crop Variety', selector: 'cropVariety', sortable: true },

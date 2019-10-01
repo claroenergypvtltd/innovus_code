@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import errorReducer from './errorReducer';
 import authReducer from './authReducer';
 import categoryReducer from './categoryReducer';
+import RetailerReducer from './RetailerReducer';
 import UserManagementReducer from './userManagementReducer'
 import FarmerReducer from './FarmerReducer'
 import cropReducer from './cropReducer'
@@ -18,6 +19,7 @@ export default combineReducers({
     user: UserManagementReducer,
     crop: cropReducer,
     price: priceReducer,
-    order: OrderReducer
+    order: OrderReducer,
+    retailer: RetailerReducer
 });
 

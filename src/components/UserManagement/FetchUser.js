@@ -40,7 +40,6 @@ class FetchUser extends React.Component {
   };
 
   componentWillReceiveProps(newProps) {
-    debugger;
     if (newProps.userData && newProps.userData.userList.datas) {
       this.setState({ data: newProps.userData.userList.datas });
     }
@@ -82,21 +81,16 @@ class FetchUser extends React.Component {
     })
   };
 
-  onchangePagination(e) {
-    e.preventDefault();
-    return true
-  }
-
   render() {
     return (
-      <div className="fetch-user">
-        <DataTableDynamic 
+      <div>
+        <DataTableDynamic
           tableHead={this.state.columns}
           tableDatas={this.state.data}
           handleEdit={this.itemEdit}
           handleView={this.itemView}
           handleDelete={this.handleDelete}
-          pagination={this.onchangePagination}
+          pagination={true}
         />
         {/* <GoogleMapPage /> */}
       </div>
