@@ -70,6 +70,11 @@ export const path = {
         add: process.env.PUBLIC_URL + '/user/farmers/add',
         edit: process.env.PUBLIC_URL + '/user/farmers/edit/',
     },
+    retailer: {
+        list: process.env.PUBLIC_URL + '/retailer',
+        add: process.env.PUBLIC_URL + '/user/retailer/add',
+        edit: process.env.PUBLIC_URL + '/user/retailer/edit/',
+    },
     aboutUs: {
         list: process.env.PUBLIC_URL + '/aboutus',
         template: process.env.PUBLIC_URL + '/template/aboutus/update/'

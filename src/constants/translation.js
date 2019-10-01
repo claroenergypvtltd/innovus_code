@@ -114,6 +114,7 @@ export const Translation = {
         "OFFICE": "Phone Number",
         "WEBSITE": "Website",
         "DELETEMESSAGE": "Are you sure you wish to delete this item?",
+        "UPDATEMESSAGE": "Are you sure you wish to Update this item?",
         "ROLEPERMISSIONTITLE": "Role Permission",
         "PASSWORDFORMAT": "(Should contains minimum 8 characters, one letter should be alpha-numeric values)",
 
@@ -170,6 +171,7 @@ export const Translation = {
             "ADDFARMER": "Add Farmer",
             "ADDRETAIL": "Add Retailer",
             "FAMS": "Farm",
+            "SHOP": "Shop",
             "KYC": "KYC Details"
         },
         "ABOUTUS": {
@@ -180,6 +182,21 @@ export const Translation = {
             "EDITTITLE": "Edit Details",
             "NAME": "Title",
             "DESCRIPTION": "Description",
+        },
+        "RETAILERS": {
+            "ADD_NEW_RETAIER": "Add New Retailer",
+            "IMG_UPLOAD": "Image Upload",
+            "SHOP_NAME": "Shop Name",
+            "GST": "GST (optional)",
+            "SHOP_LOC": "Shop Location",
+            "SELECT_SHOP_LOC": "Select Shop Location",
+            "SHOP_DETAILS": "Shop Details",
+            "PENDING": "Pending",
+            "ACCEPTED": "Accepted",
+            "REJECTED": 'Rejected',
+            "IDENTITY_PROOF": "Identity Proof",
+            "DRIVING_LICENSE_NUMBER": "Driving License Number",
+            "PHOTO_ANGLE": "Front Side"
         },
 
         "FARMERS": {
@@ -195,6 +212,7 @@ export const Translation = {
 
             "FIRST_NAME": "First Name",
             "LAST_NAME": "Last Name",
+            "ADDR": "Address",
             "ADDR_1": "Address 1",
             "ADDR_2": "Address 2",
             "IMAGE": "Image",

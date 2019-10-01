@@ -43,7 +43,6 @@ class PersonalAndContactInfo extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
         if (newProps.signUpData && newProps.signUpData.contactDatas == "200") {
             store.dispatch({ type: CONTACT_DETAILS, contact: "" })
             this.listPage();
@@ -143,15 +142,15 @@ class PersonalAndContactInfo extends Component {
                     <div className="col-md-12">
                         <h4>{window.strings['FARMERS']['PERS_AND_CONTACT']}</h4>
                         <div className="main-wrapper main-contact">
-                        
-                     
-                           
-                        <h4 className="color-title sub-contact">Personal Information</h4>
 
-                                    <form onSubmit={this.handleSubmit} noValidate className="row m-0">
-                                        <div className="personal-info  col-md-6">
-                                        <div className="row contact ">
-                                       
+
+
+                            <h4 className="color-title sub-contact">Personal Information</h4>
+
+                            <form onSubmit={this.handleSubmit} noValidate className="row m-0">
+                                <div className="personal-info  col-md-6">
+                                    <div className="row contact ">
+
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['NAME']}</label>
                                             <input
@@ -182,7 +181,7 @@ class PersonalAndContactInfo extends Component {
                                             />
                                             {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['FARMERS']['NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                         <div className="form-group col-md-6">
+                                        <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['EMAIL']}</label>
                                             <input
                                                 type="email"
@@ -212,7 +211,7 @@ class PersonalAndContactInfo extends Component {
                                             />
                                             {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        
+
                                         {/* <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['ADDR_1']}</label>
                                             <input
@@ -261,12 +260,12 @@ class PersonalAndContactInfo extends Component {
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-6">
-                                        </div> 
                                         </div>
-                                        </div>
-                                    <div className="contact-info col-md-6">
-                                        {/* <h4 class="color-title sub-contact">Contact Information</h4> */}
-                                        <div className="row contact">
+                                    </div>
+                                </div>
+                                <div className="contact-info col-md-6">
+                                    {/* <h4 class="color-title sub-contact">Contact Information</h4> */}
+                                    <div className="row contact">
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['ADDR_1']}</label>
                                             <input
@@ -297,7 +296,7 @@ class PersonalAndContactInfo extends Component {
                                             />
                                             {this.state.submitted && !this.state.address2 && <div className="mandatory">{window.strings['FARMERS']['ADDR_2'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                       
+
                                         {/* <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['EMAIL']}</label>
                                             <input
@@ -328,7 +327,7 @@ class PersonalAndContactInfo extends Component {
                                             />
                                             {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
                                         </div> */}
-                                        
+
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['AREA']}</label>
                                             <input
@@ -359,7 +358,7 @@ class PersonalAndContactInfo extends Component {
                                             />
                                             {this.state.submitted && !this.state.city && <div className="mandatory">{window.strings['FARMERS']['CITY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        
+
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['STATE']}</label>
                                             <input
@@ -392,23 +391,23 @@ class PersonalAndContactInfo extends Component {
                                         </div>
                                         <div className="form-group col-md-6">
                                         </div>
-                                       </div>
-                                       </div>
-                                          <div className="col-md-12 bottom-section">
-                                                <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
-                                                
-                                                <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
-                                              
-                                            </div>
-                                       
-                                    </form>
-                            
-                           
-                   
+                                    </div>
+                                </div>
+                                <div className="col-md-12 bottom-section">
+                                    <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
+
+                                    <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+
+                                </div>
+
+                            </form>
+
+
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         )
     }
 }

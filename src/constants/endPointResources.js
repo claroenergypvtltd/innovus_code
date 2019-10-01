@@ -60,4 +60,5 @@ export const endPoint = {
     "user": "/user",
     "farm": "/farm",
     "farmDetails": "/getFarmDetails",
+    "retailSignUp": "/signup"
 }

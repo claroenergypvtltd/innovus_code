@@ -88,6 +88,7 @@ h5{font-size: $h5}
 h6{font-size: $h6}
 .white-bg{
   background-color: $white;
+  padding: 17px 0px 8px 20px;
 }
 /****************************Login Page************************/
 
@@ -174,7 +175,7 @@ input:-khtml-autofill {
 /****************************Button Section************************/
 
 .btn{
-border-radius:50px !important;
+// border-radius:50px !important;
 padding:10px 20px  !important;
 height: auto !important;
 border: none !important;
@@ -388,7 +389,85 @@ a,p,small,span{font-family: open sans;}
 .t-srch {
   padding: 0 0px 0 5px;
 }
+.steps-content {
+  margin-top: 16px;
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  background-color: white;
+  min-height: 200px;
+  text-align: center;
+  // padding-top: 80px;
+}
 
+.steps-action {
+  margin-top: 24px;
+}
+.retallable {
+  float:left
+}
+.ant-steps-item{
+  flex: 0.6 4 !important;
+}
+.ant-steps-item-process .ant-steps-item-icon {
+  background: linear-gradient(to right, #ff8b92, #feb683) !important;
+  border-color: darkgrey !important;
+}
+.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+  color: black !important;
+}
+.ant-steps-item-finish .ant-steps-item-icon{
+  border-color: darkgrey !important;
+}
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon{
+  color: black !important;
+}
+.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
+  background-color: grey  !important;
+}
+.ant-steps-item-wait .ant-steps-item-icon {
+  background-color: #fff !important;
+}
+.ant-btn-primary {
+  background: linear-gradient(to right, #ff8b92, #feb683) !important;
+  color: black !important;
+  border-color: grey !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+.ant-steps-horizontal:not(.ant-steps-label-vertical) .ant-steps-item{
+  margin-right : 0px !important;
+}
+.ant-steps-item-title{
+ padding-right: 0px  !important;
+}
+.profile-title{
+  text-align: center;
+  padding: 9px 0 9px;
+}
+.title{
+  color: #767676;
+  font-weight: 500;
+  margin: 0;
+}
+.color-title{
+  color: #ff8b92;
+  font-weight: 500;
+  font-size: 17px;
+
+}
+.user-title{
+  color: #706d6d;
+}
+.user-subtitle{
+  color: #8C8C8C;
+  padding-top: 15px;
+}
+.sub-farmer{
+  border-top-style: outset;
+  border-width: 2px;
+  height: 50px;
+}
 
 /****************************User Management Page************************/
 
@@ -939,9 +1018,11 @@ svg{
   border-radius: .25rem;
   transition: background-color .15s ease-out,color .15s ease-out;
 }
-
 .order-img{
   border-radius: 20px;
   height: auto;
   width: 100px;
+}
+.stepsCancel{
+
 }
