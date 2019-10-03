@@ -8,6 +8,7 @@ import { path } from '../../constants';
 import { getOrderList } from '../../actions/orderAction'
 import { toastr } from '../../services/toastr.services'
 import { Link } from 'react-router-dom'
+import { Form, Row, Col } from 'react-bootstrap';
 
 class FetchOrder extends Component {
 
@@ -109,19 +110,43 @@ class FetchOrder extends Component {
 
         return (
             <div className="order">
-                <div className="clearfix title-section row">
-                    <div className="title-card col-md-8">
-                        <h4 className="user-title">List Order</h4>
+                <div className="order-board">
+                    <div className=" row pr-3">
+                    <div className="col-md-4 pr-0 dashboard-bx ship-order">
+                        <a href="#" className="card">
+                            <div className="box">
+                                <h5 className="dashboard-title">Orders to Ship</h5>
+                                <span>5872</span>
+                            </div>
+                        </a>
                     </div>
-                    {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Order</button> */}
-
-                    <div className="right-title row col-md-4 pl-5">
-                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        {/* <div className="col-md-4">
-                        <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Order</button>
-                    </div> */}
+                    <div className="col-md-4 pr-0 dashboard-bx overdue-order">
+                        <a href="#" className="card">
+                            <div className="box">
+                                <h5 className="dashboard-title">Overdue Shipments</h5>
+                                <span>12580</span>
+                            </div>
+                        </a>
                     </div>
+                    <div className="col-md-4 pr-0 dashboard-bx pending-order">
+                        <a href="#" className="card">
+                            <div className="box">
+                                <h5 className="dashboard-title">Pending Shipments</h5>
+                                <span>125058</span>
+                            </div>
+                        </a>
+                    </div>
+                    </div>
+                    <Row className="clearfix title-section pb-3">
+                    <Col md={8} className="title-card">
+                        <h4 className="user-title">Orders</h4>
+                    </Col>
+                    <Col md={4} className="pl-5">
+                         <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    </Col>
+                    </Row>
                 </div>
+        
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />

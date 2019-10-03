@@ -23,7 +23,7 @@ class CategoryList extends Component {
     }
 
     viewCrop(Data) {
-        let ViewPage = <button className="viewcrop-btn" onClick={() => this.itemView(Data)}>View Crop</button>
+        let ViewPage = <button className="view-btn" onClick={() => this.itemView(Data)}>View Crop</button>
         return ViewPage;
     }
 
