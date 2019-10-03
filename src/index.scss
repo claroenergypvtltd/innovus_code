@@ -176,7 +176,7 @@ input:-khtml-autofill {
 
 .btn{
 // border-radius:50px !important;
-padding:10px 20px  !important;
+padding:8px 10px  !important;
 height: auto !important;
 border: none !important;
 font-family: $font-open;
@@ -842,7 +842,8 @@ svg{
 .bottom-section .btn-primary{
   font-size: 15px;
   width: 125px;
-  font-weight: 700px;
+  border-radius: 20px;
+  font-weight: unset;
 }
 .form-control{
   color:#9EA0B7;
@@ -1031,4 +1032,43 @@ svg{
 
 .main-shop{
   border-right: 1px inset;
+}
+
+/****************************Coupon Section************************/
+.line-wrapper{
+  margin-bottom: 0;
+  padding: 0 0 10px 10px;
+  border-bottom: 1px inset;
+}
+
+.box-wrapper{
+  padding: 15px 7px 15px 7px;
+  margin: 17px 0;
+}
+.calendar-icon{
+background-image: url("../src/assets/images/Sprite_image_cal.png");
+background-repeat:no-repeat;
+background-position:270px -2670px;
+}
+
+
+// .form p{
+//   width: 100%;
+//   height: 100%;
+//   text-align: center;
+//   line-height: 170px;
+//   color: #ffffff;
+//   font-family: Arial;
+// }
+.img-box{
+ // position: absolute;
+ border: 2px dashed #CBCBCB;
+ height: 80px;
+ background-color: #F5F5F5;
+ text-align: center;
+ border-radius: 6px;
+}
+.img-input{
+ // position: absolute;
+  opacity: 0;
 }
