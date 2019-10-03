@@ -918,7 +918,14 @@ svg{
   font-weight: 600;
   font-size: 15px;
 }
-
+.drop-select{
+  border: none;
+  background-image: linear-gradient(to right, #ff8b92, #feb683);
+  color: #fff;
+}
+.drop-option{
+  color: #000;
+}
 /****************************Price Section************************/
 .sub-price{
   padding-top: 28px;
