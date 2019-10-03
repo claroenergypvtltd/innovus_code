@@ -147,18 +147,18 @@ class RetailerInfo extends React.Component {
                     {this.state.current === 0 ?
                         <div className="clearfix ">
                             <div className="row clearfix">
-                                <div className="col-md-10">
+                                <div className="col-md-12 p-3">
                                     {/* <h3>{this.state.categoryId ? window.strings['CROP']['EDITTITLE'] : window.strings['CROP']['CREATETITLE']}</h3> */}
-                                    <div className="col-md-6 ">
-                                        <div className="p-5 clearfix">
-                                            <div className="">
-                                                <form onSubmit={this.handleSubmit} noValidate>
-                                                    <div className="form-group pt-3">
+                                    <div className="col-md-8">
+                                        <div className="clearfix">
+                                            <div className="retailer-info">
+                                                <form onSubmit={this.handleSubmit} noValidate className="row">
+                                                    <div className="form-group pt-3 col-md-6">
                                                         <label className="retallable">{window.strings.FARMERS.NAME}</label>
                                                         <input
                                                             type="text"
                                                             placeholder="NAME"
-                                                            className={classnames('form-control form-control-lg', {
+                                                            className={classnames('form-control', {
                                                                 'is-invalid': errors.name
                                                             })}
                                                             name="name"
@@ -170,12 +170,12 @@ class RetailerInfo extends React.Component {
                                                         {this.state.submitted && !this.state.name && <div className="mandatory"> {window.strings.FARMERS.NAME + window.strings['ISREQUIRED']}</div>}
 
                                                     </div>
-                                                    <div className="form-group pt-3">
+                                                    <div className="form-group pt-3 col-md-6">
                                                         <label className="retallable">{window.strings.FARMERS.EMAIL}</label>
                                                         <input
                                                             type="text"
                                                             placeholder="EMAIL"
-                                                            className={classnames('form-control form-control-lg', {
+                                                            className={classnames('form-control', {
                                                                 'is-invalid': errors.emailId
                                                             })}
                                                             name="emailId"
@@ -186,12 +186,12 @@ class RetailerInfo extends React.Component {
                                                         />
                                                         {this.state.submitted && !this.state.emailId && <div className="mandatory"> {window.strings.FARMERS.EMAIL + window.strings['ISREQUIRED']}</div>}
                                                     </div>
-                                                    <div className="form-group pt-3">
+                                                    <div className="form-group pt-3 col-md-6">
                                                         <label className="retallable">{window.strings.FARMERS.PHON_NO}</label>
                                                         <input
                                                             type="text"
                                                             placeholder="Phone Number"
-                                                            className={classnames('form-control form-control-lg', {
+                                                            className={classnames('form-control', {
                                                                 'is-invalid': errors.name
                                                             })}
                                                             name="mobileNumber"
@@ -202,12 +202,12 @@ class RetailerInfo extends React.Component {
                                                         />
                                                         {this.state.submitted && !this.state.mobileNumber && <div className="mandatory"> {window.strings.FARMERS.PHON_NO + window.strings['ISREQUIRED']}</div>}
                                                     </div>
-                                                    <div className="form-group pt-3">
+                                                    <div className="form-group pt-3 col-md-6">
                                                         <label className="retallable">{window.strings.FARMERS.ADDR}</label>
                                                         <input
                                                             type="text"
                                                             placeholder="Address"
-                                                            className={classnames('form-control form-control-lg', {
+                                                            className={classnames('form-control', {
                                                                 'is-invalid': errors.name
                                                             })}
                                                             name="address1"
@@ -218,12 +218,12 @@ class RetailerInfo extends React.Component {
                                                         />
                                                         {this.state.submitted && !this.state.address1 && <div className="mandatory"> {window.strings.FARMERS.ADDR + window.strings['ISREQUIRED']}</div>}
                                                     </div>
-                                                    <div className="form-group pt-3">
+                                                    <div className="form-group pt-3 col-md-6">
                                                         <label className="retallable">{window.strings.RETAILERS.IMG_UPLOAD}</label>
                                                         <input
                                                             type="file"
                                                             placeholder="Retailer Personal Image"
-                                                            className={classnames('form-control form-control-lg', {
+                                                            className={classnames('form-control', {
                                                                 'is-invalid': errors.name
                                                             })}
                                                             name="retPersonalImage"
