@@ -216,7 +216,7 @@ export const Translation = {
             "DRIVING_LICENSE_NUMBER": "Driving License Number",
             "PHOTO_ANGLE": "Front Side"
         },
-
+        "RETAILERS_STATUS": ["Pending", "Accepted", "Rejected"],
         "FARMERS": {
             "PERSONAL_INFORMATION": "Personal Information",
             "CONTACT_INFORMATION": "Contact Information",

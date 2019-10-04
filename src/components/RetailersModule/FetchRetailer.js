@@ -64,11 +64,11 @@ class FetchRetailer extends React.Component {
         }
     }
     viewCrop(RetstatusId) {
-        let ViewPage = <select className="drop-select">
+        let ViewPage = <select>
+            {
+                window.strings.RETAILERS_STATUS.map((team, key) => <option key={key} value={key}>{team}</option>)
+            }
             {/* onChange={() => this.statusChange(RetstatusId)} */}
-            <option value="0" className="drop-option" selected={RetstatusId}>{window.strings.RETAILERS.PENDING}</option>
-            <option value="1" className="drop-option">{window.strings.RETAILERS.ACCEPTED}</option>
-            <option value="2" className="drop-option">{window.strings.RETAILERS.REJECTED}</option>
         </select>
         return ViewPage;
     }
