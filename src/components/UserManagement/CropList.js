@@ -85,8 +85,8 @@ class CropList extends React.Component {
           expandable={true}
           pagination={true}
           expandableComponent={expandableComponent}
-          />
-         </div>
+        />
+      </div>
     );
   }
 }

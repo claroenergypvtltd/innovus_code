@@ -27,9 +27,13 @@ import CreateFAQ from '../components/FAQModule/CreateFAQ'
 import FetchFAQ from '../components/FAQModule/FetchFAQ'
 
 import IrrigationSetting from '../components/SettingsModule/IrrigationSetting'
-import CreateCoupon from '../components/CouponModule/CreateCoupon'
-import FetchCoupon from '../components/CouponModule/FetchCoupon'
+import FetchIrrigationSetting from '../components/SettingsModule/FetchIrrigationSetting'
 
+
+// import CreateCoupon from '../components/CouponModule/CreateCoupon'
+// import FetchCoupon from '../components/CouponModule/FetchCoupon'
+
+import FetchProduct from '../components/ProductModule/FetchProduct'
 
 const root = ({ route }) => (
     <div>
@@ -219,21 +223,31 @@ export const routesPath = [
                 exact: true,
             },
 
-            {
-                path: process.env.PUBLIC_URL + '/coupon',
-                component: FetchCoupon,
-                exact: true,
-            },
+            // {
+            //     path: process.env.PUBLIC_URL + '/coupon',
+            //     component: FetchCoupon,
+            //     exact: true,
+            // },
+
+            // {
+            //     path: process.env.PUBLIC_URL + '/coupon/add',
+            //     component: CreateCoupon,
+            //     exact: true,
+            // },
 
             {
-                path: process.env.PUBLIC_URL + '/coupon/add',
-                component: CreateCoupon,
+                path: process.env.PUBLIC_URL + '/setting',
+                component: FetchIrrigationSetting,
                 exact: true,
             },
-
             {
-                path: process.env.PUBLIC_URL + '/irrigationSetting',
+                path: process.env.PUBLIC_URL + '/setting/add',
                 component: IrrigationSetting,
+                exact: true,
+            },
+            {
+                path: process.env.PUBLIC_URL + '/product',
+                component: FetchProduct,
                 exact: true,
             },
 

@@ -35,7 +35,8 @@ export const labelResources = {
     "FAQLabel": "FAQ",
     "orderLabel": "Orders",
     "staticTemplate": "Static Template",
-    "CartLabel": "Cart"
+    "CartLabel": "Cart",
+    "Setting": "Setting"
   }
 
 }

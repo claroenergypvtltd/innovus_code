@@ -109,6 +109,15 @@ export const Translation = {
             "ADD_PRICE": "Add Price"
         },
 
+        "SETTING": {
+            // "CROP_NAME": "Crop Name",
+            // "CREATETITLE": "Add Irrigation Setting",
+            // "EDITTITLE": "Edit Irrigation Setting",
+            // "LISTTITLE": "Irrigation Setting List",
+            "LIST_IRRIGATION": "List Irrigation Setting",
+            "ADD_IRRIGATION": "Add Irrigation Setting"
+        },
+
         "SUBMIT": "Save",
         "NEXT_TAB": "Next",
         "CREATED_SUCCESSFULLY": "Created Successfully",

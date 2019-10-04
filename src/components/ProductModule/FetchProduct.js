@@ -1,44 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
-import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
-import { getPriceList } from '../../actions/priceAction'
+import { getCropList } from '../../actions/cropAction'
 import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
-import CreatePrice from '../../components/PriceModule/Createprice'
-import Store from '../../store/store';
-import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
+import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
+import store from '../../store/store';
 
-class FetchPrice extends Component {
+class FetchProduct extends Component {
 
     constructor(props) {
 
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", "Total Weight", "Weight Units", "Price", "Price Units"],
-            PriceLists: props.getLists,
+            TableHead: ["Product Id", "User Name", "Crop Type", "Crop Variety", "Weight", "Amount", "Status"],
+            CropLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
             currentPage: 1,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
-            limitValue: resorceJSON.TablePageData.paginationLength
+            limitValue: resorceJSON.TablePageData.paginationLength,
         }
     }
 
     componentDidMount() {
-        this.getPriceList();
+        this.getCropList();
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
-            let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
+        if (newProps.categoryData.deletedStatus == "200") {
+            store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
+            this.getCropList();
+        }
+
+        if (newProps.cropData.List) {
+            let Data = newProps.cropData.List;
+            this.setState({ CropLists: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage })
         }
     }
 
@@ -49,34 +51,31 @@ class FetchPrice extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            let serObj = {
-                "search": this.state.search
-            };
-            this.getPriceList(serObj);
+            this.getCropList();
         }
     }
 
     resetSearch = () => {
         if (this.state.search) {
             this.setState({ search: '' }, () => {
-                this.getPriceList();
+                this.getCropList();
             });
         }
     }
 
-    getPriceList() {
+    getCropList() {
         let obj = {
+            "isallcrop": true,
             "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
-            "categoryId": ""
         }
 
-        this.props.getPriceList(obj)
+        this.props.getCropList(obj);
     }
 
-    itemEdit = (priceId) => {
-        this.props.history.push({ pathname: path.price.edit + priceId, state: { priceId: priceId } });
+    itemEdit = (catId) => {
+        this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId } });
     }
 
 
@@ -90,47 +89,44 @@ class FetchPrice extends Component {
     }
 
     itemDelete = (id) => {
-        this.props.DeleteCategory(id)
-        // .then(resp => {
-        //     if (resp) {
-        //         this.getPriceList();
-        //     }
-        // });
+        this.props.DeleteCategory(id);
     }
 
     formPath = () => {
-        this.props.history.push(path.price.add);
+        this.props.history.push(path.crop.add);
     }
 
     onChange = (data) => {
-
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
-                this.getPriceList();
+                this.getCropList();
             });
         }
     }
 
+
     render() {
-        let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
-            return { "itemList": [item.categoryAmount && item.categoryAmount.id, item.name, item.categoryAmount && item.categoryAmount.totalQuantity, item.categoryAmount && item.categoryAmount.totalQuantitySize, item.categoryAmount && item.categoryAmount.amount, item.categoryAmount && item.categoryAmount.rupeesize], "itemId": item.id }
+
+        let CategoryList = this.state.CropLists && this.state.CropLists.map((item, index) => {
+            // let catImg = <img src={imageBaseUrl + item.image} height="30px" width="30px" />
+            return { "itemList": [item.id, item.name, item.description], "itemId": item.id }
         })
 
         return (
-            <div className="price">
-                <div className="clearfix title-section row">
+            <div>
+                <div className="title-section row">
                     <div className="title-card col-md-7">
-                        <h4 className="user-title">{window.strings.PRICE.LIST_PRICE}</h4>
-                        {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
+                        {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
+                        <h4 className="user-title">List Product</h4>
+                        {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
                     </div>
                     <div className="right-title row col-md-5">
                         <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <div className="col-md-4">
-                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
-                        </div>
+                        {/* <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button> */}
+
                     </div>
                 </div>
-                <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
+                <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>
@@ -142,9 +138,11 @@ class FetchPrice extends Component {
 
 function mapStateToProps(state) {
     return {
+        categoryData: state.category,
+        cropData: state.crop,
         getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
-        priceData: state.price ? state.price : {}
+        getCount: state && state.category && state.category.count ? state.category.count : 1
     };
 }
 
-export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchPrice);
+export default connect(mapStateToProps, { getCropList, DeleteCategory })(FetchProduct);
