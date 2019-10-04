@@ -2,11 +2,8 @@ import { FAQ_CREATE_SUCCESS, FAQ_FETCH_SUCCESS } from '../constants/actionTypes'
 
 
 const initialState = {
-
-    
     Lists: [],
     count: 0
-
 }
 
 export default function (state = initialState, action) {

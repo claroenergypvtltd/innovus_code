@@ -23,14 +23,13 @@ class FetchFAQ extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (nextProps.faqData.Lists) {
+        if (nextProps.faqData && nextProps.faqData.Lists) {
 
             let Data = nextProps.faqData.Lists;
             this.setState({ FaqListDatas: Data })
         }
 
     }
-
 
     handleDelete = () => {
 
@@ -47,8 +46,6 @@ class FetchFAQ extends Component {
         user.search = this.props.searchText;
         this.props.getFaqList(user);
     }
-
-
 
     formPath = () => {
         this.props.history.push(path.faq.add)
@@ -77,7 +74,6 @@ class FetchFAQ extends Component {
     }
 
 }
-
 
 
 const mapStateToProps = (state) => ({

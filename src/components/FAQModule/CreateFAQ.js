@@ -17,7 +17,6 @@ class CreateFAQ extends Component {
         }
     }
 
-
     componentWillReceiveProps(nextProps) {
 
         if (nextProps.faqData && nextProps.faqData.createdStatus == "200") {
@@ -27,9 +26,6 @@ class CreateFAQ extends Component {
 
     }
 
-    formSubmit = (e) => {
-        e.preventDefault();
-    }
 
     handleChange = (e) => {
         this.setState({
@@ -45,9 +41,7 @@ class CreateFAQ extends Component {
             const formData = new FormData();
             formData.append("title", "FAQ");
             formData.append("question", this.state.title);
-            formData.append("answer", this.state.description);
-
-
+            formData.append("answer", this.state.description)
             this.props.SubmitFaq(formData, this.state.title);
         }
     }
@@ -65,7 +59,7 @@ class CreateFAQ extends Component {
                 <div className="col-md-12 content">
                     <div className="col-md-8 ">
                         <h3 >{window.strings.FAQ.FAQ_DETAILS}</h3><hr />
-                        <Form className="form-adjust" onSubmit={this.formSubmit} >
+                        <Form className="form-adjust"  >
                             <Form.Group >
                                 <Form.Label>{window.strings.FAQ.QUESTION_TITLE}</Form.Label>
                                 <Form.Control type="text" onChange={this.handleChange} name="title" />
@@ -85,10 +79,6 @@ class CreateFAQ extends Component {
 
                         </Form>
                     </div>
-
-
-
-
 
                 </div>
             </div>

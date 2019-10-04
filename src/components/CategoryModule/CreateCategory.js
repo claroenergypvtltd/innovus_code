@@ -51,8 +51,7 @@ class CategoryForm extends Component {
 
             let Data = nextProps.categoryData.specificData.data.datas[0];
             this.setState({ description: Data.description, name: Data.name, image: Data.image });
-            debugger;
-            console.log("state", nextProps.categoryData.specificData.data.datas)
+
         }
 
     }
@@ -176,7 +175,6 @@ class CategoryForm extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                            {/* <img className="pre-view" src={imageBaseUrl + this.state.image} />  */}
                                             {imagePreview}
                                         </div>
 

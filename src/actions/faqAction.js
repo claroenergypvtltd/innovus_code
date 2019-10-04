@@ -6,12 +6,8 @@ import { FAQ_CREATE_SUCCESS, FAQ_FETCH_SUCCESS } from '../constants/actionTypes'
 
 export const SubmitFaq = (formData, Id) => dispatch => {
 
-    debugger;
-
     if (Id) {
-            debugger;
         httpServices.post(endPoint.instruction, formData).then(resp => {
-            debugger;
             if (resp) {
                 toastr.success(resp.message);
                 dispatch({ type: FAQ_CREATE_SUCCESS, resp: resp.status })
