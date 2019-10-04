@@ -6,7 +6,7 @@ import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { getCropList } from '../../actions/cropAction'
-import { imageBaseUrl } from '../../config'
+import { imageBaseUrl } from '../../config/config'
 import { toastr } from '../../services/toastr.services'
 import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
 import store from '../../store/store';

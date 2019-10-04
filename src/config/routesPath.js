@@ -23,6 +23,8 @@ import CreatePrice from '../components/PriceModule/Createprice'
 import FetchCart from '../components/CartModule/FetchCart'
 import FetchOrder from '../components/OrderModule/FetchOrder'
 import FetchOrderDetails from '../components/OrderModule/FetchOrderDetails'
+import CreateFAQ from '../components/FAQModule/CreateFAQ'
+import FetchFAQ from '../components/FAQModule/FetchFAQ'
 
 import IrrigationSetting from '../components/SettingsModule/IrrigationSetting'
 import CreateCoupon from '../components/CouponModule/CreateCoupon'
@@ -234,6 +236,23 @@ export const routesPath = [
                 component: IrrigationSetting,
                 exact: true,
             },
+
+
+            //FAQ 
+            {
+                path: process.env.PUBLIC_URL + '/FAQ/add',
+                component: CreateFAQ,
+                exact: true,
+            },
+            {
+                path: process.env.PUBLIC_URL + '/FAQ',
+                component: FetchFAQ,
+                exact: true,
+            },
+
+
+
+
 
             {
                 path: process.env.PUBLIC_URL + '/inprogress',

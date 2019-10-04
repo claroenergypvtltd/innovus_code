@@ -6,6 +6,19 @@ export const path = {
         name: 'dashboard',
         list: process.env.PUBLIC_URL + '/dashboard'
     },
+
+
+
+
+
+    home: {
+        view: process.env.PUBLIC_URL + '/'
+    },
+
+
+
+
+
     category: {
         add: process.env.PUBLIC_URL + '/category/add',
         list: process.env.PUBLIC_URL + '/category',
