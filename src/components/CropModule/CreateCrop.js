@@ -56,7 +56,7 @@ class CreateCrop extends Component {
         }
     }
 
-    redirectPage() {
+    redirectPage = () => {
         if (this.state.cropId) {
             this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
         } else {
@@ -207,8 +207,6 @@ class CreateCrop extends Component {
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                             <img className="pre-view" src={imagePreviewUrl} />
-
-
                                         </div>
 
 
@@ -238,11 +236,9 @@ class CreateCrop extends Component {
                                             </div>
                                         </div> */}
                                         <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                                            <button type="button" className="btn btn-default" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
                                             <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
                                         </div>
-
-
                                     </form>
                                 </div>
                             </div>

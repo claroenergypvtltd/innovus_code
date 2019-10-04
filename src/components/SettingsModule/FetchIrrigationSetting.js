@@ -14,14 +14,14 @@ import CreatePrice from '../../components/PriceModule/Createprice'
 import Store from '../../store/store';
 import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
 
-class FetchPrice extends Component {
+class FetchIrrigationSetting extends Component {
 
     constructor(props) {
 
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", "Total Weight", "Weight Units", "Price", "Price Units"],
-            PriceLists: props.getLists,
+            TableHead: ["Serial Number", "State", "City", "Price", "Square Feet", "Action"],
+            irrigationSettingLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
             currentPage: 1,
@@ -38,7 +38,7 @@ class FetchPrice extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
             let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
+            this.setState({ irrigationSettingLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
         }
     }
 
@@ -99,7 +99,7 @@ class FetchPrice extends Component {
     }
 
     formPath = () => {
-        this.props.history.push(path.price.add);
+        this.props.history.push(path.setting.add);
     }
 
     onChange = (data) => {
@@ -112,7 +112,7 @@ class FetchPrice extends Component {
     }
 
     render() {
-        let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
+        let CategoryList = this.state.irrigationSettingLists && this.state.irrigationSettingLists.map((item, index) => {
             return { "itemList": [item.categoryAmount && item.categoryAmount.id, item.name, item.categoryAmount && item.categoryAmount.totalQuantity, item.categoryAmount && item.categoryAmount.totalQuantitySize, item.categoryAmount && item.categoryAmount.amount, item.categoryAmount && item.categoryAmount.rupeesize], "itemId": item.id }
         })
 
@@ -120,13 +120,13 @@ class FetchPrice extends Component {
             <div className="price">
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-7">
-                        <h4 className="user-title">{window.strings.PRICE.LIST_PRICE}</h4>
+                        <h4 className="user-title">{window.strings.SETTING.LIST_IRRIGATION}</h4>
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
                     </div>
                     <div className="right-title row col-md-5">
                         <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                         <div className="col-md-4">
-                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
+                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.SETTING.ADD_IRRIGATION}</button>
                         </div>
                     </div>
                 </div>
@@ -147,4 +147,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchPrice);
+export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchIrrigationSetting);
