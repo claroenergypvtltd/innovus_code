@@ -51,15 +51,21 @@ export const toastr = {
         confirmAlert({
             customUI: ({ onClose }) => {
             return (
-                <div className='deletepopup'>
-                    <h4 className="delete_popup_header">{title}</h4>
-                    <div className="delete_popup_message">
+                <div className='delete-popup'>
+                    <h4 className="delete-popup-header">{title}</h4>
+                    <div className="delete-popup-message">
                         <p>{message}</p>
-                        <button className="btn btn-default pull-right mrr10" onClick={()=>{
+                        {/* <button className="btn btn-default pull-right mrr10" onClick={()=>{
                         props.onCancel() 
                         onClose()}}>{window.strings.NEXT}</button>
                         <button className="btn btn-primary pull-right mrr10" onClick={() => { props.onOk()
+                            onClose()}}>{window.strings.SUBMITBUTTON}</button> */}
+                        
+                        <button className="btn btn-default mr-2" onClick={()=>{ props.onCancel() 
+                            onClose()}}>{window.strings.NEXT}</button>
+                        <button className="btn btn-primary" onClick={() => { props.onOk()
                             onClose()}}>{window.strings.SUBMITBUTTON}</button>
+                        
                     </div>
                 </div>
             )
@@ -70,15 +76,22 @@ export const toastr = {
         confirmAlert({
             customUI: ({ onClose }) => {
             return (
-                <div className='deletepopup'>
-                    <h4 className="delete_popup_header">{title}</h4>
-                    <div className="delete_popup_message">
+                <div className='delete-popup'>
+                    <h4 className="delete-popup-header">{title}</h4>
+                    <div className="delete-popup-message">
                         <p>{message}</p>
-                        <button className="btn btn-default pull-right mrr10" onClick={()=>{
+                        {/* <button className="btn btn-default pull-right mrr10" onClick={()=>{
                         props.onCancel() 
                         onClose()}}><i className="fa fa-close mr15"></i>{window.strings.CANCEL}</button>
                         <button className="btn btn-primary pull-right mrr10" onClick={() => { props.onOk()
+                            onClose()}}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button> */}
+                  
+                        <button className="btn btn-default mr-2" onClick={()=>{ props.onCancel() 
+                           onClose()}}><i className="fa fa-close mr15"></i>{window.strings.CANCEL}</button>
+                        <button className="btn btn-primary" onClick={() => { props.onOk()
                             onClose()}}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button>
+                        
+                        
                     </div>
                 </div>
             )

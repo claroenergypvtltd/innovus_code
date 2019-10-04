@@ -101,20 +101,20 @@ class CreateFarmDetails extends Component {
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
-                    <div className="col-md-10">
-                        <h3>{window.strings['FARMERS']['FARM_DETAILS']}</h3>
-                        <div className="col-md-6 ">
-                            <div className="p-5 clearfix">
+                    <div className="col-md-12">
+                        <h4 className="user-title">{window.strings['FARMERS']['FARM_DETAILS']}</h4>
+                        <div className="main-wrapper pt-3">
+                            <div className="col-md-8">
                                 <div className="">
-                                    <form onSubmit={this.handleSubmit} noValidate>
-                                        <div className="form-group pt-3">
+                                    <form onSubmit={this.handleSubmit} noValidate className="row">
+                                        <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['FARM_NAME']}</label>
 
                                             <input
                                                 type="text"
                                                 placeholder={window.strings['FARMERS']['FARM_NAME']}
-                                                className={classnames('form-control form-control-lg', {
+                                                className={classnames('form-control', {
                                                     'is-invalid': errors.name
                                                 })}
                                                 name="name"
@@ -128,14 +128,14 @@ class CreateFarmDetails extends Component {
                                         </div>
 
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['ADDR_1']}</label>
 
                                             <input
                                                 type="text"
                                                 placeholder={window.strings['FARMERS']['ADDR_1']}
-                                                className={classnames('form-control form-control-lg', {
+                                                className={classnames('form-control', {
                                                     'is-invalid': errors.address1
                                                 })}
                                                 name="address1"
@@ -149,14 +149,14 @@ class CreateFarmDetails extends Component {
 
 
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['ADDR_2']}</label>
 
                                             <input
                                                 type="text"
                                                 placeholder={window.strings['FARMERS']['ADDR_2']}
-                                                className={classnames('form-control form-control-lg', {
+                                                className={classnames('form-control', {
                                                     'is-invalid': errors.address2
                                                 })}
                                                 name="address2"
@@ -168,14 +168,14 @@ class CreateFarmDetails extends Component {
                                             {this.state.submitted && !this.state.address2 && <div className="mandatory">{window.strings['FARMERS']['ADDR_2'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['TALUK']}</label>
 
                                             <input
                                                 type="text"
                                                 placeholder={window.strings['FARMERS']['TALUK']}
-                                                className={classnames('form-control form-control-lg', {
+                                                className={classnames('form-control', {
                                                     'is-invalid': errors.taluk
                                                 })}
                                                 name="taluk"
@@ -187,14 +187,14 @@ class CreateFarmDetails extends Component {
                                             {this.state.submitted && !this.state.taluk && <div className="mandatory">{window.strings['FARMERS']['TALUK'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['VILLAGE']}</label>
 
                                             <input
                                                 type="text"
                                                 placeholder={window.strings['FARMERS']['VILLAGE']}
-                                                className={classnames('form-control form-control-lg', {
+                                                className={classnames('form-control', {
                                                     'is-invalid': errors.village
                                                 })}
                                                 name="village"
@@ -208,14 +208,14 @@ class CreateFarmDetails extends Component {
 
 
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['CITY']}</label>
 
                                             <input
                                                 type="text"
                                                 placeholder={window.strings['FARMERS']['CITY']}
-                                                className={classnames('form-control form-control-lg', {
+                                                className={classnames('form-control', {
                                                     'is-invalid': errors.city
                                                 })}
                                                 name="city"
@@ -228,14 +228,14 @@ class CreateFarmDetails extends Component {
                                         </div>
 
 
-                                        <div className="form-group pt-3">
+                                        <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['STATE']}</label>
 
                                             <input
                                                 type="text"
                                                 placeholder={window.strings['FARMERS']['STATE']}
-                                                className={classnames('form-control form-control-lg', {
+                                                className={classnames('form-control', {
                                                     'is-invalid': errors.state
                                                 })}
                                                 name="state"
@@ -247,15 +247,15 @@ class CreateFarmDetails extends Component {
                                             {this.state.submitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-
+                                    {/* 
                                         <h3>Map</h3>
 
-                                        <h3>Image Upload</h3>
+                                        <h3>Image Upload</h3> */}
 
                                         <div className="col-md-12 pt-3 p-0">
 
-                                            <div className="login-btn float-right">
-                                                <button type="button" className="btn btn-warning" onClick={this.backHandle}>{window.strings.CANCEL}</button>
+                                            <div className="bottom-section">
+                                                <button type="button" className="btn btn-default" onClick={this.backHandle}>{window.strings.CANCEL}</button>
                                                 <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
                                             </div>
                                         </div>

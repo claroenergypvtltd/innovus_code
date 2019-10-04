@@ -186,7 +186,18 @@ background-color: #ff8b92; /* For browsers that do not support gradients */
 background-image: linear-gradient(to right, #ff8b92 , #feb683);
 font-size: 15px;
 }
+.btn-default{
+  background-color: #E1E7ED;
+  font-size: 15px;
+  color: #9EA0A2;
+ }
 
+
+/****************************Popup Section************************/
+
+ .delete-popup-message{
+   text-align: right;
+ }
 /****************************Header Section************************/
 li {
   list-style: none;
@@ -412,10 +423,11 @@ a,p,small,span{font-family: open sans;}
 }
 .ant-steps-item-process .ant-steps-item-icon {
   background: linear-gradient(to right, #ff8b92, #feb683) !important;
-  border-color: darkgrey !important;
+  //border-color: darkgrey !important;
+  border: none;
 }
 .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
-  color: black !important;
+  //color: black !important;
 }
 .ant-steps-item-finish .ant-steps-item-icon{
   border-color: darkgrey !important;
@@ -631,23 +643,23 @@ a,p,small,span{font-family: open sans;}
 .right-title{
   padding: 0 0 20px 0;
 }
-.user-board{
-margin: 0 0;
-font-size: 14px;
-}
-.add-user{
-  text-align: right;
-}
+// .user-board{
+// margin: 0 0;
+// font-size: 14px;
+// }
+// .add-user{
+//   text-align: right;
+// }
 .common-btn{
  color:#fff;
  background-image: linear-gradient(to right, #ff8b92, #feb683);
  border: none;
  border-radius: 20px;
- padding: 6px 17px;
+ padding: 6px;
 // font-size:14px;
  display: inline-block;
  white-space: nowrap;
-// width: 137px;
+ width: 150px;
  margin-left: 0;
 }
 .filter-btn{
@@ -930,9 +942,9 @@ svg{
 .sub-price{
   padding-top: 28px;
 }
-.add-price{
-  margin:auto;
-}
+// .add-price{
+//   margin:auto;
+// }
 
 /****************************Pagination Section************************/
 
