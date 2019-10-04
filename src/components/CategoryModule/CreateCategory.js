@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
 import classnames from 'classnames';
 import { path } from '../../constants';
+import { imageBaseUrl } from '../../config'
 import '../../assets/css/login.scss';
 import PropTypes from "prop-types";
 import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
@@ -30,6 +31,7 @@ class CategoryForm extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             this.getSpecificCategory();
         }
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -49,6 +51,8 @@ class CategoryForm extends Component {
 
             let Data = nextProps.categoryData.specificData.data.datas[0];
             this.setState({ description: Data.description, name: Data.name, image: Data.image });
+            debugger;
+            console.log("state", nextProps.categoryData.specificData.data.datas)
         }
 
     }
@@ -68,7 +72,8 @@ class CategoryForm extends Component {
         reader.onloadend = () => {
             this.setState({
                 file: file,
-                image: file.name
+                image: file.name,
+                imagePreviewUrl: reader.result
             })
         }
         reader.readAsDataURL(file)
@@ -111,6 +116,19 @@ class CategoryForm extends Component {
     render() {
         const { errors } = this.state;
 
+
+        let { imagePreviewUrl } = this.state;
+        let imagePreview;
+
+        if (imagePreviewUrl) {
+
+            imagePreview = <img className="pre-view" src={imagePreviewUrl} />
+        } else {
+
+            imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
+        }
+
+
         return (
             <div className="clearfix">
                 <div className="row clearfix">
@@ -138,6 +156,7 @@ class CategoryForm extends Component {
                                             />
 
                                             {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
+
                                         </div>
 
 
@@ -157,6 +176,8 @@ class CategoryForm extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* <img className="pre-view" src={imageBaseUrl + this.state.image} />  */}
+                                            {imagePreview}
                                         </div>
 
                                         <div className="form-group pt-3 col-md-12">

@@ -113,7 +113,7 @@ export const Sidebar = [
                 {Label.FAQLabel}
             </span>
         ),
-        path: "/inprogress",
+        path: "/FAQ",
     },
     {
         name: (

@@ -76,6 +76,7 @@ class CategoryList extends Component {
     }
 
     formPath = () => {
+
         this.props.history.push(path.category.add);
     }
 
@@ -84,13 +85,13 @@ class CategoryList extends Component {
             <div className="category-table">
                 <div className="category-title right-title">
                     <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
-                    {window.strings.CATEGORY.ADDBUTTON}</button>
+                        {window.strings.CATEGORY.ADDBUTTON}</button>
                 </div>
-               <div className="sub-category">
-                <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} handleDelete={this.handleDelete} pagination={true} />
+                <div className="sub-category">
+                    <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} handleDelete={this.handleDelete} pagination={true} />
+                </div>
             </div>
-            </div>
-            
+
         );
     }
 }
