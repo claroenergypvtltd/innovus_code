@@ -25,6 +25,8 @@ export const endPoint = {
     "uploads": "/uploads",
     "country": "/country",
     "state": "/state",
+    "countryId": "/countryId",
+    "stateId": "/stateId",
     "city": "/city",
     "orderStatus": "/orderStatus",
     "master/order": "/master/order/",
