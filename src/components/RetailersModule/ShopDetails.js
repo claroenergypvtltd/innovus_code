@@ -14,7 +14,7 @@ class ShopDetails extends React.Component {
         const profile = this.props.profileData;
         const getname = profile.name.split('_');
         return (
-            <div className="col-sm-4">
+            <div className="col-sm-4 farm-tab p-1">
 
                 <div
 

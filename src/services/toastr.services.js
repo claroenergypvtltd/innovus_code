@@ -87,9 +87,9 @@ export const toastr = {
                             onClose()}}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button> */}
                   
                         <button className="btn btn-default mr-2" onClick={()=>{ props.onCancel() 
-                           onClose()}}><i className="fa fa-close mr15"></i>{window.strings.CANCEL}</button>
-                        <button className="btn btn-primary" onClick={() => { props.onOk()
-                            onClose()}}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button>
+                           onClose()}}>{window.strings.CANCEL}</button>
+                        <button className="btn btn-primary delete-btn" onClick={() => { props.onOk()
+                            onClose()}}>{window.strings.OK}</button>
                         
                         
                     </div>

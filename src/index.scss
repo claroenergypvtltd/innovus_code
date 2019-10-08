@@ -192,11 +192,22 @@ font-size: 15px;
   color: #9EA0A2;
  }
 
-
 /****************************Popup Section************************/
 
  .delete-popup-message{
    text-align: right;
+ }
+ .react-confirm-alert-overlay {
+  background-color: rgba(0,0,0, 0.4);
+ }
+ .delete-popup{
+  background-color: #fff;
+  padding: 15px; 
+  border-radius: 6px;
+  //box-shadow: 2px 2px 1px 1px rgba(220, 220, 220, 0.5);
+ }
+ .delete-btn{
+   width: 70px;
  }
 /****************************Header Section************************/
 li {
