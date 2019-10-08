@@ -1,8 +1,10 @@
-import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS } from '../constants/actionTypes';
+import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS } from '../constants/actionTypes';
 
 
 const initialState = {
-    Lists: {}
+    Lists: {},
+    DetailsList: {},
+    trackLists: {}
 }
 
 export default function (state = initialState, action) {
@@ -18,6 +20,13 @@ export default function (state = initialState, action) {
                 ...state,
                 DetailsList: action.Lists
             }
+
+        case ORDERTRACK_FETCH_SUCCESS:
+            return {
+                ...state,
+                trackLists: action.trackLists
+            }
+
         default:
             return state;
     }

@@ -23,8 +23,8 @@ export function TableData(props) {
         </thead>
 
         <tbody>
-          {props.TableContent.length === 0 ? <tr><td colSpan="7" className="text-center">No data Found </td></tr> :
-            props.TableContent.map((item, index) => {
+          {props.TableContent && props.TableContent.length === 0 ? <tr><td colSpan="7" className="text-center">No data Found </td></tr> :
+            props.TableContent && props.TableContent.map((item, index) => {
               return (
                 <tr key={index}>
                   {
