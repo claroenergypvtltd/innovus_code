@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { loginUser } from '../actions/authentication';
 import logo from '../assets/images/logo.png';
 import classnames from 'classnames';
-// import {path} from '../constants';
+import { path } from '../constants';
 import '../assets/css/login.scss';
 import user from '../assets/images/user_icon.png';
 import lock from '../assets/images/password_icon.png';
 
 class Login extends Component {
-
+    static contextTypes = {
+        router: PropTypes.object,
+    };
     constructor() {
         super();
         this.state = {
@@ -52,7 +54,7 @@ class Login extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push('/');
+            this.props.history.push(path.dashboard.list);
         }
         if (nextProps.errors) {
             this.setState({

@@ -132,7 +132,7 @@ class FetchRetailer extends React.Component {
     itemView = (e, item) => {
         let retailerId = item.id;
         this.context.router.history.push({
-            pathname: '/user/retailer/view/' + retailerId,
+            pathname: path.retailer.view + retailerId,
             data: { farmerData: item },
         });
     };

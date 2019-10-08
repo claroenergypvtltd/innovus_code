@@ -74,6 +74,8 @@ export const path = {
         list: process.env.PUBLIC_URL + '/retailer',
         add: process.env.PUBLIC_URL + '/user/retailer/add',
         edit: process.env.PUBLIC_URL + '/user/retailer/edit/',
+        view: process.env.PUBLIC_URL + '/user/retailer/view/',
+
     },
     aboutUs: {
         list: process.env.PUBLIC_URL + '/aboutus',

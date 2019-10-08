@@ -11,7 +11,7 @@ export const Sidebar = [
                 {Label.dasboard}
             </span>
         ),
-        path: path.dashboard,
+        path: path.dashboard.list
     },
     {
         name: (
