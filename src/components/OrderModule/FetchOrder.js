@@ -89,10 +89,6 @@ class FetchOrder extends Component {
             });
     }
 
-    formPath = () => {
-        this.props.history.push('/order/5');
-    }
-
     onChange = (data) => {
 
         if (this.state.currentPage !== (data.selected + 1)) {
@@ -112,41 +108,41 @@ class FetchOrder extends Component {
             <div className="order">
                 <div className="order-board">
                     <div className=" row pr-3">
-                    <div className="col-md-4 pr-0 dashboard-bx ship-order">
-                        <a href="#" className="card">
-                            <div className="box">
-                                <h5 className="dashboard-title">Orders to Ship</h5>
-                                <span>5872</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col-md-4 pr-0 dashboard-bx overdue-order">
-                        <a href="#" className="card">
-                            <div className="box">
-                                <h5 className="dashboard-title">Overdue Shipments</h5>
-                                <span>12580</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col-md-4 pr-0 dashboard-bx pending-order">
-                        <a href="#" className="card">
-                            <div className="box">
-                                <h5 className="dashboard-title">Pending Shipments</h5>
-                                <span>125058</span>
-                            </div>
-                        </a>
-                    </div>
+                        <div className="col-md-4 pr-0 dashboard-bx ship-order">
+                            <a href="#" className="card">
+                                <div className="box">
+                                    <h5 className="dashboard-title">Orders to Ship</h5>
+                                    <span>5872</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-md-4 pr-0 dashboard-bx overdue-order">
+                            <a href="#" className="card">
+                                <div className="box">
+                                    <h5 className="dashboard-title">Overdue Shipments</h5>
+                                    <span>12580</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-md-4 pr-0 dashboard-bx pending-order">
+                            <a href="#" className="card">
+                                <div className="box">
+                                    <h5 className="dashboard-title">Pending Shipments</h5>
+                                    <span>125058</span>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                     <Row className="clearfix title-section pb-3">
-                    <Col md={8} className="title-card">
-                        <h4 className="user-title">Orders</h4>
-                    </Col>
-                    <Col md={4} className="pl-5">
-                         <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    </Col>
+                        <Col md={8} className="title-card">
+                            <h4 className="user-title">Orders</h4>
+                        </Col>
+                        <Col md={4} className="pl-5">
+                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        </Col>
                     </Row>
                 </div>
-        
+
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />

@@ -62,161 +62,149 @@ class FarmList extends React.Component {
         return (
           <div className="col-sm-4">
 
-          <div
-            key={index}
-            className="farm-card bg-white"
-            onClick={() => this.getFarmDetails(item.id)}
-          > 
-            <span className="farm-image">
-            <Image
-              src={imageBaseUrl + item.image}
-              className="maincentext"
-              roundedCircle
-            />
-              <button className="edit-icon" onClick={() => this.editPage(item.id)}><i class="fa fa-pencil"></i></button> 
-            </span>
-            <div className="farm-box">
-              <h5 className="centext title">{item.name}</h5>
-              <span>
-              <div className="centext color-title">
-              <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>{item.state}
-              </div>
+            <div
+              key={index}
+              className="farm-card bg-white"
+              onClick={() => this.getFarmDetails(item.id)}
+            >
+              <span className="farm-image">
+                <Image
+                  src={imageBaseUrl + item.image}
+                  className="maincentext"
+                  roundedCircle
+                />
+                <button className="edit-icon" onClick={() => this.editPage(item.id)}><i class="fa fa-pencil"></i></button>
               </span>
-              <div className="farmer-details pl-4">
-              <div className="farmer-address">
-              <h5 className="title">Address</h5>
-              <p className="centext user-title sub-farm">
-                {item.address1 + '' + item.address2}
-              </p>
-              </div>
-              <div className="farmer-area">
-              <h5 className="title mt-4">Total farm area</h5>
-              <p className="centext user-title sub-farm">{item.areaSize + 'Sq.ft'}</p>
+              <div className="farm-box">
+                <h5 className="centext title">{item.name}</h5>
+                <span>
+                  <div className="centext color-title">
+                    <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>{item.state}
+                  </div>
+                </span>
+                <div className="farmer-details pl-4">
+                  <div className="farmer-address">
+                    <h5 className="title">Address</h5>
+                    <p className="centext user-title sub-farm">
+                      {item.address1 + '' + item.address2}
+                    </p>
+                  </div>
+                  <div className="farmer-area">
+                    <h5 className="title mt-4">Total farm area</h5>
+                    <p className="centext user-title sub-farm">{item.areaSize + 'Sq.ft'}</p>
+                  </div>
+                </div>
               </div>
             </div>
-            </div>
-          </div> 
-         </div>     
+          </div>
         );
-      });       
+      });
 
     return (
-     
+
       // <div className="white-bg row">
-      
+
       <div className="farm-tab">
-      <div className="white-bg">
-        {this.state.farmId ? <FarmDetails /> : Farms}
-      {/* {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>} */}
-      </div>
-      <div className="row">
-        {this.state.farmId ? <FarmDetails /> : Farms}   
-      </div>
+        <div className="white-bg">
+          {this.state.farmId ? <FarmDetails /> : Farms}
+          {/* {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>} */}
+        </div>
+        <div className="row">
+          {this.state.farmId ? <FarmDetails /> : Farms}
+        </div>
 
 
-{/* Retailer-SHOP    */}
-<div className="col-sm-4">
-<div
-  //key={index}
-  className="farm-card bg-white"
- // onClick={() => this.getFarmDetails(item.id)}
-> 
-  <span className="farm-image">
-  <Image
-    src=""
-    className="maincentext"
-    roundedCircle
-  />
-   {/* <button className="edit-icon"><i class="fa fa-pencil"></i></button>  */}
- 
-  </span>
-  <div className="farm-box">
-    <h5 className="centext title">Shop name</h5>
-    <span>
-    <div className="centext color-title">
-    <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>Place
+        {!this.props.farmerId && <div className="col-sm-4">
+          <div
+            className="farm-card bg-white"
+          >
+            <span className="farm-image">
+              <Image
+                src=""
+                className="maincentext"
+                roundedCircle
+              />
+
+            </span>
+            <div className="farm-box">
+              <h5 className="centext title">Shop name</h5>
+              <span>
+                <div className="centext color-title">
+                  <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>Place
     </div>
-    </span>
-    <div className="farmer-details pl-4">
-    <div className="farmer-address">
-    <h5 className="title">Address</h5>
-    <p className="centext user-title sub-farm">
-      {/* {item.address1 + '' + item.address2} */}
-      flat no, city, state
+              </span>
+              <div className="farmer-details pl-4">
+                <div className="farmer-address">
+                  <h5 className="title">Address</h5>
+                  <p className="centext user-title sub-farm">
+                    flat no, city, state
     </p>
-    </div>
-  
-  </div>
-  <div className="view-map">
-  <button className="common-btn" >View on Map</button> 
-  </div>
-  </div>
-</div> 
-</div>  
+                </div>
 
-{/* Retailer-KYCdetails   */}
-      <div className="col-md-12">
-          <div className="row">
-            <div className="col-md-4">
-            <div className="farm-card main-wrapper">
-              <div className="retailer-details">
-                <img src="" className="retailer-image" />
-                <div className="retailer-proof">
-                   {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                   <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                </div>
-                <div className="pl-2">
-                  <p className="user-title m-0">upload</p>
-                  <p class="user-title m-0">upload</p>
-                  <p class="user-title m-0">upload</p>
-                </div>
-               </div>
+              </div>
+              <div className="view-map">
+                <button className="common-btn" >View on Map</button>
+              </div>
             </div>
-            </div>
-            <div className="col-md-4">
-            <div className="farm-card main-wrapper">
-            <div className="retailer-details">
-                <img src="" className="retailer-image" />
-                <div className="retailer-proof"> 
-                   {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                    <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                </div>
-                <div className="pl-2">
-                  <p className="user-title m-0">upload</p>
-                  <p class="user-title m-0">upload</p>
-                  <p class="user-title m-0">upload</p>
-                </div>
-            </div>
-             </div>
-            </div>
-          <div className="col-md-4">
-          <div className="farm-card main-wrapper">
-          <div className="retailer-details">
-                <img src="" className="retailer-image" />
-                <div className="retailer-proof">
-                   {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                    <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                </div>
-                <div className="pl-2">
-                  <p className="user-title m-0">upload</p>
-                  <p class="user-title m-0">upload</p>
-                  <p class="user-title m-0">upload</p>
-                </div>
           </div>
-          </div>
-</div>
-</div>
-</div> 
-      <div className="plus-btn"> 
-         {/* <button type="submit" className="plus-icon">
-         <i class="fa fa-plus"> Add Farm</i></button>  */}
-         {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
+    </div> }
 
-      </div> 
+          <div className="col-md-12">
+            <div className="row">
+              <div className="col-md-4">
+                <div className="farm-card main-wrapper">
+                  <div className="retailer-details">
+                    <img src="" className="retailer-image" />
+                    <div className="retailer-proof">
+                      <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
+                    </div>
+                    <div className="pl-2">
+                      <p className="user-title m-0">upload</p>
+                      <p class="user-title m-0">upload</p>
+                      <p class="user-title m-0">upload</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="farm-card main-wrapper">
+                  <div className="retailer-details">
+                    <img src="" className="retailer-image" />
+                    <div className="retailer-proof">
+                      <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
+                    </div>
+                    <div className="pl-2">
+                      <p className="user-title m-0">upload</p>
+                      <p class="user-title m-0">upload</p>
+                      <p class="user-title m-0">upload</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="farm-card main-wrapper">
+                  <div className="retailer-details">
+                    <img src="" className="retailer-image" />
+                    <div className="retailer-proof">
+                      <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
+                    </div>
+                    <div className="pl-2">
+                      <p className="user-title m-0">upload</p>
+                      <p class="user-title m-0">upload</p>
+                      <p class="user-title m-0">upload</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+        <div className="plus-btn">
+          {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
+        </div>
       </div>
     );
   }
-} 
+}
 
 const mapStateToProps = state => ({
   list: state.user.farmsList
