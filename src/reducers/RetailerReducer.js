@@ -1,4 +1,4 @@
-import { RET_COUNTRY_FETCH_SUCCESS, RET_KYC_FETCH_SUCCESS, RETAILER_FETCH_SUCCESS, RETAILER_CREATE_SUCCESS, RETAILER_UPDATE_SUCCESS, RETAILER_DELETE_SUCCESS } from '../constants/actionTypes'
+import { RET_KYC_FETCH_SUCCESS, RETAILER_FETCH_SUCCESS, RETAILER_CREATE_SUCCESS, RETAILER_UPDATE_SUCCESS, RETAILER_DELETE_SUCCESS } from '../constants/actionTypes'
 
 const initialstate = {
     Lists: [],
@@ -41,12 +41,6 @@ export default function (state = initialstate, action) {
             return state = {
                 ...state,
                 KYClist: action.Lists,
-                // count: action.count
-            }
-        case RET_COUNTRY_FETCH_SUCCESS:
-            return state = {
-                ...state,
-                countryLists: action.countryLists,
                 // count: action.count
             }
 

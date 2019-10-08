@@ -91,15 +91,6 @@ export const Translation = {
             "EDITTITLE": "Edit Crop",
         },
 
-        "FAQ": {
-            "ADD_FAQ": "Add New FAQ",
-            "FAQ_DETAILS": "FAQ Details",
-            "QUESTION_TITLE": "Questions Title",
-            "TITLE": "Title is required*",
-            "DESCRIPTION_REQUIRED": "Description is required*",
-            "ADD_FAQ": "Add FAQ"
-        },
-
         "PRICE": {
             "CROP_NAME": "Crop Name",
             "CREATETITLE": "Add Price",
@@ -107,15 +98,6 @@ export const Translation = {
             "LISTTITLE": "Price Master",
             "LIST_PRICE": "List Price",
             "ADD_PRICE": "Add Price"
-        },
-
-        "SETTING": {
-            // "CROP_NAME": "Crop Name",
-            // "CREATETITLE": "Add Irrigation Setting",
-            // "EDITTITLE": "Edit Irrigation Setting",
-            // "LISTTITLE": "Irrigation Setting List",
-            "LIST_IRRIGATION": "List Irrigation Setting",
-            "ADD_IRRIGATION": "Add Irrigation Setting"
         },
 
         "SUBMIT": "Save",
@@ -216,7 +198,7 @@ export const Translation = {
             "DRIVING_LICENSE_NUMBER": "Driving License Number",
             "PHOTO_ANGLE": "Front Side"
         },
-        "RETAILERS_STATUS": ["Pending", "Accepted", "Rejected"],
+
         "FARMERS": {
             "PERSONAL_INFORMATION": "Personal Information",
             "CONTACT_INFORMATION": "Contact Information",

@@ -20,7 +20,7 @@ class FetchPrice extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", "Total Weight", "Weight Units", "Price", "Price Units"],
+            TableHead: ["Product ID", "Product Name", "Units", "Price"],
             PriceLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
@@ -91,11 +91,11 @@ class FetchPrice extends Component {
 
     itemDelete = (id) => {
         this.props.DeleteCategory(id)
-        // .then(resp => {
-        //     if (resp) {
-        //         this.getPriceList();
-        //     }
-        // });
+            .then(resp => {
+                if (resp) {
+                    this.getPriceList();
+                }
+            });
     }
 
     formPath = () => {
@@ -113,7 +113,7 @@ class FetchPrice extends Component {
 
     render() {
         let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
-            return { "itemList": [item.categoryAmount && item.categoryAmount.id, item.name, item.categoryAmount && item.categoryAmount.totalQuantity, item.categoryAmount && item.categoryAmount.totalQuantitySize, item.categoryAmount && item.categoryAmount.amount, item.categoryAmount && item.categoryAmount.rupeesize], "itemId": item.id }
+            return { "itemList": [item.categoryAmount && item.categoryAmount.id, item.name, item.categoryAmount && item.categoryAmount.discountUnit, item.categoryAmount && item.categoryAmount.amount], "itemId": item.id }
         })
 
         return (
@@ -130,7 +130,7 @@ class FetchPrice extends Component {
                         </div>
                     </div>
                 </div>
-                <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
+                <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>

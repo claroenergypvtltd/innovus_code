@@ -5,7 +5,7 @@ import { TableData } from '../../shared/Table'
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
-import { imageBaseUrl } from '../../config/config'
+import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
 import store from '../../store/store';
 import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';

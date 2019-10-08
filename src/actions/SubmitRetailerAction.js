@@ -3,7 +3,7 @@ import axios from 'axios'
 import { GET_ERRORS } from '../constants/actionTypes';
 import { toastr } from 'react-redux-toastr'
 import { endPoint } from "../constants";
-import { RET_COUNTRY_FETCH_SUCCESS, RET_KYC_FETCH_SUCCESS, RETAILER_FETCH_SUCCESS, RETAILER_CREATE_SUCCESS, RETAILER_DELETE_SUCCESS, RETAILER_UPDATE_SUCCESS } from '../constants/actionTypes';
+import { RET_KYC_FETCH_SUCCESS, RETAILER_FETCH_SUCCESS, RETAILER_CREATE_SUCCESS, RETAILER_DELETE_SUCCESS, RETAILER_UPDATE_SUCCESS } from '../constants/actionTypes';
 
 export const SubmitRetailer = (retailerData, updateRetailer) => dispatch => {
     if (updateRetailer) {
@@ -52,16 +52,10 @@ export const deleteRetailer = deleteId => dispatch => {
     });
 };
 export const getKYClist = (ProfID) => dispatch => {
+    debugger;
     httpServices.get(endPoint.kyc + '?userId=' + ProfID).then(resp => {
         dispatch({ type: RET_KYC_FETCH_SUCCESS, Lists: resp.data })
     }).catch((error) => {
         dispatch({ type: RET_KYC_FETCH_SUCCESS, error: error })
     })
 }
-export const getCountryList = (ProfID) => dispatch => {
-    httpServices.get(endPoint.country).then(resp => {
-        dispatch({ type: RET_COUNTRY_FETCH_SUCCESS, countryLists: resp.data })
-    }).catch((error) => {
-        dispatch({ type: RET_COUNTRY_FETCH_SUCCESS, error: error })
-    })
-}  

@@ -48,7 +48,7 @@ export const loginUser = (user) => dispatch => {
         // console.log(path.dashboard.list);
         // 
         dispatch(setCurrentUser(decoded));
-        history.push('/dashboard');
+        history.push('/');
     })
         .catch(err => {
             console.log(err);

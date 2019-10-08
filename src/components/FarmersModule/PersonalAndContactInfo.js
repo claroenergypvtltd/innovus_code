@@ -151,7 +151,7 @@ class PersonalAndContactInfo extends Component {
                                 <div className="personal-info  col-md-6">
                                     <div className="row contact ">
 
-                                        {/* <div className="form-group col-md-6">
+                                        <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['NAME']}</label>
                                             <input
                                                 type="text"
@@ -165,7 +165,7 @@ class PersonalAndContactInfo extends Component {
                                                 required
                                             />
                                             {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['FARMERS']['NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div> */}
+                                        </div>
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['NAME']}</label>
                                             <input

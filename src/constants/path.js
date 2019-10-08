@@ -6,19 +6,6 @@ export const path = {
         name: 'dashboard',
         list: process.env.PUBLIC_URL + '/dashboard'
     },
-
-
-
-
-
-    home: {
-        view: process.env.PUBLIC_URL + '/'
-    },
-
-
-
-
-
     category: {
         add: process.env.PUBLIC_URL + '/category/add',
         list: process.env.PUBLIC_URL + '/category',
@@ -36,9 +23,9 @@ export const path = {
         edit: process.env.PUBLIC_URL + '/cart/edit/',
     },
     products: {
-        add: process.env.PUBLIC_URL + '/product/add',
-        list: process.env.PUBLIC_URL + '/product',
-        edit: process.env.PUBLIC_URL + '/product/update/',
+        add: process.env.PUBLIC_URL + '/products/add',
+        list: process.env.PUBLIC_URL + '/products',
+        edit: process.env.PUBLIC_URL + '/products/update/',
     },
 
     price: {
@@ -110,9 +97,7 @@ export const path = {
         edit: process.env.PUBLIC_URL + '/location/update/',
     },
     setting: {
-        list: process.env.PUBLIC_URL + '/setting/',
-        add: process.env.PUBLIC_URL + '/setting/add',
-        edit: process.env.PUBLIC_URL + '/setting/update',
+        list: process.env.PUBLIC_URL + '/settings/'
     },
     profile: {
         list: process.env.PUBLIC_URL + '/profile/'

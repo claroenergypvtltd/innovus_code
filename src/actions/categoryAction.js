@@ -4,15 +4,8 @@ import { toastr } from 'react-redux-toastr'
 import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../constants/actionTypes';
 import { endPoint } from "../constants";
 
-export const getCategoryList = (Data) => dispatch => {
-
-	let search = "";
-	if (Data && Data.search) {
-		search = "?search=" + Data.search
-	}
-
-
-	httpServices.get(endPoint.category + search).then(resp => {
+export const getCategoryList = () => dispatch => {
+	httpServices.get(endPoint.category).then(resp => {
 		if (resp && resp.data) {
 			dispatch({ type: CATEGORY_FETCH_SUCCESS, List: resp.data.datas, count: resp.data.totalCount })
 		} else {

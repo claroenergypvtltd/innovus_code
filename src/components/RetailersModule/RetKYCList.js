@@ -21,7 +21,7 @@ class RetKYCList extends React.Component {
         // const profile = this.props.profileData;
         // const getname = profile.name.split('_');
         return (
-            <div className="col-md-12">
+            <div className="col-md-12 p-4">
                 <div className="row">
                     <div className="col-md-4">
                         <div className="farm-card main-wrapper">

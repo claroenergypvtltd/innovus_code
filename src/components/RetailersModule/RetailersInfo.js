@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import store from '../../store/store';
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
-import { fetchRetailers, SubmitRetailer, getCountryList } from '../../actions/SubmitRetailerAction';
+import { fetchRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction';
 
 import { toastr } from 'react-redux-toastr'
 const { Step } = Steps;
@@ -31,11 +31,10 @@ class RetailerInfo extends React.Component {
             shopaddress2: '',
             gst: '',
             shoplocation: '',
-            countries: []
         };
     }
     componentDidMount() {
-        this.getCountries();
+        console.log("---Retailer this.props", this.props);
         if (this.props.location && this.props.location.state && this.props.location.state.retailerId) {
             let user = {};
             user.retailerId = this.props.location.state.retailerId;
@@ -43,14 +42,11 @@ class RetailerInfo extends React.Component {
             this.props.fetchRetailers(user);
         }
     }
-    getCountries() {
-        this.props.getCountryList()
-    }
     retailersubmit() {
         this.setState({
             Shopsubmitted: true
         })
-        if (this.formCondition()) {
+        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImagefile && this.state.retShopImgfile) {
             // && this.state.retPersonalImagefile && this.state.retShopImgfile
             const formData = new FormData();
             formData.append("userId", this.state.userId);
@@ -64,10 +60,6 @@ class RetailerInfo extends React.Component {
             formData.append("shopName", this.state.shopname);
             formData.append("shopAddress1", this.state.shopaddress1);
             formData.append("shopAddress2", this.state.shopaddress2);
-            formData.append("city", this.state.city);
-            formData.append("country", this.state.country);
-            formData.append("state", this.state.state);
-            formData.append("zipcode", this.state.zipcode);
             formData.append("shopLocation", this.state.shoplocation);
             formData.append("shopGst", this.state.gst);
             let updateRetailer = false;
@@ -77,26 +69,19 @@ class RetailerInfo extends React.Component {
             this.props.SubmitRetailer(formData, updateRetailer);
         }
     }
-    formCondition() {
-        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImagefile
-            && this.state.retShopImgfile && this.state.country
-            && this.state.city && this.state.state && this.state.zipcode) { return true }
-    }
     componentWillReceiveProps(nextprops, newProps) {
-        console.log('------nextprops-----', nextprops);
-        debugger;
         if (parseInt(nextprops.status) == 200) {
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
             toastr.success(nextprops.message);
             this.props.history.push("/user");
-        } if (nextprops && nextprops.editLists.id) {
-            let retailerData = nextprops.editLists;
-            if (retailerData) {
-                this.RetlrStateUpdate(retailerData);
+        } else {
+            this.setState({ data: nextprops.editLists });
+            if (nextprops && nextprops.editLists) {
+                let retailerData = nextprops.editLists;
+                if (retailerData) {
+                    this.RetlrStateUpdate(retailerData);
+                }
             }
-        }
-        if (nextprops.RetreducerDatas && nextprops.RetreducerDatas.countryLists) {
-            this.setState({ countries: nextprops.RetreducerDatas.countryLists });
         }
     }
     RetlrStateUpdate(retailerData) {
@@ -107,10 +92,6 @@ class RetailerInfo extends React.Component {
             mobileNumber: retailerData.mobileNumber, shopname: retailerData.shopAddress && retailerData.shopAddress.name,
             shopaddress1: retailerData.shopAddress && retailerData.shopAddress.address1,
             shopaddress2: retailerData.shopAddress && retailerData.shopAddress.address2,
-            city: retailerData.shopAddress && retailerData.shopAddress.city,
-            state: retailerData.shopAddress && retailerData.shopAddress.state,
-            country: retailerData.shopAddress && retailerData.shopAddress.country,
-            zipcode: retailerData.shopAddress && retailerData.shopAddress.zipcode,
             retShopImgfile: retailerData.shopAddress && retailerData.shopAddress.image,
             gst: retailerData.shopAddress && retailerData.shopAddress.gst, shoplocation: retailerData.shopAddress && retailerData.shopAddress.location,
             city: retailerData.city, state: retailerData.state, pinCode: retailerData.zipcode
@@ -125,6 +106,7 @@ class RetailerInfo extends React.Component {
             submitted: true,
         })
         if (this.state.name && this.state.address1 && this.state.mobileNumber, this.state.retPersonalImagefile) {
+            //, this.state.retPersonalImagefile
             const current = this.state.current + 1;
             this.setState({ current });
         }
@@ -265,93 +247,93 @@ class RetailerInfo extends React.Component {
                                     {/* <h3>{this.state.categoryId ? window.strings['CROP']['EDITTITLE'] : window.strings['CROP']['CREATETITLE']}</h3> */}
                                     <div className="">
                                         <div className="clearfix">
-                                            <form onSubmit={this.handleSubmit} noValidate className="row m-0">
-                                                <div className="main-shop col-md-6 pt-3">
-                                                    <div className="row contact">
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings.RETAILERS.SHOP_NAME}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder="SHOP NAME"
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.name
-                                                                })}
-                                                                name="shopname"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.shopname}
-                                                                required
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.shopname && <div className="mandatory"> {window.strings.RETAILERS.SHOP_NAME + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
-
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings.RETAILERS.GST}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder="GST"
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.name
-                                                                })}
-                                                                name="gst"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.gst}
-                                                                required
-
-                                                            />
-                                                        </div>
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings.RETAILERS.IMG_UPLOAD}</label>
-                                                            <input
-                                                                type="file"
-                                                                placeholder="image"
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.name
-                                                                })}
-                                                                name="retShopImage"
-                                                                onChange={(e) => this.onhandleImageChange("retShopImage", e)}
-                                                                value={this.state.retShopImgName}
-                                                                required
-
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.retShopImgfile && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
+                                                <form onSubmit={this.handleSubmit} noValidate className="row m-0">
+                                                 <div className="main-shop col-md-6 pt-3">
+                                                  <div className="row contact">
+                                                    <div className="form-group col-md-6">
+                                                        <label className="retallable">{window.strings.RETAILERS.SHOP_NAME}</label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="SHOP NAME"
+                                                            className={classnames('form-control', {
+                                                                'is-invalid': errors.name
+                                                            })}
+                                                            name="shopname"
+                                                            onChange={this.handleInputChange}
+                                                            value={this.state.shopname}
+                                                            required
+                                                        />
+                                                        {this.state.Shopsubmitted && !this.state.shopname && <div className="mandatory"> {window.strings.RETAILERS.SHOP_NAME + window.strings['ISREQUIRED']}</div>}
                                                     </div>
-                                                </div>
+                                                    
+                                                    <div className="form-group col-md-6">
+                                                        <label className="retallable">{window.strings.RETAILERS.GST}</label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="GST"
+                                                            className={classnames('form-control', {
+                                                                'is-invalid': errors.name
+                                                            })}
+                                                            name="gst"
+                                                            onChange={this.handleInputChange}
+                                                            value={this.state.gst}
+                                                            required
+
+                                                        />
+                                                    </div>
+                                                    <div className="form-group col-md-6">
+                                                        <label className="retallable">{window.strings.RETAILERS.IMG_UPLOAD}</label>
+                                                        <input
+                                                            type="file"
+                                                            placeholder="image"
+                                                            className={classnames('form-control', {
+                                                                'is-invalid': errors.name
+                                                            })}
+                                                            name="retShopImage"
+                                                            onChange={(e) => this.onhandleImageChange("retShopImage", e)}
+                                                            value={this.state.retShopImgName}
+                                                            required
+
+                                                        />
+                                                        {this.state.Shopsubmitted && !this.state.retShopImgfile && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                                    </div>
+                                                 </div>
+                                                 </div>
                                                 <div className="sub-shop col-md-6 pt-4">
-                                                    <div className="row contact">
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings.FARMERS.ADDR_1}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder="ADDRESS 1"
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.name
-                                                                })}
-                                                                name="shopaddress1"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.shopaddress1}
-                                                                required
+                                                <div className="row contact">
+                                                    <div className="form-group col-md-6">
+                                                        <label className="retallable">{window.strings.FARMERS.ADDR_1}</label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="ADDRESS 1"
+                                                            className={classnames('form-control', {
+                                                                'is-invalid': errors.name
+                                                            })}
+                                                            name="shopaddress1"
+                                                            onChange={this.handleInputChange}
+                                                            value={this.state.shopaddress1}
+                                                            required
 
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.shopaddress1 && <div className="mandatory"> {window.strings.FARMERS.ADDR_1 + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings.FARMERS.ADDR_2}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder="ADDRESS 2"
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.name
-                                                                })}
-                                                                name="shopaddress2"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.shopaddress2}
-                                                                required
+                                                        />
+                                                        {this.state.Shopsubmitted && !this.state.shopaddress1 && <div className="mandatory"> {window.strings.FARMERS.ADDR_1 + window.strings['ISREQUIRED']}</div>}
+                                                    </div>
+                                                    <div className="form-group col-md-6">
+                                                        <label className="retallable">{window.strings.FARMERS.ADDR_2}</label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="ADDRESS 2"
+                                                            className={classnames('form-control', {
+                                                                'is-invalid': errors.name
+                                                            })}
+                                                            name="shopaddress2"
+                                                            onChange={this.handleInputChange}
+                                                            value={this.state.shopaddress2}
+                                                            required
 
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.shopaddress2 && <div className="mandatory">{window.strings.FARMERS.ADDR_2 + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
-                                                        {/* <div className="form-group col-md-6">
+                                                        />
+                                                        {this.state.Shopsubmitted && !this.state.shopaddress2 && <div className="mandatory">{window.strings.FARMERS.ADDR_2 + window.strings['ISREQUIRED']}</div>}
+                                                    </div>
+                                                    <div className="form-group col-md-6">
                                                         <label className="retallable">{window.strings['FARMERS']['AREA']}</label>
                                                         <input
                                                             type="text"
@@ -365,89 +347,73 @@ class RetailerInfo extends React.Component {
                                                             required
                                                         />
                                                         {this.state.submitted && !this.state.area && <div className="mandatory">{window.strings['FARMERS']['AREA'] + window.strings['ISREQUIRED']}</div>}
-                                                    </div> */}
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings.COUNTRY}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder={window.strings.COUNTRY}
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.country
-                                                                })}
-                                                                name="country"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.country}
-                                                                required
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.country && <div className="mandatory">{window.strings.COUNTRY + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings['FARMERS']['CITY']}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder={window.strings['FARMERS']['CITY']}
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.city
-                                                                })}
-                                                                name="city"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.city}
-                                                                required
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.city && <div className="mandatory">{window.strings['FARMERS']['CITY'] + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings['FARMERS']['STATE']}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder={window.strings['FARMERS']['STATE']}
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.state
-                                                                })}
-                                                                name="state"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.state}
-                                                                required
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
+                                                    </div>
+                                                    <div className="form-group col-md-6">
+                                                         <label className="retallable">{window.strings['FARMERS']['CITY']}</label>
+                                                         <input
+                                                            type="text"
+                                                            placeholder={window.strings['FARMERS']['CITY']}
+                                                            className={classnames('form-control', {
+                                                            'is-invalid': errors.city
+                                                             })}
+                                                            name="city"
+                                                            onChange={this.handleInputChange}
+                                                            value={this.state.city}
+                                                            required
+                                                        />
+                                                         {this.state.submitted && !this.state.city && <div className="mandatory">{window.strings['FARMERS']['CITY'] + window.strings['ISREQUIRED']}</div>}
+                                                    </div>
+                                                    <div className="form-group col-md-6">
+                                                        <label className="retallable">{window.strings['FARMERS']['STATE']}</label>
+                                                        <input
+                                                        type="text"
+                                                        placeholder={window.strings['FARMERS']['STATE']}
+                                                        className={classnames('form-control', {
+                                                        'is-invalid': errors.state
+                                                        })}
+                                                        name="state"
+                                                        onChange={this.handleInputChange}
+                                                        value={this.state.state}
+                                                        required
+                                                        />
+                                                        {this.state.submitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>}
+                                                    </div>
+                                                    
+                                                    <div className="form-group col-md-6">
+                                                        <label className="retallable">{window.strings['FARMERS']['POST_CODE']}</label>
+                                                        <input
+                                                        type="number"
+                                                        placeholder={window.strings['FARMERS']['POST_CODE']}
+                                                        className={classnames('form-control', {
+                                                        'is-invalid': errors.postCode
+                                                         })}
+                                                        name="pinCode"
+                                                        onChange={this.handleInputChange}
+                                                        value={this.state.pinCode}
+                                                        required
+                                                        />
+                                                         {this.state.submitted && !this.state.pinCode && <div className="mandatory">{window.strings['FARMERS']['POST_CODE'] + window.strings['ISREQUIRED']}</div>}
+                                                    </div>
+                                                   
+                                                    <div className="form-group pt-3 col-md-6">
+                                                        <label className="retallable">{window.strings.RETAILERS.SELECT_SHOP_LOC}</label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="SHOP LOCATION"
+                                                            className={classnames('form-control', {
+                                                                'is-invalid': errors.name
+                                                            })}
+                                                            name="shoplocation"
+                                                            onChange={this.handleInputChange}
+                                                            value={this.state.shoplocation}
+                                                            required
 
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings['FARMERS']['POST_CODE']}</label>
-                                                            <input
-                                                                type="number"
-                                                                placeholder={window.strings['FARMERS']['POST_CODE']}
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.postCode
-                                                                })}
-                                                                name="zipcode"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.pinCode}
-                                                                required
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.zipcode && <div className="mandatory">{window.strings['FARMERS']['POST_CODE'] + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
-
-                                                        <div className="form-group col-md-6">
-                                                            {/* pt-3 */}
-                                                            <label className="retallable">{window.strings.RETAILERS.SELECT_SHOP_LOC}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder="SHOP LOCATION"
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.name
-                                                                })}
-                                                                name="shoplocation"
-                                                                onChange={this.handleInputChange}
-                                                                value={this.state.shoplocation}
-                                                                required
-
-                                                            />
-                                                            {this.state.Shopsubmitted && !this.state.shoplocation && <div className="mandatory">{window.strings.RETAILERS.SHOP_LOC + window.strings['ISREQUIRED']}</div>}
-                                                        </div>
+                                                        />
+                                                        {this.state.Shopsubmitted && !this.state.shoplocation && <div className="mandatory">{window.strings.RETAILERS.SHOP_LOC + window.strings['ISREQUIRED']}</div>}
                                                     </div>
                                                 </div>
-                                                {/* <div className="form-group pt-3">
+                                                </div>
+                                                 {/* <div className="form-group pt-3">
                                                         <label className="retallable">{window.strings.RETAILERS.GST}</label>
                                                         <input
                                                             type="text"
@@ -462,7 +428,7 @@ class RetailerInfo extends React.Component {
 
                                                         />
                                                     </div> */}
-                                                {/* <div className="form-group pt-3">
+                                                    {/* <div className="form-group pt-3">
                                                         <label className="retallable">{window.strings.RETAILERS.IMG_UPLOAD}</label>
                                                         <input
                                                             type="file"
@@ -478,10 +444,10 @@ class RetailerInfo extends React.Component {
                                                         />
                                                         {this.state.Shopsubmitted && !this.state.retShopImgfile && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                                     </div> */}
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-
+                                  
                                 </div>
                             </div>
                         </div>}
@@ -518,7 +484,6 @@ RetailerInfo.propTypes = {
 const mapStateToProps = state => ({
     editLists: state.retailer.Lists,
     status: state.retailer.status,
-    message: state.retailer.message,
-    RetreducerDatas: state.retailer
+    message: state.retailer.message
 });
-export default connect(mapStateToProps, { SubmitRetailer, fetchRetailers, getCountryList })(RetailerInfo);
+export default connect(mapStateToProps, { SubmitRetailer, fetchRetailers })(RetailerInfo);

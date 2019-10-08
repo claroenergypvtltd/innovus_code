@@ -150,8 +150,4 @@ export const resorceJSON = {
     { name: 'Description', selector: 'description', sortable: true },
     { name: 'Crop', selector: 'cropButton', sortable: true },
   ],
-  FaqList: [
-    { name: 'Title', selector: 'title', sortable: true },
-    { name: 'Description', selector: 'description', sortable: true }
-  ]
 };

@@ -20,8 +20,7 @@ class CreateCrop extends Component {
             file: {},
             cropId: '',
             farmDatas: this.props.getFarmData,
-            errors: {},
-
+            errors: {}
         }
     }
 
@@ -56,7 +55,7 @@ class CreateCrop extends Component {
         }
     }
 
-    redirectPage = () => {
+    redirectPage() {
         if (this.state.cropId) {
             this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
         } else {
@@ -79,8 +78,7 @@ class CreateCrop extends Component {
         reader.onloadend = () => {
             this.setState({
                 file: file,
-                image: file.name,
-                imagePreviewUrl: reader.result
+                image: file.name
 
             })
         }
@@ -137,8 +135,6 @@ class CreateCrop extends Component {
 
     render() {
         const { errors } = this.state;
-
-        let { imagePreviewUrl } = this.state;
 
         const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
             return <option key={index}
@@ -206,7 +202,7 @@ class CreateCrop extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                            <img className="pre-view" src={imagePreviewUrl} />
+                                        <img className="pre-view"></img>
                                         </div>
 
 
@@ -236,9 +232,11 @@ class CreateCrop extends Component {
                                             </div>
                                         </div> */}
                                         <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
-                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+                                                <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
+                                                <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>       
                                         </div>
+
+
                                     </form>
                                 </div>
                             </div>

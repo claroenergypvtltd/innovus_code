@@ -9,8 +9,6 @@ import cropReducer from './cropReducer'
 import priceReducer from './priceReducer'
 import { reducer as toastrReducer } from 'react-redux-toastr';
 import OrderReducer from './OrderReducer';
-import FaqReducer from './FaqReducer';
-import IrrigationSettingReducer from './IrrigationSettingReducer'
 
 export default combineReducers({
     errors: errorReducer,
@@ -22,8 +20,6 @@ export default combineReducers({
     crop: cropReducer,
     price: priceReducer,
     order: OrderReducer,
-    retailer: RetailerReducer,
-    faq: FaqReducer,
-    irrigationSetting: IrrigationSettingReducer
+    retailer: RetailerReducer
 });
 

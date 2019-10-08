@@ -16,8 +16,7 @@ export function TableData(props) {
                 <th key={index} className="table-head">{tableHead}</th>
               )
             })}
-            {/* {props.handleEdit || props.handleDelete && <th> ACTION</th>} */}
-            <th> ACTION</th>
+            {props.handleEdit || props.handleDelete && <th> ACTION</th>}
 
           </tr>
 
