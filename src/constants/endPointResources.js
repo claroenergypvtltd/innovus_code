@@ -6,6 +6,8 @@ export const endPoint = {
     "equalTo": "=",
     'uploadFiles': 'uploadFiles',
 
+    "instruction": "/instruction",
+    "instructionId": "instructionId",
     "category": "/category",
     "categoryId": "categoryId",
     "signup": "/signup",

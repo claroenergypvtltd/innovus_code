@@ -20,6 +20,7 @@ class CategoryList extends Component {
 
     componentDidMount() {
         this.getCategoryList();
+
     }
 
     viewCrop(Data) {
@@ -38,6 +39,7 @@ class CategoryList extends Component {
 
             this.setState({ data: Lists });
         }
+
 
         if (newProps.categoryData && newProps.categoryData.deletedStatus == "200") {
             store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })

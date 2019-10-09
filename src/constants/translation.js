@@ -91,6 +91,16 @@ export const Translation = {
             "EDITTITLE": "Edit Crop",
         },
 
+        "FAQ": {
+            "ADD_FAQ": "Add New FAQ",
+            "EDIT_FAQ": "Edit Faq",
+            "FAQ_DETAILS": "FAQ Details",
+            "QUESTION_TITLE": "Questions Title",
+            "TITLE": "Title is required*",
+            "DESCRIPTION_REQUIRED": "Description is required*",
+            "ADD_FAQ": "Add FAQ"
+        },
+
         "PRICE": {
             "CROP_NAME": "Crop Name",
             "CREATETITLE": "Add Price",
