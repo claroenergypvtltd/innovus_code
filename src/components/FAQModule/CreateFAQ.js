@@ -6,6 +6,7 @@ import { path } from '../../constants';
 import { SubmitFaq, getSpecificFaq } from '../../actions/faqAction';
 import { FAQ_CREATE_SUCCESS, FAQ_UPDATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
+import '../../assets/css/login.scss'
 
 
 
@@ -45,11 +46,9 @@ class CreateFAQ extends Component {
             store.dispatch({ type: FAQ_UPDATE_SUCCESS, resp: "" })
             this.props.history.push(path.faq.list)
         }
-
-        if (nextProps.faqData && nextProps.faqData.specificData && nextProps.faqData.specificData.data) {
-            let Data = nextProps.faqData.specificData.data[0];
-            this.setState({ title: Data.title, description: Data.description });
-
+        if (nextProps.faqData && nextProps.faqData.specificData) {
+            let Data = nextProps.faqData.specificData[0];
+            this.setState({ title: Data.title, description: Data.description })
         }
 
     }
@@ -88,9 +87,9 @@ class CreateFAQ extends Component {
                 <h2>{!this.state.instructionId ? window.strings.FAQ.ADD_FAQ : window.strings.FAQ.EDIT_FAQ}</h2>
 
                 <div className="col-md-12 content">
-                    <div className="col-md-8 ">
+                    <div className="col-md-8  ">
                         <h3 >{window.strings.FAQ.FAQ_DETAILS}</h3><hr />
-                        <Form className="form-adjust" onSubmit={this.handleSubmit} >
+                        <Form onSubmit={this.handleSubmit} >
                             <Form.Group >
                                 <Form.Label>{window.strings.FAQ.QUESTION_TITLE}</Form.Label>
                                 <Form.Control type="text" onChange={this.handleChange} name="title" value={this.state.title} />

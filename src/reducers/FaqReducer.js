@@ -19,14 +19,13 @@ export default function (state = initialState, action) {
         case FAQ_FETCH_SUCCESS:
             return state = {
                 ...state,
-                Lists: action.Lists,
-                count: action.count
+                Lists: action.Lists
             }
 
         case FAQ_FETCH_SPECIFIC_DATA:
             return state = {
                 ...state,
-                specificData: action.resp
+                specificData: action.specificData
             }
 
         case FAQ_UPDATE_SUCCESS:

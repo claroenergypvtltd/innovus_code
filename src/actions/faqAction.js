@@ -1,7 +1,7 @@
 import { httpServices } from '../services/http.services'
 import { endPoint } from "../constants";
 import { toastr } from 'react-redux-toastr'
-import { FAQ_CREATE_SUCCESS, FAQ_FETCH_SUCCESS, FAQ_UPDATE_SUCCESS, FAQ_FETCH_SPECIFIC_DATA, FAQ_DELETE_SUCCESS } from '../constants/actionTypes'
+import { FAQ_CREATE_SUCCESS, FAQ_FETCH_SUCCESS, FAQ_UPDATE_SUCCESS, FAQ_FETCH_SPECIFIC_DATA, FAQ_DELETE_SUCCESS, GET_ERRORS } from '../constants/actionTypes'
 
 
 export const SubmitFaq = (instruction, Id) => dispatch => {
@@ -14,7 +14,10 @@ export const SubmitFaq = (instruction, Id) => dispatch => {
             }
         }).catch((error) => {
             console.error("error", error);
-            dispatch({ type: FAQ_CREATE_SUCCESS, resp: error.status })
+            dispatch({
+                type: GET_ERRORS,
+                payload: error
+            });
         })
 
     } else {
@@ -24,7 +27,10 @@ export const SubmitFaq = (instruction, Id) => dispatch => {
                 dispatch({ type: FAQ_CREATE_SUCCESS, resp: resp.status })
             }
         }).catch(error => {
-            dispatch({ type: FAQ_CREATE_SUCCESS, resp: error.status })
+            dispatch({
+                type: GET_ERRORS,
+                payload: error
+            });
             console.error("error", error);
         })
     }
@@ -33,12 +39,17 @@ export const SubmitFaq = (instruction, Id) => dispatch => {
 }
 
 export const getSpecificFaq = (faqId) => dispatch => {
-
-    return httpServices.get(endPoint.instruction + '?title=Profit&' + endPoint.instructionId + '=' + faqId).then(resp => {
+    httpServices.get(endPoint.instruction + '?title=Profit&' + endPoint.instructionId + '=' + faqId).then(resp => {
         if (resp.data) {
-            dispatch({ type: FAQ_FETCH_SPECIFIC_DATA, resp })
-            return resp;
+            dispatch({ type: FAQ_FETCH_SPECIFIC_DATA, specificData: resp.data })
+
         }
+    }).catch(error => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: error
+        });
+        console.error("error", error);
     })
 
 }
@@ -54,7 +65,10 @@ export const DeleteFaq = (id) => dispatch => {
         }
     }).catch((error) => {
         console.error("Delete :", error.response);
-        dispatch({ type: FAQ_DELETE_SUCCESS, resp: error.status })
+        dispatch({
+            type: GET_ERRORS,
+            payload: error
+        });
     })
 }
 
@@ -64,12 +78,16 @@ export const getFaqList = () => dispatch => {
     httpServices.get(endPoint.instruction + '?title=Profit').then(resp => {
 
         if (resp && resp.data) {
-            dispatch({ type: FAQ_FETCH_SUCCESS, Lists: resp.data, count: resp.data.totalCount })
+            dispatch({ type: FAQ_FETCH_SUCCESS, Lists: resp.data })
         } else {
             console.error("Error when getting FaqList");
         }
     }).catch((error) => {
         console.error("error", error);
+        dispatch({
+            type: GET_ERRORS,
+            payload: error
+        });
     })
 
 }
