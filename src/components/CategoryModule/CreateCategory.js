@@ -27,6 +27,7 @@ class CategoryForm extends Component {
     }
 
     componentDidMount() {
+
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             this.getSpecificCategory();
         }
@@ -42,6 +43,7 @@ class CategoryForm extends Component {
             store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
             this.props.history.goBack();
         }
+
         if (nextProps.getCategory) {
             this.setState({ categoryData: nextProps.getCategory })
         }

@@ -28,6 +28,9 @@ import IrrigationSetting from '../components/SettingsModule/IrrigationSetting'
 import CreateCoupon from '../components/CouponModule/CreateCoupon'
 import FetchCoupon from '../components/CouponModule/FetchCoupon'
 
+import CreateFAQ from '../components/FAQModule/CreateFAQ'
+import FetchFAQ from '../components/FAQModule/FetchFAQ'
+
 
 const root = ({ route }) => (
     <div>
@@ -232,6 +235,22 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/irrigationSetting',
                 component: IrrigationSetting,
+                exact: true,
+            },
+            //FAQ 
+            {
+                path: process.env.PUBLIC_URL + '/FAQ/add',
+                component: CreateFAQ,
+                exact: true,
+            },
+            {
+                path: process.env.PUBLIC_URL + '/FAQ',
+                component: FetchFAQ,
+                exact: true,
+            },
+            {
+                path: process.env.PUBLIC_URL + '/FAQ/update/:Data?',
+                component: CreateFAQ,
                 exact: true,
             },
 
