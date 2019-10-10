@@ -9,6 +9,7 @@ import { getOrderList } from '../../actions/orderAction'
 import { toastr } from '../../services/toastr.services'
 import { Link } from 'react-router-dom'
 import { Form, Row, Col } from 'react-bootstrap';
+import { formatDate } from '../../shared/DateFormat'
 
 class FetchOrder extends Component {
 
@@ -98,11 +99,28 @@ class FetchOrder extends Component {
         }
     }
 
+    getStatusName = (Data) => {
+        switch (Data) {
+            case 1: return "Order placed";
+            case 2: return "Order Accepted";
+            case 3: return "Order processed";
+            case 4: return "shipped";
+            case 5: return "At distrubed Center";
+            case 6: return "Delivered";
+            case 7: return "cancel";
+        }
+    }
+
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = <Link to={path.order.list + "/" + item.id}>{window.strings.ORDER.VIEWDETAILS}</Link>
-            return { "itemList": [item.id, item.items && item.items.length, item.created, '-', item.status, link, ''], "itemId": item.id }
+
+            let status = this.getStatusName(item.status)
+
+            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.items && item.items[0] && item.items[0].cartproductdetails && item.items[0].cartproductdetails.price, status, link], "itemId": item.id }
         })
+
+        let { OrderLists } = this.state;
 
         return (
             <div className="order">
@@ -112,7 +130,7 @@ class FetchOrder extends Component {
                             <a href="#" className="card">
                                 <div className="box">
                                     <h5 className="dashboard-title">Orders to Ship</h5>
-                                    <span>5872</span>
+                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].totalorders}</span>
                                 </div>
                             </a>
                         </div>
@@ -120,7 +138,7 @@ class FetchOrder extends Component {
                             <a href="#" className="card">
                                 <div className="box">
                                     <h5 className="dashboard-title">Overdue Shipments</h5>
-                                    <span>12580</span>
+                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].orderdue}</span>
                                 </div>
                             </a>
                         </div>
@@ -128,14 +146,14 @@ class FetchOrder extends Component {
                             <a href="#" className="card">
                                 <div className="box">
                                     <h5 className="dashboard-title">Pending Shipments</h5>
-                                    <span>125058</span>
+                                    <span>{OrderLists && OrderLists[0] && OrderLists[0].orderspending}</span>
                                 </div>
                             </a>
                         </div>
                     </div>
                     <Row className="clearfix title-section pb-3">
                         <Col md={8} className="title-card">
-                            <h4 className="user-title">Orders</h4>
+                            <h4 className="user-title">Orders </h4>
                         </Col>
                         <Col md={4} className="pl-5">
                             <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />

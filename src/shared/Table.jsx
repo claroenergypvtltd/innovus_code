@@ -3,7 +3,7 @@ import React from 'react'
 export function TableData(props) {
 
   console.log(props);
-
+  debugger;
   return (
 
     <div className="main-wrapper">
@@ -16,8 +16,8 @@ export function TableData(props) {
                 <th key={index} className="table-head">{tableHead}</th>
               )
             })}
-            {/* {props.handleEdit || props.handleDelete && <th> ACTION</th>} */}
-            <th> ACTION</th>
+            {props.handleEdit || props.handleDelete && <th> ACTION</th>}
+            {/* <th> ACTION</th> */}
 
           </tr>
 

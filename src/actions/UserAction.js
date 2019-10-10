@@ -22,7 +22,7 @@ export const fetchUsers = (user) => dispatch => {
   httpMethod
     .then(res => {
       if (res) {
-        res.message && toastr.success(res.message);
+        // res.message && toastr.success(res.message);
         dispatch({ type: USER_FETCH_SUCCESS, payload: res.data });
       }
     }).catch(err => {
