@@ -3,7 +3,6 @@ import React from 'react'
 export function TableData(props) {
 
   console.log(props);
-  debugger;
   return (
 
     <div className="main-wrapper">
