@@ -30,7 +30,7 @@ class CreateFAQ extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-
+        console.log("test");
         if (nextProps.faqData && nextProps.faqData.createdStatus == "200") {
             store.dispatch({ type: FAQ_CREATE_SUCCESS, resp: "" })
             this.props.history.push(path.faq.list);
