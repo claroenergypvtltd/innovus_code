@@ -3,17 +3,20 @@ import { connect } from 'react-redux';
 import DataTableDynamic from '../../shared/DataTableDynamic';
 import { getCategoryList, DeleteCategory } from '../../actions/categoryAction';
 import { resorceJSON } from '../../libraries'
+import { SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
 import store from '../../store/store';
 import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
+import { Form, Row, Col } from 'react-bootstrap';
 
 class CategoryList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             columns: resorceJSON.CategoryList,
+            search: '',
             data: [],
         }
     }
@@ -21,6 +24,10 @@ class CategoryList extends Component {
     componentDidMount() {
         this.getCategoryList();
 
+    }
+
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
     }
 
     viewCrop(Data) {
@@ -49,9 +56,7 @@ class CategoryList extends Component {
 
 
     getCategoryList = () => {
-        let user = {};
-        user.search = this.props.searchText;
-        this.props.getCategoryList(user);
+        this.props.getCategoryList();
     }
 
 
@@ -73,6 +78,25 @@ class CategoryList extends Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
 
+    searchResult = (e) => {
+        e.preventDefault();
+        if (this.state.search) {
+            let serObj = {
+                "search": this.state.search
+            };
+            this.props.getCategoryList(serObj);
+        }
+    }
+
+    resetSearch = () => {
+        if (this.state.search) {
+            this.setState({ search: '' }, () => {
+                this.props.getCategoryList();
+            });
+        }
+    }
+
+
     itemDelete = (id) => {
         this.props.DeleteCategory(id);
     }
@@ -84,15 +108,33 @@ class CategoryList extends Component {
     render() {
         return (
             <div className="category-table">
-                <div className="category-title right-title">
+                {/* <div className="category-title right-title">
                     <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
                     {window.strings.CATEGORY.ADDBUTTON}</button>
+                </div> */}
+
+
+                <Row className="clearfix title-section">
+                    <Col md={7} className="title-card ">
+                        <h4 className="user-title">{window.strings.CATEGORY.LISTTITLE}</h4>
+                    </Col>
+                    <Col md={5} className="right-title row pr-0 pb-3">
+                        <Col md={8} className="p-0">
+                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        </Col>
+                        <Col md={4} >
+                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
+                                {window.strings.CATEGORY.ADDBUTTON}</button>
+                        </Col>
+                    </Col>
+
+                </Row>
+
+                <div className="sub-category">
+                    <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} handleDelete={this.handleDelete} pagination={true} />
                 </div>
-               <div className="sub-category">
-                <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} handleDelete={this.handleDelete} pagination={true} />
             </div>
-            </div>
-            
+
         );
     }
 }

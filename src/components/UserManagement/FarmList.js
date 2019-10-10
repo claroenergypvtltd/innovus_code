@@ -114,7 +114,7 @@ class FarmList extends React.Component {
         </div>
 
 
-        {!this.props.farmerId && <div className="col-sm-4">
+        {!this.props.farmerId && <div> <div className="col-sm-4">
           <div
             className="farm-card bg-white"
           >
@@ -147,7 +147,7 @@ class FarmList extends React.Component {
               </div>
             </div>
           </div>
-    </div> }
+        </div>
 
           <div className="col-md-12">
             <div className="row">
@@ -197,9 +197,10 @@ class FarmList extends React.Component {
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
+        </div>}
         <div className="plus-btn">
-          {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
+          {!this.state.farmId && this.props.farmerId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
         </div>
       </div>
     );

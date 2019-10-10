@@ -86,7 +86,7 @@ export const Translation = {
         "CROP": {
             "WEIGHT": "Total Weight",
             "PRICE": "Price",
-
+            "BOX_QUANTITY": "boxQuantity",
             "CREATETITLE": "Create Crop",
             "EDITTITLE": "Edit Crop",
         },
@@ -207,6 +207,23 @@ export const Translation = {
             "IDENTITY_PROOF": "Identity Proof",
             "DRIVING_LICENSE_NUMBER": "Driving License Number",
             "PHOTO_ANGLE": "Front Side"
+        },
+
+        "SETTING": {
+            // "CROP_NAME": "Crop Name",
+            // "CREATETITLE": "Add Irrigation Setting",
+            // "EDITTITLE": "Edit Irrigation Setting",
+            // "LISTTITLE": "Irrigation Setting List",
+            "LIST_IRRIGATION": "List Irrigation Setting",
+            "ADD_IRRIGATION": "Add Irrigation Setting",
+            "STATE_LABEL": "State",
+            "CITY_LABEL": "City",
+            "SELECT_STATE": "Select State",
+            "SELECT_CITY": "Select City",
+            "PRICE_LABEL": "Price",
+            "AREA_FEET": "Area Feet"
+
+
         },
 
         "FARMERS": {

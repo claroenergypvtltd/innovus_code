@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
-import { getPriceList } from '../../actions/priceAction'
-import { imageBaseUrl } from '../../config'
+import { getIrrigationSettingList, DeleteIrrigationSetting } from '../../actions/IrrigationSettingAction'
 import { toastr } from '../../services/toastr.services'
-import CreatePrice from '../../components/PriceModule/Createprice'
 import Store from '../../store/store';
-import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
+import { IRRIGATION_SETTING_DELETE_SUCCESS } from '../../constants/actionTypes'
 
 class FetchIrrigationSetting extends Component {
 
@@ -20,8 +16,8 @@ class FetchIrrigationSetting extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["Serial Number", "State", "City", "Price", "Square Feet", "Action"],
-            irrigationSettingLists: props.getLists,
+            TableHead: ["State", "City", "Price", "Square Feet", "Action"],
+            irrigationSettingLists: [],
             CategoryCount: props.getCount,
             search: '',
             currentPage: 1,
@@ -36,9 +32,15 @@ class FetchIrrigationSetting extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
-            let respData = newProps.priceData.Lists.datas;
-            this.setState({ irrigationSettingLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
+        if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.Lists && newProps.IrrigationSettingData.Lists.datas) {
+            let respData = newProps.IrrigationSettingData.Lists.datas;
+            this.setState({ irrigationSettingLists: respData, pageCount: newProps.IrrigationSettingData.Lists.totalCount / this.state.itemPerPage })
+        }
+
+        if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.deletedStatus == "200") {
+            Store.dispatch({ type: IRRIGATION_SETTING_DELETE_SUCCESS, deletedStatus: "" })
+
+            this.getPriceList();
         }
     }
 
@@ -72,11 +74,11 @@ class FetchIrrigationSetting extends Component {
             "categoryId": ""
         }
 
-        this.props.getPriceList(obj)
+        this.props.getIrrigationSettingList(obj)
     }
 
-    itemEdit = (priceId) => {
-        this.props.history.push({ pathname: path.price.edit + priceId, state: { priceId: priceId } });
+    itemEdit = (id) => {
+        this.props.history.push({ pathname: path.setting.edit + id, state: { irrigationCostId: id } });
     }
 
 
@@ -90,12 +92,7 @@ class FetchIrrigationSetting extends Component {
     }
 
     itemDelete = (id) => {
-        this.props.DeleteCategory(id)
-        // .then(resp => {
-        //     if (resp) {
-        //         this.getPriceList();
-        //     }
-        // });
+        this.props.DeleteIrrigationSetting(id)
     }
 
     formPath = () => {
@@ -113,7 +110,7 @@ class FetchIrrigationSetting extends Component {
 
     render() {
         let CategoryList = this.state.irrigationSettingLists && this.state.irrigationSettingLists.map((item, index) => {
-            return { "itemList": [item.categoryAmount && item.categoryAmount.id, item.name, item.categoryAmount && item.categoryAmount.totalQuantity, item.categoryAmount && item.categoryAmount.totalQuantitySize, item.categoryAmount && item.categoryAmount.amount, item.categoryAmount && item.categoryAmount.rupeesize], "itemId": item.id }
+            return { "itemList": [item.states && item.states.name ? item.states.name : '-', item.cities && item.cities.name ? item.cities.name : '-', item.amount ? item.amount : '-', item.areasize ? item.areasize : '-'], "itemId": item.id }
         })
 
         return (
@@ -131,7 +128,8 @@ class FetchIrrigationSetting extends Component {
                     </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
-                // handleEdit={this.itemEdit} 
+                    // handleDelete={this.handleDelete} 
+                    handleEdit={this.itemEdit}
                 />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>
@@ -143,9 +141,9 @@ class FetchIrrigationSetting extends Component {
 
 function mapStateToProps(state) {
     return {
-        getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
-        priceData: state.price ? state.price : {}
+        // getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
+        IrrigationSettingData: state.irrigationSetting ? state.irrigationSetting : {}
     };
 }
 
-export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchIrrigationSetting);
+export default connect(mapStateToProps, { getIrrigationSettingList, DeleteIrrigationSetting })(FetchIrrigationSetting);

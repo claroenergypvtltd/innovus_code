@@ -25,6 +25,8 @@ import FetchOrder from '../components/OrderModule/FetchOrder'
 import FetchOrderDetails from '../components/OrderModule/FetchOrderDetails'
 
 import IrrigationSetting from '../components/SettingsModule/IrrigationSetting'
+import FetchIrrigationSetting from '../components/SettingsModule/FetchIrrigationSetting'
+
 import CreateCoupon from '../components/CouponModule/CreateCoupon'
 import FetchCoupon from '../components/CouponModule/FetchCoupon'
 
@@ -233,7 +235,13 @@ export const routesPath = [
             },
 
             {
-                path: process.env.PUBLIC_URL + '/irrigationSetting',
+                path: process.env.PUBLIC_URL + '/irrigationSetting/add',
+                component: IrrigationSetting,
+                exact: true,
+            },
+
+            {
+                path: process.env.PUBLIC_URL + '/irrigationSetting/edit/:id?',
                 component: IrrigationSetting,
                 exact: true,
             },
@@ -251,6 +259,12 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/FAQ/update/:Data?',
                 component: CreateFAQ,
+                exact: true,
+            },
+
+            {
+                path: process.env.PUBLIC_URL + '/irrigationSetting',
+                component: FetchIrrigationSetting,
                 exact: true,
             },
 
