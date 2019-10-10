@@ -103,7 +103,9 @@ export const path = {
         edit: process.env.PUBLIC_URL + '/location/update/',
     },
     setting: {
-        list: process.env.PUBLIC_URL + '/settings/'
+        list: process.env.PUBLIC_URL + '/irrigationSetting',
+        add: process.env.PUBLIC_URL + '/irrigationSetting/add',
+        edit: process.env.PUBLIC_URL + '/irrigationSetting/edit/'
     },
     profile: {
         list: process.env.PUBLIC_URL + '/profile/'

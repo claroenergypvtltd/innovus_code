@@ -23,6 +23,20 @@ export const Sidebar = [
         // "path": path.user.add
         path: path.farmer.list,
     },
+
+    {
+        name: (
+            <span className="menu-list user_manag">
+                <i />
+                {Label.settingLabel}
+            </span>
+        ),
+        // "path": path.user.add
+        path: path.setting.list,
+    },
+
+    // FetchIrrigationSetting
+
     {
         name: (
             <span className="menu-list prdt_cate">
@@ -41,15 +55,15 @@ export const Sidebar = [
     //     ),
     //     path: path.crop.list,
     // },
-    {
-        name: (
-            <span className="menu-list product">
-                <i />
-                {Label.productLabel}
-            </span>
-        ),
-        path: path.products.list,
-    },
+    // {
+    //     name: (
+    //         <span className="menu-list product">
+    //             <i />
+    //             {Label.productLabel}
+    //         </span>
+    //     ),
+    //     path: path.products.list,
+    // },
     // {
     //     name: (
     //         <span className="menu-list prdt_cate">
