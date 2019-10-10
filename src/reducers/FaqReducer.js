@@ -3,8 +3,10 @@ import { FAQ_CREATE_SUCCESS, FAQ_FETCH_SUCCESS, FAQ_UPDATE_SUCCESS, FAQ_FETCH_SP
 
 const initialState = {
     Lists: [],
-    count: 0,
-    specificData: []
+    specificData: [],
+    createdStatus: '',
+    updatedStatus: '',
+    deletedStatus: ''
 }
 
 export default function (state = initialState, action) {

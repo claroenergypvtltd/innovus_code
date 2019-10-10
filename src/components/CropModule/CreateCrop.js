@@ -74,7 +74,8 @@ class CreateCrop extends Component {
         reader.onloadend = () => {
             this.setState({
                 file: file,
-                image: file.name
+                image: file.name,
+                imagePreview: reader.result
 
             })
         }
@@ -131,6 +132,7 @@ class CreateCrop extends Component {
 
     render() {
         const { errors } = this.state;
+        let { imagePreview } = this.state;
 
         const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
             return <option key={index}
@@ -198,7 +200,7 @@ class CreateCrop extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                            <img className="pre-view"></img>
+                                            <img className="pre-view" src={imagePreview} />
                                         </div>
 
 

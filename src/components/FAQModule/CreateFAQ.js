@@ -15,7 +15,9 @@ class CreateFAQ extends Component {
         super(props);
         this.state = {
             submitted: false,
-            instructionId: ''
+            instructionId: '',
+            title: '',
+            description: ''
         }
     }
 
@@ -26,14 +28,6 @@ class CreateFAQ extends Component {
         }
     }
 
-    getSpecificFaq() {
-
-        if (this.props.location && this.props.location.state && this.props.location.state.instructionId) {
-            let fId = this.props.location.state.instructionId;
-            this.setState({ instructionId: fId });
-            this.props.getSpecificFaq(this.props.location.state.instructionId);
-        }
-    }
 
     componentWillReceiveProps(nextProps) {
 
@@ -46,9 +40,9 @@ class CreateFAQ extends Component {
             store.dispatch({ type: FAQ_UPDATE_SUCCESS, resp: "" })
             this.props.history.push(path.faq.list)
         }
-        if (nextProps.faqData && nextProps.faqData.specificData) {
+        if (nextProps.faqData && nextProps.faqData.specificData && nextProps.faqData.specificData[0]) {
             let Data = nextProps.faqData.specificData[0];
-            this.setState({ title: Data.title, description: Data.description })
+            this.setState({ description: Data.description, title: Data.title })
         }
 
     }
@@ -68,10 +62,21 @@ class CreateFAQ extends Component {
         if (this.state.title && this.state.description) {
 
             const formData = new FormData();
-            formData.append("instructionId", this.state.instructionId)
+
             formData.append("title", this.state.title);
             formData.append("description", this.state.description);
+            formData.append("instructionId", this.state.instructionId)
             this.props.SubmitFaq(formData, this.state.instructionId);
+        }
+    }
+
+
+    getSpecificFaq() {
+
+        if (this.props.location && this.props.location.state && this.props.location.state.instructionId) {
+            let fId = this.props.location.state.instructionId;
+            this.setState({ instructionId: fId });
+            this.props.getSpecificFaq(this.props.location.state.instructionId);
         }
     }
 
@@ -86,7 +91,7 @@ class CreateFAQ extends Component {
 
                 <h2>{!this.state.instructionId ? window.strings.FAQ.ADD_FAQ : window.strings.FAQ.EDIT_FAQ}</h2>
 
-                <div className="col-md-12 content">
+                <div className="col-md-12 content form-adjust">
                     <div className="col-md-8  ">
                         <h3 >{window.strings.FAQ.FAQ_DETAILS}</h3><hr />
                         <Form onSubmit={this.handleSubmit} >
