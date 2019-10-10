@@ -68,7 +68,7 @@ class FetchUser extends React.Component {
   itemView = (e, item) => {
     let farmerId = item.id;
     this.context.router.history.push({
-      pathname: '/user/view/' + farmerId,
+      pathname: path.user.view + farmerId,
       state: { farmerData: item },
     });
 
