@@ -131,6 +131,7 @@ class CreateCrop extends Component {
     }
 
     render() {
+        console.log("test")
         const { errors } = this.state;
         let { imagePreview } = this.state;
 

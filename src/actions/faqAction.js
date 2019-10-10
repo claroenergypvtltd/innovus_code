@@ -22,6 +22,8 @@ export const SubmitFaq = (instruction, Id) => dispatch => {
 
     } else {
         httpServices.post(endPoint.instruction, instruction).then(resp => {
+
+
             if (resp) {
                 toastr.success(resp.message);
                 dispatch({ type: FAQ_CREATE_SUCCESS, resp: resp.status })
