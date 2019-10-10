@@ -18,6 +18,8 @@ export default function (state = initialState, action) {
                 createdStatus: action.resp
             }
 
+
+
         case FAQ_FETCH_SUCCESS:
             return state = {
                 ...state,
