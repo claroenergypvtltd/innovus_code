@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import store from '../../store/store';
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
 import { fetchRetailers, SubmitRetailer, getCountryList, getStateCity } from '../../actions/SubmitRetailerAction';
+import { path } from '../../constants';
 
 import { toastr } from 'react-redux-toastr'
 const { Step } = Steps;
@@ -74,6 +75,10 @@ class RetailerInfo extends React.Component {
             formData.append("shopAddress2", this.state.shopaddress2);
             formData.append("shopLocation", this.state.shoplocation);
             formData.append("shopGst", this.state.gst);
+            formData.append("country", this.state.country);
+            formData.append("state", this.state.state);
+            formData.append("city", this.state.city);
+            formData.append("pincode", this.state.pincode);
             let updateRetailer = false;
             if (this.state.userId) {
                 updateRetailer = true;
@@ -85,7 +90,7 @@ class RetailerInfo extends React.Component {
         if (parseInt(nextprops.status) == 200) {
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
             toastr.success(nextprops.message);
-            this.props.history.push("/user");
+            this.props.history.push(path.user.list);
         } if (nextprops && nextprops.editLists.id) {
             if (nextprops.editLists.address && nextprops.editLists.address.country) {
                 let obj = {
@@ -118,10 +123,9 @@ class RetailerInfo extends React.Component {
             city: retailerData.address && retailerData.address.city,
             state: retailerData.address && retailerData.address.state,
             country: retailerData.address && retailerData.address.country,
-            zipcode: retailerData.shopAddress && retailerData.shopAddress.zipcode,
+            pincode: retailerData.shopAddress && retailerData.shopAddress.pincode,
             retShopImgfile: retailerData.shopAddress && retailerData.shopAddress.image,
             gst: retailerData.shopAddress && retailerData.shopAddress.gst, shoplocation: retailerData.shopAddress && retailerData.shopAddress.location,
-            pinCode: retailerData.zipcode
         })
     }
     prev() {
@@ -396,21 +400,7 @@ class RetailerInfo extends React.Component {
                                                             />
                                                             {this.state.Shopsubmitted && !this.state.shopaddress2 && <div className="mandatory">{window.strings.FARMERS.ADDR_2 + window.strings['ISREQUIRED']}</div>}
                                                         </div>
-                                                        <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings['FARMERS']['AREA']}</label>
-                                                            <input
-                                                                type="text"
-                                                                placeholder={window.strings['FARMERS']['AREA']}
-                                                                className={classnames('form-control', {
-                                                                    'is-invalid': errors.area
-                                                                })}
-                                                                name="area"
-                                                                nChange={this.handleInputChange}
-                                                                value={this.state.area}
-                                                                required
-                                                            />
-                                                            {this.state.submitted && !this.state.area && <div className="mandatory">{window.strings['FARMERS']['AREA'] + window.strings['ISREQUIRED']}</div>}
-                                                        </div> */}
+
                                                         <div className="form-group col-md-6">
                                                             <label className="retallable">{window.strings.COUNTRY}</label>
                                                             <select required name="country" value={this.state.country} className="form-control" onChange={this.handleInputChange}>
@@ -443,12 +433,12 @@ class RetailerInfo extends React.Component {
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.postCode
                                                                 })}
-                                                                name="zipcode"
+                                                                name="pincode"
                                                                 onChange={this.handleInputChange}
-                                                                value={this.state.pinCode}
+                                                                value={this.state.pincode}
                                                                 required
                                                             />
-                                                            {this.state.Shopsubmitted && !this.state.zipcode && <div className="mandatory">{window.strings['FARMERS']['POST_CODE'] + window.strings['ISREQUIRED']}</div>}
+                                                            {this.state.Shopsubmitted && !this.state.pincode && <div className="mandatory">{window.strings['FARMERS']['POST_CODE'] + window.strings['ISREQUIRED']}</div>}
                                                         </div>
 
                                                         <div className="form-group col-md-6">

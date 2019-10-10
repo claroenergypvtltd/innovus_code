@@ -6,8 +6,12 @@ import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import store from '../../store/store';
 import { CATEGORY_CREATE_SUCCESS, CATEGORY_UPDATE_SUCCESS } from '../../constants/actionTypes';
+import PropTypes from "prop-types";
 
 class CreateCrop extends Component {
+    static contextTypes = {
+        router: PropTypes.object
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -64,6 +68,10 @@ class CreateCrop extends Component {
             [e.target.name]: e.target.value
         })
     }
+    listPage = () => {
+        this.context.router.history.goBack();
+    }
+
 
     onhandleImageChange = (e) => {
 

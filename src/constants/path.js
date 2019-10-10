@@ -64,11 +64,15 @@ export const path = {
         list: process.env.PUBLIC_URL + '/user',
         add: process.env.PUBLIC_URL + '/user/add',
         edit: process.env.PUBLIC_URL + '/user/update/',
+        view: process.env.PUBLIC_URL + '/user/view/',
+
     },
     farmer: {
         list: process.env.PUBLIC_URL + '/user',
         add: process.env.PUBLIC_URL + '/user/farmers/add',
         edit: process.env.PUBLIC_URL + '/user/farmers/edit/',
+        view: process.env.PUBLIC_URL + '/user/farmers/view/',
+
     },
     retailer: {
         list: process.env.PUBLIC_URL + '/retailer',
