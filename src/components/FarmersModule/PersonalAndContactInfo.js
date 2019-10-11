@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { fetchUsers } from '../../actions/UserAction';
 import store from '../../store/store'
 import { CONTACT_DETAILS, UPDATE_CONTACT_DETAILS } from '../../constants/actionTypes';
-
+import { imageBaseUrl } from '../../config'
 
 class PersonalAndContactInfo extends Component {
 
@@ -31,6 +31,7 @@ class PersonalAndContactInfo extends Component {
             city: '',
             state: '',
             pinCode: '',
+            imagePreviewUrl: '',
             errors: {}
         }
     }
@@ -89,7 +90,8 @@ class PersonalAndContactInfo extends Component {
         reader.onloadend = () => {
             this.setState({
                 file: file,
-                image: file.name
+                image: file.name,
+                imagePreviewUrl: reader.result
             })
         }
         reader.readAsDataURL(file);
@@ -135,7 +137,15 @@ class PersonalAndContactInfo extends Component {
     }
 
     render() {
-        const { errors } = this.state;
+        const { errors, imagePreviewUrl } = this.state;
+
+        let imagePreview;
+        if (imagePreviewUrl) {
+            imagePreview = <img className="pre-view" src={imagePreviewUrl} />
+        } else {
+            imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
+        }
+
         return (
             <div className="clearfix">
                 <div className="row clearfix">
@@ -258,6 +268,7 @@ class PersonalAndContactInfo extends Component {
 
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                            {imagePreview}
                                         </div>
                                         <div className="form-group col-md-6">
                                         </div>
