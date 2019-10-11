@@ -3,7 +3,8 @@ import {
   USER_FETCH_SUCCESS,
   FARMS_FETCH_SUCCESS,
   FETCH_FARMS_DETAILS,
-  FARMER_DELETE_SUCCESS
+  FARMER_DELETE_SUCCESS,
+  KYC_FETCH_SUCCESS
 } from '../constants/actionTypes';
 import { endPoint } from '../constants';
 import { httpServices } from '../services/http.services';
@@ -102,3 +103,14 @@ export const deleteIrrigation = (deleteId) => {
     return res;
   });
 }
+
+export const getKycDetails = userId => dispatch => {
+  let params = endPoint.kyc + '?userId=' + userId;
+  return httpServices.get(params).then(res => {
+    let kycDetails = res.data;
+    dispatch({ type: KYC_FETCH_SUCCESS, resp: kycDetails});
+  }).catch(err => {
+    console.error(err);
+    dispatch({ type: GET_ERRORS, payload: err });
+  });
+};

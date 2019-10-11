@@ -28,7 +28,7 @@ class Farms extends React.Component {
                 </TabPanel>
 
                 <TabPanel>
-                    <FarmList />
+                    <FarmList userId={this.props.farmerId} />
                 </TabPanel>
 
             </Tabs>
