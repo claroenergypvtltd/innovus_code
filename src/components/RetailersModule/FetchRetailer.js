@@ -65,8 +65,8 @@ class FetchRetailer extends React.Component {
     }
     viewCrop(RetstatusId) {
         let ViewPage = <select className="drop-select">
-            {/* onChange={() => this.statusChange(RetstatusId)} */}
-            <option value="0" className="drop-option" selected={RetstatusId}>{window.strings.RETAILERS.PENDING}</option>
+            {/* onChange={() => this.statusChange(RetstatusId)} selected={RetstatusId}*/}
+            <option value="0" className="drop-option" >{window.strings.RETAILERS.PENDING}</option>
             <option value="1" className="drop-option">{window.strings.RETAILERS.ACCEPTED}</option>
             <option value="2" className="drop-option">{window.strings.RETAILERS.REJECTED}</option>
         </select>
@@ -167,6 +167,7 @@ class FetchRetailer extends React.Component {
                     handleView={this.itemView}
                     handleDelete={this.itemDelete} /> */}
                 <DataTableDynamic
+                    title="Category List"
                     tableHead={this.state.columns}
                     tableDatas={this.state.data}
                     handleEdit={this.itemEdit}

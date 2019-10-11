@@ -195,7 +195,8 @@ export const Translation = {
         },
         "RETAILERS": {
             "ADD_NEW_RETAIER": "Add New Retailer",
-            "IMG_UPLOAD": "Image Upload",
+            "RET_PERS_IMG_UPLOAD": "Personal Image Upload",
+            "RET_SHOP_IMG_UPLOAD": "Shop Image Upload",
             "SHOP_NAME": "Shop Name",
             "GST": "GST (optional)",
             "SHOP_LOC": "Shop Location",
