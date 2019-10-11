@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, Button } from 'react-bootstrap';
-import { fetchFarmList, getFarmDetailData } from '../../actions/UserAction';
+import { fetchFarmList, getFarmDetailData, getKycDetails } from '../../actions/UserAction';
 import { connect } from 'react-redux';
 import { imageBaseUrl } from '../../config/config';
 import FarmDetails from './FarmDetails';
@@ -22,16 +22,24 @@ class FarmList extends React.Component {
   }
 
   componentDidMount() {
+
     let FarmerId = this.props.farmerId;
     if (FarmerId) {
       this.setState({ farmerId: FarmerId })
       this.props.dispatch(fetchFarmList(FarmerId));
+    }
+    if (this.props.userId) {
+      this.getKycDetails();
     }
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.list) {
       this.setState({ farmsData: newProps.list });
+    }
+    if (newProps.userData && newProps.userData.kycDetails) {
+
+      this.setState({ kycDatas: newProps.userData.kycDetails });
     }
   }
 
@@ -41,6 +49,10 @@ class FarmList extends React.Component {
       this.props.dispatch(getFarmDetailData(farmId));
     });
   };
+
+  getKycDetails = () => {
+    this.props.dispatch(getKycDetails(this.props.userId));
+  }
 
   // /user/farm/add
 
@@ -100,105 +112,65 @@ class FarmList extends React.Component {
         );
       });
 
+
+
+
+
+
+    const kycList = this.state.kycDatas && this.state.kycDatas.map((item, index) => {
+      return (
+        <div className="col-md-12" >
+          <div className="row" >
+            <div className="col-md-4">
+              <div className="kyc-card main-wrapper">
+                <div className="retailer-details">
+                  <span className="farm-image">
+                    <Image
+                      src={imageBaseUrl + item.image}
+                      className="maincentext"
+                      roundedCircle
+                    />
+                    {/* <button className="edit-icon" onClick={() => this.editPage(item.id)}><i class="fa fa-pencil"></i></button> */}
+                  </span>
+                  <div className="retailer-proof">
+                    <h5 className="retailer-title p-2 m-0">{item.proofNameId == 1 ? "Upload Identity Proof" : "Upload Photo Proof"}</h5>
+                  </div>
+                  {item.proofNameId == 1 && <div className="pl-2">
+                    <p className="user-title m-0">{item.proofName}</p>
+                    <p class="user-title m-0">{item.proofNumber}</p>
+                    <p className="user-title m-0">{item.description}</p>
+                  </div>}
+                  {item.proofNameId == 2 && <div className="pl-2">
+                    <p className="user-title m-0">{item.description}</p>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+
+
+          </div >
+
+
+        </div >
+      );
+    })
+
+
+
+
+
+
     return (
 
       // <div className="white-bg row">
 
-      <div className="farm-tab">
+      <div className="farm-tab" >
         <div className="white-bg">
-          {this.state.farmId ? <FarmDetails /> : Farms}
+          {this.state.farmId ? <FarmDetails /> : (this.props.userId ? kycList : Farms)}
           {/* {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>} */}
         </div>
-        <div className="row">
-          {this.state.farmId ? <FarmDetails /> : Farms}
-        </div>
 
-
-        {!this.props.farmerId && <div> <div className="col-sm-4">
-          <div
-            className="farm-card bg-white"
-          >
-            <span className="farm-image">
-              <Image
-                src=""
-                className="maincentext"
-                roundedCircle
-              />
-
-            </span>
-            <div className="farm-box">
-              <h5 className="centext title">Shop name</h5>
-              <span>
-                <div className="centext color-title">
-                  <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>Place
-    </div>
-              </span>
-              <div className="farmer-details pl-4">
-                <div className="farmer-address">
-                  <h5 className="title">Address</h5>
-                  <p className="centext user-title sub-farm">
-                    flat no, city, state
-    </p>
-                </div>
-
-              </div>
-              <div className="view-map">
-                <button className="common-btn" >View on Map</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-          <div className="col-md-12">
-            <div className="row">
-              <div className="col-md-4">
-                <div className="farm-card main-wrapper">
-                  <div className="retailer-details">
-                    <img src="" className="retailer-image" />
-                    <div className="retailer-proof">
-                      <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                    </div>
-                    <div className="pl-2">
-                      <p className="user-title m-0">upload</p>
-                      <p class="user-title m-0">upload</p>
-                      <p class="user-title m-0">upload</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="farm-card main-wrapper">
-                  <div className="retailer-details">
-                    <img src="" className="retailer-image" />
-                    <div className="retailer-proof">
-                      <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                    </div>
-                    <div className="pl-2">
-                      <p className="user-title m-0">upload</p>
-                      <p class="user-title m-0">upload</p>
-                      <p class="user-title m-0">upload</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="farm-card main-wrapper">
-                  <div className="retailer-details">
-                    <img src="" className="retailer-image" />
-                    <div className="retailer-proof">
-                      <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                    </div>
-                    <div className="pl-2">
-                      <p className="user-title m-0">upload</p>
-                      <p class="user-title m-0">upload</p>
-                      <p class="user-title m-0">upload</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>}
         <div className="plus-btn">
           {!this.state.farmId && this.props.farmerId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
         </div>
@@ -208,7 +180,8 @@ class FarmList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  list: state.user.farmsList
+  list: state.user.farmsList,
+  userData: state.user
 });
 
 

@@ -115,7 +115,7 @@ class IrrigationSetting extends Component {
                 "irrigationCostId": this.state.irrigationCostId,
                 "cityId": this.state.cityId,
                 "amount": this.state.amount,
-                "areasize": this.state.areasize
+                "areasize": this.state.areaSize
             }
             let isUpdate = false;
             if (this.state.irrigationCostId) {
