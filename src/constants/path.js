@@ -67,6 +67,10 @@ export const path = {
         view: process.env.PUBLIC_URL + '/user/view/',
 
     },
+    farm: {
+        add: process.env.PUBLIC_URL + '/farm/add',
+        edit: process.env.PUBLIC_URL + '/farm/edit',
+    },
     farmer: {
         list: process.env.PUBLIC_URL + '/user',
         add: process.env.PUBLIC_URL + '/user/farmers/add',

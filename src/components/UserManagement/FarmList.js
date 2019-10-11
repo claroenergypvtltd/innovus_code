@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { imageBaseUrl } from '../../config/config';
 import FarmDetails from './FarmDetails';
 import PropTypes from "prop-types";
+import { path } from '../../constants';
 
 class FarmList extends React.Component {
 
@@ -58,13 +59,13 @@ class FarmList extends React.Component {
 
   pageRedirect = () => {
     if (this.state.farmerId) {
-      this.context.router.history.push({ pathname: '/farm/add', state: { farmerIdData: this.state.farmerId } });
+      this.context.router.history.push({ pathname: path.farm.add, state: { farmerIdData: this.state.farmerId } });
     }
 
   }
 
   editPage = (farmId) => {
-    this.context.router.history.push({ pathname: '/farm/edit/' + this.state.farmerId, state: { farmerEditId: farmId } });
+    this.context.router.history.push({ pathname: path.farm.edit + this.state.farmerId, state: { farmerEditId: farmId } });
   }
 
   render() {
