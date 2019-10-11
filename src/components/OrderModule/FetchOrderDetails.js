@@ -39,7 +39,7 @@ class FetchOrderDetails extends Component {
             let respData = newProps.orderDetails.DetailsList.datas;
             this.setState({ OrderLists: respData, productLists: respData[0].items, pageCount: newProps.orderDetails.DetailsList.totalCount / this.state.itemPerPage })
         }
-        debugger;
+
         if (newProps.orderDetails && newProps.orderDetails.trackLists) {
             this.setState({ trackLists: newProps.orderDetails.trackLists.orderWareHouse, status: newProps.orderDetails.trackLists.status })
         }
@@ -120,7 +120,7 @@ class FetchOrderDetails extends Component {
             return { "itemList": [formatDate(item.trackTime), item.activity, item.location] }
         })
         let productList = this.state.productLists && this.state.productLists.map((item) => {
-            debugger;
+
             let productname = item.category && item.category.name ? item.category.name : '-';
             let boxAmount = item.categoryAmount && item.categoryAmount.boxQuantity ? item.categoryAmount.boxQuantity : 0;
             let quantity = item.cartproductdetails && item.cartproductdetails.quantity;
