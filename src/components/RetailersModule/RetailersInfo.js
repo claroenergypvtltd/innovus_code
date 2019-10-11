@@ -10,7 +10,7 @@ import { fetchRetailers, SubmitRetailer, getCountryList, getStateCity } from '..
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
 import { toastr } from 'react-redux-toastr'
-import GoogleMap from '../../shared/GoogleMap'
+// import GoogleMap from '../../shared/GoogleMap'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 const { Step } = Steps;
@@ -500,7 +500,7 @@ class RetailerInfo extends React.Component {
                                                             />
                                                             {this.state.Shopsubmitted && !this.state.shoplocation && <div className="mandatory">{window.strings.RETAILERS.SHOP_LOC + window.strings['ISREQUIRED']}</div>}
                                                         </div>
-                                                        <GoogleMap />
+                                                        {/* <GoogleMap /> */}
 
 
                                                     </div>

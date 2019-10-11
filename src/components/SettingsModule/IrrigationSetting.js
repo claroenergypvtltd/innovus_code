@@ -36,7 +36,7 @@ class IrrigationSetting extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
+
 
         if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.specificData && newProps.IrrigationSettingData.specificData[0]) {
             let respData = newProps.IrrigationSettingData.specificData[0];
@@ -68,12 +68,12 @@ class IrrigationSetting extends Component {
 
     getStateList() {
         getLocation({}).then(resp => {
-            this.setState({ stateData: resp.data })
+            this.setState({ stateData: resp && resp.data })
         })
     }
 
     handleInputChange = (e) => {
-        debugger;
+
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -87,7 +87,7 @@ class IrrigationSetting extends Component {
 
 
     getCityList = () => {
-        debugger;
+
         let obj = {
             "stateId": this.state.stateId
         }
@@ -105,7 +105,7 @@ class IrrigationSetting extends Component {
     }
 
     handleSubmit = (e) => {
-        debugger;
+
         e.preventDefault();
         this.setState({ submitted: true })
         if (this.state.cityId && this.state.amount && this.state.areaSize) {

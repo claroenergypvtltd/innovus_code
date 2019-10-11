@@ -16,9 +16,9 @@ class FetchOrderDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Order Id", "ShippingAddress id", "From time", "To time", "Track Orders"],
+            TableHead: ["Order Id", "Shipping Address", "From Time", "To Time", "Track Orders"],
             TableHeadTrack: ["Data/Time", "Activity", "Location"],
-            TableProductHead: ["Product Id", "Quantity", "Order Date", "Order Amount"],
+            TableProductHead: ["Product Id", "Product Name", "Quantity", "Order Date", "Order Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
             CategoryCount: props.getCount,
             search: '',
@@ -39,6 +39,7 @@ class FetchOrderDetails extends Component {
             let respData = newProps.orderDetails.DetailsList.datas;
             this.setState({ OrderLists: respData, productLists: respData[0].items, pageCount: newProps.orderDetails.DetailsList.totalCount / this.state.itemPerPage })
         }
+
         if (newProps.orderDetails && newProps.orderDetails.trackLists) {
             this.setState({ trackLists: newProps.orderDetails.trackLists.orderWareHouse, status: newProps.orderDetails.trackLists.status })
         }
@@ -112,14 +113,18 @@ class FetchOrderDetails extends Component {
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = <button onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button>
-            return { "itemList": [item.id, item.shippingAddress, item.startTime, item.endTime, link], "itemId": item.id }
+            return { "itemList": [item.id, item.shopAddress.address1 + ' ' + item.shopAddress.address2, item.startTime, item.endTime, link], "itemId": item.id }
         })
 
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
             return { "itemList": [formatDate(item.trackTime), item.activity, item.location] }
         })
         let productList = this.state.productLists && this.state.productLists.map((item) => {
-            return { "itemList": [item.cartproductdetails && item.cartproductdetails.productId, item.cartproductdetails && item.cartproductdetails.quantity, item.cartproductdetails && formatDate(item.cartproductdetails.lastModified), item.cartproductdetails && item.cartproductdetails.price] }
+
+            let productname = item.category && item.category.name ? item.category.name : '-';
+            let boxAmount = item.categoryAmount && item.categoryAmount.boxQuantity ? item.categoryAmount.boxQuantity : 0;
+            let quantity = item.cartproductdetails && item.cartproductdetails.quantity;
+            return { "itemList": [item.cartproductdetails && item.cartproductdetails.productId, productname, quantity + ' ' + '( ' + quantity / boxAmount + "box)", item.cartproductdetails && formatDate(item.cartproductdetails.lastModified), item.cartproductdetails && item.cartproductdetails.price] }
         })
 
         let { status } = this.state;
