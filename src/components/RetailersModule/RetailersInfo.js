@@ -8,8 +8,11 @@ import store from '../../store/store';
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
 import { fetchRetailers, SubmitRetailer, getCountryList, getStateCity } from '../../actions/SubmitRetailerAction';
 import { path } from '../../constants';
-
+import { imageBaseUrl } from '../../config'
 import { toastr } from 'react-redux-toastr'
+import GoogleMap from '../../shared/GoogleMap'
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+
 const { Step } = Steps;
 const steps = [
     {
@@ -52,14 +55,14 @@ class RetailerInfo extends React.Component {
             "countryId": 101
         }
         getStateCity({ obj }).then(resp => {
-            this.setState({ stateData: resp.data })
+            this.setState({ stateData: resp && resp.data })
         })
     }
     retailersubmit() {
         this.setState({
             Shopsubmitted: true
         })
-        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImagefile && this.state.retShopImgfile) {
+        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImage && this.state.retShopImage) {
             // && this.state.retPersonalImagefile && this.state.retShopImgfile
             const formData = new FormData();
             formData.append("userId", this.state.userId);
@@ -69,16 +72,16 @@ class RetailerInfo extends React.Component {
             formData.append("mobileNumber", this.state.mobileNumber);
             formData.append("address1", this.state.address1);
             formData.append("image", this.state.retPersonalImagefile);
-            formData.append("shopImage", this.state.retShopImgfile);
+            formData.append("shopImage", this.state.retShopImagefile);
             formData.append("shopName", this.state.shopname);
             formData.append("shopAddress1", this.state.shopaddress1);
             formData.append("shopAddress2", this.state.shopaddress2);
             formData.append("shopLocation", this.state.shoplocation);
             formData.append("shopGst", this.state.gst);
-            formData.append("country", this.state.country);
-            formData.append("state", this.state.state);
-            formData.append("city", this.state.city);
-            formData.append("pincode", this.state.pincode);
+            formData.append("shopCountry", this.state.country);
+            formData.append("shopState", this.state.state);
+            formData.append("shopCity", this.state.city);
+            formData.append("shopZipCode", this.state.pincode);
             let updateRetailer = false;
             if (this.state.userId) {
                 updateRetailer = true;
@@ -92,11 +95,11 @@ class RetailerInfo extends React.Component {
             toastr.success(nextprops.message);
             this.props.history.push(path.user.list);
         } if (nextprops && nextprops.editLists.id) {
-            if (nextprops.editLists.address && nextprops.editLists.address.country) {
+            if (nextprops.editLists.shopAddress && nextprops.editLists.shopAddress.country) {
                 let obj = {
                     // "countryId": this.state.country,
-                    "countryId": nextprops.editLists.address.country,
-                    "stateId": nextprops.editLists.address.state
+                    "countryId": nextprops.editLists.shopAddress.country,
+                    "stateId": nextprops.editLists.shopAddress.state
                 }
                 getStateCity(obj).then(resp => {
                     if (obj.countryId && obj.stateId) {
@@ -120,11 +123,11 @@ class RetailerInfo extends React.Component {
             mobileNumber: retailerData.mobileNumber, shopname: retailerData.shopAddress && retailerData.shopAddress.name,
             shopaddress1: retailerData.shopAddress && retailerData.shopAddress.address1,
             shopaddress2: retailerData.shopAddress && retailerData.shopAddress.address2,
-            city: retailerData.address && retailerData.address.city,
-            state: retailerData.address && retailerData.address.state,
-            country: retailerData.address && retailerData.address.country,
-            pincode: retailerData.shopAddress && retailerData.shopAddress.pincode,
-            retShopImgfile: retailerData.shopAddress && retailerData.shopAddress.image,
+            city: retailerData.shopAddress && retailerData.shopAddress.city,
+            state: retailerData.shopAddress && retailerData.shopAddress.state,
+            country: retailerData.shopAddress && retailerData.shopAddress.country,
+            pincode: retailerData.shopAddress && retailerData.shopAddress.zipcode,
+            retShopImage: retailerData.shopAddress && retailerData.shopAddress.image,
             gst: retailerData.shopAddress && retailerData.shopAddress.gst, shoplocation: retailerData.shopAddress && retailerData.shopAddress.location,
         })
     }
@@ -136,11 +139,13 @@ class RetailerInfo extends React.Component {
         this.setState({
             submitted: true,
         })
-        if (this.state.name && this.state.address1 && this.state.mobileNumber, this.state.retPersonalImagefile) {
-            //, this.state.retPersonalImagefile
-            const current = this.state.current + 1;
-            this.setState({ current });
-        }
+        // if (this.state.name && this.state.address1 && this.state.mobileNumber && this.state.retPersonalImage) {
+        //     //, this.state.retPersonalImagefile
+        //     const current = this.state.current + 1;
+        //     this.setState({ current });
+        // }
+        const current = this.state.current + 1;
+        this.setState({ current });
     }
     listPath = () => {
         this.props.history.goBack();
@@ -179,16 +184,51 @@ class RetailerInfo extends React.Component {
         let file = e.target.files[0];
         reader.onloadend = () => {
             if (type == "retPersonalImage") {
-                this.setState({ retPersonalImagefile: file })
+                this.setState({
+                    retPersonalImagefile: file,
+                    retPersonalImage: file.name,
+                    RetPerosnalimagePrewUrl: reader.result
+                })
             } else {
-                this.setState({ retShopImgfile: file })
+                this.setState({
+                    retShopImagefile: file,
+                    retShopImage: file.name,
+                    RetShopimagePrewUrl: reader.result
+                })
             }
         }
         reader.readAsDataURL(file)
     }
+    // onhandleImageChange = (e) => {
+
+    //     e.preventDefault();
+    //     let reader = new FileReader();
+    //     let file = e.target.files[0];
+
+    //     reader.onloadend = () => {
+    //         this.setState({
+    //             file: file,
+    //             image: file.name,
+    //             imagePreviewUrl: reader.result
+    //         })
+    //     }
+    //     reader.readAsDataURL(file)
+    // }
     render() {
         const { current } = this.state;
         const { errors } = this.state;
+        let { RetPerosnalimagePrewUrl, RetShopimagePrewUrl } = this.state;
+        let retailPersonalimagePreview, retailShopimagePreview;
+        if (RetPerosnalimagePrewUrl) {
+            retailPersonalimagePreview = <img className="pre-view" src={RetPerosnalimagePrewUrl} />
+        } else {
+            retailPersonalimagePreview = <img className="pre-view" src={imageBaseUrl + this.state.retPersonalImage} />
+        }
+        if (RetShopimagePrewUrl) {
+            retailShopimagePreview = <img className="pre-view" src={RetShopimagePrewUrl} />
+        } else {
+            retailShopimagePreview = <img className="pre-view" src={imageBaseUrl + this.state.retShopImage} />
+        }
         console.log('this state -- ', this.state);
         const countryDropDown = this.state.countries && this.state.countries.map((item, index) => {
             return <option key={index}
@@ -286,21 +326,22 @@ class RetailerInfo extends React.Component {
                                                         {this.state.submitted && !this.state.address1 && <div className="mandatory"> {window.strings.FARMERS.ADDR + window.strings['ISREQUIRED']}</div>}
                                                     </div>
                                                     <div className="form-group pt-3 col-md-6">
-                                                        <label className="retallable">{window.strings.RETAILERS.IMG_UPLOAD}</label>
+                                                        <label className="retallable">{window.strings.RETAILERS.RET_PERS_IMG_UPLOAD}</label>
                                                         <input
                                                             type="file"
                                                             placeholder="Retailer Personal Image"
                                                             className={classnames('form-control', {
                                                                 'is-invalid': errors.name
                                                             })}
-                                                            name="retPersonalImage"
+                                                            name="retPersonalImagefile"
                                                             onChange={(e) => this.onhandleImageChange("retPersonalImage", e)}
                                                             //onChange={this.onhandleImageChange()}
                                                             //value={this.state.retPersonalImagefile}
                                                             required
 
                                                         />
-                                                        {this.state.submitted && !this.state.retPersonalImagefile && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                                        {this.state.submitted && !this.state.retPersonalImage && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                                        {retailPersonalimagePreview}
                                                     </div>
                                                 </form>
                                             </div>
@@ -349,7 +390,7 @@ class RetailerInfo extends React.Component {
                                                             />
                                                         </div>
                                                         <div className="form-group col-md-6">
-                                                            <label className="retallable">{window.strings.RETAILERS.IMG_UPLOAD}</label>
+                                                            <label className="retallable">{window.strings.RETAILERS.RET_SHOP_IMG_UPLOAD}</label>
                                                             <input
                                                                 type="file"
                                                                 placeholder="image"
@@ -362,7 +403,8 @@ class RetailerInfo extends React.Component {
                                                                 required
 
                                                             />
-                                                            {this.state.Shopsubmitted && !this.state.retShopImgfile && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                                            {this.state.Shopsubmitted && !this.state.retShopImage && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                                            {retailShopimagePreview}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -458,6 +500,9 @@ class RetailerInfo extends React.Component {
                                                             />
                                                             {this.state.Shopsubmitted && !this.state.shoplocation && <div className="mandatory">{window.strings.RETAILERS.SHOP_LOC + window.strings['ISREQUIRED']}</div>}
                                                         </div>
+                                                        <GoogleMap />
+
+
                                                     </div>
                                                 </div>
                                                 {/* <div className="form-group pt-3">
@@ -531,6 +576,11 @@ RetailerInfo.propTypes = {
 const mapStateToProps = state => ({
     editLists: state.retailer.Lists,
     status: state.retailer.status,
-    message: state.retailer.message
+    message: state.retailer.message,
+    apiKey: ('AIzaSyC0OQRouIeF8m6n0brmgidHUQtT_BPguAY'),
+    libraries: ['drawing'],
+    libraries: ['places'],
+    mapTypeId: ['satellite'],
 });
 export default connect(mapStateToProps, { SubmitRetailer, fetchRetailers })(RetailerInfo);
+
