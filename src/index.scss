@@ -670,8 +670,10 @@ a,p,small,span{font-family: open sans;}
 // font-size:14px;
  display: inline-block;
  white-space: nowrap;
- width: 150px;
+ //width: 150px;
  margin-left: 0;
+ width: auto;
+ min-width: 137px;
 }
 .filter-btn{
  color:#9EA0A2;
@@ -826,12 +828,72 @@ svg{
 .table th, table td{
   border-top: none;
   color: #9E9E9E;
-
 }
 .table thead th{
   border-bottom: 1px solid #dee2e6;
 }
+.chart-box{
+  padding: 30px 0px 0px;
+  margin: 14px;
+  width: 500px;
+  height: auto;
+}
 
+// .graph-board{
+//  justify-content: space-around;
+//  display: flex;
+//  list-style: none;
+//  padding: 0;
+// }
+
+// .list-box::before {
+//   content: "\25AA";
+//   color: red;
+//   font-weight: bold;
+//   display: inline-block; 
+//   width: 1em;
+//   margin-left: -1em;
+// }
+.main-graph{
+  position: absolute;
+  text-align:left;
+}
+.sub-graph{
+  text-align: right;
+}
+.farm-graph{
+  background-image: url("../src/assets/images/Sprite_image.png");
+  background-repeat:no-repeat;
+  background-position: -9px -2703px;
+  padding:0 20px;
+  color: #697a99;
+  font-size: 13px;
+}
+.chart-graph{
+  background-image: url("../src/assets/images/Sprite_image.png");
+  background-repeat:no-repeat;
+  background-position: -9px -2722px;
+  padding:0 20px;
+  color: #697a99;
+  font-size: 13px;
+}
+.order-graph{
+  background-image: url("../src/assets/images/Sprite_image.png");
+  background-repeat:no-repeat;
+  background-position: -9px -2741px;
+  padding:0 20px;
+  color: #697a99;
+  font-size: 13px;
+}
+.graph-label{
+  color:#aaa;
+  font-size: 13px;
+}
+.graph-title{
+  color: #697a99;
+  font-size: 17px;
+  padding: 0 10px 0 20px;
+}
 
 /****************************Contact Details************************/
 .main-contact{
