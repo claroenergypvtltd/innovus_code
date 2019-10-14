@@ -250,7 +250,7 @@ class RetailerInfo extends React.Component {
                         <Step key={item.title} title={item.title} />
                     ))}
                 </Steps>
-                <div className="steps-content">
+                <div className="main-wrapper mt-4">
                     {this.state.current === 0 ?
                         <div className="clearfix ">
                             <div className="row clearfix">
@@ -543,7 +543,10 @@ class RetailerInfo extends React.Component {
                                 </div>
                             </div>
                         </div>}
-
+                    {/* <div className="col-md-12 bottom-section p-4">
+                        <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                        <button type="submit" className="btn btn-primary">Next</button>
+                    </div> */}
                 </div>
                 <div className="steps-action">
                     <Button className="bottom-section" style={{ marginRight: 10, background: '#E1E7ED' }} onClick={() => this.listPath()}>{window.strings.CANCEL}
