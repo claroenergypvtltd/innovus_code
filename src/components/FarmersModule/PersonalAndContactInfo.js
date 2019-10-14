@@ -128,7 +128,6 @@ class PersonalAndContactInfo extends Component {
                 stateForm.address1 && stateForm.address2 && stateForm.file) {
                 if (validation.checkValidation("mobile", stateForm.mobileNumber) && validation.checkValidation("email", stateForm.email)) {
                     let updateUser = false;
-                    debugger;
                     if (stateForm.userId) {
                         updateUser = true;
                     }

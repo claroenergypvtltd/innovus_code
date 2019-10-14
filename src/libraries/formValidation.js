@@ -47,7 +47,6 @@ function checkValidation(fieldName, value, state) {
             break;
         case 'mobile':
             let phoneNum = value.replace("+", "");
-            debugger;
             let phoneNumValid = phoneNum ? (value.length === 10 ? true : false) : false;
             FormErrors.phoneNumValid = phoneNumValid;
             // FormErrors.mobile = state.mobile !== '' ? true : false;
