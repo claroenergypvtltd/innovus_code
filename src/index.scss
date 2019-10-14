@@ -180,6 +180,7 @@ padding:8px 10px  !important;
 height: auto !important;
 border: none !important;
 font-family: $font-open;
+font-weight: 500;
 }
 .btn-primary{
 background-color: #ff8b92; /* For browsers that do not support gradients */
@@ -202,7 +203,7 @@ font-size: 15px;
  }
  .delete-popup{
   background-color: #fff;
-  padding: 15px; 
+  padding: 20px; 
   border-radius: 6px;
   //box-shadow: 2px 2px 1px 1px rgba(220, 220, 220, 0.5);
  }

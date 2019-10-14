@@ -114,15 +114,15 @@ class FetchIrrigationSetting extends Component {
         })
 
         return (
-            <div className="price">
-                <div className="clearfix title-section row">
-                    <div className="title-card col-md-7">
+            <div className="fetch-irrigation">
+                <div className="clearfix title-section row mr-0">
+                    <div className="title-card col-md-6">
                         <h4 className="user-title">{window.strings.SETTING.LIST_IRRIGATION}</h4>
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
                     </div>
-                    <div className="right-title row col-md-5">
+                    <div className="right-title row col-md-6 pl-5">
                         <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <div className="col-md-4">
+                        <div className="col-md-4 p-0">
                             <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.SETTING.ADD_IRRIGATION}</button>
                         </div>
                     </div>
