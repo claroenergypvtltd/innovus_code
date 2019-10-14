@@ -63,18 +63,18 @@ class User extends Component {
         </div> */}
         <div>
           <Row className="clearfix title-section">
-            <Col md={7} className="title-card user-board">
+            <Col md={7} className="title-card">
               <h4 className="user-title">{window.strings.USERMANAGEMENT.USER}</h4>
             </Col>
-            <Col md={5} className="right-title row pr-0 pb-3">
-              <Col md={8} className="user-board add-user">
+            <Col md={5} className="right-title row pb-3">
+              <Col md={8} className="p-0">
                 <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 {/* <i className="fa fa-search search-icon"></i><input type="text" className="search-btn" placeholder="Search.." />  */}
               </Col>
               {/* <Col md={3} className="user-board add-user">
                 <button type="submit" className="filter-btn"><i className="fa fa-filter filter-icon"></i>Filter by</button>
               </Col> */}
-              <Col md={3} className="user-board add-user">
+              <Col md={3} className="p-0">
                 <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
                   {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ADDRETAIL}
                 </button>
