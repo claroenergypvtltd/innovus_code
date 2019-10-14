@@ -22,6 +22,7 @@ class CreateFarmDetails extends Component {
             village: '',
             city: '',
             state: '',
+            areaSize: '',
             errors: {},
             userId: ''
         }
@@ -54,7 +55,7 @@ class CreateFarmDetails extends Component {
             let resp = newProps.userData.farmDetails;
             this.setState({
                 id: resp.id, userId: resp.userId, name: resp.name, address1: resp.address1, address2: resp.address2,
-                taluk: resp.taulk, village: resp.village, city: resp.city, state: resp.state
+                taluk: resp.taulk, village: resp.village, city: resp.city, state: resp.state, areaSize: resp.areaSize
             })
         }
     }
@@ -85,6 +86,7 @@ class CreateFarmDetails extends Component {
             formData.append("city", this.state.city);
             formData.append("state", this.state.state);
             formData.append("userId", this.state.userId);
+            formData.append("areaSize", this.state.areaSize);
             formData.append("location", "[{9.86,9.99},{9.86,9.99},{9.86,9.99},{9.86,9.99}]");
 
             let farmParam = false;
@@ -247,7 +249,27 @@ class CreateFarmDetails extends Component {
                                             {this.state.submitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                    {/* 
+
+                                        <div className="form-group col-md-6">
+
+                                            <label>{window.strings['FARMERS']['AREA_SIZE']}</label>
+
+                                            <input
+                                                type="text"
+                                                placeholder={window.strings['FARMERS']['AREA_SIZE']}
+                                                className={classnames('form-control', {
+                                                    'is-invalid': errors.areaSize
+                                                })}
+                                                name="areaSize"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.areaSize}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.areaSize && <div className="mandatory">{window.strings['FARMERS']['AREA_SIZE'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+                                        {/* 
                                         <h3>Map</h3>
 
                                         <h3>Image Upload</h3> */}

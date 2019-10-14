@@ -74,6 +74,7 @@ class DataTableDynamic extends React.Component {
           pagination={this.props.pagination}
           expandableRows={this.props.expandable}
           expandableRowsComponent={this.props.expandableComponent}
+          paginationRowsPerPageOptions={[10, 25, 50]}
         />
       </div>
     );

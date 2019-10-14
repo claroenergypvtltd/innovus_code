@@ -8,6 +8,9 @@ import { fetchUsers } from '../../actions/UserAction';
 import store from '../../store/store'
 import { CONTACT_DETAILS, UPDATE_CONTACT_DETAILS } from '../../constants/actionTypes';
 import { imageBaseUrl } from '../../config'
+import { toastr } from '../../services';
+import { utils } from '../../services/utils.services';
+import { validation } from '../../libraries/formValidation'
 
 class PersonalAndContactInfo extends Component {
 
@@ -40,7 +43,6 @@ class PersonalAndContactInfo extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.farmerId) {
             this.getUserList();
         }
-
     }
 
     componentWillReceiveProps(newProps) {
@@ -66,7 +68,6 @@ class PersonalAndContactInfo extends Component {
             }
         }
     }
-
 
     getUserList = () => {
         if (this.props.location && this.props.location.state && this.props.location.state.farmerId) {
@@ -125,12 +126,14 @@ class PersonalAndContactInfo extends Component {
             let stateForm = this.state;
             if (stateForm.city && stateForm.email && stateForm.mobileNumber && stateForm.state && stateForm.pinCode && stateForm.name &&
                 stateForm.address1 && stateForm.address2 && stateForm.file) {
-
-                let updateUser = false;
-                if (stateForm.userId) {
-                    updateUser = true;
+                if (validation.checkValidation("mobile", stateForm.mobileNumber) && validation.checkValidation("email", stateForm.email)) {
+                    let updateUser = false;
+                    debugger;
+                    if (stateForm.userId) {
+                        updateUser = true;
+                    }
+                    this.props.SubmitPersonalAndContactInfo(formData, updateUser)
                 }
-                this.props.SubmitPersonalAndContactInfo(formData, updateUser)
             }
         })
 
@@ -152,30 +155,10 @@ class PersonalAndContactInfo extends Component {
                     <div className="col-md-12">
                         <h4>{window.strings['FARMERS']['PERS_AND_CONTACT']}</h4>
                         <div className="main-wrapper main-contact">
-
-
-
                             <h4 className="color-title sub-contact">Personal Information</h4>
-
                             <form onSubmit={this.handleSubmit} noValidate className="row m-0">
                                 <div className="personal-info  col-md-6">
                                     <div className="row contact ">
-
-                                        {/* <div className="form-group col-md-6">
-                                            <label>{window.strings['FARMERS']['NAME']}</label>
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['NAME']}
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.name
-                                                })}
-                                                name="name"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.name}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['FARMERS']['NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div> */}
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['NAME']}</label>
                                             <input
@@ -205,11 +188,14 @@ class PersonalAndContactInfo extends Component {
                                                 required
                                             />
                                             {this.state.submitted && !this.state.email && <div className="mandatory">{window.strings['FARMERS']['EMAIL'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* !validation.checkValidation("mobile", this.state.mobileNumber) */}
+                                            {this.state.submitted && this.state.email && !validation.checkValidation("email", this.state.email) && <div className="mandatory">Email is Invalid</div>}
+
                                         </div>
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['PHON_NO']}</label>
                                             <input
-                                                type="text"
+                                                type="number"
                                                 placeholder={window.strings['FARMERS']['PHON_NO']}
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.mobileNumber
@@ -220,38 +206,10 @@ class PersonalAndContactInfo extends Component {
                                                 required
                                             />
                                             {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && this.state.mobileNumber && !this.state.mobileNumberValidate && <div className="mandatory">Mobile Number Invalid</div>} */}
+                                            {this.state.mobileNumber && !validation.checkValidation("mobile", this.state.mobileNumber) && <div className="mandatory">Mobile Number Invalid</div>}
                                         </div>
 
-                                        {/* <div className="form-group col-md-6">
-                                            <label>{window.strings['FARMERS']['ADDR_1']}</label>
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['ADDR_1']}
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.address1
-                                                })}
-                                                name="address1"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.address1}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.address1 && <div className="mandatory">{window.strings['FARMERS']['ADDR_1'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-                                        <div className="form-group col-md-6">
-                                            <label>{window.strings['FARMERS']['ADDR_2']}</label>
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['ADDR_2']}
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.address2
-                                                })}
-                                                name="address2"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.address2}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.address2 && <div className="mandatory">{window.strings['FARMERS']['ADDR_2'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>*/}
                                         <div className="form-group col-md-6">
 
                                             <label>{window.strings['FARMERS']['IMAGE']}</label>
@@ -275,7 +233,6 @@ class PersonalAndContactInfo extends Component {
                                     </div>
                                 </div>
                                 <div className="contact-info col-md-6">
-                                    {/* <h4 class="color-title sub-contact">Contact Information</h4> */}
                                     <div className="row contact">
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['ADDR_1']}</label>
@@ -307,37 +264,6 @@ class PersonalAndContactInfo extends Component {
                                             />
                                             {this.state.submitted && !this.state.address2 && <div className="mandatory">{window.strings['FARMERS']['ADDR_2'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
-                                        {/* <div className="form-group col-md-6">
-                                            <label>{window.strings['FARMERS']['EMAIL']}</label>
-                                            <input
-                                                type="email"
-                                                placeholder={window.strings['FARMERS']['EMAIL']}
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.email
-                                                })}
-                                                name="email"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.email}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.email && <div className="mandatory">{window.strings['FARMERS']['EMAIL'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-                                        <div className="form-group col-md-6">
-                                            <label>{window.strings['FARMERS']['PHON_NO']}</label>
-                                            <input
-                                                type="number"
-                                                placeholder={window.strings['FARMERS']['PHON_NO']}
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.mobileNumber
-                                                })}
-                                                name="mobileNumber"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.mobileNumber}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
-                                        </div> */}
 
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['AREA']}</label>
@@ -406,15 +332,9 @@ class PersonalAndContactInfo extends Component {
                                 </div>
                                 <div className="col-md-12 bottom-section">
                                     <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
-
                                     <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
-
                                 </div>
-
                             </form>
-
-
-
                         </div>
                     </div>
                 </div>
