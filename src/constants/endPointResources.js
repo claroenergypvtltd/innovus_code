@@ -1,5 +1,6 @@
 export const endPoint = {
     "user": "/user",
+    "getusers": '/users',
     "slash": "/",
     "id": "id",
     "question": "?",
