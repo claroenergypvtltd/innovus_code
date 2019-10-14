@@ -96,15 +96,15 @@ class FarmList extends React.Component {
                   </div>
                 </span>
                 <div className="farmer-details pl-4">
+                  <div className="farmer-area">
+                    <h5 className="title mt-4">Total farm area</h5>
+                    <p className="centext user-title sub-farm">{item.areaSize + 'Sq.ft'}</p>
+                  </div>
                   <div className="farmer-address">
                     <h5 className="title">Address</h5>
                     <p className="centext user-title sub-farm">
                       {item.address1 + '' + item.address2}
                     </p>
-                  </div>
-                  <div className="farmer-area">
-                    <h5 className="title mt-4">Total farm area</h5>
-                    <p className="centext user-title sub-farm">{item.areaSize + 'Sq.ft'}</p>
                   </div>
                 </div>
               </div>
@@ -112,11 +112,6 @@ class FarmList extends React.Component {
           </div>
         );
       });
-
-
-
-
-
 
     const kycList = this.state.kycDatas && this.state.kycDatas.map((item, index) => {
       return (
@@ -157,21 +152,11 @@ class FarmList extends React.Component {
       );
     })
 
-
-
-
-
-
     return (
-
-      // <div className="white-bg row">
-
       <div className="farm-tab" >
         <div className="white-bg">
           {this.state.farmId ? <FarmDetails /> : (this.props.userId ? kycList : Farms)}
-          {/* {!this.state.farmId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>} */}
         </div>
-
         <div className="plus-btn">
           {!this.state.farmId && this.props.farmerId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
         </div>

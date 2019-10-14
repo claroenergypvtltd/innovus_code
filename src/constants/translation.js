@@ -262,7 +262,8 @@ export const Translation = {
             "TOTAL_VALUE": "Total Value",
             "DESCRIPTION": "Description",
             "SOWING_DATE": "Sowing Date",
-            "SOW_DATE": "Sow Date"
+            "SOW_DATE": "Sow Date",
+            "AREA_SIZE": "Area Size"
 
         },
 
