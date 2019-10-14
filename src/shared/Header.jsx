@@ -27,7 +27,7 @@ export class Header extends Component {
               <li className="notify-sec">
                 <a>
                   <img src={notifi} />
-                  <span class="notify-badge"></span>
+                  <span className="notify-badge"></span>
                 </a>
               </li>
               <li className="profile-sec">
