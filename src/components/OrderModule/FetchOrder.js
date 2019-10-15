@@ -115,6 +115,8 @@ class FetchOrder extends Component {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = <Link to={path.order.list + "/" + item.id}>{window.strings.ORDER.VIEWDETAILS}</Link>
 
+            // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
+
             let status = this.getStatusName(item.status)
 
             return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.items && item.items[0] && item.items[0].cartproductdetails && item.items[0].cartproductdetails.price, status, link], "itemId": item.id }

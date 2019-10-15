@@ -88,7 +88,7 @@ export const Translation = {
         "CROP": {
             "WEIGHT": "Total Weight",
             "PRICE": "Price",
-            "BOX_QUANTITY": "boxQuantity",
+            "BOX_QUANTITY": "Box Quantity",
             "CREATETITLE": "Create Crop",
             "EDITTITLE": "Edit Crop",
         },
@@ -105,11 +105,11 @@ export const Translation = {
 
         "PRICE": {
             "CROP_NAME": "Crop Name",
-            "CREATETITLE": "Add Price",
-            "EDITTITLE": "Edit Price",
-            "LISTTITLE": "Price Master",
-            "LIST_PRICE": "List Price",
-            "ADD_PRICE": "Add Price"
+            "CREATETITLE": "Add Inventory",
+            "EDITTITLE": "Edit Inventory",
+            "LISTTITLE": "Inventory Master",
+            "LIST_PRICE": "List Inventory",
+            "ADD_PRICE": "Add Inventory"
         },
 
         "SUBMIT": "Save",

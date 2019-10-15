@@ -36,8 +36,6 @@ class IrrigationSetting extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-
-
         if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.specificData && newProps.IrrigationSettingData.specificData[0]) {
             let respData = newProps.IrrigationSettingData.specificData[0];
             this.setState({ amount: respData.amount, areaSize: respData.areasize, stateId: respData.stateId, cityId: respData.cityId }, () => {

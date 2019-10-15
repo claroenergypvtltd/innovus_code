@@ -69,8 +69,9 @@ class CreatePrice extends Component {
                     this.props.getPriceList(subCatId).then(response => {
                         this.setState({ categoryId: resp.datas[0].id });
                         if (response && response.datas && response.datas[0] && response.datas[0].categoryAmount) {
-                            this.setState({ weight: response.datas[0].categoryAmount.totalQuantitySize, price: response.datas[0].categoryAmount.amount, 
-                                            weightId: response.datas[0].categoryAmount.rupeesize , boxQuantity : response.datas[0].categoryAmount.boxQuantity
+                            this.setState({
+                                weight: response.datas[0].categoryAmount.totalQuantitySize, price: response.datas[0].categoryAmount.amount,
+                                weightId: response.datas[0].categoryAmount.rupeesize, boxQuantity: response.datas[0].categoryAmount.boxQuantity
                             })
                         }
                     })
@@ -161,7 +162,7 @@ class CreatePrice extends Component {
                 "boxQuantity": this.state.boxQuantity,
                 "totalQuantity": this.state.weight,
                 "totalQuantitySize": this.state.weightId,
-                "boxQuantitySize":this.state.weightId
+                "boxQuantitySize": this.state.weightId
             }
 
             this.props.submitPrice(obj, isUpdate);
@@ -271,15 +272,6 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         {/* </div> */}
-
-
-
-
-
-
-
-
-
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-6">
