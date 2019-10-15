@@ -29,7 +29,7 @@ export const labelResources = {
     "paymentLabel": "Payment Management",
     "reportLabel": "Report Management",
     "productLabel": "Products",
-    "priceLabel": "Price",
+    "priceLabel": "Inventory",
     "categoryLabel": "Category Management",
     "CropLabel": "Crop",
     "couponLabel": "Coupon",
