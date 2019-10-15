@@ -47,6 +47,7 @@ export const Translation = {
             "RANGEERROR": "End date should be greater than start date",
             "RANGEERROR1": "Start date sould be less than end date",
             "STARTDATE": "Please select start date",
+            "EXPIRYDATE": "Please select Expiry date"
         },
         "DROPDOWNDEFAULT": "Select an option",
         "NODATA": "No Data Found..!",
@@ -83,6 +84,7 @@ export const Translation = {
             "SUB_CATEGORY": "Sub Catgeory",
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
+        "DESCRIPTION": "Description",
         "CROP": {
             "WEIGHT": "Total Weight",
             "PRICE": "Price",
@@ -147,7 +149,20 @@ export const Translation = {
             "EMAIL": "Email"
         },
 
+        "COUPON": {
+            "COUPON_LIST": "Coupon list",
+            "ADD_COUPON": "Add Coupon",
+            "EDIT_COUPON": "Edit Coupon",
+            "ADD_NEW_COUPON": "Add New Coupon",
+            "COUPON_DETAILS": "Coupon Details",
+            "COUPON_TITLE": "Coupon Title",
+            "COUPON_TYPE": "Coupon Type",
+            "COUPON_AMOUNT": "Coupon Amount",
+            "COUPON_START_DATE": "Start Date",
+            "COUPON_EXPIRY_DATE": "Expiry Date"
+        },
 
+        "IMAGE": "Image",
 
         "ORDER": {
             "DELETE_ORDER": "Order?",

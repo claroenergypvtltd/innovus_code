@@ -11,6 +11,7 @@ import { reducer as toastrReducer } from 'react-redux-toastr';
 import OrderReducer from './OrderReducer';
 import FaqReducer from './FaqReducer'
 import IrrigationSettingReducer from './IrrigationSettingReducer';
+import couponReducer from './couponReducer'
 
 export default combineReducers({
     errors: errorReducer,
@@ -24,6 +25,7 @@ export default combineReducers({
     order: OrderReducer,
     retailer: RetailerReducer,
     faq: FaqReducer,
-    irrigationSetting: IrrigationSettingReducer
+    irrigationSetting: IrrigationSettingReducer,
+    coupon: couponReducer
 });
 

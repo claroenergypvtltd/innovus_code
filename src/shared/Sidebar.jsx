@@ -98,7 +98,7 @@ export const Sidebar = [
                 {Label.couponLabel}
             </span>
         ),
-        path: "/inprogress",
+        path: path.coupons.list,
     },
     {
         name: (

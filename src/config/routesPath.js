@@ -239,6 +239,11 @@ export const routesPath = [
                 component: IrrigationSetting,
                 exact: true,
             },
+            {
+                path: process.env.PUBLIC_URL + '/coupon/update/:Data?',
+                component: CreateCoupon,
+                exact: true,
+            },
 
             {
                 path: process.env.PUBLIC_URL + '/irrigationSetting/edit/:id?',
