@@ -1,6 +1,9 @@
 export const endPoint = {
     "user": "/user",
-    "getusers": '/users',
+    "getusers": '/users?Id=1',
+    "getyearorders": '',
+    "getmonthorders": '',
+    "getweekorders": '',
     "slash": "/",
     "id": "id",
     "question": "?",

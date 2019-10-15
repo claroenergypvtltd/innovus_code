@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ReactBarChart, ReactPieChart } from '../shared/Reactgraphcharts';
-import { getUsersDetails } from '../actions/SubmitRetailerAction';
+import { getUsersDetails, getOrderReports } from '../actions/SubmitRetailerAction';
+import DatesCalculation from '../shared/DatesCalculation'
+
 class Home extends Component {
     constructor(props, context) {
         super(props);
@@ -16,6 +18,11 @@ class Home extends Component {
 
     listPath = () => {
         this.props.history.push('categoryList');
+    }
+    getDateType = (e) => {
+        this.props.getOrderReports(e.target.value)
+        //let X_axis_format = DatesCalculation.dateType(e.target.value);
+        // console.log('X_axis_format', X_axis_format);
     }
 
     render() {
@@ -60,7 +67,12 @@ class Home extends Component {
                     <div className="LineChart main-wrapper chart-box">
                         <div className="main-graph">
                             <span className="graph-title">Delivery Orders</span>
-                            <span className="graph-label">This Week</span>
+                            {/* <span className="graph-label">This Week</span> */}
+                            <select className="drop-select" onChange={(e) => this.getDateType(e)}>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
                         </div>
                         <div className="sub-graph pb-4">
                             <span className="order-graph">Orders</span>

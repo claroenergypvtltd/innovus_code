@@ -23,10 +23,6 @@ class RetailerProfile extends React.Component {
                                 <h5 className="centext title">{getname[0]} {getname[1]}</h5>
                                 <span className="centext color-title">{"Retailer"}</span>
                             </div>
-                            <div className="sub-farmer row">
-                                <span className="icon split-farm">1</span>
-                                <span className="icon1">30</span>
-                            </div>
                         </div>
                         <div className="count-box">
 
@@ -37,17 +33,17 @@ class RetailerProfile extends React.Component {
 
                         <Col md={4}>
                             <h4 className="user-title">{"Email"}</h4>
-                            <p className="user-subtitle">{profile.emailId}</p>
+                            <p className="user-subtitle">{profile.emailId ? profile.emailId : '-'}</p>
                         </Col>
                         <Col md={3}>
 
                             <h4 className="user-title">{"Phone"}</h4>
-                            <p className="user-subtitle">{profile.mobileNumber}</p>
+                            <p className="user-subtitle">{profile.mobileNumber ? profile.mobileNumber : '-'}</p>
 
                         </Col>
                         <Col md={5}>
                             <h4 className="user-title">{"Address"}</h4>
-                            <p className="user-subtitle">{profile.address && profile.address.address1}</p>
+                            <p className="user-subtitle">{profile.address && profile.address.address1 ? profile.address.address1 : '-'}</p>
                         </Col>
                     </Col>
                 </Row>

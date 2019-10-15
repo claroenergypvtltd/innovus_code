@@ -23,18 +23,6 @@ export const Sidebar = [
         // "path": path.user.add
         path: path.farmer.list,
     },
-
-    {
-        name: (
-            <span className="menu-list user_manag">
-                <i />
-                {Label.settingLabel}
-            </span>
-        ),
-        // "path": path.user.add
-        path: path.setting.list,
-    },
-
     // FetchIrrigationSetting
 
     {
@@ -45,6 +33,25 @@ export const Sidebar = [
             </span>
         ),
         path: path.category.list,
+    },
+    {
+        name: (
+            <span className="menu-list pay_manag">
+                <i />
+                {Label.paymentLabel}
+            </span>
+        ),
+        path: "/inprogress",
+    },
+
+    {
+        name: (
+            <span className="menu-list report_manag">
+                <i />
+                {Label.reportLabel}
+            </span>
+        ),
+        path: "/inprogress",
     },
     // {
     //     name: (
@@ -102,23 +109,15 @@ export const Sidebar = [
     },
     {
         name: (
-            <span className="menu-list pay_manag">
+            <span className="menu-list user_manag">
                 <i />
-                {Label.paymentLabel}
+                {Label.settingLabel}
             </span>
         ),
-        path: "/inprogress",
+        // "path": path.user.add
+        path: path.setting.list,
     },
 
-    {
-        name: (
-            <span className="menu-list report_manag">
-                <i />
-                {Label.reportLabel}
-            </span>
-        ),
-        path: "/inprogress",
-    },
 
     {
         name: (
