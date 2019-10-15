@@ -15,7 +15,6 @@ export const getOrderList = (Data) => dispatch => {
         searchData = Data.search ? '&search=' + Data.search : '';
         orderId = Data.orderId ? Data.orderId : ''
     }
-
     httpServices.get('order' + '?orderId=' + orderId + searchData + page + rows).then(resp => {
         if (resp && resp.data) {
             if (Data.orderId) {

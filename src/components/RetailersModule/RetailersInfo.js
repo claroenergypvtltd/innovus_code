@@ -442,7 +442,6 @@ class RetailerInfo extends React.Component {
                                                             />
                                                             {this.state.Shopsubmitted && !this.state.shopaddress2 && <div className="mandatory">{window.strings.FARMERS.ADDR_2 + window.strings['ISREQUIRED']}</div>}
                                                         </div>
-
                                                         <div className="form-group col-md-6">
                                                             <label className="retallable">{window.strings.COUNTRY}</label>
                                                             <select required name="country" value={this.state.country} className="form-control" onChange={this.handleInputChange}>

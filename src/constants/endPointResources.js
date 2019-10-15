@@ -20,6 +20,8 @@ export const endPoint = {
     "price": "/inventorys",
     "inventory": "/inventory",
 
+    "coupon": "/coupon",
+
 
     "certificate": "/certificate",
     "settings": "/settings",

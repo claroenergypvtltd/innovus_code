@@ -138,7 +138,11 @@ class FetchPrice extends Component {
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
                     //  handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                <ReactPagination PageDetails={{
+                    pageCount: this.state.pageCount, onPageChange: this.onChange,
+                    activePage: this.state.currentPage, perPage: this.state.limitValue
+                }} />
+
             </div>
         );
     }

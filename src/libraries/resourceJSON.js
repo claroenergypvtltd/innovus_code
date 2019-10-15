@@ -2,7 +2,7 @@ import { imageBaseUrl } from '../config'
 
 export const resorceJSON = {
   TablePageData: {
-    itemPerPage: 5,
+    itemPerPage: 2,
     currentPage: 1,
     pageCount: 1,
     paginationLength: 10,

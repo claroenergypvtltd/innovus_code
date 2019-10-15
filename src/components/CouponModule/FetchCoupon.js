@@ -1,52 +1,148 @@
-// FetchCoupon
-
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
-import classnames from 'classnames';
-import { Form, Row, Col } from 'react-bootstrap';
-import { path } from '../../constants';
-import '../../assets/css/login.scss';
-import PropTypes from "prop-types";
-import { SearchBar } from '../../shared'
-import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { TableData } from '../../shared/Table'
+import { getCouponList, DeleteCoupon } from '../../actions/couponAction'
+import { ReactPagination, SearchBar } from '../../shared'
+import '../../assets/css/login.scss'
+import { toastr } from '../../services/toastr.services'
+import { path } from '../../constants/path'
+import { COUPON_DELETE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
+import { resorceJSON } from '../../libraries'
 
-export default class FetchCoupon extends Component {
-    static contextTypes = {
-        router: PropTypes.object
-    }
+class FetchCoupon extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            submitted: false,
-            errors: {}
+            TableHead: ["Name", "Actions"],
+            CouponData: [],
+            search: '',
+            itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            pageCount: resorceJSON.TablePageData.pageCount,
+            limitValue: resorceJSON.TablePageData.paginationLength
         }
     }
 
-    render(){
-        let stateValue = this.state;
-        return(
+    componentDidMount() {
+
+        this.getCouponList();
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.couponList && nextProps.couponList.Lists && nextProps.couponList.Lists.datas) {
+            let Data = nextProps.couponList.Lists;
+            this.setState({ CouponData: Data.datas, pageCount: nextProps.couponList.Lists.totalCount / this.state.itemPerPage })
+        }
+
+        if (nextProps.couponList && nextProps.couponList.deletedStatus == "200") {
+            store.dispatch({ type: COUPON_DELETE_SUCCESS, resp: "" })
+            this.getCouponList();
+        }
+
+    }
+
+    handleChange = (e) => {
+
+        this.setState({ search: e.target.value })
+    }
+
+    searchResult = (e) => {
+        e.preventDefault();
+        if (this.state.search) {
+            let serObj = {
+                "search": this.state.search
+            };
+            this.getCouponList(serObj);
+        }
+    }
+
+    resetSearch = () => {
+        if (this.state.search) {
+            this.setState({ search: '' }, () => {
+                this.getCouponList();
+            });
+        }
+    }
+
+    getCouponList() {
+        let obj = {
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "search": this.state.search,
+            "limit": this.state.itemPerPage
+        }
+        this.props.getCouponList(obj)
+    }
+
+    onChange = (data) => {
+
+        if (this.state.currentPage !== (data.selected + 1)) {
+            this.setState({ currentPage: data.selected + 1 }, () => {
+                this.getCouponList();
+            });
+        }
+    }
+
+
+    handleDelete = (data) => {
+        let message = window.strings.DELETEMESSAGE;
+        const toastrConfirmOptions = {
+            onOk: () => { this.itemDelete(data) },
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
+    }
+
+    itemDelete = (id) => {
+        this.props.DeleteCoupon(id);
+    }
+
+    itemEdit = (Data) => {
+
+        this.props.history.push({ pathname: path.coupons.edit + Data, state: { couponId: Data } })
+    }
+
+    formPath = () => {
+        this.props.history.push({ pathname: path.coupons.add })
+    }
+
+
+
+
+    render() {
+
+        let coupondata = this.state.CouponData.length !== 0 && this.state.CouponData.map((item, index) => {
+            return { "itemList": [item.name], "itemId": item.id }
+        })
+
+        return (
             <div>
-            <Row className="clearfix title-section">
-                <Col md={7} className="title-card">
-                    <h4 className="user-title"> Coupon List</h4>
-                </Col>
-                <Col md={5} className="right-title row">
-                    <Col md={8} className="p-0">
-                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    </Col>
-                    {/* <Col md={3} className="user-board add-user">
-                         <button type="submit" className="filter-btn"><i className="fa fa-filter filter-icon"></i>Filter by</button>
-                        </Col> */}
-                    <Col md={4}>
-                        <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
-                            {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ADDRETAIL}
-                        </button>
-                    </Col>
-                </Col>
-            </Row>
+                <div className="category-table">
+                    <div className="category-title row right-title">
+
+                        <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
+                            {window.strings.COUPON.ADD_COUPON}</button>
+                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    </div>
+                    <div className="sub-category">
+                        <TableData TableHead={this.state.TableHead} TableContent={coupondata} handleDelete={this.handleDelete}
+                            handleEdit={this.itemEdit} />
+                        <ReactPagination PageDetails={{
+                            pageCount: this.state.pageCount, onPageChange: this.onChange,
+                            activePage: this.state.currentPage, perPage: this.state.limitValue
+                        }} />
+
+                    </div>
+                </div>
             </div>
         )
     }
 }
+
+const mapStatetoProps = (state) => ({
+
+    couponList: state.coupon,
+    // getCoupondata: state && state.coupon && state.coupon.Lists ? state.coupon.Lists : []
+})
+
+export default connect(mapStatetoProps, { getCouponList, DeleteCoupon })(FetchCoupon);

@@ -42,8 +42,10 @@ class CreateFAQ extends Component {
             this.props.history.push(path.faq.list)
         }
         if (nextProps.faqData && nextProps.faqData.specificData && nextProps.faqData.specificData[0]) {
+            debugger;
             let Data = nextProps.faqData.specificData[0];
             this.setState({ description: Data.description, title: Data.title })
+            debugger;
         }
 
     }

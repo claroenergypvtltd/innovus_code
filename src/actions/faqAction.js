@@ -22,8 +22,6 @@ export const SubmitFaq = (instruction, Id) => dispatch => {
 
     } else {
         httpServices.post(endPoint.instruction, instruction).then(resp => {
-
-
             if (resp) {
                 toastr.success(resp.message);
                 dispatch({ type: FAQ_CREATE_SUCCESS, resp: resp.status })
@@ -75,15 +73,25 @@ export const DeleteFaq = (id) => dispatch => {
 }
 
 
-export const getFaqList = () => dispatch => {
+export const getFaqList = (Data) => dispatch => {
 
-    httpServices.get(endPoint.instruction + '?title=Profit').then(resp => {
+    let search = "";
+    let page, rows = "";
+    if (Data) {
+        search = Data.search ? Data.search : '';
+        page = Data.page ? (Data.page - 1) : '';
+        rows = Data.limit ? Data.limit : '';
+    }
 
-        if (resp && resp.data) {
-            dispatch({ type: FAQ_FETCH_SUCCESS, Lists: resp.data })
+    httpServices.get(endPoint.instruction + '?title=Profit' + '&search=' + search + "&page=" + page + '&rows=' + rows).then(resp => {
+
+        if (resp) {
+            dispatch({ type: FAQ_FETCH_SUCCESS, Lists: resp })
         } else {
             console.error("Error when getting FaqList");
         }
+
+
     }).catch((error) => {
         console.error("error", error);
         dispatch({

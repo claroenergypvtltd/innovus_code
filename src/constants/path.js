@@ -40,9 +40,9 @@ export const path = {
         edit: process.env.PUBLIC_URL + '/reports/update/',
     },
     coupons: {
-        add: process.env.PUBLIC_URL + '/coupons/add',
-        list: process.env.PUBLIC_URL + '/coupons',
-        edit: process.env.PUBLIC_URL + '/coupons/update/',
+        add: process.env.PUBLIC_URL + '/coupon/add',
+        list: process.env.PUBLIC_URL + '/coupon',
+        edit: process.env.PUBLIC_URL + '/coupon/update/',
     },
     payments: {
         list: process.env.PUBLIC_URL + '/payments',

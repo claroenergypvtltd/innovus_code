@@ -6,14 +6,21 @@ import { path } from '../../constants/path'
 import { toastr } from '../../services/toastr.services'
 import { FAQ_DELETE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
+import { SearchBar, ReactPagination } from '../../shared'
+import { resorceJSON } from '../../libraries'
 
 class FetchFAQ extends Component {
     constructor(props) {
         super(props);
         this.state = {
             TableHead: ["Title", "Description", "Actions"],
-            FaqListDatas: props.getLists,
-            FaqCount: props.getCount
+            FaqListDatas: [],
+            FaqCount: props.getCount,
+            search: '',
+            currentPage: 1,
+            itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            pageCount: resorceJSON.TablePageData.pageCount,
+            limitValue: resorceJSON.TablePageData.paginationLength
 
         }
     }
@@ -25,12 +32,13 @@ class FetchFAQ extends Component {
 
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.faqData && nextProps.faqData.Lists.data && nextProps.faqData.Lists.data.datas) {
 
-        if (nextProps.faqData && nextProps.faqData.Lists) {
-
-            let Data = nextProps.faqData.Lists;
-            this.setState({ FaqListDatas: Data })
+            let Data = nextProps.faqData.Lists.data.datas;
+            this.setState({ FaqListDatas: Data, pageCount: nextProps.faqData.Lists.data.totalCount / this.state.itemPerPage })
         }
+
+
 
         if (nextProps.faqData && nextProps.faqData.deletedStatus == "200") {
             store.dispatch({ type: FAQ_DELETE_SUCCESS, resp: "" })
@@ -61,14 +69,53 @@ class FetchFAQ extends Component {
     }
 
 
-    getFaqList = () => {
-        let user = {};
-        user.search = this.props.searchText;
-        this.props.getFaqList(user);
-    }
 
     formPath = () => {
         this.props.history.push(path.faq.add)
+    }
+
+    //Search
+
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
+
+    searchResult = (e) => {
+        e.preventDefault();
+        if (this.state.search) {
+            let serObj = {
+                "search": this.state.search
+            };
+            this.getFaqList(serObj);
+        }
+    }
+
+
+    getFaqList() {
+        let obj = {
+            "search": this.state.search,
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "limit": this.state.itemPerPage
+        };
+        // user.search = this.props.searchText;
+        this.props.getFaqList(obj);
+    }
+
+    resetSearch = () => {
+        if (this.state.search) {
+            this.setState({ search: '' }, () => {
+                this.getFaqList();
+            });
+        }
+    }
+
+    onChange = (data) => {
+
+        if (this.state.currentPage !== (data.selected + 1)) {
+            this.setState({ currentPage: data.selected + 1 }, () => {
+                this.getFaqList();
+            });
+        }
     }
 
 
@@ -78,15 +125,21 @@ class FetchFAQ extends Component {
             return { "itemList": [item.title, item.description], "itemId": item.id }
         })
 
+
         return (
             <div className="category-table">
-                <div className="category-title right-title">
+                <div className="category-title row right-title">
                     <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
                         {window.strings.FAQ.ADD_FAQ}</button>
+                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 </div>
                 <div className="sub-category">
                     <TableData TableHead={this.state.TableHead} TableContent={FaqList} handleDelete={this.handleDelete}
                         handleEdit={this.itemEdit} />
+                    <ReactPagination PageDetails={{
+                        pageCount: this.state.pageCount, onPageChange: this.onChange,
+                        activePage: this.state.currentPage, perPage: this.state.limitValue
+                    }} />
                 </div>
             </div>
 
@@ -98,7 +151,7 @@ class FetchFAQ extends Component {
 
 const mapStateToProps = (state) => ({
     faqData: state.faq,
-    getLists: state && state.faq && state.faq.Lists ? state.faq.Lists : [],
+    // getLists: state && state.faq && state.faq.Lists ? state.faq.Lists : [],
 })
 
 
