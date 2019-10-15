@@ -64,7 +64,7 @@ class FetchRetailer extends React.Component {
         }
     }
     viewCrop(RetstatusId) {
-        let ViewPage = <select className="drop-select">
+        let ViewPage = <select className="drop-select" onChange={(e) => this.statusChange(e, RetstatusId)} selected={RetstatusId}>
             {/* onChange={() => this.statusChange(RetstatusId)} selected={RetstatusId}*/}
             <option value="0" className="drop-option" >{window.strings.RETAILERS.PENDING}</option>
             <option value="1" className="drop-option">{window.strings.RETAILERS.ACCEPTED}</option>
@@ -72,19 +72,21 @@ class FetchRetailer extends React.Component {
         </select>
         return ViewPage;
     }
-    // statusChange(RetstatusId) {
-    //     console.log("RetstatusId", RetstatusId);
-    //     e.preventDefault();
-    //     let message = window.strings.UPDATEMESSAGE;
-    //     const toastrConfirmOptions = {
-    //         onOk: () => { this.statusUpdate(RetstatusId) },
-    //         onCancel: () => console.log('CANCEL: clicked')
-    //     };
-    //     toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
-    // }
-    // statusUpdate = (id) => {
-    //     this.props.updateStatusRetailer(id)
-    // };
+    statusChange(e, RetstatusId) {
+        console.log("RetstatusId", RetstatusId);
+        console.log("status", e.target.value);
+        // e.preventDefault();
+        let message = window.strings.UPDATEMESSAGE;
+        const toastrConfirmOptions = {
+            onOk: () => { //this.statusUpdate(e.target.value, RetstatusId) 
+            },
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
+    }
+    statusUpdate = (id) => {
+        //this.props.updateStatusRetailer(id)
+    };
     handleDelete = (data, e) => {
         e.preventDefault();
         let message = window.strings.DELETEMESSAGE;

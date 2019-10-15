@@ -64,6 +64,12 @@ class DataTableDynamic extends React.Component {
     let tableHeader = this.state.tableHead;
     let tableDatas = this.props.tableDatas;
     console.log('tableDatas', tableDatas);
+    const myNewTheme = {
+      rows: {
+        fontSize: '15px',
+        color: '#9E9E9E!important'
+      }
+    }
     return (
       <div className="tables">
         <DataTable className="crop-table"
@@ -75,6 +81,7 @@ class DataTableDynamic extends React.Component {
           expandableRows={this.props.expandable}
           expandableRowsComponent={this.props.expandableComponent}
           paginationRowsPerPageOptions={[10, 25, 50]}
+          customTheme={myNewTheme}
         />
       </div>
     );

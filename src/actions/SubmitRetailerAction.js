@@ -82,4 +82,31 @@ export const getUsersDetails = () => dispatch => {
     }).catch((error) => {
         dispatch({ type: RET_USER_FETCH_SUCCESS, error: error })
     })
-} 
+}
+export const getOrderReports = (gettype) => dispatch => {
+    let servietype;
+    switch (gettype) {
+        case 'year':
+            servietype = endPoint.getyearorders;
+            break;
+        case 'month':
+            servietype = endPoint.getmonthorders;
+            break;
+        case 'week':
+            servietype = endPoint.getweekorders;
+            break;
+    }
+    // if (gettype == "year") {
+
+    // } else if (gettype == "month") {
+    //     servietype = endPoint.getmonthorders;
+    // } else {
+    //     servietype = endPoint.getweekorders;
+    // }
+    httpServices.get(servietype).then(resp => {
+        dispatch({ type: RET_USER_FETCH_SUCCESS, Lists: resp.data })
+    }).catch((error) => {
+        dispatch({ type: RET_USER_FETCH_SUCCESS, error: error })
+    })
+}
+

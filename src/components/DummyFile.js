@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-
+import { UnderConstruction } from '../shared/UnderConstruction'
 export default class DummyFile extends Component {
-
-
     render() {
         return (
             <div>
-                <h1>Working</h1>
+                <UnderConstruction />
             </div>
         );
     }
