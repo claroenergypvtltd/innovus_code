@@ -6,7 +6,6 @@ import { endPoint } from "../constants";
 
 
 export const SubmitPersonalAndContactInfo = (formData, isEdit) => dispatch => {
-
     let httpMethod = "";
 
     if (isEdit) {

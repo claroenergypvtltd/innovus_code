@@ -7,7 +7,7 @@ class RetailerDetailProfile extends React.Component {
         super(props);
         this.state = {
             farmerId: this.props.match.params.farmerId,
-            farmerProfile: this.props.location.data.farmerData,
+            farmerProfile: this.props.location.data && this.props.location.data.farmerData,
         }
     }
     render() {

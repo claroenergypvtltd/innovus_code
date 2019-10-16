@@ -65,17 +65,26 @@ export const getCountryList = (ProfID) => dispatch => {
         dispatch({ type: RET_COUNTRY_FETCH_SUCCESS, error: error })
     })
 }
-export const getStateCity = (getStateCityID) => {
-    console.log("getStateCityID", getStateCityID);
-    // let getCSCDats = getStateCityID.countryId && getStateCityID.stateId ? 'country?countryId=' + getStateCityID.countryId + '&stateId=' + getStateCityID.stateId : 'country?countryId=' + getStateCityID.countryId
-    let getCSCDats = getStateCityID.countryId && getStateCityID.stateId ? 'country?countryId=101&stateId=' + getStateCityID.stateId : 'country?countryId=101'
-    return httpServices.get(getCSCDats).then(resp => {
+export const getStateCity = (Data) => {
+
+    let countryId = ""; let stateId = "";
+    if (Data.countryId && Data.stateId) {
+        stateId = 'country?countryId=101&stateId=' + Data.stateId;
+    }
+    else {
+
+        countryId = 'country?countryId=101'
+    }
+
+    return httpServices.get(countryId + stateId).then(resp => {
         if (resp) {
             return resp
         }
     }).catch((error) => {
     })
 }
+
+
 export const getUsersDetails = () => dispatch => {
     httpServices.get(endPoint.getusers).then(resp => {
         dispatch({ type: RET_USER_FETCH_SUCCESS, Lists: resp.data })

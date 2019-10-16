@@ -10,7 +10,6 @@ export const getCouponList = (Data) => dispatch => {
     let page = '';
     let search = '';
     let rows = '';
-    debugger;
     if (Data) {
         page = Data.page ? (Data.page - 1) : '';
         search = Data.search ? Data.search : '';
@@ -24,7 +23,6 @@ export const getCouponList = (Data) => dispatch => {
         else {
             console.error("Error when getting coupon List");
         }
-        debugger;
     }).catch((error) => {
         console.error("error", error);
         dispatch({
