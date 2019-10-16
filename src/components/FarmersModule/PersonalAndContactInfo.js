@@ -11,6 +11,7 @@ import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services';
 import { utils } from '../../services/utils.services';
 import { validation } from '../../libraries/formValidation'
+import { getStateCity } from '../../actions/SubmitRetailerAction';
 
 class PersonalAndContactInfo extends Component {
 
@@ -40,6 +41,8 @@ class PersonalAndContactInfo extends Component {
     }
 
     componentDidMount() {
+
+        this.getStateList();
         if (this.props.location && this.props.location.state && this.props.location.state.farmerId) {
             this.getUserList();
         }
@@ -64,9 +67,32 @@ class PersonalAndContactInfo extends Component {
                     userId: resData.id, name: resData.name, email: resData.emailId, address1: resAddr.address1,
                     address2: resAddr.address2, image: resData.image, mobileNumber: resData.mobileNumber,
                     city: resAddr.city, state: resAddr.state, pinCode: resAddr.zipcode
-                })
+                }, () => { this.getCityList(); })
             }
         }
+
+    }
+
+    getCityList() {
+        let obj = {
+            "countryId": 101,
+            "stateId": this.state.state
+        }
+        getStateCity(obj).then(resp => {
+            if (resp) {
+                this.setState({ cityData: resp.data })
+
+            }
+        })
+    }
+
+    getStateList() {
+        let obj = {
+            "countryId": 101
+        }
+        getStateCity({ obj }).then(resp => {
+            this.setState({ stateData: resp && resp.data })
+        })
     }
 
     getUserList = () => {
@@ -79,9 +105,25 @@ class PersonalAndContactInfo extends Component {
     };
 
     handleInputChange = (e) => {
+        let obj = {};
         this.setState({
             [e.target.name]: e.target.value
         })
+        if (e.target.name == "state") {
+            obj = {
+                // "countryId": this.state.country,
+                "countryId": 101,
+                "stateId": e.target.value
+            }
+            getStateCity(obj).then(resp => {
+                if (obj.countryId && obj.stateId) {
+                    this.setState({ cityData: resp && resp.data })
+                } else {
+                    this.setState({ stateData: resp && resp.data })
+                }
+            })
+        }
+
     }
 
     onhandleChangeImage = (e) => {
@@ -116,6 +158,7 @@ class PersonalAndContactInfo extends Component {
             formData.append("state", this.state.state);
             formData.append("pincode", this.state.pinCode);
             formData.append("role", "farmer");
+            formData.append("area", this.state.area)
             formData.append("name", this.state.name);
             formData.append("address1", this.state.address1);
             formData.append("address2", this.state.address2);
@@ -147,6 +190,15 @@ class PersonalAndContactInfo extends Component {
         } else {
             imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
         }
+
+        const stateDropDown = this.state.stateData && this.state.stateData.map((item, index) => {
+            return <option key={index}
+                value={item.id}> {item.name}</option>
+        });
+        const cityDropDown = this.state.cityData && this.state.cityData.map((item, index) => {
+            return <option key={index}
+                value={item.id}> {item.name}</option>
+        });
 
         return (
             <div className="clearfix">
@@ -281,34 +333,21 @@ class PersonalAndContactInfo extends Component {
                                         </div>
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['CITY']}</label>
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['CITY']}
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.city
-                                                })}
-                                                name="city"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.city}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.city && <div className="mandatory">{window.strings['FARMERS']['CITY'] + window.strings['ISREQUIRED']}</div>}
+                                            <select required name="city" value={this.state.city} className="form-control" onChange={this.handleInputChange}>
+                                                <option value="0">Select City</option>
+                                                {cityDropDown}
+                                            </select>
+                                            {/* {this.state.submitted && !this.state.city && <div className="mandatory">{window.strings['FARMERS']['CITY'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['STATE']}</label>
-                                            <input
-                                                type="text"
-                                                placeholder={window.strings['FARMERS']['STATE']}
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.state
-                                                })}
-                                                name="state"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.state}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>}
+
+                                            <select required name="state" value={this.state.state} className="form-control" onChange={this.handleInputChange}>
+                                                <option value="0">Select State</option>
+                                                {stateDropDown}
+                                            </select>
+                                            {/* {this.state.submitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['POST_CODE']}</label>
@@ -331,7 +370,7 @@ class PersonalAndContactInfo extends Component {
                                 </div>
                                 <div className="col-md-12 bottom-section">
                                     <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
-                                    <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+                                    <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
                                 </div>
                             </form>
                         </div>
@@ -346,7 +385,9 @@ class PersonalAndContactInfo extends Component {
 function mapStateToProps(state) {
     return {
         signUpData: state.farmer,
-        userData: state.user
+        userData: state.user,
+        editLists: state.retailer.Lists
+
     };
 }
 

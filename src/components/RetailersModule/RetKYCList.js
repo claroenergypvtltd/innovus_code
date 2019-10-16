@@ -9,75 +9,57 @@ class RetKYCList extends React.Component {
         super(props);
         this.state = {
             tabIndex: 0,
+            KycData: []
         };
     }
     componentDidMount() {
         this.props.getKYClist(this.props.profileID);
     }
     componentWillReceiveProps(nextprops) {
+        if (nextprops.Lists && nextprops.Lists.KYClist) {
+            let Data = nextprops.Lists.KYClist;
+            this.setState({ KycData: Data })
+        }
     }
     render() {
-        // console.log('profileData', this.props);
-        // const profile = this.props.profileData;
-        // const getname = profile.name.split('_');
+
+        const kyc = this.state.KycData;
+
         return (
             <div className="col-md-12 p-4">
                 <div className="row">
-                    <div className="col-md-4">
-                        <div className="farm-card main-wrapper">
-                            <div className="retailer-details">
-                                <img src="" className="retailer-image" />
-                                <div className="retailer-proof">
-                                    {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                                    <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                                </div>
-                                <div className="pl-2">
-                                    <p className="user-title m-0">upload</p>
-                                    <p class="user-title m-0">upload</p>
-                                    <p class="user-title m-0">upload</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="farm-card main-wrapper">
-                            <div className="retailer-details">
-                                <img src="" className="retailer-image" />
-                                <div className="retailer-proof">
-                                    {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                                    <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                                </div>
-                                <div className="pl-2">
-                                    <p className="user-title m-0">upload</p>
-                                    <p class="user-title m-0">upload</p>
-                                    <p class="user-title m-0">upload</p>
+
+                    {this.state.KycData && this.state.KycData.map((item, index) =>
+                        <div className="col-md-4">
+                            <div className="farm-card main-wrapper">
+                                <div className="retailer-details">
+                                    <img src={imageBaseUrl + item.image} className="retailer-image" />
+                                    <div className="retailer-proof">
+                                        <h5 className="retailer-title p-2 m-0">{item.proofNameId == 1 ? "Upload Identity Proof" : "Upload Photo Proof"}</h5>
+                                    </div>
+                                    {item.proofNameId == 1 && <div className="pl-2">
+                                        <p className="user-title m-0">{item.proofName}</p>
+                                        <p class="user-title m-0">{item.proofNumber}</p>
+                                        <p class="user-title m-0">{item.description}</p>
+                                    </div>}
+                                    {item.proofNameId == 2 && <div className="pl-2">
+                                        <p className="user-title m-0">{item.description}</p>
+                                    </div>}
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="farm-card main-wrapper">
-                            <div className="retailer-details">
-                                <img src="" className="retailer-image" />
-                                <div className="retailer-proof">
-                                    {/* <i class="fa fa-pencil retailer-edit mt-2"></i> */}
-                                    <h5 className="retailer-title p-2 m-0">Photo Proof</h5>
-                                </div>
-                                <div className="pl-2">
-                                    <p className="user-title m-0">upload</p>
-                                    <p class="user-title m-0">upload</p>
-                                    <p class="user-title m-0">upload</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    )}
+                    {kyc && kyc.length == 0 && <div>{window.strings.NODATA}</div>}
                 </div>
             </div>
+
+
         )
+
     }
 }
 
 const mapStateToProps = state => ({
-    Lists: state.retailer.KYClist
+    Lists: state.retailer
 });
 export default connect(mapStateToProps, { getKYClist })(RetKYCList);

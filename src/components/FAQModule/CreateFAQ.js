@@ -41,11 +41,9 @@ class CreateFAQ extends Component {
             store.dispatch({ type: FAQ_UPDATE_SUCCESS, resp: "" })
             this.props.history.push(path.faq.list)
         }
-        if (nextProps.faqData && nextProps.faqData.specificData && nextProps.faqData.specificData[0]) {
-            debugger;
-            let Data = nextProps.faqData.specificData[0];
+        if (nextProps.faqData && nextProps.faqData.specificData && nextProps.faqData.specificData.datas && nextProps.faqData.specificData.datas[0]) {
+            let Data = nextProps.faqData.specificData.datas[0];
             this.setState({ description: Data.description, title: Data.title })
-            debugger;
         }
 
     }
