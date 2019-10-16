@@ -49,7 +49,7 @@ class RetKYCList extends React.Component {
                             </div>
                         </div>
                     )}
-                    {kyc.length == 0 && <div>{window.strings.NODATA}</div>}
+                    {kyc && kyc.length == 0 && <div>{window.strings.NODATA}</div>}
                 </div>
             </div>
 

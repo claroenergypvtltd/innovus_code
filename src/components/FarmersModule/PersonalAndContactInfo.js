@@ -115,8 +115,6 @@ class PersonalAndContactInfo extends Component {
                 "countryId": 101,
                 "stateId": e.target.value
             }
-        }
-        if (Object.keys(obj).length != 0) {
             getStateCity(obj).then(resp => {
                 if (obj.countryId && obj.stateId) {
                     this.setState({ cityData: resp && resp.data })
@@ -125,6 +123,7 @@ class PersonalAndContactInfo extends Component {
                 }
             })
         }
+
     }
 
     onhandleChangeImage = (e) => {
