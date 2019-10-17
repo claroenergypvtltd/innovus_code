@@ -39,3 +39,16 @@ export const getTrackDetails = (orderId) => dispatch => {
         dispatch({ type: GET_ERRORS, payload: error });
     })
 }
+
+
+export const SubmitOrderStatus = (statusData) => {
+    return httpServices.post('orderWareHouse', statusData).then(resp => {
+        if (resp) {
+            toastr.success(resp.message);
+            return resp
+        }
+    }).catch(error => {
+        console.error("error", error);
+    })
+}
+

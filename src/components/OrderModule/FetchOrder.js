@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
-import { resorceJSON } from '../../libraries'
+import { resorceJSON, ModalData } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { getOrderList } from '../../actions/orderAction'
@@ -10,6 +10,7 @@ import { toastr } from '../../services/toastr.services'
 import { Link } from 'react-router-dom'
 import { Form, Row, Col } from 'react-bootstrap';
 import { formatDate } from '../../shared/DateFormat'
+import StatusUpdate from './StatusUpdate'
 
 class FetchOrder extends Component {
 
@@ -22,6 +23,7 @@ class FetchOrder extends Component {
             CategoryCount: props.getCount,
             search: '',
             currentPage: 1,
+            orderId: '',
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength
@@ -111,16 +113,30 @@ class FetchOrder extends Component {
         }
     }
 
+    onOpenModal = (orderId) => {
+        this.setState({ open: true, orderId: orderId });
+    };
+
+    onCloseModal = () => {
+        this.getOrderList();
+        this.setState({ open: false });
+    };
+
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = <Link to={path.order.list + "/" + item.id}>{window.strings.ORDER.VIEWDETAILS}</Link>
 
             // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
 
-            let status = this.getStatusName(item.status)
+            let status = <div>
+                {this.getStatusName(item.status)} <button onClick={() => { this.onOpenModal(item.orderId) }}>Update</button>
+            </div>
+
 
             return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.items && item.items[0] && item.items[0].cartproductdetails && item.items[0].cartproductdetails.price, status, link], "itemId": item.id }
         })
+
+        let statusUpdataData = < StatusUpdate orderId={this.state.orderId} onCloseModal={this.onCloseModal} />
 
         let { OrderLists } = this.state;
 
@@ -163,8 +179,9 @@ class FetchOrder extends Component {
                     </Row>
                 </div>
 
-                <TableData TableHead={this.state.TableHead} TableContent={OrderList}
-                />
+                <TableData TableHead={this.state.TableHead} TableContent={OrderList} />
+                <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={statusUpdataData} ModalTitle="Update Track" />
+
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>
         );

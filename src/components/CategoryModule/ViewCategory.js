@@ -14,7 +14,7 @@ class ViewCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "Image", "Description"],
+            TableHead: ["Crop Name", "Image", "Description","Action"],
             CategoryListDatas: props.getLists,
             CategoryCount: props.getCount,
             currentPage: resorceJSON.TablePageData.currentPage,
