@@ -127,10 +127,10 @@ class CategoryForm extends Component {
             <div className="clearfix">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h3>{this.state.categoryId ? window.strings['CATEGORY']['EDITTITLE'] : window.strings['CATEGORY']['CREATETITLE']}</h3>
+                        <h4 className="user-title">{this.state.categoryId ? window.strings['CATEGORY']['EDITTITLE'] : window.strings['CATEGORY']['CREATETITLE']}</h4>
                         <div className="">
                             <div className=" main-wrapper">
-                                <div className="col-md-5">
+                                <div className="col-md-6">
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0">
                                         <div className="form-group pt-3 col-md-12">
 
@@ -138,7 +138,7 @@ class CategoryForm extends Component {
 
                                             <input
                                                 type="text"
-                                                placeholder="Name"
+                                                placeholder="Category Name"
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.name
                                                 })}
@@ -153,13 +153,13 @@ class CategoryForm extends Component {
                                         </div>
 
 
-                                        <div className="form-group pt-3 col-md-12">
+                                        {/* <div className="form-group pt-3 col-md-12">
 
                                             <label>{window.strings.CATEGORY.IMAGE}</label>
 
                                             <input
                                                 type="file"
-                                                placeholder="image"
+                                                placeholder="Image"
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.image
                                                 })}
@@ -170,7 +170,7 @@ class CategoryForm extends Component {
                                             />
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                             {imagePreview}
-                                        </div>
+                                        </div> */}
 
 
                                         <div className="form-group pt-3 col-md-12">
@@ -178,7 +178,7 @@ class CategoryForm extends Component {
                                             <label>{window.strings.CATEGORY.DESCRIPTION}</label>
 
                                             <textarea
-                                                placeholder="description"
+                                                placeholder="Description"
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.description
                                                 })}
@@ -191,12 +191,35 @@ class CategoryForm extends Component {
                                             {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+                                        <div className="form-group pt-3 col-md-12">
+
+                                            <label>{window.strings.CATEGORY.IMAGE}</label>
+
+                                            <input
+                                                type="file"
+                                                placeholder="Image"
+                                                className={classnames('form-control form-control-lg', {
+                                                    'is-invalid': errors.image
+                                                })}
+                                                name="image"
+                                                onChange={this.onhandleImageChange}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                            {imagePreview}
                                         </div>
 
+                                        {/* <div className="col-md-12 bottom-section">
+                                            <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+                                        </div> */}
+
                                     </form>
+                                </div>
+                                <div className="col-md-12 bottom-section">
+                                    <button type="button" className="btn btn-default mb-2" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                                    <button type="submit" className="btn btn-primary mb-2">{window.strings.SUBMIT}</button>
                                 </div>
                             </div>
                         </div>

@@ -109,24 +109,24 @@ class FetchCrop extends Component {
 
         let CategoryData = this.state.CropLists ? this.state.CropLists : [];
         let CategoryList = this.state.CropLists && this.state.CropLists.map((item, index) => {
-            let catImg = <img src={imageBaseUrl + item.image} height="30px" width="30px" />
+            let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
             return { "itemList": [item.name, catImg, item.description], "itemId": item.id }
         })
 
         return (
             <div>
-            <div className="title-section row">
-                <div className="title-card col-md-7">
-                    {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
-                    <h4 className="user-title">List Crop</h4>
-                    {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
-                </div>
-                <div className="right-title row col-md-5">
-                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button>
+                <div className="title-section row">
+                    <div className="title-card col-md-7">
+                        {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
+                        <h4 className="user-title">List Crop</h4>
+                        {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
+                    </div>
+                    <div className="right-title row col-md-5">
+                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button>
 
+                    </div>
                 </div>
-            </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />

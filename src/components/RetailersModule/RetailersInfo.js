@@ -244,17 +244,17 @@ class RetailerInfo extends React.Component {
         });
         return (
             <div>
-                <h3>{window.strings.RETAILERS.ADD_NEW_RETAIER}</h3>
+                <h4 className="user-title">{window.strings.RETAILERS.ADD_NEW_RETAIER}</h4>
                 <Steps current={current}>
                     {steps.map(item => (
                         <Step key={item.title} title={item.title} />
                     ))}
                 </Steps>
-                <div className="main-wrapper mt-4">
+                <div className="main-wrapper mt-3">
                     {this.state.current === 0 ?
                         <div className="clearfix ">
                             <div className="row clearfix">
-                                <div className="col-md-12 p-3">
+                                <div className="col-md-12">
                                     {/* <h3>{this.state.categoryId ? window.strings['CROP']['EDITTITLE'] : window.strings['CROP']['CREATETITLE']}</h3> */}
                                     <div className="col-md-8">
                                         <div className="clearfix">
@@ -264,7 +264,7 @@ class RetailerInfo extends React.Component {
                                                         <label className="retallable">{window.strings.FARMERS.NAME}</label>
                                                         <input
                                                             type="text"
-                                                            placeholder="NAME"
+                                                            placeholder="Name"
                                                             className={classnames('form-control', {
                                                                 'is-invalid': errors.name
                                                             })}
@@ -281,7 +281,7 @@ class RetailerInfo extends React.Component {
                                                         <label className="retallable">{window.strings.FARMERS.EMAIL}</label>
                                                         <input
                                                             type="text"
-                                                            placeholder="EMAIL"
+                                                            placeholder="Email"
                                                             className={classnames('form-control', {
                                                                 'is-invalid': errors.emailId
                                                             })}
@@ -362,7 +362,7 @@ class RetailerInfo extends React.Component {
                                                             <label className="retallable">{window.strings.RETAILERS.SHOP_NAME}</label>
                                                             <input
                                                                 type="text"
-                                                                placeholder="SHOP NAME"
+                                                                placeholder="Shop Name"
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.name
                                                                 })}
@@ -378,7 +378,7 @@ class RetailerInfo extends React.Component {
                                                             <label className="retallable">{window.strings.RETAILERS.GST}</label>
                                                             <input
                                                                 type="text"
-                                                                placeholder="GST"
+                                                                placeholder="Gst"
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.name
                                                                 })}
@@ -393,8 +393,8 @@ class RetailerInfo extends React.Component {
                                                             <label className="retallable">{window.strings.RETAILERS.RET_SHOP_IMG_UPLOAD}</label>
                                                             <input
                                                                 type="file"
-                                                                placeholder="image"
-                                                                className={classnames('form-control', {
+                                                                placeholder="Image"
+                                                                className={classnames('form-control p-0', {
                                                                     'is-invalid': errors.name
                                                                 })}
                                                                 name="retShopImage"
@@ -414,7 +414,7 @@ class RetailerInfo extends React.Component {
                                                             <label className="retallable">{window.strings.FARMERS.ADDR_1}</label>
                                                             <input
                                                                 type="text"
-                                                                placeholder="ADDRESS 1"
+                                                                placeholder="Address 1"
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.name
                                                                 })}
@@ -430,7 +430,7 @@ class RetailerInfo extends React.Component {
                                                             <label className="retallable">{window.strings.FARMERS.ADDR_2}</label>
                                                             <input
                                                                 type="text"
-                                                                placeholder="ADDRESS 2"
+                                                                placeholder="Address 2"
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.name
                                                                 })}
@@ -487,7 +487,7 @@ class RetailerInfo extends React.Component {
                                                             <label className="retallable">{window.strings.RETAILERS.SELECT_SHOP_LOC}</label>
                                                             <input
                                                                 type="text"
-                                                                placeholder="SHOP LOCATION"
+                                                                placeholder="Shop Location"
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.name
                                                                 })}
@@ -540,14 +540,36 @@ class RetailerInfo extends React.Component {
                                     </div>
 
                                 </div>
+
+
                             </div>
                         </div>}
                     {/* <div className="col-md-12 bottom-section p-4">
                         <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
                         <button type="submit" className="btn btn-primary">Next</button>
                     </div> */}
+                    <div className="col-md-12 bottom-section m-0">
+                        <Button className="btn btn-default mb-2" onClick={() => this.listPath()}>{window.strings.CANCEL}
+                        </Button>
+                        {current < steps.length - 1 && (
+                            <Button type="primary" className="btn btn-primary mb-2" onClick={() => this.next()}>
+                                Next
+                    </Button>
+                        )}
+                        {current > 0 && (
+                            <Button className="btn btn-default mb-2" onClick={() => this.prev()}>
+                                Previous
+                    </Button>
+                        )}
+                        {current === steps.length - 1 && (
+                            <Button className="btn btn-primary mb-2" type="primary" onClick={() => this.retailersubmit()}>
+
+                                Submit
+                    </Button>
+                        )}
+                    </div>
                 </div>
-                <div className="steps-action">
+                {/* <div className="steps-action">
                     <Button className="bottom-section" style={{ marginRight: 10, background: '#E1E7ED' }} onClick={() => this.listPath()}>{window.strings.CANCEL}
                     </Button>
                     {current < steps.length - 1 && (
@@ -566,7 +588,7 @@ class RetailerInfo extends React.Component {
                             Submit
                 </Button>
                     )}
-                </div>
+                </div> */}
             </div >
         );
     }

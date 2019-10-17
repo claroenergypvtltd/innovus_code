@@ -88,7 +88,7 @@ class User extends Component {
               onSelect={tabIndex => this.tabChange(tabIndex)}
             >
               <TabList className="change-tab">
-                <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab>
+                {/* <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab> */}
                 <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
               </TabList>
 

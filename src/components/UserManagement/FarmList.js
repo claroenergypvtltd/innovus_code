@@ -132,12 +132,12 @@ class FarmList extends React.Component {
                     <h5 className="retailer-title p-2 m-0">{item.proofNameId == 1 ? "Upload Identity Proof" : "Upload Photo Proof"}</h5>
                   </div>
                   {item.proofNameId == 1 && <div className="pl-2">
-                    <p className="user-title m-0">{item.proofName}</p>
-                    <p class="user-title m-0">{item.proofNumber}</p>
-                    <p className="user-title m-0">{item.description}</p>
+                    <p className="title m-0">{item.proofName}</p>
+                    <p className="title m-0">{item.proofNumber}</p>
+                    <p className="title m-0">{item.description}</p>
                   </div>}
                   {item.proofNameId == 2 && <div className="pl-2">
-                    <p className="user-title m-0">{item.description}</p>
+                    <p className="title m-0">{item.description}</p>
                   </div>
                   }
                 </div>
@@ -159,6 +159,9 @@ class FarmList extends React.Component {
         </div>
         <div className="plus-btn">
           {!this.state.farmId && this.props.farmerId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
+        </div>
+        <div className="back-btn">
+          <button class="common-btn">Back</button>
         </div>
       </div>
     );

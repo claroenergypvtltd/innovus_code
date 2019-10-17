@@ -40,7 +40,7 @@ class CategoryList extends Component {
         if (newProps.getLists) {
             let Lists = newProps.getLists.map(item => {
                 item.cropButton = this.viewCrop(item);
-                item.image = <img src={imageBaseUrl + item.image} height="30px" width="30px" />
+                item.image = <img src={imageBaseUrl + item.image} height="40px" width="40px" />
                 return item;
             })
 

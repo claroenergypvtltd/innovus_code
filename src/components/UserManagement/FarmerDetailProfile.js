@@ -17,14 +17,14 @@ class FarmerDetailProfile extends React.Component {
       console.log("farmerId", this.state.farmerId);
       return (
          <div className="main-wrapper1">
-         <div className="main-wrapper34">
-          <FarmerProfile profileData = {this.state.farmerProfile}  />
-         </div>
-         <div className="main-wrapper">
-         <div className="tab-wrapper">
-            <Farms farmerId = {this.props.match.params.farmerId} />
-         </div>
-         </div>
+            <div className="main-wrapper34">
+               <FarmerProfile profileData={this.state.farmerProfile} />
+            </div>
+            <div className="main-wrapper sub-wrapper">
+               <div className="tab-wrapper">
+                  <Farms farmerId={this.props.match.params.farmerId} />
+               </div>
+            </div>
          </div>
       );
    }

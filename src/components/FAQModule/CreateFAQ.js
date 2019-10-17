@@ -90,11 +90,11 @@ class CreateFAQ extends Component {
         return (
             <div>
 
-                <h2>{!this.state.instructionId ? window.strings.FAQ.ADD_FAQ : window.strings.FAQ.EDIT_FAQ}</h2>
+                <h4 className="user-title">{!this.state.instructionId ? window.strings.FAQ.ADD_FAQ : window.strings.FAQ.EDIT_FAQ}</h4>
 
                 <div className="col-md-12 content form-adjust">
-                    <div className="col-md-8  ">
-                        <h3 >{window.strings.FAQ.FAQ_DETAILS}</h3><hr />
+                    <div className="col-md-6">
+                        <h4 className="color-title line-wrapper mb-2" >{window.strings.FAQ.FAQ_DETAILS}</h4>
                         <Form onSubmit={this.handleSubmit} >
                             <Form.Group >
                                 <Form.Label>{window.strings.FAQ.QUESTION_TITLE}</Form.Label>
@@ -108,14 +108,12 @@ class CreateFAQ extends Component {
                                 {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings.FAQ.DESCRIPTION_REQUIRED}</div>}<br />
                             </Form.Group>
 
-                            <div className="col-md-12 bottom-section">
-                                <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                                <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
-                            </div>
-
                         </Form>
                     </div>
-
+                    <div className="col-md-12 bottom-section">
+                        <button type="button" className="btn btn-default mb-2" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                        <button type="submit" className="btn btn-primary mb-2" onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
+                    </div>
                 </div>
             </div>
         )

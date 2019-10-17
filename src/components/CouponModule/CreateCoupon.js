@@ -63,7 +63,7 @@ class CreateCoupon extends Component {
                         <div className="box-wrapper main-wrapper">
                             <h4 className="color-title line-wrapper">{window.strings.COUPON.COUPON_DETAILS}</h4>
                             <div className="">
-                                <div className="create-coupon col-md-8">
+                                <div className="create-coupon col-md-6">
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
 
                                         <div className="form-group col-md-12">
@@ -72,7 +72,7 @@ class CreateCoupon extends Component {
 
                                             <input
                                                 type="text"
-                                                placeholder="name"
+                                                placeholder="Coupon Title"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.name
                                                 })}
@@ -161,37 +161,30 @@ class CreateCoupon extends Component {
                                         </div>
 
                                         <div className="form-group col-md-12 pt-3">
-                                            <div className="img-box ">
-                                                {/* <label>{window.strings.CATEGORY.IMAGE}</label> */}
-                                                <input type="file" className="img-input" multiple />
-                                                <p>Upload Coupon Image</p>
-                                                {/* <input
+
+                                            <label>{window.strings.CATEGORY.IMAGE}</label>
+
+                                            <input
                                                 type="file"
-                                                placeholder="image"
-                                                className={classnames('form-control', {
+                                                placeholder="Image"
+                                                className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.image
                                                 })}
                                                 name="image"
                                                 onChange={this.onhandleImageChange}
                                                 required
 
-                                            /> */}
-                                                {/* <img className="pre-view"></img> */}
-
-                                            </div>
-
+                                            />
+                                            <img className="pre-view"></img>
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
-
-                                        <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
-                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
-                                        </div>
-
-
                                     </form>
                                 </div>
+                                <div className="col-md-12 bottom-section">
+                                    <button type="button" className="btn btn-default" onClick={this.listPage}>{window.strings.CANCEL}</button>
+                                    <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
