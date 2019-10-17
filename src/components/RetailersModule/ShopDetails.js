@@ -1,18 +1,27 @@
 import React from 'react';
 import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
+import PropTypes from "prop-types";
 
 class ShopDetails extends React.Component {
+    static contextTypes = {
+        router: PropTypes.object
+    }
     constructor(props) {
         super(props);
         this.state = {
             tabIndex: 0,
         };
     }
+
+    redirectPage = () => {
+        this.context.router.history.goBack();
+    }
+
     render() {
         console.log('profileData', this.props);
-        const profile = this.props.profileData;
-        const getname = profile.name.split('_');
+        const profile = this.props.profileData ? this.props.profileData : [];
+        // const getname = profile.name.split('_');
         return (
             <div className="col-sm-4 farm-tab p-1">
 
@@ -23,24 +32,24 @@ class ShopDetails extends React.Component {
                 >
                     <span className="farm-image">
                         <Image
-                            src={imageBaseUrl + profile.shopAddress.image}
+                            src={imageBaseUrl + profile && profile.shopAddress && profile.shopAddress.image}
                             className="maincentext"
                             roundedCircle
                         />
                         {/* <button className="edit-icon" onClick={() => this.editPage(item.id)}><i class="fa fa-pencil"></i></button>  */}
                     </span>
                     <div className="farm-box">
-                        <h5 className="centext title">{profile.shopAddress.name}</h5>
+                        <h5 className="centext title">{profile.shopAddress && profile.shopAddress.name}</h5>
                         <span>
                             <div className="centext color-title">
-                                <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>{profile.shopAddress.state}
+                                <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>{profile.shopAddress && profile.shopAddress.state}
                             </div>
                         </span>
                         <div className="farmer-details pl-4">
                             <div className="farmer-address">
                                 <h5 className="title">Address</h5>
                                 <p className="centext user-title sub-farm">
-                                    {profile.shopAddress.address1 + '' + profile.shopAddress.address2}
+                                    {profile.shopAddress && profile.shopAddress.address1 + '' + profile.shopAddress && profile.shopAddress.address2}
                                 </p>
                             </div>
                             {/* <div className="farmer-area">
@@ -51,7 +60,7 @@ class ShopDetails extends React.Component {
                     </div>
                 </div>
                 <div className="back-btn">
-                    <button className="common-btn">Back</button>
+                    <button className="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
             </div>
             // <Container>

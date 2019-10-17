@@ -58,12 +58,13 @@ class StatusUpdate extends Component {
             "location": this.state.location,
             "status": this.state.status,
         }
-
-        SubmitOrderStatus(obj).then(resp => {
-            if (resp) {
-                this.props.onCloseModal();
-            }
-        });
+        if(this.props.orderId && this.state.activity && this.state.location && this.state.status){
+            SubmitOrderStatus(obj).then(resp => {
+                if (resp) {
+                    this.props.onCloseModal();
+                }
+            });
+        }       
     }
 
     getTrackDetails = () => {
@@ -139,7 +140,7 @@ class StatusUpdate extends Component {
                                         <label>{window.strings.ORDER.LOCATION}</label>
                                         <input
                                             type="text"
-                                            placeholder="Location"
+                                            placeholder={window.strings.ORDER.LOCATION}
                                             className={classnames('form-control form-control-lg', {
                                                 'is-invalid': errors.location
                                             })}
@@ -154,7 +155,7 @@ class StatusUpdate extends Component {
                                     <div className="form-group col-md-12">
                                         <label>{window.strings.ORDER.ACTIVITY}</label>
                                         <textarea
-                                            placeholder="activity"
+                                            placeholder={window.strings.ORDER.ACTIVITY}
                                             className={classnames('form-control form-control-lg', {
                                                 'is-invalid': errors.activity
                                             })}

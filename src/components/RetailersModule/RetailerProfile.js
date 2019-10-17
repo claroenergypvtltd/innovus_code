@@ -9,8 +9,8 @@ class RetailerProfile extends React.Component {
     }
     render() {
         console.log('profileData', this.props);
-        const profile = this.props.profileData;
-        const getname = profile.name.split('_');
+        const profile = this.props.profileData ? this.props.profileData : [];
+        const getname = profile && profile.name ? profile.name.split('_') : '';
         return (
 
             <Container>

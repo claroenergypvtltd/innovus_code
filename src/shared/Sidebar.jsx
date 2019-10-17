@@ -128,13 +128,13 @@ export const Sidebar = [
         ),
         path: path.faq.list,
     },
-    {
-        name: (
-            <span className="menu-list static">
-                <i />
-                {Label.staticTemplate}
-            </span>
-        ),
-        path: path.inprogress.list,
-    },
+    // {
+    //     name: (
+    //         <span className="menu-list static">
+    //             <i />
+    //             {Label.staticTemplate}
+    //         </span>
+    //     ),
+    //     path: path.inprogress.list,
+    // },
 ];
