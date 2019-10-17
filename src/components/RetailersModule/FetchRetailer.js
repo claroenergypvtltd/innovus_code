@@ -1,12 +1,13 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import DataTableDynamic from '../../shared/DataTableDynamic';
-import { fetchRetailers, deleteRetailer } from '../../actions/SubmitRetailerAction';
+import { fetchRetailers, deleteRetailer, updateStatusRetailer } from '../../actions/SubmitRetailerAction';
 import { RETAILER_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { connect } from 'react-redux';
 import { resorceJSON } from '../../libraries';
 import PropTypes from 'prop-types';
 import { toastr } from '../../services/toastr.services'
+
 // import GoogleMapPage from '../../shared/GoogleMapPage';
 import { DynamicTable } from '../../../src/shared/DynamicTable'
 import { path } from '../../constants';
@@ -37,9 +38,12 @@ class FetchRetailer extends React.Component {
     componentWillMount() {
         this.getRetailerList();
     }
-    getRetailerList = () => {
+    getRetailerList = (status) => {
         let user = {};
         user.roleId = 2;
+        if (status) {
+            user.status = status;
+        }
         user.search = this.props.searchText;
         this.props.fetchRetailers(user);
     };
@@ -53,7 +57,7 @@ class FetchRetailer extends React.Component {
         if (newProps.list.datas) {
             let selectlist = newProps.list.datas;
             let Lists = selectlist && selectlist.map(item => {
-                item.selectBox = this.viewCrop(item.id);
+                item.selectBox = this.viewCrop(item.id, item.status);
                 return item;
             })
             this.setState({ data: Lists });
@@ -63,30 +67,41 @@ class FetchRetailer extends React.Component {
             this.getRetailerList();
         }
     }
-    viewCrop(RetstatusId) {
-        let ViewPage = <select className="drop-select" onChange={(e) => this.statusChange(e, RetstatusId)} selected={RetstatusId}>
+    viewCrop(RetstatusId, status) {
+        const statusDropdown = resorceJSON.statusOptions.map((item, index) => {
+            return <option value={index} selected={status == index ? true : false}>{item}</option>
+        })
+        let ViewPage = <select className="drop-select" onChange={(e) => this.statusChange(e, RetstatusId)}>
+            {statusDropdown}
             {/* onChange={() => this.statusChange(RetstatusId)} selected={RetstatusId}*/}
-            <option value="0" className="drop-option" >{window.strings.RETAILERS.PENDING}</option>
-            <option value="1" className="drop-option">{window.strings.RETAILERS.ACCEPTED}</option>
-            <option value="2" className="drop-option">{window.strings.RETAILERS.REJECTED}</option>
+            {/* <option value={status} className="drop-option" >{window.strings.RETAILERS.PENDING}</option>
+            <option value={status} className="drop-option">{window.strings.RETAILERS.ACCEPTED}</option>
+            <option value={status} className="drop-option">{window.strings.RETAILERS.REJECTED}</option> */}
         </select>
         return ViewPage;
     }
-    statusChange(e, RetstatusId) {
-        console.log("RetstatusId", RetstatusId);
-        console.log("status", e.target.value);
-        // e.preventDefault();
+    statusChange(e, RetId) {
+        let statusVal = e.target.value;
+        console.log('----statusVal--', statusVal);
         let message = window.strings.UPDATEMESSAGE;
         const toastrConfirmOptions = {
-            onOk: () => { //this.statusUpdate(e.target.value, RetstatusId) 
+            onOk: () => {
+                const formData = new FormData();
+                formData.append("userId", RetId);
+                formData.append("roleId", 2);
+                formData.append("status", statusVal);
+                updateStatusRetailer(formData).then(resp => {
+                    resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
+                })
             },
             onCancel: () => console.log('CANCEL: clicked')
         };
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
-    statusUpdate = (id) => {
-        //this.props.updateStatusRetailer(id)
-    };
+    statusFilter(e) {
+        this.getRetailerList(e.target.value);
+
+    }
     handleDelete = (data, e) => {
         e.preventDefault();
         let message = window.strings.DELETEMESSAGE;
@@ -145,8 +160,18 @@ class FetchRetailer extends React.Component {
         })
     };
     render() {
+        const statusDropdown =
+            resorceJSON.statusOptions.map((item, index) => {
+                return <option value={index}> {item}</option>
+            })
         return (
             <div>
+                <div className="statusFilter"><label>Status Filter:</label>&nbsp;
+                    <select className="drop-select" onChange={(e) => this.statusFilter(e)}>
+                        <option value="">-- Select --</option>
+                        {statusDropdown}
+                    </select>
+                </div>
                 {/* <Row className="clearfix title-section">
                     <Col md={5} className="title-card user-board">
                         <h4 className="user-title">{window.strings.USERMANAGEMENT.USER}</h4>
@@ -178,7 +203,7 @@ class FetchRetailer extends React.Component {
                     pagination={true}
                 />
                 {/* <GoogleMapPage /> */}
-            </div>
+            </div >
         );
     }
 }

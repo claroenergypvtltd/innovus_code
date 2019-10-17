@@ -41,7 +41,7 @@ export const Sidebar = [
                 {Label.paymentLabel}
             </span>
         ),
-        path: "/inprogress",
+        path: path.inprogress.list,
     },
 
     {
@@ -51,7 +51,7 @@ export const Sidebar = [
                 {Label.reportLabel}
             </span>
         ),
-        path: "/inprogress",
+        path: path.inprogress.list,
     },
     // {
     //     name: (
@@ -135,6 +135,6 @@ export const Sidebar = [
                 {Label.staticTemplate}
             </span>
         ),
-        path: "/inprogress",
+        path: path.inprogress.list,
     },
 ];

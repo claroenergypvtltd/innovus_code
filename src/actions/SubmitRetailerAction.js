@@ -118,4 +118,11 @@ export const getOrderReports = (gettype) => dispatch => {
         dispatch({ type: RET_USER_FETCH_SUCCESS, error: error })
     })
 }
+export const updateStatusRetailer = (updateDatas) => {
+    return httpServices.put(endPoint.user, updateDatas).then(resp => {
+        return resp;
+    }).catch((error) => {
+    })
+}
+
 

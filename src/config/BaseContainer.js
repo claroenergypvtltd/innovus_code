@@ -44,8 +44,10 @@ export class BaseContainer extends Component {
     handleClick = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('jwtToken');
-        this.context.router.history.push('/login');
-
+        // this.context.router.history.push(path.login.login)
+        this.context.router.history.push({
+            pathname: path.login.login
+        });
     }
 
 

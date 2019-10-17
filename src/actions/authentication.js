@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode';
 import { endPoint } from '../constants';
 import { phaseKey } from "../config/LocalConfig";
 import { toastr } from 'react-redux-toastr';
-import { path } from '../constants';
+import { path } from '../constants/path'
 import CryptoJS from 'crypto-js';
 
 import { history } from '../store/history';
@@ -17,7 +17,7 @@ import store from '../store/store';
 
 export const registerUser = (user, history) => dispatch => {
     axios.post('/api/users/register', user)
-        .then(res => history.push('/login'))
+        .then(res => history.push(path.login.login))
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
@@ -73,7 +73,7 @@ export const logoutUser = (history) => dispatch => {
 
     // console.log(store.getState().router );
     // if(location.pathname !== process.env.PUBLIC_URL+'/login')
-    history.push('/login');
+    // history.push('majhd');
 
 }
 

@@ -71,6 +71,8 @@ class RetailerInfo extends React.Component {
             formData.append("emailId", this.state.emailId);
             formData.append("mobileNumber", this.state.mobileNumber);
             formData.append("address1", this.state.address1);
+            formData.append("city", this.state.city);
+            formData.append("state", this.state.state);
             formData.append("image", this.state.retPersonalImagefile);
             formData.append("shopImage", this.state.retShopImagefile);
             formData.append("shopName", this.state.shopname);
@@ -78,7 +80,7 @@ class RetailerInfo extends React.Component {
             formData.append("shopAddress2", this.state.shopaddress2);
             formData.append("shopLocation", this.state.shoplocation);
             formData.append("shopGst", this.state.gst);
-            formData.append("shopCountry", this.state.country);
+            formData.append("shopCountry", 101);//this.state.country
             formData.append("shopState", this.state.state);
             formData.append("shopCity", this.state.city);
             formData.append("shopZipCode", this.state.pincode);
@@ -229,7 +231,6 @@ class RetailerInfo extends React.Component {
         } else {
             retailShopimagePreview = <img className="pre-view" src={imageBaseUrl + this.state.retShopImage} />
         }
-        console.log('this state -- ', this.state);
         const countryDropDown = this.state.countries && this.state.countries.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
@@ -343,6 +344,19 @@ class RetailerInfo extends React.Component {
                                                         {this.state.submitted && !this.state.retPersonalImage && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                                         {retailPersonalimagePreview}
                                                     </div>
+                                                    <div className="form-group pt-3 col-md-6">
+                                                        <label className="retallable">{window.strings.RETAILERS.CUSID}</label><br></br>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Customer ID"
+                                                            className={classnames('form-control', {
+                                                                'is-invalid': errors.name
+                                                            })}
+                                                            name="customerId"
+                                                            disabled={true}
+                                                            value={1984078393}
+                                                        />
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -406,6 +420,19 @@ class RetailerInfo extends React.Component {
                                                             {this.state.Shopsubmitted && !this.state.retShopImage && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                                             {retailShopimagePreview}
                                                         </div>
+                                                        <div className="form-group  col-md-6">
+                                                            <label className="retallable">{window.strings.RETAILERS.AGENTID}</label><br></br>
+                                                            <input
+                                                                type="text"
+                                                                placeholder="Customer ID"
+                                                                className={classnames('form-control', {
+                                                                    'is-invalid': errors.name
+                                                                })}
+                                                                name="customerId"
+                                                                disabled={true}
+                                                                value={1984078393}
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="sub-shop col-md-6 pt-4">
@@ -445,7 +472,7 @@ class RetailerInfo extends React.Component {
                                                         <div className="form-group col-md-6">
                                                             <label className="retallable">{window.strings.COUNTRY}</label>
                                                             <select required name="country" value={this.state.country} className="form-control" onChange={this.handleInputChange}>
-                                                                <option value="0">Select Country</option>
+                                                                {/* <option value="0">Select Country</option> */}
                                                                 <option value="101">INDIA</option>
                                                                 {/* {countryDropDown} */}
                                                             </select>
