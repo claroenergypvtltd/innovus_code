@@ -37,7 +37,6 @@ class FetchCart extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
         if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
             let respData = newProps.priceData.Lists.datas;
             this.setState({ PriceLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
@@ -49,7 +48,6 @@ class FetchCart extends Component {
     }
 
     searchResult = (e) => {
-        debugger;
         e.preventDefault();
         if (this.state.search) {
             let serObj = {

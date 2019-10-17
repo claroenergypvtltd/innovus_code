@@ -113,6 +113,7 @@ export const Translation = {
         },
 
         "SUBMIT": "Save",
+        "EXCELEXPORT": 'Export',
         "NEXT_TAB": "Next",
         "CREATED_SUCCESSFULLY": "Created Successfully",
         "ACTION": "Action",
