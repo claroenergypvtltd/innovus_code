@@ -17,7 +17,7 @@ class RetailerDetailProfile extends React.Component {
                 <div className="main-wrapper34">
                     <RetailerProfile profileData={this.state.farmerProfile} />
                 </div>
-                <div className="main-wrapper">
+                <div className="main-wrapper sub-wrapper">
                     <div className="tab-wrapper">
                         <Shops profileData={this.state.farmerProfile} />
                     </div>

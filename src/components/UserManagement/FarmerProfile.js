@@ -35,17 +35,17 @@ class FarmerProfile extends React.Component {
           <Col md={9} className="row pt-5 pl-5">
 
             <Col md={4}>
-              <h4 className="user-title">{"Email"}</h4>
+              <h4 className="title">{"Email"}</h4>
               <p className="user-subtitle">{profile.emailId}</p>
             </Col>
             <Col md={3}>
 
-              <h4 className="user-title">{"Phone"}</h4>
+              <h4 className="title">{"Phone"}</h4>
               <p className="user-subtitle">{profile.mobileNumber}</p>
 
             </Col>
             <Col md={5}>
-              <h4 className="user-title">{"Address"}</h4>
+              <h4 className="title">{"Address"}</h4>
               <p className="user-subtitle">{profile.mobileNumber}</p>
 
             </Col>

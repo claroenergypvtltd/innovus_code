@@ -121,59 +121,56 @@ class StatusUpdate extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <div className="col-md-12 main-wrapper">
-                            <div className="">
-                                <div className="create-crop col-md-5">
-                                    <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
-                                        <div className="form-group col-md-12">
-                                            <label>{window.strings['ORDER']['STATUS']}</label>
-                                            <select required name="status" className="form-control" value={this.state.status} onChange={this.handleInputChange}>
-                                                <option value="0">Select Status</option>
-                                                {statusDropDown}
-                                                <option value="1">Pending</option>
-                                            </select>
+                        <div className="col-md-9">
+                            <div className="create-crop">
+                                <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
+                                    <div className="form-group col-md-12">
+                                        <label>{window.strings['ORDER']['STATUS']}</label>
+                                        <select required name="status" className="form-control" value={this.state.status} onChange={this.handleInputChange}>
+                                            <option value="0">Select Status</option>
+                                            {statusDropDown}
+                                            <option value="1">Pending</option>
+                                        </select>
 
-                                            {this.state.submitted && !this.state.status && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
+                                        {this.state.submitted && !this.state.status && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
 
-                                        <div className="form-group col-md-12">
-                                            <label>{window.strings.ORDER.LOCATION}</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Location"
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.location
-                                                })}
-                                                name="location"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.location}
-                                                required
-                                            />
-                                            {this.state.submitted && !this.state.location && <div className="mandatory">{window.strings['CATEGORY']['LOCATION'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
+                                    <div className="form-group col-md-12">
+                                        <label>{window.strings.ORDER.LOCATION}</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Location"
+                                            className={classnames('form-control form-control-lg', {
+                                                'is-invalid': errors.location
+                                            })}
+                                            name="location"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.location}
+                                            required
+                                        />
+                                        {this.state.submitted && !this.state.location && <div className="mandatory">{window.strings['CATEGORY']['LOCATION'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
 
-                                        <div className="form-group col-md-12">
-                                            <label>{window.strings.ORDER.ACTIVITY}</label>
-                                            <textarea
-                                                placeholder="activity"
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.activity
-                                                })}
-                                                name="activity"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.activity}
-                                                required
-                                            ></textarea>
-                                            {this.state.submitted && !this.state.activity && <div className="mandatory">{window.strings['ORDER']['ACTIVITY'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-
-                                        <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
-                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                    <div className="form-group col-md-12">
+                                        <label>{window.strings.ORDER.ACTIVITY}</label>
+                                        <textarea
+                                            placeholder="activity"
+                                            className={classnames('form-control form-control-lg', {
+                                                'is-invalid': errors.activity
+                                            })}
+                                            name="activity"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.activity}
+                                            required
+                                        ></textarea>
+                                        {this.state.submitted && !this.state.activity && <div className="mandatory">{window.strings['ORDER']['ACTIVITY'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
+                                </form>
                             </div>
+                        </div>
+                        <div className="col-md-12 bottom-section">
+                            <button type="button" className="btn btn-default" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
+                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
                         </div>
                     </div>
                 </div>

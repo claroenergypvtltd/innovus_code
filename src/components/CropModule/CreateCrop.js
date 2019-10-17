@@ -152,100 +152,93 @@ class CreateCrop extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h3>{this.state.categoryId ? window.strings['CROP']['EDITTITLE'] : window.strings['CROP']['CREATETITLE']}</h3>
+                        <h4 className="user-title">{this.state.categoryId ? window.strings['CROP']['EDITTITLE'] : window.strings['CROP']['CREATETITLE']}</h4>
                         <div className="col-md-12 main-wrapper">
-                            <div className="">
-                                <div className="create-crop col-md-5">
-                                    <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
+                            <div className="create-crop col-md-6">
+                                <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
 
 
-                                        {!this.state.cropId && <div className="form-group col-md-12">
+                                    {!this.state.cropId && <div className="form-group col-md-12">
 
-                                            <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
+                                        <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
 
-                                            <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleInputChange}>
-                                                <option value="0">Select Category</option>
-                                                {categoryDropDown}
-                                            </select>
+                                        <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleInputChange}>
+                                            <option value="0">Select Category</option>
+                                            {categoryDropDown}
+                                        </select>
 
-                                            {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>}
-
-
-                                        <div className="form-group col-md-12">
-
-                                            <label>{window.strings.CATEGORY.NAME}</label>
-
-                                            <input
-                                                type="text"
-                                                placeholder="Name"
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.name
-                                                })}
-                                                name="name"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.name}
-                                                required
-
-                                            />
-
-                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
+                                        {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>}
 
 
-                                        <div className="form-group col-md-12">
+                                    <div className="form-group col-md-12">
 
-                                            <label>{window.strings.CATEGORY.IMAGE}</label>
+                                        <label>{window.strings.CATEGORY.NAME}</label>
 
-                                            <input
-                                                type="file"
-                                                placeholder="image"
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.image
-                                                })}
-                                                name="image"
-                                                onChange={this.onhandleImageChange}
-                                                required
+                                        <input
+                                            type="text"
+                                            placeholder="Category Name"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.name
+                                            })}
+                                            name="name"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.name}
+                                            required
 
-                                            />
-                                            {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                            <img className="pre-view" src={imagePreview} />
-                                        </div>
+                                        />
 
+                                        {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
 
-                                        <div className="form-group col-md-12">
+                                    <div className="form-group col-md-12">
 
-                                            <label>{window.strings.CATEGORY.DESCRIPTION}</label>
+                                        <label>{window.strings.CATEGORY.DESCRIPTION}</label>
 
-                                            <textarea
-                                                placeholder="description"
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.description
-                                                })}
-                                                name="description"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.description}
-                                                required
+                                        <textarea
+                                            placeholder="Description"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.description
+                                            })}
+                                            name="description"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.description}
+                                            required
 
-                                            ></textarea>
-                                            {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
+                                        ></textarea>
+                                        {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
 
+                                    <div className="form-group col-md-12">
 
-                                        {/* <div className="col-md-12 pt-3 p-0">
+                                        <label>{window.strings.CATEGORY.IMAGE}</label>
+
+                                        <input
+                                            type="file"
+                                            placeholder="Image"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.image
+                                            })}
+                                            name="image"
+                                            onChange={this.onhandleImageChange}
+                                            required
+
+                                        />
+                                        {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                        <img className="pre-view" src={imagePreview} />
+                                    </div>
+
+                                    {/* <div className="col-md-12 pt-3 p-0">
                                             <div className="login-btn float-right">
                                                 <button type="submit" className="btn btn-info" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
                                                 <button type="button" className="btn btn-info" onClick={this.listPath}>{window.strings.CANCEL}</button>
                                             </div>
                                         </div> */}
-                                        <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
-                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
-                                        </div>
-
-
-                                    </form>
-                                </div>
+                                </form>
+                            </div>
+                            <div className="col-md-12 bottom-section">
+                                <button type="button" className="btn btn-default mb-2" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
+                                <button type="submit" className="btn btn-primary mb-2">{window.strings.SUBMIT}</button>
                             </div>
                         </div>
                     </div>

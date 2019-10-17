@@ -196,7 +196,7 @@ class CreatePrice extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h3>{this.state.categoryId ? window.strings['PRICE']['EDITTITLE'] : window.strings['PRICE']['CREATETITLE']}</h3>
+                        <h4 className="user-title">{this.state.categoryId ? window.strings['PRICE']['EDITTITLE'] : window.strings['PRICE']['CREATETITLE']}</h4>
                         <div className="">
                             <div className="main-wrapper pt-3">
                                 <div className="col-md-8 add-price">
@@ -251,7 +251,7 @@ class CreatePrice extends Component {
                                         <div className="form-group col-md-6">
                                             <label>{window.strings.CROP.PRICE}</label>
                                             <input type="number"
-                                                placeholder="price"
+                                                placeholder="Price"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.price
                                                 })}
@@ -303,13 +303,12 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                                            <button type="submit" className="btn btn-primary" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
-
-                                        </div>
-
                                     </form>
+                                </div>
+                                <div className="col-md-12 bottom-section">
+                                    <button type="button" className="btn btn-default mb-2" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                                    <button type="submit" className="btn btn-primary mb-2" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
+
                                 </div>
                             </div>
                         </div>

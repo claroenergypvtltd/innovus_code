@@ -204,7 +204,7 @@ class PersonalAndContactInfo extends Component {
             <div className="clearfix">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h4>{window.strings['FARMERS']['PERS_AND_CONTACT']}</h4>
+                        <h4 className="user-title">ADD NEW FARMER</h4>
                         <div className="main-wrapper main-contact">
                             <h4 className="color-title sub-contact">Personal Information</h4>
                             <form onSubmit={this.handleSubmit} noValidate className="row m-0">
@@ -268,7 +268,7 @@ class PersonalAndContactInfo extends Component {
                                             <input
                                                 type="file"
                                                 placeholder={window.strings['FARMERS']['IMAGE']}
-                                                className={classnames('form-control', {
+                                                className={classnames('form-control p-0', {
                                                     'is-invalid': errors.image
                                                 })}
                                                 name="image"

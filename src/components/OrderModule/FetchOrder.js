@@ -124,12 +124,12 @@ class FetchOrder extends Component {
 
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
-            let link = <Link to={path.order.list + "/" + item.id}>{window.strings.ORDER.VIEWDETAILS}</Link>
+            let link = <Link to={path.order.list + "/" + item.id} className="order-btn">{window.strings.ORDER.VIEWDETAILS}</Link>
 
             // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
 
             let status = <div>
-                {this.getStatusName(item.status)} <button onClick={() => { this.onOpenModal(item.orderId) }}>Update</button>
+                <button className="update-btn" onClick={() => { this.onOpenModal(item.orderId) }}>{this.getStatusName(item.status)}</button>
             </div>
 
 
@@ -171,7 +171,7 @@ class FetchOrder extends Component {
                     </div>
                     <Row className="clearfix title-section pb-3">
                         <Col md={8} className="title-card">
-                            <h4 className="user-title">Orders </h4>
+                            <h4 className="user-title">ORDER</h4>
                         </Col>
                         <Col md={4} className="pl-5">
                             <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
@@ -180,7 +180,7 @@ class FetchOrder extends Component {
                 </div>
 
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList} />
-                <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={statusUpdataData} ModalTitle="Update Track" />
+                <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={statusUpdataData} ModalTitle="UPDATE TRACK" />
 
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
             </div>

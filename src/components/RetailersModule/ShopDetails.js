@@ -50,6 +50,9 @@ class ShopDetails extends React.Component {
                         </div>
                     </div>
                 </div>
+                <div className="back-btn">
+                    <button className="common-btn">Back</button>
+                </div>
             </div>
             // <Container>
             //     <Row className="show-grid white-bg">

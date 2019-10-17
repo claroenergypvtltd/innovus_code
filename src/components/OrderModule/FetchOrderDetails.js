@@ -112,7 +112,7 @@ class FetchOrderDetails extends Component {
 
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
-            let link = <button onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button>
+            let link = <button className="track-btn" onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button>
             return { "itemList": [item.id, item.shopAddress.address1 + ' ' + item.shopAddress.address2, item.startTime, item.endTime, link], "itemId": item.id }
         })
 
@@ -133,13 +133,13 @@ class FetchOrderDetails extends Component {
             <div className="order-details">
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-8">
-                        <h4 className="user-title">List Order Details</h4>
+                        <h4 className="user-title">LIST ORDER DETAIL</h4>
                     </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 />
 
-                {this.state.viewtrack && <div className="main-wrapper p-3">
+                {this.state.viewtrack && <div className="pt-3">
                     <div class="bs-stepper-header">
 
                         <div class="step active">
@@ -196,16 +196,19 @@ class FetchOrderDetails extends Component {
                                 <span class="bs-stepper-label">cancel</span>
                             </div>
                         </div>
-                        <div class="bs-stepper-line"></div>
+                        {/* <div class="bs-stepper-line"></div> */}
                     </div>
 
                     <TableData TableHead={this.state.TableHeadTrack} TableContent={trackList} />
-                    <button onClick={this.productPage}>Back To Product List</button>
+                    <button className="common-btn" onClick={this.productPage}>Back To Product List</button>
                 </div>}
-                {!this.state.viewtrack && <div className="main-wrapper p-3">
-                    <h4>Product List</h4>
+                {!this.state.viewtrack && <div className="pt-3">
+                    <h4 className="user-title">PRODUCT LIST</h4>
                     <TableData TableHead={this.state.TableProductHead} TableContent={productList} />
                 </div>}
+                <div className="back-btn">
+                    <button className="common-btn">Back</button>
+                </div>
             </div>
         );
     }
