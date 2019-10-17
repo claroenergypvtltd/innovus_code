@@ -354,7 +354,7 @@ class RetailerInfo extends React.Component {
                                                             })}
                                                             name="customerId"
                                                             disabled={true}
-                                                            value={1984078393}
+                                                            value={'CU001839'}
                                                         />
                                                     </div>
                                                 </form>
@@ -424,13 +424,13 @@ class RetailerInfo extends React.Component {
                                                             <label className="retallable">{window.strings.RETAILERS.AGENTID}</label><br></br>
                                                             <input
                                                                 type="text"
-                                                                placeholder="Customer ID"
+                                                                placeholder="AGENT ID"
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.name
                                                                 })}
                                                                 name="customerId"
                                                                 disabled={true}
-                                                                value={1984078393}
+                                                                value={"AG937389"}
                                                             />
                                                         </div>
                                                     </div>

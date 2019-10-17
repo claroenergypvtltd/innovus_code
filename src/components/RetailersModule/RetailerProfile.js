@@ -36,11 +36,11 @@ class RetailerProfile extends React.Component {
                     <Col md={9} className="row pt-5 pl-5">
                         <Col md={2} className="p-0">
                             <h4 className="title">{"Customer Id"}</h4>
-                            <p className="user-subtitle"></p>
+                            <p className="user-subtitle">{'CU001839'}</p>
                         </Col>
                         <Col md={2}>
                             <h4 className="title">{"Agent Id"}</h4>
-                            <p className="user-subtitle"></p>
+                            <p className="user-subtitle">{'AG001679'}</p>
                         </Col>
                         <Col md={2}>
                             <h4 className="title">{"Email"}</h4>

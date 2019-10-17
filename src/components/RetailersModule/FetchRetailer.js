@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { resorceJSON } from '../../libraries';
 import PropTypes from 'prop-types';
 import { toastr } from '../../services/toastr.services'
-
+import ExportFile from '../../shared/ExportFile';
 // import GoogleMapPage from '../../shared/GoogleMapPage';
 import { DynamicTable } from '../../../src/shared/DynamicTable'
 import { path } from '../../constants';
@@ -24,15 +24,17 @@ class FetchRetailer extends React.Component {
             retailerId: "",
             columns: resorceJSON.RetailerList,
             data: [],
-            products: [{
+            products: {
                 id: 1,
                 name: "Product1",
                 price: 120
-            }, {
-                id: 2,
-                name: "Product2",
-                price: 100
-            }]
+            },
+            csvData: [
+                { firstname: "lastname" },
+                { ee: "lastname" },
+                { fi33rstname: "lastname" },
+                { fir3323stname: "lastname" }
+            ],
         }
     }
     componentWillMount() {
@@ -114,6 +116,10 @@ class FetchRetailer extends React.Component {
     itemDelete = (id) => {
         this.props.deleteRetailer(id)
     };
+    excelExport(e) {
+        e.preventDefault();
+        console.log('----excelExport----');
+    }
     // Actions() {
     //     let actions = <div>
 
@@ -160,12 +166,20 @@ class FetchRetailer extends React.Component {
         })
     };
     render() {
+        let excelDatas = [];
         const statusDropdown =
             resorceJSON.statusOptions.map((item, index) => {
                 return <option value={index}> {item}</option>
             })
+        this.state.data.map((item, index) => {
+            if (item.shopAddress) {
+                excelDatas.push(item.shopAddress)
+            }
+        })
         return (
             <div>
+                <ExportFile csvData={this.state.data} />
+                {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
                 <div className="statusFilter"><label>Status Filter:</label>&nbsp;
                     <select className="drop-select" onChange={(e) => this.statusFilter(e)}>
                         <option value="">-- Select --</option>
