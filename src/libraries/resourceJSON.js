@@ -23,9 +23,11 @@ export const resorceJSON = {
     { name: 'Email ', selector: 'emailId', sortable: true },
   ],
   RetailerList: [
+    { name: 'Customer Id', selector: 'mobileNumber', sortable: true },
     { name: 'Name', selector: 'name', sortable: true },
     { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
     { name: 'Email', selector: 'emailId', sortable: true },
+    { name: 'Agent Id', selector: 'mobileNumber', sortable: true },
     { name: 'Status', selector: 'selectBox', sortable: true },
     // { text: 'Actions', dataField: 'actions', sortable: true },
   ],
@@ -45,4 +47,5 @@ export const resorceJSON = {
     { name: 'Description', selector: 'description', sortable: true },
     { name: 'Crop', selector: 'cropButton', sortable: true },
   ],
+  statusOptions: ['Pending', 'Accepted', 'Rejected'],
 };

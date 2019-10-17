@@ -1,6 +1,11 @@
 export const path = {
     login: {
-        add: process.env.PUBLIC_URL + '/'
+        add: process.env.PUBLIC_URL + '/',
+        login: process.env.PUBLIC_URL + '/login'
+    },
+    inprogress: {
+        name: 'inprogress',
+        list: process.env.PUBLIC_URL + '/inprogress'
     },
     dashboard: {
         name: 'dashboard',

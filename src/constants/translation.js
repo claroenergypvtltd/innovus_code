@@ -100,7 +100,7 @@ export const Translation = {
             "QUESTION_TITLE": "Questions Title",
             "TITLE": "Title is required*",
             "DESCRIPTION_REQUIRED": "Description is required*",
-            "ADD_FAQ": "Add FAQ"
+            "ADD_FAQ": "ADD FAQ"
         },
 
         "PRICE": {
@@ -225,7 +225,9 @@ export const Translation = {
             "REJECTED": 'Rejected',
             "IDENTITY_PROOF": "Identity Proof",
             "DRIVING_LICENSE_NUMBER": "Driving License Number",
-            "PHOTO_ANGLE": "Front Side"
+            "PHOTO_ANGLE": "Front Side",
+            "CUSID": 'Customer ID',
+            'AGENTID': 'Agent ID'
         },
 
         "SETTING": {
@@ -234,7 +236,7 @@ export const Translation = {
             // "EDITTITLE": "Edit Irrigation Setting",
             // "LISTTITLE": "Irrigation Setting List",
             "LIST_IRRIGATION": "IRRIGATION SETTINGS LIST",
-            "ADD_IRRIGATION": "Add Irrigation Setting",
+            "ADD_IRRIGATION": "Add IRRIGATION SETTING",
             "STATE_LABEL": "State",
             "CITY_LABEL": "City",
             "SELECT_STATE": "Select State",
