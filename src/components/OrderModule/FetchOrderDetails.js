@@ -92,6 +92,8 @@ class FetchOrderDetails extends Component {
             });
     }
 
+
+
     onChange = (data) => {
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
@@ -108,6 +110,10 @@ class FetchOrderDetails extends Component {
 
     productPage = () => {
         this.setState({ viewtrack: false })
+    }
+
+    redirectPage = () => {
+        this.props.history.goBack();
     }
 
     render() {
@@ -200,14 +206,14 @@ class FetchOrderDetails extends Component {
                     </div>
 
                     <TableData TableHead={this.state.TableHeadTrack} TableContent={trackList} />
-                    <button className="common-btn" onClick={this.productPage}>Back To Product List</button>
+                    {this.state.viewtrack && <button className="common-btn" onClick={this.productPage}>Back To Product List</button>}
                 </div>}
                 {!this.state.viewtrack && <div className="pt-3">
                     <h4 className="user-title">PRODUCT LIST</h4>
                     <TableData TableHead={this.state.TableProductHead} TableContent={productList} />
                 </div>}
                 <div className="back-btn">
-                    <button className="common-btn">Back</button>
+                    {!this.state.viewtrack && <button className="common-btn" onClick={this.redirectPage}>Back</button>}
                 </div>
             </div>
         );

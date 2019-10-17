@@ -14,7 +14,7 @@ class ViewCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "Image", "Description","Action"],
+            TableHead: ["Crop Name", "Image", "Description", "Action"],
             CategoryListDatas: props.getLists,
             CategoryCount: props.getCount,
             currentPage: resorceJSON.TablePageData.currentPage,
@@ -104,6 +104,10 @@ class ViewCategory extends Component {
         }
     }
 
+    redirectPage = () => {
+        this.props.history.goBack();
+    }
+
 
     render() {
         let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
@@ -135,7 +139,7 @@ class ViewCategory extends Component {
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
                 <div className="row">
-                    <div className="back-btn col-md-2"><button class="common-btn">Back</button></div>
+                    <div className="back-btn col-md-2"><button class="common-btn" onClick={this.redirectPage}>Back</button></div>
                     <div className="col-md-10">
                         {this.state.CategoryListDatas && this.state.CategoryListDatas.length != 0 && < ReactPagination className="m-0" PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />}
                     </div>

@@ -17,7 +17,7 @@ class Shops extends React.Component {
         this.setState({ tabIndex: tabIndex });
     }
     render() {
-
+        let ProfileData = this.props.profileData && this.props.profileData.id ? this.props.profileData.id : '';
         return (
             <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.tabChange(tabIndex)}
             >
@@ -31,7 +31,7 @@ class Shops extends React.Component {
                 </TabPanel>
 
                 <TabPanel>
-                    <RetKYCList profileID={this.props.profileData.id} />
+                    <RetKYCList profileID={ProfileData} />
                 </TabPanel>
 
             </Tabs>
