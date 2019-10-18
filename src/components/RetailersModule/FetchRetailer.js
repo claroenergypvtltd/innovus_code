@@ -169,7 +169,7 @@ class FetchRetailer extends React.Component {
         let excelDatas = [];
         const statusDropdown =
             resorceJSON.statusOptions.map((item, index) => {
-                return <option value={index}> {item}</option>
+                return <option value={index} className="drop-option"> {item}</option>
             })
         this.state.data.map((item, index) => {
             if (item.shopAddress) {
@@ -180,9 +180,9 @@ class FetchRetailer extends React.Component {
             <div>
                 <ExportFile csvData={this.state.data} />
                 {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
-                <div className="statusFilter"><label>Status Filter:</label>&nbsp;
-                    <select className="drop-select" onChange={(e) => this.statusFilter(e)}>
-                        <option value="">-- Select --</option>
+                <div className="status-filter"><label>Status Filter:</label>
+                    <select className="drop-select ml-1" onChange={(e) => this.statusFilter(e)}>
+                        <option value="" className="drop-option">-- Select --</option>
                         {statusDropdown}
                     </select>
                 </div>

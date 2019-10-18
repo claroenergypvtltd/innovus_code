@@ -194,10 +194,22 @@ font-size: 15px;
   font-size: 15px;
   color: #9EA0A2;
  }
+ .reset-btn{
+  border: none;
+  background-color: #F5F5F5;
+  text-align: inherit;
+  color: #aaa;
+  padding: 13px 0px 0px 10px;
+}
+button.reset-btn:focus {
+  outline: none;
+}
  .back-btn {
   padding: 10px 0 0 14px;
 }
-
+button:focus {
+  outline: none;
+}
 /****************************Popup Section************************/
 
  .delete-popup-message{
@@ -442,6 +454,23 @@ a,p,small,span{font-family: open sans;}
 .ant-steps-item{
   flex: 0.6 4 ;
 }
+// .ant-btn-primary:active {
+//   color: #fff;
+//   background-color: pink;
+//   border-color: #096dd9;
+// }
+// button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
+//   background-color: $gradient-1;
+// }
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  color: #fff;
+  background-image: $gradient-1;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  color: #fff;
+  border-color: #ff8b92;
+  background-image: $gradient-1;
+}
 .ant-steps-item-process .ant-steps-item-icon {
   background: linear-gradient(to right, #ff8b92, #feb683);
   //border-color: darkgrey !important;
@@ -476,10 +505,10 @@ a,p,small,span{font-family: open sans;}
 //   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
 // }
 .ant-steps-horizontal:not(.ant-steps-label-vertical) .ant-steps-item{
-  margin-right : 0px !important;
+  margin-right : 0px ;
 }
 .ant-steps-item-title{
- padding-right: 0px  !important;
+ padding-right: 0px;
 }
 .profile-title{
   text-align: center;
@@ -982,13 +1011,6 @@ svg{
 .form-search{
   display: flex
 }
-.reset-btn{
-  border: none;
-  background-color: #F5F5F5;
-  text-align: inherit;
-  color: #aaa;
-  padding: 13px 0px 0px 10px;
-}
 .sub-search{
   display: contents;
 }
@@ -1275,13 +1297,14 @@ background-position:270px -2670px;
   //   font-size: 14px !important;
   //   color : #9E9E9E !important; 
   // }
-  .statusFilter{
-    float: right;
-    margin: 1%;
+  
+  .status-filter{
+    text-align:right;
+    margin: 15px 0 0;
   }
   .excelExpBtn{
     float: right;
-    margin: 3px 5px 0 4px;
+    margin: 0 0 0 10px;
   }
 .rdt_TableCol_Sortable {
   font-weight: 600 ;

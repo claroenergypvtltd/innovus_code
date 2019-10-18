@@ -10,7 +10,7 @@ import { toastr } from '../../services/toastr.services'
 import { Link } from 'react-router-dom'
 import { Form, Row, Col } from 'react-bootstrap';
 import { formatDate } from '../../shared/DateFormat'
-import StatusUpdate from './StatusUpdate'
+import StatusUpdate from './statusUpdate'
 
 class FetchOrder extends Component {
 

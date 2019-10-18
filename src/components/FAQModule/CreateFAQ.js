@@ -90,7 +90,7 @@ class CreateFAQ extends Component {
         return (
             <div>
 
-                <h4 className="user-title">{!this.state.instructionId ? window.strings.FAQ.ADD_FAQ : window.strings.FAQ.EDIT_FAQ}</h4>
+                <h4 className="user-title">{!this.state.instructionId ? window.strings.FAQ.ADD_NEW_FAQ : window.strings.FAQ.EDIT_FAQ}</h4>
 
                 <div className="col-md-12 content form-adjust">
                     <div className="col-md-6">

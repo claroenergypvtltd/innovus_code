@@ -238,7 +238,7 @@ class CreateCrop extends Component {
                             </div>
                             <div className="col-md-12 bottom-section">
                                 <button type="button" className="btn btn-default mb-2" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
-                                <button type="submit" className="btn btn-primary mb-2">{window.strings.SUBMIT}</button>
+                                <button type="submit" className="btn btn-primary mb-2" onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
                             </div>
                         </div>
                     </div>
