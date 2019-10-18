@@ -210,7 +210,7 @@ class IrrigationSetting extends Component {
                     </div>
                     <div className="col-md-12 bottom-section">
                         <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                        <button type="submit" className="btn btn-primary" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
+                        <button type="submit" className="btn btn-primary" onClick={this.handleSubmit} disabled={this.state.loading}>{window.strings.SUBMIT}</button>
                     </div>
                 </div>
             </div>

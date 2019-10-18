@@ -94,13 +94,13 @@ export const Translation = {
         },
 
         "FAQ": {
-            "ADD_FAQ": "ADD NEW FAQ",
+            "ADD_NEW_FAQ": "ADD NEW FAQ",
             "EDIT_FAQ": "EDIT FAQ",
             "FAQ_DETAILS": "FAQ Details",
             "QUESTION_TITLE": "Questions Title",
             "TITLE": "Title is required*",
             "DESCRIPTION_REQUIRED": "Description is required*",
-            "ADD_FAQ": "ADD FAQ"
+            "ADD_FAQ": "Add FAQ"
         },
 
         "PRICE": {
