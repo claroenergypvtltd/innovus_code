@@ -40,6 +40,13 @@ class FetchRetailer extends React.Component {
     componentWillMount() {
         this.getRetailerList();
     }
+
+    componentDidUpdate(preProps) {
+        if (preProps.searchText != this.props.searchText) {
+            this.getRetailerList();
+        }
+    }
+
     getRetailerList = (status) => {
         let user = {};
         user.roleId = 2;

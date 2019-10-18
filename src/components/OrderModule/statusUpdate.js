@@ -130,7 +130,6 @@ class StatusUpdate extends Component {
                                         <select required name="status" className="form-control" value={this.state.status} onChange={this.handleInputChange}>
                                             <option value="0">Select Status</option>
                                             {statusDropDown}
-                                            <option value="1">Pending</option>
                                         </select>
 
                                         {this.state.submitted && !this.state.status && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}

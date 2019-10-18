@@ -60,7 +60,7 @@ class App extends Component {
 
       <div>
         {/* <LoaderBar isLoggedin={true}></LoaderBar> */}
-        <LoaderBar isLoggedin={true}></LoaderBar>
+        {/* <LoaderBar isLoggedin={true}></LoaderBar> */}
 
         {
           this.state.loaded ? <Routes></Routes> : 'Loading ...'

@@ -106,7 +106,7 @@ class User extends Component {
                 <FetchRetailer
                   // ref="fetchRetailer"
                   roleId={this.state.selectedRoleId}
-                  searchText={this.state.search}
+                  searchText={this.state.farmerSearch}
                 />
               </TabPanel>
             </Tabs>
