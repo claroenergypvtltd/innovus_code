@@ -1376,3 +1376,15 @@ bottom: 50%;
     font-size: 14px ;
     color :  #707070 ; 
   }
+  .li-menu-link {
+    /* background: rgba(237, 240, 245, 0.5); */
+    background:rgba(241, 231, 254, 1) 
+  }
+  .a-menu-link {
+      color: #800080 !important;
+  }
+ .a-menu-active{
+    border-image: linear-gradient(180deg,#ff8b92, #feb683) 1;
+    border-left: 8px solid #ff8b92;
+    color: $active-font-color;
+  }
