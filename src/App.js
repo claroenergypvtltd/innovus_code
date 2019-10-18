@@ -7,6 +7,7 @@ import { setCurrentUser, logoutUser } from './actions/authentication';
 import { Translation, Constant } from './constants';
 import LocalizedStrings from 'react-localization';
 import { path } from './constants';
+import { LoaderBar } from './libraries/LoaderBar';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes } from './config';
@@ -25,6 +26,14 @@ if (localStorage.jwtToken) {
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: false
+    }
+
+  }
+
 
   componentWillMount() {
     this.fetchLanguageJson();
@@ -51,6 +60,8 @@ class App extends Component {
 
       <div>
         {/* <LoaderBar isLoggedin={true}></LoaderBar> */}
+        <LoaderBar isLoggedin={true}></LoaderBar>
+
         {
           this.state.loaded ? <Routes></Routes> : 'Loading ...'
         }

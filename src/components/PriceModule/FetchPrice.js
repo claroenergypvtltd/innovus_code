@@ -20,7 +20,7 @@ class FetchPrice extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", "Total Weight", "Weight Units", "Price", "Price Units", "Box Quantity", "Box Units", "Actions"], PriceLists: props.getLists,
+            TableHead: ["Product ID", "Product Name", "Total Weight(Unit)", "Weight Units", "Price(Unit)", "Price Units", "Box Quantity(Unit)", "Box Units", "Actions"], PriceLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
             currentPage: 1,
@@ -114,9 +114,9 @@ class FetchPrice extends Component {
         let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
             return {
                 "itemList": [item.categoryAmount && item.categoryAmount.id, item.name,
-                item.categoryAmount && item.categoryAmount.totalQuantity,
-                item.categoryAmount && item.categoryAmount.totalQuantitySize, item.categoryAmount && item.categoryAmount.amount,
-                item.categoryAmount && item.categoryAmount.rupeesize, item.categoryAmount && item.categoryAmount.boxQuantity,
+                item.categoryAmount && item.categoryAmount.totalQuantity + " KG",
+                item.categoryAmount && item.categoryAmount.totalQuantitySize, item.categoryAmount && item.categoryAmount.amount + " Rs/KG",
+                item.categoryAmount && item.categoryAmount.rupeesize, item.categoryAmount && item.categoryAmount.boxQuantity + " KG",
                 item.categoryAmount && item.categoryAmount.boxQuantitySize], "itemId": item.id
             }
         })
