@@ -18,6 +18,7 @@ class CreatePrice extends Component {
             boxQuantity: '',
             categoryId: '',
             parentId: '',
+            offer: '',
             priceData: {},
             weightDatas: [],
             errors: {}
@@ -71,7 +72,8 @@ class CreatePrice extends Component {
                         if (response && response.datas && response.datas[0] && response.datas[0].categoryAmount) {
                             this.setState({
                                 weight: response.datas[0].categoryAmount.totalQuantitySize, price: response.datas[0].categoryAmount.amount,
-                                weightId: response.datas[0].categoryAmount.rupeesize, boxQuantity: response.datas[0].categoryAmount.boxQuantity
+                                weightId: response.datas[0].categoryAmount.rupeesize, boxQuantity: response.datas[0].categoryAmount.boxQuantity,
+                                discountValue: response.datas[0].categoryAmount.discountValue, discountUnit: response.datas[0].categoryAmount.discountUnit
                             })
                         }
                     })
@@ -162,7 +164,9 @@ class CreatePrice extends Component {
                 "boxQuantity": this.state.boxQuantity,
                 "totalQuantity": this.state.weight,
                 "totalQuantitySize": this.state.weightId,
-                "boxQuantitySize": this.state.weightId
+                "boxQuantitySize": this.state.weightId,
+                "discountValue": this.state.offer,
+                "discountUnit": this.state.offerId
             }
 
             this.props.submitPrice(obj, isUpdate);
@@ -192,6 +196,11 @@ class CreatePrice extends Component {
                 value={item.id}> {item.name}</option>
         });
 
+        const priceDropDown = this.state.weightDatas && this.state.weightDatas.map((item, index) => {
+            return <option key={index}
+                value={item.id}> {item.name + " RS/KG"}</option>
+        });
+
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -209,15 +218,15 @@ class CreatePrice extends Component {
                                                 <option value="0">Select Category</option>
                                                 {categoryDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-6">
-                                            <label>Crop Category</label>
+                                            <label>{window.strings['CATEGORY']['SUB_CATEGORY']}</label>
                                             <select required name="categoryId" className="form-control" value={this.state.categoryId} onChange={this.handleSubCategory}>
                                                 <option value="0">Select SubCategory </option>
                                                 {subCategoryDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['CATEGORY']['SUB_CATEGORY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         {/* </div> */}
 
@@ -243,7 +252,7 @@ class CreatePrice extends Component {
                                                 {weightDropDown}
                                             </select>
 
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         {/* </div> */}
 
@@ -267,9 +276,9 @@ class CreatePrice extends Component {
                                         <div className="form-group col-md-6 sub-price">
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
                                                 <option value="0">Select</option>
-                                                {weightDropDown}
+                                                {priceDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         {/* </div> */}
 
@@ -300,14 +309,41 @@ class CreatePrice extends Component {
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
+                                        <div className="form-group col-md-6">
+                                            <label>{window.strings.PRICE.OFFER}</label>
+                                            <input type="number"
+                                                placeholder="Offer"
+                                                className={classnames('form-control', {
+                                                    'is-invalid': errors.offer
+                                                })}
+                                                name="offer"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.offer}
+                                                required
+
+                                            />
+                                            {this.state.submitted && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+
+                                        <div className="form-group col-md-6 sub-price">
+                                            <select required name="offerId" className="form-control" value={this.state.offerId} onChange={this.handleInputChange} >
+                                                <option value="0">Select</option>
+                                                <option value="1">Currency</option>
+                                                <option value="2">Percentage</option>
+                                            </select>
+                                            {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                     </form>
                                 </div>
                                 <div className="col-md-12 bottom-section">
                                     <button type="button" className="btn btn-default mb-2" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                                    <button type="submit" className="btn btn-primary mb-2" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
+                                    <button type="submit" className="btn btn-primary mb-2" disabled={this.state.loading} onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
 
                                 </div>
                             </div>
