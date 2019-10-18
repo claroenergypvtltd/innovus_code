@@ -16,7 +16,7 @@ export default class ExportFile extends React.Component {
         // ];
 
         return (
-            <CSVLink className="excelExpBtn btn btn-primary mb-2" data={this.props.csvData}>
+            <CSVLink className="excel-btn" data={this.props.csvData}>
                 {window.strings.EXCELEXPORT}
             </CSVLink>
         )
