@@ -58,13 +58,13 @@ class StatusUpdate extends Component {
             "location": this.state.location,
             "status": this.state.status,
         }
-        if(this.props.orderId && this.state.activity && this.state.location && this.state.status){
+        if (this.props.orderId && this.state.activity && this.state.location && this.state.status) {
             SubmitOrderStatus(obj).then(resp => {
                 if (resp) {
                     this.props.onCloseModal();
                 }
             });
-        }       
+        }
     }
 
     getTrackDetails = () => {
@@ -171,7 +171,7 @@ class StatusUpdate extends Component {
                         </div>
                         <div className="col-md-12 bottom-section">
                             <button type="button" className="btn btn-default" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
-                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
+                            <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
                         </div>
                     </div>
                 </div>

@@ -22,6 +22,7 @@ class IrrigationSetting extends Component {
             stateId: '',
             amount: '',
             areaSize: '',
+            irrigationCostId: '',
             errors: {}
         }
     }
@@ -159,7 +160,7 @@ class IrrigationSetting extends Component {
 
                             <div className="form-group col-md-6">
                                 <label>{window.strings['SETTING']['STATE_LABEL']}</label>
-                                <select required name="stateId" className="form-control" value={this.state.stateId} onChange={this.handleStateChange}>
+                                <select required name="stateId" className="form-control" value={this.state.stateId} onChange={this.handleStateChange} disabled={this.state.irrigationCostId}>
                                     <option value="0">{window.strings['SETTING']['SELECT_STATE']}</option>
                                     {stateDropDown}
                                 </select>
@@ -167,7 +168,7 @@ class IrrigationSetting extends Component {
                             </div>
                             <div className="form-group col-md-6">
                                 <label>{window.strings['SETTING']['CITY_LABEL']}</label>
-                                <select required name="cityId" className="form-control" value={this.state.cityId} onChange={this.handleInputChange}>
+                                <select required name="cityId" className="form-control" value={this.state.cityId} onChange={this.handleInputChange} disabled={this.state.irrigationCostId}>
                                     <option value="0">{window.strings['SETTING']['SELECT_CITY']} </option>
                                     {cityDropDown}
                                 </select>
