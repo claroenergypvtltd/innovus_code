@@ -3,14 +3,21 @@ import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import { getKYClist } from '../../actions/SubmitRetailerAction';
 import { connect } from 'react-redux';
+import PropTypes from "prop-types";
 
 class RetKYCList extends React.Component {
+    static contextTypes = {
+        router: PropTypes.object
+    }
     constructor(props) {
         super(props);
         this.state = {
             tabIndex: 0,
             KycData: []
         };
+    }
+    redirectPage = () => {
+        this.context.router.history.goBack();
     }
     componentDidMount() {
         this.props.getKYClist(this.props.profileID);
@@ -50,6 +57,10 @@ class RetKYCList extends React.Component {
                         </div>
                     )}
                     {kyc && kyc.length == 0 && <div>{window.strings.NODATA}</div>}
+
+                </div>
+                <div className="back-btn">
+                    <button className="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
             </div>
 

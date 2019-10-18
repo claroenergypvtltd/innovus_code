@@ -23,18 +23,7 @@ class FetchRetailer extends React.Component {
             roleId: props.roleId,
             retailerId: "",
             columns: resorceJSON.RetailerList,
-            data: [],
-            products: {
-                id: 1,
-                name: "Product1",
-                price: 120
-            },
-            csvData: [
-                { firstname: "lastname" },
-                { ee: "lastname" },
-                { fi33rstname: "lastname" },
-                { fir3323stname: "lastname" }
-            ],
+            data: []
         }
     }
     componentWillMount() {
@@ -53,7 +42,6 @@ class FetchRetailer extends React.Component {
         e.preventDefault();
         let redrctpath = path.retailer.add;
         this.context.router.history.push(redrctpath);
-        // this.props.history.push(path.farmer.add);
     };
     componentWillReceiveProps(newProps) {
         if (newProps.list.datas) {
@@ -75,16 +63,11 @@ class FetchRetailer extends React.Component {
         })
         let ViewPage = <select className="drop-select" onChange={(e) => this.statusChange(e, RetstatusId)}>
             {statusDropdown}
-            {/* onChange={() => this.statusChange(RetstatusId)} selected={RetstatusId}*/}
-            {/* <option value={status} className="drop-option" >{window.strings.RETAILERS.PENDING}</option>
-            <option value={status} className="drop-option">{window.strings.RETAILERS.ACCEPTED}</option>
-            <option value={status} className="drop-option">{window.strings.RETAILERS.REJECTED}</option> */}
         </select>
         return ViewPage;
     }
     statusChange(e, RetId) {
         let statusVal = e.target.value;
-        console.log('----statusVal--', statusVal);
         let message = window.strings.UPDATEMESSAGE;
         const toastrConfirmOptions = {
             onOk: () => {
@@ -102,7 +85,6 @@ class FetchRetailer extends React.Component {
     }
     statusFilter(e) {
         this.getRetailerList(e.target.value);
-
     }
     handleDelete = (data, e) => {
         e.preventDefault();
@@ -116,10 +98,6 @@ class FetchRetailer extends React.Component {
     itemDelete = (id) => {
         this.props.deleteRetailer(id)
     };
-    excelExport(e) {
-        e.preventDefault();
-        console.log('----excelExport----');
-    }
     // Actions() {
     //     let actions = <div>
 
@@ -171,10 +149,35 @@ class FetchRetailer extends React.Component {
             resorceJSON.statusOptions.map((item, index) => {
                 return <option value={index} className="drop-option"> {item}</option>
             })
-        this.state.data.map((item, index) => {
-            if (item.shopAddress) {
-                excelDatas.push(item.shopAddress)
+        this.state.data && this.state.data.map((item, index) => {
+            let address = '';
+            let addressData = '';
+            let role = '';
+            let shopAddress = '';
+            let shopAddressData = '';
+            let selectBox = '';
+            if (Object.keys(item.address).length > 1) {
+                address = JSON.stringify(item.address).toString().replace(/"/g, '');
             }
+            if (Object.keys(item.addressData).length > 1) {
+                addressData = JSON.stringify(item.addressData).toString().replace(/"/g, '');
+            }
+            if (Object.keys(item.role).length > 1) {
+                role = JSON.stringify(item.role).toString().replace(/"/g, '');
+            }
+            if (Object.keys(item.shopAddress).length > 1) {
+                shopAddress = JSON.stringify(item.shopAddress).toString().replace(/"/g, '');
+            }
+            // if (Object.keys(item.shopAddressData).length > 1) {
+            //      shopAddressData = JSON.stringify(item.shopAddressData).toString().replace(/"/g, '');
+            // }
+            item.address = address;
+            // item.addressData = addressData;
+            item.role = role;
+            item.selectBox = selectBox;
+            item.shopAddress = shopAddress;
+            // item.shopAddressData = shopAddressData;
+            excelDatas.push(item);
         })
         return (
             <div>

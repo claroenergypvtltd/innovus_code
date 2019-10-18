@@ -23,11 +23,11 @@ export const resorceJSON = {
     { name: 'Email ', selector: 'emailId', sortable: true },
   ],
   RetailerList: [
-    { name: 'Customer Id', selector: 'mobileNumber', sortable: true },
+    { name: 'Customer Id', selector: 'cusId', sortable: true },
     { name: 'Name', selector: 'name', sortable: true },
     { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
     { name: 'Email', selector: 'emailId', sortable: true },
-    { name: 'Agent Id', selector: 'mobileNumber', sortable: true },
+    { name: 'Agent Id', selector: 'agentId', sortable: true },
     { name: 'Status', selector: 'selectBox', sortable: true },
     // { text: 'Actions', dataField: 'actions', sortable: true },
   ],

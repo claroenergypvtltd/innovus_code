@@ -8,15 +8,8 @@ export default class ExportFile extends React.Component {
         }
     }
     render() {
-        // const csvData = [
-        //     ["firstname", "lastname", "email"],
-        //     ["Ahmed", "Tomi", "ah@smthing.co.com"],
-        //     ["Raed", "Labes", "rl@smthing.co.com"],
-        //     ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-        // ];
-
         return (
-            <CSVLink className="excel-btn" data={this.props.csvData}>
+            <CSVLink filename='Retailers.csv' className="excel-btn" data={this.props.csvData}>
                 {window.strings.EXCELEXPORT}
             </CSVLink>
         )
