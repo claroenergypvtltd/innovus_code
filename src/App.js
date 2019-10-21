@@ -59,7 +59,7 @@ class App extends Component {
       //   </Router>
 
       <div>
-        {/* <LoaderBar isLoggedin={true}></LoaderBar> */}
+        <LoaderBar isLoggedin={true}></LoaderBar>
         {/* <LoaderBar isLoggedin={true}></LoaderBar> */}
 
         {

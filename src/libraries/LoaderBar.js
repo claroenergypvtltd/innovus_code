@@ -59,15 +59,17 @@ export class LoaderBar extends React.Component {
 	render() {
 		return (
 			this.state.loader ?
+				<div className="loader-overlay">
+					<div className="loader">
 
-				<div className="loader">
-					<ReactLoading type="spin" color="#ff8b92" className="loader-section" />
+						<ReactLoading type="spin" className="loader-section" />
+					</div>
 				</div>
 
 				:
 				<div>
 					<div className="loader-hide">
-						<ReactLoading type="spin" color="#ff8b92" className="loader-section-hide" />
+						<ReactLoading type="spin" className="loader-section-hide" />
 					</div>
 				</div>
 		)
