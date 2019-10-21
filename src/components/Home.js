@@ -69,9 +69,9 @@ class Home extends Component {
                             <span className="graph-title">Delivery Orders</span>
                             {/* <span className="graph-label">This Week</span> */}
                             <select className="drop-select" onChange={(e) => this.getDateType(e)}>
-                                <option value="week">This Week</option>
-                                <option value="month">This Month</option>
-                                <option value="year">This Year</option>
+                                <option value="week" className="drop-option" >This Week</option>
+                                <option value="month" className="drop-option">This Month</option>
+                                <option value="year" className="drop-option">This Year</option>
                             </select>
                         </div>
                         <div className="sub-graph pb-4">

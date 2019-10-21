@@ -78,7 +78,7 @@ class FetchRetailer extends React.Component {
     }
     viewCrop(RetstatusId, status) {
         const statusDropdown = resorceJSON.statusOptions.map((item, index) => {
-            return <option value={index} selected={status == index ? true : false}>{item}</option>
+            return <option value={index} selected={status == index ? true : false} className="drop-option">{item}</option>
         })
         let ViewPage = <select className="drop-select" onChange={(e) => this.statusChange(e, RetstatusId)}>
             {statusDropdown}
@@ -184,14 +184,36 @@ class FetchRetailer extends React.Component {
             }
         })
         return (
-            <div>
-                <ExportFile csvData={this.state.data} />
-                {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
-                <div className="status-filter"><label>Status Filter:</label>
-                    <select className="drop-select ml-1" onChange={(e) => this.statusFilter(e)}>
-                        <option value="" className="drop-option">-- Select --</option>
-                        {statusDropdown}
-                    </select>
+            <div className="mt-4">
+                <div className="main-filter">
+                    <div className="date-range mr-2"><label className="label-title">Date:</label>
+                        <input type="text" name="date" className="date-box ml-1" />
+                    </div>
+                    <div className="new-filter mr-2"><label className="label-title">State:</label>
+                        <select className="drop-select ml-1 yellow" onChange={(e) => this.statusFilter(e)}>
+                            <option value="" className="drop-option">-- Select --</option>
+                            <option value="" className="drop-option">Tamil Nadu</option>
+                            <option value="" className="drop-option">Kerala</option>
+
+                        </select>
+                    </div>
+                    <div className="sub-filter"><label className="label-title">City:</label>
+                        <select className="drop-select ml-1 red" onChange={(e) => this.statusFilter(e)}>
+                            <option value="" className="drop-option">-- Select --</option>
+                            <option value="" className="drop-option">Madurai</option>
+                            <option value="" className="drop-option">Kochi</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="sub-filter">
+                    <ExportFile csvData={this.state.data} />
+                    {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
+                    <div className="status-filter"><label className="label-title">Status Filter:</label>
+                        <select className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                            <option value="" className="drop-option">-- Select --</option>
+                            {statusDropdown}
+                        </select>
+                    </div>
                 </div>
                 {/* <Row className="clearfix title-section">
                     <Col md={5} className="title-card user-board">
