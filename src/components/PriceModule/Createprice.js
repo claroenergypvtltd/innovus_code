@@ -198,7 +198,7 @@ class CreatePrice extends Component {
 
         const priceDropDown = this.state.weightDatas && this.state.weightDatas.map((item, index) => {
             return <option key={index}
-                value={item.id}> {item.name + " RS/KG"}</option>
+                value={item.id}> {"RS / " + item.name}</option>
         });
 
         return (
@@ -246,7 +246,8 @@ class CreatePrice extends Component {
                                             />
                                             {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        <div className="form-group col-md-6 sub-price">
+                                        <div className="form-group col-md-6">
+                                            <label>{window.strings.PRICE.TYPE}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} Z>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
@@ -273,7 +274,8 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.price && <div className="mandatory">{window.strings['CROP']['PRICE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group col-md-6 sub-price">
+                                        <div className="form-group col-md-6 ">
+                                            <label>{window.strings.PRICE.TYPE}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
                                                 <option value="0">Select</option>
                                                 {priceDropDown}
@@ -304,7 +306,8 @@ class CreatePrice extends Component {
                                         {/* boxQuantity */}
 
 
-                                        <div className="form-group col-md-6 sub-price">
+                                        <div className="form-group col-md-6 ">
+                                            <label>{window.strings.PRICE.TYPE}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
@@ -330,13 +333,15 @@ class CreatePrice extends Component {
                                         </div>
 
 
-                                        <div className="form-group col-md-6 sub-price">
+                                        <div className="form-group col-md-6 ">
+                                            <label>{window.strings.PRICE.TYPE}</label>
+
                                             <select required name="offerId" className="form-control" value={this.state.offerId} onChange={this.handleInputChange} >
                                                 <option value="0">Select</option>
                                                 <option value="1">Currency</option>
                                                 <option value="2">Percentage</option>
                                             </select>
-                                            {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                     </form>
