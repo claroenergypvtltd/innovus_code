@@ -28,6 +28,7 @@ export const Translation = {
         "STOCKLABELOUT": "Out-stock",
         "STOCKLABELIN": "In-stock",
         "NEXT": "Next",
+        "UPDATERETSTATUS": 'Update Status',
         "SUBMITBUTTON": "Submit",
         "YES": "Yes",
         "NO": "No",

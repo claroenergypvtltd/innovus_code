@@ -9,7 +9,7 @@ export default class ExportFile extends React.Component {
     }
     render() {
         return (
-            <CSVLink filename='Retailers.csv' className="excel-btn" data={this.props.csvData}>
+            <CSVLink filename='Retailers.csv' className="excel-btn ml-2" data={this.props.csvData}>
                 {window.strings.EXCELEXPORT}
             </CSVLink>
         )

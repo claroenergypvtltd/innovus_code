@@ -65,6 +65,10 @@ class FetchOrder extends Component {
         }
     }
 
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
+
     getOrderList() {
         let obj = {
             "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
@@ -148,7 +152,7 @@ class FetchOrder extends Component {
                             <a href="#" className="card">
                                 <div className="box">
                                     <h5 className="dashboard-title">Orders to Ship</h5>
-                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].totalorders}</span>
+                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].totalorders ? OrderLists[0].totalorders : 0}</span>
                                 </div>
                             </a>
                         </div>
@@ -156,7 +160,7 @@ class FetchOrder extends Component {
                             <a href="#" className="card">
                                 <div className="box">
                                     <h5 className="dashboard-title">Overdue Shipments</h5>
-                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].orderdue}</span>
+                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].orderdue ? OrderLists[0].orderdue : 0}</span>
                                 </div>
                             </a>
                         </div>
@@ -164,7 +168,7 @@ class FetchOrder extends Component {
                             <a href="#" className="card">
                                 <div className="box">
                                     <h5 className="dashboard-title">Pending Shipments</h5>
-                                    <span>{OrderLists && OrderLists[0] && OrderLists[0].orderspending}</span>
+                                    <span>{OrderLists && OrderLists[0] && OrderLists[0].orderspending ? OrderLists[0].orderspending : 0}</span>
                                 </div>
                             </a>
                         </div>
@@ -173,9 +177,9 @@ class FetchOrder extends Component {
                         <Col md={8} className="title-card">
                             <h4 className="user-title">ORDER</h4>
                         </Col>
-                        <Col md={4} className="pl-5">
-                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        </Col>
+                        {/* <Col md={4} className="pl-5">
+                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        </Col> */}
                     </Row>
                 </div>
 

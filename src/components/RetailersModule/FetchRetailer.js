@@ -23,12 +23,20 @@ class FetchRetailer extends React.Component {
             roleId: props.roleId,
             retailerId: "",
             columns: resorceJSON.RetailerList,
-            data: []
+            data: [],
+            excelDatas: []
         }
     }
     componentWillMount() {
         this.getRetailerList();
     }
+
+    componentDidUpdate(preProps) {
+        if (preProps.searchText != this.props.searchText) {
+            this.getRetailerList();
+        }
+    }
+
     getRetailerList = (status) => {
         let user = {};
         user.roleId = 2;
@@ -50,7 +58,10 @@ class FetchRetailer extends React.Component {
                 item.selectBox = this.viewCrop(item.id, item.status);
                 return item;
             })
-            this.setState({ data: Lists });
+            this.setState({
+                data: Lists, exceldatas: Lists
+            })
+
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
             store.dispatch({ type: RETAILER_DELETE_SUCCESS, resp: "" })
@@ -58,12 +69,21 @@ class FetchRetailer extends React.Component {
         }
     }
     viewCrop(RetstatusId, status) {
+        let statusClass;
+        if (status == 0) {
+            statusClass = window.strings.RETAILERS.PENDING
+        } else if (status == 1) {
+            statusClass = window.strings.RETAILERS.ACCEPTED
+        } else {
+            statusClass = window.strings.RETAILERS.REJECTED
+        }
         const statusDropdown = resorceJSON.statusOptions.map((item, index) => {
-            return <option value={index} selected={status == index ? true : false}>{item}</option>
+            return <option value={index} selected={status == index ? true : false} className="drop-option">{item}</option>
         })
-        let ViewPage = <select className="drop-select" onChange={(e) => this.statusChange(e, RetstatusId)}>
+        let ViewPage = <select className={statusClass} onChange={(e) => this.statusChange(e, RetstatusId)}>
+            {/* className="drop-select" */}
             {statusDropdown}
-        </select>
+        </select >
         return ViewPage;
     }
     statusChange(e, RetId) {
@@ -77,11 +97,12 @@ class FetchRetailer extends React.Component {
                 formData.append("status", statusVal);
                 updateStatusRetailer(formData).then(resp => {
                     resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
+                    window.location.reload(false);
                 })
             },
             onCancel: () => console.log('CANCEL: clicked')
         };
-        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }
     statusFilter(e) {
         this.getRetailerList(e.target.value);
@@ -134,7 +155,7 @@ class FetchRetailer extends React.Component {
         let retailerId = item.id;
         this.context.router.history.push({
             pathname: path.retailer.view + retailerId,
-            data: { farmerData: item },
+            data: { farmerData: item, retailerId: retailerId },
         });
     };
     itemEdit = (Data) => {
@@ -149,7 +170,7 @@ class FetchRetailer extends React.Component {
             resorceJSON.statusOptions.map((item, index) => {
                 return <option value={index} className="drop-option"> {item}</option>
             })
-        this.state.data && this.state.data.map((item, index) => {
+        this.state.exceldatas && this.state.exceldatas.map((item, index) => {
             let address = '';
             let addressData = '';
             let role = '';
@@ -171,23 +192,48 @@ class FetchRetailer extends React.Component {
             // if (Object.keys(item.shopAddressData).length > 1) {
             //      shopAddressData = JSON.stringify(item.shopAddressData).toString().replace(/"/g, '');
             // }
+            item.jsonaddress = item.address;
+            item.jsonshopAddress = item.shopAddress;
             item.address = address;
             // item.addressData = addressData;
             item.role = role;
-            item.selectBox = selectBox;
             item.shopAddress = shopAddress;
             // item.shopAddressData = shopAddressData;
             excelDatas.push(item);
+            console.log('excelDatas---', excelDatas);
+
         })
         return (
-            <div>
-                <ExportFile csvData={this.state.data} />
-                {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
-                <div className="status-filter"><label>Status Filter:</label>
-                    <select className="drop-select ml-1" onChange={(e) => this.statusFilter(e)}>
-                        <option value="" className="drop-option">-- Select --</option>
-                        {statusDropdown}
-                    </select>
+            <div className="mt-4">
+                <div className="main-filter">
+                    <div className="date-range mr-2"><label className="label-title">Date:</label>
+                        <input type="text" name="date" className="date-box ml-1" />
+                    </div>
+                    <div className="new-filter mr-2"><label className="label-title">State:</label>
+                        <select className="drop-select ml-1 yellow" onChange={(e) => this.statusFilter(e)}>
+                            <option value="" className="drop-option">-- Select --</option>
+                            <option value="" className="drop-option">Tamil Nadu</option>
+                            <option value="" className="drop-option">Kerala</option>
+
+                        </select>
+                    </div>
+                    <div className="sub-filter"><label className="label-title">City:</label>
+                        <select className="drop-select ml-1 red" onChange={(e) => this.statusFilter(e)}>
+                            <option value="" className="drop-option">-- Select --</option>
+                            <option value="" className="drop-option">Madurai</option>
+                            <option value="" className="drop-option">Kochi</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="sub-filter">
+                    <ExportFile csvData={this.state.data} />
+                    {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
+                    <div className="status-filter"><label className="label-title">Status Filter:</label>
+                        <select className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                            <option value="" className="drop-option">-- Select --</option>
+                            {statusDropdown}
+                        </select>
+                    </div>
                 </div>
                 {/* <Row className="clearfix title-section">
                     <Col md={5} className="title-card user-board">

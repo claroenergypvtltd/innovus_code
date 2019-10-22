@@ -12,6 +12,7 @@ import { imageBaseUrl } from '../../config'
 import { toastr } from 'react-redux-toastr'
 // import GoogleMap from '../../shared/GoogleMap'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import noimg from '../../assets/noimage/Avatar_farmer.png'
 
 const { Step } = Steps;
 const steps = [
@@ -64,7 +65,7 @@ class RetailerInfo extends React.Component {
         this.setState({
             Shopsubmitted: true
         })
-        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImage && this.state.retShopImage && this.state.agentId) {
+        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImage && this.state.retShopImage && this.state.agentId && this.state.pincode) {
             // && this.state.retPersonalImagefile && this.state.retShopImgfile
             const formData = new FormData();
             formData.append("userId", this.state.userId);
@@ -227,13 +228,19 @@ class RetailerInfo extends React.Component {
         let retailPersonalimagePreview, retailShopimagePreview;
         if (RetPerosnalimagePrewUrl) {
             retailPersonalimagePreview = <img className="pre-view" src={RetPerosnalimagePrewUrl} />
-        } else {
+        } else if (this.state.retPersonalImage) {
             retailPersonalimagePreview = <img className="pre-view" src={imageBaseUrl + this.state.retPersonalImage} />
+        } else {
+            retailPersonalimagePreview = <img className="pre-view" src={noimg} />
         }
+
         if (RetShopimagePrewUrl) {
             retailShopimagePreview = <img className="pre-view" src={RetShopimagePrewUrl} />
-        } else {
+        } else if (this.state.retShopImage) {
             retailShopimagePreview = <img className="pre-view" src={imageBaseUrl + this.state.retShopImage} />
+        }
+        else {
+            retailShopimagePreview = <img className="pre-view" src={noimg} />
         }
         const countryDropDown = this.state.countries && this.state.countries.map((item, index) => {
             return <option key={index}
