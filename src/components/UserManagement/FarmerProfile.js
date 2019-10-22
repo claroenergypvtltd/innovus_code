@@ -13,7 +13,7 @@ class FarmerProfile extends React.Component {
     return (
       <Container>
         <Row className="show-grid white-bg">
-          <Col md={3} className="ticket_block">
+          <Col md={3} className="ticket-block">
             <div className="profile-box">
               <div className="profile-img">
                 <Image src={imageBaseUrl + profile.image} className="centext" roundedCircle />

@@ -65,7 +65,7 @@ class ShopDetails extends React.Component {
             </div >
             // <Container>
             //     <Row className="show-grid white-bg">
-            //         <Col sm={6} md={3} className="ticket_block">
+            //         <Col sm={6} md={3} className="ticket-block">
             //             <div className="profile-box">
             //                 <div className="profile-img">
             //                     <Image

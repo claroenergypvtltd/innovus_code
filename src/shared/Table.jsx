@@ -33,8 +33,22 @@ export function TableData(props) {
                     )
                   }
                   <td>
-                    {props.handleEdit && <i className="fa fa-pencil-square-o edit_icon" aria-hidden="true" onClick={() => props.handleEdit(item.itemId)}></i>}
-                    {props.handleDelete && <i className="fa fa-trash del_icon" aria-hidden="true" onClick={() => props.handleDelete(item.itemId)}></i>}
+                    {/* {props.handleEdit && <div><i className="fa fa-pencil-square-o edit_icon btn-view" aria-hidden="true" onClick={() => props.handleEdit(item.itemId)}></i>
+                      <span className="tooltip-text">View</span></div>
+                    } */}
+                    {props.handleEdit && (
+                      <button onClick={() => props.handleEdit(item.itemId)} className="btn-edit">
+                        <i className="fa fa-pencil-square-o" />
+                        <span className="tooltip-text">Edit</span>
+                      </button>
+                    )}
+                    {props.handleDelete && (
+                      <button onClick={() => props.handleDelete(item.itemId)} className="btn-trash">
+                        <i className="fa fa-trash-alt" />
+                        <span className="tooltip-text">Delete</span>
+                      </button>
+                    )}
+                    {/* {props.handleDelete && <i className="fa fa-trash" aria-hidden="true" onClick={() => props.handleDelete(item.itemId)}></i>} */}
                   </td>
                 </tr>
 

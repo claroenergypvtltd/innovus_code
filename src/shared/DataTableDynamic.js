@@ -18,17 +18,20 @@ class DataTableDynamic extends React.Component {
             {this.props.handleView && (
               <button onClick={e => this.handleView(e, row)} className="btn-view">
                 <i className="fa fa-eye" aria-hidden="true" />
+                <span className="tooltip-text">View</span>
               </button>
             )}
             {this.props.handleEdit && (
-              <button onClick={() => this.handleEdit(row)} className="btn-view">
+              <button onClick={() => this.handleEdit(row)} className="btn-edit">
                 {/* <i className="fal fa-pencil-square-o edit_icon" />*/}
                 <i className="fa fa-pencil-square-o" />
+                <span className="tooltip-text">Edit</span>
               </button>
             )}
             {this.props.handleDelete && (
-              <button onClick={e => this.handleDelete(row, e)} className="btn-view">
+              <button onClick={e => this.handleDelete(row, e)} className="btn-trash">
                 <i className="fa fa-trash" />
+                <span className="tooltip-text">Delete</span>
               </button>
             )}
           </div>

@@ -40,7 +40,7 @@ class FarmDetails extends React.Component {
       <Container>
         <div className="farm-all">
           <Row className="show-grid">
-            <Col sm={6} md={2} className="ticket_block1">
+            <Col sm={6} md={2} className="ticket-block1">
               <Image
                 src={imageBaseUrl + farmData.image}
                 className="maincentext"

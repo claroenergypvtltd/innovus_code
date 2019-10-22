@@ -18,18 +18,23 @@ export class DynamicTable extends React.Component {
                 cell: row => (
                     <div>
                         {this.props.handleView && (
-                            <button onClick={e => this.handleView(e, row)}>
+                            <button onClick={e => this.handleView(e, row)} className="btn-view">
                                 <i className="fa fa-eye" aria-hidden="true" />
+                                <span className="tooltip-text">View</span>
+
                             </button>
                         )}
                         {this.props.handleEdit && (
-                            <button onClick={(e) => this.handleEdit(e, row)}>
-                                <i className="fal fa-pencil-square-o edit_icon" />
+                            <button onClick={(e) => this.handleEdit(e, row)} className="btn-edit">
+                                <i className="fal fa-pencil-square-o" />
+                                <span className="tooltip-text">Edit</span>
+
                             </button>
                         )}
                         {this.props.handleDelete && (
-                            <button onClick={(e) => this.handleDelete(row, e)}>
+                            <button onClick={(e) => this.handleDelete(row, e)} className="btn-trash">
                                 <i className="fas fa-trash-alt" />
+                                <span className="tooltip-text">Delete</span>
                             </button>
                         )}
                     </div>

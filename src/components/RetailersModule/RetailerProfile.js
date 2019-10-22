@@ -42,7 +42,7 @@ class RetailerProfile extends React.Component {
                     <button className="common-button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                 </div> */}
                 <Row className="show-grid white-bg">
-                    <Col md={3} className="ticket_block">
+                    <Col md={3} className="ticket-block">
                         <div className="profile-box">
                             <div className="profile-img">
                                 <Image src={RetImg} className="centext" roundedCircle />
