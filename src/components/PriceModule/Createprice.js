@@ -71,9 +71,9 @@ class CreatePrice extends Component {
                         this.setState({ categoryId: resp.datas[0].id });
                         if (response && response.datas && response.datas[0] && response.datas[0].categoryAmount) {
                             this.setState({
-                                weight: response.datas[0].categoryAmount.totalQuantitySize, price: response.datas[0].categoryAmount.amount,
+                                weight: response.datas[0].categoryAmount.totalQuantity, price: response.datas[0].categoryAmount.amount,
                                 weightId: response.datas[0].categoryAmount.rupeesize, boxQuantity: response.datas[0].categoryAmount.boxQuantity,
-                                discountValue: response.datas[0].categoryAmount.discountValue, discountUnit: response.datas[0].categoryAmount.discountUnit
+                                offer: response.datas[0].categoryAmount.discountValue, offerId: response.datas[0].categoryAmount.discountUnit
                             })
                         }
                     })

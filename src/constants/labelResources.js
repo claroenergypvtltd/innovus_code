@@ -25,7 +25,7 @@ export const labelResources = {
   "Sidebar": {
     "dasboard": "Dashboard",
     "userLabel": "User Management",
-    "settingLabel": "Settings",
+    "settingLabel": "Irrigation Settings",
     "paymentLabel": "Payment Management",
     "reportLabel": "Report Management",
     "productLabel": "Products",

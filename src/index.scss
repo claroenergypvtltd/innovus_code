@@ -296,6 +296,11 @@ li:hover .menu-link{
   border-left: 8px solid #ff8b92;
   color: $active-font-color;
 }
+.menu-link-high{
+  border-image: linear-gradient(180deg,#ff8b92, #feb683) 1;
+  border-left: 8px solid #ff8b92;
+  color: $active-font-color;
+}
 .menu-list i{
   background-image: url(../src/assets/images/AgroSprit_menuicons.png);
   background-repeat: no-repeat;

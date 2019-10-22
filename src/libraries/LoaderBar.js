@@ -40,7 +40,7 @@ export class LoaderBar extends React.Component {
 
 	componentDidMount() {
 		if (this.props.isLoggedIn === null || this.props.isLoggedIn) {
-			this.setState({ loader: true });
+			this.setState({ loader: false });
 		}
 		this.subcri = PubSub.subscribe('msg', (msg, data) => {
 			this.setState({ loader: data });
