@@ -49,7 +49,7 @@ class CropList extends React.Component {
       return (
         <div key={index}>
           {index <= 0 && <div><h1>Irigation Schedule</h1>
-            <button className="fa fa-pencil-square-o edit_icon float-right" onClick={() => this.irrigationPage(item)}></button></div>}
+            <button className="fa fa-pencil-square-o float-right" onClick={() => this.irrigationPage(item)}></button></div>}
           <div>{item.name}</div>
           <div>{utils.dateConvertion(item.irrigationDate)}</div>
           <i className="fa fa-check" aria-hidden="true" />
@@ -85,8 +85,8 @@ class CropList extends React.Component {
           expandable={true}
           pagination={true}
           expandableComponent={expandableComponent}
-          />
-         </div>
+        />
+      </div>
     );
   }
 }

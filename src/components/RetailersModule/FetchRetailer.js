@@ -209,7 +209,7 @@ class FetchRetailer extends React.Component {
                     <div className="date-range mr-2"><label className="label-title">Date:</label>
                         <input type="text" name="date" className="date-box ml-1" />
                     </div>
-                    <div className="new-filter mr-2"><label className="label-title">State:</label>
+                    <div className="state-filter mr-2"><label className="label-title">State:</label>
                         <select className="drop-select ml-1 yellow" onChange={(e) => this.statusFilter(e)}>
                             <option value="" className="drop-option">-- Select --</option>
                             <option value="" className="drop-option">Tamil Nadu</option>
@@ -217,7 +217,7 @@ class FetchRetailer extends React.Component {
 
                         </select>
                     </div>
-                    <div className="sub-filter"><label className="label-title">City:</label>
+                    <div className="city-filter"><label className="label-title">City:</label>
                         <select className="drop-select ml-1 red" onChange={(e) => this.statusFilter(e)}>
                             <option value="" className="drop-option">-- Select --</option>
                             <option value="" className="drop-option">Madurai</option>

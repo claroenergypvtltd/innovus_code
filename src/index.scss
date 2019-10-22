@@ -384,7 +384,7 @@ li:hover .menu-list i{
     
   }
 }
-.ticket_block{
+.ticket-block{
   //border: 1px solid #ccc;
   border-right-style: inset;
   .profile-img{
@@ -730,7 +730,79 @@ a,p,small,span{font-family: open sans;}
   border:none;
   background-color: #ffffff;
   color: #706d6d;
+  border:none;
+  background-color: #ffffff;
+  color: #706d6d;
+}
+.btn-view .tooltip-text {
+  visibility: hidden;
+  background-image: $gradient-1;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 1;
+  padding: 0 2px;
+  top: 72%;
+  // left: 10px;
+  left: -2px;
+  margin-left: 0;
+  font-size: 10px;
+}
+.btn-view:hover .tooltip-text {
+  visibility: visible;
+}
+.btn-trash{
+  border:none;
+  background-color: #ffffff;
+  color: #706d6d;
+  border:none;
+  background-color: #ffffff;
+  color: #706d6d;
+}
+.btn-trash .tooltip-text {
+  visibility: hidden;
+  background-image: $gradient-1;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 1;
+  padding: 0 2px;
+  top: 72%;
+ // left: 61px;
+  left: 49px;
+  font-size: 10px;
+  margin-left: 0;
+}
+.btn-trash:hover .tooltip-text {
+  visibility: visible;
+}
+.btn-edit {
+  position: relative;
+  display: inline-block;
+  border:none;
+  background-color: #ffffff;
+  color: #706d6d;
+}
 
+.btn-edit .tooltip-text {
+  visibility: hidden;
+  background-image: $gradient-1;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 1;
+  padding: 0 3px;
+  top: 100%;
+  //left: 0;
+  left: -7px;
+  margin-left: 0;
+  font-size: 10px;
+}
+.btn-edit:hover .tooltip-text {
+  visibility: visible;
 }
 .right-title{
   padding: 0 0 20px 0;
@@ -1088,11 +1160,13 @@ svg{
   background-image: linear-gradient(to right, #ff8b92, #feb683);
   color: #fff;
   border-radius: 5px;
+  cursor: pointer;
 
  // width: 90px;
 }
 .drop-option{
   color: #000;
+  background-color: #fff;
 }
 /****************************Price Section************************/
 .sub-price{
@@ -1348,6 +1422,7 @@ bottom: 50%;
 .date-box{
   border: 1px solid #aaa;
   border-radius: 5px;
+  cursor: pointer;
 }
 .main-filter{
   text-align: left;
@@ -1393,20 +1468,20 @@ bottom: 50%;
     color: $active-font-color;
   }
 // ******* -- STATUS  COLOR **** //
-.Pending{
-  background-color: #F2F21C;
+.pending{
+  background-color: #F2C71C;
   border: none;
-  color:#707070;
+  color:#fff;
   border-radius: 5px;
 }
-.Accepted{
-  background-color: #B9F319;
+.accepted{
+  background-color: #1CCE46;
   border: none;
-  color: #707070;
+  color: #fff;
   border-radius: 5px;
 }
-.Rejected{
-  background-color: #FE203D;
+.rejected{
+  background-color: #EF4A4A;
   border: none;
   color: #fff;
   border-radius: 5px;
