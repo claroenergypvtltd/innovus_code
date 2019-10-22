@@ -12,6 +12,7 @@ import { imageBaseUrl } from '../../config'
 import { toastr } from 'react-redux-toastr'
 // import GoogleMap from '../../shared/GoogleMap'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import noimg from '../../assets/noimage/Avatar_farmer.png'
 
 const { Step } = Steps;
 const steps = [
@@ -35,12 +36,14 @@ class RetailerInfo extends React.Component {
             shopaddress2: '',
             gst: '',
             shoplocation: '',
+            editpage: false
         };
     }
     componentDidMount() {
         // this.getCountries();
         this.getStateList();
         if (this.props.location && this.props.location.state && this.props.location.state.retailerId) {
+            this.setState({ editpage: true })
             let user = {};
             user.retailerId = this.props.location.state.retailerId;
             user.isEdit = true;
@@ -62,13 +65,14 @@ class RetailerInfo extends React.Component {
         this.setState({
             Shopsubmitted: true
         })
-        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImage && this.state.retShopImage) {
+        if (this.state.shopname && this.state.shopaddress1 && this.state.shopaddress2 && this.state.shoplocation && this.state.retPersonalImage && this.state.retShopImage && this.state.agentId && this.state.pincode) {
             // && this.state.retPersonalImagefile && this.state.retShopImgfile
             const formData = new FormData();
             formData.append("userId", this.state.userId);
             formData.append("name", this.state.name);
             formData.append("role", "retailer");
             formData.append("emailId", this.state.emailId);
+            formData.append("agentId", this.state.agentId);
             formData.append("mobileNumber", this.state.mobileNumber);
             formData.append("address1", this.state.address1);
             formData.append("city", this.state.city);
@@ -123,6 +127,7 @@ class RetailerInfo extends React.Component {
             emailId: retailerData.emailId, address1: retailerData.address && retailerData.address.address1,
             address2: retailerData.address && retailerData.address.address2, retPersonalImage: retailerData.image,
             mobileNumber: retailerData.mobileNumber, shopname: retailerData.shopAddress && retailerData.shopAddress.name,
+            cusId: retailerData.cusId, agentId: retailerData.agentId,
             shopaddress1: retailerData.shopAddress && retailerData.shopAddress.address1,
             shopaddress2: retailerData.shopAddress && retailerData.shopAddress.address2,
             city: retailerData.shopAddress && retailerData.shopAddress.city,
@@ -223,13 +228,19 @@ class RetailerInfo extends React.Component {
         let retailPersonalimagePreview, retailShopimagePreview;
         if (RetPerosnalimagePrewUrl) {
             retailPersonalimagePreview = <img className="pre-view" src={RetPerosnalimagePrewUrl} />
-        } else {
+        } else if (this.state.retPersonalImage) {
             retailPersonalimagePreview = <img className="pre-view" src={imageBaseUrl + this.state.retPersonalImage} />
+        } else {
+            retailPersonalimagePreview = <img className="pre-view" src={noimg} />
         }
+
         if (RetShopimagePrewUrl) {
             retailShopimagePreview = <img className="pre-view" src={RetShopimagePrewUrl} />
-        } else {
+        } else if (this.state.retShopImage) {
             retailShopimagePreview = <img className="pre-view" src={imageBaseUrl + this.state.retShopImage} />
+        }
+        else {
+            retailShopimagePreview = <img className="pre-view" src={noimg} />
         }
         const countryDropDown = this.state.countries && this.state.countries.map((item, index) => {
             return <option key={index}
@@ -344,7 +355,7 @@ class RetailerInfo extends React.Component {
                                                         {this.state.submitted && !this.state.retPersonalImage && <div className="mandatory">{window.strings['FARMERS']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                                         {retailPersonalimagePreview}
                                                     </div>
-                                                    <div className="form-group pt-3 col-md-6">
+                                                    {this.state.editpage && <div className="form-group pt-3 col-md-6">
                                                         <label className="retallable">{window.strings.RETAILERS.CUSID}</label><br></br>
                                                         <input
                                                             type="text"
@@ -354,9 +365,9 @@ class RetailerInfo extends React.Component {
                                                             })}
                                                             name="customerId"
                                                             disabled={true}
-                                                            value={'CU001839'}
+                                                            value={this.state.cusId}
                                                         />
-                                                    </div>
+                                                    </div>}
                                                 </form>
                                             </div>
                                         </div>
@@ -428,10 +439,11 @@ class RetailerInfo extends React.Component {
                                                                 className={classnames('form-control', {
                                                                     'is-invalid': errors.name
                                                                 })}
-                                                                name="customerId"
-                                                                disabled={true}
-                                                                value={"AG937389"}
+                                                                name="agentId"
+                                                                onChange={this.handleInputChange}
+                                                                value={this.state.agentId}
                                                             />
+                                                            {this.state.Shopsubmitted && !this.state.agentId && <div className="mandatory"> {window.strings.RETAILERS.AGENTID + window.strings['ISREQUIRED']}</div>}
                                                         </div>
                                                     </div>
                                                 </div>

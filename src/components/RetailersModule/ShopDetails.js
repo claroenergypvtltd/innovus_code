@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import PropTypes from "prop-types";
+import noimg from '../../assets/noimage/Avatar_farmer.png'
 
 class ShopDetails extends React.Component {
     static contextTypes = {
@@ -19,20 +20,19 @@ class ShopDetails extends React.Component {
     }
 
     render() {
-        console.log('profileData', this.props);
         const profile = this.props.profileData ? this.props.profileData : [];
+        let shopImg = noimg;
+        if (profile.shopAddress && profile.shopAddress.image) {
+            shopImg = imageBaseUrl + profile.shopAddress.image
+        }
         // const getname = profile.name.split('_');
         return (
             <div className="col-sm-4 farm-tab p-1">
-
-                <div
-
-                    className="farm-card bg-white"
-                // onClick={() => this.getFarmDetails(item.id)}
+                <div className="farm-card bg-white"
                 >
                     <span className="farm-image">
                         <Image
-                            src={imageBaseUrl + profile && profile.shopAddress && profile.shopAddress.image}
+                            src={shopImg}
                             className="maincentext"
                             roundedCircle
                         />
@@ -62,7 +62,7 @@ class ShopDetails extends React.Component {
                 <div className="back-btn">
                     <button className="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
-            </div>
+            </div >
             // <Container>
             //     <Row className="show-grid white-bg">
             //         <Col sm={6} md={3} className="ticket_block">

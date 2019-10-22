@@ -1,7 +1,8 @@
 export const path = {
     login: {
-        add: process.env.PUBLIC_URL + '/',
-        login: process.env.PUBLIC_URL + '/login'
+        name: 'login',
+        login: process.env.PUBLIC_URL + '/',
+        // login: process.env.PUBLIC_URL + '/login'
     },
     inprogress: {
         name: 'inprogress',

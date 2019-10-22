@@ -1358,7 +1358,7 @@ bottom: 50%;
   background-image: linear-gradient(to right, #ff8b92, #feb683);
   color: #fff;
   border-radius: 5px;
-  padding: 0 15px;
+  padding: 1px 15px;
  // margin-left: 13px;
 }
 .excel-btn:hover{
@@ -1387,3 +1387,22 @@ bottom: 50%;
     border-left: 8px solid #ff8b92;
     color: $active-font-color;
   }
+// ******* -- STATUS  COLOR **** //
+.Pending{
+  background-color: #F2F21C;
+  border: none;
+  color:#707070;
+  border-radius: 5px;
+}
+.Accepted{
+  background-color: #B9F319;
+  border: none;
+  color: #707070;
+  border-radius: 5px;
+}
+.Rejected{
+  background-color: #FE203D;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+}
