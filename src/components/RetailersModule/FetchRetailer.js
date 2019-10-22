@@ -97,10 +97,10 @@ class FetchRetailer extends React.Component {
                 formData.append("status", statusVal);
                 updateStatusRetailer(formData).then(resp => {
                     resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
-                    window.location.reload(false);
+                    this.getRetailerList();
                 })
             },
-            onCancel: () => console.log('CANCEL: clicked')
+            onCancel: () => this.getRetailerList()
         };
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }

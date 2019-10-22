@@ -112,12 +112,24 @@ class FetchPrice extends Component {
 
     render() {
         let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
+
+            let productId = item.categoryAmount && item.categoryAmount.id;
+            let productName = item.name;
+            let totWeight = ((item.categoryAmount && item.categoryAmount.totalQuantity) + ' / ' + (item.categoryAmount && item.categoryAmount.rupeesize));
+            let weightUnits = item.categoryAmount && item.categoryAmount.totalQuantitySize;
+            let amount = ((item.categoryAmount && item.categoryAmount.amount) + " Rs/" + (item.categoryAmount && item.categoryAmount.rupeesize));
+            let priceUnit = item.categoryAmount && item.categoryAmount.rupeesize;
+            let boxQuantity = ((item.categoryAmount && item.categoryAmount.boxQuantity) + ' ' + (item.categoryAmount && item.categoryAmount.rupeesize));
+            let boxQuantitySize = item.categoryAmount && item.categoryAmount.boxQuantitySize
+
             return {
-                "itemList": [item.categoryAmount && item.categoryAmount.id, item.name,
-                item.categoryAmount && item.categoryAmount.totalQuantity + " KG",
-                item.categoryAmount && item.categoryAmount.totalQuantitySize, item.categoryAmount && item.categoryAmount.amount + " Rs/KG",
-                item.categoryAmount && item.categoryAmount.rupeesize, item.categoryAmount && item.categoryAmount.boxQuantity + " KG",
-                item.categoryAmount && item.categoryAmount.boxQuantitySize], "itemId": item.id
+                "itemList": [productId, productName,
+                    totWeight,
+                    weightUnits, amount,
+                    priceUnit,
+                    boxQuantity,
+                    boxQuantitySize
+                ], "itemId": item.id
             }
         })
 
