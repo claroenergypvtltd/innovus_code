@@ -13,6 +13,8 @@ import { DynamicTable } from '../../../src/shared/DynamicTable'
 import { path } from '../../constants';
 import store from '../../store/store';
 
+import datepicker from 'js-datepicker'
+
 class FetchRetailer extends React.Component {
     static contextTypes = {
         router: PropTypes.object,
@@ -202,12 +204,18 @@ class FetchRetailer extends React.Component {
             excelDatas.push(item);
             console.log('excelDatas---', excelDatas);
 
-        })
+        });
+
         return (
             <div className="mt-4">
                 <div className="main-filter">
                     <div className="date-range mr-2"><label className="label-title">Date:</label>
-                        <input type="text" name="date" className="date-box ml-1" />
+                        {/* <input type="date" name="date" className="date-box ml-1" /> */}
+                        <input type="date" id="datepicker" className="date-box ml-1" />
+
+
+
+
                     </div>
                     <div className="state-filter mr-2"><label className="label-title">State:</label>
                         <select className="drop-select ml-1 yellow" onChange={(e) => this.statusFilter(e)}>

@@ -82,7 +82,7 @@ export const getFaqList = (Data) => dispatch => {
         rows = Data.limit ? Data.limit : '';
     }
 
-    httpServices.get(endPoint.instruction + '?title=Profit' + '&search=' + search + "&page=" + page + '&rows=' + rows).then(resp => {
+    httpServices.get(endPoint.instruction + '?title=' + '&search=' + search + "&page=" + page + '&rows=' + rows).then(resp => {
 
         if (resp) {
             dispatch({ type: FAQ_FETCH_SUCCESS, Lists: resp })
