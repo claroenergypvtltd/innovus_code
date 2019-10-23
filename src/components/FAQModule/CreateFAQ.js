@@ -7,7 +7,7 @@ import { SubmitFaq, getSpecificFaq } from '../../actions/faqAction';
 import { FAQ_CREATE_SUCCESS, FAQ_UPDATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
 import '../../assets/css/login.scss'
-
+import classnames from 'classnames';
 
 
 class CreateFAQ extends Component {
@@ -17,7 +17,7 @@ class CreateFAQ extends Component {
             submitted: false,
             instructionId: '',
             title: '',
-            description: ''
+            description: '', errors: {}
         }
     }
 
@@ -30,7 +30,6 @@ class CreateFAQ extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log("test");
 
         if (nextProps.faqData && nextProps.faqData.createdStatus == "200") {
             store.dispatch({ type: FAQ_CREATE_SUCCESS, resp: "" })
@@ -87,28 +86,51 @@ class CreateFAQ extends Component {
 
 
     render() {
+        const { errors } = this.state;
+
         return (
             <div>
-
                 <h4 className="user-title">{!this.state.instructionId ? window.strings.FAQ.ADD_NEW_FAQ : window.strings.FAQ.EDIT_FAQ}</h4>
-
                 <div className="col-md-12 content form-adjust">
-                    <div className="col-md-6">
+                    <div className="col-md-10">
                         <h4 className="color-title line-wrapper mb-2" >{window.strings.FAQ.FAQ_DETAILS}</h4>
-                        <Form onSubmit={this.handleSubmit} >
-                            <Form.Group >
-                                <Form.Label>{window.strings.FAQ.QUESTION_TITLE}</Form.Label>
-                                <Form.Control type="text" onChange={this.handleChange} name="title" value={this.state.title} />
-                                {this.state.submitted && !this.state.title && <div className="mandatory">{window.strings.FAQ.TITLE}</div>}
-                            </Form.Group>
+                        <form onSubmit={this.handleSubmit} >
+                            <div className="form-group col-md-12">
 
-                            <Form.Group >
-                                <Form.Label>{window.strings.CATEGORY.DESCRIPTION}</Form.Label>
-                                <Form.Control as="textarea" rows="5" onChange={this.handleChange} name="description" value={this.state.description} />
-                                {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings.FAQ.DESCRIPTION_REQUIRED}</div>}<br />
-                            </Form.Group>
+                                <label>{window.strings.FAQ.QUESTION_TITLE}</label>
 
-                        </Form>
+                                <input
+                                    type="text"
+                                    placeholder="Question title"
+                                    className={classnames('form-control', {
+                                        'is-invalid': errors.name
+                                    })}
+                                    name="title"
+                                    onChange={this.handleChange}
+                                    value={this.state.title}
+                                    required
+
+                                />
+
+                                {this.state.submitted && !this.state.title && <div className="mandatory">{window.strings['FAQ']['TITLE']}</div>}
+                            </div>
+                            <div className="form-group col-md-12 pt-2">
+                                <label>{window.strings.DESCRIPTION}</label>
+                                <textarea
+                                    placeholder="Description"
+                                    className={classnames('form-control', {
+                                        'is-invalid': errors.description
+                                    })}
+                                    rows="5"
+                                    name="description"
+                                    onChange={this.handleChange}
+                                    value={this.state.description}
+                                    required
+                                ></textarea>
+                                {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
+                            </div>
+
+                        </form>
                     </div>
                     <div className="col-md-12 bottom-section">
                         <button type="button" className="btn btn-default mb-2" onClick={this.listPath}>{window.strings.CANCEL}</button>
@@ -123,6 +145,5 @@ class CreateFAQ extends Component {
 const mapStateToProps = (state) => ({
     faqData: state.faq
 })
-
 
 export default connect(mapStateToProps, { SubmitFaq, getSpecificFaq })(CreateFAQ)

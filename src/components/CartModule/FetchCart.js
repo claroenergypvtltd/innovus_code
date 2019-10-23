@@ -18,7 +18,6 @@ import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
 class FetchCart extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = {
             TableHead: ["Product ID", "Product Name", "Units", "Price"],
@@ -104,7 +103,6 @@ class FetchCart extends Component {
     }
 
     onChange = (data) => {
-        debugger;
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
                 this.getPriceList();

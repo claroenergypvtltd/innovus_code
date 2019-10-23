@@ -4,7 +4,13 @@ import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import store from '../../store/store';
-import { getSpecificCouponData } from '../../actions/couponAction'
+import { getSpecificCouponData, SubmitCoupon } from '../../actions/couponAction'
+import { formatDate } from '../../shared/DateFormat'
+import { COUPON_CREATE_SUCCESS, COUPON_UPDATE_SUCCESS } from '../../constants/actionTypes'
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
+import { fetchUsers } from '../../actions/UserAction';
+import noimg from '../../assets/noimage/Avatar_farmer.png'
+import { imageBaseUrl } from '../../config'
 
 class CreateCoupon extends Component {
 
@@ -12,14 +18,53 @@ class CreateCoupon extends Component {
         super(props);
         this.state = {
             submitted: false,
-            errors: {}
+            errors: {},
+            name: '',
+            startDate: '',
+            expiryDate: '',
+            description: '',
+            amount: ''
         }
     }
 
     componentDidMount() {
+        this.fetchUsers();
         if (this.props.location && this.props.location.state && this.props.location.state.couponId) {
             this.getSpecificCouponData();
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.addCoupon && nextProps.addCoupon.createdStatus == "200") {
+            store.dispatch({ type: COUPON_CREATE_SUCCESS, resp: "" })
+            this.props.history.push(path.coupons.list);
+        }
+
+        if (nextProps.addCoupon && nextProps.addCoupon.updatedStatus == "200") {
+            store.dispatch({ type: COUPON_UPDATE_SUCCESS, resp: "" })
+            this.props.history.push(path.coupons.list)
+        }
+
+        if (nextProps.addCoupon && nextProps.addCoupon.specificData && nextProps.addCoupon.specificData.datas && nextProps.addCoupon.specificData.datas[0]) {
+            let Data = nextProps.addCoupon.specificData.datas[0];
+            this.setState({
+                name: Data.name, parentId: Data.discountUnit, amount: Data.discountValue,
+                startDate: formatDate(Data.startDate), expiryDate: formatDate(Data.expiryDate), description: Data.description
+            })
+        }
+
+        if (nextProps.user && nextProps.user.userList && nextProps.user.userList.datas) {
+            this.setState({ userData: nextProps.user.userList.datas })
+        }
+    }
+
+
+    fetchUsers() {
+        let user = {
+            "roleId": 2
+        };
+        this.props.fetchUsers(user);
     }
 
     handleChange = (e) => {
@@ -28,9 +73,55 @@ class CreateCoupon extends Component {
         })
     }
 
+
+    onhandleImageChange = (e) => {
+
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                image: file.name,
+                imagePreviewUrl: reader.result
+
+            })
+        }
+        reader.readAsDataURL(file)
+
+
+    }
+
+    getSpecificCouponData() {
+
+        if (this.props.location && this.props.location.state && this.props.location.state.couponId) {
+            let id = this.props.location.state.couponId;
+            this.setState({ couponId: id });
+            this.props.getSpecificCouponData(this.props.location.state.couponId);
+        }
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
+
+        if (this.state.name && this.state.parentId) {
+
+            const formData = new FormData();
+
+            formData.append("name", this.state.name);
+            formData.append("code", "me20i10L");
+            formData.append("startDate", this.state.startDate);
+            formData.append("expiryDate", this.state.expiryDate);
+            formData.append("discountValue", this.state.amount);
+            formData.append("discountUnit", this.state.parentId);
+            formData.append("status", '1');
+            formData.append("description", this.state.description);
+            formData.append("id", this.state.couponId);
+            this.props.SubmitCoupon(formData, this.state.couponId);
+        }
+
     }
 
     listPage = () => {
@@ -40,26 +131,45 @@ class CreateCoupon extends Component {
     getSpecificCouponData() {
         if (this.props.location && this.props.location.state && this.props.location.state.couponId) {
             let id = this.props.location.state.couponId;
-            this.setState({ couponid: id })
+            this.setState({ couponId: id })
 
             this.props.getSpecificCouponData(this.props.location.state.couponId)
 
         }
     }
 
-    render() {
-        const { errors } = this.state;
+    checkbox(value) {
 
-        const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
-            return <option key={index}
-                value={item.id}> {item.name}</option>
-        });
+    }
+
+    render() {
+
+        const { errors } = this.state;
+        let { imagePreviewUrl } = this.state;
+        let imagePreview;
+        if (imagePreviewUrl) {
+            imagePreview = <img className="pre-view" src={imagePreviewUrl} />
+        }
+        else if (this.state.image) {
+            imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
+        }
+        else {
+            imagePreview = <img className="pre-view" src={noimg} />
+        }
+
+        let dropDownData = [];
+
+        this.state.userData && this.state.userData.map((item) => {
+
+            let obj = { "label": item.userName, "value": item.id };
+            dropDownData.push(obj);
+        })
+
         return (
             <div>
-
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h4 className="user-title">{!this.state.couponid ? window.strings.COUPON.ADD_NEW_COUPON : window.strings.COUPON.EDIT_COUPON}</h4>
+                        <h4 className="user-title">{!this.state.couponId ? window.strings.COUPON.ADD_NEW_COUPON : window.strings.COUPON.EDIT_COUPON}</h4>
                         <div className="box-wrapper main-wrapper">
                             <h4 className="color-title line-wrapper">{window.strings.COUPON.COUPON_DETAILS}</h4>
                             <div className="">
@@ -92,7 +202,8 @@ class CreateCoupon extends Component {
 
                                             <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleChange}>
                                                 <option value="0">Select Type</option>
-                                                {categoryDropDown}
+                                                <option value='1'>Percentage</option>
+                                                <option value='2'>Discount</option>
                                             </select>
 
                                             {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['COUPON']['COUPON_TYPE'] + window.strings['ISREQUIRED']}</div>}
@@ -102,10 +213,17 @@ class CreateCoupon extends Component {
 
                                             <label>{window.strings.COUPON.COUPON_AMOUNT}</label>
 
-                                            <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleInputChange}>
-                                                <option value="0">Select Amount</option>
-                                                {categoryDropDown}
-                                            </select>
+                                            <input
+                                                type="text"
+                                                placeholder="Amount"
+                                                className={classnames('form-control calendar-icon', {
+                                                    'is-invalid': errors.name
+                                                })}
+                                                name="amount"
+                                                onChange={this.handleChange}
+                                                value={this.state.amount}
+                                                required
+                                            />
 
                                             {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['COUPON']['COUPON_AMOUNT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
@@ -115,35 +233,35 @@ class CreateCoupon extends Component {
                                             <label>{window.strings.COUPON.COUPON_START_DATE}</label>
 
                                             <input
-                                                type="text"
+                                                type="Date"
                                                 placeholder="Start Date"
                                                 className={classnames('form-control calendar-icon', {
                                                     'is-invalid': errors.name
                                                 })}
-                                                name="name"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.name}
+                                                name="startDate"
+                                                onChange={this.handleChange}
+                                                value={this.state.startDate}
                                                 required
                                             />
-                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['DATEERROR']['STARTDATE']}</div>}
+                                            {this.state.submitted && !this.state.startDate && <div className="mandatory">{window.strings['DATEERROR']['STARTDATE']}</div>}
                                         </div>
                                         <div className="form-group col-md-6 pt-2">
 
                                             <label>{window.strings.COUPON.COUPON_EXPIRY_DATE}</label>
                                             <input
-                                                type="text"
+                                                type="Date"
                                                 placeholder="Expiry Date"
                                                 className={classnames('form-control calendar-icon', {
                                                     'is-invalid': errors.name
                                                 })}
-                                                name="name"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.name}
+                                                name="expiryDate"
+                                                onChange={this.handleChange}
+                                                value={this.state.expiryDate}
                                                 required
 
                                             />
 
-                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['DATEERROR']['EXPIRYDATE']}</div>}
+                                            {this.state.submitted && !this.state.expiryDate && <div className="mandatory">{window.strings['DATEERROR']['EXPIRYDATE']}</div>}
                                         </div>
                                         <div className="form-group col-md-12 pt-2">
                                             <label>{window.strings.DESCRIPTION}</label>
@@ -153,7 +271,7 @@ class CreateCoupon extends Component {
                                                     'is-invalid': errors.description
                                                 })}
                                                 name="description"
-                                                onChange={this.handleInputChange}
+                                                onChange={this.handleChange}
                                                 value={this.state.description}
                                                 required
                                             ></textarea>
@@ -175,8 +293,13 @@ class CreateCoupon extends Component {
                                                 required
 
                                             />
-                                            <img className="pre-view"></img>
+                                            {imagePreview}
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* <img className="pre-view" src={imagePreviewUrl} /> */}
+                                        </div>
+                                        <div className="form-group col-md-12 pt-2">
+                                            <label>User</label>
+                                            <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} />
                                         </div>
                                     </form>
                                 </div>
@@ -195,10 +318,8 @@ class CreateCoupon extends Component {
 }
 
 const mapStatetoProps = (state) => ({
-
-    addCoupon: state.coupon
-
+    addCoupon: state.coupon,
+    user: state.user
 })
 
-
-export default connect(mapStatetoProps, { getSpecificCouponData })(CreateCoupon)
+export default connect(mapStatetoProps, { getSpecificCouponData, SubmitCoupon, fetchUsers })(CreateCoupon)
