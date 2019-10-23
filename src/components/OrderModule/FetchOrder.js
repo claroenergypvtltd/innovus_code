@@ -137,7 +137,7 @@ class FetchOrder extends Component {
             </div>
 
 
-            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.items && item.items[0] && item.items[0].cartproductdetails && item.items[0].cartproductdetails.price, status, link], "itemId": item.id }
+            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.orderAmount, status, link], "itemId": item.id }
         })
 
         let statusUpdataData = < StatusUpdate orderId={this.state.orderId} onCloseModal={this.onCloseModal} />
@@ -177,9 +177,9 @@ class FetchOrder extends Component {
                         <Col md={8} className="title-card">
                             <h4 className="user-title">ORDER</h4>
                         </Col>
-                        {/* <Col md={4} className="pl-5">
+                        <Col md={4} className="pl-5">
                             <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        </Col> */}
+                        </Col>
                     </Row>
                 </div>
 

@@ -150,7 +150,7 @@ class CreatePrice extends Component {
             submitted: true
         })
 
-        if (this.state.categoryId && this.state.weight && this.state.price && this.state.weightId) {
+        if (this.state.categoryId && this.state.weight && this.state.price && this.state.weightId && this.state.boxQuantity) {
 
             let isUpdate = false;
             if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
@@ -253,7 +253,7 @@ class CreatePrice extends Component {
                                                 {weightDropDown}
                                             </select>
 
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         {/* </div> */}
 
@@ -266,6 +266,7 @@ class CreatePrice extends Component {
                                                     'is-invalid': errors.price
                                                 })}
                                                 name="price"
+                                                min="0"
                                                 onChange={this.handleInputChange}
                                                 value={this.state.price}
                                                 required
@@ -280,7 +281,7 @@ class CreatePrice extends Component {
                                                 <option value="0">Select</option>
                                                 {priceDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['PRICE'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         {/* </div> */}
 
@@ -301,18 +302,13 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.boxQuantity && <div className="mandatory">{window.strings['CROP']['BOX_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-
-
-                                        {/* boxQuantity */}
-
-
                                         <div className="form-group col-md-6 ">
                                             <label>{window.strings.PRICE.TYPE}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['BOX_QUANTITY'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
 
@@ -329,7 +325,7 @@ class CreatePrice extends Component {
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
 
@@ -341,7 +337,7 @@ class CreatePrice extends Component {
                                                 <option value="1">Currency</option>
                                                 <option value="2">Percentage</option>
                                             </select>
-                                            {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['OFFER'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
                                     </form>
