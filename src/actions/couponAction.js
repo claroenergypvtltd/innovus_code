@@ -1,8 +1,7 @@
 import { httpServices } from '../services/http.services'
 import { endPoint } from "../constants";
-import { COUPON_FETCH_SUCCESS, GET_ERRORS, COUPON_DELETE_SUCCESS, COUPON_UPDATE_SUCCESS, COUPON_FETCH_SPECIFIC_DATA } from '../constants/actionTypes'
+import { COUPON_FETCH_SUCCESS, GET_ERRORS, COUPON_DELETE_SUCCESS, COUPON_UPDATE_SUCCESS, COUPON_FETCH_SPECIFIC_DATA, COUPON_CREATE_SUCCESS } from '../constants/actionTypes'
 import { toastr } from 'react-redux-toastr'
-
 
 
 export const getCouponList = (Data) => dispatch => {
@@ -30,7 +29,6 @@ export const getCouponList = (Data) => dispatch => {
             payload: error
         });
     })
-
 }
 
 
@@ -51,11 +49,51 @@ export const DeleteCoupon = (id) => dispatch => {
 }
 
 
-export const getSpecificCouponData = () => dispatch => {
+export const getSpecificCouponData = (couponId) => dispatch => {
 
+    httpServices.get(endPoint.coupon + '?couponId=' + couponId).then(resp => {
+        if (resp.data) {
+            dispatch({ type: COUPON_FETCH_SPECIFIC_DATA, specificData: resp.data })
 
+        }
+    }).catch(error => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: error
+        });
+        console.error("error", error);
+    })
 }
 
-export const submitCoupon = () => dispatch => {
 
+export const SubmitCoupon = (coupon, Id) => dispatch => {
+    if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
+        httpServices.put(endPoint.coupon).then(resp => {
+            if (resp) {
+                toastr.success(resp.message);
+                dispatch({ type: COUPON_UPDATE_SUCCESS, resp: resp.status })
+            }
+        }).catch((error) => {
+            console.error("error", error);
+            dispatch({
+                type: GET_ERRORS,
+                payload: error
+            });
+        })
+
+    } else {
+        httpServices.post(endPoint.coupon, coupon).then(resp => {
+            if (resp) {
+                toastr.success(resp.message);
+                dispatch({ type: COUPON_CREATE_SUCCESS, resp: resp.status })
+            }
+        }).catch(error => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: error
+            });
+            console.error("error", error);
+        })
+    }
 }
+

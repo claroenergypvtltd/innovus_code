@@ -5,7 +5,6 @@ import { FAQ_CREATE_SUCCESS, FAQ_FETCH_SUCCESS, FAQ_UPDATE_SUCCESS, FAQ_FETCH_SP
 
 
 export const SubmitFaq = (instruction, Id) => dispatch => {
-
     if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
         httpServices.put(endPoint.instruction, instruction).then(resp => {
             if (resp) {

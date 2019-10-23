@@ -11,7 +11,6 @@ import { httpServices } from '../services/http.services';
 import { toastr } from 'react-redux-toastr';
 
 export const fetchUsers = (user) => dispatch => {
-
   let httpMethod = "";
 
   if (user.isEdit) {
@@ -108,7 +107,7 @@ export const getKycDetails = userId => dispatch => {
   let params = endPoint.kyc + '?userId=' + userId;
   return httpServices.get(params).then(res => {
     let kycDetails = res.data;
-    dispatch({ type: KYC_FETCH_SUCCESS, resp: kycDetails});
+    dispatch({ type: KYC_FETCH_SUCCESS, resp: kycDetails });
   }).catch(err => {
     console.error(err);
     dispatch({ type: GET_ERRORS, payload: err });

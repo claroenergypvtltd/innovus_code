@@ -8,6 +8,7 @@ import '../../assets/css/login.scss';
 import PropTypes from "prop-types";
 import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
 import store from '../../store/store';
+import noimg from '../../assets/noimage/Avatar_farmer.png'
 
 class CategoryForm extends Component {
     static contextTypes = {
@@ -118,9 +119,12 @@ class CategoryForm extends Component {
         if (imagePreviewUrl) {
 
             imagePreview = <img className="pre-view" src={imagePreviewUrl} />
-        } else {
+        } else if (this.state.image) {
 
             imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
+        }
+        else {
+            imagePreview = <img className="pre-view" src={noimg} />
         }
 
         return (
@@ -206,8 +210,9 @@ class CategoryForm extends Component {
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                             {imagePreview}
+                                            {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
+
                                         </div>
 
                                         {/* <div className="col-md-12 bottom-section">
