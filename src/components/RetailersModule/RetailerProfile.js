@@ -42,7 +42,7 @@ class RetailerProfile extends React.Component {
                     <button className="common-button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                 </div> */}
                 <Row className="show-grid white-bg">
-                    <Col md={3} className="ticket-block">
+                    {/* <Col md={3} className="ticket-block">
                         <div className="profile-box">
                             <div className="profile-img">
                                 <Image src={RetImg} className="centext" roundedCircle />
@@ -57,25 +57,67 @@ class RetailerProfile extends React.Component {
                         </div>
                         <div className="count-box" />
                     </Col>
-                    <Col md={9} className="row pt-5 pl-5">
+                    <Col md={9} className="row pt-5 m-0">
                         <Col md={2} className="p-0">
                             <h4 className="title">{"Customer Id"}</h4>
                             <p className="user-subtitle">{profile.cusId}</p>
                         </Col>
-                        <Col md={2}>
+                        <Col md={2} className="p-0">
                             <h4 className="title">{"Agent Id"}</h4>
                             <p className="user-subtitle">{profile.agentId}</p>
                         </Col>
-                        <Col md={2}>
+                        <Col md={2} className="p-0">
                             <h4 className="title">{"Email"}</h4>
                             <p className="user-subtitle">{profile.emailId ? profile.emailId : '-'}</p>
                         </Col>
-                        <Col md={2}>
+                        <Col md={2} className="p-0">
                             <h4 className="title">{"Phone"}</h4>
                             <p className="user-subtitle">{profile.mobileNumber ? profile.mobileNumber : '-'}</p>
 
                         </Col>
-                        <Col md={3}>
+                        <Col md={3} className="p-0">
+                            <h4 className="title">{"Address"}</h4>
+                            <p className="user-subtitle">{profile.address && profile.address.address1 ? profile.address.address1 : '-'}</p>
+                        </Col>
+                    </Col> */}
+
+
+                    {/* RESPONSIVE */}
+
+                    <Col md={3} sm={6} xs={12} className="ticket-block">
+                        <div className="profile-box">
+                            <div className="profile-img">
+                                <Image src={RetImg} className="centext" roundedCircle />
+                            </div>
+                            <div className="profile-title">
+                                <h5 className="centext title">{getname[0]} {getname[1]}</h5>
+                                <span className="centext color-title">{"Retailer"}</span>
+                            </div>
+                        </div>
+                        {/* <div className="count-box">
+
+                        </div>
+                        <div className="count-box" /> */}
+                    </Col>
+                    <Col md={9} sm={6} xs={12} className="row pt-5 m-0">
+                        <Col md={2} sm={6} xs={12} className="p-0">
+                            <h4 className="title">{"Customer Id"}</h4>
+                            <p className="user-subtitle">{profile.cusId}</p>
+                        </Col>
+                        <Col md={2} sm={6} xs={12} className="p-0">
+                            <h4 className="title">{"Agent Id"}</h4>
+                            <p className="user-subtitle">{profile.agentId}</p>
+                        </Col>
+                        <Col md={2} sm={6} xs={12} className="p-0">
+                            <h4 className="title">{"Email"}</h4>
+                            <p className="user-subtitle">{profile.emailId ? profile.emailId : '-'}</p>
+                        </Col>
+                        <Col md={2} sm={6} xs={12} className="p-0">
+                            <h4 className="title">{"Phone"}</h4>
+                            <p className="user-subtitle">{profile.mobileNumber ? profile.mobileNumber : '-'}</p>
+
+                        </Col>
+                        <Col md={3} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Address"}</h4>
                             <p className="user-subtitle">{profile.address && profile.address.address1 ? profile.address.address1 : '-'}</p>
                         </Col>
