@@ -32,7 +32,7 @@ class RetailerDetailProfile extends React.Component {
         return (
 
             <div className="main-wrapper1">
-                <div className="main-wrapper34">
+                <div className="main-wrapper">
                     <RetailerProfile profileData={this.state.profileData} />
                 </div>
                 <div className="main-wrapper sub-wrapper">

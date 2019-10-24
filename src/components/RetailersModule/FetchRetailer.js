@@ -13,7 +13,7 @@ import { DynamicTable } from '../../../src/shared/DynamicTable'
 import { path } from '../../constants';
 import store from '../../store/store';
 
-import datepicker from 'js-datepicker'
+//import datepicker from 'js-datepicker'
 
 class FetchRetailer extends React.Component {
     static contextTypes = {
@@ -218,7 +218,7 @@ class FetchRetailer extends React.Component {
 
                     </div>
                     <div className="state-filter mr-2"><label className="label-title">State:</label>
-                        <select className="drop-select ml-1 yellow" onChange={(e) => this.statusFilter(e)}>
+                        <select className="drop-select ml-1 state-box yellow" onChange={(e) => this.statusFilter(e)}>
                             <option value="" className="drop-option">-- Select --</option>
                             <option value="" className="drop-option">Tamil Nadu</option>
                             <option value="" className="drop-option">Kerala</option>
@@ -232,16 +232,18 @@ class FetchRetailer extends React.Component {
                             <option value="" className="drop-option">Kochi</option>
                         </select>
                     </div>
-                </div>
-                <div className="sub-filter">
-                    <ExportFile csvData={this.state.data} />
-                    {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
-                    <div className="status-filter"><label className="label-title">Status Filter:</label>
+                    <div className="status-filter ml-1"><label className="label-title">Status Filter:</label>
                         <select className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
                             <option value="" className="drop-option">-- Select --</option>
                             {statusDropdown}
                         </select>
                     </div>
+                    <button className="reset ml-2"><i className="fa fa-refresh" aria-hidden="true"></i></button>
+
+                </div>
+                <div className="sub-filter">
+                    <ExportFile csvData={this.state.data} />
+                    {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
                 </div>
                 {/* <Row className="clearfix title-section">
                     <Col md={5} className="title-card user-board">
