@@ -9,6 +9,7 @@ import { path } from '../../constants/path'
 import { COUPON_DELETE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
 import { resorceJSON } from '../../libraries'
+import { fetchUsers } from '../../actions/UserAction';
 
 class FetchCoupon extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class FetchCoupon extends Component {
     }
 
     componentDidMount() {
-
+        this.fetchUsers();
         this.getCouponList();
     }
 
@@ -40,6 +41,13 @@ class FetchCoupon extends Component {
             this.getCouponList();
         }
 
+    }
+
+    fetchUsers() {
+        let user = {
+            "roleId": 2
+        };
+        this.props.fetchUsers(user);
     }
 
     handleChange = (e) => {
@@ -149,4 +157,4 @@ const mapStatetoProps = (state) => ({
     // getCoupondata: state && state.coupon && state.coupon.Lists ? state.coupon.Lists : []
 })
 
-export default connect(mapStatetoProps, { getCouponList, DeleteCoupon })(FetchCoupon);
+export default connect(mapStatetoProps, { getCouponList, DeleteCoupon, fetchUsers })(FetchCoupon);

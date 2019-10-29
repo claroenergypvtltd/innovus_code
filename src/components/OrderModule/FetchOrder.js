@@ -18,7 +18,7 @@ class FetchOrder extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["order No", "Product Items", "Order Date", "Order Amount", "Status", "View Order"],
+            TableHead: ["Order No", "No of Product Items", "Order Date", "Order Amount", "Status", "View Order"],
             OrderLists: props.orderData && props.orderData.Lists && props.orderData.Lists.datas ? props.orderData.Lists.datas : [],
             CategoryCount: props.getCount,
             search: '',
@@ -137,7 +137,7 @@ class FetchOrder extends Component {
             </div>
 
 
-            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.orderAmount, status, link], "itemId": item.id }
+            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.orderAmount + ' RS', status, link], "itemId": item.id }
         })
 
         let statusUpdataData = < StatusUpdate orderId={this.state.orderId} onCloseModal={this.onCloseModal} />
