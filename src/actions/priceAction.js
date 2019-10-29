@@ -1,3 +1,4 @@
+
 import { httpServices } from '../services/http.services'
 import { toastr } from 'react-redux-toastr'
 import { PRICE_FETCH_SUCCESS, PRICE_CREATE_SUCCESS, PRICE_DELETE_SUCCESS, PRICE_UPDATE_SUCCESS, PRICE_SPECIFIC_DATA_SUCCESS, GET_ERRORS } from '../constants/actionTypes';
@@ -8,6 +9,7 @@ export const getPriceList = (formData) => dispatch => {
     formData.pages = formData.page ? formData.page : '';
     formData.rows = formData.limit ? formData.limit : '';
     formData.search = formData.search ? formData.search : '';
+    formData.flag = 1;
 
     return httpServices.post(endPoint.price, formData).then(resp => {
         if (resp && resp.data) {
