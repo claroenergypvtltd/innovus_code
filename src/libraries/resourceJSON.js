@@ -25,10 +25,16 @@ export const resorceJSON = {
   RetailerList: [
     { name: 'Customer Id', selector: 'cusId', sortable: true },
     { name: 'Name', selector: 'name', sortable: true },
-    { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
     { name: 'Email', selector: 'emailId', sortable: true },
+    { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
+    { name: 'Shop Name', selector: 'shopNames', sortable: true, Required: true },
+    { name: 'Shop Address', selector: 'shopAddrss', sortable: true, Required: true },
+    { name: 'Shop Country', selector: 'shopAddressDataCountry', sortable: true },
+    { name: 'Shop State', selector: 'shopAddressDataState', sortable: true },
+    { name: 'Shop City', selector: 'shopAddressDataCity', sortable: true },
     { name: 'Agent Id', selector: 'agentId', sortable: true },
     { name: 'Status', selector: 'selectBox', sortable: true },
+    { name: 'created', selector: 'created', sortable: true },
     // { text: 'Actions', dataField: 'actions', sortable: true },
   ],
   CropList: [

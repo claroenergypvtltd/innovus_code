@@ -105,13 +105,6 @@ export const getOrderReports = (gettype) => dispatch => {
             servietype = endPoint.getweekorders;
             break;
     }
-    // if (gettype == "year") {
-
-    // } else if (gettype == "month") {
-    //     servietype = endPoint.getmonthorders;
-    // } else {
-    //     servietype = endPoint.getweekorders;
-    // }
     httpServices.get(servietype).then(resp => {
         dispatch({ type: RET_USER_FETCH_SUCCESS, Lists: resp.data })
     }).catch((error) => {
@@ -121,6 +114,16 @@ export const getOrderReports = (gettype) => dispatch => {
 export const updateStatusRetailer = (updateDatas) => {
     return httpServices.put(endPoint.user, updateDatas).then(resp => {
         return resp;
+    }).catch((error) => {
+    })
+}
+export const getStateUsers = (obj) => {
+    delete obj.countryId;
+    return httpServices.post(endPoint.user, obj).then(resp => {
+        if (resp) {
+            console.log('resp---', resp);
+            return resp
+        }
     }).catch((error) => {
     })
 }

@@ -42,14 +42,19 @@ class ShopDetails extends React.Component {
                         <h5 className="centext title">{profile.shopAddress && profile.shopAddress.name}</h5>
                         <span>
                             <div className="centext color-title">
-                                <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>{profile.shopAddress && profile.shopAddress.state}
+                                <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>{profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name}
                             </div>
                         </span>
                         <div className="farmer-details pl-4">
                             <div className="farmer-address">
                                 <h5 className="title">Address</h5>
                                 <p className="centext user-title sub-farm">
-                                    {profile.shopAddress && profile.shopAddress.address1 + '' + profile.shopAddress && profile.shopAddress.address2}
+                                    {profile.shopAddress && profile.shopAddress.address1 + '' + profile.shopAddress && profile.shopAddress.address2 + ','}
+                                    <p></p>
+                                    {profile.shopAddressData && profile.shopAddressData.cities && profile.shopAddressData.cities.name + ','}
+                                    {profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name + ','}
+                                    <p></p>
+                                    {profile.shopAddressData && profile.shopAddressData.countrys && profile.shopAddressData.countrys.name + '.'}
                                 </p>
                             </div>
                             {/* <div className="farmer-area">

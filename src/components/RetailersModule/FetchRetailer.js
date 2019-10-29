@@ -1,7 +1,7 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import DataTableDynamic from '../../shared/DataTableDynamic';
-import { fetchRetailers, deleteRetailer, updateStatusRetailer } from '../../actions/SubmitRetailerAction';
+import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers } from '../../actions/SubmitRetailerAction';
 import { RETAILER_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { connect } from 'react-redux';
 import { resorceJSON } from '../../libraries';
@@ -12,38 +12,106 @@ import ExportFile from '../../shared/ExportFile';
 import { DynamicTable } from '../../../src/shared/DynamicTable'
 import { path } from '../../constants';
 import store from '../../store/store';
-
-//import datepicker from 'js-datepicker'
-
+import * as moment from 'moment';
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import 'bootstrap/dist/css/bootstrap.css';
+// you will also need the css that comes with bootstrap-daterangepicker
+import 'bootstrap-daterangepicker/daterangepicker.css';
 class FetchRetailer extends React.Component {
     static contextTypes = {
         router: PropTypes.object,
     };
     constructor(props, context) {
+
         super(props);
         this.state = {
             roleId: props.roleId,
             retailerId: "",
             columns: resorceJSON.RetailerList,
             data: [],
-            excelDatas: []
+            excelDatas: [],
+            dateChanged: false,
+            startDate: moment(),
+            endDate: moment(),
         }
     }
     componentWillMount() {
         this.getRetailerList();
+        this.getStateList();
     }
-
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
             this.getRetailerList();
         }
     }
-
+    getStateList() {
+        let obj = {
+            "countryId": 101
+        }
+        getStateCity({ obj }).then(resp => {
+            this.setState({ stateData: resp && resp.data })
+        })
+    }
+    handleInputChange = (e) => {
+        let obj = {};
+        if (e.target.name == "stateId" || e.target.name == "cityId") {
+            if (e.target.name == "stateId") {
+                this.setState({ cityData: [], cityId: 0 })
+            }
+            if (e.target.value) {
+                this.setState({
+                    [e.target.name]: e.target.value,
+                }, () => {
+                    this.getRetailerList();
+                    obj = {
+                        // "countryId": this.state.country,
+                        "roleId": 2,
+                        "countryId": 101,
+                        "stateId": this.state.stateId,
+                    }
+                    if (this.state.stateId != 0) {
+                        getStateCity(obj).then(resp => {
+                            if (obj.countryId && obj.stateId) {
+                                this.setState({ cityData: resp && resp.data })
+                            } else {
+                                this.setState({ stateData: resp && resp.data })
+                            }
+                        })
+                    }
+                    else {
+                        this.setState({ cityData: [] })
+                    }
+                })
+            }
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
+    }
     getRetailerList = (status) => {
+        const initialState = {};
         let user = {};
         user.roleId = 2;
-        if (status) {
-            user.status = status;
+        if (status == 'reset') {
+            this.setState({
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0
+            })
+        }
+        else {
+            if (this.state.stateId != 0) {
+                user.state = this.state.stateId
+            }
+            if (this.state.cityId != 0) {
+                user.city = this.state.cityId;
+            }
+            if (this.state.dateChanged) {
+                user.startTime = this.state.startDate;
+                user.endTime = this.state.endDate;
+            }
+            if (status) {
+                user.status = status;
+            }
         }
         user.search = this.props.searchText;
         this.props.fetchRetailers(user);
@@ -121,38 +189,6 @@ class FetchRetailer extends React.Component {
     itemDelete = (id) => {
         this.props.deleteRetailer(id)
     };
-    // Actions() {
-    //     let actions = <div>
-
-    //         <button onClick={e => this.handleView(e)}>
-    //             <i className="fa fa-eye" aria-hidden="true" />
-    //         </button>
-
-
-    //         <button onClick={(e) => this.handleEdit(e)}>
-    //             <i className="fal fa-pencil-square-o edit_icon" />
-    //         </button>
-
-
-    //         <button onClick={(e) => this.handleDelete(e)}>
-    //             <i className="fas fa-trash-alt" />
-    //         </button>
-
-    //     </div>
-    //     return actions;
-    // }
-    // componentWillReceiveProps(newProps) {
-    //     if (newProps.list) {
-    //         let selectlist = newProps.list;
-    //         let Lists = selectlist && selectlist.map(item => {
-    //             // item.selectBox = this.viewCrop();
-    //             //item.actions = this.Actions();
-    //             return item;
-    //         })
-    //         this.setState({ data: Lists });
-    //     }
-    // }
-
     itemView = (e, item) => {
         let retailerId = item.id;
         this.context.router.history.push({
@@ -166,12 +202,36 @@ class FetchRetailer extends React.Component {
             state: { retailerId: Data.id }
         })
     };
+    handleApply = (event, picker) => {
+        this.setState({
+            dateChanged: true,
+            startDate: picker.startDate,
+            endDate: picker.endDate,
+        }, () => {
+            this.getRetailerList()
+        })
+    }
+
     render() {
+        let start = this.state.startDate.format('DD-MM-YYYY');
+        let end = this.state.endDate.format('DD-MM-YYYY');
+        let label = start + ' - ' + end;
+        if (start === end) {
+            label = '';
+        }
         let excelDatas = [];
         const statusDropdown =
             resorceJSON.statusOptions.map((item, index) => {
                 return <option value={index} className="drop-option"> {item}</option>
             })
+        const stateDropDown = this.state.stateData && this.state.stateData.map((item, index) => {
+            return <option key={index}
+                value={item.id}> {item.name}</option>
+        });
+        const cityDropDown = this.state.cityData && this.state.cityData.map((item, index) => {
+            return <option key={index}
+                value={item.id}> {item.name}</option>
+        });
         this.state.exceldatas && this.state.exceldatas.map((item, index) => {
             let address = '';
             let addressData = '';
@@ -179,6 +239,13 @@ class FetchRetailer extends React.Component {
             let shopAddress = '';
             let shopAddressData = '';
             let selectBox = '';
+            item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
+            item.shopNames = item.shopAddress && item.shopAddress.name;
+            item.shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
+            item.shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
+            item.shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
+
+            item.created = moment(item.created).format("DD/MM/YYYY");
             if (Object.keys(item.address).length > 1) {
                 address = JSON.stringify(item.address).toString().replace(/"/g, '');
             }
@@ -191,55 +258,47 @@ class FetchRetailer extends React.Component {
             if (Object.keys(item.shopAddress).length > 1) {
                 shopAddress = JSON.stringify(item.shopAddress).toString().replace(/"/g, '');
             }
-            // if (Object.keys(item.shopAddressData).length > 1) {
-            //      shopAddressData = JSON.stringify(item.shopAddressData).toString().replace(/"/g, '');
-            // }
-            item.jsonaddress = item.address;
-            item.jsonshopAddress = item.shopAddress;
             item.address = address;
-            // item.addressData = addressData;
             item.role = role;
             item.shopAddress = shopAddress;
-            // item.shopAddressData = shopAddressData;
             excelDatas.push(item);
-            console.log('excelDatas---', excelDatas);
-
-        });
-
+        })
         return (
             <div className="mt-4">
                 <div className="main-filter">
                     <div className="date-range mr-2"><label className="label-title">Date:</label>
-                        {/* <input type="date" name="date" className="date-box ml-1" /> */}
-                        <input type="date" id="datepicker" className="date-box ml-1" />
-
-
-
-
+                        <DateRangePicker
+                            startDate={this.state.startDate}
+                            endDate={this.state.endDate}
+                            onApply={this.handleApply}
+                        >  <div className="input-group">
+                                <input type="text" className="form-control" value={label} />
+                                <span className="input-group-btn">
+                                    <Button className="default date-range-toggle">
+                                        <i className="fa fa-calendar" />
+                                    </Button>
+                                </span>
+                            </div>
+                        </DateRangePicker>
                     </div>
                     <div className="state-filter mr-2"><label className="label-title">State:</label>
-                        <select className="drop-select ml-1 state-box yellow" onChange={(e) => this.statusFilter(e)}>
-                            <option value="" className="drop-option">-- Select --</option>
-                            <option value="" className="drop-option">Tamil Nadu</option>
-                            <option value="" className="drop-option">Kerala</option>
-
+                        <select name="stateId" value={this.state.stateId} className="drop-select ml-1 yellow" onChange={this.handleInputChange}>
+                            <option value="0">--Select State--</option>{stateDropDown}
                         </select>
                     </div>
                     <div className="city-filter"><label className="label-title">City:</label>
-                        <select className="drop-select ml-1 red" onChange={(e) => this.statusFilter(e)}>
-                            <option value="" className="drop-option">-- Select --</option>
-                            <option value="" className="drop-option">Madurai</option>
-                            <option value="" className="drop-option">Kochi</option>
+                        <select name="cityId" value={this.state.cityId} className="drop-select ml-1 red" onChange={this.handleInputChange}>
+                            <option value="0">--Select City---</option>{cityDropDown}
                         </select>
                     </div>
-                    <div className="status-filter ml-1"><label className="label-title">Status Filter:</label>
-                        <select className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                            <option value="" className="drop-option">-- Select --</option>
+                    <div className="status-filter  ml-1"><label className="label-title">Status Filter:</label>
+                        <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                            <option value="0" className="drop-option">-- Select --</option>
                             {statusDropdown}
                         </select>
                     </div>
-                    <button className="reset ml-2"><i className="fa fa-refresh" aria-hidden="true"></i></button>
-
+                    <div className="state-filter mr-2"><button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                    </div>
                 </div>
                 <div className="sub-filter">
                     <ExportFile csvData={this.state.data} />
@@ -272,7 +331,7 @@ class FetchRetailer extends React.Component {
                     tableDatas={this.state.data}
                     handleEdit={this.itemEdit}
                     handleView={this.itemView}
-                    handleDelete={this.handleDelete}
+                    // handleDelete={this.handleDelete}
                     pagination={true}
                 />
                 {/* <GoogleMapPage /> */}

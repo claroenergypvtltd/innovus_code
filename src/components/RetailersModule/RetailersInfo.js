@@ -146,13 +146,13 @@ class RetailerInfo extends React.Component {
         this.setState({
             submitted: true,
         })
-        // if (this.state.name && this.state.address1 && this.state.mobileNumber && this.state.retPersonalImage) {
-        //     //, this.state.retPersonalImagefile
-        //     const current = this.state.current + 1;
-        //     this.setState({ current });
-        // }
-        const current = this.state.current + 1;
-        this.setState({ current });
+        if (this.state.name && this.state.address1 && this.state.mobileNumber && this.state.retPersonalImage) {
+            //, this.state.retPersonalImagefile
+            const current = this.state.current + 1;
+            this.setState({ current });
+        }
+        // const current = this.state.current + 1;
+        // this.setState({ current });
     }
     listPath = () => {
         this.props.history.goBack();

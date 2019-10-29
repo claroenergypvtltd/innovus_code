@@ -33,8 +33,8 @@ class User extends Component {
 
   handlePageChange = e => {
     e.preventDefault();
-    // let redrctpath = this.state.tabIndex == 1 ? path.retailer.add : path.farmer.add;
-    let redrctpath = path.retailer.add;
+    let redrctpath = this.state.tabIndex == 1 ? path.retailer.add : path.farmer.add;
+    // let redrctpath = path.retailer.add;
     this.props.history.push(redrctpath);
     // this.props.history.push(path.farmer.add);
   };
@@ -77,9 +77,8 @@ class User extends Component {
               </Col> */}
               <Col md={3} className="p-0">
                 <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
-                  {/* {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ADDRETAIL} */}
-                  {window.strings.USERMANAGEMENT.ADDRETAIL}
-
+                  {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ADDRETAIL}
+                  {/* {window.strings.USERMANAGEMENT.ADDRETAIL} */}
                 </button>
               </Col>
             </Col>
@@ -91,19 +90,19 @@ class User extends Component {
               onSelect={tabIndex => this.tabChange(tabIndex)}
             >
               <TabList className="change-tab">
-                {/* <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab> */}
+                <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab>
                 <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
                 {/* <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'retail-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab> */}
 
               </TabList>
 
-              {/* <TabPanel className="main-panel">
+              <TabPanel className="main-panel">
                 <FetchUser
                   // ref="fetchUser"
                   roleId={this.state.selectedRoleId}
                   searchText={this.state.farmerSearch}
                 />
-              </TabPanel> */}
+              </TabPanel>
               <TabPanel>
                 <FetchRetailer
                   // ref="fetchRetailer"

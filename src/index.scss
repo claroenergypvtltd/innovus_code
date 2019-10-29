@@ -137,9 +137,13 @@ background-size: cover;}
   border-radius: .25rem;
 }
 .input-group {
-  border-bottom: 1px solid #d7d7d7;
-  color: #4b4b4b;
-  box-shadow: 0 1px 0px 0px #dcdcdc
+  width: 275px;
+  border-bottom: none;  color: #4b4b4b;
+  //box-shadow: 0 1px 0px 0px #dcdcdc
+  
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+  background-color:#ff8b92;
 }
 .login-form .input-group .form-control{
   position: relative;
@@ -401,7 +405,6 @@ li:hover .menu-list i{
     border: 1px solid #ddd;
     img{
       width: 100%;
-      //height: auto;
       height: 100%;
       border-radius: 100px;
     }
@@ -1004,6 +1007,13 @@ svg{
 .sub-dashboard{
   padding-top:10px;
 }
+
+.crop-table{
+  overflow-x: scroll;
+  width: 100%;
+  overflow-y: hidden;
+  max-width: 1162px;
+}
 .table th, table td{
   border-top: none;
   color: #707070;
@@ -1187,6 +1197,7 @@ svg{
   cursor: pointer;
   padding: 1px;
   font-size: 15px;
+  height: 25px;
  // width: 90px;
 }
 .drop-option{
@@ -1469,7 +1480,7 @@ bottom: 50%;
   border-radius: 5px;
   padding: 1px 15px;
   font-size: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 25px;
  // margin-left: 13px;
 }
 .excel-btn:hover{
@@ -1487,8 +1498,8 @@ bottom: 50%;
 
   .crop-table .rdt_TableCol_Sortable {
   font-weight: 600 ;
-  font-size: 14px ;
-  color : #707070 ;
+  font-size: 14px;
+  color : #707070;
 }
 .crop-table .rdt_TableRow{
     font-size: 14px ;
