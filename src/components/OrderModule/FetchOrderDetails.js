@@ -17,7 +17,7 @@ class FetchOrderDetails extends Component {
         super(props);
         this.state = {
             TableHead: ["Order Id", "Shipping Address", "From Time", "To Time", "Track Orders"],
-            TableHeadTrack: ["Data/Time", "Activity", "Location"],
+            TableHeadTrack: ["Date/Time", "Activity", "Location"],
             TableProductHead: ["Product Id", "Product Name", "Quantity", "Order Date", "Order Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
             CategoryCount: props.getCount,
@@ -119,7 +119,7 @@ class FetchOrderDetails extends Component {
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = <button className="track-btn" onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button>
-            return { "itemList": [item.id, item.shopAddress.address1 + ' ' + item.shopAddress.address2, item.startTime, item.endTime, link], "itemId": item.id }
+            return { "itemList": [item.orderId, item.shopAddress.address1 + ' ' + item.shopAddress.address2, item.startTime, item.endTime, link], "itemId": item.id }
         })
 
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
