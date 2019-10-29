@@ -15,9 +15,12 @@ class FetchOrderDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
-            TableHeadTrack: ["Data/Time", "Activity", "Location"],
-            TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
+           // TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
+            //TableHeadTrack: ["Data/Time", "Activity", "Location"],
+            //TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
+            TableHead: ["Order Id", "Shipping Address", "From Time", "To Time", "Track Orders"],
+            TableHeadTrack: ["Date/Time", "Activity", "Location"],
+            TableProductHead: ["Product Id", "Product Name", "Quantity", "Order Date", "Order Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
             CategoryCount: props.getCount,
             search: '',

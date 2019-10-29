@@ -28,7 +28,7 @@ class CreateCoupon extends Component {
     }
 
     componentDidMount() {
-        this.fetchUsers();
+        // this.fetchUsers();
         if (this.props.location && this.props.location.state && this.props.location.state.couponId) {
             this.getSpecificCouponData();
         }
@@ -60,12 +60,12 @@ class CreateCoupon extends Component {
     }
 
 
-    fetchUsers() {
-        let user = {
-            "roleId": 2
-        };
-        this.props.fetchUsers(user);
-    }
+    // fetchUsers() {
+    //     let user = {
+    //         "roleId": 2
+    //     };
+    //     this.props.fetchUsers(user);
+    // }
 
     handleChange = (e) => {
         this.setState({
