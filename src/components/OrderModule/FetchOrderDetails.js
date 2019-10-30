@@ -15,10 +15,11 @@ class FetchOrderDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           // TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
+            // TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
             //TableHeadTrack: ["Data/Time", "Activity", "Location"],
             //TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
             TableHead: ["Order Id", "Shipping Address", "From Time", "To Time", "Track Orders"],
+            TableHeadTwo: ["Order Id", "Shipping Address", "From Time", "To Time"],
             TableHeadTrack: ["Date/Time", "Activity", "Location"],
             TableProductHead: ["Product Id", "Product Name", "Quantity", "Order Date", "Order Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
@@ -28,7 +29,8 @@ class FetchOrderDetails extends Component {
             viewtrack: false,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
-            limitValue: resorceJSON.TablePageData.paginationLength
+            limitValue: resorceJSON.TablePageData.paginationLength,
+            trackDetails: false
         }
     }
 
@@ -105,13 +107,13 @@ class FetchOrderDetails extends Component {
     }
 
     viewtrack = (Data) => {
-        this.setState({ viewtrack: true }, () => {
+        this.setState({ viewtrack: true, trackDetails: true }, () => {
             this.props.getTrackDetails(Data.orderId)
         })
     }
 
     productPage = () => {
-        this.setState({ viewtrack: false })
+        this.setState({ viewtrack: false, trackDetails: false })
     }
 
     redirectPage = () => {
@@ -120,10 +122,9 @@ class FetchOrderDetails extends Component {
 
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
-            let link = <button className="track-btn" onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button>
+            let link = this.state.trackDetails === false ? <button className="track-btn" onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button> : "";
             return { "itemList": [item.id, item.shopAddress && item.shopAddress.address1 + ' ' + item.shopAddress && item.shopAddress.address2, formatDate(item.created), item.startTime + ' - ' + item.endTime, link], "itemId": item.id }
         })
-
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
             return { "itemList": [formatDate(item.trackTime), item.activity, item.location] }
         })
@@ -144,8 +145,10 @@ class FetchOrderDetails extends Component {
                         <h4 className="user-title">LIST ORDER DETAIL</h4>
                     </div>
                 </div>
-                <TableData TableHead={this.state.TableHead} TableContent={OrderList}
-                />
+                {this.state.trackDetails === false ? <TableData TableHead={this.state.TableHead} TableContent={OrderList}
+                /> : <TableData TableHead={this.state.TableHeadTwo} TableContent={OrderList}
+                    />}
+
 
                 {this.state.viewtrack && <div className="pt-3">
                     <div class="bs-stepper-header">

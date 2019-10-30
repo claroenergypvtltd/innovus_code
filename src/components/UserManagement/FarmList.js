@@ -68,6 +68,10 @@ class FarmList extends React.Component {
     this.context.router.history.push({ pathname: path.farm.edit + this.state.farmerId, state: { farmerEditId: farmId } });
   }
 
+  listPath = () => {
+    this.context.router.history.goBack();
+  }
+
   render() {
     const Farms =
       this.state.farmsData &&
@@ -161,7 +165,7 @@ class FarmList extends React.Component {
           {!this.state.farmId && this.props.farmerId && <Button onClick={this.pageRedirect}>{'Add Farm'}</Button>}
         </div>
         <div className="back-btn">
-          <button class="common-btn">Back</button>
+          <button class="common-btn" onClick={this.listPath} >Back</button>
         </div>
       </div>
     );

@@ -12,6 +12,7 @@ import { toastr } from '../../services';
 import { utils } from '../../services/utils.services';
 import { validation } from '../../libraries/formValidation'
 import { getStateCity } from '../../actions/SubmitRetailerAction';
+import noimg from '../../assets/noimage/Avatar_farmer.png'
 
 class PersonalAndContactInfo extends Component {
 
@@ -187,8 +188,11 @@ class PersonalAndContactInfo extends Component {
         let imagePreview;
         if (imagePreviewUrl) {
             imagePreview = <img className="pre-view" src={imagePreviewUrl} />
-        } else {
+        } else if (this.state.image) {
             imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
+        }
+        else {
+            imagePreview = <img className="pre-view" src={noimg} />
         }
 
         const stateDropDown = this.state.stateData && this.state.stateData.map((item, index) => {
@@ -337,7 +341,7 @@ class PersonalAndContactInfo extends Component {
                                                 <option value="0">Select City</option>
                                                 {cityDropDown}
                                             </select>
-                                            {/* {this.state.submitted && !this.state.city && <div className="mandatory">{window.strings['FARMERS']['CITY'] + window.strings['ISREQUIRED']}</div>} */}
+                                            {this.state.submitted && !this.state.city && <div className="mandatory">{window.strings['FARMERS']['CITY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                         <div className="form-group col-md-6">
@@ -347,7 +351,7 @@ class PersonalAndContactInfo extends Component {
                                                 <option value="0">Select State</option>
                                                 {stateDropDown}
                                             </select>
-                                            {/* {this.state.submitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>} */}
+                                            {this.state.submitted && !this.state.state && <div className="mandatory">{window.strings['FARMERS']['STATE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['FARMERS']['POST_CODE']}</label>
