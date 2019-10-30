@@ -204,6 +204,7 @@ export const Translation = {
             "SALESAGENT": "Sales Agent",
             "ADDFARMER": "Add Farmer",
             "ADDRETAIL": "Add Retailer",
+            "ASSIGN_TRANSFER_AGENT": "Assign / Transfer Agent",
             "FAMS": "Farm",
             "SHOP": "Shop",
             "KYC": "KYC Details"

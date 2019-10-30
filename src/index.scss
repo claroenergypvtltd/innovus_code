@@ -140,7 +140,6 @@ background-size: cover;}
   width: 275px;
   border-bottom: 1px solid #dcdcdc;  
   box-shadow: 0 1px 0px 0px #dcdcdc
-
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
@@ -1226,7 +1225,7 @@ select:focus {
   padding: 1px;
   font-size: 15px;
   height: 25px;
- // width: 90px;
+  width: 120px;
 }
 .drop-option{
   color: #000;
@@ -1483,6 +1482,7 @@ bottom: 50%;
 }
   /****************************Export-user management************************/
 
+
 .date-box{
   border: none;
   display: flex;
@@ -1500,6 +1500,9 @@ input.form-control.date-form {
   border-radius: 4px;
   color: #fff;
   height: 30px;
+}
+.assign-btn{
+  text-align: right;
 }
 .state-box{
   width: 240px;
