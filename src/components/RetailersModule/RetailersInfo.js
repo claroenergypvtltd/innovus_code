@@ -424,7 +424,7 @@ class RetailerInfo extends React.Component {
                                                                 })}
                                                                 name="retShopImage"
                                                                 onChange={(e) => this.onhandleImageChange("retShopImage", e)}
-                                                                value={this.state.retShopImgName}
+                                                                // value={this.state.retShopImgName}
                                                                 required
 
                                                             />

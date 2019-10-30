@@ -28,10 +28,18 @@ class CreateCoupon extends Component {
     }
 
     componentDidMount() {
-        // this.fetchUsers();
+        this.fetchUsers();
         if (this.props.location && this.props.location.state && this.props.location.state.couponId) {
+            this.setState({ couponId: this.props.location.state.couponId })
             this.getSpecificCouponData();
         }
+    }
+
+    fetchUsers() {
+        let user = {
+            "roleId": 3
+        };
+        this.props.fetchUsers(user);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -46,7 +54,7 @@ class CreateCoupon extends Component {
             this.props.history.push(path.coupons.list)
         }
 
-        if (nextProps.addCoupon && nextProps.addCoupon.specificData && nextProps.addCoupon.specificData.datas && nextProps.addCoupon.specificData.datas[0]) {
+        if (this.state.couponId && nextProps.addCoupon && nextProps.addCoupon.specificData && nextProps.addCoupon.specificData.datas && nextProps.addCoupon.specificData.datas[0]) {
             let Data = nextProps.addCoupon.specificData.datas[0];
             this.setState({
                 name: Data.name, parentId: Data.discountUnit, amount: Data.discountValue,
@@ -59,20 +67,11 @@ class CreateCoupon extends Component {
         }
     }
 
-
-    // fetchUsers() {
-    //     let user = {
-    //         "roleId": 2
-    //     };
-    //     this.props.fetchUsers(user);
-    // }
-
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-
 
     onhandleImageChange = (e) => {
 
@@ -318,7 +317,7 @@ class CreateCoupon extends Component {
 }
 
 const mapStatetoProps = (state) => ({
-    addCoupon: state.coupon,
+    addCoupon: state.coupon ? state.coupon : {},
     user: state.user
 })
 

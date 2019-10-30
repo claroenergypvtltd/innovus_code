@@ -16,7 +16,7 @@ class FetchIrrigationSetting extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["State", "City", "Price", "Square Feet", "Actions"],
+            TableHead: ["State", "City", "Price", "Area Feet", "Actions"],
             irrigationSettingLists: [],
             CategoryCount: props.getCount,
             search: '',
