@@ -4,7 +4,7 @@ import DataTableDynamic from '../../shared/DataTableDynamic';
 import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers } from '../../actions/SubmitRetailerAction';
 import { RETAILER_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { connect } from 'react-redux';
-import { resorceJSON } from '../../libraries';
+import { resorceJSON, ModalData } from '../../libraries';
 import PropTypes from 'prop-types';
 import { toastr } from '../../services/toastr.services'
 import ExportFile from '../../shared/ExportFile';
@@ -17,6 +17,8 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap/dist/css/bootstrap.css';
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import TransferAgent from './TransferAgent'
+
 class FetchRetailer extends React.Component {
     static contextTypes = {
         router: PropTypes.object,
@@ -33,6 +35,7 @@ class FetchRetailer extends React.Component {
             dateChanged: false,
             startDate: moment(),
             endDate: moment(),
+            selectedDatas: [],
         }
     }
     componentWillMount() {
@@ -212,6 +215,24 @@ class FetchRetailer extends React.Component {
         })
     }
 
+    handleRowChange = (Data) => {
+        this.setState({ selectedDatas: Data })
+    }
+
+    onCloseModal = () => {
+        this.getRetailerList();
+        this.setState({ open: false });
+    };
+
+    onOpenModal = (e) => {
+        e.preventDefault();
+        if (this.state.selectedDatas && this.state.selectedDatas.length > 0) {
+            this.setState({ open: true });
+        } else {
+            toastr.error("Please Select any Customer");
+        }
+    };
+
     render() {
         let start = this.state.startDate.format('DD-MM-YYYY');
         let end = this.state.endDate.format('DD-MM-YYYY');
@@ -263,25 +284,34 @@ class FetchRetailer extends React.Component {
             item.shopAddress = shopAddress;
             excelDatas.push(item);
         })
+
+        let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} selectedDatas={this.state.selectedDatas} />
+
         return (
-            <div className="mt-4">
+            <div className=" mt-4">
+                <div className="assign-btn mb-3">
+                    <button className="common-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                        {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
+                    </button>
+                </div>
                 <div className="main-filter">
-                    <div className="date-range mr-2"><label className="label-title">Date:</label>
+                    <div className="date-range mr-1"><label className="label-title">Date:</label>
                         <DateRangePicker
                             startDate={this.state.startDate}
                             endDate={this.state.endDate}
                             onApply={this.handleApply}
-                        >  <div className="input-group">
-                                <input type="text" className="form-control" value={label} />
-                                <span className="input-group-btn">
-                                    <Button className="default date-range-toggle">
+                        >  <div className="date-box">
+                                <input type="text" className="form-control date-form" value={label} />
+                                <span className="date-group">
+                                    <button className="date-btn">
                                         <i className="fa fa-calendar" />
-                                    </Button>
+                                    </button>
                                 </span>
                             </div>
                         </DateRangePicker>
                     </div>
-                    <div className="state-filter mr-2"><label className="label-title">State:</label>
+
+                    <div className="state-filter mr-1"><label className="label-title">State:</label>
                         <select name="stateId" value={this.state.stateId} className="drop-select ml-1 yellow" onChange={this.handleInputChange}>
                             <option value="0">--Select State--</option>{stateDropDown}
                         </select>
@@ -297,9 +327,19 @@ class FetchRetailer extends React.Component {
                             {statusDropdown}
                         </select>
                     </div>
-                    <div className="state-filter mr-2"><button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                    <div className="state-filter mr-1"><button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                     </div>
+
+                    {/* <div>
+                        <button className="common-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                            {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
+                        </button>
+                    </div> */}
+
                 </div>
+
+
+
                 <div className="sub-filter">
                     <ExportFile csvData={this.state.data} />
                     {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
@@ -325,15 +365,21 @@ class FetchRetailer extends React.Component {
                 {/* <DynamicTable tableDatas={this.state.data} tableHead={this.state.columns} handleEdit={this.itemEdit}
                     handleView={this.itemView}
                     handleDelete={this.itemDelete} /> */}
+
                 <DataTableDynamic
                     title="Category List"
                     tableHead={this.state.columns}
                     tableDatas={this.state.data}
-                    handleEdit={this.itemEdit}
+                    // handleEdit={this.itemEdit}
                     handleView={this.itemView}
                     // handleDelete={this.handleDelete}
                     pagination={true}
+                    checkbox={true}
+                    onRowSelected={this.handleRowChange}
+                    handleRowChange={this.handleRowChange}
                 />
+                <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
+
                 {/* <GoogleMapPage /> */}
             </div >
         );

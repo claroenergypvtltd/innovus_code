@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 
 import { fetchUsers } from '../../actions/UserAction';
 import FetchSalesAgent from '../SalesAgent/FetchSalesAgent';
+// import TransferAgent from '../RetailersModule/TransferAgent'
+// import { resorceJSON, ModalData } from '../../libraries';
 
 
 class User extends Component {
@@ -33,11 +35,13 @@ class User extends Component {
   };
 
   handlePageChange = e => {
+    debugger;
     e.preventDefault();
-    let redrctpath = this.state.tabIndex == 1 ? path.retailer.add : path.farmer.add;
-    // let redrctpath = path.retailer.add;
-    this.props.history.push(redrctpath);
-    // this.props.history.push(path.farmer.add);
+    if (this.state.tabIndex == 1) {
+      this.onOpenModal();
+    } else {
+      this.props.history.push(path.farmer.add);
+    }
   };
 
   handleSearch = e => {
@@ -55,9 +59,22 @@ class User extends Component {
     this.setState({ farmerSearch: '', search: '' })
   }
 
+  // onCloseModal = () => {
+  //   // this.getRetailerList();
+  //   this.setState({ open: false });
+  // };
+
+  // onOpenModal = (orderId) => {
+  //   debugger;
+  //   // this.retailerData
+  //   this.setState({ open: true, orderId: orderId });
+  // };
+
 
   render() {
     let stateValue = this.state;
+    // let TransferAgentData = < TransferAgent agentId={this.state.agentId} onCloseModal={this.onCloseModal} />
+
     return (
       <Form>
         {/* <div className="col-md-6 s-left">
@@ -77,10 +94,9 @@ class User extends Component {
                 <button type="submit" className="filter-btn"><i className="fa fa-filter filter-icon"></i>Filter by</button>
               </Col> */}
               <Col md={3} className="p-0">
-                <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
-                  {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ADDRETAIL}
-                  {/* {window.strings.USERMANAGEMENT.ADDRETAIL} */}
-                </button>
+                {/* <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
+                  {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
+                </button> */}
               </Col>
             </Col>
 
@@ -91,19 +107,21 @@ class User extends Component {
               onSelect={tabIndex => this.tabChange(tabIndex)}
             >
               <TabList className="change-tab">
-                {/* <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab> */}
+                {/* <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} disabled></Tab> */}
+                {/* {window.strings.USERMANAGEMENT.FARMER} */}
                 <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
+                {/* <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'retail-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab> */}
                 <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.SALESAGENT}</Tab>
 
               </TabList>
 
-              {/* <TabPanel className="main-panel">
-                <FetchUser
+              {/* <TabPanel className="main-panel"> */}
+              {/* <FetchUser
                   // ref="fetchUser"
                   roleId={this.state.selectedRoleId}
                   searchText={this.state.farmerSearch}
-                />
-              </TabPanel> */}
+                /> */}
+              {/* </TabPanel> */}
               <TabPanel>
                 <FetchRetailer
                   // ref="fetchRetailer"
@@ -121,7 +139,9 @@ class User extends Component {
             </Tabs>
           </div>
         </div>
+        {/* <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" /> */}
       </Form>
+
     );
   }
 }
@@ -129,5 +149,5 @@ const mapStateToProps = () => ({
 
 });
 
-export default connect(mapStateToProps, { fetchUsers })(User);
+export default connect(mapStateToProps, { fetchUsers, FetchRetailer })(User);
 

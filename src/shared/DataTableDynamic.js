@@ -63,6 +63,10 @@ class DataTableDynamic extends React.Component {
     // this.props.handleEdit(row);
   }
 
+  handleRowChange = (row) => {
+    this.props.handleRowChange(row.selectedRows);
+  }
+
   render() {
     let tableHeader = this.state.tableHead;
     let tableDatas = this.props.tableDatas;
@@ -85,6 +89,8 @@ class DataTableDynamic extends React.Component {
           expandableRowsComponent={this.props.expandableComponent}
           paginationRowsPerPageOptions={[10, 25, 50]}
           customTheme={myNewTheme}
+          selectableRows
+          onRowSelected={this.handleRowChange}
         />
       </div>
     );
