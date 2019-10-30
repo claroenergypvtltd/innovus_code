@@ -144,7 +144,7 @@ export const Translation = {
             "CREATETITLE": "Create User",
             "EDITTITLE": "Edit User",
             "USERNAME": "User Name",
-            "EMAILID": "Email id",
+            "EMAILID": "Email ID",
             "PASSWORD": "Password",
             "CONFIRMPASSWORD": "Confirm Password",
             "ISACTIVE": "Active",
@@ -201,6 +201,7 @@ export const Translation = {
             "USER": "USER MANAGEMENT",
             "FARMER": "Farmer",
             "RETAILER": "Retailer",
+            "SALESAGENT": "Sales Agent",
             "ADDFARMER": "Add Farmer",
             "ADDRETAIL": "Add Retailer",
             "FAMS": "Farm",
@@ -234,7 +235,11 @@ export const Translation = {
             "CUSID": 'Customer ID',
             'AGENTID': 'Agent ID'
         },
-
+        "SALES_AGENT": {
+            "ADD_AGENT": "ADD AGENT",
+            "PHON_NO": "Phone Number",
+            "AGENT_NAME": "Agent Name",
+        },
         "SETTING": {
             // "CROP_NAME": "Crop Name",
             // "CREATETITLE": "Add Irrigation Setting",

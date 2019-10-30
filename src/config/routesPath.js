@@ -33,6 +33,9 @@ import FetchCoupon from '../components/CouponModule/FetchCoupon'
 import CreateFAQ from '../components/FAQModule/CreateFAQ'
 import FetchFAQ from '../components/FAQModule/FetchFAQ'
 
+import FetchSalesAgent from '../components/SalesAgent/FetchSalesAgent'
+import CreateSalesAgent from '../components/SalesAgent/CreateSalesAgent'
+
 
 const root = ({ route }) => (
     <div>
@@ -169,6 +172,16 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/user/view/:farmerId',
                 component: FarmerDetailProfile,
+                exact: true,
+            },
+            {
+                path: process.env.PUBLIC_URL + '/salesAgent',
+                component: FetchSalesAgent,
+                exact: true,
+            },
+            {
+                path: process.env.PUBLIC_URL + '/agent/add',
+                component: CreateSalesAgent,
                 exact: true,
             },
             {

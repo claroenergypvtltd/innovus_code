@@ -10,6 +10,7 @@ import { SearchBar } from '../../shared'
 import { connect } from 'react-redux';
 
 import { fetchUsers } from '../../actions/UserAction';
+import FetchSalesAgent from '../SalesAgent/FetchSalesAgent';
 
 
 class User extends Component {
@@ -90,24 +91,31 @@ class User extends Component {
               onSelect={tabIndex => this.tabChange(tabIndex)}
             >
               <TabList className="change-tab">
-                <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab>
-                <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
-                {/* <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'retail-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab> */}
+                {/* <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} >{window.strings.USERMANAGEMENT.FARMER}</Tab> */}
+                <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
+                <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.SALESAGENT}</Tab>
 
               </TabList>
 
-              <TabPanel className="main-panel">
+              {/* <TabPanel className="main-panel">
                 <FetchUser
                   // ref="fetchUser"
                   roleId={this.state.selectedRoleId}
                   searchText={this.state.farmerSearch}
                 />
-              </TabPanel>
+              </TabPanel> */}
               <TabPanel>
                 <FetchRetailer
                   // ref="fetchRetailer"
                   roleId={this.state.selectedRoleId}
                   searchText={this.state.farmerSearch}
+                />
+              </TabPanel>
+              <TabPanel>
+                <FetchSalesAgent
+                // ref="fetchRetailer"
+                // roleId={this.state.selectedRoleId}
+                // searchText={this.state.farmerSearch}
                 />
               </TabPanel>
             </Tabs>
