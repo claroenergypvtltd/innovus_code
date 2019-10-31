@@ -98,7 +98,7 @@ class FetchRetailer extends React.Component {
         user.roleId = 2;
         if (status == 'reset') {
             this.setState({
-                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 3
             })
         }
         else {
@@ -178,7 +178,14 @@ class FetchRetailer extends React.Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }
     statusFilter(e) {
+        if (this.state.StatusfilterId == 0) {
+            this.state.StatusfilterId = e.target.value
+        }
+        else {
+            this.state.StatusfilterId = e.target.value
+        }
         this.getRetailerList(e.target.value);
+
     }
     handleDelete = (data, e) => {
         e.preventDefault();
@@ -323,7 +330,7 @@ class FetchRetailer extends React.Component {
                     </div>
                     <div className="status-filter  ml-1"><label className="label-title">Status Filter:</label>
                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                            <option value="0" className="drop-option">-- Select --</option>
+                            <option value="3" className="drop-option">-- Select --</option>
                             {statusDropdown}
                         </select>
                     </div>

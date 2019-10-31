@@ -16,6 +16,8 @@ class CreateCoupon extends Component {
 
     constructor(props) {
         super(props);
+        var today = new Date(),
+            date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         this.state = {
             submitted: false,
             errors: {},
@@ -23,7 +25,8 @@ class CreateCoupon extends Component {
             startDate: '',
             expiryDate: '',
             description: '',
-            amount: ''
+            amount: '',
+            Date: date
         }
     }
 
@@ -105,7 +108,7 @@ class CreateCoupon extends Component {
         e.preventDefault();
         this.setState({ submitted: true })
 
-        if (this.state.name && this.state.parentId) {
+        if (this.state.name && this.state.parentId && this.state.amount > 0) {
 
             const formData = new FormData();
 
@@ -142,7 +145,6 @@ class CreateCoupon extends Component {
     }
 
     render() {
-
         const { errors } = this.state;
         let { imagePreviewUrl } = this.state;
         let imagePreview;
@@ -213,8 +215,8 @@ class CreateCoupon extends Component {
                                             <label>{window.strings.COUPON.COUPON_AMOUNT}</label>
 
                                             <input
-                                                type="text"
-                                                placeholder="Amount"
+                                                type="number"
+                                                placeholder="Coupon Amount"
                                                 className={classnames('form-control calendar-icon', {
                                                     'is-invalid': errors.name
                                                 })}
@@ -224,7 +226,8 @@ class CreateCoupon extends Component {
                                                 required
                                             />
 
-                                            {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['COUPON']['COUPON_AMOUNT'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.amount && <div className="mandatory">{window.strings['COUPON']['COUPON_AMOUNT'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && this.state.amount < 0 && <div className="mandatory">{'Invalid ' + window.strings['COUPON']['COUPON_AMOUNT']}</div>}
                                         </div>
 
                                         <div className="form-group col-md-6 pt-2">
@@ -232,7 +235,7 @@ class CreateCoupon extends Component {
                                             <label>{window.strings.COUPON.COUPON_START_DATE}</label>
 
                                             <input
-                                                type="Date"
+                                                type="date"
                                                 placeholder="Start Date"
                                                 className={classnames('form-control calendar-icon', {
                                                     'is-invalid': errors.name
@@ -240,6 +243,7 @@ class CreateCoupon extends Component {
                                                 name="startDate"
                                                 onChange={this.handleChange}
                                                 value={this.state.startDate}
+                                                min={this.state.Date}
                                                 required
                                             />
                                             {this.state.submitted && !this.state.startDate && <div className="mandatory">{window.strings['DATEERROR']['STARTDATE']}</div>}
@@ -248,7 +252,7 @@ class CreateCoupon extends Component {
 
                                             <label>{window.strings.COUPON.COUPON_EXPIRY_DATE}</label>
                                             <input
-                                                type="Date"
+                                                type="date"
                                                 placeholder="Expiry Date"
                                                 className={classnames('form-control calendar-icon', {
                                                     'is-invalid': errors.name
@@ -256,6 +260,7 @@ class CreateCoupon extends Component {
                                                 name="expiryDate"
                                                 onChange={this.handleChange}
                                                 value={this.state.expiryDate}
+                                                min={this.state.Date}
                                                 required
 
                                             />
