@@ -98,17 +98,12 @@ class TransferAgent extends Component {
         });
 
         return (
-            <div className="irrigation-setting">
-                {/* <div className="clearfix title-section row">
-                    <div className="title-card col-md-7">
-                        <h4 className="user-title">Transfer Agent</h4>
-                    </div>
-                </div> */}
-                <div className="main-wrapper p-3">
-                    <div className="col-md-8">
-                        <form onSubmit={this.handleSubmit} noValidate className="row m-0">
+            <div className="update-agent">
+                <div className="p-3">
+                    <div className="row">
+                        <form onSubmit={this.handleSubmit} noValidate className="col-md-6">
 
-                            <div className="form-group col-md-6">
+                            <div className="form-group">
                                 <label>{window.strings['SETTING']['STATE_LABEL']}</label>
                                 <select required name="agentId" className="form-control" value={this.state.agentId} onChange={this.handleInputChange} >
                                     <option value="0">{window.strings['SETTING']['SELECT_STATE']}</option>

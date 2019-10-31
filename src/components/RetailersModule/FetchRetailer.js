@@ -18,6 +18,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import TransferAgent from './TransferAgent'
+import { SearchBar } from '../../shared'
 
 class FetchRetailer extends React.Component {
     static contextTypes = {
@@ -247,11 +248,11 @@ class FetchRetailer extends React.Component {
             })
         const stateDropDown = this.state.stateData && this.state.stateData.map((item, index) => {
             return <option key={index}
-                value={item.id}> {item.name}</option>
+                value={item.id} className="drop-option"> {item.name}</option>
         });
         const cityDropDown = this.state.cityData && this.state.cityData.map((item, index) => {
             return <option key={index}
-                value={item.id}> {item.name}</option>
+                value={item.id} className="drop-option"> {item.name}</option>
         });
         this.state.exceldatas && this.state.exceldatas.map((item, index) => {
             let address = '';
@@ -289,82 +290,64 @@ class FetchRetailer extends React.Component {
 
         return (
             <div className=" mt-4">
-                <div className="assign-btn mb-3">
-                    <button className="common-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                <div className="assign-box">
+                    <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                         {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                     </button>
                 </div>
-                <div className="main-filter">
-                    <div className="date-range mr-1"><label className="label-title">Date:</label>
-                        <DateRangePicker
-                            startDate={this.state.startDate}
-                            endDate={this.state.endDate}
-                            onApply={this.handleApply}
-                        >  <div className="date-box">
-                                <input type="text" className="form-control date-form" value={label} />
-                                <span className="date-group">
-                                    <button className="date-btn">
-                                        <i className="fa fa-calendar" />
-                                    </button>
-                                </span>
-                            </div>
-                        </DateRangePicker>
+                <div className="main-filter d-flex justify-content-end">
+                    <div className="row">
+                        <SearchBar className="col-md-6" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        <ExportFile className="col-md-6" csvData={this.state.data} />
                     </div>
-
-                    <div className="state-filter mr-1"><label className="label-title">State:</label>
-                        <select name="stateId" value={this.state.stateId} className="drop-select ml-1 yellow" onChange={this.handleInputChange}>
-                            <option value="0">--Select State--</option>{stateDropDown}
-                        </select>
+                </div>
+                <div className="sub-filter">
+                    <div className="row">
+                        <div className="col-md-3 date-range"><label className="label-title">Date:</label>
+                            <DateRangePicker
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                onApply={this.handleApply}
+                            >  <div className="date-box">
+                                    <input type="text" className="form-control date-form ml-1" value={label} />
+                                    <span className="date-group">
+                                        <button className="date-btn">
+                                            <i className="fa fa-calendar" />
+                                        </button>
+                                    </span>
+                                </div>
+                            </DateRangePicker>
+                        </div>
+                        <div className="col-md-4 state-filter"><label className="label-title">State:</label>
+                            <select name="stateId" value={this.state.stateId} className="state-select ml-1 yellow" onChange={this.handleInputChange}>
+                                <option value="0" className="drop-option">--Select State--</option>{stateDropDown}
+                            </select>
+                        </div>
+                        <div className="col-md-3 city-filter"><label className="label-title">City:</label>
+                            <select name="cityId" value={this.state.cityId} className="city-select ml-1 red" onChange={this.handleInputChange}>
+                                <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
+                            </select>
+                        </div>
+                        <div className="col-md-2 status-filter"><label className="label-title">Status:</label>
+                            <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                                <option value="0" className="drop-option">-- Select --</option>
+                                {statusDropdown}
+                            </select>
+                        </div>
                     </div>
-                    <div className="city-filter"><label className="label-title">City:</label>
-                        <select name="cityId" value={this.state.cityId} className="drop-select ml-1 red" onChange={this.handleInputChange}>
-                            <option value="0">--Select City---</option>{cityDropDown}
-                        </select>
-                    </div>
-                    <div className="status-filter  ml-1"><label className="label-title">Status Filter:</label>
+                </div >
+                <div className="row">
+                    <div className="col-md-2"><label className="label-title">Agent:</label>
                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
                             <option value="0" className="drop-option">-- Select --</option>
                             {statusDropdown}
                         </select>
                     </div>
-                    <div className="state-filter mr-1"><button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                    <div className="d-flex justify-content-end">
+                        <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                        {/* <ExportFile csvData={this.state.data} /> */}
                     </div>
-
-                    {/* <div>
-                        <button className="common-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
-                            {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
-                        </button>
-                    </div> */}
-
                 </div>
-
-
-
-                <div className="sub-filter">
-                    <ExportFile csvData={this.state.data} />
-                    {/* <button onClick={(e) => this.excelExport(e)} className="excelExpBtn btn btn-primary mb-2">{window.strings.EXCELEXPORT}</button> */}
-                </div>
-                {/* <Row className="clearfix title-section">
-                    <Col md={5} className="title-card user-board">
-                        <h4 className="user-title">{window.strings.USERMANAGEMENT.USER}</h4>
-                    </Col>
-                    <Col md={7} className="right-title row pr-0 pb-3">
-                        <Col md={6} className="user-board add-user">
-                            <i className="fa fa-search search-icon"></i><input type="text" className="search-btn" placeholder="Search.." />
-                        </Col>
-                        <Col md={3} className="user-board add-user">
-                            <button type="submit" className="filter-btn"><i className="fa fa-filter filter-icon"></i>Filter by</button>
-                        </Col>
-                        <Col md={3} className="user-board add-user">
-                            <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>{window.strings.USERMANAGEMENT.ADDRETAIL}
-                            </button>
-                        </Col>
-                    </Col>
-
-                </Row> */}
-                {/* <DynamicTable tableDatas={this.state.data} tableHead={this.state.columns} handleEdit={this.itemEdit}
-                    handleView={this.itemView}
-                    handleDelete={this.itemDelete} /> */}
 
                 <DataTableDynamic
                     title="Category List"
@@ -378,10 +361,10 @@ class FetchRetailer extends React.Component {
                     onRowSelected={this.handleRowChange}
                     handleRowChange={this.handleRowChange}
                 />
-                <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
+                <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="UPDATE AGENT" />
 
                 {/* <GoogleMapPage /> */}
-            </div >
+            </div>
         );
     }
 }

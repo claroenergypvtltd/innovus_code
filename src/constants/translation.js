@@ -247,7 +247,7 @@ export const Translation = {
             // "EDITTITLE": "Edit Irrigation Setting",
             // "LISTTITLE": "Irrigation Setting List",
             "LIST_IRRIGATION": "IRRIGATION SETTINGS LIST",
-            "ADD_IRRIGATION": "Add IRRIGATION SETTING",
+            "ADD_IRRIGATION": "Add Irrigation Setting",
             "STATE_LABEL": "State",
             "CITY_LABEL": "City",
             "SELECT_STATE": "Select State",

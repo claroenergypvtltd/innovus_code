@@ -87,7 +87,7 @@ class User extends Component {
             </Col>
             <Col md={5} className="right-title row pb-3">
               <Col md={8} className="p-0">
-                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                {/* <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
                 {/* <i className="fa fa-search search-icon"></i><input type="text" className="search-btn" placeholder="Search.." />  */}
               </Col>
               {/* <Col md={3} className="user-board add-user">
@@ -102,18 +102,24 @@ class User extends Component {
 
           </Row>
           <div className="main-wrapper">
-            <Tabs className="main-tab"
+            <Tabs className="main-tab sub-tab"
               selectedIndex={this.state.tabIndex}
               onSelect={tabIndex => this.tabChange(tabIndex)}
             >
-              <TabList className="change-tab">
+              <TabList className="change-tab d-flex">
                 {/* <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'} disabled></Tab> */}
                 {/* {window.strings.USERMANAGEMENT.FARMER} */}
                 <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab>
                 {/* <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'retail-change'}>{window.strings.USERMANAGEMENT.RETAILER}</Tab> */}
                 <Tab className={this.state.tabIndex == "1" ? 'sub-select' : 'sub-change'}>{window.strings.USERMANAGEMENT.SALESAGENT}</Tab>
-
+                {/* <div className="assign-btn flex-grow-1">
+                  <button className="common-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                    {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
+                  </button>
+                </div> */}
               </TabList>
+
+
 
               {/* <TabPanel className="main-panel"> */}
               {/* <FetchUser
