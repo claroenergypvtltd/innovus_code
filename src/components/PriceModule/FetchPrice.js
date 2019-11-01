@@ -20,7 +20,7 @@ class FetchPrice extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", "Total Weight(Unit)", "Weight Units", "Price(Unit)", "Price Units", "Box Quantity(Unit)", "Box Units", "Actions"], PriceLists: props.getLists,
+            TableHead: ["Product ID", "Product Name", "Total Weight(Unit)", "Price(Unit)", "Box Quantity(Unit)", "Actions"], PriceLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
             currentPage: 1,
@@ -116,19 +116,20 @@ class FetchPrice extends Component {
             let productId = item.categoryAmount && item.categoryAmount.id;
             let productName = item.name;
             let totWeight = ((item.categoryAmount && item.categoryAmount.totalQuantity) + ' / ' + (item.categoryAmount && item.categoryAmount.rupeesize));
-            let weightUnits = item.categoryAmount && item.categoryAmount.totalQuantitySize;
+            // let weightUnits = item.categoryAmount && item.categoryAmount.totalQuantitySize;
             let amount = ((item.categoryAmount && item.categoryAmount.amount) + " Rs/" + (item.categoryAmount && item.categoryAmount.rupeesize));
-            let priceUnit = item.categoryAmount && item.categoryAmount.rupeesize;
+            // let priceUnit = item.categoryAmount && item.categoryAmount.rupeesize;
             let boxQuantity = ((item.categoryAmount && item.categoryAmount.boxQuantity) + ' ' + (item.categoryAmount && item.categoryAmount.rupeesize));
-            let boxQuantitySize = item.categoryAmount && item.categoryAmount.boxQuantitySize
+            // let boxQuantitySize = item.categoryAmount && item.categoryAmount.boxQuantitySize
 
             return {
                 "itemList": [productId, productName,
                     totWeight,
-                    weightUnits, amount,
-                    priceUnit,
+                    // weightUnits, 
+                    amount,
+                    // priceUnit,
                     boxQuantity,
-                    boxQuantitySize
+                    // boxQuantitySize
                 ], "itemId": item.id
             }
         })

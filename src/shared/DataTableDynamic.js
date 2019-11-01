@@ -9,6 +9,7 @@ class DataTableDynamic extends React.Component {
       tableDatas: [],
     };
   }
+
   componentDidMount() {
     let buttonActions = [
       {
@@ -64,7 +65,7 @@ class DataTableDynamic extends React.Component {
   }
 
   handleRowChange = (row) => {
-    this.props.handleRowChange(row.selectedRows);
+    this.props && this.props.handleRowChange && this.props.handleRowChange(row.selectedRows);
   }
 
   render() {
@@ -76,6 +77,10 @@ class DataTableDynamic extends React.Component {
         fontSize: '15px',
         color: '#9E9E9E!important'
       }
+    }
+    let selectableRows = false;
+    if (this.props && this.props.handleRowChange) {
+      selectableRows = true
     }
     return (
       <div className="tables">
@@ -89,7 +94,7 @@ class DataTableDynamic extends React.Component {
           expandableRowsComponent={this.props.expandableComponent}
           paginationRowsPerPageOptions={[10, 25, 50]}
           customTheme={myNewTheme}
-          selectableRows
+          selectableRows={selectableRows}
           onRowSelected={this.handleRowChange}
         />
       </div>
