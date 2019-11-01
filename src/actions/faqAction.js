@@ -38,7 +38,7 @@ export const SubmitFaq = (instruction, Id) => dispatch => {
 }
 
 export const getSpecificFaq = (faqId) => dispatch => {
-    httpServices.get(endPoint.instruction + '?title=Profit&' + endPoint.instructionId + '=' + faqId).then(resp => {
+    httpServices.get(endPoint.instruction + '?title=&' + endPoint.instructionId + '=' + faqId).then(resp => {
         if (resp.data) {
             dispatch({ type: FAQ_FETCH_SPECIFIC_DATA, specificData: resp.data })
 

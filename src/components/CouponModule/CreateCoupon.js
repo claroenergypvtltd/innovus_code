@@ -17,7 +17,7 @@ class CreateCoupon extends Component {
     constructor(props) {
         super(props);
         var today = new Date(),
-            date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            date = today.getDate() < 10 ? today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + ('0' + today.getDate()) : today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         this.state = {
             submitted: false,
             errors: {},
@@ -59,9 +59,10 @@ class CreateCoupon extends Component {
 
         if (this.state.couponId && nextProps.addCoupon && nextProps.addCoupon.specificData && nextProps.addCoupon.specificData.datas && nextProps.addCoupon.specificData.datas[0]) {
             let Data = nextProps.addCoupon.specificData.datas[0];
+            let couponDate = Data.startDate
             this.setState({
                 name: Data.name, parentId: Data.discountUnit, amount: Data.discountValue,
-                startDate: formatDate(Data.startDate), expiryDate: formatDate(Data.expiryDate), description: Data.description
+                startDate: formatDate(Data.startDate, couponDate), expiryDate: formatDate(Data.expiryDate, couponDate), description: Data.description
             })
         }
 
@@ -71,9 +72,14 @@ class CreateCoupon extends Component {
     }
 
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        if (e.target.value < 0) {
+
+        }
+        else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     onhandleImageChange = (e) => {
@@ -260,7 +266,7 @@ class CreateCoupon extends Component {
                                                 name="expiryDate"
                                                 onChange={this.handleChange}
                                                 value={this.state.expiryDate}
-                                                min={this.state.Date}
+                                                min='2019-11-01'
                                                 required
 
                                             />

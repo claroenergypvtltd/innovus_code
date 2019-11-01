@@ -151,7 +151,7 @@ class IrrigationSetting extends Component {
             <div className="irrigation-setting">
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-7">
-                        <h4 className="user-title">ADD IRRIGATION SETTING</h4>
+                        <h4 className="user-title">{!this.state.irrigationCostId ? window.strings.SETTING.ADD_IRRIGATION : window.strings.SETTING.EDIT_IRRIGATION}</h4>
                     </div>
                 </div>
                 <div className="main-wrapper p-3">

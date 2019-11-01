@@ -82,7 +82,7 @@ export const Translation = {
             "IMAGE": "Image",
             "DESCRIPTION": "Description",
             "CATEGORY_NAME": "Category",
-            "SUB_CATEGORY": "Sub Catgeory",
+            "SUB_CATEGORY": "Sub Category",
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
         "DESCRIPTION": "Description",
@@ -252,6 +252,7 @@ export const Translation = {
             // "LISTTITLE": "Irrigation Setting List",
             "LIST_IRRIGATION": "IRRIGATION SETTINGS LIST",
             "ADD_IRRIGATION": "Add Irrigation Setting",
+            "EDIT_IRRIGATION": "EDIT Irrigation Setting",
             "STATE_LABEL": "State",
             "CITY_LABEL": "City",
             "SELECT_STATE": "Select State",

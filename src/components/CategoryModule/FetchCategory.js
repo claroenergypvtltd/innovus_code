@@ -10,6 +10,7 @@ import { toastr } from '../../services/toastr.services'
 import store from '../../store/store';
 import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { Form, Row, Col } from 'react-bootstrap';
+import noimg from '../../assets/noimage/Avatar_farmer.png'
 
 class CategoryList extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class CategoryList extends Component {
         if (newProps.getLists) {
             let Lists = newProps.getLists.map(item => {
                 item.cropButton = this.viewCrop(item);
-                item.image = <img src={imageBaseUrl + item.image} height="40px" width="40px" />
+                item.image = item.image ? <img src={imageBaseUrl + item.image} height="40px" width="40px" /> : <img src={noimg} height="40px" width="40px" />;
                 return item;
             })
 

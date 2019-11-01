@@ -67,8 +67,9 @@ export const getSpecificCouponData = (couponId) => dispatch => {
 
 
 export const SubmitCoupon = (coupon, Id) => dispatch => {
+    let couponId = Id;
     if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
-        httpServices.put(endPoint.coupon).then(resp => {
+        httpServices.put(endPoint.coupon + '?couponId=' + couponId, coupon).then(resp => {
             if (resp) {
                 toastr.success(resp.message);
                 dispatch({ type: COUPON_UPDATE_SUCCESS, resp: resp.status })

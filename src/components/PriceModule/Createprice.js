@@ -114,9 +114,7 @@ class CreatePrice extends Component {
 
 
     handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
     }
 
     handleCategoryChange = (e) => {
@@ -325,7 +323,7 @@ class CreatePrice extends Component {
                                                 required
 
                                             />
-                                            {/* {this.state.submitted && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>} */}
+                                            {this.state.submitted && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
 
@@ -337,7 +335,7 @@ class CreatePrice extends Component {
                                                 <option value="1">Currency</option>
                                                 <option value="2">Percentage</option>
                                             </select>
-                                            {/* {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['OFFER'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>} */}
+                                            {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['OFFER'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                     </form>
