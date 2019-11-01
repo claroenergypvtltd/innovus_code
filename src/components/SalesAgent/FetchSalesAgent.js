@@ -40,7 +40,7 @@ class FetchSalesAgent extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
+        //debugger;
         if (newProps && newProps.agentData && newProps.agentData.Lists.datas) {
             this.setState({
                 salesAgentData: newProps.agentData.Lists.datas, pageCount: newProps.agentData.Lists.totalCount / this.state.itemPerPage
@@ -87,7 +87,7 @@ class FetchSalesAgent extends React.Component {
     }
 
     itemEdit = (id) => {
-        debugger;
+        //debugger;
         this.context.router.history.push({ pathname: 'user/salesAgent/edit/' + id, state: { salesAgentId: id } });
     }
 
@@ -100,10 +100,18 @@ class FetchSalesAgent extends React.Component {
 
         return (
             <div>
-                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Sales Agent</button>
-                <TableData TableHead={this.state.TableHead} TableContent={salesAgentList} handleEdit={this.itemEdit} />
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                <div d-flex justify-content-end>
+                    <SearchBar className="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <div className="assign-box">
+                        {/* <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                            {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT} */}
+                        <button className="assign-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Sales Agent</button>
+
+                        {/* </button> */}
+                    </div>
+                    <TableData TableHead={this.state.TableHead} TableContent={salesAgentList} handleEdit={this.itemEdit} />
+                    <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                </div>
             </div>
         )
     }
