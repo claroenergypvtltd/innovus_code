@@ -31,8 +31,9 @@ class FetchSalesAgent extends React.Component {
     getSalesAgentList = () => {
         let obj = {
             roleId: "4",
-            page: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
-            rows: this.state.itemPerPage
+            pages: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            row: this.state.itemPerPage,
+            search: this.state.search
         }
 
         this.props.fetchSalesAgent(obj);
@@ -61,6 +62,30 @@ class FetchSalesAgent extends React.Component {
 
     }
 
+
+    searchResult = (e) => {
+
+        e.preventDefault();
+        if (this.state.search) {
+            // let serObj = {
+            //     "search": this.state.search
+            // };
+            this.getSalesAgentList();
+        }
+    }
+
+    resetSearch = () => {
+        if (this.state.search) {
+            this.setState({ search: '' }, () => {
+                this.getSalesAgentList();
+            });
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
+
     itemEdit = (id) => {
         debugger;
         this.context.router.history.push({ pathname: 'user/salesAgent/edit/' + id, state: { salesAgentId: id } });
@@ -75,6 +100,7 @@ class FetchSalesAgent extends React.Component {
 
         return (
             <div>
+                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Sales Agent</button>
                 <TableData TableHead={this.state.TableHead} TableContent={salesAgentList} handleEdit={this.itemEdit} />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
