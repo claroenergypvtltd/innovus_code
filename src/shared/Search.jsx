@@ -4,7 +4,7 @@ import React from 'react';
 export function SearchBar(props) {
    return (
 
-      <div className="clearfix col-md-8">
+      <div className="search">
          <form id="form1" onSubmit={props.SearchDetails.onClickSearch} className="form-search">
             <div className="pt-search-box">
                <input type="text" className="form-control search-btn pl-1" placeholder="Search..." value={props.SearchDetails.filterText} onChange={props.SearchDetails.onChange} />

@@ -207,7 +207,9 @@ export const Translation = {
             "ASSIGN_TRANSFER_AGENT": "Assign / Transfer Agent",
             "FAMS": "Farm",
             "SHOP": "Shop",
-            "KYC": "KYC Details"
+            "KYC": "KYC Details",
+            "AGENT_LABEL": "Agent",
+            "SELECT_AGENT": "Select Agent"
         },
         "ABOUTUS": {
             "TITLE": "About Us",
@@ -240,6 +242,8 @@ export const Translation = {
             "ADD_AGENT": "ADD AGENT",
             "PHON_NO": "Phone Number",
             "AGENT_NAME": "Agent Name",
+            "SURVEY_AREA": "Surveing Area",
+            "DC_CODE": "DC Code"
         },
         "SETTING": {
             // "CROP_NAME": "Crop Name",
@@ -247,7 +251,7 @@ export const Translation = {
             // "EDITTITLE": "Edit Irrigation Setting",
             // "LISTTITLE": "Irrigation Setting List",
             "LIST_IRRIGATION": "IRRIGATION SETTINGS LIST",
-            "ADD_IRRIGATION": "Add IRRIGATION SETTING",
+            "ADD_IRRIGATION": "Add Irrigation Setting",
             "STATE_LABEL": "State",
             "CITY_LABEL": "City",
             "SELECT_STATE": "Select State",

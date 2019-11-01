@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import renderEmpty from 'antd/lib/config-provider/renderEmpty';
+import { submitSalesAgent, fetchSalesAgent } from '../../actions/salesAgentAction';
+import { connect } from 'react-redux';
+import { AGENT_CREATE_SUCCESS, AGENT_UPDATE_SUCCESS } from '../../constants/actionTypes'
+import store from '../../store/store';
 
 
-
-export default class CreateSalesAgent extends React.Component {
+class CreateSalesAgent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,6 +15,78 @@ export default class CreateSalesAgent extends React.Component {
             mobileNumber: '',
             errors: {}
         }
+    }
+
+    componentDidMount() {
+        debugger;
+        if (this.props.location && this.props.location.state && this.props.location.state.salesAgentId) {
+            this.getEditData();
+        }
+    }
+
+    getEditData = () => {
+        let obj = {
+            roleId: "4",
+            agentId: this.props.location.state.salesAgentId,
+            isEdit: true
+        }
+
+        this.props.fetchSalesAgent(obj);
+    }
+
+    componentWillReceiveProps(newProps) {
+        debugger;
+        if (newProps && newProps.agentData && newProps.agentData.Lists) {
+            let editDatas = newProps.agentData.Lists
+            this.setState({ name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea, dcCode: editDatas.dcCode })
+        }
+
+        if (newProps.agentData && newProps.agentData.createdStatus == "200") {
+            store.dispatch({ type: AGENT_CREATE_SUCCESS, resp: "" })
+            this.redirectPage();
+        }
+        if (newProps.agentData && newProps.agentData.updatedStatus == "200") {
+            store.dispatch({ type: AGENT_UPDATE_SUCCESS, resp: "" })
+            this.redirectPage();
+        }
+
+    }
+
+    handleInputChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    redirectPage = () => {
+        this.props.history.goBack();
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({
+            submitted: true
+        })
+        if (this.state.name && this.state.mobileNumber) {
+
+            const formData = new FormData();
+            formData.append("name", this.state.name);
+            formData.append("mobileNumber", this.state.mobileNumber);
+            formData.append("surveyingArea", this.state.surveyingArea);
+            formData.append("dcCode", this.state.dcCode);
+            formData.append("role", "agent");
+
+            let isEdit = false;
+
+            if (this.props.location && this.props.location.state && this.props.location.state.salesAgentId) {
+                formData.append("userId", this.props.location.state.salesAgentId);
+                isEdit = true
+            }
+
+            this.props.submitSalesAgent(formData, isEdit);
+
+        }
+
     }
 
     render() {
@@ -37,18 +112,17 @@ export default class CreateSalesAgent extends React.Component {
                                         onChange={this.handleInputChange}
                                         value={this.state.name}
                                         required
-
                                     />
 
-                                    {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                    {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['SALES_AGENT']['AGENT_NAME'] + window.strings['ISREQUIRED']}</div>}
                                 </div>
                                 <div className="form-group col-md-12">
 
                                     <label>{window.strings['SALES_AGENT']['PHON_NO']}</label>
 
                                     <input
-                                        type="text"
-                                        placeholder={window.strings['FARMERS']['PHON_NO']}
+                                        type="number"
+                                        placeholder={window.strings['SALES_AGENT']['PHON_NO']}
                                         className={classnames('form-control', {
                                             'is-invalid': errors.mobileNumber
                                         })}
@@ -58,7 +132,45 @@ export default class CreateSalesAgent extends React.Component {
                                         required
 
                                     />
-                                    {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['FARMERS']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
+                                    {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['SALES_AGENT']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
+                                </div>
+
+                                <div className="form-group col-md-12">
+
+                                    <label>{window.strings['SALES_AGENT']['SURVEY_AREA']}</label>
+
+                                    <input
+                                        type="text"
+                                        placeholder={window.strings['SALES_AGENT']['SURVEY_AREA']}
+                                        className={classnames('form-control', {
+                                            'is-invalid': errors.surveyingArea
+                                        })}
+                                        name="surveyingArea"
+                                        onChange={this.handleInputChange}
+                                        value={this.state.surveyingArea}
+                                        required
+
+                                    />
+                                    {this.state.submitted && !this.state.surveyingArea && <div className="mandatory">{window.strings['SALES_AGENT']['SURVEY_AREA'] + window.strings['ISREQUIRED']}</div>}
+                                </div>
+
+                                <div className="form-group col-md-12">
+
+                                    <label>{window.strings['SALES_AGENT']['DC_CODE']}</label>
+
+                                    <input
+                                        type="text"
+                                        placeholder={window.strings['SALES_AGENT']['DC_CODE']}
+                                        className={classnames('form-control', {
+                                            'is-invalid': errors.dcCode
+                                        })}
+                                        name="dcCode"
+                                        onChange={this.handleInputChange}
+                                        value={this.state.dcCode}
+                                        required
+
+                                    />
+                                    {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                 </div>
 
                             </form>
@@ -76,3 +188,10 @@ export default class CreateSalesAgent extends React.Component {
     }
 
 }
+
+const mapStateToProps = (state) => ({
+    agentData: state.salesAgent
+})
+
+
+export default connect(mapStateToProps, { submitSalesAgent, fetchSalesAgent })(CreateSalesAgent)

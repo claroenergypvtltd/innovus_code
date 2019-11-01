@@ -174,13 +174,18 @@ export const routesPath = [
                 component: FarmerDetailProfile,
                 exact: true,
             },
+            // {
+            //     path: process.env.PUBLIC_URL + '/user/salesAgent',
+            //     component: FetchSalesAgent,
+            //     exact: true,
+            // },
             {
-                path: process.env.PUBLIC_URL + '/salesAgent',
-                component: FetchSalesAgent,
+                path: process.env.PUBLIC_URL + '/user/salesAgent/add',
+                component: CreateSalesAgent,
                 exact: true,
             },
             {
-                path: process.env.PUBLIC_URL + '/agent/add',
+                path: process.env.PUBLIC_URL + '/user/salesAgent/edit/:id?',
                 component: CreateSalesAgent,
                 exact: true,
             },
