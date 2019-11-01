@@ -6,6 +6,7 @@ import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { updateStatusRetailer } from '../../actions/SubmitRetailerAction';
 import { toastr } from '../../services/toastr.services'
 import { path } from '../../constants';
+import ImageZoom from 'react-medium-image-zoom'
 
 class ShopDetails extends React.Component {
     static contextTypes = {
@@ -57,10 +58,20 @@ class ShopDetails extends React.Component {
                     <div className="farm-card bg-white"
                     >
                         <span className="farm-image">
-                            <Image
+                            {/* <Image
                                 src={shopImg}
                                 className="maincentext"
                                 roundedCircle
+                            /> */}
+                            <ImageZoom
+                                image={{
+                                    src: shopImg,
+                                    className: "maincentext",
+
+                                }}
+                                zoomImage={{
+                                    src: { shopImg }
+                                }}
                             />
                             {/* <button className="edit-icon" onClick={() => this.editPage(item.id)}><i class="fa fa-pencil"></i></button>  */}
                         </span>
