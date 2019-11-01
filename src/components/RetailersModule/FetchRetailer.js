@@ -290,65 +290,76 @@ class FetchRetailer extends React.Component {
 
         return (
             <div className=" mt-4">
-                <div className="assign-box">
-                    <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
-                        {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
-                    </button>
+                <div className="d-flex justify-content-end">
+                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <ExportFile csvData={this.state.data} />
                 </div>
-                <div className="main-filter d-flex justify-content-end">
-                    <div className="row">
-                        <SearchBar className="col-md-6" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <ExportFile className="col-md-6" csvData={this.state.data} />
-                    </div>
-                </div>
-                <div className="sub-filter">
-                    <div className="row">
-                        <div className="col-md-3 date-range"><label className="label-title">Date:</label>
-                            <DateRangePicker
-                                startDate={this.state.startDate}
-                                endDate={this.state.endDate}
-                                onApply={this.handleApply}
-                            >  <div className="date-box">
-                                    <input type="text" className="form-control date-form ml-1" value={label} />
-                                    <span className="date-group">
-                                        <button className="date-btn">
-                                            <i className="fa fa-calendar" />
-                                        </button>
-                                    </span>
-                                </div>
-                            </DateRangePicker>
-                        </div>
-                        <div className="col-md-4 state-filter"><label className="label-title">State:</label>
-                            <select name="stateId" value={this.state.stateId} className="state-select ml-1 yellow" onChange={this.handleInputChange}>
-                                <option value="0" className="drop-option">--Select State--</option>{stateDropDown}
-                            </select>
-                        </div>
-                        <div className="col-md-3 city-filter"><label className="label-title">City:</label>
-                            <select name="cityId" value={this.state.cityId} className="city-select ml-1 red" onChange={this.handleInputChange}>
-                                <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
-                            </select>
-                        </div>
-                        <div className="col-md-2 status-filter"><label className="label-title">Status:</label>
-                            <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                                <option value="0" className="drop-option">-- Select --</option>
-                                {statusDropdown}
-                            </select>
-                        </div>
-                    </div>
-                </div >
-                <div className="row">
-                    <div className="col-md-2"><label className="label-title">Agent:</label>
-                        <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                            <option value="0" className="drop-option">-- Select --</option>
-                            {statusDropdown}
-                        </select>
-                    </div>
-                    <div className="d-flex justify-content-end">
-                        <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                        {/* <ExportFile csvData={this.state.data} /> */}
-                    </div>
-                </div>
+                <div id="menu">
+                    <button className="advance-search"><span className="advance-icon"></span></button>
 
+                    <div id="list">
+
+                        {/* </div> */}
+                        <div className="assign-box">
+                            <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                                {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
+                            </button>
+                        </div>
+                        <div className="main-filter d-flex justify-content-end">
+                            <div className="row">
+                                {/* <SearchBar className="col-md-6" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
+                                {/* <ExportFile className="col-md-6" csvData={this.state.data} /> */}
+                            </div>
+                        </div>
+                        <div className="sub-filter">
+                            <div className="row">
+                                <div className="col-md-3 date-range"><label className="label-title">Date:</label>
+                                    <DateRangePicker
+                                        startDate={this.state.startDate}
+                                        endDate={this.state.endDate}
+                                        onApply={this.handleApply}
+                                    >  <div className="date-box">
+                                            <input type="text" className="form-control date-form ml-1" value={label} />
+                                            <span className="date-group">
+                                                <button className="date-btn">
+                                                    <i className="fa fa-calendar" />
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </DateRangePicker>
+                                </div>
+                                <div className="col-md-4 state-filter"><label className="label-title">State:</label>
+                                    <select name="stateId" value={this.state.stateId} className="state-select ml-1 yellow" onChange={this.handleInputChange}>
+                                        <option value="0" className="drop-option">--Select State--</option>{stateDropDown}
+                                    </select>
+                                </div>
+                                <div className="col-md-3 city-filter"><label className="label-title">City:</label>
+                                    <select name="cityId" value={this.state.cityId} className="city-select ml-1 red" onChange={this.handleInputChange}>
+                                        <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
+                                    </select>
+                                </div>
+                                <div className="col-md-2 status-filter"><label className="label-title">Status:</label>
+                                    <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                                        <option value="0" className="drop-option">-- Select --</option>
+                                        {statusDropdown}
+                                    </select>
+                                </div>
+                            </div>
+                        </div >
+                        <div className="row m-0">
+                            <div className=""><label className="label-title">Agent:</label>
+                                <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                                    <option value="0" className="drop-option">-- Select --</option>
+                                    {statusDropdown}
+                                </select>
+                            </div>
+                            <div className="">
+                                <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                                {/* <ExportFile csvData={this.state.data} /> */}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <DataTableDynamic
                     title="Category List"
                     tableHead={this.state.columns}
@@ -361,7 +372,7 @@ class FetchRetailer extends React.Component {
                     onRowSelected={this.handleRowChange}
                     handleRowChange={this.handleRowChange}
                 />
-                <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="UPDATE AGENT" />
+                <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
 
                 {/* <GoogleMapPage /> */}
             </div>
