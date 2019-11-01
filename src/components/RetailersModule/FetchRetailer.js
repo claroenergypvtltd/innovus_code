@@ -483,7 +483,7 @@ class FetchRetailer extends React.Component {
                             </div >
                             <div className="sub-filter">
                                 <div className="row ">
-                                    <div className="col-md-6 agent-filter"><label className="label-title">Agent:</label>
+                                    <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
                                         <Select
                                             className="city-box ml-1"
                                             value={this.state.selectedAgentOption}
