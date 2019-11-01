@@ -37,6 +37,7 @@ class FetchRetailer extends React.Component {
             startDate: moment(),
             endDate: moment(),
             selectedDatas: [],
+            advanceSearch: false
         }
     }
     componentWillMount() {
@@ -234,6 +235,12 @@ class FetchRetailer extends React.Component {
         }
     };
 
+    enableAdvanceSearch = (e) => {
+        e.preventDefault();
+        let enableSearch = this.state.advanceSearch ? false : true
+        this.setState({ advanceSearch: enableSearch })
+    }
+
     render() {
         let start = this.state.startDate.format('DD-MM-YYYY');
         let end = this.state.endDate.format('DD-MM-YYYY');
@@ -294,17 +301,19 @@ class FetchRetailer extends React.Component {
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                     <ExportFile csvData={this.state.data} />
                 </div>
-                <div id="menu">
-                    <button className="advance-search"><span className="advance-icon"></span></button>
+                <button className="advance-search" onClick={this.enableAdvanceSearch} ><span className="advance-icon"></span>Advance Search</button>
+
+
+                <div className="assign-box">
+                    <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                        {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
+                    </button>
+                </div>
+
+                {this.state.advanceSearch && <div id="list">
 
                     <div id="list">
 
-                        {/* </div> */}
-                        <div className="assign-box">
-                            <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
-                                {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
-                            </button>
-                        </div>
                         <div className="main-filter d-flex justify-content-end">
                             <div className="row">
                                 {/* <SearchBar className="col-md-6" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
@@ -321,7 +330,7 @@ class FetchRetailer extends React.Component {
                                     >  <div className="date-box">
                                             <input type="text" className="form-control date-form ml-1" value={label} />
                                             <span className="date-group">
-                                                <button className="date-btn">
+                                                <button type="button" className="date-btn">
                                                     <i className="fa fa-calendar" />
                                                 </button>
                                             </span>
@@ -359,7 +368,7 @@ class FetchRetailer extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>}
                 <DataTableDynamic
                     title="Category List"
                     tableHead={this.state.columns}

@@ -23,12 +23,12 @@ class TransferAgent extends Component {
     }
 
     componentDidMount() {
-        debugger;
+
         this.getAgentList();
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
+
         if (newProps && newProps.list && newProps.list.datas) {
             let selectlist = newProps.list.datas;
 
@@ -52,14 +52,13 @@ class TransferAgent extends Component {
     }
 
     handleInputChange = (e) => {
-
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
     listPath = () => {
-        this.props.history.goBack();
+        this.props.onCloseModal();
     }
 
     handleSubmit = (e) => {
@@ -72,7 +71,7 @@ class TransferAgent extends Component {
             userData.push(item.id)
         })
 
-        debugger;
+
 
 
         if (this.state.agentId && userData) {
@@ -104,12 +103,12 @@ class TransferAgent extends Component {
                         <form onSubmit={this.handleSubmit} noValidate className="col-md-6">
 
                             <div className="form-group">
-                                <label>{window.strings['SETTING']['STATE_LABEL']}</label>
+                                <label>{window.strings['USERMANAGEMENT']['AGENT_LABEL']}</label>
                                 <select required name="agentId" className="form-control" value={this.state.agentId} onChange={this.handleInputChange} >
-                                    <option value="0">{window.strings['SETTING']['SELECT_STATE']}</option>
+                                    <option value="0">{window.strings['USERMANAGEMENT']['SELECT_AGENT']}</option>
                                     {agentDropDown}
                                 </select>
-                                {this.state.submitted && !this.state.agentId && <div className="mandatory">{window.strings['SETTING']['STATE_LABEL'] + window.strings['ISREQUIRED']}</div>}
+                                {this.state.submitted && !this.state.agentId && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_LABEL'] + window.strings['ISREQUIRED']}</div>}
                             </div>
 
                         </form>
