@@ -4,6 +4,7 @@ import { imageBaseUrl } from '../../config/config';
 import { getKYClist } from '../../actions/SubmitRetailerAction';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
+import ImageZoom from 'react-medium-image-zoom'
 
 class RetKYCList extends React.Component {
     static contextTypes = {
@@ -40,7 +41,18 @@ class RetKYCList extends React.Component {
                         <div className="col-md-4">
                             <div className="farm-card main-wrapper">
                                 <div className="retailer-details">
-                                    <img src={imageBaseUrl + item.image} className="retailer-image" />
+                                    <ImageZoom
+                                        image={{
+                                            src: imageBaseUrl + item.image,
+                                            className: "retailer-image",
+
+                                        }}
+                                        zoomImage={{
+                                            src: imageBaseUrl + item.image
+                                        }
+                                        }
+                                    />
+                                    {/* <img src={imageBaseUrl + item.image} className="retailer-image" /> */}
                                     <div className="retailer-proof">
                                         <h5 className="retailer-title p-2 m-0">{item.proofNameId == 1 ? "Upload Identity Proof" : "Upload Photo Proof"}</h5>
                                     </div>
