@@ -985,7 +985,41 @@ svg{
   margin: 10px;
  // background-image: linear-gradient(to right, #C064F8, #D795FC);
 }
+
+
+/****************************User Management-Advanced search************************/
+#menu #list {
+  max-height: 0;
+  transition: max-height 0.15s ease-out;
+  overflow: hidden;
+  background-color: #fff;
+  margin: 7px 0;
+  padding: 0 10px;
+}
+
+#menu:hover #list {
+  width: 100%;
+  padding: 10px;
+  max-height: 500px;
+  transition: max-height 0.25s ease-in;
+  box-shadow: 0 0 3px 0px #FE988D;
+}
+.advance-icon {
+  background-image: url(/static/media/Sprite_image.f8e75c05.png);
+  background-repeat: no-repeat;
+  background-position: -5px -1273px;
+  text-align: center;
+  padding: 7px 13px 0;
+  
+}
+.advance-search{
+  float: right;
+  background-image: linear-gradient(to right, #ff8b92, #feb683);
+  border: none;
+  border-radius: 5px;
+}
 /****************************User Management Page icon************************/
+
 .icon{
  background-image: url("../src/assets/images/Sprite_image.png");
  background-repeat:no-repeat;
@@ -1733,3 +1767,5 @@ text-align: right;
     height: auto;
   }
 }
+
+
