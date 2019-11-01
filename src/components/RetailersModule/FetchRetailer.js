@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import DataTableDynamic from '../../shared/DataTableDynamic';
 import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers } from '../../actions/SubmitRetailerAction';
+import { fetchSalesAgent } from '../../actions/salesAgentAction';
 import { RETAILER_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { connect } from 'react-redux';
 import { resorceJSON, ModalData } from '../../libraries';
@@ -32,6 +33,7 @@ class FetchRetailer extends React.Component {
         this.state = {
             roleId: props.roleId,
             retailerId: "",
+            search: '',
             columns: resorceJSON.RetailerList,
             data: [],
             excelDatas: [],
@@ -45,6 +47,7 @@ class FetchRetailer extends React.Component {
     componentWillMount() {
         this.getRetailerList();
         this.getStateList();
+        this.fetchAgents();
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
@@ -97,7 +100,6 @@ class FetchRetailer extends React.Component {
         }
     }
     handleStateChange = (e) => {
-        console.log(e, 'eeeeeee');
         let obj = {};
         if (e.name == "stateId" || e.name == "cityId") {
             if (e.name == "stateId") {
@@ -137,13 +139,19 @@ class FetchRetailer extends React.Component {
             })
         }
     };
+
+    handleAgentChange = (e) => {
+        this.setState({ selectedAgentOption: e, agentId: e.value }, () => { this.getRetailerList() })
+
+    };
     getRetailerList = (status) => {
         const initialState = {};
         let user = {};
         user.roleId = 2;
+        user.search = this.state.search;
         if (status == 'reset') {
             this.setState({
-                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0, selectedCityOption: '', selectedStateOption: ''
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0, selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: ''
             })
         }
         else {
@@ -160,10 +168,18 @@ class FetchRetailer extends React.Component {
             if (status) {
                 user.status = status;
             }
+            if (this.state.agentId) {
+                user.agentId = this.state.agentId;
+            }
         }
-        user.search = this.props.searchText;
         this.props.fetchRetailers(user);
+
     };
+    fetchAgents = () => {
+        let user = {};
+        user.roleId = 4;
+        this.props.fetchSalesAgent(user);
+    }
     handlePageChange = e => {
         e.preventDefault();
         let redrctpath = path.retailer.add;
@@ -172,12 +188,13 @@ class FetchRetailer extends React.Component {
     componentWillReceiveProps(newProps) {
         if (newProps.list.datas) {
             let selectlist = newProps.list.datas;
+            let agentDataList = newProps.agentData;
             let Lists = selectlist && selectlist.map(item => {
                 item.selectBox = this.viewCrop(item.id, item.status);
                 return item;
             })
             this.setState({
-                data: Lists, exceldatas: Lists
+                data: Lists, exceldatas: Lists, agentDataList: agentDataList.Lists.datas
             })
 
         }
@@ -284,6 +301,28 @@ class FetchRetailer extends React.Component {
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
+    searchResult = (e) => {
+
+        e.preventDefault();
+        if (this.state.search) {
+            // let serObj = {
+            // "search": this.state.search
+            // };
+            this.getRetailerList();
+        }
+    }
+
+    resetSearch = () => {
+        if (this.state.search) {
+            this.setState({ search: '' }, () => {
+                this.getRetailerList();
+            });
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
 
     render() {
         let start = this.state.startDate.format('DD-MM-YYYY');
@@ -293,11 +332,15 @@ class FetchRetailer extends React.Component {
             label = '';
         }
         let excelDatas = [];
-        let stateDropDown = []; let cityDropDown = [];
+        let stateDropDown = []; let cityDropDown = []; let agentListDropDown = [];
         const statusDropdown =
             resorceJSON.statusOptions.map((item, index) => {
                 return <option value={index} className="drop-option"> {item}</option>
             })
+        this.state.agentDataList && this.state.agentDataList.map((item) => {
+            let obj = { "label": item.agentName, "value": item.agentId, "name": "agentName" };
+            agentListDropDown.push(obj);
+        })
         this.state.stateData && this.state.stateData.map((item) => {
             let obj = { "label": item.name, "value": item.id, "name": "stateId" };
             stateDropDown.push(obj);
@@ -440,12 +483,13 @@ class FetchRetailer extends React.Component {
                             </div >
                             <div className="sub-filter">
                                 <div className="row ">
-                                    <div className="col-md-4 agent-filter"><label className="label-title">Agent:</label>
-                                        <Select className="state-box ml-1"
-                                            value={this.state.selectedStateOption}
-                                            onChange={(e) => this.handleStateChange(e)}
-                                            options={stateDropDown}
-                                            placeholder="--Select State--"
+                                    <div className="col-md-6 agent-filter"><label className="label-title">Agent:</label>
+                                        <Select
+                                            className="city-box ml-1"
+                                            value={this.state.selectedAgentOption}
+                                            onChange={(e) => this.handleAgentChange(e)}
+                                            options={agentListDropDown}
+                                            placeholder="--Select Agent--"
                                         />
 
                                     </div>
@@ -483,9 +527,10 @@ class FetchRetailer extends React.Component {
 const mapStateToProps = state => ({
     list: state.retailer.Lists ? state.retailer.Lists : [],
     deletedData: state.retailer.deletedData,
+    agentData: state.salesAgent
 });
 
 export default connect(
     mapStateToProps,
-    { fetchRetailers, deleteRetailer },
+    { fetchRetailers, deleteRetailer, fetchSalesAgent },
 )(FetchRetailer);
