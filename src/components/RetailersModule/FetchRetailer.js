@@ -215,7 +215,7 @@ class FetchRetailer extends React.Component {
                 formData.append("roleId", 2);
                 formData.append("status", statusVal);
                 updateStatusRetailer(formData).then(resp => {
-                    resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
+                    // resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
                     this.getRetailerList();
                 })
             },

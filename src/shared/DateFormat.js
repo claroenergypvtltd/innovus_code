@@ -1,7 +1,7 @@
 
 import * as moment from 'moment';
 
-export function formatDate(d) {
+export function formatDate(d, data) {
   var date = new Date(d)
   var dd = date.getDate();
   var mm = date.getMonth() + 1;
@@ -11,7 +11,8 @@ export function formatDate(d) {
   if (d == null) {
     console.log("Date null");
   } else {
-    return d = dd + '-' + mm + '-' + yyyy
+    let MM = mm
+    return !data ? d = dd + '-' + mm + '-' + yyyy : d = yyyy + '-' + MM + '-' + dd;
   }
 
 }
