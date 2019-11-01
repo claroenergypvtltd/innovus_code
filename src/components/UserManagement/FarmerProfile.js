@@ -46,7 +46,7 @@ class FarmerProfile extends React.Component {
             </Col>
             <Col md={5}>
               <h4 className="title">{"Address"}</h4>
-              <p className="user-subtitle">{profile.mobileNumber}</p>
+              <p className="user-subtitle">{profile.address.address1}  </p>
 
             </Col>
           </Col>

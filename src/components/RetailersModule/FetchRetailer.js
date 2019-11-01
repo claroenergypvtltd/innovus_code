@@ -100,7 +100,7 @@ class FetchRetailer extends React.Component {
         user.roleId = 2;
         if (status == 'reset') {
             this.setState({
-                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 3
             })
         }
         else {
@@ -180,7 +180,14 @@ class FetchRetailer extends React.Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }
     statusFilter(e) {
+        if (this.state.StatusfilterId == 0) {
+            this.state.StatusfilterId = e.target.value
+        }
+        else {
+            this.state.StatusfilterId = e.target.value
+        }
         this.getRetailerList(e.target.value);
+
     }
     handleDelete = (data, e) => {
         e.preventDefault();
@@ -301,7 +308,45 @@ class FetchRetailer extends React.Component {
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                     <ExportFile csvData={this.state.data} />
                 </div>
+
+                <div className="main-filter">
+                    <div className="date-range mr-1"><label className="label-title">Date:</label>
+                        <DateRangePicker
+                            startDate={this.state.startDate}
+                            endDate={this.state.endDate}
+                            onApply={this.handleApply}
+                        >  <div className="date-box">
+                                <input type="text" className="form-control date-form" value={label} />
+                                <span className="date-group">
+                                    <button className="date-btn">
+                                        <i className="fa fa-calendar" />
+                                    </button>
+                                </span>
+                            </div>
+                        </DateRangePicker>
+                    </div>
+
+                    <div className="state-filter mr-1"><label className="label-title">State:</label>
+                        <select name="stateId" value={this.state.stateId} className="drop-select ml-1 yellow" onChange={this.handleInputChange}>
+                            <option value="0">--Select State--</option>{stateDropDown}
+                        </select>
+                    </div>
+                    <div className="city-filter"><label className="label-title">City:</label>
+                        <select name="cityId" value={this.state.cityId} className="drop-select ml-1 red" onChange={this.handleInputChange}>
+                            <option value="0">--Select City---</option>{cityDropDown}
+                        </select>
+                    </div>
+                    <div className="status-filter  ml-1"><label className="label-title">Status Filter:</label>
+                        <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                            <option value="3" className="drop-option">-- Select --</option>
+                            {statusDropdown}
+                        </select>
+                    </div>
+                    <div className="state-filter mr-1"><button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                    </div>
+
                 <button className="advance-search" onClick={this.enableAdvanceSearch} ><span className="advance-icon"></span>Advance Search</button>
+
 
 
                 <div className="assign-box">

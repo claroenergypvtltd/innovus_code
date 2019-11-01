@@ -71,7 +71,6 @@ class FetchUser extends React.Component {
       pathname: path.user.view + farmerId,
       state: { farmerData: item },
     });
-
   };
 
   itemEdit = (Data) => {

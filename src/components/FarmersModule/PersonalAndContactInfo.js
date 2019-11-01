@@ -45,6 +45,7 @@ class PersonalAndContactInfo extends Component {
 
         this.getStateList();
         if (this.props.location && this.props.location.state && this.props.location.state.farmerId) {
+            this.setState({ farmerId: this.props.location.state.farmerId })
             this.getUserList();
         }
     }
@@ -208,7 +209,7 @@ class PersonalAndContactInfo extends Component {
             <div className="clearfix">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h4 className="user-title">ADD NEW FARMER</h4>
+                        <h4 className="user-title">{!this.state.farmerId ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.EDITFARMER} </h4>
                         <div className="main-wrapper main-contact">
                             <h4 className="color-title sub-contact">Personal Information</h4>
                             <form onSubmit={this.handleSubmit} noValidate className="row m-0">

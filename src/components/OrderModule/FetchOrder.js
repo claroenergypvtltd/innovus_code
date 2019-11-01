@@ -137,7 +137,7 @@ class FetchOrder extends Component {
             </div>
 
 
-            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), item.orderAmount + ' RS', status, link], "itemId": item.id }
+            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), ' RS. ' + item.orderAmount, status, link], "itemId": item.id }
         })
 
         let statusUpdataData = < StatusUpdate orderId={this.state.orderId} onCloseModal={this.onCloseModal} />

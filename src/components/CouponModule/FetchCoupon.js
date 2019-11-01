@@ -9,12 +9,13 @@ import { path } from '../../constants/path'
 import { COUPON_DELETE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
 import { resorceJSON } from '../../libraries'
+import { formatDate } from '../../shared/DateFormat'
 
 class FetchCoupon extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Name", "Actions"],
+            TableHead: ["Name", "Description", "Start Date", "Expiry Date", "Actions"],
             CouponData: [],
             search: '',
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
@@ -111,7 +112,7 @@ class FetchCoupon extends Component {
     render() {
 
         let coupondata = this.state.CouponData.length !== 0 && this.state.CouponData.map((item, index) => {
-            return { "itemList": [item.name], "itemId": item.id }
+            return { "itemList": [item.name, item.description, formatDate(item.startDate), formatDate(item.expiryDate)], "itemId": item.id }
         })
 
         return (
