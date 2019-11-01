@@ -15,24 +15,16 @@ export function formatDate(d) {
   }
 
 }
-export function formatDateTime(date) {
-  var d = new Date(date);
-  var month;
-  var day;
-  var year;
-  var kk = moment(date, 'DD.MM.YYYY')
-  console.log("1111", d.toString()); // shows 'Invalid Date'
-  console.log("11122221", typeof d); // shows 'object'
-  console.log("1111344", d instanceof Date); // shows 'true'
-  console.log(kk, '---------d-----');
-  // month = '' + (d.getMonth() + 1),
-  //   day = '' + d.getDate(),
-  //   year = d.getFullYear();
-
-  // if (month.length < 2)
-  //   month = '0' + month;
-  // if (day.length < 2)
-  //   day = '0' + day;
-
-  // return [year, month, day].join('-');
+export function timeformat(date) {
+  let Setendtime;
+  let timesplit = date.split(' ');
+  Setendtime = timesplit[1] + timesplit[2];
+  return Setendtime;
+}
+export function dateformat(date) {
+  let Setendtime;
+  let timesplit = date.split(' ');
+  Setendtime = timesplit[1] + timesplit[2];
+  // Setendtime = getStardate[2] + getStardate[1] + getStardate[0] + timesplit[1] + timesplit[2];
+  return Setendtime;
 }

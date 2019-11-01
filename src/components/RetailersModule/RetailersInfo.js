@@ -10,7 +10,7 @@ import { fetchRetailers, SubmitRetailer, getCountryList, getStateCity } from '..
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
 import { toastr } from 'react-redux-toastr'
-// import GoogleMap from '../../shared/GoogleMap'
+import GoogleMap from '../../shared/GoogleMap'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 
@@ -146,11 +146,13 @@ class RetailerInfo extends React.Component {
         this.setState({
             submitted: true,
         })
-        if (this.state.name && this.state.address1 && this.state.mobileNumber && this.state.retPersonalImage) {
-            //, this.state.retPersonalImagefile
-            const current = this.state.current + 1;
-            this.setState({ current });
-        }
+        // if (this.state.name && this.state.address1 && this.state.mobileNumber && this.state.retPersonalImage) {
+        //     //, this.state.retPersonalImagefile
+        //     const current = this.state.current + 1;
+        //     this.setState({ current });
+        // }
+        const current = this.state.current + 1;
+        this.setState({ current });
         // const current = this.state.current + 1;
         // this.setState({ current });
     }
@@ -538,10 +540,7 @@ class RetailerInfo extends React.Component {
                                                             />
                                                             {this.state.Shopsubmitted && !this.state.shoplocation && <div className="mandatory">{window.strings.RETAILERS.SHOP_LOC + window.strings['ISREQUIRED']}</div>}
                                                         </div>
-                                                        {/* <GoogleMap /> */}
-
-
-                                                    </div>
+                                                        {/* <GoogleMap /> */} </div>
                                                 </div>
                                                 {/* <div className="form-group pt-3">
                                                         <label className="retallable">{window.strings.RETAILERS.GST}</label>

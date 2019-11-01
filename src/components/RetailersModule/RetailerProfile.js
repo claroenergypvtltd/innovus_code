@@ -4,6 +4,7 @@ import { imageBaseUrl } from '../../config/config';
 import { connect } from 'react-redux';
 import { fetchRetailers } from '../../actions/SubmitRetailerAction';
 import noimg from '../../assets/noimage/Avatar_farmer.png'
+import { formatDate } from '../../shared/DateFormat'
 
 class RetailerProfile extends React.Component {
     constructor(props) {
@@ -31,9 +32,18 @@ class RetailerProfile extends React.Component {
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
         const getname = profile && profile.name ? profile.name.split('_') : '';
+        let status = profile.status
         let RetImg = noimg;
         if (profile && profile.image) {
             RetImg = imageBaseUrl + profile.image
+        }
+        let statusClass;
+        if (status == 0) {
+            statusClass = window.strings.RETAILERS.PENDING
+        } else if (status == 1) {
+            statusClass = window.strings.RETAILERS.ACCEPTED
+        } else {
+            statusClass = window.strings.RETAILERS.REJECTED
         }
         return (
 
@@ -104,22 +114,33 @@ class RetailerProfile extends React.Component {
                             <h4 className="title">{"Customer Id"}</h4>
                             <p className="user-subtitle">{profile.cusId}</p>
                         </Col>
-                        <Col md={2} sm={6} xs={12} className="p-0">
+                        {/* <Col md={2} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Agent Id"}</h4>
                             <p className="user-subtitle">{profile.agentId}</p>
-                        </Col>
+                        </Col> */}
                         <Col md={2} sm={6} xs={12} className="p-0">
+                            <h4 className="title">{"Agent Name"}</h4>
+                            <p className="user-subtitle">{profile.agentName ? profile.agentName : '-'}</p>
+                        </Col>
+                        {/* <Col md={2} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Email"}</h4>
                             <p className="user-subtitle">{profile.emailId ? profile.emailId : '-'}</p>
-                        </Col>
+                        </Col> */}
                         <Col md={2} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Phone"}</h4>
                             <p className="user-subtitle">{profile.mobileNumber ? profile.mobileNumber : '-'}</p>
-
                         </Col>
-                        <Col md={3} sm={6} xs={12} className="p-0">
+                        {/* <Col md={3} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Address"}</h4>
                             <p className="user-subtitle">{profile.address && profile.address.address1 ? profile.address.address1 : '-'}</p>
+                        </Col> */}
+                        <Col md={2} sm={6} xs={12} className="p-0">
+                            <h4 className="title">{"Status"}</h4>
+                            <p className={'user-subtitle '}>{statusClass}</p>
+                        </Col>
+                        <Col md={2} sm={6} xs={12} className="p-0">
+                            <h4 className="title">{"Onboarded Date"}</h4>
+                            <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>
                     </Col>
                 </Row>

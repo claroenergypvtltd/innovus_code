@@ -9,7 +9,7 @@ import { getOrderList, getTrackDetails } from '../../actions/orderAction'
 import { toastr } from '../../services/toastr.services'
 import Store from '../../store/store';
 import { Link } from 'react-router-dom'
-import { formatDate, formatDateTime } from '../../shared/DateFormat'
+import { formatDate, timeformat, dateformat } from '../../shared/DateFormat'
 import * as moment from 'moment';
 class FetchOrderDetails extends Component {
     constructor(props) {
@@ -123,7 +123,7 @@ class FetchOrderDetails extends Component {
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let link = this.state.trackDetails === false ? <button className="track-btn" onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button> : "";
-            return { "itemList": [item.id, item.shopAddress && item.shopAddress.address1 + ' ' + item.shopAddress && item.shopAddress.address2, formatDate(item.created), item.startTime + ' - ' + item.endTime, link], "itemId": item.id }
+            return { "itemList": [item.id, item.shopAddress && item.shopAddress.address1 + ' ' + item.shopAddress && item.shopAddress.address2, formatDate(item.created), dateformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id }
         })
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
             return { "itemList": [formatDate(item.trackTime), item.activity, item.location] }
