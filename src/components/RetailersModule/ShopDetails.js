@@ -3,6 +3,9 @@ import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import PropTypes from "prop-types";
 import noimg from '../../assets/noimage/Avatar_farmer.png'
+import { updateStatusRetailer } from '../../actions/SubmitRetailerAction';
+import { toastr } from '../../services/toastr.services'
+import { path } from '../../constants';
 
 class ShopDetails extends React.Component {
     static contextTypes = {
@@ -12,11 +15,33 @@ class ShopDetails extends React.Component {
         super(props);
         this.state = {
             tabIndex: 0,
+            showStatusBtn: true
         };
     }
 
     redirectPage = () => {
         this.context.router.history.goBack();
+    }
+    updateStatus(RetId, status) {
+        let message = window.strings.UPDATEMESSAGE;
+        const toastrConfirmOptions = {
+            onOk: () => {
+                const formData = new FormData();
+                formData.append("userId", RetId);
+                formData.append("roleId", 2);
+                formData.append("status", status);
+                updateStatusRetailer(formData).then(resp => {
+                    if (resp && resp.status == 200) {
+                        toastr.success(resp.message);
+                        this.setState({
+                            showStatusBtn: false
+                        })
+                    }
+                })
+            },
+            onCancel: () => { }
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }
 
     render() {
@@ -70,10 +95,10 @@ class ShopDetails extends React.Component {
                     <div className="col-md-6">
                         <button className="common-btn" onClick={this.redirectPage}>Back</button>
                     </div>
-                    <div className="col-md-6 d-flex justify-content-end">
-                        <button className="accept-btn" onClick={this.redirectPage}>Accept</button>
-                        <button className="reject-btn" onClick={this.redirectPage}>Reject</button>
-                    </div>
+                    {this.state.showStatusBtn && profile.status == 0 && <div className="col-md-6 d-flex justify-content-end">
+                        <button className="accept-btn" onClick={(e) => this.updateStatus(profile.id, 1)}>Accept</button>
+                        <button className="reject-btn" onClick={(e) => this.updateStatus(profile.id, 2)}>Reject</button>
+                    </div>}
                 </div>
             </div >
             // <Container>

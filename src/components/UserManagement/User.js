@@ -36,11 +36,12 @@ class User extends Component {
 
   handlePageChange = e => {
     e.preventDefault();
-    if (this.state.tabIndex == 1) {
-      this.onOpenModal();
-    } else {
-      this.props.history.push(path.farmer.add);
-    }
+    // if (this.state.tabIndex == 1) {
+    //   this.onOpenModal();
+    // } else {
+    this.props.history.push(path.retailer.add);
+    // this.props.history.push(path.farmer.add);
+    //}
   };
 
   handleSearch = e => {
@@ -92,11 +93,11 @@ class User extends Component {
               {/* <Col md={3} className="user-board add-user">
                 <button type="submit" className="filter-btn"><i className="fa fa-filter filter-icon"></i>Filter by</button>
               </Col> */}
-              <Col md={3} className="p-0">
-                {/* <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
-                  {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
-                </button> */}
-              </Col>
+              {/* <Col md={3} className="p-0">
+                <button className="common-btn" onClick={this.handlePageChange} ><i className="fa fa-plus sub-plus"></i>
+                  {stateValue.tabIndex == 0 ? window.strings.USERMANAGEMENT.ADDFARMER : window.strings.USERMANAGEMENT.ADDRETAILER}
+                </button>
+              </Col> */}
             </Col>
 
           </Row>

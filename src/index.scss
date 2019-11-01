@@ -140,9 +140,12 @@ background-size: cover;}
   border-radius: .25rem;
 }
 .input-group {
-  //width: 275px;
+  // width: 275px;
   border-bottom: 1px solid #dcdcdc;  
   box-shadow: 0 1px 0px 0px #dcdcdc
+}
+.rdt_TableCell div:first-child{
+  white-space: unset;
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
@@ -1707,19 +1710,25 @@ text-align: right;
   background-color: #F2C71C;
   border: none;
   color:#fff;
-  border-radius: 5px;
+  text-transform:capitalize;
+  padding: 7px;
+  margin: auto;
 }
 .accepted{
   background-color: #1CCE46;
   border: none;
   color: #fff;
-  border-radius: 5px;
+  text-transform:capitalize;
+  padding: 7px;
+  margin: auto;
 }
 .rejected{
   background-color: #EF4A4A;
   border: none;
   color: #fff;
-  border-radius: 5px;
+  text-transform:capitalize;
+  padding: 7px;
+  margin: auto;
 }
 // #datepicker{
 //   color: #1CCE46;
