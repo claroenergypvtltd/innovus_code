@@ -18,7 +18,7 @@ class CreateSalesAgent extends React.Component {
     }
 
     componentDidMount() {
-        debugger;
+        //debugger;
         if (this.props.location && this.props.location.state && this.props.location.state.salesAgentId) {
             this.getEditData();
         }
@@ -35,7 +35,7 @@ class CreateSalesAgent extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
+        //debugger;
         if (newProps && newProps.agentData && newProps.agentData.Lists) {
             let editDatas = newProps.agentData.Lists
             this.setState({ name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea, dcCode: editDatas.dcCode })
