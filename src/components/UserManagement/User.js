@@ -35,7 +35,6 @@ class User extends Component {
   };
 
   handlePageChange = e => {
-    debugger;
     e.preventDefault();
     if (this.state.tabIndex == 1) {
       this.onOpenModal();

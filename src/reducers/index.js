@@ -12,6 +12,7 @@ import OrderReducer from './OrderReducer';
 import FaqReducer from './FaqReducer'
 import IrrigationSettingReducer from './IrrigationSettingReducer';
 import couponReducer from './couponReducer'
+import salesAgentReducer from './salesAgentReducer'
 
 export default combineReducers({
     errors: errorReducer,
@@ -26,6 +27,7 @@ export default combineReducers({
     retailer: RetailerReducer,
     faq: FaqReducer,
     irrigationSetting: IrrigationSettingReducer,
-    coupon: couponReducer
+    coupon: couponReducer,
+    salesAgent: salesAgentReducer
 });
 
