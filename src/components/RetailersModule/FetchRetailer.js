@@ -145,13 +145,14 @@ class FetchRetailer extends React.Component {
 
     };
     getRetailerList = (status) => {
-        const initialState = {};
         let user = {};
-        user.roleId = 2;
-        user.search = this.state.search;
         if (status == 'reset') {
             this.setState({
-                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0, selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: ''
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0, selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: '', search: ''
+            }, () => {
+                user.roleId = 2;
+                user.search = this.state.search;
+                this.props.fetchRetailers(user);
             })
         }
         else {
@@ -171,8 +172,11 @@ class FetchRetailer extends React.Component {
             if (this.state.agentId) {
                 user.agentId = this.state.agentId;
             }
+            user.roleId = 2;
+            user.search = this.state.search;
+            this.props.fetchRetailers(user);
         }
-        this.props.fetchRetailers(user);
+
 
     };
     fetchAgents = () => {
@@ -395,7 +399,7 @@ class FetchRetailer extends React.Component {
         return (
             <div className=" mt-4">
                 <div className="d-flex justify-content-end">
-                    <SearchBar className="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <SearchBar className="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                     <div className="retail-reset">
                         <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                     </div>

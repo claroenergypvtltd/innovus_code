@@ -17,10 +17,10 @@ class FetchSalesAgent extends React.Component {
         this.state = {
             search: '',
             currentPage: 1,
-            itemPerPage: 3,
+            itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
-            TableHead: ["Created On", "Agent ID", "Agent Name", "Phone Number", "Surveying Area", "dcCode", "Actions"]
+            TableHead: ["Created On", "Agent ID", "Agent Name", "Phone Number", "Surveying Area", "DC Code", "Actions"]
         }
     }
 
@@ -101,7 +101,7 @@ class FetchSalesAgent extends React.Component {
         return (
             <div>
                 <div d-flex justify-content-end>
-                    <SearchBar className="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                     <div className="assign-box">
                         {/* <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT} */}

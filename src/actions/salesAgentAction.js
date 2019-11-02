@@ -50,7 +50,7 @@ export const submitSalesAgent = (formData, isEdit) => dispatch => {
     }
 
     httpMethod.then(resp => {
-        if (resp) {
+        if (resp && resp.message) {
             toastr.success(resp && resp.message);
 
             if (isEdit) {
