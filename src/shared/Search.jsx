@@ -5,7 +5,7 @@ export function SearchBar(props) {
    return (
 
       <div className="">
-         {props.className ? <form id="form1" onSubmit={props.SearchDetails.onClickSearch} className="form-retailer">
+         {props.searchclassName && props.searchclassName ? <form id="form1" onSubmit={props.SearchDetails.onClickSearch} className="form-retailer">
             <div className="search-box">
                <input type="text" className="form-control retailer-search pl-1" placeholder="Search..." value={props.SearchDetails.filterText} onChange={props.SearchDetails.onChange} />
                <a type="submit" form="form1" className="sub-search" onClick={props.SearchDetails.onClickSearch}>

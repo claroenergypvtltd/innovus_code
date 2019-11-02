@@ -397,13 +397,14 @@ class FetchRetailer extends React.Component {
         let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} selectedDatas={this.state.selectedDatas} />
 
         return (
+
             <div className=" mt-4">
-                <div className="d-flex justify-content-end">
-                    <SearchBar className="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                <div className="d-flex justify-content-end retailersearchdiv">
+                    <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
                     <div className="retail-reset">
                         <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                     </div>
-                    <button className="advance-search" onClick={this.enableAdvanceSearch} ><span className="advance-icon"></span>Advance Search</button>
                     <ExportFile className="export-search" csvData={this.state.data} />
                 </div>
                 <div id="menu">
@@ -433,9 +434,7 @@ class FetchRetailer extends React.Component {
                                         >  <div className="date-box">
                                                 <input type="text" className="form-control date-form ml-1" value={label} />
                                                 <span className="date-group">
-                                                    <button className="date-btn">
-                                                        <i className="fa fa-calendar" />
-                                                    </button>
+                                                    <i className="date-btn fa fa-calendar" />
                                                 </span>
                                             </div>
                                         </DateRangePicker>
@@ -487,7 +486,7 @@ class FetchRetailer extends React.Component {
                             </div >
                             <div className="sub-filter">
                                 <div className="row ">
-                                    <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
+                                    <div className="col-md-4 agent-filter"><label className="label-title">Agent:</label>
                                         <Select
                                             className="city-box ml-1"
                                             value={this.state.selectedAgentOption}
@@ -499,7 +498,7 @@ class FetchRetailer extends React.Component {
                                     </div>
                                     <div className="col-md-5 status-filter"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                                            <option value="0" className="drop-option">-- Select --</option>
+                                            <option value="0" className="drop-option">-- Select Status--</option>
                                             {statusDropdown}
                                         </select>
                                     </div>

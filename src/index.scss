@@ -97,7 +97,7 @@ body{
 // }
 .main-container{
     width: calc(100vw - 252px);
-    padding: 20px 20px 0 20px;
+    padding: 18px 18px 0 18px;
     transition: all 0.3s;
 }
 ul{
@@ -147,7 +147,59 @@ background-size: cover;}
 .rdt_TableCell div:first-child{
   white-space: unset;
 }
-
+.retailersearchdiv{
+  justify-content: left!important;
+  display:block!important;
+  text-align: left;
+  > div, div.retail-reset, button.advance-search{
+    float: none!important;
+    display:inline-block!important;
+    vertical-align: middle!important;
+  }
+  
+ .advance-search{ color: #707070;
+  background: none;
+  text-decoration: underline;
+  }
+   
+}
+.label-title{ 
+  min-width: 58px; display: inline-block; vertical-align: middle;
+  line-height: 36px;
+}
+.react-bootstrap-daterangepicker-container{
+  max-width: 82%;
+  width: 100%;
+  .date-box{
+    width:100%;
+    .date-form{
+      height: 36px;
+      max-width: 100%;
+      width: 100%;
+      border-radius: 4px 0px 0 4px;
+      -webkit-border-radius: 4px 0px 0 4px;
+      -moz-border-radius: 4px 0px 0 4px;
+    }
+  }
+  .date-btn{
+    width:34px;
+    height: 36px;
+    border-radius:0 4px 4px 0;
+    -webkit-border-radius:0 4px 4px 0;
+    -moz-border-radius:0 4px 4px 0;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+}
+.status-filter{
+  select{
+    background: none;
+    border: 1px solid #ced4da;
+    color:#707070 ;
+  }
+}
 .daterangepicker td.active, .daterangepicker td.active:hover {
   background-color:#ff8b92;
 }
@@ -178,6 +230,11 @@ align-items: center;
 // .loader-hide{
 // display: none;
 // }
+.agent-filter{
+  .css-bg1rzq-control{
+    width: 98%;
+  }
+}
 
 .forget-pwd a{ 
 
@@ -323,7 +380,7 @@ li {
 .menu-link{
   border-left:8px solid transparent;
   display: block;
-  padding: 10px 0;
+  padding: 7px 0;
   font-family: $font-sans;
 }
 li:hover .menu-link{
@@ -1047,6 +1104,12 @@ svg{
   background-position: -8px -1219px;
   text-align: center;
   padding: 13px;
+}
+.form-search .search-btn {
+  background: #fff;
+}
+.pt-search-btn .reset-btn {
+  background: none;
 }
 /****************************User Management Page icon************************/
 
@@ -1830,3 +1893,6 @@ display: flex;
 }
 
 
+body .main-header .navbar{
+  padding: 0.1rem 1rem;
+}
