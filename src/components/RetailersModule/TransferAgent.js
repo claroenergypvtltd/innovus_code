@@ -93,7 +93,7 @@ class TransferAgent extends Component {
 
         const agentDropDown = this.state.agentData && this.state.agentData.map((item, index) => {
             return <option key={index}
-                value={item.id}> {item.name}</option>
+                value={item.agentId}> {item.name}</option>
         });
 
         return (

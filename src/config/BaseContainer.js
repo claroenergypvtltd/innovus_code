@@ -127,60 +127,80 @@ export class BaseContainer extends Component {
                                                     } else {
                                                         if (orgPath === item.path + "/add") {
                                                             pathName = item.path + "/add";
-                                                        } else if (orgPath === item.path + "/update/" + editId) {
-                                                            pathName = item.path + "/update/" + editId;
+                                                        } else if (orgPath === item.path + "/edit/" + editId) {
+                                                            pathName = item.path + "/edit/" + editId;
                                                         } else if (orgPath === item.path) {
                                                             pathName = item.path;
+                                                        }
+                                                        else if (item.path == "/user") {
+                                                            if (orgPath === item.path + "/retailer/view/" + editId) {
+                                                                pathName = item.path + "/retailer/view/" + editId;
+                                                            }
+                                                        }
+                                                        else if (orgPath === item.path + "/view/" + editId) {
+                                                            pathName = item.path + "/view/" + editId;
                                                         }
                                                     }
 
                                                     return (
                                                         <li>
                                                             {
-                                                                item.hasOwnProperty('child') ?
-                                                                    (renderDropdownNavbar(item, index)).length ?
-                                                                        (pathName === orgPath) ?
-                                                                            <div className='dropdown parent-menu li-menu-active'>
-                                                                                <a className='dropdown-toggle menu-link a-menu-active'> {item.name}</a>
+                                                                // item.hasOwnProperty('child') ?
+                                                                //     (renderDropdownNavbar(item, index)).length ?
+                                                                //         (pathName == orgPath) ?
 
-                                                                                {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension">
-                                                                                    {
-                                                                                        renderDropdownNavbar(item, index)
-                                                                                    }
-                                                                                </ul>
-                                                                                    :
+                                                                //             <div className='dropdown parent-menu li-menu-active'>
+                                                                //                 <p>{pathName + orgPath}</p>
+                                                                //                 <a className='dropdown-toggle menu-link a-menu-active'> {item.name}</a>
 
-                                                                                    <ul className="dropdown-menu">
-                                                                                        {
-                                                                                            renderDropdownNavbar(item, index)
-                                                                                        }
-                                                                                    </ul>
-                                                                                }
+                                                                //                 {/* {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension"> */}
+                                                                //                 {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension">
+
+                                                                //                     {
+                                                                //                         renderDropdownNavbar(item, index)
+                                                                //                     }
+                                                                //                 </ul>
+                                                                //                     :
+
+                                                                //                     <ul className="dropdown-menu ">
+                                                                //                         {
+                                                                //                             renderDropdownNavbar(item, index)
+                                                                //                         }
+                                                                //                     </ul>
+                                                                //                 }
 
 
 
-                                                                            </div>
-                                                                            :
-                                                                            <div className='dropdown parent-menu '>
-                                                                                <a className='dropdown-toggle menu-link'> {item.name}</a>
+                                                                //             </div>
+                                                                //             :
+                                                                //             <div className='dropdown parent-menu '>
+                                                                //                 <a className='dropdown-toggle menu-link'> {item.name}</a>
 
-                                                                                {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension">
-                                                                                    {
-                                                                                        renderDropdownNavbar(item, index)
-                                                                                    }
-                                                                                </ul>
+                                                                //                 {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension">
+                                                                //                     {
+                                                                //                         renderDropdownNavbar(item, index)
+                                                                //                     }
+                                                                //                 </ul>
 
-                                                                                    :
+                                                                //                     :
 
-                                                                                    <ul className="dropdown-menu">
-                                                                                        {
-                                                                                            renderDropdownNavbar(item, index)
-                                                                                        }
-                                                                                    </ul>
-                                                                                }
-                                                                            </div>
-                                                                        :
-                                                                        ''
+                                                                //                     <ul className="dropdown-menu">
+                                                                //                         {
+                                                                //                             renderDropdownNavbar(item, index)
+                                                                //                         }
+                                                                //                     </ul>
+                                                                //                 }
+                                                                //             </div>
+                                                                //         :
+                                                                //         ''
+                                                                //     :
+                                                                // (renderDropdownNavbar(item, index)).length &&
+                                                                (pathName == orgPath) ?
+
+                                                                    <div className="parent-menu" key={'mykey' + index}>
+                                                                        <Link className="menu-link activate" to={item.path}>{item.name} </Link>
+                                                                    </div>
+
                                                                     :
 
                                                                     <div className="parent-menu" key={'mykey' + index}>

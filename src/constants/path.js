@@ -5,8 +5,9 @@ export const path = {
         // login: process.env.PUBLIC_URL + '/login'
     },
     inprogress: {
-        name: 'inprogress',
-        list: process.env.PUBLIC_URL + '/inprogress'
+        payment: '/payment/inprogress',
+        reports: '/reports/inprogress',
+        // list: process.env.PUBLIC_URL + '/inprogress'
     },
     dashboard: {
         name: 'dashboard',
