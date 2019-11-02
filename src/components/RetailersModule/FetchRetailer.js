@@ -287,8 +287,9 @@ class FetchRetailer extends React.Component {
     }
 
     onCloseModal = () => {
-        this.getRetailerList();
-        this.setState({ open: false });
+        this.setState({ open: false, selectedDatas: [] }, () => {
+            this.getRetailerList();
+        });
     };
 
     onOpenModal = (e) => {

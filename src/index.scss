@@ -69,6 +69,7 @@ $gradient-4:linear-gradient(to right, #feb683,#ff8b92);
 // .loader-hide{display: none;
 // }
 
+
 body{
   background: #f5f5f5;
   overflow-x: hidden;
@@ -145,7 +146,7 @@ background-size: cover;}
   box-shadow: 0 1px 0px 0px #dcdcdc
 }
 .rdt_TableCell div:first-child{
-  white-space: unset;
+  white-space: unset !important;
 }
 .retailersearchdiv{
   justify-content: left!important;
@@ -388,6 +389,19 @@ li:hover .menu-link{
   border-left: 8px solid #ff8b92;
   color: $active-font-color;
 }
+ .activate {
+  border-image: linear-gradient(180deg,#ff8b92, #feb683) 1;
+  border-left: 8px solid #ff8b92;
+  color: $active-font-color;
+}
+.activate span.menu-list {
+  border-image: linear-gradient(180deg,#ff8b92, #feb683) 1;
+  color: $active-font-color;
+}
+.activate span.menu-list i {
+  border-image: linear-gradient(180deg,#ff8b92, #feb683) 1;
+  color: $active-font-color;
+}
 .menu-list i{
   background-image: url(../src/assets/images/AgroSprit_menuicons.png);
   background-repeat: no-repeat;
@@ -410,6 +424,9 @@ li:hover .menu-link{
 .static i{ background-position: -19px -92px;}
 li:hover .menu-list i{
   background-position-x: -59px;
+}
+li .activate .menu-list i{
+  background-position-x: -59px!important;
 }
 }
 /****************************DashBoard page************************/
