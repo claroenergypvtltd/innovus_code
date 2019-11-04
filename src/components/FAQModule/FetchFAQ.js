@@ -132,10 +132,16 @@ class FetchFAQ extends Component {
                     <div className="title-card col-md-7">
                         <h4 className="user-title">FAQ LIST</h4>
                     </div>
-                    <div className="row right-title col-md-5">
-                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
-                            {window.strings.FAQ.ADD_FAQ}</button>
+                    <div className="right-title col-md-5">
+                        <div className="row">
+                            <div className="col-md-7 pr-0">
+                                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                            </div>
+                            <div className="col-md-5 pl-0">
+                                <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
+                                    {window.strings.FAQ.ADD_FAQ}</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="sub-category">

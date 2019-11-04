@@ -414,9 +414,11 @@ class FetchRetailer extends React.Component {
         return (
 
             <div className=" mt-4">
-                <div className="d-flex justify-content-end retailersearchdiv">
-                    <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
+                <div className="retailersearchdiv">
+                    <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}
+                        {/* <span className="advance-icon"></span>Advance Search */}
+                    </button>
                     <div className="retail-reset">
                         <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                     </div>
@@ -455,7 +457,7 @@ class FetchRetailer extends React.Component {
                                         </DateRangePicker>
                                     </div>
 
-                                    <div className="col-md-4 state-filter"><label className="label-title">State:</label>
+                                    <div className="col-md-4 state-filter"><label className="label-title label-line">State:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                         <Select className="state-box ml-1"
                                             value={this.state.selectedStateOption}
@@ -474,7 +476,7 @@ class FetchRetailer extends React.Component {
                                     </select>
                                 </div> */}
 
-                                    <div className="col-md-4 city-filter"><label className="label-title">City:</label>
+                                    <div className="col-md-4 city-filter"><label className="label-title label-line">City:</label>
                                         {/* <select name="cityId" value={this.state.cityId} className="city-select ml-1 red" onChange={this.handleInputChange}>
                                 <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
                             </select> */}
@@ -501,7 +503,7 @@ class FetchRetailer extends React.Component {
                             </div >
                             <div className="sub-filter">
                                 <div className="row ">
-                                    <div className="col-md-4 agent-filter"><label className="label-title">Agent:</label>
+                                    <div className="col-md-4 agent-filter"><label className="label-title label-line">Agent:</label>
                                         <Select
                                             className="city-box ml-1"
                                             value={this.state.selectedAgentOption}

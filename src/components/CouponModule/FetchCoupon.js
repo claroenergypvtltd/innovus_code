@@ -117,29 +117,34 @@ class FetchCoupon extends Component {
         })
 
         return (
-            <div>
-                <div className="coupon-table">
-                    <div className="clearfix title-section row">
-                        <div class="title-card col-md-7">
-                            <h4 class="user-title">COUPON LIST</h4>
-                        </div>
-                        <div className="category-title row right-title col-md-5">
-                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
-                                {window.strings.COUPON.ADD_COUPON}</button>
-                        </div>
+            <div className="coupon-table">
+                <div className="clearfix title-section row">
+                    <div class="title-card col-md-7">
+                        <h4 class="user-title">COUPON LIST</h4>
                     </div>
-                    <div className="sub-category">
-                        <TableData TableHead={this.state.TableHead} TableContent={coupondata} handleDelete={this.handleDelete}
-                            handleEdit={this.itemEdit} />
-                        <ReactPagination PageDetails={{
-                            pageCount: this.state.pageCount, onPageChange: this.onChange,
-                            activePage: this.state.currentPage, perPage: this.state.limitValue
-                        }} />
-
+                    <div className="right-title col-md-5">
+                        <div className="row">
+                            <div className="col-md-7 pr-0">
+                                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                            </div>
+                            <div className=" col-md-5 pl-0">
+                                <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
+                                    {window.strings.COUPON.ADD_COUPON}</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div className="sub-category">
+                    <TableData TableHead={this.state.TableHead} TableContent={coupondata} handleDelete={this.handleDelete}
+                        handleEdit={this.itemEdit} />
+                    <ReactPagination PageDetails={{
+                        pageCount: this.state.pageCount, onPageChange: this.onChange,
+                        activePage: this.state.currentPage, perPage: this.state.limitValue
+                    }} />
+
+                </div>
             </div>
+
         )
     }
 }

@@ -118,31 +118,43 @@ class FetchSalesAgent extends React.Component {
 
         return (
             <div>
-                <div d-flex justify-content-end>
-                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                <div className="retailersearchdiv">
+                    {/* <div d-flex justify-content-end> */}
+                    <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                     <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
-
-                    {this.state.advanceSearch &&
-                        <div className="col-md-4 state-filter"><label className="label-title">State:</label>
-                            {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                            <Select className="state-box ml-1"
-                                value={this.state.dcCodeObj}
-                                onChange={(e) => this.handleDcCodeChange(e)}
-                                options={dcData}
-                                placeholder="--Select State--"
-                            />
-                        </div>
-                    }
+                    <div className="retail-reset">
+                        <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div id="menu">
                     <div className="assign-box">
                         {/* <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT} */}
                         <button className="assign-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Sales Agent</button>
-
                         {/* </button> */}
                     </div>
-                    <TableData TableHead={this.state.TableHead} TableContent={salesAgentList} handleEdit={this.itemEdit} />
-                    <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+
+                    {this.state.advanceSearch &&
+                        <div className="main-filter">
+                            <div className="row">
+                                <div className="col-md-4 state-filter"><label className="label-title">State:</label>
+                                    {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                    <Select className="state-box ml-1"
+                                        value={this.state.dcCodeObj}
+                                        onChange={(e) => this.handleDcCodeChange(e)}
+                                        options={dcData}
+                                        placeholder="--Select State--"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                 </div>
+
+                <TableData TableHead={this.state.TableHead} TableContent={salesAgentList} handleEdit={this.itemEdit} />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                {/* </div> */}
             </div>
         )
     }

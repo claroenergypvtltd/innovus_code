@@ -84,7 +84,7 @@ class DataTableDynamic extends React.Component {
     }
     return (
       <div className="tables">
-        <DataTable className={this.props && this.props.customCss ? 'fetchretcss' : 'crop-table'}
+        <DataTable className={this.props && this.props.customCss ? 'fetchretailertbl' : 'crop-table'}
           noHeader={true}
           data={tableDatas}
           columns={tableHeader}

@@ -119,16 +119,17 @@ class CategoryList extends Component {
                     <Col md={7} className="title-card ">
                         <h4 className="user-title">{window.strings.CATEGORY.LISTTITLE}</h4>
                     </Col>
-                    <Col md={5} className="right-title row pr-0 pb-3">
-                        <Col md={8} className="p-0">
-                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        </Col>
-                        <Col md={4} >
-                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
-                                {window.strings.CATEGORY.ADDBUTTON}</button>
-                        </Col>
+                    <Col md={5} className="right-title">
+                        <Row>
+                            <Col md={7} className="pr-0">
+                                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                            </Col>
+                            <Col md={5} className="pl-0">
+                                <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
+                                    {window.strings.CATEGORY.ADDBUTTON}</button>
+                            </Col>
+                        </Row>
                     </Col>
-
                 </Row>
 
                 <div className="sub-category">
