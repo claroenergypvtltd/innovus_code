@@ -8,12 +8,28 @@ export default class ExportFile extends React.Component {
         }
     }
     render() {
-        // this.props.csvData && this.props.csvdatas.map((index, item) => {
-        //     // delete index.addressKey
-        //     // delete index.selectBox
-        // });
+        let PrintexcelDatas = [];
+        console.log('--this.props.csvData-', this.props.csvData);
+        this.props.csvData && this.props.csvData.map((item, index) => {
+            let excelitem = {};
+            if (item.status == 0) {
+                excelitem.Status = "Pending";
+            }
+            else if (item.status == 1) {
+                excelitem.Status = "Accepted";
+            }
+            else if (item.status == 2) {
+                excelitem.Status = "Rejected";
+            }
+            excelitem.OnboardedDate = item.created;
+            excelitem.CustomerID = item.cusId;
+            excelitem.ShopName = item.shopNames;
+            excelitem.AgentName = item.agentName;
+            excelitem.ShopAddress = item.fullShopAddrss;
+            PrintexcelDatas.push(excelitem);
+        });
         return (
-            <CSVLink filename='Retailers.csv' className="excel-btn ml-2" data={this.props.csvData}>
+            <CSVLink filename='Retailers.csv' className="excel-btn ml-2" data={PrintexcelDatas} >
                 {window.strings.EXCELEXPORT}
             </CSVLink>
         )

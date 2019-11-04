@@ -1107,6 +1107,7 @@ svg{
     text-align: left;
     width: 202px;
     border-radius: unset;
+    background:none
 }
 .form-retailer{
   display: flex;
@@ -1123,7 +1124,7 @@ svg{
   padding: 13px;
 }
 .form-search .search-btn {
-  background: #fff;
+  background: none;
 }
 .pt-search-btn .reset-btn {
   background: none;
@@ -1806,6 +1807,11 @@ display: flex;
   color : #707070;
 }
 .crop-table .rdt_TableRow{
+    font-size: 14px ;
+    color :  #707070 ; 
+    white-space: nowrap !important;
+  }
+  .fetchretcss .rdt_TableRow{
     font-size: 14px ;
     color :  #707070 ; 
   }
