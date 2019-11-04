@@ -265,6 +265,12 @@ export const Translation = {
 
         },
 
+        "VEHICLE": {
+            "VEHICLE_MANAGEMENT": "Vehicle Management",
+            "ADD_VEHICLE": "Add Vehicle",
+            "EDIT_VEHICLE": "Edit Vehicle"
+        },
+
         "FARMERS": {
             "PERSONAL_INFORMATION": "Personal Information",
             "CONTACT_INFORMATION": "Contact Information",

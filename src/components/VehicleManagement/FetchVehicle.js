@@ -1,0 +1,149 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { TableData } from '../../shared/Table'
+import { confirmAlert } from 'react-confirm-alert';
+import { resorceJSON } from '../../libraries'
+import { ReactPagination, SearchBar } from '../../shared'
+import { path } from '../../constants';
+import { getIrrigationSettingList, DeleteIrrigationSetting } from '../../actions/IrrigationSettingAction'
+import { toastr } from '../../services/toastr.services'
+import Store from '../../store/store';
+import { IRRIGATION_SETTING_DELETE_SUCCESS } from '../../constants/actionTypes'
+
+class FetchVehicle extends Component {
+
+    constructor(props) {
+
+        super(props);
+        this.state = {
+            TableHead: ["Vehicle Type", "Vehicle Name", "Volme(mc)", "Transaction Time", "Operating Hours", "Actions"],
+            irrigationSettingLists: [],
+            CategoryCount: props.getCount,
+            search: '',
+            currentPage: 1,
+            itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            pageCount: resorceJSON.TablePageData.pageCount,
+            limitValue: resorceJSON.TablePageData.paginationLength
+        }
+    }
+
+    componentDidMount() {
+        // this.getPriceList();
+    }
+
+    componentWillReceiveProps(newProps) {
+        // if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.Lists && newProps.IrrigationSettingData.Lists.datas) {
+        //     let respData = newProps.IrrigationSettingData.Lists.datas;
+        //     this.setState({ irrigationSettingLists: respData, pageCount: newProps.IrrigationSettingData.Lists.totalCount / this.state.itemPerPage })
+        // }
+
+        // if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.deletedStatus == "200") {
+        //     Store.dispatch({ type: IRRIGATION_SETTING_DELETE_SUCCESS, deletedStatus: "" })
+
+        //     this.getPriceList();
+        // }
+    }
+
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
+
+    searchResult = (e) => {
+        e.preventDefault();
+        if (this.state.search) {
+            let serObj = {
+                "search": this.state.search
+            };
+            this.getPriceList(serObj);
+        }
+    }
+
+    resetSearch = () => {
+        if (this.state.search) {
+            this.setState({ search: '' }, () => {
+                this.getPriceList();
+            });
+        }
+    }
+
+    getPriceList() {
+        let obj = {
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "search": this.state.search,
+            "limit": this.state.itemPerPage,
+            "categoryId": ""
+        }
+
+        this.props.getIrrigationSettingList(obj)
+    }
+
+    itemEdit = (id) => {
+        this.props.history.push({ pathname: path.setting.edit + id, state: { irrigationCostId: id } });
+    }
+
+
+    handleDelete = (data) => {
+        let message = window.strings.DELETEMESSAGE;
+        const toastrConfirmOptions = {
+            onOk: () => { this.itemDelete(data) },
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
+    }
+
+    itemDelete = (id) => {
+        this.props.DeleteIrrigationSetting(id)
+    }
+
+    formPath = () => {
+        this.props.history.push(path.vehicle.add);
+    }
+
+    onChange = (data) => {
+
+        if (this.state.currentPage !== (data.selected + 1)) {
+            this.setState({ currentPage: data.selected + 1 }, () => {
+                this.getPriceList();
+            });
+        }
+    }
+
+    render() {
+        let CategoryList = this.state.irrigationSettingLists && this.state.irrigationSettingLists.map((item, index) => {
+            return { "itemList": [item.states && item.states.name ? item.states.name : '-', item.cities && item.cities.name ? item.cities.name : '-', item.amount ? item.amount : '-', item.areasize ? item.areasize : '-'], "itemId": item.id }
+        })
+
+        return (
+            <div className="fetch-irrigation">
+                <div className="clearfix title-section row mr-0">
+                    <div className="title-card col-md-6">
+                        <h4 className="user-title">{window.strings.VEHICLE.VEHICLE_MANAGEMENT}</h4>
+                        {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
+                    </div>
+                    <div className="right-title col-md-6 d-flex justify-content-end">
+                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        <div className="pl-3">
+                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.VEHICLE.ADD_VEHICLE}</button>
+                        </div>
+                    </div>
+                </div>
+                <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
+                    // handleDelete={this.handleDelete} 
+                    handleEdit={this.itemEdit}
+                />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+            </div>
+        );
+    }
+}
+
+
+
+function mapStateToProps(state) {
+    return {
+        // getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
+        IrrigationSettingData: state.irrigationSetting ? state.irrigationSetting : {}
+    };
+}
+
+export default connect(mapStateToProps, { getIrrigationSettingList, DeleteIrrigationSetting })(FetchVehicle);

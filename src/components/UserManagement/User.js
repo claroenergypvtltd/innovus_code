@@ -26,6 +26,12 @@ class User extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props && this.props.location && this.props.location.tabNumber == 1) {
+      this.setState({ tabIndex: 1 })
+    }
+  }
+
   tabChange = tabIndex => {
     let roleId =
       tabIndex == Constant.CONSTANT.ZERO

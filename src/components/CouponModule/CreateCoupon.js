@@ -181,7 +181,6 @@ class CreateCoupon extends Component {
                     <div className="col-md-12">
                         <h4 className="user-title">{!this.state.couponId ? window.strings.COUPON.ADD_NEW_COUPON : window.strings.COUPON.EDIT_COUPON}</h4>
                         <div className="box-wrapper main-wrapper">
-                            <h4 className="color-title line-wrapper">{window.strings.COUPON.COUPON_DETAILS}</h4>
                             <div className="">
                                 <div className="create-coupon col-md-6">
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">

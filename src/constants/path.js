@@ -118,6 +118,11 @@ export const path = {
         add: process.env.PUBLIC_URL + '/irrigationSetting/add',
         edit: process.env.PUBLIC_URL + '/irrigationSetting/edit/'
     },
+    vehicle: {
+        list: process.env.PUBLIC_URL + '/vehicle',
+        add: process.env.PUBLIC_URL + '/vehicle/add',
+        edit: process.env.PUBLIC_URL + '/vehicle/edit/'
+    },
     profile: {
         list: process.env.PUBLIC_URL + '/profile/'
     },

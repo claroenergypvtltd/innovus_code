@@ -36,6 +36,9 @@ import FetchFAQ from '../components/FAQModule/FetchFAQ'
 import FetchSalesAgent from '../components/SalesAgent/FetchSalesAgent'
 import CreateSalesAgent from '../components/SalesAgent/CreateSalesAgent'
 
+import CreateVehicle from '../components/VehicleManagement/CreateVehicle'
+import FetchVehicle from '../components/VehicleManagement/FetchVehicle'
+
 
 const root = ({ route }) => (
     <div>
@@ -299,6 +302,28 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/reports/inprogress',
                 component: DummyFile,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/reports/inprogress',
+                component: DummyFile,
+                exact: true
+            },
+
+
+            {
+                path: process.env.PUBLIC_URL + '/vehicle/add',
+                component: CreateVehicle,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/vehicle/edit/:id?',
+                component: CreateVehicle,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/vehicle',
+                component: FetchVehicle,
                 exact: true
             },
             {

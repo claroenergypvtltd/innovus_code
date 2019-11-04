@@ -98,6 +98,15 @@ export const Sidebar = [
         ),
         path: path.order.list,
     },
+    // {
+    //     name: (
+    //         <span className="menu-list product">
+    //             <i />
+    //             {Label.VehicleManagement}
+    //         </span>
+    //     ),
+    //     path: path.vehicle.list,
+    // },
     {
         name: (
             <span className="menu-list coupon">
