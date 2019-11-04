@@ -5,6 +5,7 @@ import { submitSalesAgent, fetchSalesAgent } from '../../actions/salesAgentActio
 import { connect } from 'react-redux';
 import { AGENT_CREATE_SUCCESS, AGENT_UPDATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
+import { path } from '../../constants';
 
 
 class CreateSalesAgent extends React.Component {
@@ -18,7 +19,6 @@ class CreateSalesAgent extends React.Component {
     }
 
     componentDidMount() {
-        //debugger;
         if (this.props.location && this.props.location.state && this.props.location.state.salesAgentId) {
             this.setState({ salesAgentId: this.props.location.state.salesAgentId })
             this.getEditData();
@@ -36,7 +36,6 @@ class CreateSalesAgent extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        //debugger;
         if (newProps && newProps.agentData && newProps.agentData.Lists) {
             let editDatas = newProps.agentData.Lists
             this.setState({ name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea, dcCode: editDatas.dcCode })
@@ -60,7 +59,7 @@ class CreateSalesAgent extends React.Component {
     }
 
     redirectPage = () => {
-        this.props.history.goBack();
+        this.props.history.push({ pathname: path.farmer.list, tabNumber: 1 });
     }
 
     handleSubmit = (e) => {

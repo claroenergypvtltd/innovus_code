@@ -6,6 +6,7 @@ import { fetchSalesAgent } from '../../actions/salesAgentAction';
 import { connect } from 'react-redux';
 import { ReactPagination, SearchBar } from '../../shared'
 import { resorceJSON } from '../../libraries'
+import Select from 'react-select';
 
 
 class FetchSalesAgent extends React.Component {
@@ -20,6 +21,8 @@ class FetchSalesAgent extends React.Component {
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
+            advanceSearch: false,
+            dcCode: '',
             TableHead: ["Created On", "Agent ID", "Agent Name", "Phone Number", "Surveying Area", "DC Code", "Actions"]
         }
     }
@@ -33,14 +36,14 @@ class FetchSalesAgent extends React.Component {
             roleId: "4",
             pages: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
             row: this.state.itemPerPage,
-            search: this.state.search
+            search: this.state.search,
+            deCode: this.state.dcCode
         }
 
         this.props.fetchSalesAgent(obj);
     }
 
     componentWillReceiveProps(newProps) {
-        //debugger;
         if (newProps && newProps.agentData && newProps.agentData.Lists.datas) {
             this.setState({
                 salesAgentData: newProps.agentData.Lists.datas, pageCount: newProps.agentData.Lists.totalCount / this.state.itemPerPage
@@ -87,11 +90,26 @@ class FetchSalesAgent extends React.Component {
     }
 
     itemEdit = (id) => {
-        //debugger;
         this.context.router.history.push({ pathname: 'user/salesAgent/edit/' + id, state: { salesAgentId: id } });
     }
 
+    enableAdvanceSearch = (e) => {
+        e.preventDefault();
+        let enableSearch = this.state.advanceSearch ? false : true
+        this.setState({ advanceSearch: enableSearch })
+    }
+
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSalesAgentList() })
+    };
+
     render() {
+        let dcData = [];
+        this.state.dcCodeData = [{ name: "name", id: 1 }]
+        this.state.dcCodeData && this.state.dcCodeData.map((item) => {
+            let obj = { "label": item.name, "value": item.id };
+            dcData.push(obj);
+        })
 
         let salesAgentList = this.state.salesAgentData && this.state.salesAgentData.map((item, index) => {
             let createdDate = item.created.split("T");
@@ -102,6 +120,19 @@ class FetchSalesAgent extends React.Component {
             <div>
                 <div d-flex justify-content-end>
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                    <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
+
+                    {this.state.advanceSearch &&
+                        <div className="col-md-4 state-filter"><label className="label-title">State:</label>
+                            {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                            <Select className="state-box ml-1"
+                                value={this.state.dcCodeObj}
+                                onChange={(e) => this.handleDcCodeChange(e)}
+                                options={dcData}
+                                placeholder="--Select State--"
+                            />
+                        </div>
+                    }
                     <div className="assign-box">
                         {/* <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT} */}
