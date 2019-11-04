@@ -159,7 +159,7 @@ class IrrigationSetting extends Component {
                         <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
                             <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['STATE_LABEL']}</label>
+                                <label>{window.strings['SETTING']['STATE_LABEL'] + ' *'}</label>
                                 <select required name="stateId" className="form-control" value={this.state.stateId} onChange={this.handleStateChange} disabled={this.state.irrigationCostId}>
                                     <option value="0">{window.strings['SETTING']['SELECT_STATE']}</option>
                                     {stateDropDown}
@@ -167,7 +167,7 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.stateId && <div className="mandatory">{window.strings['SETTING']['STATE_LABEL'] + window.strings['ISREQUIRED']}</div>}
                             </div>
                             <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['CITY_LABEL']}</label>
+                                <label>{window.strings['SETTING']['CITY_LABEL'] + ' *'}</label>
                                 <select required name="cityId" className="form-control" value={this.state.cityId} onChange={this.handleInputChange} disabled={this.state.irrigationCostId}>
                                     <option value="0">{window.strings['SETTING']['SELECT_CITY']} </option>
                                     {cityDropDown}
@@ -176,7 +176,7 @@ class IrrigationSetting extends Component {
                             </div>
 
                             <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['PRICE_LABEL']}</label>
+                                <label>{window.strings['SETTING']['PRICE_LABEL'] + ' *'}</label>
                                 <input
                                     type="number"
                                     placeholder="Price"
@@ -192,7 +192,7 @@ class IrrigationSetting extends Component {
                             </div>
 
                             <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['AREA_FEET']}</label>
+                                <label>{window.strings['SETTING']['AREA_FEET'] + ' *'}</label>
                                 <input type="number"
                                     placeholder="Area Size"
                                     className={classnames('form-control', {

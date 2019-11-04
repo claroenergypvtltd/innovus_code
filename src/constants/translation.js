@@ -92,6 +92,7 @@ export const Translation = {
             "BOX_QUANTITY": "Box Quantity",
             "CREATETITLE": "ADD CROP",
             "EDITTITLE": "Edit Crop",
+            "CROP_NAME": "Crop Name"
         },
 
         "FAQ": {
@@ -240,6 +241,7 @@ export const Translation = {
         },
         "SALES_AGENT": {
             "ADD_AGENT": "ADD AGENT",
+            "EDIT_AGENT": "EDIT AGENT",
             "PHON_NO": "Phone Number",
             "AGENT_NAME": "Agent Name",
             "SURVEY_AREA": "Surveing Area",

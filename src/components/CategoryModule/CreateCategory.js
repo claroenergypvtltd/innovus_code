@@ -138,7 +138,7 @@ class CategoryForm extends Component {
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0">
                                         <div className="form-group pt-3 col-md-12">
 
-                                            <label>{window.strings.CATEGORY.NAME}</label>
+                                            <label>{window.strings.CATEGORY.NAME + ' *'}</label>
 
                                             <input
                                                 type="text"
@@ -197,7 +197,7 @@ class CategoryForm extends Component {
 
                                         <div className="form-group pt-3 col-md-12">
 
-                                            <label>{window.strings.CATEGORY.IMAGE}</label>
+                                            <label>{window.strings.CATEGORY.IMAGE + ' *'}</label>
 
                                             <input
                                                 type="file"

@@ -211,7 +211,7 @@ class CreatePrice extends Component {
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
+                                            <label>{window.strings['CATEGORY']['CATEGORY_NAME'] + ' *'}</label>
                                             <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleCategoryChange}>
                                                 <option value="0">Select Category</option>
                                                 {categoryDropDown}
@@ -219,7 +219,7 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings['CATEGORY']['SUB_CATEGORY']}</label>
+                                            <label>{window.strings['CATEGORY']['SUB_CATEGORY'] + ' *'}</label>
                                             <select required name="categoryId" className="form-control" value={this.state.categoryId} onChange={this.handleSubCategory}>
                                                 <option value="0">Select SubCategory </option>
                                                 {subCategoryDropDown}
@@ -230,7 +230,7 @@ class CreatePrice extends Component {
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.CROP.WEIGHT}</label>
+                                            <label>{window.strings.CROP.WEIGHT + ' *'}</label>
                                             <input
                                                 type="number"
                                                 placeholder="Weight"
@@ -245,7 +245,7 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.PRICE.TYPE}</label>
+                                            <label>{window.strings.PRICE.TYPE + ' *'}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} Z>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
@@ -257,7 +257,7 @@ class CreatePrice extends Component {
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.CROP.PRICE}</label>
+                                            <label>{window.strings.CROP.PRICE + ' *'}</label>
                                             <input type="number"
                                                 placeholder="Price"
                                                 className={classnames('form-control', {
@@ -274,7 +274,7 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-6 ">
-                                            <label>{window.strings.PRICE.TYPE}</label>
+                                            <label>{window.strings.PRICE.TYPE + ' *'}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
                                                 <option value="0">Select</option>
                                                 {priceDropDown}
@@ -285,7 +285,7 @@ class CreatePrice extends Component {
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.CROP.BOX_QUANTITY}</label>
+                                            <label>{window.strings.CROP.BOX_QUANTITY + ' *'}</label>
                                             <input type="number"
                                                 placeholder="Box Quantity"
                                                 className={classnames('form-control', {
@@ -301,7 +301,7 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-6 ">
-                                            <label>{window.strings.PRICE.TYPE}</label>
+                                            <label>{window.strings.PRICE.TYPE + ' *'}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}

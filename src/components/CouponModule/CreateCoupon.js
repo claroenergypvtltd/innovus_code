@@ -17,7 +17,10 @@ class CreateCoupon extends Component {
     constructor(props) {
         super(props);
         var today = new Date(),
-            date = today.getDate() < 10 ? today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + ('0' + today.getDate()) : today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            dateValue = today.getDate() >= 10 ? today.getDate() : ('0' + today.getDate()),
+            monthValue = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : ('0' + today.getMonth() + 1),
+            date = today.getFullYear() + '-' + monthValue + '-' + dateValue
+
         this.state = {
             submitted: false,
             errors: {},
@@ -266,7 +269,7 @@ class CreateCoupon extends Component {
                                                 name="expiryDate"
                                                 onChange={this.handleChange}
                                                 value={this.state.expiryDate}
-                                                min='2019-11-01'
+                                                min={this.state.Date}
                                                 required
 
                                             />
