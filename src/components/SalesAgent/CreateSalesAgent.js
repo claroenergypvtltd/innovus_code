@@ -20,6 +20,7 @@ class CreateSalesAgent extends React.Component {
     componentDidMount() {
         //debugger;
         if (this.props.location && this.props.location.state && this.props.location.state.salesAgentId) {
+            this.setState({ salesAgentId: this.props.location.state.salesAgentId })
             this.getEditData();
         }
     }
@@ -94,13 +95,13 @@ class CreateSalesAgent extends React.Component {
         return (
             <div className="row clearfix">
                 <div className="col-md-12">
-                    <h4 className="user-title">{this.state.categoryId ? window.strings['SALES_AGENT']['ADD_AGENT'] : window.strings['SALES_AGENT']['ADD_AGENT']}</h4>
+                    <h4 className="user-title">{this.state.salesAgentId ? window.strings['SALES_AGENT']['EDIT_AGENT'] : window.strings['SALES_AGENT']['ADD_AGENT']}</h4>
                     <div className="col-md-12 main-wrapper">
                         <div className="create-agent col-md-6">
                             <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
                                 <div className="form-group col-md-12">
 
-                                    <label>{window.strings['SALES_AGENT']['AGENT_NAME']}</label>
+                                    <label>{window.strings['SALES_AGENT']['AGENT_NAME'] + ' *'}</label>
 
                                     <input
                                         type="text"
@@ -118,7 +119,7 @@ class CreateSalesAgent extends React.Component {
                                 </div>
                                 <div className="form-group col-md-12">
 
-                                    <label>{window.strings['SALES_AGENT']['PHON_NO']}</label>
+                                    <label>{window.strings['SALES_AGENT']['PHON_NO'] + ' *'}</label>
 
                                     <input
                                         type="number"

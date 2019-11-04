@@ -7,6 +7,8 @@ import '../../assets/css/login.scss';
 import store from '../../store/store';
 import { CATEGORY_CREATE_SUCCESS, CATEGORY_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import PropTypes from "prop-types";
+import noimg from '../../assets/noimage/Avatar_farmer.png'
+import { imageBaseUrl } from '../../config'
 
 class CreateCrop extends Component {
     static contextTypes = {
@@ -83,7 +85,7 @@ class CreateCrop extends Component {
             this.setState({
                 file: file,
                 image: file.name,
-                imagePreview: reader.result
+                imagePreviewUrl: reader.result
 
             })
         }
@@ -141,7 +143,19 @@ class CreateCrop extends Component {
     render() {
         console.log("test")
         const { errors } = this.state;
-        let { imagePreview } = this.state;
+        let { imagePreviewUrl } = this.state;
+        let imagePreview;
+
+        if (imagePreviewUrl) {
+
+            imagePreview = <img className="pre-view" src={imagePreviewUrl} />
+        } else if (this.state.image) {
+
+            imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
+        }
+        else {
+            imagePreview = <img className="pre-view" src={noimg} />
+        }
 
         const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
             return <option key={index}
@@ -173,11 +187,11 @@ class CreateCrop extends Component {
 
                                     <div className="form-group col-md-12">
 
-                                        <label>{window.strings.CATEGORY.NAME}</label>
+                                        <label>{window.strings.CROP.CROP_NAME}</label>
 
                                         <input
                                             type="text"
-                                            placeholder="Category Name"
+                                            placeholder="Crop Name"
                                             className={classnames('form-control', {
                                                 'is-invalid': errors.name
                                             })}
@@ -188,7 +202,7 @@ class CreateCrop extends Component {
 
                                         />
 
-                                        {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                        {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CROP']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
                                     <div className="form-group col-md-12">
@@ -224,8 +238,8 @@ class CreateCrop extends Component {
                                             required
 
                                         />
+                                        {imagePreview}
                                         {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                        <img className="pre-view" src={imagePreview} />
                                     </div>
 
                                     {/* <div className="col-md-12 pt-3 p-0">

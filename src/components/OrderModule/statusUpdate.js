@@ -132,7 +132,7 @@ class StatusUpdate extends Component {
                                             {statusDropDown}
                                         </select>
 
-                                        {this.state.submitted && !this.state.status && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                        {this.state.submitted && this.state.status == 0 && <div className="mandatory">{window.strings['ORDER']['STATUS'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
                                     <div className="form-group col-md-12">
@@ -148,7 +148,7 @@ class StatusUpdate extends Component {
                                             value={this.state.location}
                                             required
                                         />
-                                        {this.state.submitted && !this.state.location && <div className="mandatory">{window.strings['CATEGORY']['LOCATION'] + window.strings['ISREQUIRED']}</div>}
+                                        {this.state.submitted && !this.state.location && <div className="mandatory">{window.strings['ORDER']['LOCATION'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
                                     <div className="form-group col-md-12">
