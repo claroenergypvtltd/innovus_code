@@ -5,7 +5,7 @@ export function TableData(props) {
   console.log(props);
   return (
 
-    <div className="main-wrapper">
+    <div className="table-wrapper">
       <table className="table">
         <thead>
           <tr>

@@ -141,10 +141,14 @@ class FetchPrice extends Component {
                         <h4 className="user-title">{window.strings.PRICE.LIST_PRICE}</h4>
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
                     </div>
-                    <div className="right-title row col-md-5">
-                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <div className="col-md-4">
-                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
+                    <div className="right-title col-md-5">
+                        <div className="row">
+                            <div className="col-md-7 pr-0">
+                                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                            </div>
+                            <div className="col-md-5 pl-0">
+                                <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
