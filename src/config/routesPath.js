@@ -295,6 +295,11 @@ export const routesPath = [
             },
 
             {
+                path: process.env.PUBLIC_URL + '/order/inprogress/page',
+                component: DummyFile,
+                exact: true
+            },
+            {
                 path: process.env.PUBLIC_URL + '/payment/inprogress',
                 component: DummyFile,
                 exact: true

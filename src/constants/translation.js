@@ -210,7 +210,12 @@ export const Translation = {
             "SHOP": "Shop",
             "KYC": "KYC Details",
             "AGENT_LABEL": "Agent",
-            "SELECT_AGENT": "Select Agent"
+            "SELECT_AGENT": "Select Agent",
+            "ORDERRECEIVED": "Order Received",
+            "PLANROUTE": "Plan Route",
+            "SHIPPINGADJUSTMENT": "Shipping Adjustment",
+            "OUTOFDELIVERY": "Out Of Delivery",
+            "DELIVERED": "Delivery"
         },
         "ABOUTUS": {
             "TITLE": "About Us",

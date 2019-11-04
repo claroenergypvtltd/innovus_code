@@ -47,6 +47,8 @@ class ShopDetails extends React.Component {
 
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
+        let shopAddress1 = profile.shopAddress && profile.shopAddress.address1 ? profile.shopAddress.address1 : '';
+        let shopAddress2 = profile.shopAddress && profile.shopAddress.address2 ? profile.shopAddress.address2 : '';
         let shopImg = noimg;
         if (profile.shopAddress && profile.shopAddress.image) {
             shopImg = imageBaseUrl + profile.shopAddress.image
@@ -86,7 +88,9 @@ class ShopDetails extends React.Component {
                                 <div className="farmer-address">
                                     <h5 className="title">Address</h5>
                                     <p className="centext user-title sub-farm">
-                                        {profile.shopAddress && profile.shopAddress.address1 + '' + profile.shopAddress && profile.shopAddress.address2 + ','}
+                                        <p>{shopAddress1}</p>
+                                        <p></p>
+                                        <p>{shopAddress2}</p>
                                         <p></p>
                                         {profile.shopAddressData && profile.shopAddressData.cities && profile.shopAddressData.cities.name + ','}
                                         {profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name + ','}

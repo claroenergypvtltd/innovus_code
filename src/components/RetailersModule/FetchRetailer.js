@@ -371,27 +371,41 @@ class FetchRetailer extends React.Component {
             let shopAddressData = '';
             let selectBox = '';
             item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
-            item.shopNames = item.shopAddress && item.shopAddress.name;
+            if (item && item.shopAddress && item.shopAddress.name) {
+                item.shopNames = item.shopAddress.name
+            } else {
+                item.shopNames = ''
+            }
+            if (item && item.agentName) {
+                item.agentName = item.agentName
+            } else {
+                item.agentName = ''
+            }
+
             item.shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
             item.shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
             item.shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
-            item.fullShopAddrss = item.shopAddrss + item.shopAddressDataCity + item.shopAddressDataState + ',' + item.shopAddressDataCountry + '.';
+            if (item.shopAddrss && item.shopAddressDataCity && item.shopAddressDataState && item.shopAddressDataCountry) {
+                item.fullShopAddrss = item.shopAddrss + ',' + item.shopAddressDataCity + ',' + item.shopAddressDataState + ',' + item.shopAddressDataCountry + '.';
+            } else {
+                item.fullShopAddrss = ''
+            }
             item.created = moment(item.created).format("DD/MM/YYYY");
-            if (Object.keys(item.address).length > 1) {
-                address = JSON.stringify(item.address).toString().replace(/"/g, '');
-            }
-            if (Object.keys(item.addressData).length > 1) {
-                addressData = JSON.stringify(item.addressData).toString().replace(/"/g, '');
-            }
-            if (Object.keys(item.role).length > 1) {
-                role = JSON.stringify(item.role).toString().replace(/"/g, '');
-            }
-            if (Object.keys(item.shopAddress).length > 1) {
-                shopAddress = JSON.stringify(item.shopAddress).toString().replace(/"/g, '');
-            }
-            item.address = address;
-            item.role = role;
-            item.shopAddress = shopAddress;
+            // if (Object.keys(item.address).length > 1) {
+            //     address = JSON.stringify(item.address).toString().replace(/"/g, '');
+            // }
+            // if (Object.keys(item.addressData).length > 1) {
+            //     addressData = JSON.stringify(item.addressData).toString().replace(/"/g, '');
+            // }
+            // if (Object.keys(item.role).length > 1) {
+            //     role = JSON.stringify(item.role).toString().replace(/"/g, '');
+            // }
+            // if (Object.keys(item.shopAddress).length > 1) {
+            //     shopAddress = JSON.stringify(item.shopAddress).toString().replace(/"/g, '');
+            // }
+            // item.address = address;
+            // item.role = role;
+            // item.shopAddress = shopAddress;
             excelDatas.push(item);
         })
 
@@ -509,6 +523,7 @@ class FetchRetailer extends React.Component {
                                 </div></div>
                         </div>}
                     <DataTableDynamic
+                        customCss="fetchretailer"
                         title="Category List"
                         tableHead={this.state.columns}
                         tableDatas={this.state.data}

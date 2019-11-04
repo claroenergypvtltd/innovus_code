@@ -13,6 +13,25 @@ export const Sidebar = [
         ),
         path: path.dashboard.list
     },
+    // {
+    //     name: (
+    //         <span className="menu-list order">
+    //             <i />
+    //             {Label.orderLabel}
+    //         </span>
+    //     ),
+    //     path: path.order.list,
+    // },
+    {
+        name: (
+            <span className="menu-list order">
+                <i />
+                {Label.orderLabel}
+            </span>
+        ),
+        path: path.inprogress.order,
+    },
+
     {
         name: (
             <span className="menu-list user_manag">
