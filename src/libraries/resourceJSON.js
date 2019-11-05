@@ -38,6 +38,16 @@ export const resorceJSON = {
     // { name: 'Shop City', selector: 'shopAddressDataCity', sortable: true },
     // { text: 'Actions', dataField: 'actions', sortable: true },
   ],
+  OrderlistCols: [
+    { name: 'Order ID', selector: 'orderID', sortable: true },
+    { name: 'Customer ID', selector: 'customerId', sortable: true },
+    { name: 'Shop Name', selector: 'shopName', sortable: true },
+    { name: 'Address', selector: 'fullShopAddrss', sortable: true },
+    { name: 'Contact No', selector: 'contactno', sortable: true },
+    { name: 'Order Details', selector: 'viewpage', sortable: true },
+    { name: 'Total Amount', selector: 'totalAmount', sortable: true },
+    { name: 'Agent ID', selector: 'agentId', sortable: true },
+  ],
   CropList: [
     { name: 'Crop Name', selector: 'cropName', sortable: true },
     { name: 'Crop Variety', selector: 'cropVariety', sortable: true },

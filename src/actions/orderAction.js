@@ -17,7 +17,7 @@ export const getOrderList = (Data) => dispatch => {
     }
     httpServices.get('order' + '?orderId=' + orderId + searchData + page + rows).then(resp => {
         if (resp && resp.data) {
-            if (Data.orderId) {
+            if (Data && Data.orderId) {
                 dispatch({ type: ORDERDETAILS_FETCH_SUCCESS, Lists: resp.data })
             } else {
                 dispatch({ type: ORDER_FETCH_SUCCESS, Lists: resp.data })

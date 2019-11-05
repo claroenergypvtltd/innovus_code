@@ -9,7 +9,6 @@ export default class ExportFile extends React.Component {
     }
     render() {
         let PrintexcelDatas = [];
-        console.log('--this.props.csvData-', this.props.csvData);
         this.props.csvData && this.props.csvData.map((item, index) => {
             let excelitem = {};
             if (item.status == 0) {

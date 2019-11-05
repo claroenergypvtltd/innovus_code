@@ -11,9 +11,10 @@ import { getVehicleType, submitVehicle } from '../../actions/VehicleAction'
 import Select from 'react-select';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import TimePicker from 'rc-time-picker';
+import 'rc-time-picker/assets/index.css';
 import * as moment from 'moment';
 import { fetchVehicle } from '../../actions/VehicleAction'
-
 class CreateVehicle extends Component {
     static contextTypes = {
         router: PropTypes.object
@@ -35,11 +36,9 @@ class CreateVehicle extends Component {
     }
 
     componentDidMount() {
-
         if (this.props.location && this.props.location.state && this.props.location.state.vehicleId) {
             this.getEditData();
         }
-
         this.getVehicleType();
     }
 
@@ -50,32 +49,25 @@ class CreateVehicle extends Component {
             }
         });
     }
-
     componentWillReceiveProps(newProps) {
-
         // vehicleName: '',
         // vehicleType: '',
         // volume: '',
         // transitionTime: '',
         // operatingHour: '',
-        debugger;
         if (newProps.VehicleData && newProps.VehicleData.specificData && newProps.VehicleData.specificData[0]) {
             let respData = newProps.VehicleData.specificData[0];
-            this.setState({ vehicleName: respData.vehiclename, vehicleType: respData.vehicleType, volume: respData.volume, transitionTime: respData.transitionTime })
+            this.setState({ vehicleType: { 'label': respData.vehicleCategory.vehicleType, 'value': respData.vehicleCategory.id }, vehicleName: respData.vehiclename, volume: respData.volume, transitionTime: respData.transitionTime })
         }
-
         if (newProps.VehicleData && newProps.VehicleData.createdStatus == "200") {
             store.dispatch({ type: "VEHICLE_CREATE_SUCCESS", createdStatus: "" });
             this.listPath();
         }
-
         if (newProps.VehicleData && newProps.VehicleData.updatedStatus == "200") {
             store.dispatch({ type: "VEHICLE_UPDATE_SUCCESS", updatedStatus: "" });
             this.listPath();
         }
     }
-
-
     getEditData = () => {
         let obj = {
             "id": this.props.location.state.vehicleId
@@ -108,7 +100,6 @@ class CreateVehicle extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-        debugger;
         if (this.state.vehicleName && this.state.vehicleType && this.state.volume && this.state.transitionTime && this.state.startDate && this.state.endDate) {
             let obj = {
                 "vehicleName": this.state.vehicleName,
@@ -153,7 +144,6 @@ class CreateVehicle extends Component {
     }
 
     addNewType = () => {
-        debugger;
         this.setState({})
     }
 
@@ -219,12 +209,14 @@ class CreateVehicle extends Component {
 
                                     <div className="form-group col-md-6">
                                         <label>{window.strings['VEHICLE']['TRANSACTION_TIME']}</label>
-                                        <Select className="state-box ml-1"
+                                        {/* <Select className="state-box ml-1"
                                             value={this.state.transitionTime}
                                             onChange={(e) => this.handleDropDownChange(e, "transitionTime")}
                                             options={transtactionTimeData}
                                             placeholder="--Select Transaction Time--"
-                                        />
+                                        /> */}
+                                        <TimePicker
+                                            placeholder="--Transaction Time--" defaultValue={this.state.transitionTime} showSecond={false} minuteStep={15} />
                                         {this.state.submitted && !this.state.transitionTime && <div className="mandatory">{window.strings['VEHICLE']['TRANSACTION_TIME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 

@@ -110,7 +110,7 @@ export const Translation = {
             "CREATETITLE": "ADD INVENTORY",
             "EDITTITLE": "EDIT INVENTORY",
             "LISTTITLE": "Inventory Master",
-            "LIST_PRICE": "LIST INVENTORY",
+            "LIST_PRICE": "INVENTORY LIST",
             "ADD_PRICE": "Add Inventory",
             "OFFER": "Offer",
             "WEIGHT": "Weight",

@@ -18,10 +18,10 @@ class FetchOrderDetails extends Component {
             // TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
             //TableHeadTrack: ["Data/Time", "Activity", "Location"],
             //TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
-            TableHead: ["Order Id", "Shipping Address", "From Time", "To Time", "Track Orders"],
+            TableHead: ["Order Id", "Shipping Address", "Ordered Date", "Expected Delivery Date", "Track Orders"],
             TableHeadTwo: ["Order Id", "Shipping Address", "From Time", "To Time"],
             TableHeadTrack: ["Date/Time", "Activity", "Location"],
-            TableProductHead: ["Product Id", "Product Name", "Quantity", "Order Date", "Order Amount"],
+            TableProductHead: ["Product Id", "Product Name", "Quantity", "Order Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
             CategoryCount: props.getCount,
             search: '',
@@ -122,8 +122,21 @@ class FetchOrderDetails extends Component {
 
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
+            let fullShopAddrss;
             let link = this.state.trackDetails === false ? <button className="track-btn" onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button> : "";
-            return { "itemList": [item.id, item.shopAddress && item.shopAddress.address1 + ' ' + item.shopAddress && item.shopAddress.address2, formatDate(item.created), dateformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id }
+            let shipaddrss = item.shopAddress && item.shopAddress.address1 + item.shopAddress.address2;
+            let shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
+            let shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
+            let shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
+            if (shipaddrss && shopAddressDataCity && shopAddressDataState && shopAddressDataCountry) {
+                fullShopAddrss = shipaddrss + ',' + shopAddressDataCity + ',' + shopAddressDataState + ',' + shopAddressDataCountry + '.';
+            } else {
+                fullShopAddrss = ''
+            }
+            return {
+                "itemList": [item.id, fullShopAddrss, formatDate(item.created),
+                dateformat(item.startTime, 'getDate') + '(' + timeformat(item.startTime) + ' - ' + timeformat(item.endTime) + ')', link], "itemId": item.id
+            }
         })
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
             return { "itemList": [formatDate(item.trackTime), item.activity, item.location] }
@@ -132,8 +145,8 @@ class FetchOrderDetails extends Component {
 
             let productname = item.category && item.category.name ? item.category.name : '-';
             let boxAmount = item.categoryAmount && item.categoryAmount.boxQuantity ? item.categoryAmount.boxQuantity : 0;
-            let quantity = item.cartproductdetails && item.cartproductdetails.quantity;
-            return { "itemList": [item.cartproductdetails && item.cartproductdetails.productId, productname, quantity + ' ' + '( ' + quantity / boxAmount + "box)", item.cartproductdetails && formatDate(item.cartproductdetails.lastModified), item.cartproductdetails && item.cartproductdetails.price] }
+            let quantity = item.cartProductDetails && item.cartProductDetails.quantity;
+            return { "itemList": [item.cartProductDetails && item.cartProductDetails.productId, productname, quantity + ' ' + '( ' + quantity / boxAmount + "box)", item.cartProductDetails && 'Rs. ' + item.cartProductDetails.price] }
         })
 
         let { status } = this.state;
