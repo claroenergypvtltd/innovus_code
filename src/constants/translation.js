@@ -271,9 +271,14 @@ export const Translation = {
         },
 
         "VEHICLE": {
-            "VEHICLE_MANAGEMENT": "Vehicle Management",
+            "VEHICLE_MANAGEMENT": "VEHICLE MANAGEMENT",
             "ADD_VEHICLE": "Add Vehicle",
-            "EDIT_VEHICLE": "Edit Vehicle"
+            "EDIT_VEHICLE": "Edit Vehicle",
+            "VEHICLE_TYPE": "Vehicle Type",
+            "TRANSACTION_TIME": "Transaction Time",
+            "VEHICLE_NAME": "Vehicle Name",
+            "VOLUME": "Volume(mc)",
+            "OPERATING_HOURS": "Operating Hours"
         },
 
         "FARMERS": {
