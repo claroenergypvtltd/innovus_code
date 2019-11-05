@@ -43,6 +43,10 @@ class FetchSalesAgent extends React.Component {
         this.props.fetchSalesAgent(obj);
     }
 
+    // getDcCode = () => {
+    //     this.props.getDcCode();
+    // }
+
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.agentData && newProps.agentData.Lists.datas) {
             this.setState({
@@ -105,7 +109,7 @@ class FetchSalesAgent extends React.Component {
 
     render() {
         let dcData = [];
-        this.state.dcCodeData = [{ name: "name", id: 1 }]
+        this.state.dcCodeData = [{ name: "0987", id: 1 }]
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
             let obj = { "label": item.name, "value": item.id };
             dcData.push(obj);
@@ -137,13 +141,13 @@ class FetchSalesAgent extends React.Component {
                     {this.state.advanceSearch &&
                         <div className="main-filter">
                             <div className="row">
-                                <div className="col-md-4 state-filter"><label className="label-title">State:</label>
+                                <div className="col-md-4 state-filter"><label className="label-title">DCCode:</label>
                                     {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                     <Select className="state-box ml-1"
                                         value={this.state.dcCodeObj}
                                         onChange={(e) => this.handleDcCodeChange(e)}
                                         options={dcData}
-                                        placeholder="--Select State--"
+                                        placeholder="--Select DC Code--"
                                     />
                                 </div>
                             </div>

@@ -27,17 +27,17 @@ export const fetchSalesAgent = (user) => dispatch => {
 }
 
 
-export const DeleteIrrigationSetting = (id) => dispatch => {
-    httpServices.remove("irrigationcost", id).then(response => {
-        if (response) {
-            toastr.success(response.message);
-            dispatch({ type: AGENT_DELETE_SUCCESS, deletedStatus: response.status })
-        }
-    }).catch((error) => {
-        console.error("Delete :", error.response);
-        dispatch({ type: GET_ERRORS, payload: error });
-    })
-}
+// export const DeleteIrrigationSetting = (id) => dispatch => {
+//     httpServices.remove("irrigationcost", id).then(response => {
+//         if (response) {
+//             toastr.success(response.message);
+//             dispatch({ type: AGENT_DELETE_SUCCESS, deletedStatus: response.status })
+//         }
+//     }).catch((error) => {
+//         console.error("Delete :", error.response);
+//         dispatch({ type: GET_ERRORS, payload: error });
+//     })
+// }
 
 
 export const submitSalesAgent = (formData, isEdit) => dispatch => {

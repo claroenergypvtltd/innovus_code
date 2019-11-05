@@ -70,5 +70,8 @@ export const endPoint = {
     "user": "/user",
     "farm": "/farm",
     "farmDetails": "/getFarmDetails",
-    "retailSignUp": "/signup"
+    "retailSignUp": "/signup",
+    "vehicle": "/vehicles",
+    "submitVehicle": "/vehicle",
+    "vehiclesCategory": "/vehicleCategory"
 }
