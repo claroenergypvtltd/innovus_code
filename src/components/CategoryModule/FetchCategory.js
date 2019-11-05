@@ -133,7 +133,7 @@ class CategoryList extends Component {
                 </Row>
 
                 <div className="sub-category">
-                    <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} handleDelete={this.handleDelete} pagination={true} />
+                    <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} pagination={true} />
                 </div>
             </div>
 

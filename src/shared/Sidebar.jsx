@@ -13,15 +13,6 @@ export const Sidebar = [
         ),
         path: path.dashboard.list
     },
-    // {
-    //     name: (
-    //         <span className="menu-list order">
-    //             <i />
-    //             {Label.orderLabel}
-    //         </span>
-    //     ),
-    //     path: path.order.list,
-    // },
     {
         name: (
             <span className="menu-list order">
@@ -29,8 +20,17 @@ export const Sidebar = [
                 {Label.orderLabel}
             </span>
         ),
-        path: path.inprogress.order,
+        path: path.order.list,
     },
+    // {
+    //     name: (
+    //         <span className="menu-list order">
+    //             <i />
+    //             {Label.orderLabel}
+    //         </span>
+    //     ),
+    //     path: path.inprogress.order,
+    // },
 
     {
         name: (
@@ -108,15 +108,15 @@ export const Sidebar = [
         ),
         path: path.price.list,
     },
-    {
-        name: (
-            <span className="menu-list order">
-                <i />
-                {Label.orderLabel}
-            </span>
-        ),
-        path: path.order.list,
-    },
+    // {
+    //     name: (
+    //         <span className="menu-list order">
+    //             <i />
+    //             {Label.orderLabel}
+    //         </span>
+    //     ),
+    //     path: path.order.list,
+    // },
     {
         name: (
             <span className="menu-list product">

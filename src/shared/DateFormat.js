@@ -22,10 +22,20 @@ export function timeformat(date) {
   Setendtime = timesplit[1] + timesplit[2];
   return Setendtime;
 }
-export function dateformat(date) {
+export function dateformat(date, type) {
   let Setendtime;
   let timesplit = date.split(' ');
-  Setendtime = timesplit[1] + timesplit[2];
-  // Setendtime = getStardate[2] + getStardate[1] + getStardate[0] + timesplit[1] + timesplit[2];
-  return Setendtime;
+  if (type = "getDate") {
+    return Dateformat(timesplit[0])
+  } else {
+    return timesplit[1] + timesplit[2];
+  }
+}
+
+function Dateformat(date) {
+  var datesplit = date.split('-');
+  return datesplit[2] + '-' + datesplit[1] + '-' + datesplit[0];
+  // return datesplit[2] + '-' + datesplit[1] + datesplit[0]
+
+
 }

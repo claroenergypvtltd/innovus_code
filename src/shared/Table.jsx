@@ -6,7 +6,7 @@ export function TableData(props) {
   return (
 
     <div className="table-wrapper">
-      <table className="table">
+      <table className="table table-striped">
         <thead>
           <tr>
             {props.TableHead && props.TableHead.map((tableHead, index) => {
@@ -44,7 +44,7 @@ export function TableData(props) {
                     )}
                     {props.handleDelete && (
                       <button onClick={() => props.handleDelete(item.itemId)} className="btn-trash">
-                        <i className="fa fa-trash-alt" />
+                        <i className="fa fa-trash" />
                         <span className="tooltip-text">Delete</span>
                       </button>
                     )}

@@ -43,7 +43,12 @@ class DataTableDynamic extends React.Component {
       },
     ];
     if (this.props.tableHead) {
-      let datasAndButtons = this.props.tableHead.concat(buttonActions);
+      let datasAndButtons;
+      if (this.props.orderReceivedpage) {
+        datasAndButtons = this.props.tableHead
+      } else {
+        datasAndButtons = this.props.tableHead.concat(buttonActions);
+      }
       this.setState({ tableHead: datasAndButtons });
     }
   }
@@ -53,6 +58,7 @@ class DataTableDynamic extends React.Component {
     this.props.handleEdit(row);
   }
   handleView(e, row) {
+
     this.props.handleView(e, row);
   }
   handleDelete(row, e) {
@@ -75,7 +81,8 @@ class DataTableDynamic extends React.Component {
     const myNewTheme = {
       rows: {
         fontSize: '15px',
-        color: '#9E9E9E!important'
+        color: '#9E9E9E!important',
+        background: 'red'
       }
     }
     let selectableRows = false;
@@ -84,7 +91,7 @@ class DataTableDynamic extends React.Component {
     }
     return (
       <div className="tables">
-        <DataTable className={this.props && this.props.customCss ? 'fetchretailertbl' : 'crop-table'}
+        <DataTable className={this.props && this.props.customCss ? 'fetchretailertbl row' : 'crop-table row'}
           noHeader={true}
           data={tableDatas}
           columns={tableHeader}
@@ -96,6 +103,7 @@ class DataTableDynamic extends React.Component {
           customTheme={myNewTheme}
           selectableRows={selectableRows}
           onRowSelected={this.handleRowChange}
+          striped={true}
         />
       </div>
     );

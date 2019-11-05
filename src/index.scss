@@ -855,12 +855,9 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 //   margin: 41px 20px 0 54px;
 // }
 .btn-view{
-  border:none;
-  background-color: #ffffff;
   color: #706d6d;
   border:none;
-  background-color: #ffffff;
-  color: #706d6d;
+  background-color: unset
 }
 .btn-view .tooltip-text {
   visibility: hidden;
@@ -884,11 +881,8 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 }
 .btn-trash{
   border:none;
-  background-color: #ffffff;
-  color: #706d6d;
-  border:none;
-  background-color: #ffffff;
-  color: #706d6d;
+  background-color: unset;
+  color:#d82525
 }
 .btn-trash .tooltip-text {
   visibility: hidden;
@@ -915,8 +909,8 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
   position: relative;
   display: inline-block;
   border:none;
-  background-color: #ffffff;
-  color: #706d6d;
+  background-color: unset;
+  color:#359123
 }
 
 .btn-edit .tooltip-text {
@@ -1029,7 +1023,7 @@ input.form-control.search-btn:focus {
 
 
 svg{
-  color:#FFA5AB;
+  // color:#FFA5AB;
 }
 // .rdt_ExpanderRow:before {
 //   font-family: FontAwesome;
@@ -1958,11 +1952,13 @@ display: flex;
   .react-bootstrap-daterangepicker-container{
     max-width: 80%;
   }
+
 }
 @media screen and (min-width: 1200px) {
   .react-bootstrap-daterangepicker-container{
     max-width: 78%;
   }
+  
 }
 @media screen and (min-width: 991px) and (max-width: 1199px){
   .react-bootstrap-daterangepicker-container{

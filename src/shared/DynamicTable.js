@@ -33,7 +33,7 @@ export class DynamicTable extends React.Component {
                         )}
                         {this.props.handleDelete && (
                             <button onClick={(e) => this.handleDelete(row, e)} className="btn-trash">
-                                <i className="fas fa-trash-alt" />
+                                <i className="fas fa-trash" />
                                 <span className="tooltip-text">Delete</span>
                             </button>
                         )}
