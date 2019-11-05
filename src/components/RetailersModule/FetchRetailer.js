@@ -325,7 +325,7 @@ class FetchRetailer extends React.Component {
         }
     }
 
-    handleChange = (e) => {
+    handleSearch = (e) => {
         this.setState({ search: e.target.value })
     }
 

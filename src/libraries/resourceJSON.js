@@ -54,5 +54,14 @@ export const resorceJSON = {
     { name: 'Description', selector: 'description', sortable: true },
     { name: 'Crop', selector: 'cropButton', sortable: true },
   ],
+
+  VehicleList: [
+    { name: 'Vehicle Type', selector: 'vehicleType', sortable: true },
+    { name: 'Vehicle Name', selector: 'vehiclename', sortable: true },
+    { name: 'Volme(mc)', selector: 'volume', sortable: true },
+    { name: 'Transaction Time', selector: 'transitionTime', sortable: true },
+    { name: 'Operating Hours', selector: 'operatingHour', sortable: true },
+  ],
+
   statusOptions: ['Pending', 'Accepted', 'Rejected'],
 };

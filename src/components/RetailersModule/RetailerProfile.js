@@ -138,7 +138,7 @@ class RetailerProfile extends React.Component {
                             <h4 className="title">{"Status"}</h4>
                             <p className={'user-subtitle '}>{statusClass}</p>
                         </Col>
-                        <Col md={2} sm={6} xs={12} className="p-0">
+                        <Col md={3} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Onboarded Date"}</h4>
                             <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>

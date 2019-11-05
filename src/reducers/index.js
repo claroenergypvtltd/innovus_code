@@ -13,6 +13,7 @@ import FaqReducer from './FaqReducer'
 import IrrigationSettingReducer from './IrrigationSettingReducer';
 import couponReducer from './couponReducer'
 import salesAgentReducer from './salesAgentReducer'
+import VehicleReducer from './VehicleReducer'
 
 export default combineReducers({
     errors: errorReducer,
@@ -28,6 +29,7 @@ export default combineReducers({
     faq: FaqReducer,
     irrigationSetting: IrrigationSettingReducer,
     coupon: couponReducer,
-    salesAgent: salesAgentReducer
+    salesAgent: salesAgentReducer,
+    Vehicle: VehicleReducer
 });
 
