@@ -1292,7 +1292,8 @@ svg{
 }
 .bottom-section .btn-default{
  color:#9EA0A2;
- background-color: #E1E7ED;
+ //background-color: #E1E7ED;
+ background-color: #fff;
  border: 1px solid;
  border-radius: 20px;
  padding: 5px 15px 5px 9px;
@@ -1343,6 +1344,15 @@ svg{
   margin-left: -28px;
   top: 7px;
   display: block;
+
+  // background-image: linear-gradient(to right, #ff8b92, #feb683);
+  // border: none;
+  // color: #fff;
+  // border-radius: 15px;
+  // width: 25px;
+  // height: 25px;
+  // line-height: 22px;
+  // padding: 1px 6px;
 }
  .search-label{
   color: #aaa;
@@ -1966,4 +1976,7 @@ display: flex;
 }
 body .main-header .navbar{
   padding: 0.1rem 1rem;
+}
+.navbar-brand{
+  padding: 0;
 }

@@ -148,71 +148,89 @@ class CreateVehicle extends Component {
         // });
 
         return (
-            <div className="irrigation-setting">
-                <div className="clearfix title-section row">
-                    <div className="title-card col-md-7">
-                        <h4 className="user-title">{!this.state.vehicleId ? window.strings.SETTING.ADD_VEHICLE : window.strings.SETTING.EDIT_VEHICLE}</h4>
-                    </div>
-                </div>
-                <div className="main-wrapper p-3">
-                    <div className="col-md-8">
-                        <h1>Inprogress</h1>
-                        {/* <form onSubmit={this.handleSubmit} noValidate className="row m-0">
+            <div className="add-vehicle">
+                <div className="row clearfix">
+                    <div className="col-md-12">
+                        {/* <h4 className="user-title">{!this.state.vehicleId ? window.strings.SETTING.ADD_VEHICLE : window.strings.SETTING.EDIT_VEHICLE}</h4> */}
+                        <h4 className="user-title">ADD VEHICLE</h4>
 
-                            <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['STATE_LABEL']}</label>
-                                <select required name="stateId" className="form-control" value={this.state.stateId} onChange={this.handleStateChange} disabled={this.state.irrigationCostId}>
-                                    <option value="0">{window.strings['SETTING']['SELECT_STATE']}</option>
-                                    {stateDropDown}
-                                </select>
-                                {this.state.submitted && !this.state.stateId && <div className="mandatory">{window.strings['SETTING']['STATE_LABEL'] + window.strings['ISREQUIRED']}</div>}
+                        <div className="main-wrapper pt-3">
+                            <div className="col-md-8 ">
+                                <form onSubmit={this.handleSubmit} noValidate className="row m-0">
+
+                                    <div className="form-group col-md-6">
+                                        <label>{window.strings['VEHICLE']['VEHICLE_TYPE']}</label>
+                                        <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleCategoryChange}>
+                                            <option value="0">Select Vehicle Type</option>
+                                            {/* {categoryDropDown} */}
+                                        </select>
+                                        {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>{window.strings['VEHICLE']['TRANSACTION_TIME']}</label>
+                                        <input
+                                            type="number"
+                                            placeholder="Transaction Time"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.weight
+                                            })}
+                                            name="weight"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.weight}
+                                            required
+                                        />
+                                        {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>{window.strings['VEHICLE']['VEHICLE_NAME']}</label>
+                                        <input
+                                            type="number"
+                                            placeholder="Vehicle Name"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.weight
+                                            })}
+                                            name="weight"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.weight}
+                                            required
+                                        />
+                                        {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>{window.strings['VEHICLE']['OPERATING_HOURS']}</label>
+                                        <input
+                                            type="number"
+                                            placeholder="Operating Hours"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.weight
+                                            })}
+                                            name="weight"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.weight}
+                                            required
+                                        />
+                                        {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label>{window.strings['VEHICLE']['VOLUME']}</label>
+                                        <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleCategoryChange}>
+                                            <option value="0">Select Vehicle Volume</option>
+                                            {/* {categoryDropDown} */}
+                                        </select>
+                                        {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
+                                </form>
                             </div>
-                            <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['CITY_LABEL']}</label>
-                                <select required name="cityId" className="form-control" value={this.state.cityId} onChange={this.handleInputChange} disabled={this.state.irrigationCostId}>
-                                    <option value="0">{window.strings['SETTING']['SELECT_CITY']} </option>
-                                    {cityDropDown}
-                                </select>
-                                {this.state.submitted && !this.state.cityId && <div className="mandatory">{window.strings['SETTING']['CITY_LABEL'] + window.strings['ISREQUIRED']}</div>}
+                            <div className="col-md-12 bottom-section">
+                                <button type="button" className="btn btn-default mb-2" onClick={this.listPath}>{window.strings.CANCEL}</button>
+                                <button type="submit" className="btn btn-primary mb-2" disabled={this.state.loading} onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
+
                             </div>
-
-                            <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['PRICE_LABEL']}</label>
-                                <input
-                                    type="number"
-                                    placeholder="Price"
-                                    className={classnames('form-control', {
-                                        'is-invalid': errors.amount
-                                    })}
-                                    name="amount"
-                                    onChange={this.handleInputChange}
-                                    value={this.state.amount}
-                                    required
-                                />
-                                {this.state.submitted && !this.state.amount && <div className="mandatory">{window.strings['SETTING']['PRICE_LABEL'] + window.strings['ISREQUIRED']}</div>}
-                            </div>
-
-                            <div className="form-group col-md-6">
-                                <label>{window.strings['SETTING']['AREA_FEET']}</label>
-                                <input type="number"
-                                    placeholder="Area Size"
-                                    className={classnames('form-control', {
-                                        'is-invalid': errors.areaSize
-                                    })}
-                                    name="areaSize"
-                                    onChange={this.handleInputChange}
-                                    value={this.state.areaSize}
-                                    required
-
-                                />
-                                {this.state.submitted && !this.state.areaSize && <div className="mandatory">{window.strings['SETTING']['AREA_FEET'] + window.strings['ISREQUIRED']}</div>}
-                            </div>
-                        </form> */}
-
-                    </div>
-                    <div className="col-md-12 bottom-section">
-                        <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                        <button type="submit" className="btn btn-primary" onClick={this.handleSubmit} disabled={this.state.loading}>{window.strings.SUBMIT}</button>
+                        </div>
                     </div>
                 </div>
             </div>

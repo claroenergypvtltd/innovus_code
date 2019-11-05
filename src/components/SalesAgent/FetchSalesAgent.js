@@ -117,7 +117,7 @@ class FetchSalesAgent extends React.Component {
         })
 
         return (
-            <div>
+            <div className="mt-4">
                 <div className="retailersearchdiv">
                     {/* <div d-flex justify-content-end> */}
                     <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
