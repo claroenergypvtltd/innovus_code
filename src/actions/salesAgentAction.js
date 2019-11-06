@@ -68,33 +68,12 @@ export const submitSalesAgent = (formData, isEdit) => dispatch => {
     })
 }
 
-// export const submitSalesAgent = (formData, isUpdate) => dispatch => {
-//     if (isUpdate) {
-//         httpServices.put("irrigationcost", formData).then(resp => {
-//             if (resp && resp.data) {
-//                 toastr.success(resp && resp.message);
-//                 dispatch({ type: "AGENT_UPDATE_SUCCESS", updatedStatus: resp.status })
-//             }
-//         }).catch((error) => {
-//             console.error("error", error);
-//             dispatch({
-//                 type: GET_ERRORS,
-//                 payload: error
-//             });
-//         })
-//     } else {
-//         httpServices.post("irrigationcost", formData).then(resp => {
-//             if (resp && resp.data) {
-//                 toastr.success(resp && resp.message);
-//                 dispatch({ type: "AGENT_CREATE_SUCCESS", createdStatus: resp.status })
-//             }
-//         }).catch((error) => {
-//             console.error("error", error);
-//             dispatch({
-//                 type: GET_ERRORS,
-//                 payload: error
-//             });
-//         })
-//         // }
-//     }
-// }
+export const getDcCodeData = (dcData) => {
+    return httpServices.get(endPoint.dcCodeSearch + '?search=' + dcData.search).then(resp => {
+        if (resp && resp.data) {
+            return resp.data
+        }
+    }).catch((error) => {
+        console.error("error", error);
+    })
+}

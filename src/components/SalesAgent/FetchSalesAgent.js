@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TableData } from '../../shared/Table'
 import { path } from '../../constants';
 import PropTypes from 'prop-types';
-import { fetchSalesAgent } from '../../actions/salesAgentAction';
+import { fetchSalesAgent, getDcCodeData } from '../../actions/salesAgentAction';
 import { connect } from 'react-redux';
 import { ReactPagination, SearchBar } from '../../shared'
 import { resorceJSON } from '../../libraries'
@@ -28,6 +28,7 @@ class FetchSalesAgent extends React.Component {
     }
 
     componentDidMount() {
+        this.getDCData();
         this.getSalesAgentList();
     }
 
@@ -37,15 +38,24 @@ class FetchSalesAgent extends React.Component {
             pages: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
             row: this.state.itemPerPage,
             search: this.state.search,
-            deCode: this.state.dcCode
+            dcCode: this.state.dcCode
         }
 
         this.props.fetchSalesAgent(obj);
     }
 
-    // getDcCode = () => {
-    //     this.props.getDcCode();
-    // }
+    getDCData = () => {
+
+        let obj = {
+            search: this.state.dcCode
+        }
+        getDcCodeData(obj).then(resp => {
+            if (resp) {
+
+                this.setState({ dcCodeData: resp })
+            }
+        })
+    }
 
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.agentData && newProps.agentData.Lists.datas) {
@@ -82,8 +92,8 @@ class FetchSalesAgent extends React.Component {
     }
 
     resetSearch = () => {
-        if (this.state.search) {
-            this.setState({ search: '' }, () => {
+        if (this.state.search || this.state.dcCodeObj) {
+            this.setState({ search: '', dcCodeObj: '', dcCode: '' }, () => {
                 this.getSalesAgentList();
             });
         }
@@ -109,9 +119,11 @@ class FetchSalesAgent extends React.Component {
 
     render() {
         let dcData = [];
-        this.state.dcCodeData = [{ name: "0987", id: 1 }]
+        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
+
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
-            let obj = { "label": item.name, "value": item.id };
+
+            let obj = { "label": item, "value": item };
             dcData.push(obj);
         })
 
@@ -127,7 +139,7 @@ class FetchSalesAgent extends React.Component {
                     <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                     <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
                     <div className="retail-reset">
-                        <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                        <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <div id="menu">
