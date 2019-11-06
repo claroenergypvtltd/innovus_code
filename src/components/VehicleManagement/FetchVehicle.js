@@ -138,7 +138,7 @@ class FetchVehicle extends Component {
                     handleEdit={this.itemEdit}
                 />
                 <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} /> */}
-                <DataTableDynamic title="Vehicle List" tableHead={this.state.TableHead} tableDatas={this.state.data} handleEdit={this.itemEdit} handleDelete={this.handleDelete} pagination={true} />
+                <DataTableDynamic title="Vehicle List" tableHead={this.state.TableHead} tableDatas={this.state.data} handleEdit={this.itemEdit} pagination={true} />
             </div>
         );
     }

@@ -124,9 +124,9 @@ export const Sidebar = [
                 {Label.VehicleManagement}
             </span>
         ),
-        path: path.inprogress.order,
+        // path: path.inprogress.order,
 
-        // path: path.vehicle.list,
+        path: path.vehicle.list,
     },
     {
         name: (
