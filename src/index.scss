@@ -38,6 +38,10 @@ $gradient-1:linear-gradient(to right, #ff8b92 , #feb683);
 $gradient-2:linear-gradient(140deg, #c693f9 , #ac65f4);
 $gradient-3:linear-gradient(140deg, #6aa4e3 , #6869e9);
 $gradient-4:linear-gradient(to right, #feb683,#ff8b92);
+$gradient-5:linear-gradient(to right, #59d56a,#7fe49d);
+$gradient-6:linear-gradient(to right, #ffcc4f,#ffdc4f); 
+
+
 
 
 .form-control{
@@ -200,6 +204,12 @@ background-size: cover;}
     background: none;
     border: 1px solid #ced4da;
     color:#707070 ;
+  }
+}
+.code-filter{
+  display: flex;
+  .label-title{
+    white-space: nowrap;
   }
 }
 .daterangepicker td.active, .daterangepicker td.active:hover {
@@ -855,9 +865,9 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 //   margin: 41px 20px 0 54px;
 // }
 .btn-view{
-  color: #706d6d;
   border:none;
-  background-color: unset
+  background-color:unset;
+  color: #706d6d;
 }
 .btn-view .tooltip-text {
   visibility: hidden;
@@ -880,6 +890,7 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
   visibility: visible;
 }
 .btn-trash{
+
   border:none;
   background-color: unset;
   color:#d82525
@@ -1576,6 +1587,139 @@ a.order-btn:hover {
 }
 .modal-content{
   border: none;
+}
+
+/****************************Order Section-NEW************************/
+
+.order-tab{
+  padding: 0;
+  font-size: 15px; 
+}
+.order-wrapper{
+  max-width: 20%;
+  width: 100%;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 7px;
+}
+.order-dashboard{
+  max-width: 100%;
+  flex: none;
+  h5{
+    color: $white;
+    font-family: $font-open;
+    text-align: center;
+  }
+  h5:hover{
+    color: $white;
+    text-decoration: none;
+  }
+  .order-card{
+    // display: block;
+    // padding: 35px 15px 0;
+    // border: none;
+    // border-radius: 7px;
+    // margin-top: 0;
+    // width: 100px;
+    // height: 100px;
+    // text-align: center;
+    display: block;
+    padding: 10px 0;
+    border: none;
+    border-radius: 7px;
+  }
+  .box{
+    background-image: url(../src/assets/images/Sprite_image_orders.png);
+    background-repeat: no-repeat;
+    padding: 30px;
+    height: 95px;
+    width: 95px;
+    margin: 0 auto;
+  }
+}
+.order-receive{
+  background-image: $gradient-2;
+  .order-card{
+  .box{
+    background-position: -21px -3170px;
+  }
+}
+}
+.grey-receive{
+background-color: #b2b2b2;
+  .order-card{
+  .box{
+    background-position: -21px -3170px;
+  }
+}
+}
+
+.order-plan{
+  background-image: $gradient-3;
+  .order-card{
+  .box{
+    background-position: -26px -3287px;
+  }
+}
+}
+.grey-plan{
+  background-color: #b2b2b2;
+  .order-card{
+  .box{
+    background-position: -26px -3287px;
+  }
+}
+}
+
+.order-ship {
+   background-image: $gradient-4;
+.order-card{
+.box{
+  background-position:-27px -3396px;
+}
+}
+}
+.grey-ship{
+  background-color: #b2b2b2;
+  .order-card{
+  .box{
+  background-position:-27px -3396px;
+  }
+}
+}
+
+.order-task{
+  background-image: $gradient-5;
+  .order-card{
+  .box{
+    background-position: -20px -3515px;
+  }
+}
+}
+.grey-task{
+  background-color: #b2b2b2;
+  .order-card{
+  .box{
+    background-position: -20px -3515px;
+  }
+}
+}
+
+.order-delivery{
+  background-image: $gradient-6;
+  .order-card{
+  .box{
+    background-position: -20px -3519px;
+  }
+}
+}
+.grey-delivery{
+  background-color: #b2b2b2;
+  .order-card{
+  .box{
+    background-position: -20px -3519px;
+  }
+}
 }
 /****************************Shop Details Section************************/
 .shop-centext{

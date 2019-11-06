@@ -281,6 +281,14 @@ export const Translation = {
             "OPERATING_HOURS": "Operating Hours"
         },
 
+        "ORDERS": {
+            "PRODUCT_ID": "Product ID",
+            "PRODUCT_NAME": "Product Name",
+            "QUALITY_AVAILABLE": "Quality Available",
+            "QUALITY_ORDERED": "Quality Ordered",
+            "TO_BE_ADJUSTED": "To be Adjusted"
+        },
+
         "FARMERS": {
             "PERSONAL_INFORMATION": "Personal Information",
             "CONTACT_INFORMATION": "Contact Information",
