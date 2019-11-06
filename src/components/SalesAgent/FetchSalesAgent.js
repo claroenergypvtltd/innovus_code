@@ -141,9 +141,9 @@ class FetchSalesAgent extends React.Component {
                     {this.state.advanceSearch &&
                         <div className="main-filter">
                             <div className="row">
-                                <div className="col-md-4 state-filter"><label className="label-title">DCCode:</label>
+                                <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                     {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                                    <Select className="state-box ml-1"
+                                    <Select className="state-box ml-4"
                                         value={this.state.dcCodeObj}
                                         onChange={(e) => this.handleDcCodeChange(e)}
                                         options={dcData}

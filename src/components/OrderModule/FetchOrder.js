@@ -64,43 +64,84 @@ class FetchOrder extends Component {
         return (
             <Form>
                 <div>
-                    <div className="main-wrapper">
-                        <Tabs className="main-tab sub-tab"
-                            selectedIndex={this.state.tabIndex}
-                            onSelect={tabIndex => this.tabChange(tabIndex)}
-                        >
-                            <TabList className="change-tab d-flex">
-                                <Tab className={this.state.tabIndex == "1" ? 'sub-select-orderrecvd' : 'sub-change-orderrecvd'}>{window.strings.USERMANAGEMENT.ORDERRECEIVED}</Tab>
-                                <Tab className={this.state.tabIndex == "2" ? 'sub-select-planrecvd' : 'sub-change-planrecvd'}>{window.strings.USERMANAGEMENT.PLANROUTE}</Tab>
-                                <Tab className={this.state.tabIndex == "3" ? 'sub-select-shippngadjmnt' : 'sub-change-shippngadjmnt'}>{window.strings.USERMANAGEMENT.SHIPPINGADJUSTMENT}</Tab>
-                                <Tab className={this.state.tabIndex == "4" ? 'sub-select-outofdelvry' : 'sub-change-outofdelvry'}>{window.strings.USERMANAGEMENT.OUTOFDELIVERY}</Tab>
-                                <Tab className={this.state.tabIndex == "5" ? 'sub-select-delivred' : 'sub-change-delivred'}>{window.strings.USERMANAGEMENT.DELIVERED}</Tab>
-                            </TabList>
-                            <TabPanel>
-                                <FetchOrderReceived
-                                // ref="fetchRetailer"
-                                // roleId={this.state.selectedRoleId}
-                                // searchText={this.state.farmerSearch}
-                                />
-                            </TabPanel>
-                            <TabPanel>
-                                <FetchPlanRoute
-                                />
-                            </TabPanel>
-                            <TabPanel>
-                                <FetchShippingAdjustment
-                                />
-                            </TabPanel>
-                            <TabPanel>
-                                <FetchOutofDelivery
-                                />
-                            </TabPanel>
-                            <TabPanel>
-                                <FetchDelivered
-                                />
-                            </TabPanel>
-                        </Tabs>
-                    </div>
+
+                    <Tabs className=""
+                        selectedIndex={this.state.tabIndex}
+                        onSelect={tabIndex => this.tabChange(tabIndex)}
+                    >
+                        <TabList className="order-tab d-flex">
+                            <Tab className={this.state.tabIndex == "1" ? 'sub-select-orderrecvd order-wrapper grey-receive' : 'sub-change-orderrecvd order-wrapper order-receive'}>
+                                <div className="col-md-4 order-dashboard">
+                                    <a href="#" className="order-card">
+                                        <h5>{window.strings.USERMANAGEMENT.ORDERRECEIVED}</h5>
+                                        <div className="box">
+                                        </div>
+                                    </a>
+                                </div>
+                            </Tab>
+
+                            <Tab className={this.state.tabIndex == "2" ? 'sub-select-planrecvd order-wrapper grey-plan' : 'sub-change-planrecvd order-wrapper order-plan'}>
+                                <div className="col-md-4 order-dashboard">
+                                    <a href="#" className="order-card">
+                                        <h5>{window.strings.USERMANAGEMENT.PLANROUTE}</h5>
+                                        <div className="box">
+                                        </div>
+                                    </a>
+                                </div>
+                            </Tab>
+                            <Tab className={this.state.tabIndex == "3" ? 'sub-select-shippngadjmnt order-wrapper grey-ship' : 'sub-change-shippngadjmnt order-wrapper order-ship'}>
+                                <div className="col-md-4 order-dashboard">
+                                    <a href="#" className="order-card">
+                                        <h5>{window.strings.USERMANAGEMENT.SHIPPINGADJUSTMENT}</h5>
+                                        <div className="box">
+                                        </div>
+                                    </a>
+                                </div>
+                            </Tab>
+                            <Tab className={this.state.tabIndex == "4" ? 'sub-select-outofdelvry order-wrapper grey-task' : 'sub-change-outofdelvry order-wrapper order-task'}>
+                                <div className="col-md-4 order-dashboard">
+                                    <a href="#" className="order-card">
+                                        <h5>{window.strings.USERMANAGEMENT.OUTOFDELIVERY}</h5>
+                                        <div className="box">
+                                        </div>
+                                    </a>
+                                </div>
+                            </Tab>
+                            <Tab className={this.state.tabIndex == "5" ? 'sub-select-delivred order-wrapper grey-delivery' : 'sub-change-delivred order-wrapper order-delivery'}>
+                                <div className="col-md-4 order-dashboard">
+                                    <a href="#" className="order-card">
+                                        <h5>{window.strings.USERMANAGEMENT.DELIVERED}</h5>
+                                        <div className="box">
+                                        </div>
+                                    </a>
+                                </div>
+                            </Tab>
+                        </TabList>
+                        <TabPanel>
+                            <FetchOrderReceived
+                            // ref="fetchRetailer"
+                            // roleId={this.state.selectedRoleId}
+                            // searchText={this.state.farmerSearch}
+                            />
+                        </TabPanel>
+                        <TabPanel>
+                            <FetchPlanRoute
+                            />
+                        </TabPanel>
+                        <TabPanel>
+                            <FetchShippingAdjustment
+                            />
+                        </TabPanel>
+                        <TabPanel>
+                            <FetchOutofDelivery
+                            />
+                        </TabPanel>
+                        <TabPanel>
+                            <FetchDelivered
+                            />
+                        </TabPanel>
+                    </Tabs>
+
                 </div>
             </Form>
 
