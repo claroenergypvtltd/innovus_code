@@ -83,3 +83,15 @@ export const submitVehicle = (formData, isEdit) => dispatch => {
     })
 }
 
+
+export const submitType = (formData) => {
+    return httpServices.post(endPoint.Type, formData).then(resp => {
+        if (resp && resp.message) {
+            toastr.success(resp && resp.message);
+            return resp;
+        }
+    }).catch((error) => {
+        console.error("error", error);
+    })
+}
+

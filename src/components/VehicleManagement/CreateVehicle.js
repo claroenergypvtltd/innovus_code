@@ -4,10 +4,10 @@ import { path } from '../../constants';
 import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import PropTypes from "prop-types";
-import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
+// import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
 import store from '../../store/store';
 import { TableData } from '../../shared/Table'
-import { getVehicleType, submitVehicle } from '../../actions/VehicleAction'
+import { getVehicleType, submitVehicle, submitType } from '../../actions/VehicleAction'
 import Select from 'react-select';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
@@ -15,6 +15,10 @@ import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import * as moment from 'moment';
 import { fetchVehicle } from '../../actions/VehicleAction'
+import { resorceJSON, ModalData } from '../../libraries';
+import { formatDate } from '../../shared/DateFormat'
+
+
 class CreateVehicle extends Component {
     static contextTypes = {
         router: PropTypes.object
@@ -23,12 +27,14 @@ class CreateVehicle extends Component {
         super(props);
         this.state = {
             submitted: false,
+            typeSubmitted: false,
             vehicleName: '',
             vehicleType: '',
             volume: '',
-            transitionTime: '',
+            transitionTime: null,
             operatingHour: '',
             vehicleId: '',
+            category: '',
             startDate: moment(),
             endDate: moment(),
             errors: {}
@@ -50,14 +56,13 @@ class CreateVehicle extends Component {
         });
     }
     componentWillReceiveProps(newProps) {
-        // vehicleName: '',
-        // vehicleType: '',
-        // volume: '',
-        // transitionTime: '',
-        // operatingHour: '',
         if (newProps.VehicleData && newProps.VehicleData.specificData && newProps.VehicleData.specificData[0]) {
             let respData = newProps.VehicleData.specificData[0];
-            this.setState({ vehicleType: { 'label': respData.vehicleCategory.vehicleType, 'value': respData.vehicleCategory.id }, vehicleName: respData.vehiclename, volume: respData.volume, transitionTime: respData.transitionTime })
+            let date = respData && respData.operatingHour && respData.operatingHour.split('-');
+            this.setState({
+                vehicleType: { 'label': respData.vehicleCategory.vehicleType, 'value': respData.vehicleCategory.id }, vehicleName: respData.vehiclename,
+                volume: respData.volume, transitionTime: respData.transitionTime, startDate: formatDate(respData.created), endDate: date && formatDate(date[1]), vehicleId: respData.id
+            })
         }
         if (newProps.VehicleData && newProps.VehicleData.createdStatus == "200") {
             store.dispatch({ type: "VEHICLE_CREATE_SUCCESS", createdStatus: "" });
@@ -75,17 +80,16 @@ class CreateVehicle extends Component {
         this.props.fetchVehicle(obj);
     }
 
-    // getStateList() {
-    //     getLocation({}).then(resp => {
-    //         this.setState({ stateData: resp && resp.data })
-    //     })
-    // }
-
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
+
+    handleTimePicker = (Data) => {
+        this.setState({ transitionTime: Data._i })
+    }
+
 
     handleStateChange = (e) => {
         this.setState({ stateId: e.target.value }, () => {
@@ -101,13 +105,24 @@ class CreateVehicle extends Component {
         e.preventDefault();
         this.setState({ submitted: true })
         if (this.state.vehicleName && this.state.vehicleType && this.state.volume && this.state.transitionTime && this.state.startDate && this.state.endDate) {
+
+
+
             let obj = {
                 "vehicleName": this.state.vehicleName,
                 "vehicleType": this.state.vehicleType.value,
-                "volume": this.state.volume + "sq.ft",
-                "transitionTime": this.state.transitionTime.id,
-                "operatingHour": this.state.startDate + ' - ' + this.state.endDate,
-                "vehicleId": this.props.location && this.props.location.state && this.props.location.state.vehicleId
+                "volume": this.state.volume,
+                "transitionTime": this.state.transitionTime,
+                // "operatingHour": this.state.startDate && this.state.startDate.format('DD-MM-YYYY') + ' - ' + this.state.endDate.format('DD-MM-YYYY'),
+                "id": this.props.location && this.props.location.state && this.props.location.state.vehicleId
+            }
+
+            if (this.state.startDate && this.state.endDate) {
+                if (this.state.startDate._locale && this.state.endDate._locale) {
+                    obj.operatingHour = this.state.startDate && this.state.startDate.format('DD-MM-YYYY') + ' - ' + this.state.endDate.format('DD-MM-YYYY')
+                } else {
+                    obj.operatingHour = this.state.startDate + ' - ' + this.state.endDate
+                }
             }
 
             let isUpdate = false;
@@ -126,15 +141,6 @@ class CreateVehicle extends Component {
         }
     }
 
-    getTransactionList = () => {
-        let traData = [
-            {
-                "name": "jhj",
-                "id": "lklk"
-            }
-        ];
-    }
-
     handleApply = (event, picker) => {
         this.setState({
             dateChanged: true,
@@ -144,7 +150,31 @@ class CreateVehicle extends Component {
     }
 
     addNewType = () => {
-        this.setState({})
+        this.setState({ open: true, typeSubmitted: false })
+    }
+
+    onCloseModal = () => {
+        this.setState({ open: false }, () => {
+            this.getVehicleType();
+        });
+    };
+
+    onOpenModal = (e) => {
+        e.preventDefault();
+        this.setState({ open: true });
+    };
+
+    handleTypeSubmit = () => {
+        this.setState({ typeSubmitted: true });
+        if (this.state.category) {
+            const formData = new FormData();
+            formData.append("category", this.state.category);
+            submitType(formData).then(resp => {
+                if (resp) {
+                    this.onCloseModal();
+                }
+            })
+        }
     }
 
     render() {
@@ -171,21 +201,35 @@ class CreateVehicle extends Component {
             return <option key={index}
                 value={item.id}> {item.name}</option>
         });
-
-        let start = this.state.startDate && this.state.startDate.format('DD-MM-YYYY');
-        let end = this.state.endDate && this.state.endDate.format('DD-MM-YYYY');
-        let label = start + ' - ' + end;
-        if (start === end) {
-            label = '';
+        let label;
+        if (this.state.startDate && this.state.startDate._locale) {
+            let start = this.state.startDate && this.state.startDate.format('DD-MM-YYYY');
+            let end = this.state.endDate && this.state.endDate.format('DD-MM-YYYY');
+            label = start + ' - ' + end;
+            if (start === end) {
+                label = '';
+            }
+        } else {
+            label = this.state.startDate + ' - ' + this.state.endDate;
         }
 
-        // <div>
-        //      <label>{window.strings['VEHICLE']['VEHICLE_NAME']}</label>
-        //       <input type="text" placeholder="Vehicle Type" 
-        //         className={classnames('form-control', { 'is-invalid': errors.vehicleName })}
-        //         name="vehicleName" onChange={this.handleInputChange} value={this.state.vehicleName} required
-        //       />
-        // </div>
+
+        let TypeData = <div>
+            <div>
+                <label>{window.strings['VEHICLE']['VEHICLE_TYPE']}</label>
+                <input type="text" placeholder="Vehicle Type"
+                    className={classnames('form-control', { 'is-invalid': errors.category })}
+                    name="category" onChange={this.handleInputChange} value={this.state.category} required
+                />
+                {this.state.typeSubmitted && !this.state.category && <div className="mandatory">{window.strings['VEHICLE']['VEHICLE_TYPE'] + window.strings['ISREQUIRED']}</div>}
+
+            </div>
+            <div className="col-md-12 bottom-section">
+                <button type="button" className="btn btn-default mb-2" onClick={this.onCloseModal}>{window.strings.CANCEL}</button>
+                <button type="submit" className="btn btn-primary mb-2" disabled={this.state.loading} onClick={this.handleTypeSubmit}>{window.strings.SUBMIT}</button>
+
+            </div>
+        </div>
 
         return (
             <div className="add-vehicle">
@@ -216,7 +260,9 @@ class CreateVehicle extends Component {
                                             placeholder="--Select Transaction Time--"
                                         /> */}
                                         <TimePicker
-                                            placeholder="--Transaction Time--" defaultValue={this.state.transitionTime} showSecond={false} minuteStep={15} />
+                                            placeholder="--Transaction Time--" defaultValue={this.state.transitionTime} showSecond={false} minuteStep={15}
+                                            onChange={this.handleTimePicker}
+                                        />
                                         {this.state.submitted && !this.state.transitionTime && <div className="mandatory">{window.strings['VEHICLE']['TRANSACTION_TIME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
@@ -274,6 +320,9 @@ class CreateVehicle extends Component {
                                 <button type="submit" className="btn btn-primary mb-2" disabled={this.state.loading} onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
 
                             </div>
+
+                            <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TypeData} ModalTitle="Add Vehicle Type" />
+
                         </div>
                     </div>
                 </div>
