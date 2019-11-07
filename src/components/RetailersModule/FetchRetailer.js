@@ -274,6 +274,8 @@ class FetchRetailer extends React.Component {
         })
     };
     handleApply = (event, picker) => {
+        console.log(picker, '===picker====');
+
         this.setState({
             dateChanged: true,
             startDate: picker.startDate,
@@ -375,22 +377,22 @@ class FetchRetailer extends React.Component {
             if (item && item.shopAddress && item.shopAddress.name) {
                 item.shopNames = item.shopAddress.name
             } else {
-                item.shopNames = ''
+                item.shopNames = '-'
             }
             if (item && item.agentName) {
                 item.agentName = item.agentName
             } else {
-                item.agentName = ''
+                item.agentName = '-'
             }
-
             item.shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
             item.shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
             item.shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
             if (item.shopAddrss && item.shopAddressDataCity && item.shopAddressDataState && item.shopAddressDataCountry) {
                 item.fullShopAddrss = item.shopAddrss + ',' + item.shopAddressDataCity + ',' + item.shopAddressDataState + ',' + item.shopAddressDataCountry + '.';
             } else {
-                item.fullShopAddrss = ''
+                item.fullShopAddrss = '-'
             }
+            item.cusId = item.cusId && item.cusId ? item.cusId : '-';
             item.created = moment(item.created).format("DD/MM/YYYY");
             // if (Object.keys(item.address).length > 1) {
             //     address = JSON.stringify(item.address).toString().replace(/"/g, '');
@@ -525,7 +527,7 @@ class FetchRetailer extends React.Component {
                             </div> */}
                                 </div></div>
                         </div>}
-                    <DataTableDynamic
+                    {/* <DataTableDynamic
                         customCss="fetchretailer"
                         title="Category List"
                         tableHead={this.state.columns}
@@ -536,8 +538,10 @@ class FetchRetailer extends React.Component {
                         pagination={true}
                         checkbox={true}
                         onRowSelected={this.handleRowChange}
-                        handleRowChange={this.handleRowChange}
-                    />
+                    // handleRowChange={this.handleRowChange}
+                    /> */}
+                    <DataTableDynamic customCss="fetchretailer" title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleView={this.itemView} pagination={true} />
+
                     <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
 
                     {/* <GoogleMapPage /> */}

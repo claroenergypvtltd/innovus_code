@@ -1,4 +1,4 @@
-import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS } from '../constants/actionTypes';
+import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS, CUSIDLIST_FETCH_SUCCESS } from '../constants/actionTypes';
 
 
 const initialState = {
@@ -14,7 +14,6 @@ export default function (state = initialState, action) {
                 ...state,
                 Lists: action.Lists
             }
-
         case ORDERDETAILS_FETCH_SUCCESS:
             return {
                 ...state,
@@ -26,7 +25,11 @@ export default function (state = initialState, action) {
                 ...state,
                 trackLists: action.trackLists
             }
-
+        case CUSIDLIST_FETCH_SUCCESS:
+            return {
+                ...state,
+                CusIdLists: action.CusIdLists
+            }
         default:
             return state;
     }

@@ -123,7 +123,6 @@ export const getStateUsers = (obj) => {
     delete obj.countryId;
     return httpServices.post(endPoint.user, obj).then(resp => {
         if (resp) {
-            console.log('resp---', resp);
             return resp
         }
     }).catch((error) => {

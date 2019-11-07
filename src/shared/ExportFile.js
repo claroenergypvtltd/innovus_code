@@ -21,10 +21,11 @@ export default class ExportFile extends React.Component {
                 excelitem.Status = "Rejected";
             }
             excelitem.OnboardedDate = item.created;
-            excelitem.CustomerID = item.cusId;
-            excelitem.ShopName = item.shopNames;
-            excelitem.AgentName = item.agentName;
-            excelitem.ShopAddress = item.fullShopAddrss;
+            excelitem.CustomerID = item.cusId && item.cusId === '-' ? '' : item.cusId;
+            excelitem.ShopName = item.shopNames && item.shopNames === '-' ? '' : item.shopNames;
+            excelitem.ShopAddress = item.fullShopAddrss && item.fullShopAddrss === '-' ? '' : item.fullShopAddrss;
+            excelitem.mobileNumber = item.mobileNumber && item.mobileNumber === '-' ? '' : item.mobileNumber;
+            excelitem.AgentName = item.agentName && item.agentName === '-' ? '' : item.agentName;
             PrintexcelDatas.push(excelitem);
         });
         return (

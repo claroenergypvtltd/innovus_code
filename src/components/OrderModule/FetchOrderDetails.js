@@ -41,7 +41,7 @@ class FetchOrderDetails extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.orderDetails && newProps.orderDetails.DetailsList && newProps.orderDetails.DetailsList.datas) {
             let respData = newProps.orderDetails.DetailsList.datas;
-            this.setState({ OrderLists: respData, productLists: respData[0].items, pageCount: newProps.orderDetails.DetailsList.totalCount / this.state.itemPerPage })
+            this.setState({ OrderLists: respData, productLists: respData[0] && respData[0].items, pageCount: newProps.orderDetails.DetailsList.totalCount / this.state.itemPerPage })
         }
 
         if (newProps.orderDetails && newProps.orderDetails.trackLists) {
@@ -123,13 +123,27 @@ class FetchOrderDetails extends Component {
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let fullShopAddrss;
+            let add1;
+            let add2;
             let link = this.state.trackDetails === false ? <button className="track-btn" onClick={() => { this.viewtrack(item) }}>{window.strings.ORDER.TRACK}</button> : "";
-            let shipaddrss = item.shopAddress && item.shopAddress.address1 + item.shopAddress.address2;
+            // let shipaddrss = item.shopAddress && item.shopAddress.address1 + item.shopAddress.address2;
+            if (item.shopAddress && item.shopAddress.address1) {
+                add1 = item.shopAddress.address1
+            } else {
+                add1 = ''
+            }
+            if (item.shopAddress && item.shopAddress.address2) {
+                add2 = ',' + item.shopAddress.address2
+            }
+            else {
+                add2 = ''
+            }
+            let shopAddrss = add1 + add2;
             let shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
             let shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
             let shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
-            if (shipaddrss && shopAddressDataCity && shopAddressDataState && shopAddressDataCountry) {
-                fullShopAddrss = shipaddrss + ',' + shopAddressDataCity + ',' + shopAddressDataState + ',' + shopAddressDataCountry + '.';
+            if (shopAddrss && shopAddressDataCity && shopAddressDataState && shopAddressDataCountry) {
+                fullShopAddrss = shopAddrss + ',' + shopAddressDataCity + ',' + shopAddressDataState + ',' + shopAddressDataCountry + '.';
             } else {
                 fullShopAddrss = ''
             }

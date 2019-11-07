@@ -17,7 +17,7 @@ class FetchCrop extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "DC Code", "Image", "Description"],
+            TableHead: ["Crop Name", "Image", "Description", "DC Code"],
             CropLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
@@ -110,7 +110,7 @@ class FetchCrop extends Component {
         let CategoryData = this.state.CropLists ? this.state.CropLists : [];
         let CategoryList = this.state.CropLists && this.state.CropLists.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
-            return { "itemList": [item.name, catImg, item.description], "itemId": item.id }
+            return { "itemList": [item.name, catImg, item.description, item.dcCode], "itemId": item.id }
         })
 
         return (
