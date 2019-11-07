@@ -121,10 +121,11 @@ class FetchCrop extends Component {
                         <h4 className="user-title">List Crop</h4>
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
                     </div>
-                    <div className="right-title row col-md-5">
-                        <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button>
-
+                    <div className="right-title col-md-5">
+                        <div className="row">
+                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                            <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button>
+                        </div>
                     </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}

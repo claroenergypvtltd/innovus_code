@@ -104,19 +104,78 @@ class FetchShippingAdjustment extends Component {
                     </div>
                 </div>
                 <div className="mt-3">
-                    <div className="row m-0">
-                        <div className="main-wrapper col-md-3">customer ID
+                    <div className="row">
+                        <div className="col-md-3">
+                            <div className="main-wrapper ship">
+                                customer ID
+                                <div className="row m-0 ship-box">
+                                    <div className="col-md-3 minus-circle">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </div>
+                                    <div className="col-md-6 order-quantity">
+                                        10
+                                    </div>
+                                    <div className="col-md-3 plus-circle">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="main-wrapper col-md-3">customer ID
+                        <div className="col-md-3">
+                            <div className="main-wrapper ship">
+                                customer ID
+                                <div className="row m-0 ship-box">
+                                    <div className="col-md-3 minus-circle">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </div>
+                                    <div className="col-md-6 order-quantity">
+                                        10
+                                    </div>
+                                    <div className="col-md-3 plus-circle">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="main-wrapper col-md-3">customer ID
+                        <div className="col-md-3">
+                            <div className="main-wrapper ship">
+                                customer ID
+                                <div className="row m-0 ship-box">
+                                    <div className="col-md-3 minus-circle">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </div>
+                                    <div className="col-md-6 order-quantity">
+                                        10
+                                    </div>
+                                    <div className="col-md-3 plus-circle">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="main-wrapper col-md-3">customer ID
+                        <div className="col-md-3">
+                            <div className="main-wrapper ship">
+                                customer ID
+                                <div className="row m-0 ship-box">
+                                    <div className="col-md-3 minus-circle">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </div>
+                                    <div className="col-md-6 order-quantity">
+                                        10
+                                    </div>
+                                    <div className="col-md-3 plus-circle">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
 
+                <div className="text-right mt-3">
+                    <button className="common-btn pl-1">Next<i class="fa fa-arrow-right"></i></button>
+                </div>
             </div>
         )
     }

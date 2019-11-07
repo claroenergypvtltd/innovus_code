@@ -1114,7 +1114,7 @@ svg{
 .retailer-search{
     border: none;
     border-bottom: 1px solid #aaa;
-    padding: 4px 24px;
+    padding: 4px 30px;
     text-align: left;
     width: 202px;
     border-radius: unset;
@@ -1692,7 +1692,7 @@ background-color: #b2b2b2;
   background-image: $gradient-5;
   .order-card{
   .box{
-    background-position: -20px -3515px;
+    background-position: -22px -3515px;
   }
 }
 }
@@ -1709,7 +1709,7 @@ background-color: #b2b2b2;
   background-image: $gradient-6;
   .order-card{
   .box{
-    background-position: -20px -3519px;
+    background-position: -22px -3641px;
   }
 }
 }
@@ -1717,9 +1717,65 @@ background-color: #b2b2b2;
   background-color: #b2b2b2;
   .order-card{
   .box{
-    background-position: -20px -3519px;
+    background-position: -22px -3641px;
   }
 }
+}
+
+/****************************Order Section NEW-Shipping Adjustment************************/
+
+.ship{
+width: 100%;
+height: 100%;
+margin-right: 10px;
+padding: 5px;
+}
+.ship-box{
+  border: 1px solid #b0b0b0;
+}
+.minus-circle{
+  color: #aaa;
+  border-right: 1px solid #b0b0b0;
+}
+.plus-circle{
+  border-left: 1px solid #b0b0b0;
+}
+.order-quantity{
+  text-align: center;
+}
+
+/****************************Order Section NEW-Out Of Delivery************************/
+.vehicle-icon{
+    background-image: url(../src/assets/images/Sprite_image_orders.png);
+    background-position: -21px -3082px;
+    background-repeat: no-repeat;
+    padding: 0 0 0 45px;
+    margin: 0 10px;
+    height: 28px;
+}
+.number-icon{
+  background-image: url(../src/assets/images/Sprite_image_orders.png);
+  background-position: -22px -3106px;
+  background-repeat: no-repeat;
+  padding: 0 0 0 45px;
+  margin: 0 10px;
+  height: 28px;
+}
+.drive-icon{
+  background-image: url(../src/assets/images/Sprite_image_orders.png);
+  background-position: -21px -3133px;
+  background-repeat: no-repeat;
+  padding: 0px 0 0 45px;
+  margin: 0 10px;
+  height: 28px;
+}
+.order-label{
+  color:#b0b0b0;
+}
+.order-text{
+  margin: 0;
+  color: #707070;
+  font-size: 16px;
 }
 /****************************Shop Details Section************************/
 .shop-centext{
