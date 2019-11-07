@@ -37,7 +37,6 @@ class CategoryList extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-
         if (newProps.getLists) {
             let Lists = newProps.getLists.map(item => {
                 item.cropButton = this.viewCrop(item);

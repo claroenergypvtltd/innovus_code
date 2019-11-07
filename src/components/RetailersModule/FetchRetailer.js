@@ -527,7 +527,7 @@ class FetchRetailer extends React.Component {
                             </div> */}
                                 </div></div>
                         </div>}
-                    {/* <DataTableDynamic
+                    <DataTableDynamic
                         customCss="fetchretailer"
                         title="Category List"
                         tableHead={this.state.columns}
@@ -538,9 +538,12 @@ class FetchRetailer extends React.Component {
                         pagination={true}
                         checkbox={true}
                         onRowSelected={this.handleRowChange}
-                    // handleRowChange={this.handleRowChange}
+                        handleRowChange={this.handleRowChange}
+                    />
+                    {/* <DataTableDynamic customCss="fetchretailer" title="Category List" tableHead={this.state.columns}
+                        tableDatas={this.state.data} handleView={this.itemView}
+                        pagination={true} onRowSelected={this.handleRowChange}
                     /> */}
-                    <DataTableDynamic customCss="fetchretailer" title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleView={this.itemView} pagination={true} />
 
                     <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
 
