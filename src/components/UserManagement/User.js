@@ -65,6 +65,9 @@ class User extends Component {
     this.setState({ farmerSearch: '', search: '' })
   }
 
+  // callBack = (data) => {
+  //   this.setState({ tabIndex: data })
+  // }
   // onCloseModal = () => {
   //   // this.getRetailerList();
   //   this.setState({ open: false });
@@ -146,6 +149,7 @@ class User extends Component {
                 // ref="fetchRetailer"
                 // roleId={this.state.selectedRoleId}
                 // searchText={this.state.farmerSearch}
+                //  mutualState={this.callBack}
                 />
               </TabPanel>
             </Tabs>

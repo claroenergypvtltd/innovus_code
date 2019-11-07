@@ -73,10 +73,9 @@ class IrrigationSetting extends Component {
 
     handleInputChange = (e) => {
 
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
     }
+
 
     handleStateChange = (e) => {
         this.setState({ stateId: e.target.value }, () => {
@@ -125,7 +124,6 @@ class IrrigationSetting extends Component {
             // this.props.submitPrice(obj, isUpdate);
         }
     }
-
 
 
 

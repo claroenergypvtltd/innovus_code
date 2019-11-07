@@ -9,6 +9,8 @@ import { CATEGORY_CREATE_SUCCESS, CATEGORY_UPDATE_SUCCESS } from '../../constant
 import PropTypes from "prop-types";
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { imageBaseUrl } from '../../config'
+import { fetchSalesAgent, getDcCodeData } from '../../actions/salesAgentAction';
+import Select from 'react-select';
 
 class CreateCrop extends Component {
     static contextTypes = {
@@ -38,6 +40,7 @@ class CreateCrop extends Component {
 
     componentDidMount() {
         this.getSpecificCategory();
+        this.getDCData();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -104,6 +107,7 @@ class CreateCrop extends Component {
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);
             formData.append("image", this.state.file);
+            formData.append("dcCode", this.state.dcCode);
             formData.append("categoryId", this.state.categoryId);
             if (this.state.cropId) {
                 formData.append("parentId", this.state.cropId);
@@ -140,6 +144,35 @@ class CreateCrop extends Component {
         }
     }
 
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSalesAgentList() })
+    };
+
+    getSalesAgentList = () => {
+        let obj = {
+            roleId: "4",
+            pages: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            row: this.state.itemPerPage,
+            search: this.state.search,
+            dcCode: this.state.dcCode
+        }
+
+        this.props.fetchSalesAgent(obj);
+    }
+
+    getDCData = () => {
+
+        let obj = {
+            search: ''
+        }
+        getDcCodeData(obj).then(resp => {
+            if (resp) {
+
+                this.setState({ dcCodeData: resp })
+            }
+        })
+    }
+
     render() {
         console.log("test")
         const { errors } = this.state;
@@ -162,6 +195,15 @@ class CreateCrop extends Component {
                 value={item.id}> {item.name}</option>
         });
 
+        let dcData = [];
+        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
+
+        this.state.dcCodeData && this.state.dcCodeData.map((item) => {
+
+            let obj = { "label": item, "value": item };
+            dcData.push(obj);
+        })
+
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -172,22 +214,9 @@ class CreateCrop extends Component {
                                 <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
 
 
-                                    {!this.state.cropId && <div className="form-group col-md-12">
-
-                                        <label>{window.strings['CATEGORY']['CATEGORY_NAME']}</label>
-
-                                        <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleInputChange}>
-                                            <option value="0">Select Category</option>
-                                            {categoryDropDown}
-                                        </select>
-
-                                        {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['FARMERS']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
-                                    </div>}
-
-
                                     <div className="form-group col-md-12">
 
-                                        <label>{window.strings.CROP.CROP_NAME}</label>
+                                        <label>{window.strings.CROP.CROP_NAME + ' *'}</label>
 
                                         <input
                                             type="text"
@@ -207,22 +236,29 @@ class CreateCrop extends Component {
 
                                     <div className="form-group col-md-12">
 
-                                        <label>DC Code</label>
+                                        <label>{window.strings.SALES_AGENT.DC_CODE}</label>
 
-                                        <input
+                                        <Select className="state-box ml-4"
+                                            value={this.state.dcCodeObj}
+                                            onChange={(e) => this.handleDcCodeChange(e)}
+                                            options={dcData}
+                                            placeholder="--Select DC Code--"
+                                        />
+
+                                        {/* <input
                                             type="text"
                                             placeholder="DC Code"
                                             className={classnames('form-control', {
                                                 'is-invalid': errors.name
                                             })}
-                                            name="name"
+                                            name="dcCode"
                                             onChange={this.handleInputChange}
-                                            value={this.state.name}
+                                            value={this.state.dcCode}
                                             required
 
-                                        />
+                                        /> */}
 
-                                        {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CROP']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                        {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
                                     <div className="form-group col-md-12">
@@ -240,12 +276,12 @@ class CreateCrop extends Component {
                                             required
 
                                         ></textarea>
-                                        {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
+                                        {/* {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>} */}
                                     </div>
 
                                     <div className="form-group col-md-12">
 
-                                        <label>{window.strings.CATEGORY.IMAGE}</label>
+                                        <label>{window.strings.CATEGORY.IMAGE + ' *'}</label>
 
                                         <input
                                             type="file"
@@ -289,4 +325,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, { SubmitCategory, getCategoryList, getSpecificCategory })(CreateCrop)
+export default connect(mapStateToProps, { SubmitCategory, getCategoryList, getSpecificCategory, fetchSalesAgent })(CreateCrop)

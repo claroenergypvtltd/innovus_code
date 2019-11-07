@@ -148,7 +148,7 @@ class FetchRetailer extends React.Component {
         let user = {};
         if (status == 'reset') {
             this.setState({
-                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: 0, selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: '', search: ''
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: '', search: ''
             }, () => {
                 user.roleId = 2;
                 user.search = this.state.search;
@@ -246,6 +246,7 @@ class FetchRetailer extends React.Component {
     }
     statusFilter(e) {
         this.getRetailerList(e.target.value);
+        this.setState({ StatusfilterId: e.target.value })
     }
     handleDelete = (data, e) => {
         e.preventDefault();
@@ -515,7 +516,7 @@ class FetchRetailer extends React.Component {
                                     </div>
                                     <div className="col-md-5 status-filter"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                                            <option value="0" className="drop-option">-- Select Status--</option>
+                                            <option value="" className="drop-option">-- Select Status--</option>
                                             {statusDropdown}
                                         </select>
                                     </div>

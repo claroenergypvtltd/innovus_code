@@ -39,6 +39,7 @@ class ShopDetails extends React.Component {
                         })
                     }
                 })
+                this.context.router.history.goBack();
             },
             onCancel: () => { }
         };

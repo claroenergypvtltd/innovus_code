@@ -17,7 +17,7 @@ class FetchCrop extends Component {
 
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "Image", "Description"],
+            TableHead: ["Crop Name", "DC Code", "Image", "Description"],
             CropLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',

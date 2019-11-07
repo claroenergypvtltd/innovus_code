@@ -11,6 +11,7 @@ import store from '../../store/store';
 import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
 import Select from 'react-select';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
+import { fetchSalesAgent, getDcCodeData } from '../../actions/salesAgentAction';
 
 class ViewCategory extends Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class ViewCategory extends Component {
 
     componentDidMount() {
         this.getSpecificData();
+        this.getDCData();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -77,7 +79,7 @@ class ViewCategory extends Component {
 
 
     itemEdit = (catId) => {
-        this.props.history.push({ pathname: path.category.edit + catId, state: { categoryId: catId } });
+        this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId } });
     }
 
 
@@ -116,11 +118,42 @@ class ViewCategory extends Component {
         this.setState({ advanceSearch: enableSearch })
     }
 
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSalesAgentList() })
+    };
+
+    getSalesAgentList = () => {
+        let obj = {
+            roleId: "4",
+            pages: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            row: this.state.itemPerPage,
+            search: this.state.search,
+            dcCode: this.state.dcCode
+        }
+
+        this.props.fetchSalesAgent(obj);
+    }
+
+    getDCData = () => {
+
+        let obj = {
+            search: ''
+        }
+        getDcCodeData(obj).then(resp => {
+            if (resp) {
+
+                this.setState({ dcCodeData: resp })
+            }
+        })
+    }
+
     render() {
         let dcData = [];
-        this.state.dcCodeData = [{ name: "0987", id: 1 }]
+        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
+
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
-            let obj = { "label": item.name, "value": item.id };
+
+            let obj = { "label": item, "value": item };
             dcData.push(obj);
         })
 
@@ -217,4 +250,4 @@ ViewCategory.defaultProps = defaultProps;
 
 
 
-export default connect(mapStateToProps, { DeleteCategory, getSpecificCategory })(ViewCategory);
+export default connect(mapStateToProps, { DeleteCategory, getSpecificCategory, fetchSalesAgent })(ViewCategory);
