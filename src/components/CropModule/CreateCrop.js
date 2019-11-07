@@ -207,6 +207,26 @@ class CreateCrop extends Component {
 
                                     <div className="form-group col-md-12">
 
+                                        <label>DC Code</label>
+
+                                        <input
+                                            type="text"
+                                            placeholder="DC Code"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.name
+                                            })}
+                                            name="name"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.name}
+                                            required
+
+                                        />
+
+                                        {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CROP']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>
+
+                                    <div className="form-group col-md-12">
+
                                         <label>{window.strings.CATEGORY.DESCRIPTION}</label>
 
                                         <textarea

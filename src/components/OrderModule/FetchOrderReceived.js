@@ -78,7 +78,8 @@ class FetchOrderReceived extends Component {
             if (item.shopAddress && item.shopAddress.address2) {
                 add2 = ',' + item.shopAddress.address2
             }
-            orderlist.shopAddrss = item.shopAddress.address1 + item.shopAddress.address2
+            // orderlist.shopAddrss = item.shopAddress.address1 + item.shopAddress.address2
+            orderlist.shopAddrss = item.shopAddress && item.shopAddress.address1 + item.shopAddress && item.shopAddress.address2
             orderlist.shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
             orderlist.shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
             orderlist.shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
@@ -95,7 +96,7 @@ class FetchOrderReceived extends Component {
         })
         return (
             <div>
-                <div className="">
+                <div className="mb-2">
                     <div className="main-filter">
                         <div className="row">
                             <div className="col-md-4 date-range">
@@ -137,7 +138,7 @@ class FetchOrderReceived extends Component {
                         </div>
                     </div>
                 </div>
-                <DataTableDynamic
+                <DataTableDynamic className="main-wrapper"
                     tableHead={this.state.columns}
                     tableDatas={orderDatas}
                     orderReceivedpage='false'
