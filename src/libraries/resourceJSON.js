@@ -26,13 +26,16 @@ export const resorceJSON = {
     { name: 'Status', selector: 'selectBox', sortable: true },
     { name: 'Onboarded Date', selector: 'created', sortable: true },
     { name: 'Customer ID', selector: 'cusId', sortable: true },
-    { name: 'Shop Name', selector: 'shopNames', sortable: true, Required: true },
+    { name: 'Shop Name', selector: 'shopNames', sortable: true },
+    { name: 'Shop Address', selector: 'fullShopAddrss', sortable: true },
+    { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
     { name: 'Agent Name', selector: 'agentName', sortable: true },
+
+
     // { name: 'Name', selector: 'name', sortable: true },
     // { name: 'Email', selector: 'emailId', sortable: true },
     // { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
     // { name: 'Shop Address', selector: 'shopAddrss', sortable: true, Required: true },
-    { name: 'Shop Address', selector: 'fullShopAddrss', sortable: true, Required: true },
     // { name: 'Shop Country', selector: 'shopAddressDataCountry', sortable: true },
     // { name: 'Shop State', selector: 'shopAddressDataState', sortable: true },
     // { name: 'Shop City', selector: 'shopAddressDataCity', sortable: true },
@@ -47,6 +50,13 @@ export const resorceJSON = {
     { name: 'Order Details', selector: 'viewpage', sortable: true },
     { name: 'Total Amount', selector: 'totalAmount', sortable: true },
     { name: 'Agent ID', selector: 'agentId', sortable: true },
+  ],
+  PlanrouteOrderslistCols: [
+    { name: 'Order ID', selector: 'orderID', sortable: true },
+    { name: 'Customer ID', selector: 'customerId', sortable: true },
+    { name: 'Shop Name', selector: 'shopName', sortable: true },
+    { name: 'Address', selector: 'fullShopAddrss', sortable: true },
+    { name: 'Location', selector: 'shopAddressDataState', sortable: true }
   ],
   CropList: [
     { name: 'Crop Name', selector: 'cropName', sortable: true },

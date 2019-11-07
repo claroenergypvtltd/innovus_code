@@ -95,7 +95,8 @@ export const Translation = {
             "CREATETITLE": "ADD CROP",
             "EDITTITLE": "Edit Crop",
             "CROP_NAME": "Crop Name",
-            "UPDATE_WEIGHT": "Update Weight"
+            "UPDATE_WEIGHT": "Update Weight",
+            "DCCODE": "DC Code"
         },
 
         "FAQ": {

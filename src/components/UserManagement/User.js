@@ -8,12 +8,8 @@ import { Form, Row, Col } from 'react-bootstrap';
 import { path } from '../../constants';
 import { SearchBar } from '../../shared'
 import { connect } from 'react-redux';
-
 import { fetchUsers } from '../../actions/UserAction';
 import FetchSalesAgent from '../SalesAgent/FetchSalesAgent';
-// import TransferAgent from '../RetailersModule/TransferAgent'
-// import { resorceJSON, ModalData } from '../../libraries';
-
 
 class User extends Component {
   constructor(props) {
@@ -42,12 +38,7 @@ class User extends Component {
 
   handlePageChange = e => {
     e.preventDefault();
-    // if (this.state.tabIndex == 1) {
-    //   this.onOpenModal();
-    // } else {
     this.props.history.push(path.retailer.add);
-    // this.props.history.push(path.farmer.add);
-    //}
   };
 
   handleSearch = e => {
@@ -65,30 +56,11 @@ class User extends Component {
     this.setState({ farmerSearch: '', search: '' })
   }
 
-  // callBack = (data) => {
-  //   this.setState({ tabIndex: data })
-  // }
-  // onCloseModal = () => {
-  //   // this.getRetailerList();
-  //   this.setState({ open: false });
-  // };
-
-  // onOpenModal = (orderId) => {
-  //   debugger;
-  //   // this.retailerData
-  //   this.setState({ open: true, orderId: orderId });
-  // };
-
-
   render() {
     let stateValue = this.state;
-    // let TransferAgentData = < TransferAgent agentId={this.state.agentId} onCloseModal={this.onCloseModal} />
 
     return (
       <Form>
-        {/* <div className="col-md-6 s-left">
-          <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-        </div> */}
         <div>
           <Row className="clearfix title-section">
             <Col md={7} className="title-card">

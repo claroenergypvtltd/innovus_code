@@ -1,156 +1,203 @@
 import React, { Component } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import FetchOrderReceived from '../OrderModule/FetchOrderReceived';
-import FetchPlanRoute from '../OrderModule/FetchPlanRoute';
-import FetchShippingAdjustment from '../OrderModule/FetchShippingAdjustment';
-import FetchOutofDelivery from '../OrderModule/FetchOutofDelivery';
-import FetchDelivered from '../OrderModule/FetchDelivered';
-
-import { Constant } from '../../constants';
-import { Form, Row, Col } from 'react-bootstrap';
-import { path } from '../../constants';
-import { SearchBar } from '../../shared'
 import { connect } from 'react-redux';
-
-import { fetchUsers } from '../../actions/UserAction';
-import FetchSalesAgent from '../SalesAgent/FetchSalesAgent';
-// import TransferAgent from '../RetailersModule/TransferAgent'
-// import { resorceJSON, ModalData } from '../../libraries';
-
+import { TableData } from '../../shared/Table'
+import { confirmAlert } from 'react-confirm-alert';
+import { resorceJSON, ModalData } from '../../libraries'
+import { ReactPagination, SearchBar } from '../../shared'
+import { path } from '../../constants';
+import { getOrderList } from '../../actions/orderAction'
+import { toastr } from '../../services/toastr.services'
+import { Link } from 'react-router-dom'
+import { Form, Row, Col } from 'react-bootstrap';
+import { formatDate } from '../../shared/DateFormat'
+import StatusUpdate from './statusUpdate'
 
 class FetchOrder extends Component {
+
     constructor(props) {
+
         super(props);
         this.state = {
-            tabIndex: Constant.CONSTANT.ZERO,
-            selectedRoleId: Constant.CONSTANT.THREE,
+            TableHead: ["Order No", "No of Product Items", "Order Date", "Order Amount", "Status", "View Order"],
+            OrderLists: props.orderData && props.orderData.Lists && props.orderData.Lists.datas ? props.orderData.Lists.datas : [],
+            CategoryCount: props.getCount,
             search: '',
-            searchResponse: []
-        };
-    }
-
-    tabChange = tabIndex => {
-        let roleId =
-            tabIndex == Constant.CONSTANT.ZERO
-                ? Constant.CONSTANT.THREE
-                : Constant.CONSTANT.TWO;
-        this.setState({ tabIndex: tabIndex, selectedRoleId: roleId });
-    };
-
-    handlePageChange = e => {
-        e.preventDefault();
-        // if (this.state.tabIndex == 1) {
-        //   this.onOpenModal();
-        // } else {
-        this.props.history.push(path.retailer.add);
-        // this.props.history.push(path.farmer.add);
-        //}
-    };
-    handleSearch = e => {
-        e.preventDefault();
-        this.setState({ search: e.target.value })
-    };
-    searchResult = () => {
-        if (this.state.search) {
-            this.setState({ farmerSearch: this.state.search })
+            currentPage: 1,
+            orderId: '',
+            itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            pageCount: resorceJSON.TablePageData.pageCount,
+            limitValue: resorceJSON.TablePageData.paginationLength
         }
     }
-    resetSearch = () => {
-        this.setState({ farmerSearch: '', search: '' })
+
+    componentDidMount() {
+        this.getOrderList();
     }
+
+    componentWillReceiveProps(newProps) {
+
+        if (newProps.orderData && newProps.orderData.Lists && newProps.orderData.Lists.datas) {
+            let respData = newProps.orderData.Lists.datas;
+            this.setState({ OrderLists: respData, pageCount: newProps.orderData.Lists.totalCount / this.state.itemPerPage })
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
+
+    searchResult = (e) => {
+
+        e.preventDefault();
+        if (this.state.search) {
+            let serObj = {
+                "search": this.state.search
+            };
+            this.getOrderList(serObj);
+        }
+    }
+
+    resetSearch = () => {
+        if (this.state.search) {
+            this.setState({ search: '' }, () => {
+                this.getOrderList();
+            });
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({ search: e.target.value })
+    }
+
+    getOrderList() {
+        let obj = {
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "search": this.state.search,
+            "limit": this.state.itemPerPage
+        }
+        this.props.getOrderList(obj)
+    }
+
+    handleDelete = (data) => {
+        let message = window.strings.DELETEMESSAGE;
+        const toastrConfirmOptions = {
+            onOk: () => { this.itemDelete(data) },
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
+    }
+
+    itemDelete = (id) => {
+        this.props.DeleteCategory(id)
+            .then(resp => {
+                if (resp) {
+                    this.getOrderList();
+                }
+            });
+    }
+
+    onChange = (data) => {
+
+        if (this.state.currentPage !== (data.selected + 1)) {
+            this.setState({ currentPage: data.selected + 1 }, () => {
+                this.getOrderList();
+            });
+        }
+    }
+
+    getStatusName = (Data) => {
+        switch (Data) {
+            case 1: return "Order placed";
+            case 2: return "Order Accepted";
+            case 3: return "Order processed";
+            case 4: return "shipped";
+            case 5: return "At distrubed Center";
+            case 6: return "Delivered";
+            case 7: return "cancel";
+        }
+    }
+
+    onOpenModal = (orderId) => {
+        this.setState({ open: true, orderId: orderId });
+    };
+
+    onCloseModal = () => {
+        this.getOrderList();
+        this.setState({ open: false });
+    };
+
     render() {
-        let stateValue = this.state;
+        let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
+            let link = <Link to={path.order.list + "/" + item.orderId} className="order-btn">{window.strings.ORDER.VIEWDETAILS}</Link>
+
+            // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
+
+            let status = <div>
+                <button className="update-btn" onClick={() => { this.onOpenModal(item.orderId) }}>{this.getStatusName(item.status)}</button>
+            </div>
+
+
+            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), ' RS. ' + item.orderAmount, status, link], "itemId": item.id }
+        })
+
+        let statusUpdataData = < StatusUpdate orderId={this.state.orderId} onCloseModal={this.onCloseModal} />
+
+        let { OrderLists } = this.state;
+
         return (
-            <Form>
-                <div>
-
-                    <Tabs className=""
-                        selectedIndex={this.state.tabIndex}
-                        onSelect={tabIndex => this.tabChange(tabIndex)}
-                    >
-                        <TabList className="order-tab d-flex">
-                            <Tab className={this.state.tabIndex == "1" ? 'sub-select-orderrecvd order-wrapper grey-receive' : 'sub-change-orderrecvd order-wrapper order-receive'}>
-                                <div className="col-md-4 order-dashboard">
-                                    <a href="#" className="order-card">
-                                        <h5>{window.strings.USERMANAGEMENT.ORDERRECEIVED}</h5>
-                                        <div className="box">
-                                        </div>
-                                    </a>
+            <div className="order">
+                <div className="order-board">
+                    <div className=" row pr-3">
+                        <div className="col-md-4 pr-0 dashboard-bx ship-order">
+                            <a href="#" className="card">
+                                <div className="box">
+                                    <h5 className="dashboard-title">Orders to Ship</h5>
+                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].totalorders ? OrderLists[0].totalorders : 0}</span>
                                 </div>
-                            </Tab>
-
-                            <Tab className={this.state.tabIndex == "2" ? 'sub-select-planrecvd order-wrapper grey-plan' : 'sub-change-planrecvd order-wrapper order-plan'}>
-                                <div className="col-md-4 order-dashboard">
-                                    <a href="#" className="order-card">
-                                        <h5>{window.strings.USERMANAGEMENT.PLANROUTE}</h5>
-                                        <div className="box">
-                                        </div>
-                                    </a>
+                            </a>
+                        </div>
+                        <div className="col-md-4 pr-0 dashboard-bx overdue-order">
+                            <a href="#" className="card">
+                                <div className="box">
+                                    <h5 className="dashboard-title">Overdue Shipments</h5>
+                                    <span> {OrderLists && OrderLists[0] && OrderLists[0].orderdue ? OrderLists[0].orderdue : 0}</span>
                                 </div>
-                            </Tab>
-                            <Tab className={this.state.tabIndex == "3" ? 'sub-select-shippngadjmnt order-wrapper grey-ship' : 'sub-change-shippngadjmnt order-wrapper order-ship'}>
-                                <div className="col-md-4 order-dashboard">
-                                    <a href="#" className="order-card">
-                                        <h5>{window.strings.USERMANAGEMENT.SHIPPINGADJUSTMENT}</h5>
-                                        <div className="box">
-                                        </div>
-                                    </a>
+                            </a>
+                        </div>
+                        <div className="col-md-4 pr-0 dashboard-bx pending-order">
+                            <a href="#" className="card">
+                                <div className="box">
+                                    <h5 className="dashboard-title">Pending Shipments</h5>
+                                    <span>{OrderLists && OrderLists[0] && OrderLists[0].orderspending ? OrderLists[0].orderspending : 0}</span>
                                 </div>
-                            </Tab>
-                            <Tab className={this.state.tabIndex == "4" ? 'sub-select-outofdelvry order-wrapper grey-task' : 'sub-change-outofdelvry order-wrapper order-task'}>
-                                <div className="col-md-4 order-dashboard">
-                                    <a href="#" className="order-card">
-                                        <h5>{window.strings.USERMANAGEMENT.OUTOFDELIVERY}</h5>
-                                        <div className="box">
-                                        </div>
-                                    </a>
-                                </div>
-                            </Tab>
-                            <Tab className={this.state.tabIndex == "5" ? 'sub-select-delivred order-wrapper grey-delivery' : 'sub-change-delivred order-wrapper order-delivery'}>
-                                <div className="col-md-4 order-dashboard">
-                                    <a href="#" className="order-card">
-                                        <h5>{window.strings.USERMANAGEMENT.DELIVERED}</h5>
-                                        <div className="box">
-                                        </div>
-                                    </a>
-                                </div>
-                            </Tab>
-                        </TabList>
-                        <TabPanel>
-                            <FetchOrderReceived
-                            // ref="fetchRetailer"
-                            // roleId={this.state.selectedRoleId}
-                            // searchText={this.state.farmerSearch}
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <FetchPlanRoute
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <FetchShippingAdjustment
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <FetchOutofDelivery
-                            />
-                        </TabPanel>
-                        <TabPanel>
-                            <FetchDelivered
-                            />
-                        </TabPanel>
-                    </Tabs>
-
+                            </a>
+                        </div>
+                    </div>
+                    <Row className="clearfix title-section pb-3">
+                        <Col md={8} className="title-card">
+                            <h4 className="user-title">ORDER</h4>
+                        </Col>
+                        <Col md={4} className="pl-5">
+                            <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                        </Col>
+                    </Row>
                 </div>
-            </Form>
 
+                <TableData TableHead={this.state.TableHead} TableContent={OrderList} />
+                <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={statusUpdataData} ModalTitle="UPDATE TRACK" />
+
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+            </div>
         );
     }
 }
-const mapStateToProps = () => ({
 
-});
 
-export default connect(mapStateToProps, {})(FetchOrder);
 
+function mapStateToProps(state) {
+    return {
+        orderData: state.order ? state.order : {}
+    };
+}
+
+export default connect(mapStateToProps, { getOrderList })(FetchOrder);

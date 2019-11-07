@@ -13,7 +13,7 @@ class CreatePrice extends Component {
         super(props);
         this.state = {
             submitted: false,
-            weight: '',
+            weight: 0,
             price: '',
             boxQuantity: '',
             categoryId: '',
@@ -249,6 +249,7 @@ class CreatePrice extends Component {
                                                 onChange={this.handleInputChange}
                                                 value={this.state.weight}
                                                 required
+                                                disabled
                                             />
                                             {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
@@ -261,9 +262,9 @@ class CreatePrice extends Component {
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.weight
                                                 })}
-                                                name="weight"
+                                                name="updateWeight"
                                                 onChange={this.handleInputChange}
-                                                value={this.state.weight}
+                                                value={this.state.updateWeight}
                                                 required
                                             />
                                             {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}

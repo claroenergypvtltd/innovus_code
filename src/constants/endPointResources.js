@@ -75,5 +75,6 @@ export const endPoint = {
     "submitVehicle": "/vehicle",
     "vehiclesCategory": "/vehicleCategory",
     "dcCodeSearch": "/dcCodeSearch",
-    "Type": "vehiclesCategory"
+    "Type": "vehiclesCategory",
+    "customerIdSearch": "/customerIdSearch"
 }
