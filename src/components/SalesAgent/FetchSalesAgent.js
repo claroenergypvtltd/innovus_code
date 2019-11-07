@@ -18,7 +18,7 @@ class FetchSalesAgent extends React.Component {
         this.state = {
             search: '',
             currentPage: 1,
-            itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            itemPerPage: 3,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
             advanceSearch: false,
@@ -92,7 +92,7 @@ class FetchSalesAgent extends React.Component {
     }
 
     resetSearch = () => {
-        if (this.state.search || this.state.dcCodeObj) {
+        if (this.state.search || this.state.dcCodeObj || this.state.search == '') {
             this.setState({ search: '', dcCodeObj: '', dcCode: '' }, () => {
                 this.getSalesAgentList();
             });

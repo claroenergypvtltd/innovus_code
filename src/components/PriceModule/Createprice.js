@@ -252,8 +252,9 @@ class CreatePrice extends Component {
                                             />
                                             {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        <div className="form-group col-md-4">
-                                            <label>{window.strings['CATEGORY']['UPDATE_WEIGHT'] + ' *'}</label>
+
+                                        <div className="form-group col-md-6">
+                                            <label>{window.strings.CROP.UPDATE_WEIGHT + ' *'}</label>
                                             <input
                                                 type="number"
                                                 placeholder="Update Weight"
@@ -269,6 +270,15 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-4">
+                                            name="updateweight"
+                                                onChange={this.handleInputChange}
+                                            value={this.state.updateweight}
+                                            required
+                                        />
+                                            {this.state.submitted && !this.state.updateweight && <div className="mandatory">{window.strings['CROP']['UPDATE_WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+                                        <div className="form-group col-md-6">
                                             <label>{window.strings.PRICE.TYPE + ' *'}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} Z>
                                                 <option value="0">Select</option>

@@ -157,6 +157,7 @@ class CategoryForm extends Component {
                                         </div>
 
 
+
                                         {/* <div className="form-group pt-3 col-md-12">
 
                                             <label>{window.strings.CATEGORY.IMAGE}</label>
@@ -192,7 +193,7 @@ class CategoryForm extends Component {
                                                 required
 
                                             ></textarea>
-                                            {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
                                         <div className="form-group pt-3 col-md-12">

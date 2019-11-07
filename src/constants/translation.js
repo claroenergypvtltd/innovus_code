@@ -94,7 +94,8 @@ export const Translation = {
             "BOX_QUANTITY": "Box Quantity",
             "CREATETITLE": "ADD CROP",
             "EDITTITLE": "Edit Crop",
-            "CROP_NAME": "Crop Name"
+            "CROP_NAME": "Crop Name",
+            "UPDATE_WEIGHT": "Update Weight"
         },
 
         "FAQ": {
@@ -261,7 +262,7 @@ export const Translation = {
             // "LISTTITLE": "Irrigation Setting List",
             "LIST_IRRIGATION": "IRRIGATION SETTINGS LIST",
             "ADD_IRRIGATION": "Add Irrigation Setting",
-            "EDIT_IRRIGATION": "EDIT Irrigation Setting",
+            "EDIT_IRRIGATION": "Edit Irrigation Setting",
             "STATE_LABEL": "State",
             "CITY_LABEL": "City",
             "SELECT_STATE": "Select State",
