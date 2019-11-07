@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DeleteCategory, getSpecificCategory } from '../../actions/categoryAction';
+import { DeleteCategory, getSpecificCategory, getCategoryDCCode } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
@@ -27,8 +27,10 @@ class ViewCategory extends Component {
     }
 
     componentDidMount() {
-        this.getSpecificData();
-        this.getDCData();
+        if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
+            this.getSpecificData();
+            this.getDCData();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -51,12 +53,39 @@ class ViewCategory extends Component {
                 "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
                 "search": this.state.search,
                 "limit": this.state.itemPerPage,
-                "categoryId": this.props.location.state.categoryId
+                "categoryId": this.props.location.state.categoryId,
+                "dcCode": this.props.location.state.categoryId
             }
 
             this.props.getSpecificCategory(obj, true);
         }
     }
+
+    getDCData = () => {
+
+        // let obj = {
+        //     "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+        //     "search": this.state.search,
+        //     "limit": this.state.itemPerPage,
+        // "categoryId": this.props.location.state.categoryId,
+        let dcCode = this.props.location.state.categoryId
+        // }
+
+        getCategoryDCCode(dcCode).then(resp => {
+            if (resp && resp.data && resp.data.datas) {
+                this.setState({ dcCodeData: resp.data.datas })
+            }
+
+        });
+        // getDcCodeData(obj).then(resp => {
+        //     if (resp) {
+
+        //         this.setState({ dcCodeData: resp })
+        //     }
+        // })
+    }
+
+
 
     handleChange = (e) => {
         this.setState({ search: e.target.value })
@@ -132,19 +161,6 @@ class ViewCategory extends Component {
         }
 
         this.props.fetchSalesAgent(obj);
-    }
-
-    getDCData = () => {
-
-        let obj = {
-            search: ''
-        }
-        getDcCodeData(obj).then(resp => {
-            if (resp) {
-
-                this.setState({ dcCodeData: resp })
-            }
-        })
     }
 
     render() {

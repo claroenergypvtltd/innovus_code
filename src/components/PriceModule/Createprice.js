@@ -53,7 +53,6 @@ class CreatePrice extends Component {
             let obj = {
                 "categoryId": this.props.location.state.priceId
             }
-
             this.props.getPriceList(obj).then(resp => {
                 if (resp && resp.datas && resp.datas[0]) {
                     this.setState({ parentId: resp.datas[0].parentId })
@@ -81,8 +80,6 @@ class CreatePrice extends Component {
             });
         }
     }
-
-
     componentDidUpdate(preProps) {
 
         if (preProps.priceData != this.props.priceData) {
@@ -91,7 +88,6 @@ class CreatePrice extends Component {
             }
         }
     }
-
     componentWillReceiveProps(nextProps) {
         this.setState({ categoryData: nextProps.getCategory })
 
@@ -111,12 +107,9 @@ class CreatePrice extends Component {
             this.listPath();
         }
     }
-
-
     handleInputChange = (e) => {
         e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
     }
-
     handleCategoryChange = (e) => {
         this.setState({ parentId: e.target.value }, () => {
 
@@ -126,7 +119,6 @@ class CreatePrice extends Component {
             this.props.getSpecificCategory(obj, true);
         })
     }
-
     handleSubCategory = (e) => {
         this.setState({ categoryId: e.target.value }, () => {
 
@@ -136,12 +128,10 @@ class CreatePrice extends Component {
             this.props.getPriceList(obj);
         })
     }
-
     getCategoryList = () => {
         let user = {};
         this.props.getCategoryList(user);
     }
-
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
@@ -171,34 +161,27 @@ class CreatePrice extends Component {
         }
 
     }
-
     listPath = () => {
         this.props.history.goBack();
     }
-
     render() {
         const { errors } = this.state;
-
         const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
         });
-
         const subCategoryDropDown = this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
         });
-
         const weightDropDown = this.state.weightDatas && this.state.weightDatas.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
         });
-
         const priceDropDown = this.state.weightDatas && this.state.weightDatas.map((item, index) => {
             return <option key={index}
                 value={item.id}> {"RS / " + item.name}</option>
         });
-
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -254,7 +237,7 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group col-md-6">
+                                        <div className="form-group col-md-4">
                                             <label>{window.strings.CROP.UPDATE_WEIGHT + ' *'}</label>
                                             <input
                                                 type="number"
@@ -269,17 +252,7 @@ class CreatePrice extends Component {
                                             />
                                             {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
                                         <div className="form-group col-md-4">
-                                            name="updateweight"
-                                                onChange={this.handleInputChange}
-                                            value={this.state.updateweight}
-                                            required
-                                        />
-                                            {this.state.submitted && !this.state.updateweight && <div className="mandatory">{window.strings['CROP']['UPDATE_WEIGHT'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-
-                                        <div className="form-group col-md-6">
                                             <label>{window.strings.PRICE.TYPE + ' *'}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} Z>
                                                 <option value="0">Select</option>

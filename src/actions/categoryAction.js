@@ -81,11 +81,23 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 		searchData = Data.search ? '&search=' + Data.search : '';
 	}
 
-	return httpServices.get(endPoint.category + '?' + IdText + '=' + Data.categoryId + searchData + page + rows).then(resp => {
+	httpServices.get(endPoint.category + '?' + IdText + '=' + Data.categoryId + searchData + page + rows).then(resp => {
 
 		if (resp.data) {
 			dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
-			return resp;
+		}
+	}).catch((error) => {
+		console.error("error", error.resp);
+	})
+}
+
+export const getCategoryDCCode = (dcCode) => {
+
+	return httpServices.get(endPoint.category + '?dcCode=' + dcCode).then(resp => {
+
+		if (resp.data) {
+			return resp
+			// dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
 		}
 	}).catch((error) => {
 		console.error("error", error.resp);
