@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
+import { getSpecificCategory, getCategoryList, getCategoryDCCode } from '../../actions/categoryAction';
 import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
@@ -13,7 +13,7 @@ class CreatePrice extends Component {
         super(props);
         this.state = {
             submitted: false,
-            weight: 0,
+            weight: '',
             price: '',
             boxQuantity: '',
             categoryId: '',
@@ -27,9 +27,12 @@ class CreatePrice extends Component {
 
 
     componentDidMount() {
-        this.editPrice();
-        this.setWeightData();
-        this.getCategoryList();
+        this.setState({ weight: '', subCategoryDatas: [] }, () => {
+            this.editPrice();
+            this.setWeightData();
+            this.getCategoryList();
+        })
+
     }
 
     setWeightData() {
@@ -38,7 +41,7 @@ class CreatePrice extends Component {
             "id": "Quindal"
         }, {
             "name": "KG",
-            "id": "KG",
+            "id": "Kg",
         },
         {
             "name": "Ton",
@@ -55,8 +58,15 @@ class CreatePrice extends Component {
             }
             this.props.getPriceList(obj).then(resp => {
                 if (resp && resp.datas && resp.datas[0]) {
-                    this.setState({ parentId: resp.datas[0].parentId })
+                    this.setState({ parentId: resp.datas[0].parentId, dcCode: resp.datas[0].dcCode }, () => {
+                        getCategoryDCCode(this.state.parentId).then(resp => {
+                            if (resp && resp.data && resp.data.datas) {
+                                this.setState({ dcCodeData: resp.data.datas })
+                            }
+                        });
 
+
+                    })
                     let obj = {
                         "categoryId": resp.datas[0].parentId
                     }
@@ -90,12 +100,23 @@ class CreatePrice extends Component {
     }
     componentWillReceiveProps(nextProps) {
         this.setState({ categoryData: nextProps.getCategory })
-
+        let showweight = 0;
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
 
             let Data = nextProps.categoryData.specificData.data;
             this.setState({ subCategoryDatas: Data.datas })
         }
+        if (nextProps.priceData && nextProps.priceData.specificData && nextProps.priceData.specificData.datas) {
+            if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].categoryAmount) {
+                showweight = nextProps.priceData.specificData.datas[0].categoryAmount.totalQuantity
+            }
+            // debugger;
+            // if (this.props && this.props.location && this.props.location.state && this.props.location.state.priceId) {
+            this.setState({ weight: showweight })
+
+            // }
+        }
+
 
         if (nextProps.priceData && nextProps.priceData.createdData == "200") {
             store.dispatch({ type: PRICE_CREATE_SUCCESS, createdData: '' });
@@ -111,12 +132,26 @@ class CreatePrice extends Component {
         e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
     }
     handleCategoryChange = (e) => {
-        this.setState({ parentId: e.target.value }, () => {
+        this.setState({ weight: '', dcCodeData: [], subCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
+            getCategoryDCCode(this.state.parentId).then(resp => {
+                if (resp && resp.data && resp.data.datas) {
+                    this.setState({ dcCodeData: resp.data.datas })
+                }
+            });
+        })
+    }
+    handleDcCodeSubCategory = (e) => {
+        this.setState({ subCategoryDatas: [], dcCode: e.target.value, categoryId: "" }, () => {
+            getCategoryDCCode(this.state.parentId, this.state.dcCode, 'getDcsubCat').then(resp => {
+                if (resp && resp.data && resp.data.datas) {
+                    this.setState({ subCategoryDatas: resp.data.datas })
+                }
+            });
 
-            let obj = {
-                "categoryId": this.state.parentId
-            }
-            this.props.getSpecificCategory(obj, true);
+            // let obj = {
+            //     "categoryId": this.state.categoryId
+            // }
+            // this.props.getPriceList(obj);
         })
     }
     handleSubCategory = (e) => {
@@ -137,8 +172,7 @@ class CreatePrice extends Component {
         this.setState({
             submitted: true
         })
-
-        if (this.state.categoryId && this.state.weight && this.state.price && this.state.weightId && this.state.boxQuantity) {
+        if (this.state.categoryId && this.state.price && this.state.weightId && this.state.boxQuantity) {
 
             let isUpdate = false;
             if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
@@ -151,6 +185,7 @@ class CreatePrice extends Component {
                 "amount": this.state.price,
                 "boxQuantity": this.state.boxQuantity,
                 "totalQuantity": this.state.weight,
+                "updateQuantity": this.state.updateQuantity,
                 "totalQuantitySize": this.state.weightId,
                 "boxQuantitySize": this.state.weightId,
                 "discountValue": this.state.offer,
@@ -170,6 +205,11 @@ class CreatePrice extends Component {
             return <option key={index}
                 value={item.id}> {item.name}</option>
         });
+        const dcCodeData = this.state.dcCodeData && this.state.dcCodeData.map((item, index) => {
+            return <option key={index}
+                value={item.dcCode}> {item.dcCode}</option>
+        });
+
         const subCategoryDropDown = this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
@@ -203,11 +243,11 @@ class CreatePrice extends Component {
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label>{window.strings['CATEGORY']['DC_CODE'] + ' *'}</label>
-                                            <select required name="categoryId" className="form-control" value={this.state.categoryId} onChange={this.handleSubCategory}>
-                                                <option value="0">Select DC Code </option>
-                                                {subCategoryDropDown}
+                                            <select required name="dcCode" className="form-control" value={this.state.dcCode} onChange={this.handleDcCodeSubCategory}>
+                                                <option value="0">Select DC Code</option>
+                                                {dcCodeData}
                                             </select>
-                                            {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['CATEGORY']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['CATEGORY']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label>{window.strings['CATEGORY']['SUB_CATEGORY'] + ' *'}</label>
@@ -221,10 +261,10 @@ class CreatePrice extends Component {
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-4">
-                                            <label>{window.strings.CROP.WEIGHT + ' *'}</label>
+                                            <label>{window.strings.CROP.TOTAL_QUANTITY + ' *'}</label>
                                             <input
                                                 type="number"
-                                                placeholder="Weight"
+                                                placeholder="Total Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.weight
                                                 })}
@@ -234,23 +274,23 @@ class CreatePrice extends Component {
                                                 required
                                                 disabled
                                             />
-                                            {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
                                         <div className="form-group col-md-4">
-                                            <label>{window.strings.CROP.UPDATE_WEIGHT + ' *'}</label>
+                                            <label>{window.strings.CROP.UPDATE_QUANTITY + ' *'}</label>
                                             <input
                                                 type="number"
-                                                placeholder="Update Weight"
+                                                placeholder="Update Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.weight
                                                 })}
-                                                name="updateWeight"
+                                                name="updateQuantity"
                                                 onChange={this.handleInputChange}
-                                                value={this.state.updateWeight}
+                                                value={this.state.updateQuantity}
                                                 required
                                             />
-                                            {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.updateQuantity && <div className="mandatory">{window.strings['CROP']['UPDATE_QUANTITY'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label>{window.strings.PRICE.TYPE + ' *'}</label>

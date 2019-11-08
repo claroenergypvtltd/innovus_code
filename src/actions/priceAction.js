@@ -6,10 +6,11 @@ import { PRICE_FETCH_SUCCESS, PRICE_CREATE_SUCCESS, PRICE_DELETE_SUCCESS, PRICE_
 import { endPoint } from "../constants";
 
 export const getPriceList = (formData) => dispatch => {
-    formData.pages = formData.page ? formData.page : '';
-    formData.rows = formData.limit ? formData.limit : '';
+    formData.pages = formData.pages ? formData.pages - 1 : 0;
+    formData.rows = formData.rows ? formData.rows : '';
     formData.search = formData.search ? formData.search : '';
-    formData.flag = 1;
+    formData.dCCode = formData.dCCode ? formData.dCCode : '';
+    // formData.flag = 1;
 
     return httpServices.post(endPoint.price, formData).then(resp => {
         if (resp && resp.data) {

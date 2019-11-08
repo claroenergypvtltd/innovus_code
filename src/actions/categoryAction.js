@@ -92,9 +92,15 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 	})
 }
 
-export const getCategoryDCCode = (dcCode) => {
-
-	return httpServices.get(endPoint.category + '?dcCode=' + dcCode).then(resp => {
+export const getCategoryDCCode = (dcCode, dcsubcat, type) => {
+	let dCCode = '';
+	if (type == 'getDcsubCat') {
+		dCCode = '?categoryId=' + dcCode + '&dcCode=' + dcsubcat;
+	}
+	else {
+		dCCode = '?dcCode=' + dcCode
+	}
+	return httpServices.get(endPoint.category + dCCode).then(resp => {
 
 		if (resp.data) {
 			return resp
