@@ -17,12 +17,13 @@ class ViewCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "Image", "Description", "Action"],
+            TableHead: ["Crop Name", "Image", "Description", "DC Code", "Action"],
             CategoryListDatas: props.getLists,
             CategoryCount: props.getCount,
             currentPage: resorceJSON.TablePageData.currentPage,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
-            categoryId: ''
+            categoryId: '',
+            dcCode: ''
         }
     }
 
@@ -54,7 +55,7 @@ class ViewCategory extends Component {
                 "search": this.state.search,
                 "limit": this.state.itemPerPage,
                 "categoryId": this.props.location.state.categoryId,
-                "dcCode": this.props.location.state.categoryId
+                "dcCode": this.state.dcCode
             }
 
             this.props.getSpecificCategory(obj, true);
@@ -99,8 +100,8 @@ class ViewCategory extends Component {
     }
 
     resetSearch = () => {
-        if (this.state.search) {
-            this.setState({ search: '' }, () => {
+        if (this.state.search || this.state.dcCode) {
+            this.setState({ search: '', dcCodeObj: '', dcCode: '' }, () => {
                 this.getSpecificData();
             });
         }
@@ -148,20 +149,10 @@ class ViewCategory extends Component {
     }
 
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSalesAgentList() })
+        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSpecificData() })
     };
 
-    getSalesAgentList = () => {
-        let obj = {
-            roleId: "4",
-            pages: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
-            row: this.state.itemPerPage,
-            search: this.state.search,
-            dcCode: this.state.dcCode
-        }
 
-        this.props.fetchSalesAgent(obj);
-    }
 
     render() {
         let dcData = [];
@@ -169,13 +160,13 @@ class ViewCategory extends Component {
 
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
 
-            let obj = { "label": item, "value": item };
+            let obj = { "label": item.dcCode, "value": item.dcCode };
             dcData.push(obj);
         })
 
         let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
-            return { "itemList": [item.name, catImg, item.description], "itemId": item.id }
+            return { "itemList": [item.name, catImg, item.description, item.dcCode], "itemId": item.id }
         })
 
 
@@ -205,7 +196,7 @@ class ViewCategory extends Component {
                         <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                         <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
                         <div className="retail-reset">
-                            <button type="button" className="reset ml-2" onClick={(e) => this.getSpecificData('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                            <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                         </div>
                     </div>
                     <div id="menu">

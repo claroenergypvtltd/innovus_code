@@ -7,6 +7,7 @@ class DataTableDynamic extends React.Component {
     this.state = {
       tableHead: [],
       tableDatas: [],
+      // toggledClearRows : false
     };
   }
 
@@ -74,6 +75,10 @@ class DataTableDynamic extends React.Component {
     this.props && this.props.handleRowChange && this.props.handleRowChange(row.selectedRows);
   }
 
+  //  handleClearRows = () => {
+  //   this.setState({ toggledClearRows: !this.state.toggledClearRows})
+  // }
+
   render() {
     let tableHeader = this.state.tableHead;
     let tableDatas = this.props.tableDatas;
@@ -104,6 +109,7 @@ class DataTableDynamic extends React.Component {
           selectableRows={selectableRows}
           onRowSelected={this.handleRowChange}
           striped={true}
+          clearSelectedRows={this.props.handleClearRows}
         />
       </div>
     );

@@ -41,7 +41,8 @@ class FetchRetailer extends React.Component {
             startDate: moment(),
             endDate: moment(),
             selectedDatas: [],
-            advanceSearch: false
+            advanceSearch: false,
+            popup: false
         }
     }
     componentWillMount() {
@@ -145,6 +146,7 @@ class FetchRetailer extends React.Component {
 
     };
     getRetailerList = (status) => {
+        this.onCloseModal();
         let user = {};
         if (status == 'reset') {
             this.setState({
@@ -174,6 +176,9 @@ class FetchRetailer extends React.Component {
             }
             user.roleId = 2;
             user.search = this.state.search;
+            this.setState({
+                selectedDatas: []
+            })
             this.props.fetchRetailers(user);
         }
 
@@ -190,7 +195,7 @@ class FetchRetailer extends React.Component {
         this.context.router.history.push(redrctpath);
     };
     componentWillReceiveProps(newProps) {
-        if (newProps.list.datas) {
+        if (newProps.list.datas && !this.state.popup) {
             let selectlist = newProps.list.datas;
             let agentDataList = newProps.agentData;
             let Lists = selectlist && selectlist.map(item => {
@@ -286,19 +291,24 @@ class FetchRetailer extends React.Component {
     }
 
     handleRowChange = (Data) => {
+        console.log('checkbox data', Data);
         this.setState({ selectedDatas: Data })
     }
 
-    onCloseModal = () => {
-        this.setState({ open: false, selectedDatas: [] }, () => {
-            this.getRetailerList();
+    onCloseModal = (type) => {
+        this.setState({ open: false, popup: false, selectedDatas: [] }, () => {
+            // if (type == 'success') {
+            this.setState({ selectedDatas: [] })
+            let redrctpath = path.user.list;
+            this.context.router.history.push(redrctpath);
+            // }
         });
     };
 
     onOpenModal = (e) => {
         e.preventDefault();
         if (this.state.selectedDatas && this.state.selectedDatas.length > 0) {
-            this.setState({ open: true });
+            this.setState({ open: true, popup: true });
         } else {
             toastr.error("Please Select any Customer");
         }
@@ -332,6 +342,13 @@ class FetchRetailer extends React.Component {
         this.setState({ search: e.target.value })
     }
 
+
+    // handleClearRows = () => {
+    //     // this.setState({ toggledClearRows: !this.state.toggledClearRows})
+    //     return true
+
+    // }
+
     render() {
         let start = this.state.startDate.format('DD-MM-YYYY');
         let end = this.state.endDate.format('DD-MM-YYYY');
@@ -345,9 +362,13 @@ class FetchRetailer extends React.Component {
             resorceJSON.statusOptions.map((item, index) => {
                 return <option value={index} className="drop-option"> {item}</option>
             })
+
+        let nilAgent = { "label": '-- Nil ---', "value": "nill" };
+        agentListDropDown.push(nilAgent);
         this.state.agentDataList && this.state.agentDataList.map((item) => {
             let obj = { "label": item.agentName, "value": item.agentId, "name": "agentName" };
             agentListDropDown.push(obj);
+
         })
         this.state.stateData && this.state.stateData.map((item) => {
             let obj = { "label": item.name, "value": item.id, "name": "stateId" };
@@ -411,8 +432,7 @@ class FetchRetailer extends React.Component {
             // item.shopAddress = shopAddress;
             excelDatas.push(item);
         })
-
-        let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} selectedDatas={this.state.selectedDatas} />
+        let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} />
 
         return (
 
