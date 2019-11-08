@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { DeleteCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
+import { getDcCodeData, fetchSalesAgent } from '../../actions/salesAgentAction';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
@@ -16,42 +16,52 @@ import { PRICE_CREATE_SUCCESS } from '../../constants/actionTypes'
 import Select from 'react-select';
 
 class FetchPrice extends Component {
-
     constructor(props) {
-
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", "Total Weight(Unit)", "Price(Unit)", "Box Quantity(Unit)", "Actions"], PriceLists: props.getLists,
+            TableHead: ["Product ID", "Product Name", 'Dc Code', "Total Weight(Unit)", "Price(Unit)", "Box Quantity(Unit)", "Actions"], PriceLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
-            currentPage: 1,
+            dcCode: '',
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength
         }
     }
-
     componentDidMount() {
         this.getPriceList();
+        this.getDCData();
     }
-
+    getDCData = () => {
+        let obj = {
+            search: this.state.dcCode
+        }
+        getDcCodeData(obj).then(resp => {
+            if (resp) {
+                this.setState({ dcCodeData: resp })
+            }
+        })
+    }
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dCCode: Data.value }, () => {
+            this.getPriceList()
+        })
+    };
     componentWillReceiveProps(newProps) {
         if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
             let respData = newProps.priceData.Lists.datas;
             this.setState({ PriceLists: respData, pageCount: newProps.priceData.Lists.totalCount / this.state.itemPerPage })
         }
     }
-
     handleChange = (e) => {
         this.setState({ search: e.target.value })
     }
-
     enableAdvanceSearch = (e) => {
         e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
-
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
@@ -61,31 +71,31 @@ class FetchPrice extends Component {
             this.getPriceList(serObj);
         }
     }
-
     resetSearch = () => {
         if (this.state.search) {
-            this.setState({ search: '' }, () => {
+            this.setState({ search: '', dCCode: '', dcCodeObj: '' }, () => {
                 this.getPriceList();
             });
         }
     }
-
     getPriceList() {
+        // {
+        //     "pages":"0",
+        //     "rows":"10",
+        //     "search":"",
+        //     "dCCode":""
+        //    }
         let obj = {
-            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "pages": this.state.currentPage ? this.state.currentPage : 0,
+            "rows": this.state.itemPerPage,
             "search": this.state.search,
-            "limit": this.state.itemPerPage,
-            "categoryId": ""
+            "dCCode": this.state.dCCode
         }
-
         this.props.getPriceList(obj)
     }
-
     itemEdit = (priceId) => {
         this.props.history.push({ pathname: path.price.edit + priceId, state: { priceId: priceId } });
     }
-
-
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
         const toastrConfirmOptions = {
@@ -94,7 +104,6 @@ class FetchPrice extends Component {
         };
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
     }
-
     itemDelete = (id) => {
         // this.props.DeleteCategory(id)
         // .then(resp => {
@@ -107,7 +116,6 @@ class FetchPrice extends Component {
     formPath = () => {
         this.props.history.push(path.price.add);
     }
-
     onChange = (data) => {
 
         if (this.state.currentPage !== (data.selected + 1)) {
@@ -116,18 +124,16 @@ class FetchPrice extends Component {
             });
         }
     }
-
     render() {
         let dcData = [];
-        this.state.dcCodeData = [{ name: "0987", id: 1 }]
+        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
-            let obj = { "label": item.name, "value": item.id };
+            let obj = { "label": item, "value": item };
             dcData.push(obj);
         })
-
         let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
-
             let productId = item.categoryAmount && item.categoryAmount.id;
+            let dcCode = item.dcCode ? item.dcCode : '-';
             let productName = item.name;
             let totWeight = ((item.categoryAmount && item.categoryAmount.totalQuantity) + ' / ' + (item.categoryAmount && item.categoryAmount.rupeesize));
             // let weightUnits = item.categoryAmount && item.categoryAmount.totalQuantitySize;
@@ -137,7 +143,7 @@ class FetchPrice extends Component {
             // let boxQuantitySize = item.categoryAmount && item.categoryAmount.boxQuantitySize
 
             return {
-                "itemList": [productId, productName,
+                "itemList": [productId, productName, dcCode,
                     totWeight,
                     // weightUnits, 
                     amount,
@@ -171,7 +177,7 @@ class FetchPrice extends Component {
                         <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                         <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
                         <div className="retail-reset">
-                            <button type="button" className="reset ml-2" onClick={(e) => this.getPriceList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
+                            <button type="button" className="reset ml-2" onClick={(e) => this.resetSearch()}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                         </div>
                     </div>
                     <div id="menu">
@@ -214,4 +220,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getPriceList, DeleteCategory })(FetchPrice);
+export default connect(mapStateToProps, { getPriceList, DeleteCategory, fetchSalesAgent })(FetchPrice);

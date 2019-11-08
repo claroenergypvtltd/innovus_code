@@ -83,6 +83,7 @@ export const Translation = {
             "DESCRIPTION": "Description",
             "CATEGORY_NAME": "Category",
             "DC_CODE": "DC Code",
+            "UPDATE_QUANTITY": "Update Quantity",
             "UPDATE_WEIGHT": "Update Weight",
             "SUB_CATEGORY": "Sub Category",
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
@@ -96,6 +97,8 @@ export const Translation = {
             "EDITTITLE": "Edit Crop",
             "CROP_NAME": "Crop Name",
             "UPDATE_WEIGHT": "Update Weight",
+            "TOTAL_QUANTITY": "Total Quantity",
+            "UPDATE_QUANTITY": "Update Quantity",
             "DCCODE": "DC Code"
         },
 
