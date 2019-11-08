@@ -27,7 +27,7 @@ export const resorceJSON = {
     { name: 'Onboarded Date', selector: 'created', sortable: true },
     { name: 'Customer ID', selector: 'cusId', sortable: true },
     { name: 'Shop Name', selector: 'shopNames', sortable: true },
-    { name: 'Shop Address', selector: 'fullShopAddrss', sortable: true },
+    { name: 'Shop Address', selector: 'shopAddrss', sortable: true },
     { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
     { name: 'Agent Name', selector: 'agentName', sortable: true },
 

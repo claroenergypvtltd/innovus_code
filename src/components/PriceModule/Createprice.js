@@ -132,7 +132,7 @@ class CreatePrice extends Component {
         e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
     }
     handleCategoryChange = (e) => {
-        this.setState({ weight: '', dcCodeData: [], subCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
+        this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
             getCategoryDCCode(this.state.parentId).then(resp => {
                 if (resp && resp.data && resp.data.datas) {
                     this.setState({ dcCodeData: resp.data.datas })
@@ -185,7 +185,7 @@ class CreatePrice extends Component {
                 "amount": this.state.price,
                 "boxQuantity": this.state.boxQuantity,
                 "totalQuantity": this.state.weight,
-                "updateQuantity": this.state.updateQuantity,
+                "updateQuantity": this.state.updateQuantity ? this.state.updateQuantity : 0,
                 "totalQuantitySize": this.state.weightId,
                 "boxQuantitySize": this.state.weightId,
                 "discountValue": this.state.offer,
