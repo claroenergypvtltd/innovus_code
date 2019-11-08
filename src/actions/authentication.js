@@ -4,9 +4,10 @@ import setAuthToken from '../setAuthToken';
 import jwt_decode from 'jwt-decode';
 import { endPoint } from '../constants';
 import { phaseKey } from "../config/LocalConfig";
-import { toastr } from 'react-redux-toastr';
+// import { toastr } from 'react-redux-toastr';
 import { path } from '../constants/path'
 import CryptoJS from 'crypto-js';
+import { toastr } from '../services/toastr.services'
 
 import { history } from '../store/history';
 import store from '../store/store';
