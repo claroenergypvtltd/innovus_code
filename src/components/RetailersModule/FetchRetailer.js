@@ -146,7 +146,7 @@ class FetchRetailer extends React.Component {
 
     };
     getRetailerList = (status) => {
-        this.onCloseModal();
+        // this.onCloseModal();
         let user = {};
         if (status == 'reset') {
             this.setState({
@@ -295,13 +295,8 @@ class FetchRetailer extends React.Component {
     }
 
     onCloseModal = (type) => {
-        this.setState({ open: false, popup: false, selectedDatas: [] }, () => {
-            // if (type == 'success') {
-            this.setState({ selectedDatas: [] })
-            let redrctpath = path.user.list;
-            this.context.router.history.push(redrctpath);
-            // }
-        });
+        this.setState({ open: false, popup: false, selectedDatas: [] })
+        this.getRetailerList();
     };
 
     onOpenModal = (e) => {
@@ -556,7 +551,7 @@ class FetchRetailer extends React.Component {
                         handleView={this.itemView}
                         // handleDelete={this.handleDelete}
                         pagination={true}
-                        checkbox={true}
+                        // checkbox={true}
                         onRowSelected={this.handleRowChange}
                         handleRowChange={this.handleRowChange}
                     />
