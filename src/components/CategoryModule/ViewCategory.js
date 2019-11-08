@@ -159,9 +159,11 @@ class ViewCategory extends Component {
         // this.state.dcCodeData = [{ name: "0987", id: 1 }]
 
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
+            if (item.dcCode) {
+                let obj = { "label": item.dcCode, "value": item.dcCode };
+                dcData.push(obj);
+            }
 
-            let obj = { "label": item.dcCode, "value": item.dcCode };
-            dcData.push(obj);
         })
 
         let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {

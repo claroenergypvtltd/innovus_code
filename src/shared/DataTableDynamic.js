@@ -109,7 +109,8 @@ class DataTableDynamic extends React.Component {
           selectableRows={selectableRows}
           onRowSelected={this.handleRowChange}
           striped={true}
-          clearSelectedRows={this.props.handleClearRows}
+          clearSelectedRows={selectableRows}
+          selectableRowsPreSelectedField={false}
         />
       </div>
     );

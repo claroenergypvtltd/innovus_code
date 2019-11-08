@@ -50,7 +50,7 @@ class CreateCrop extends Component {
             && nextProps.categoryData.specificData.data.datas.length > 0) {
             let Data = nextProps.categoryData.specificData.data.datas[0];
             let dcCodeObj = { "label": Data.dcCode, "value": Data.dcCode };
-            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj });
+            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj, dcCode: Data.dcCode });
         }
 
 
@@ -102,7 +102,7 @@ class CreateCrop extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name && this.state.description) {
+        if (this.state.name && this.state.description && this.state.dcCode) {
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);
@@ -234,7 +234,7 @@ class CreateCrop extends Component {
                                         {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CROP']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
-                                    <div className="form-group col-md-12">
+                                    {/* <div className="form-group col-md-12">
 
                                         <label>{window.strings.SALES_AGENT.DC_CODE}</label>
 
@@ -245,7 +245,29 @@ class CreateCrop extends Component {
                                             placeholder="--Select DC Code--"
                                         />
                                         {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
+                                    </div> */}
+
+                                    <div className="form-group col-md-12">
+
+                                        <label>{window.strings.SALES_AGENT.DC_CODE + ' *'}</label>
+
+                                        <input
+                                            type="text"
+                                            placeholder="DC Code"
+                                            className={classnames('form-control', {
+                                                'is-invalid': errors.dcCode
+                                            })}
+                                            name="dcCode"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.dcCode}
+                                            required
+
+                                        />
+
+                                        {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
+
+
 
                                     <div className="form-group col-md-12">
 

@@ -206,8 +206,10 @@ class CreatePrice extends Component {
                 value={item.id}> {item.name}</option>
         });
         const dcCodeData = this.state.dcCodeData && this.state.dcCodeData.map((item, index) => {
-            return <option key={index}
-                value={item.dcCode}> {item.dcCode}</option>
+            if (item.dcCode) {
+                return <option key={index}
+                    value={item.dcCode}> {item.dcCode}</option>
+            }
         });
 
         const subCategoryDropDown = this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {

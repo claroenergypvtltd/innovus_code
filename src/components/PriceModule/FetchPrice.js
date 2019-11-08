@@ -144,11 +144,11 @@ class FetchPrice extends Component {
 
             return {
                 "itemList": [productId, productName, dcCode,
-                    totWeight,
+                    totWeight.includes("null") ? '-' : totWeight,
                     // weightUnits, 
-                    amount,
+                    amount.includes("null") ? '-' : amount,
                     // priceUnit,
-                    boxQuantity,
+                    boxQuantity.includes("null")  ? '-' : boxQuantity,
                     // boxQuantitySize
                 ], "itemId": item.id
             }

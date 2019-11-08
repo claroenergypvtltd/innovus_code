@@ -43,8 +43,8 @@ class TransferAgent extends Component {
             let redrctpath = path.user.list;
             this.context.router.history.push(redrctpath);
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
-            this.props.getRetailerList();
-
+            // this.props.getRetailerList();
+            this.listPath();
         }
 
     }
