@@ -33,7 +33,7 @@ class ShopDetails extends React.Component {
                 formData.append("status", status);
                 updateStatusRetailer(formData).then(resp => {
                     if (resp && resp.status == 200) {
-                        toastr.success(resp.message);
+                        // toastr.success(resp.message);
                         this.setState({
                             showStatusBtn: false
                         })
