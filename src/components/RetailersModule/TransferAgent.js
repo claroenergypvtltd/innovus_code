@@ -7,6 +7,7 @@ import store from '../../store/store';
 import { fetchRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction'
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from '../../services/toastr.services'
+import { path } from '../../constants';
 
 
 class TransferAgent extends Component {
@@ -39,8 +40,11 @@ class TransferAgent extends Component {
         }
 
         if (newProps && newProps.status == "200") {
+            let redrctpath = path.user.list;
+            this.context.router.history.push(redrctpath);
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
-            this.props.onCloseModal();
+            this.props.getRetailerList();
+
         }
 
     }
@@ -70,9 +74,6 @@ class TransferAgent extends Component {
         this.props.selectedDatas && this.props.selectedDatas.map(item => {
             userData.push(item.id)
         })
-
-
-
 
         if (this.state.agentId && userData) {
             const formData = new FormData();

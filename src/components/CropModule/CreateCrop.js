@@ -45,12 +45,12 @@ class CreateCrop extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({ categoryData: nextProps.getCategory })
-
         if (nextProps && nextProps.categoryData && nextProps.categoryData.specificData
             && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas
             && nextProps.categoryData.specificData.data.datas.length > 0) {
             let Data = nextProps.categoryData.specificData.data.datas[0];
-            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId });
+            let dcCodeObj = { "label": Data.dcCode, "value": Data.dcCode };
+            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj });
         }
 
 
@@ -238,26 +238,12 @@ class CreateCrop extends Component {
 
                                         <label>{window.strings.SALES_AGENT.DC_CODE}</label>
 
-                                        <Select className="state-box ml-4"
+                                        <Select
                                             value={this.state.dcCodeObj}
                                             onChange={(e) => this.handleDcCodeChange(e)}
                                             options={dcData}
                                             placeholder="--Select DC Code--"
                                         />
-
-                                        {/* <input
-                                            type="text"
-                                            placeholder="DC Code"
-                                            className={classnames('form-control', {
-                                                'is-invalid': errors.name
-                                            })}
-                                            name="dcCode"
-                                            onChange={this.handleInputChange}
-                                            value={this.state.dcCode}
-                                            required
-
-                                        /> */}
-
                                         {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 

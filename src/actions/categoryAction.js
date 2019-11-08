@@ -73,15 +73,16 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 	} else {
 		IdText = endPoint.id;
 	}
-	let rows = ''; let page = ''; let searchData = '';
+	let rows = ''; let page = ''; let searchData = ''; let dcCode = "";
 
 	if (Data && Data.limit) {
 		page = Data.page ? '&page=' + Data.page : '';
 		rows = Data.limit ? '&rows=' + Data.limit : '';
 		searchData = Data.search ? '&search=' + Data.search : '';
+		dcCode = Data.dcCode ? '&dcCode=' + Data.dcCode : '';
 	}
 
-	httpServices.get(endPoint.category + '?' + IdText + '=' + Data.categoryId + searchData + page + rows).then(resp => {
+	httpServices.get(endPoint.category + '?' + IdText + '=' + Data.categoryId + searchData + page + rows + dcCode).then(resp => {
 
 		if (resp.data) {
 			dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
