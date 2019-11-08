@@ -279,8 +279,7 @@ class FetchRetailer extends React.Component {
         })
     };
     handleApply = (event, picker) => {
-        console.log(picker, '===picker====');
-
+        console.log('----picker--', picker);
         this.setState({
             dateChanged: true,
             startDate: picker.startDate,
@@ -354,7 +353,7 @@ class FetchRetailer extends React.Component {
         let end = this.state.endDate.format('DD-MM-YYYY');
         let label = start + ' - ' + end;
         if (start === end) {
-            label = '';
+            label = ''
         }
         let excelDatas = [];
         let stateDropDown = []; let cityDropDown = []; let agentListDropDown = [];
@@ -468,6 +467,7 @@ class FetchRetailer extends React.Component {
                                 <div className="row">
                                     <div className="col-md-4 date-range"><label className="label-title">Date:</label>
                                         <DateRangePicker
+                                            placeholder="-- Date -- "
                                             startDate={this.state.startDate}
                                             endDate={this.state.endDate}
                                             onApply={this.handleApply}
