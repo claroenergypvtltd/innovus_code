@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ReactBarChart, ReactPieChart } from '../shared/Reactgraphcharts';
 import { getUsersDetails, getOrderReports } from '../actions/SubmitRetailerAction';
 import DatesCalculation from '../shared/DatesCalculation'
+import { SearchBar } from '../../src/shared'
 
 class Home extends Component {
     constructor(props, context) {
@@ -89,13 +90,14 @@ class Home extends Component {
                     <div className="col-md-6"></div>
                     <div className="col-md-6"></div>
                 </div>
-                <label for="search-bar-0">
+                {/* <label for="search-bar-0">
                     <span class="sr-only">Search this table</span>
                     <input id="search-bar-0" type="text" aria-label="enter text you want to search" className="form-control " placeholder="Search" value="" />
                     <button className="reset-btn"><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
 
-                </label>
-                <h4>New Orders</h4>
+                </label> */}
+                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
+                <h4 className="user-title mb-4">NEW ORDERS</h4>
 
                 <div class="react-bootstrap-table main-wrapper">
                     {/*  <div className="dashboard-table main-wrapper">*/}

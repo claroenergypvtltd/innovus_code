@@ -210,6 +210,7 @@ background-size: cover;}
   display: flex;
   .label-title{
     white-space: nowrap;
+    padding-right: 15px;
   }
 }
 .daterangepicker td.active, .daterangepicker td.active:hover {
@@ -1120,6 +1121,9 @@ svg{
     border-radius: unset;
     background:none
 }
+.form-control.retailer-search:focus {
+  background: none;
+}
 .form-retailer{
   display: flex;
   float: right;
@@ -1602,6 +1606,11 @@ a.order-btn:hover {
   margin-right: 10px;
   border-radius: 7px;
 }
+.bubble-icon{
+  background-image: url("../src/assets/images/Sprite_image.png");
+  background-repeat:no-repeat;
+  background-position: 53px -2475px;
+ }
 .order-dashboard{
   max-width: 100%;
   flex: none;
@@ -2148,13 +2157,13 @@ display: flex;
     height: auto;
   }
 }
-@media screen and (max-width: 1300px) {
+@media screen and (min-width: 1300px) {
   .react-bootstrap-daterangepicker-container{
-    max-width: 80%;
+    max-width: 81%;
   }
 
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1200px) and (max-width: 1299px){
   .react-bootstrap-daterangepicker-container{
     max-width: 78%;
   }
@@ -2176,3 +2185,4 @@ body .main-header .navbar{
 .navbar-brand{
   padding: 0;
 }
+

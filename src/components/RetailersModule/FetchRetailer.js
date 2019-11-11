@@ -23,6 +23,7 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import TransferAgent from './TransferAgent'
 import { SearchBar } from '../../shared'
 
+
 class FetchRetailer extends React.Component {
     static contextTypes = {
         router: PropTypes.object,
@@ -49,6 +50,7 @@ class FetchRetailer extends React.Component {
         this.getRetailerList();
         this.getStateList();
         this.fetchAgents();
+        this.getDCData();
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
@@ -63,6 +65,20 @@ class FetchRetailer extends React.Component {
             this.setState({ stateData: resp && resp.data })
         })
     }
+
+    getDCData = () => {
+
+        let obj = {
+            search: this.state.dcCode
+        }
+        // getDcCodeData(obj).then(resp => {
+        //     if (resp) {
+
+        //         this.setState({ dcCodeData: resp })
+        //     }
+        // })
+    }
+
     handleInputChange = (e) => {
         let obj = {};
         if (e.target.name == "stateId" || e.target.name == "cityId") {
@@ -344,6 +360,16 @@ class FetchRetailer extends React.Component {
     // }
 
     render() {
+
+        let dcData = [];
+        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
+
+        this.state.dcCodeData && this.state.dcCodeData.map((item) => {
+
+            let obj = { "label": item, "value": item };
+            dcData.push(obj);
+        })
+
         let start = this.state.startDate.format('DD-MM-YYYY');
         let end = this.state.endDate.format('DD-MM-YYYY');
         let label = start + ' - ' + end;
@@ -478,6 +504,16 @@ class FetchRetailer extends React.Component {
                                     <div className="col-md-4 state-filter"><label className="label-title label-line">State:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                         <Select className="state-box ml-1"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
                                             value={this.state.selectedStateOption}
                                             onChange={(e) => this.handleStateChange(e)}
                                             options={stateDropDown}
@@ -499,6 +535,16 @@ class FetchRetailer extends React.Component {
                                 <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
                             </select> */}
                                         <Select className="city-box ml-1"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
                                             value={this.state.selectedCityOption}
                                             onChange={(e) => this.handleStateChange(e)}
                                             options={cityDropDown}
@@ -523,6 +569,16 @@ class FetchRetailer extends React.Component {
                                 <div className="row ">
                                     <div className="col-md-4 agent-filter"><label className="label-title label-line">Agent:</label>
                                         <Select
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
                                             className="city-box ml-1"
                                             value={this.state.selectedAgentOption}
                                             onChange={(e) => this.handleAgentChange(e)}
@@ -531,15 +587,31 @@ class FetchRetailer extends React.Component {
                                         />
 
                                     </div>
-                                    <div className="col-md-5 status-filter"><label className="label-title">Status:</label>
+                                    <div className="col-md-4 status-filter"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
                                             <option value="" className="drop-option">-- Select Status--</option>
                                             {statusDropdown}
                                         </select>
                                     </div>
-                                    {/* <div className="">
-                                <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                            </div> */}
+                                    <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
+                                        {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                        <Select className="state-box"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            value={this.state.dcCodeObj}
+                                            onChange={(e) => this.handleDcCodeChange(e)}
+                                            options={dcData}
+                                            placeholder="--Select DC Code--"
+                                        />
+                                    </div>
                                 </div></div>
                         </div>}
                     <DataTableDynamic
