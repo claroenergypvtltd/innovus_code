@@ -47,13 +47,28 @@ class ShopDetails extends React.Component {
     }
 
     render() {
+        let shopAddLat;
+        let shopAddLong
         const profile = this.props.profileData ? this.props.profileData : [];
         let shopAddress1 = profile.shopAddress && profile.shopAddress.address1 ? profile.shopAddress.address1 : '';
         let shopAddress2 = profile.shopAddress && profile.shopAddress.address2 ? profile.shopAddress.address2 : '';
+        let loc = [{ "lat": "9.91783", "long": "78.1213" }]
+        // console.log("---loc----", JSON.parse(profile.shopAddress.location))
+
+        // debugger;
+        loc.map((item, index) => {
+            shopAddLat = item.lat
+            shopAddLong = item.long
+        })
+        // console.log("---loc----", profile.shopAddress.location.split(""))
+        // let parseLocaddress = parseLoc.split('"', 2)
+        // let shopAddressLat = profile.shopAddress && profile.shopAddress.location ? profile.shopAddress.lat : '';
+        // let shopAddressLng = profile.shopAddress && profile.shopAddress.location ? profile.shopAddress.lng : '';
         let shopImg = noimg;
         if (profile.shopAddress && profile.shopAddress.image) {
             shopImg = imageBaseUrl + profile.shopAddress.image
         }
+        let mapPinString = "http://www.google.com/maps/place/" + shopAddLat + ',' + shopAddLong
         // const getname = profile.name.split('_');
         return (
             <div className="farm-tab p-1">
@@ -130,9 +145,17 @@ class ShopDetails extends React.Component {
                                     </p>
                                 </div>
                                 <span>
-                                    <div className="color-title">
-                                        <i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>{profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name}
-                                    </div>
+                                    <button className="common-btn mt-2 ml-0">
+                                        <a target="_blank" href={mapPinString} className="text-white" ><i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>View on Map</a>
+                                    </button>
+                                    {/* <div className="color-title">
+                                        <button className="common-btn mt-2 ml-0">
+                                            <a target="_blank" href={mapPinString} ><i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>View on Map</a>
+                                        </button> */}
+
+                                    {/* <i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>{profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name} */}
+                                    {/* </div> */}
+                                    {/* <a href={mapPinString} target="_blank">Open in google map</a> */}
                                 </span>
                             </div>
                         </div>

@@ -97,8 +97,8 @@ export const Translation = {
             "EDITTITLE": "Edit Crop",
             "CROP_NAME": "Crop Name",
             "UPDATE_WEIGHT": "Update Weight",
-            "TOTAL_QUANTITY": "Total Quantity",
-            "UPDATE_QUANTITY": "Update Quantity",
+            "TOTAL_QUANTITY": "Available Quantity",
+            "UPDATE_QUANTITY": "Increase/Decrease Quantity",
             "DCCODE": "DC Code"
         },
 

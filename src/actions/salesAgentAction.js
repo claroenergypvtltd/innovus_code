@@ -69,7 +69,11 @@ export const submitSalesAgent = (formData, isEdit) => dispatch => {
 }
 
 export const getDcCodeData = (dcData) => {
-    return httpServices.get(endPoint.dcCodeSearch + '?search=' + dcData.search).then(resp => {
+    let searchDCcode; let roleId;
+    // searchDCcode = dcData.search ? '?search=' + dcData.search : ''
+    searchDCcode = dcData.search
+    roleId = dcData.roleId ? '&roleId=' + dcData.roleId : ''
+    return httpServices.get(endPoint.dcCodeSearch + '?search=' + dcData.search + roleId).then(resp => {
         if (resp && resp.data) {
             return resp.data
         }

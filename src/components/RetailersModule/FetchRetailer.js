@@ -22,6 +22,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import TransferAgent from './TransferAgent'
 import { SearchBar } from '../../shared'
+import { getDcCodeData } from '../../actions/salesAgentAction';
 
 
 class FetchRetailer extends React.Component {
@@ -43,7 +44,8 @@ class FetchRetailer extends React.Component {
             endDate: moment(),
             selectedDatas: [],
             advanceSearch: false,
-            popup: false
+            popup: false,
+            dcCode: ''
         }
     }
     componentWillMount() {
@@ -65,20 +67,17 @@ class FetchRetailer extends React.Component {
             this.setState({ stateData: resp && resp.data })
         })
     }
-
     getDCData = () => {
-
         let obj = {
+            roleId: 2,
             search: this.state.dcCode
         }
-        // getDcCodeData(obj).then(resp => {
-        //     if (resp) {
-
-        //         this.setState({ dcCodeData: resp })
-        //     }
-        // })
+        getDcCodeData(obj).then(resp => {
+            if (resp) {
+                this.setState({ dcCodeData: resp })
+            }
+        })
     }
-
     handleInputChange = (e) => {
         let obj = {};
         if (e.target.name == "stateId" || e.target.name == "cityId") {
@@ -166,7 +165,7 @@ class FetchRetailer extends React.Component {
         let user = {};
         if (status == 'reset') {
             this.setState({
-                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: '', search: ''
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: '', search: '', dcCode: '', dcCodeObj: ''
             }, () => {
                 user.roleId = 2;
                 user.search = this.state.search;
@@ -190,6 +189,10 @@ class FetchRetailer extends React.Component {
             if (this.state.agentId) {
                 user.agentId = this.state.agentId;
             }
+            if (this.state.dcCode) {
+                user.dcCode = this.state.dcCode;
+            }
+
             user.roleId = 2;
             user.search = this.state.search;
             this.setState({
@@ -197,8 +200,6 @@ class FetchRetailer extends React.Component {
             })
             this.props.fetchRetailers(user);
         }
-
-
     };
     fetchAgents = () => {
         let user = {};
@@ -304,17 +305,19 @@ class FetchRetailer extends React.Component {
             this.getRetailerList()
         })
     }
-
     handleRowChange = (Data) => {
         console.log('checkbox data', Data);
         this.setState({ selectedDatas: Data })
     }
-
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => {
+            this.getRetailerList()
+        })
+    };
     onCloseModal = (type) => {
         this.setState({ open: false, popup: false, selectedDatas: [] })
         this.getRetailerList();
     };
-
     onOpenModal = (e) => {
         e.preventDefault();
         if (this.state.selectedDatas && this.state.selectedDatas.length > 0) {
@@ -323,7 +326,6 @@ class FetchRetailer extends React.Component {
             toastr.error("Please Select any Customer");
         }
     };
-
     enableAdvanceSearch = (e) => {
         e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
@@ -339,7 +341,6 @@ class FetchRetailer extends React.Component {
             this.getRetailerList();
         }
     }
-
     resetSearch = () => {
         if (this.state.search) {
             this.setState({ search: '' }, () => {
@@ -347,12 +348,9 @@ class FetchRetailer extends React.Component {
             });
         }
     }
-
     handleSearch = (e) => {
         this.setState({ search: e.target.value })
     }
-
-
     // handleClearRows = () => {
     //     // this.setState({ toggledClearRows: !this.state.toggledClearRows})
     //     return true
