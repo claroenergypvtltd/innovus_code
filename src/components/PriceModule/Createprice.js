@@ -113,7 +113,6 @@ class CreatePrice extends Component {
             if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].categoryAmount) {
                 showweight = nextProps.priceData.specificData.datas[0].categoryAmount.totalQuantity
             }
-            // debugger;
             if (this.state.priceId) {
                 this.setState({ weight: showweight })
 

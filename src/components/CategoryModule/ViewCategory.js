@@ -154,7 +154,6 @@ class ViewCategory extends Component {
     };
 
     handleStatusUpdate = (isActive, subcategoryId) => {
-        debugger;
         let parentId = this.props.location && this.props.location.state && this.props.location.state.categoryId
 
         const formData = new FormData();
