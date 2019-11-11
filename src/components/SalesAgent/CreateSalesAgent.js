@@ -67,7 +67,7 @@ class CreateSalesAgent extends React.Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name && this.state.mobileNumber) {
+        if (this.state.name && this.state.mobileNumber && this.state.dcCode) {
 
             const formData = new FormData();
             formData.append("name", this.state.name);
@@ -151,12 +151,12 @@ class CreateSalesAgent extends React.Component {
                                         required
 
                                     />
-                                    {this.state.submitted && !this.state.surveyingArea && <div className="mandatory">{window.strings['SALES_AGENT']['SURVEY_AREA'] + window.strings['ISREQUIRED']}</div>}
+                                    {/* {this.state.submitted && !this.state.surveyingArea && <div className="mandatory">{window.strings['SALES_AGENT']['SURVEY_AREA'] + window.strings['ISREQUIRED']}</div>} */}
                                 </div>
 
                                 <div className="form-group col-md-12">
 
-                                    <label>{window.strings['SALES_AGENT']['DC_CODE']}</label>
+                                    <label>{window.strings['SALES_AGENT']['DC_CODE'] + ' *'}</label>
 
                                     <input
                                         type="text"

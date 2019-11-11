@@ -27,6 +27,9 @@ class CreatePrice extends Component {
 
 
     componentDidMount() {
+        if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
+            this.setState({ priceId: this.props.location.state.priceId })
+        }
         this.setState({ weight: '', subCategoryDatas: [] }, () => {
             this.editPrice();
             this.setWeightData();
@@ -104,17 +107,17 @@ class CreatePrice extends Component {
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
 
             let Data = nextProps.categoryData.specificData.data;
-            this.setState({ subCategoryDatas: Data.datas })
+            this.setState({ editSubCategoryDatas: Data.datas })
         }
         if (nextProps.priceData && nextProps.priceData.specificData && nextProps.priceData.specificData.datas) {
             if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].categoryAmount) {
                 showweight = nextProps.priceData.specificData.datas[0].categoryAmount.totalQuantity
             }
             // debugger;
-            // if (this.props && this.props.location && this.props.location.state && this.props.location.state.priceId) {
-            this.setState({ weight: showweight })
+            if (this.state.priceId) {
+                this.setState({ weight: showweight })
 
-            // }
+            }
         }
 
 
@@ -212,10 +215,15 @@ class CreatePrice extends Component {
             }
         });
 
-        const subCategoryDropDown = this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {
+        const subCategoryDropDown = this.state.priceId ? this.state.editSubCategoryDatas && this.state.editSubCategoryDatas.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
-        });
+        })
+            : this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {
+                return <option key={index}
+                    value={item.id}> {item.name}</option>
+            });
+
         const weightDropDown = this.state.weightDatas && this.state.weightDatas.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
@@ -228,7 +236,7 @@ class CreatePrice extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h4 className="user-title">{this.state.categoryId ? window.strings['PRICE']['EDITTITLE'] : window.strings['PRICE']['CREATETITLE']}</h4>
+                        <h4 className="user-title">{this.state.priceId ? window.strings['PRICE']['EDITTITLE'] : window.strings['PRICE']['CREATETITLE']}</h4>
                         <div className="">
                             <div className="main-wrapper pt-3">
                                 <div className="col-md-8 add-price">
@@ -373,7 +381,7 @@ class CreatePrice extends Component {
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
 
@@ -385,7 +393,7 @@ class CreatePrice extends Component {
                                                 <option value="1">Currency</option>
                                                 <option value="2">Percentage</option>
                                             </select>
-                                            {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['OFFER'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.offerId && <div className="mandatory">{window.strings['PRICE']['OFFER'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
                                     </form>
