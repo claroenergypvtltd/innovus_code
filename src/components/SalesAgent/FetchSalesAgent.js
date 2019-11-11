@@ -156,6 +156,16 @@ class FetchSalesAgent extends React.Component {
                                 <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                     {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                     <Select className="state-box ml-4"
+                                        styles={{
+                                            control: base => ({
+                                                ...base,
+                                                borderColor: 'hsl(0,0%,80%)',
+                                                boxShadow: '#FE988D',
+                                                '&:hover': {
+                                                    borderColor: '#FE988D'
+                                                }
+                                            })
+                                        }}
                                         value={this.state.dcCodeObj}
                                         onChange={(e) => this.handleDcCodeChange(e)}
                                         options={dcData}
