@@ -270,10 +270,10 @@ class CreatePrice extends Component {
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-4">
-                                            <label>{window.strings.CROP.TOTAL_QUANTITY + ' *'}</label>
+                                            <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
                                             <input
                                                 type="number"
-                                                placeholder="Total Quantity"
+                                                placeholder="Available Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.weight
                                                 })}
@@ -287,10 +287,10 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-4">
-                                            <label>{window.strings.CROP.UPDATE_QUANTITY + ' *'}</label>
+                                            <label>{window.strings.CROP.UPDATE_QUANTITY}</label>
                                             <input
                                                 type="number"
-                                                placeholder="Update Quantity"
+                                                placeholder="Increase/Decrease Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.weight
                                                 })}
