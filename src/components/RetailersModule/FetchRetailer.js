@@ -455,8 +455,9 @@ class FetchRetailer extends React.Component {
         let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} />
 
         return (
-
             <div className=" mt-4">
+                        <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
+
                 <div className="retailersearchdiv">
                     <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                     <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}
@@ -631,9 +632,6 @@ class FetchRetailer extends React.Component {
                         tableDatas={this.state.data} handleView={this.itemView}
                         pagination={true} onRowSelected={this.handleRowChange}
                     /> */}
-
-                    <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
-
                     {/* <GoogleMapPage /> */}
                 </div></div>
         );

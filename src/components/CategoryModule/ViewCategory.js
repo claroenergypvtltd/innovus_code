@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DeleteCategory, getSpecificCategory, getCategoryDCCode } from '../../actions/categoryAction';
+import { DeleteCategory, getSpecificCategory, getCategoryDCCode, SubmitCategory } from '../../actions/categoryAction';
 import { TableData } from '../../shared/Table'
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
@@ -122,6 +122,7 @@ class ViewCategory extends Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
     }
 
+
     itemDelete = (id) => {
         this.props.DeleteCategory(id);
     }
@@ -152,7 +153,25 @@ class ViewCategory extends Component {
         this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSpecificData() })
     };
 
+    handleStatusUpdate = (isActive, subcategoryId) => {
+        let parentId = this.props.location && this.props.location.state && this.props.location.state.categoryId
 
+        const formData = new FormData();
+        formData.append("isActive", isActive);
+        formData.append("parentId", parentId);
+        formData.append("categoryId", subcategoryId);
+        this.props.SubmitCategory(formData, parentId)
+    }
+
+    handleStatusChange = (e, data) => {
+        let message = "Are u sure want to update ?";
+        let value = e.target.value
+        const toastrConfirmOptions = {
+            onOk: () => { this.handleStatusUpdate(value, data) },
+            onCancel: () => { this.getSpecificData() }
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, "Status Update")
+    }
 
     render() {
         let dcData = [];
@@ -168,9 +187,17 @@ class ViewCategory extends Component {
 
         let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
-            return { "itemList": [item.name, catImg, item.description, item.dcCode], "itemId": item.id }
-        })
 
+
+            let selectedValue = item.isActive;
+            let statusChange = <select onChange={(e) => this.handleStatusChange(e, item.id)}>
+                {/* {statusDropdown} */}
+                <option value="0" selected={selectedValue}>Active</option>
+                <option value="1" selected={selectedValue}>In Active</option>
+            </select >
+
+            return { "itemList": [item.name, catImg, item.description, item.dcCode, statusChange], "itemId": item.id }
+        })
 
         return (
             <div>
@@ -227,8 +254,12 @@ class ViewCategory extends Component {
                 <div className="col-md-6 s-left">
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 </div> */}
-                <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
-                    handleEdit={this.itemEdit} />
+                <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
+                // handleDelete={this.handleDelete}
+                //     handleEdit={this.itemEdit} 
+                // handleStatusChange={this.handleStatusChange}
+
+                />
                 <div className="row">
                     <div className="back-btn col-md-2"><button class="common-btn" onClick={this.redirectPage}>Back</button></div>
                     <div className="col-md-10">
@@ -259,4 +290,4 @@ ViewCategory.defaultProps = defaultProps;
 
 
 
-export default connect(mapStateToProps, { DeleteCategory, getSpecificCategory, fetchSalesAgent })(ViewCategory);
+export default connect(mapStateToProps, { DeleteCategory, getSpecificCategory, fetchSalesAgent, SubmitCategory })(ViewCategory);
