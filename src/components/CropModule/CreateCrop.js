@@ -92,8 +92,9 @@ class CreateCrop extends Component {
 
             })
         }
-        reader.readAsDataURL(file)
-
+        if (e.target.files && e.target.files[0]) {
+            reader.readAsDataURL(file)
+        }
 
     }
 
@@ -298,6 +299,7 @@ class CreateCrop extends Component {
                                                 'is-invalid': errors.image
                                             })}
                                             name="image"
+                                            accept="image/*"
                                             onChange={this.onhandleImageChange}
                                             required
 

@@ -59,7 +59,7 @@ class CategoryForm extends Component {
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     onhandleImageChange = (e) => {
@@ -75,7 +75,9 @@ class CategoryForm extends Component {
                 imagePreviewUrl: reader.result
             })
         }
-        reader.readAsDataURL(file)
+        if (e.target.files && e.target.files[0]) {
+            reader.readAsDataURL(file)
+        }
     }
 
     getSpecificCategory() {
@@ -207,6 +209,7 @@ class CategoryForm extends Component {
                                                     'is-invalid': errors.image
                                                 })}
                                                 name="image"
+                                                accept="image/*"
                                                 onChange={this.onhandleImageChange}
                                                 required
 

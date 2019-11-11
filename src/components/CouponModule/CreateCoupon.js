@@ -99,9 +99,9 @@ class CreateCoupon extends Component {
 
             })
         }
-        reader.readAsDataURL(file)
-
-
+        if (e.target.files && e.target.files[0]) {
+            reader.readAsDataURL(file)
+        }
     }
 
     getSpecificCouponData() {
@@ -302,6 +302,7 @@ class CreateCoupon extends Component {
                                                 })}
                                                 name="image"
                                                 onChange={this.onhandleImageChange}
+                                                accept="image/*"
                                                 required
 
                                             />
