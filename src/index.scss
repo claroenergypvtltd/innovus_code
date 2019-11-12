@@ -1794,6 +1794,25 @@ padding: 5px;
 .main-shop{
   border-right: 1px inset;
 }
+.active-box{
+  position: relative;
+}
+.active-btn{
+  background-color: #fff;
+  color: #aaa;
+  border: 2px solid #ff7b00;
+  border-radius: 20px;
+  padding: 6px;
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: 0;
+  width: auto;
+  min-width: 137px;
+  font-size: 15px;
+  position: absolute;
+  top: -61px;
+  right: 5px;
+}
 .accept-btn{
   color:#fff;
   background-color: #1CCE46;
@@ -2103,6 +2122,16 @@ display: flex;
 }
 .rejected{
   background-color: #EF4A4A;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  text-transform:capitalize;
+  padding: 2px 7px;
+  margin: auto;
+  width: 75px;
+}
+.inactive{
+  background-color:  #ff7b00;
   border: none;
   border-radius: 5px;
   color: #fff;

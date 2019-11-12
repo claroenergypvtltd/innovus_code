@@ -216,7 +216,7 @@ class FetchRetailer extends React.Component {
             let selectlist = newProps.list.datas;
             let agentDataList = newProps.agentData;
             let Lists = selectlist && selectlist.map(item => {
-                item.selectBox = this.viewCrop(item.id, item.status);
+                item.selectBox = this.viewCrop(item.id, item.status, item.isActive);
                 return item;
             })
             this.setState({
@@ -229,15 +229,27 @@ class FetchRetailer extends React.Component {
             this.getRetailerList();
         }
     }
-    viewCrop(RetstatusId, status) {
+    viewCrop(RetstatusId, status, isActive) {
         let statusClass;
-        if (status == 0) {
+
+
+
+        // else {
+        if (status == 0 && isActive == 1) {
             statusClass = window.strings.RETAILERS.PENDING
-        } else if (status == 1) {
+        } else if (status == 1 && isActive == 1) {
             statusClass = window.strings.RETAILERS.ACCEPTED
-        } else {
+        } else if (status == 2 && isActive == 1) {
             statusClass = window.strings.RETAILERS.REJECTED
         }
+        //  else if (isActive == 0) {
+        //     statusClass = window.strings.RETAILERS.INACTIVE
+        // }
+        // }
+
+
+        // statusClass = window.strings.RETAILERS.INACTIVE
+
         let ViewPage = <p className={statusClass} >{statusClass}</p>
         // const statusDropdown = resorceJSON.statusOptions.map((item, index) => {
         //     return <option value={index} selected={status == index ? true : false} className="drop-option">{item}</option>
@@ -296,7 +308,6 @@ class FetchRetailer extends React.Component {
         })
     };
     handleApply = (event, picker) => {
-        console.log('----picker--', picker);
         this.setState({
             dateChanged: true,
             startDate: picker.startDate,
@@ -431,6 +442,7 @@ class FetchRetailer extends React.Component {
             } else {
                 item.fullShopAddrss = '-'
             }
+            item.shopType = item.shopType && item.shopType.type
             item.cusId = item.cusId && item.cusId ? item.cusId : '-';
             item.created = moment(item.created).format("DD/MM/YYYY");
             // if (Object.keys(item.address).length > 1) {
@@ -454,7 +466,7 @@ class FetchRetailer extends React.Component {
 
         return (
             <div className=" mt-4">
-                        <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
+                <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
 
                 <div className="retailersearchdiv">
                     <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
