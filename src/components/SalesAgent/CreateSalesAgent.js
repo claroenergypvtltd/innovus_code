@@ -53,9 +53,11 @@ class CreateSalesAgent extends React.Component {
     }
 
     handleInputChange = (e) => {
-        this.setState({
+        e.charCode == 32 ? this.setState({
+            [e.target.name]: ''
+        }) : this.setState({
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     redirectPage = () => {
@@ -67,7 +69,7 @@ class CreateSalesAgent extends React.Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name && this.state.mobileNumber && this.state.dcCode) {
+        if (this.state.name != ' ' && this.state.mobileNumber && this.state.dcCode) {
 
             const formData = new FormData();
             formData.append("name", this.state.name);
@@ -110,6 +112,7 @@ class CreateSalesAgent extends React.Component {
                                         })}
                                         name="name"
                                         onChange={this.handleInputChange}
+                                        onKeyPress={this.handleInputChange}
                                         value={this.state.name}
                                         required
                                     />
