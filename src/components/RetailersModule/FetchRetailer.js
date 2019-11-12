@@ -235,7 +235,10 @@ class FetchRetailer extends React.Component {
 
 
         // else {
-        if (status == 0 && isActive == 1) {
+        if (isActive == 0) {
+            statusClass = window.strings.RETAILERS.INACTIVE
+        }
+        else if (status == 0 && isActive == 1) {
             statusClass = window.strings.RETAILERS.PENDING
         } else if (status == 1 && isActive == 1) {
             statusClass = window.strings.RETAILERS.ACCEPTED
