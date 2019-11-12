@@ -1339,7 +1339,9 @@ svg{
  // font-size: 15px;
 
 }
-
+textarea.form-control{
+  resize: none;
+}
 /****************************List Crop************************/
 .form-search{
   //display: flex;

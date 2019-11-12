@@ -131,7 +131,7 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
+        this.setState({ [e.target.name]: e.target.value })
     }
     handleCategoryChange = (e) => {
         this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
@@ -177,6 +177,8 @@ class CreatePrice extends Component {
         if (this.state.categoryId && this.state.price && this.state.weightId && this.state.boxQuantity) {
 
             let isUpdate = false;
+            let flag;
+            this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
             if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
                 isUpdate = true;
             }
@@ -191,12 +193,12 @@ class CreatePrice extends Component {
                 "totalQuantitySize": this.state.weightId,
                 "boxQuantitySize": this.state.weightId,
                 "discountValue": this.state.offer,
-                "discountUnit": this.state.offerId
+                "discountUnit": this.state.offerId,
+                "flag": flag
             }
 
             this.props.submitPrice(obj, isUpdate);
         }
-
     }
     listPath = () => {
         this.props.history.goBack();
@@ -238,7 +240,7 @@ class CreatePrice extends Component {
                         <h4 className="user-title">{this.state.priceId ? window.strings['PRICE']['EDITTITLE'] : window.strings['PRICE']['CREATETITLE']}</h4>
                         <div className="">
                             <div className="main-wrapper pt-3">
-                                <div className="col-md-11 add-price">
+                                <div className="col-md-10 add-price">
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
                                         {/* <div className="col-md-4 row"> */}
@@ -251,10 +253,10 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
                                             {this.state.priceId && this.state.submitted && this.state.parentId == 0 && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        <div className="form-group col-md-4">
+                                        <div className="form-group col-md-4 px-0">
                                             <label>{window.strings['CATEGORY']['DC_CODE'] + ' *'}</label>
                                             <select required name="dcCode" className="form-control" value={this.state.dcCode} onChange={this.handleDcCodeSubCategory}>
-                                                <option value=" ">Select DC Code</option>
+                                                <option value="" >Select DC Code</option>
                                                 {dcCodeData}
                                             </select>
                                             {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['CATEGORY']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
@@ -287,7 +289,7 @@ class CreatePrice extends Component {
                                             {/* {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
-                                        <div className="form-group col-md-4">
+                                        <div className="form-group col-md-4 px-0">
                                             <label>{window.strings.CROP.UPDATE_QUANTITY}</label>
                                             <input
                                                 type="number"
