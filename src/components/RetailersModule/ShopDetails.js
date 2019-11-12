@@ -16,8 +16,19 @@ class ShopDetails extends React.Component {
         super(props);
         this.state = {
             tabIndex: 0,
-            showStatusBtn: true
+            showStatusBtn: true,
+            activeButton: false,
+            rejectKey: false
         };
+    }
+
+    componentWillReceiveProps(newProps) {
+        debugger;
+        if (newProps.profileData && newProps.profileData.isActive == "0") {
+            this.setState({ activeButton: false });
+        } else {
+            this.setState({ activeButton: true });
+        }
     }
 
     redirectPage = () => {
@@ -39,9 +50,24 @@ class ShopDetails extends React.Component {
                     if (resp && resp.status == 200) {
                         console.log(resp, '-----status-------');
                         // toastr.success(resp.message);
-                        this.setState({
-                            showStatusBtn: false
-                        })
+                        let activeKey;
+                        if (this.state.activeButton) {
+                            activeKey = false
+                        } else {
+                            activeKey = true
+                        }
+                        if (isActive) {
+                            this.setState({
+                                activeButton: activeKey
+                            })
+                        } else {
+                            this.setState({ showStatusBtn: false });
+                        }
+
+                        if (resp.data && resp.data.status == "2") {
+                            this.setState({ rejectKey: true });
+                        }
+
                     }
                 })
                 // this.context.router.history.goBack();
@@ -68,13 +94,21 @@ class ShopDetails extends React.Component {
         }
         let mapPinString = "http://www.google.com/maps/place/" + shopAddressLat + ',' + shopAddressLng
         // const getname = profile.name.split('_');
+        debugger;
         return (
             <div className="farm-tab p-1 active-box">
                 {
-                    (profile.status == 0 || profile.status == 1) &&
+                    (profile.status == 0 || profile.status == 1) && !this.state.rejectKey &&
                     <div className="assign-box">
-                        {profile.isActive == 0 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 1, 'isActive')}>InActive</button>}
-                        {profile.isActive == 1 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>Active</button>}
+                        {!this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 1, 'isActive')}>Active</button>}
+                        {this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>InActive</button>}
+
+                        {/* {!this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>InActive</button>}
+                        {this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 1, 'isActive')}>Active</button>} */}
+
+                        {/* activeButton */}
+
+                        {/* {profile.isActive == 1 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>Active</button>} */}
                     </div>
                 }
                 <div className="row">

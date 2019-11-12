@@ -1,4 +1,4 @@
-// export const baseUrl = 'http://192.168.1.39:8001/api/';
+// export const baseUrl = 'http://192.168.1.60:8001/api/';
 // // export const imageBaseUrl = 'http://192.168.1.5:8001/images/';
 // export const imageBaseUrl = 'https://innovus-bucket.s3.ap-south-1.amazonaws.com/';
 // // const baseUrl = "http://demo.greatinnovus.com:9801/";
