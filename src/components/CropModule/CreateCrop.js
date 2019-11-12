@@ -103,7 +103,7 @@ class CreateCrop extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name && this.state.description && this.state.dcCode) {
+        if (this.state.name && this.state.dcCode && this.state.image) {
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);

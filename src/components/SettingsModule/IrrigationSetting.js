@@ -111,6 +111,7 @@ class IrrigationSetting extends Component {
 
             let obj = {
                 "irrigationCostId": this.state.irrigationCostId,
+                "stateId": this.state.stateId,
                 "cityId": this.state.cityId,
                 "amount": this.state.amount,
                 "areasize": this.state.areaSize
