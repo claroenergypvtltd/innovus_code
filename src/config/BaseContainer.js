@@ -125,20 +125,8 @@ export class BaseContainer extends Component {
                                                             }
                                                         })
                                                     } else {
-                                                        if (orgPath === item.path + "/add") {
-                                                            pathName = item.path + "/add";
-                                                        } else if (orgPath === item.path + "/edit/" + editId) {
-                                                            pathName = item.path + "/edit/" + editId;
-                                                        } else if (orgPath === item.path) {
-                                                            pathName = item.path;
-                                                        }
-                                                        else if (item.path == "/user") {
-                                                            if (orgPath === item.path + "/retailer/view/" + editId) {
-                                                                pathName = item.path + "/retailer/view/" + editId;
-                                                            }
-                                                        }
-                                                        else if (orgPath === item.path + "/view/" + editId) {
-                                                            pathName = item.path + "/view/" + editId;
+                                                        if (orgPath && orgPath.includes(item.path)) {
+                                                            pathName = orgPath;
                                                         }
                                                     }
 
