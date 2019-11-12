@@ -72,7 +72,7 @@ class FetchPrice extends Component {
         }
     }
     resetSearch = () => {
-        if (this.state.search) {
+        if (this.state.search || this.state.dcCodeObj) {
             this.setState({ search: '', dCCode: '', dcCodeObj: '' }, () => {
                 this.getPriceList();
             });
@@ -148,7 +148,7 @@ class FetchPrice extends Component {
                     // weightUnits, 
                     amount.includes("null") ? '-' : amount,
                     // priceUnit,
-                    boxQuantity.includes("null")  ? '-' : boxQuantity,
+                    boxQuantity.includes("null") ? '-' : boxQuantity,
                     // boxQuantitySize
                 ], "itemId": item.id
             }

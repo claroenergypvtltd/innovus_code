@@ -238,7 +238,7 @@ class CreatePrice extends Component {
                         <h4 className="user-title">{this.state.priceId ? window.strings['PRICE']['EDITTITLE'] : window.strings['PRICE']['CREATETITLE']}</h4>
                         <div className="">
                             <div className="main-wrapper pt-3">
-                                <div className="col-md-8 add-price">
+                                <div className="col-md-11 add-price">
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
                                         {/* <div className="col-md-4 row"> */}
@@ -249,11 +249,12 @@ class CreatePrice extends Component {
                                                 {categoryDropDown}
                                             </select>
                                             {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.priceId && this.state.submitted && this.state.parentId == 0 && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label>{window.strings['CATEGORY']['DC_CODE'] + ' *'}</label>
                                             <select required name="dcCode" className="form-control" value={this.state.dcCode} onChange={this.handleDcCodeSubCategory}>
-                                                <option value="0">Select DC Code</option>
+                                                <option value=" ">Select DC Code</option>
                                                 {dcCodeData}
                                             </select>
                                             {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['CATEGORY']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}

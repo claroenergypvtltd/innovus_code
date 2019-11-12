@@ -195,8 +195,9 @@ class ViewCategory extends Component {
                 <option value="0" selected={selectedValue}>Active</option>
                 <option value="1" selected={selectedValue}>In Active</option>
             </select >
-
-            return { "itemList": [item.name, catImg, item.description, item.dcCode, statusChange], "itemId": item.id }
+            let description = item.description == '' ? '-' : item.description;
+            let dcCode = item.dcCode == '' ? '-' : item.dcCode;
+            return { "itemList": [item.name, catImg, description, dcCode, statusChange], "itemId": item.id }
         })
 
         return (

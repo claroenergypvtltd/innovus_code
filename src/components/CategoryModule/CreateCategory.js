@@ -98,7 +98,7 @@ class CategoryForm extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name && this.state.description) {
+        if (this.state.name && this.state.image) {
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);
