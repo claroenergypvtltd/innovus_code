@@ -23,23 +23,28 @@ class ShopDetails extends React.Component {
     redirectPage = () => {
         this.context.router.history.goBack();
     }
-    updateStatus(RetId, status) {
+    updateStatus(RetId, status, isActive) {
         let message = window.strings.UPDATEMESSAGE;
         const toastrConfirmOptions = {
             onOk: () => {
                 const formData = new FormData();
                 formData.append("userId", RetId);
                 formData.append("roleId", 2);
-                formData.append("status", status);
+                if (isActive == "isActive") {
+                    formData.append("isActive", status);
+                } else {
+                    formData.append("status", status);
+                }
                 updateStatusRetailer(formData).then(resp => {
                     if (resp && resp.status == 200) {
+                        console.log(resp, '-----status-------');
                         // toastr.success(resp.message);
                         this.setState({
                             showStatusBtn: false
                         })
                     }
                 })
-                this.context.router.history.goBack();
+                // this.context.router.history.goBack();
             },
             onCancel: () => { }
         };
@@ -53,25 +58,25 @@ class ShopDetails extends React.Component {
         let shopAddress1 = profile.shopAddress && profile.shopAddress.address1 ? profile.shopAddress.address1 : '';
         let shopAddress2 = profile.shopAddress && profile.shopAddress.address2 ? profile.shopAddress.address2 : '';
         let loc = [{ "lat": "9.91783", "long": "78.1213" }]
-        // console.log("---loc----", JSON.parse(profile.shopAddress.location))
-
-        // debugger;
-        loc.map((item, index) => {
-            shopAddLat = item.lat
-            shopAddLong = item.long
-        })
-        // console.log("---loc----", profile.shopAddress.location.split(""))
-        // let parseLocaddress = parseLoc.split('"', 2)
-        // let shopAddressLat = profile.shopAddress && profile.shopAddress.location ? profile.shopAddress.lat : '';
-        // let shopAddressLng = profile.shopAddress && profile.shopAddress.location ? profile.shopAddress.lng : '';
+        let locc = profile.shopAddress && profile.shopAddress.location.replace(/[\[\]']+/g, '');
+        let splitLoc = locc && locc.split(",");
+        let shopAddressLat = splitLoc && splitLoc[0] ? splitLoc[0].replace(/"/g, "") : '';
+        let shopAddressLng = splitLoc && splitLoc[1] ? splitLoc[1].replace(/"/g, "") : '';
         let shopImg = noimg;
         if (profile.shopAddress && profile.shopAddress.image) {
             shopImg = imageBaseUrl + profile.shopAddress.image
         }
-        let mapPinString = "http://www.google.com/maps/place/" + shopAddLat + ',' + shopAddLong
+        let mapPinString = "http://www.google.com/maps/place/" + shopAddressLat + ',' + shopAddressLng
         // const getname = profile.name.split('_');
         return (
-            <div className="farm-tab p-1">
+            <div className="farm-tab p-1 active-box">
+                {
+                    (profile.status == 0 || profile.status == 1) &&
+                    <div className="assign-box">
+                        {profile.isActive == 0 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 1, 'isActive')}>InActive</button>}
+                        {profile.isActive == 1 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>Active</button>}
+                    </div>
+                }
                 <div className="row">
                     <div className="col-sm-4">
                         <div className="farm-card bg-white"

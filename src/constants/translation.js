@@ -249,7 +249,8 @@ export const Translation = {
             "DRIVING_LICENSE_NUMBER": "Driving License Number",
             "PHOTO_ANGLE": "Front Side",
             "CUSID": 'Customer ID',
-            'AGENTID': 'Agent ID'
+            'AGENTID': 'Agent ID',
+            'INACTIVE': 'inactive'
         },
         "SALES_AGENT": {
             "ADD_AGENT": "ADD AGENT",

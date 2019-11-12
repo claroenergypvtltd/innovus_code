@@ -29,6 +29,7 @@ export const resorceJSON = {
     { name: 'Shop Name', selector: 'shopNames', sortable: true },
     { name: 'Shop Address', selector: 'shopAddrss', sortable: true },
     { name: 'Phone Number', selector: 'mobileNumber', sortable: true },
+    { name: 'Shop Type', selector: 'shopType', sortable: true },
     { name: 'Agent Name', selector: 'agentName', sortable: true },
 
 
@@ -83,5 +84,5 @@ export const resorceJSON = {
     { name: 'Operating Hours', selector: 'operatingHour', sortable: true },
   ],
 
-  statusOptions: ['Pending', 'Accepted', 'Rejected'],
+  statusOptions: ['Pending', 'Accepted', 'Rejected', 'InActive'],
 };
