@@ -1454,16 +1454,16 @@ select:focus {
 .tick-color{
   background-image: url(/static/media/Sprite_image.f8e75c05.png);
   background-repeat: no-repeat;
-  background-position: -6px -1843px;
+  background-position: -9px -1843px;
   text-align: right;
-  padding: 6px 18px;
+  padding:5px 15px;
 }
 .tick-light{
   background-image: url(/static/media/Sprite_image.f8e75c05.png);
   background-repeat: no-repeat;
-  background-position: -9px -1883px;
+  background-position: -10px -1883px;
   text-align: right;
-  padding: 5px 16px;
+  padding: 5px 15px;
 }
 .order-btn {
   border: none;
@@ -1491,7 +1491,7 @@ a.order-btn:hover {
 .bs-stepper-header {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .bs-stepper-label {
   display: inline-block;

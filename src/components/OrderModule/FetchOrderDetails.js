@@ -184,7 +184,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 1 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label">Order placed</span>
+                                <span class="bs-stepper-label m-0">Order placed</span>
                             </div>
                         </div>
                         <div class="bs-stepper-line"></div>
@@ -192,7 +192,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 2 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label">Order Accepted</span>
+                                <span class="bs-stepper-label m-0">Order Accepted</span>
                             </div>
                         </div>
                         <div class="bs-stepper-line"></div>
@@ -200,7 +200,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 3 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label">Order processed</span>
+                                <span class="bs-stepper-label m-0">Order processed</span>
                             </div>
                         </div>
                         <div class="bs-stepper-line"></div>
@@ -208,7 +208,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 4 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label">shipped</span>
+                                <span class="bs-stepper-label m-0">shipped</span>
                             </div>
                         </div>
                         <div class="bs-stepper-line"></div>
@@ -216,7 +216,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 5 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label">At distrubed Center</span>
+                                <span class="bs-stepper-label m-0">At distrubed Center</span>
                             </div>
                         </div>
                         <div class="bs-stepper-line"></div>
@@ -224,7 +224,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 6 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label">Delivered</span>
+                                <span class="bs-stepper-label m-0">Delivered</span>
                             </div>
                         </div>
                         <div class="bs-stepper-line"></div>
@@ -232,7 +232,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 7 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label">cancel</span>
+                                <span class="bs-stepper-label m-0">cancel</span>
                             </div>
                         </div>
                         {/* <div class="bs-stepper-line"></div> */}
