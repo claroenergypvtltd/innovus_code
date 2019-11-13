@@ -57,7 +57,7 @@ class CategoryForm extends Component {
     }
 
     handleInputChange = (e) => {
-        e.target.value == ' ' || e.target.value[0] == ' ' ? e.target.value = ''
+        e.charCode == 32 && e.target.value == ' ' || e.target.value[0] == ' ' ? e.target.value = ''
             : this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -149,6 +149,7 @@ class CategoryForm extends Component {
                                                 })}
                                                 name="name"
                                                 onChange={this.handleInputChange}
+                                                onKeyPress={this.handleInputChange}
                                                 value={this.state.name}
                                                 required
 
