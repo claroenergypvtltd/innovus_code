@@ -72,7 +72,7 @@ export function ReactBarChart(props) {
         <div>
             <BarChart
                 width={500}
-                height={300}
+                height={400}
                 data={barChartdata}
                 margin={{
                     top: 5, right: 30, left: 20, bottom: 5,

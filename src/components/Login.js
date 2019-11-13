@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authentication';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/login_logo.png';
 import classnames from 'classnames';
 import { path } from '../constants';
 import '../assets/css/login.scss';

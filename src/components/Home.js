@@ -54,41 +54,44 @@ class Home extends Component {
                             </div>
                         </a>
                     </div>
-                    <div className="LineChart main-wrapper chart-box">
-                        <div className="row m-0">
-                            <div className="col-md-6">
-                                <span className="graph-title">User Analytics</span>
-                                <span className="graph-label">This Week</span>
-                            </div>
-                            <div className="col-md-6 d-flex justify-content-end">
-                                <span className="farm-graph">Farmer</span>
-                                <span className="chart-graph">Retailer</span>
-                            </div>
-                            <ReactPieChart userdata={this.state.Userlist} />
-                        </div>
-                    </div>
-                    <div className="LineChart main-wrapper chart-box">
-                        <div className="row m-0">
-                            <div className="col-md-8">
-                                <span className="graph-title">Delivery Orders</span>
-                                {/* <span className="graph-label">This Week</span> */}
-                                <select className="drop-select" onChange={(e) => this.getDateType(e)}>
-                                    <option value="week" className="drop-option" >This Week</option>
-                                    <option value="month" className="drop-option">This Month</option>
-                                    <option value="year" className="drop-option">This Year</option>
-                                </select>
-                            </div>
-                            <div className="col-md-4 d-flex justify-content-end">
-                                <span className="order-graph">Orders</span>
-                                <span className="chart-graph">Estimate</span>
-                            </div>
-                            <ReactBarChart />
-                        </div>
-                    </div>
+
                 </div>
                 <div className="row dashboard-graph">
-                    <div className="col-md-6"></div>
-                    <div className="col-md-6"></div>
+                    <div className="col-md-6">
+                        <div className="LineChart main-wrapper chart-box">
+                            <div className="row m-0">
+                                <div className="col-md-6">
+                                    <span className="graph-title">User Analytics</span>
+                                    <span className="graph-label">This Week</span>
+                                </div>
+                                <div className="col-md-6 d-flex justify-content-end">
+                                    <span className="farm-graph">Farmer</span>
+                                    <span className="chart-graph">Retailer</span>
+                                </div>
+                                <ReactPieChart userdata={this.state.Userlist} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="LineChart main-wrapper chart-box">
+                            <div className="row m-0">
+                                <div className="col-md-8">
+                                    <span className="graph-title">Delivery Orders</span>
+                                    {/* <span className="graph-label">This Week</span> */}
+                                    <select className="drop-select" onChange={(e) => this.getDateType(e)}>
+                                        <option value="week" className="drop-option" >This Week</option>
+                                        <option value="month" className="drop-option">This Month</option>
+                                        <option value="year" className="drop-option">This Year</option>
+                                    </select>
+                                </div>
+                                <div className="col-md-4 d-flex justify-content-end">
+                                    <span className="order-graph">Orders</span>
+                                    <span className="chart-graph">Estimate</span>
+                                </div>
+                                <ReactBarChart />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {/* <label for="search-bar-0">
                     <span class="sr-only">Search this table</span>
