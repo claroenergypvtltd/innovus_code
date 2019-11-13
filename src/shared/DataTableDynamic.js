@@ -90,6 +90,7 @@ class DataTableDynamic extends React.Component {
         background: 'red'
       }
     }
+
     let selectableRows = false;
     if (this.props && this.props.handleRowChange) {
       selectableRows = true

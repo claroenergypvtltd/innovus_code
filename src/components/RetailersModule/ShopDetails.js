@@ -23,7 +23,6 @@ class ShopDetails extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        debugger;
         if (newProps.profileData && newProps.profileData.isActive == "0") {
             this.setState({ activeButton: false });
         } else {
@@ -94,7 +93,6 @@ class ShopDetails extends React.Component {
         }
         let mapPinString = "http://www.google.com/maps/place/" + shopAddressLat + ',' + shopAddressLng
         // const getname = profile.name.split('_');
-        debugger;
         return (
             <div className="farm-tab p-1 active-box">
                 {
@@ -177,7 +175,7 @@ class ShopDetails extends React.Component {
                                 <div className="farmer-address">
                                     <h4 className="user-title">Address</h4>
                                     <p className="centext title sub-farm">
-                                        {profile.shopAddress && profile.shopAddress.address1 + '' + profile.shopAddress && profile.shopAddress.address2 + ','}
+                                        {profile.shopAddress && profile.shopAddress.address1}    {profile.shopAddress && profile.shopAddress.address2 + ','}
                                         {profile.shopAddressData && profile.shopAddressData.cities && profile.shopAddressData.cities.name + ','}
                                         {profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name + ','}
                                         {profile.shopAddressData && profile.shopAddressData.countrys && profile.shopAddressData.countrys.name + '.'}
