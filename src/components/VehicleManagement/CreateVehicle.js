@@ -242,7 +242,21 @@ class CreateVehicle extends Component {
                                 <form onSubmit={this.handleSubmit} noValidate className="row m-0">
                                     <div className="form-group col-md-6">
                                         <label>{window.strings['VEHICLE']['VEHICLE_TYPE']}</label>
-                                        <Select className="state-box ml-1"
+                                        <Select className="state-box"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    // '&:placeholder': {
+                                                    //     color: '#9EA0B7'
+                                                    // },
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+
+                                                })
+                                            }}
                                             value={this.state.vehicleType}
                                             onChange={(e) => this.handleDropDownChange(e, "vehicleType")}
                                             options={vehicleTypeDatas}
@@ -252,14 +266,14 @@ class CreateVehicle extends Component {
                                     </div>
 
                                     <div className="form-group col-md-6">
-                                        <label>{window.strings['VEHICLE']['TRANSACTION_TIME']}</label>
+                                        <label>{window.strings['VEHICLE']['ESTIMATED_TRANSACTION_TIME']}</label>
                                         {/* <Select className="state-box ml-1"
                                             value={this.state.transitionTime}
                                             onChange={(e) => this.handleDropDownChange(e, "transitionTime")}
                                             options={transtactionTimeData}
                                             placeholder="--Select Transaction Time--"
                                         /> */}
-                                        <TimePicker
+                                        <TimePicker className="time-pick"
                                             placeholder="--Transaction Time--" defaultValue={this.state.transitionTime} showSecond={false} minuteStep={15}
                                             onChange={this.handleTimePicker}
                                         />
@@ -283,8 +297,8 @@ class CreateVehicle extends Component {
                                     </div>
 
                                     <div className="form-group col-md-6">
-                                        <label>{window.strings['VEHICLE']['OPERATING_HOURS']}</label>
-                                        <DateRangePicker
+                                        <label>{window.strings['VEHICLE']['TIME_WINDOW_AT_OPERATION']}</label>
+                                        <DateRangePicker className="daterange"
                                             startDate={this.state.startDate}
                                             endDate={this.state.endDate}
                                             onApply={this.handleApply}

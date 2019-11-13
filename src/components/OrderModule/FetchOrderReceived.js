@@ -198,8 +198,8 @@ class FetchOrderReceived extends Component {
                                 />
                             </div>
                             <div className="col-md-2 city-filter">
-                                <div className="back-btn">
-                                    <button type="button" className="common-btn" onClick={(e) => this.getOrderList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i>Reset</button>
+                                <div>
+                                    <button className="common-btn"><i className="fa fa-refresh mrr5" aria-hidden="true"></i>Reset</button>
                                 </div>
                             </div>
                         </div>

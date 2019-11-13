@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo_black from '../assets/images/Agro_logo.png';
+import logo_black from '../assets/images/Claro Agro_logo.png';
 import notifi from '../assets/images/notification_icon.png';
 import user from '../assets/images/Dashboard/avatar.png';
 
