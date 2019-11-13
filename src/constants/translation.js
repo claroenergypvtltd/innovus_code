@@ -283,10 +283,10 @@ export const Translation = {
             "ADD_VEHICLE": "Add Vehicle",
             "EDIT_VEHICLE": "Edit Vehicle",
             "VEHICLE_TYPE": "Vehicle Type",
-            "TRANSACTION_TIME": "Transaction Time",
+            "ESTIMATED_TRANSACTION_TIME": "Estimated Transaction Time",
             "VEHICLE_NAME": "Vehicle Name",
             "VOLUME": "Volume(mc)",
-            "OPERATING_HOURS": "Operating Hours"
+            "TIME_WINDOW_AT_OPERATION": "Time Window at Operation"
         },
 
         "ORDERS": {

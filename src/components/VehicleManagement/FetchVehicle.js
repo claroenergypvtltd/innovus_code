@@ -117,14 +117,14 @@ class FetchVehicle extends Component {
 
         return (
             <div className="fetch-vehicle">
-                <div className="clearfix title-section row">
-                    <div className="title-card col-md-7">
+                <div className="clearfix title-section row mr-0">
+                    <div className="title-card col-md-8">
                         <h4 className="user-title">{window.strings.VEHICLE.VEHICLE_MANAGEMENT}</h4>
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
                     </div>
-                    <div className="right-title col-md-5">
-                        <div className="row">
-                            <div className="col-md-7 pr-0">
+                    <div className="right-title col-md-4">
+                        <div className="row m-0">
+                            <div className="col-md-7">
                                 <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                             </div>
                             <div className="col-md-5">
