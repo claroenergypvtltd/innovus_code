@@ -131,7 +131,7 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+        !this.state.priceId && e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
     }
     handleCategoryChange = (e) => {
         this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], editSubCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
