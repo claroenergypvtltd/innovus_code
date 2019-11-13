@@ -2051,6 +2051,10 @@ display: flex;
   font-size: 14px;
   color : $primary-color;
 }
+.fetchretailertbl .rdt_TableCell {
+  word-wrap: break-word;
+  
+}
   // .crop-table{
   //   overflow-x: scroll;
   //   width: 500px;
@@ -2082,7 +2086,8 @@ display: flex;
   text-transform:capitalize;
   padding: 2px 7px;
   margin: auto;
-  width: 75px;
+  width: 80px;
+  text-align: center;
 }
 .accepted{
   background-color: $accept-green;
@@ -2092,7 +2097,8 @@ display: flex;
   text-transform:capitalize;
   padding: 2px 7px;
   margin: auto;
-  width: 75px;
+  width: 80px;
+  text-align: center;
 }
 .rejected{
   background-color: $reject-red;
@@ -2102,7 +2108,8 @@ display: flex;
   text-transform:capitalize;
   padding: 2px 7px;
   margin: auto;
-  width: 75px;
+  width: 80px;
+  text-align: center;
 }
 .inactive{
   background-color:  #ff7b00;
@@ -2112,7 +2119,8 @@ display: flex;
   text-transform:capitalize;
   padding: 2px 7px;
   margin: auto;
-  width: 75px;
+  width: 80px;
+  text-align: center;
 }
 // #datepicker{
 //   color: $accept-green;

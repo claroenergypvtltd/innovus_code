@@ -81,6 +81,11 @@ export const routesPath = [
                 exact: true
             },
             {
+                component: Login,
+                path: process.env.PUBLIC_URL + '/',
+                exact: true
+            },
+            {
                 path: process.env.PUBLIC_URL + '/dashboard',
                 component: Home,
                 exact: true
