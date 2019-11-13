@@ -57,11 +57,8 @@ class CategoryForm extends Component {
     }
 
     handleInputChange = (e) => {
-        e.charCode == 32 ? this.setState({
-            [e.target.name]: ''
-        }) : this.setState({
-            [e.target.name]: e.target.value
-        });
+        e.target.value == ' ' || e.target.value[0] == ' ' ? e.target.value = ''
+            : this.setState({ [e.target.name]: e.target.value });
     }
 
     onhandleImageChange = (e) => {
@@ -100,7 +97,7 @@ class CategoryForm extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name != ' ' && this.state.image) {
+        if (this.state.name && this.state.image) {
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);
@@ -152,7 +149,6 @@ class CategoryForm extends Component {
                                                 })}
                                                 name="name"
                                                 onChange={this.handleInputChange}
-                                                onKeyPress={this.handleInputChange}
                                                 value={this.state.name}
                                                 required
 

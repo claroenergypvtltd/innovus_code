@@ -69,11 +69,8 @@ class CreateCrop extends Component {
     }
 
     handleInputChange = (e) => {
-        e.charCode == 32 ? this.setState({
-            [e.target.name]: ''
-        }) : this.setState({
-            [e.target.name]: e.target.value
-        });
+        e.target.value == ' ' || e.target.value[0] == ' ' ? e.target.value = ''
+            : this.setState({ [e.target.name]: e.target.value });
     }
     listPage = () => {
         this.context.router.history.goBack();
@@ -105,7 +102,7 @@ class CreateCrop extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name != ' ' && this.state.dcCode && this.state.image) {
+        if (this.state.name && this.state.dcCode && this.state.image) {
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("description", this.state.description);
@@ -229,12 +226,10 @@ class CreateCrop extends Component {
                                             })}
                                             name="name"
                                             onChange={this.handleInputChange}
-                                            onKeyPress={this.handleInputChange}
                                             value={this.state.name}
                                             required
 
                                         />
-
                                         {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CROP']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 

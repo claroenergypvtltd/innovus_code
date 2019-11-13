@@ -53,11 +53,8 @@ class CreateSalesAgent extends React.Component {
     }
 
     handleInputChange = (e) => {
-        e.charCode == 32 ? this.setState({
-            [e.target.name]: ''
-        }) : this.setState({
-            [e.target.name]: e.target.value
-        });
+        e.target.value == ' ' || e.target.value[0] == ' ' ? e.target.value = ''
+            : this.setState({ [e.target.name]: e.target.value });
     }
 
     redirectPage = () => {
@@ -69,7 +66,7 @@ class CreateSalesAgent extends React.Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name != ' ' && this.state.mobileNumber && this.state.dcCode) {
+        if (this.state.name && this.state.mobileNumber && this.state.dcCode) {
 
             const formData = new FormData();
             formData.append("name", this.state.name);
@@ -112,11 +109,9 @@ class CreateSalesAgent extends React.Component {
                                         })}
                                         name="name"
                                         onChange={this.handleInputChange}
-                                        onKeyPress={this.handleInputChange}
                                         value={this.state.name}
                                         required
                                     />
-
                                     {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['SALES_AGENT']['AGENT_NAME'] + window.strings['ISREQUIRED']}</div>}
                                 </div>
                                 <div className="form-group col-md-12">

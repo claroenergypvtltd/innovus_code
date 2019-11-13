@@ -189,7 +189,7 @@ class CreatePrice extends Component {
                 "amount": this.state.price,
                 "boxQuantity": this.state.boxQuantity,
                 "totalQuantity": this.state.weight,
-                "updateQuantity": this.state.updateQuantity ? this.state.updateQuantity : 0,
+                "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
                 "totalQuantitySize": this.state.weightId,
                 "boxQuantitySize": this.state.weightId,
                 "discountValue": this.state.offer,
