@@ -1582,7 +1582,7 @@ a.order-btn:hover {
   margin-right: 10px;
   border-radius: 7px;
 }
-.bubble-icon{
+.bubble-img{
   background-image: url("../src/assets/images/Sprite_image.png");
   background-repeat:no-repeat;
   background-position: 53px -2475px;
@@ -1857,6 +1857,10 @@ background-position:270px -2670px;
   top: 70px;
   }
 
+/****************************Irrigation setting Section************************/
+input:-webkit-autofill {
+    -webkit-text-fill-color: $form-color;
+}
   /****************************Loader Section************************/
 .loader-section-hide{
 height: 64px;
@@ -2178,6 +2182,57 @@ display: flex;
     max-width: 67%;
   }
 }
+
+
+@media screen and (max-width:1140px){
+  .chart-box{
+    // width: 500px;
+    // height: auto;
+  }
+}
+// @media screen and (min-width: 1400px) {
+//   .chart-box{
+//     width: 500px;
+//     height: auto;
+//   }
+// }
+@media screen and (min-width: 1200px) and (max-width: 1299px){
+  .chart-box{
+    width: 466px;
+    height: auto;
+  }
+  .LineChart.main-wrapper {
+    padding: 43px 0 0px 0px;
+    margin: 17px;
+}
+.recharts-wrapper  {
+  > .recharts-surface{
+    width: 465px;
+  }
+}
+}
+// @media screen and (min-width: 991px) and (max-width: 1199px){
+//   .chart-box{
+//     width: 446px;
+//     height: auto;
+//   }
+//   .LineChart.main-wrapper {
+//     padding: 43px 0 0px 0px;
+//     margin: 17px;
+// }
+// .recharts-wrapper  {
+//   > .recharts-surface{
+//     width: 435px;
+//   }
+// }
+// }
+
+// @media screen and (min-width: 768px) and (max-width: 991px){
+//   .chart-box{
+   
+//   }
+// }
+
 body .main-header .navbar{
   padding: 0.1rem 1rem;
 }
