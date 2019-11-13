@@ -134,7 +134,7 @@ class CreatePrice extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
     handleCategoryChange = (e) => {
-        this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
+        this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], editSubCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
             getCategoryDCCode(this.state.parentId).then(resp => {
                 if (resp && resp.data && resp.data.datas) {
                     this.setState({ dcCodeData: resp.data.datas })
@@ -143,7 +143,7 @@ class CreatePrice extends Component {
         })
     }
     handleDcCodeSubCategory = (e) => {
-        this.setState({ subCategoryDatas: [], dcCode: e.target.value, categoryId: "" }, () => {
+        this.setState({ subCategoryDatas: [], editSubCategoryDatas: [], dcCode: e.target.value, categoryId: "" }, () => {
             getCategoryDCCode(this.state.parentId, this.state.dcCode, 'getDcsubCat').then(resp => {
                 if (resp && resp.data && resp.data.datas) {
                     this.setState({ subCategoryDatas: resp.data.datas })
@@ -256,7 +256,7 @@ class CreatePrice extends Component {
                                         <div className="form-group col-md-4 px-0">
                                             <label>{window.strings['CATEGORY']['DC_CODE'] + ' *'}</label>
                                             <select required name="dcCode" className="form-control" value={this.state.dcCode} onChange={this.handleDcCodeSubCategory}>
-                                                <option value="" >Select DC Code</option>
+                                                <option value="-" >Select DC Code</option>
                                                 {dcCodeData}
                                             </select>
                                             {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['CATEGORY']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}

@@ -21,7 +21,7 @@ export const path = {
         view: process.env.PUBLIC_URL + '/category/view/'
     },
     crop: {
-        add: process.env.PUBLIC_URL + '/crop/add',
+        add: process.env.PUBLIC_URL + '/category/crop/add',
         list: process.env.PUBLIC_URL + '/crop',
         edit: process.env.PUBLIC_URL + '/crop/edit/',
     },
