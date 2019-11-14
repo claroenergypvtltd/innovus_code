@@ -35,9 +35,10 @@ class FetchPrice extends Component {
     }
     getDCData = () => {
         let obj = {
+            flag: 1,
             search: this.state.dcCode
         }
-        getDcCodeData(obj).then(resp => {
+        getDcCodeData(obj, 'price').then(resp => {
             if (resp) {
                 this.setState({ dcCodeData: resp })
             }

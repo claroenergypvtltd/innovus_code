@@ -7,6 +7,7 @@ import '../../assets/css/login.scss';
 import store from '../../store/store';
 import { PRICE_CREATE_SUCCESS, PRICE_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import { getPriceList, submitPrice } from '../../actions/priceAction'
+import { toastr } from '../../services/toastr.services'
 
 class CreatePrice extends Component {
     constructor(props) {
@@ -196,8 +197,20 @@ class CreatePrice extends Component {
                 "discountUnit": this.state.offerId,
                 "flag": flag
             }
-
-            this.props.submitPrice(obj, isUpdate);
+            if (this.state.updateQuantity) {
+                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                    this.props.submitPrice(obj, isUpdate);
+                } else {
+                    toastr.error("Please increment/decrement in multiple of box quantity")
+                }
+            } else {
+                this.props.submitPrice(obj, isUpdate);
+            }
+            // if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+            //     this.props.submitPrice(obj, isUpdate);
+            // } else {
+            //     toastr.error("Please increment/decrement in multiple of box quantity")
+            // }
         }
     }
     listPath = () => {
