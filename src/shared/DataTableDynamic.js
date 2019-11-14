@@ -7,8 +7,11 @@ class DataTableDynamic extends React.Component {
     this.state = {
       tableHead: [],
       tableDatas: [],
-      // toggledClearRows : false
+      toggledClearRows: true
     };
+  }
+  handleClearRows = () => {
+    this.setState({ toggledClearRows: !this.state.toggledClearRows })
   }
 
   componentDidMount() {
@@ -72,12 +75,12 @@ class DataTableDynamic extends React.Component {
   }
 
   handleRowChange = (row) => {
-    this.props && this.props.handleRowChange && this.props.handleRowChange(row.selectedRows);
+    this.setState({ toggledClearRows: this.state.toggledClearRows }, () => {
+      this.props && this.props.handleRowChange && this.props.handleRowChange(row.selectedRows);
+
+    })
   }
 
-  //  handleClearRows = () => {
-  //   this.setState({ toggledClearRows: !this.state.toggledClearRows})
-  // }
 
   render() {
     let tableHeader = this.state.tableHead;
@@ -107,11 +110,11 @@ class DataTableDynamic extends React.Component {
           expandableRowsComponent={this.props.expandableComponent}
           paginationRowsPerPageOptions={[10, 25, 50]}
           customTheme={myNewTheme}
-          selectableRows={selectableRows}
+          selectableRows={true}
           onRowSelected={this.handleRowChange}
           striped={true}
-          clearSelectedRows={selectableRows}
-          selectableRowsPreSelectedField={false}
+          clearSelectedRows={this.state.toggledClearRows}
+        // selectableRowsPreSelectedField={false}
         />
       </div>
     );
