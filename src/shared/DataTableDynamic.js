@@ -80,6 +80,9 @@ class DataTableDynamic extends React.Component {
 
     })
   }
+  clearSelectedRows = () => {
+    return true
+  }
 
 
   render() {
@@ -98,6 +101,7 @@ class DataTableDynamic extends React.Component {
     if (this.props && this.props.handleRowChange) {
       selectableRows = true
     }
+
     return (
       <div className="tables">
         <DataTable className={this.props && this.props.customCss ? 'fetchretailertbl' : 'crop-table'}
