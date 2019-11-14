@@ -44,7 +44,7 @@ class TransferAgent extends Component {
             this.context.router.history.push(redrctpath);
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
             // this.props.getRetailerList();
-            this.listPath();
+            this.listPath('AgentAssignsuccess');
         }
 
     }
@@ -61,8 +61,8 @@ class TransferAgent extends Component {
         })
     }
 
-    listPath = () => {
-        this.props.onCloseModal();
+    listPath = (type) => {
+        this.props.onCloseModal(type);
     }
 
     handleSubmit = (e) => {
@@ -80,7 +80,6 @@ class TransferAgent extends Component {
             formData.append("agentId", this.state.agentId);
             formData.append("flag", 1);
             formData.append("userId", userData);
-
             this.props.SubmitRetailer(formData, true)
         }
 

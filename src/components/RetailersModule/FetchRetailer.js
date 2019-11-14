@@ -45,7 +45,8 @@ class FetchRetailer extends React.Component {
             selectedDatas: [],
             advanceSearch: false,
             popup: false,
-            dcCode: ''
+            dcCode: '',
+            clearCheck: true
         }
     }
     componentWillMount() {
@@ -183,7 +184,7 @@ class FetchRetailer extends React.Component {
                 user.startTime = this.state.startDate;
                 user.endTime = this.state.endDate;
             }
-            if (status) {
+            if (status != "transagent") {
                 user.status = status;
             }
             if (this.state.agentId) {
@@ -319,8 +320,14 @@ class FetchRetailer extends React.Component {
             this.getRetailerList()
         })
     }
+    resetSelection = (event, picker) => {
+        // this.setState({
+        //     dateChanged: true,
+        //     startDate: new Date(),
+        //     endDate: new Date()
+        // })
+    }
     handleRowChange = (Data) => {
-        console.log('checkbox data', Data);
         this.setState({ selectedDatas: Data })
     }
     handleDcCodeChange = (Data) => {
@@ -330,7 +337,11 @@ class FetchRetailer extends React.Component {
     };
     onCloseModal = (type) => {
         this.setState({ open: false, popup: false })
-        // this.getRetailerList();
+        if (type == 'AgentAssignsuccess') {
+            this.getRetailerList('transagent');
+            this.context.router.history.push('/category');
+            this.context.router.history.goBack();
+        }
     };
     onOpenModal = (e) => {
         e.preventDefault();
@@ -465,7 +476,7 @@ class FetchRetailer extends React.Component {
             // item.shopAddress = shopAddress;
             excelDatas.push(item);
         })
-        let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} />
+        let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} clearRows={this.state.clearCheck} />
 
         return (
             <div className=" mt-4">
@@ -502,6 +513,8 @@ class FetchRetailer extends React.Component {
                                 <div className="row">
                                     <div className="col-md-4 date-range"><label className="label-title">Date:</label>
                                         <DateRangePicker
+                                            autoApply={false}
+                                            onHide={this.resetSelection}
                                             placeholder="-- Date -- "
                                             startDate={this.state.startDate}
                                             endDate={this.state.endDate}
