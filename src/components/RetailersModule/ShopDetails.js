@@ -21,7 +21,6 @@ class ShopDetails extends React.Component {
             rejectKey: false
         };
     }
-
     componentWillReceiveProps(newProps) {
         if (newProps.profileData && newProps.profileData.isActive == "0") {
             this.setState({ activeButton: false });
@@ -29,7 +28,6 @@ class ShopDetails extends React.Component {
             this.setState({ activeButton: true });
         }
     }
-
     redirectPage = () => {
         this.context.router.history.goBack();
     }
@@ -47,7 +45,6 @@ class ShopDetails extends React.Component {
                 }
                 updateStatusRetailer(formData).then(resp => {
                     if (resp && resp.status == 200) {
-                        console.log(resp, '-----status-------');
                         // toastr.success(resp.message);
                         let activeKey;
                         if (this.state.activeButton) {

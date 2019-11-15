@@ -184,9 +184,12 @@ class FetchRetailer extends React.Component {
                 user.startTime = this.state.startDate;
                 user.endTime = this.state.endDate;
             }
-            if (status != "transagent") {
-                user.status = status;
+            if (this.state.StatusfilterId) {
+                user.status = this.state.StatusfilterId;
             }
+            // if (status != "transagent") {
+
+            // }
             if (this.state.agentId) {
                 user.agentId = this.state.agentId;
             }
@@ -283,8 +286,9 @@ class FetchRetailer extends React.Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }
     statusFilter(e) {
-        this.getRetailerList(e.target.value);
-        this.setState({ StatusfilterId: e.target.value })
+        this.setState({ StatusfilterId: e.target.value }, () => {
+            this.getRetailerList();
+        })
     }
     handleDelete = (data, e) => {
         e.preventDefault();
@@ -316,16 +320,18 @@ class FetchRetailer extends React.Component {
             dateChanged: true,
             startDate: picker.startDate,
             endDate: picker.endDate,
+            closePicker: true
         }, () => {
-            this.getRetailerList()
+            this.getRetailerList();
         })
     }
-    resetSelection = (event, picker) => {
-        // this.setState({
-        //     dateChanged: true,
-        //     startDate: new Date(),
-        //     endDate: new Date()
-        // })
+    resetSelection = (event) => {
+        this.setState({
+            startDate: moment(),
+            endDate: moment()
+        }, () => {
+            this.getRetailerList();
+        })
     }
     handleRowChange = (Data) => {
         this.setState({ selectedDatas: Data })
@@ -338,7 +344,7 @@ class FetchRetailer extends React.Component {
     onCloseModal = (type) => {
         this.setState({ open: false, popup: false })
         if (type == 'AgentAssignsuccess') {
-            this.getRetailerList('transagent');
+            // this.getRetailerList('transagent');
             this.context.router.history.push('/category');
             this.context.router.history.goBack();
         }
@@ -513,8 +519,7 @@ class FetchRetailer extends React.Component {
                                 <div className="row">
                                     <div className="col-md-4 date-range"><label className="label-title">Date:</label>
                                         <DateRangePicker
-                                            autoApply={false}
-                                            onHide={this.resetSelection}
+                                            // onHide={this.getRetailerList}
                                             placeholder="-- Date -- "
                                             startDate={this.state.startDate}
                                             endDate={this.state.endDate}
