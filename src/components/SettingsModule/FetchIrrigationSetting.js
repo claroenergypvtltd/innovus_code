@@ -51,10 +51,12 @@ class FetchIrrigationSetting extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            let serObj = {
-                "search": this.state.search
-            };
-            this.getPriceList(serObj);
+            this.setState({ currentPage: 1 }, () => {
+                let serObj = {
+                    "search": this.state.search
+                };
+                this.getPriceList(serObj);
+            })
         }
     }
 

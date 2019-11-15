@@ -87,7 +87,9 @@ class FetchSalesAgent extends React.Component {
             // let serObj = {
             //     "search": this.state.search
             // };
-            this.getSalesAgentList();
+            this.setState({ currentPage: 1 }, () => {
+                this.getSalesAgentList();
+            })
         }
     }
 
@@ -114,7 +116,7 @@ class FetchSalesAgent extends React.Component {
     }
 
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSalesAgentList() })
+        this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 1 }, () => { this.getSalesAgentList() })
     };
 
     render() {

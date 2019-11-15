@@ -22,6 +22,7 @@ class CreatePrice extends Component {
             offer: '',
             priceData: {},
             weightDatas: [],
+            weightId: 0,
             errors: {}
         }
     }
@@ -175,7 +176,7 @@ class CreatePrice extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.categoryId && this.state.price && this.state.weightId && this.state.boxQuantity) {
+        if (this.state.categoryId && this.state.price && this.state.weightId !== 0 && this.state.boxQuantity) {
 
             let isUpdate = false;
             let flag;
@@ -324,7 +325,7 @@ class CreatePrice extends Component {
                                                 {weightDropDown}
                                             </select>
 
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         {/* </div> */}
 

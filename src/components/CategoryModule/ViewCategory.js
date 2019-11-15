@@ -95,7 +95,9 @@ class ViewCategory extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            this.getSpecificData();
+            this.setState({ currentPage: 1 }, () => {
+                this.getSpecificData();
+            })
         }
     }
 
@@ -150,7 +152,7 @@ class ViewCategory extends Component {
     }
 
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSpecificData() })
+        this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 1 }, () => { this.getSpecificData() })
     };
 
     handleStatusUpdate = (isActive, subcategoryId) => {

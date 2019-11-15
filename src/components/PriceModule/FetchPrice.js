@@ -45,7 +45,7 @@ class FetchPrice extends Component {
         })
     }
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dCCode: Data.value }, () => {
+        this.setState({ dcCodeObj: Data, dCCode: Data.value, currentPage: 1 }, () => {
             this.getPriceList()
         })
     };
@@ -65,11 +65,14 @@ class FetchPrice extends Component {
     }
     searchResult = (e) => {
         e.preventDefault();
-        if (this.state.search) {
-            let serObj = {
-                "search": this.state.search
-            };
-            this.getPriceList(serObj);
+        if (this.state.search || this.state.dCCode) {
+            this.setState({ currentPage: 1 }, () => {
+                let serObj = {
+                    "search": this.state.search
+                };
+                this.getPriceList(serObj);
+            });
+
         }
     }
     resetSearch = () => {

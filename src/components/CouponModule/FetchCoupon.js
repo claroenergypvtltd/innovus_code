@@ -50,10 +50,12 @@ class FetchCoupon extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            let serObj = {
-                "search": this.state.search
-            };
-            this.getCouponList(serObj);
+            this.setState({ currentPage: 1 }, () => {
+                let serObj = {
+                    "search": this.state.search
+                };
+                this.getCouponList(serObj);
+            })
         }
     }
 
