@@ -176,7 +176,7 @@ class CreatePrice extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.categoryId && this.state.price && this.state.weightId !== 0 && this.state.boxQuantity) {
+        if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
 
             let isUpdate = false;
             let flag;
