@@ -50,10 +50,13 @@ class FetchOrder extends Component {
 
         e.preventDefault();
         if (this.state.search) {
-            let serObj = {
-                "search": this.state.search
-            };
-            this.getOrderList(serObj);
+            this.setState({ currentPage: 1 }, () => {
+                let serObj = {
+                    "search": this.state.search
+                };
+                this.getOrderList(serObj);
+            })
+
         }
     }
 

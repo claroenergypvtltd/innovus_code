@@ -114,7 +114,7 @@ class DataTableDynamic extends React.Component {
           expandableRowsComponent={this.props.expandableComponent}
           paginationRowsPerPageOptions={[10, 25, 50]}
           customTheme={myNewTheme}
-          selectableRows={true}
+          selectableRows={selectableRows}
           onRowSelected={this.handleRowChange}
           striped={true}
           clearSelectedRows={this.state.toggledClearRows}

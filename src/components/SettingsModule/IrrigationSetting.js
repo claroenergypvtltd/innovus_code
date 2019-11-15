@@ -136,7 +136,7 @@ class IrrigationSetting extends Component {
                 value={item.id}> {item.name}</option>
         });
 
-        const cityDropDown = this.state.cityData && this.state.cityData.map((item, index) => {
+        const cityDropDown = this.state.stateId == 0 ? [] : this.state.cityData && this.state.cityData.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
         });
