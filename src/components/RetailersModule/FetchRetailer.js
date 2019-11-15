@@ -325,13 +325,14 @@ class FetchRetailer extends React.Component {
             this.getRetailerList();
         })
     }
-    resetSelection = (event) => {
-        this.setState({
-            startDate: moment(),
-            endDate: moment()
-        }, () => {
-            this.getRetailerList();
-        })
+    resetSelection = (event, picker) => {
+        console.log("picker", picker.autoUpdateInput);
+        // this.setState({
+        //     startDate: moment(),
+        //     endDate: moment()
+        // }, () => {
+        //     // this.getRetailerList();
+        // })
     }
     handleRowChange = (Data) => {
         this.setState({ selectedDatas: Data })
@@ -402,9 +403,14 @@ class FetchRetailer extends React.Component {
         let start = this.state.startDate.format('DD-MM-YYYY');
         let end = this.state.endDate.format('DD-MM-YYYY');
         let label = start + ' - ' + end;
-        if (start === end) {
+        if (this.state.dateChanged) {
+            if (start === end) {
+                label = start + ' - ' + end;
+            }
+        } else {
             label = ''
         }
+
         let excelDatas = [];
         let stateDropDown = []; let cityDropDown = []; let agentListDropDown = [];
         const statusDropdown =
@@ -519,7 +525,9 @@ class FetchRetailer extends React.Component {
                                 <div className="row">
                                     <div className="col-md-4 date-range"><label className="label-title">Date:</label>
                                         <DateRangePicker
-                                            // onHide={this.getRetailerList}
+                                            placeholder="Please select a date"
+                                            autoUpdateInput={false}
+                                            onHide={this.resetSelection}
                                             placeholder="-- Date -- "
                                             startDate={this.state.startDate}
                                             endDate={this.state.endDate}

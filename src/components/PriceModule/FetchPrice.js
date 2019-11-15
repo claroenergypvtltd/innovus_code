@@ -19,7 +19,7 @@ class FetchPrice extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", 'Dc Code', "Total Available quantity(Unit)", "Price(Unit)", "Box Quantity(Unit)", "Actions"], PriceLists: props.getLists,
+            TableHead: ["Product ID", "Product Name", 'DC Code', "Total Available quantity(Unit)", "Price(Unit)", "Box Quantity(Unit)", "Actions"], PriceLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
             dcCode: '',
