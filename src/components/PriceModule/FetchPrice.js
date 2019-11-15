@@ -89,7 +89,6 @@ class FetchPrice extends Component {
         //     "search":"",
         //     "dCCode":""
         //    }
-        debugger;
         let obj = {
             "pages": this.state.currentPage ? this.state.currentPage : 0,
             "rows": this.state.itemPerPage,
