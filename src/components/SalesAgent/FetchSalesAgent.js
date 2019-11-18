@@ -23,7 +23,7 @@ class FetchSalesAgent extends React.Component {
             limitValue: resorceJSON.TablePageData.paginationLength,
             advanceSearch: false,
             dcCode: '',
-            TableHead: ["Created On", "Agent ID", "Agent Name", "Phone Number", "Surveying Area", "DC Code", "Actions"]
+            TableHead: ["Created On", "Agent ID", "Agent Name", "Phone Number", "Surveying Area", "Email", "DC Code", "Actions"]
         }
     }
 
@@ -131,7 +131,7 @@ class FetchSalesAgent extends React.Component {
 
         let salesAgentList = this.state.salesAgentData && this.state.salesAgentData.map((item, index) => {
             let createdDate = item.created.split("T");
-            return { "itemList": [createdDate[0], item.agentId, item.name, item.mobileNumber, item.surveyingArea == "undefined" || item.surveyingArea == "null" ? '-' : item.surveyingArea, item.dcCode], "itemId": item.id }
+            return { "itemList": [createdDate[0], item.agentId, item.name, item.mobileNumber, item.surveyingArea == "undefined" || item.surveyingArea == "null" ? '-' : item.surveyingArea, item.emailId, item.dcCode], "itemId": item.id }
         })
 
         return (
