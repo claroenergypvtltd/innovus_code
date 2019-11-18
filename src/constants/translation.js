@@ -254,6 +254,7 @@ export const Translation = {
         },
         "SALES_AGENT": {
             "ADD_AGENT": "ADD AGENT",
+            "EMAIL": "Email",
             "EDIT_AGENT": "EDIT AGENT",
             "PHON_NO": "Phone Number",
             "AGENT_NAME": "Agent Name",

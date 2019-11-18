@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import store from '../../store/store';
-import { PRICE_CREATE_SUCCESS, PRICE_UPDATE_SUCCESS } from '../../constants/actionTypes';
+import { PRICE_CREATE_SUCCESS, PRICE_UPDATE_SUCCESS, PRICE_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
 import { getPriceList, submitPrice } from '../../actions/priceAction'
 import { toastr } from '../../services/toastr.services'
 
@@ -116,10 +116,12 @@ class CreatePrice extends Component {
             if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].categoryAmount) {
                 showweight = nextProps.priceData.specificData.datas[0].categoryAmount.totalQuantity
             }
-            if (this.state.priceId) {
-                this.setState({ weight: showweight })
+            // if (this.state.priceId) {
+            store.dispatch({ type: PRICE_SPECIFIC_DATA_SUCCESS, specificData: "" })
 
-            }
+            this.setState({ weight: showweight })
+
+            // }
         }
 
 
@@ -205,13 +207,16 @@ class CreatePrice extends Component {
                 } else {
                     toastr.error("Please increment/decrement in multiple of box quantity")
                 }
-                if (this.state.offer || this.state.offerId != 0) {
-                    if (this.state.offer && this.state.offerId != 0) {
-                        this.props.submitPrice(obj, isUpdate);
-                    }
-                } else {
-                    this.props.submitPrice(obj, isUpdate);
-                }
+
+                // if (this.state.offer || this.state.offerId != 0) {
+                //     if (this.state.offer && this.state.offerId != 0) {
+                //         this.props.submitPrice(obj, isUpdate);
+                //     }
+                // } else {
+                //     this.props.submitPrice(obj, isUpdate);
+                // }
+            } else {
+                this.props.submitPrice(obj, isUpdate);
             }
         }
 

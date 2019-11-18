@@ -14,6 +14,8 @@ class CreateSalesAgent extends React.Component {
         this.state = {
             name: '',
             mobileNumber: '',
+            emailId: '',
+            editDatas: [],
             errors: {}
         }
     }
@@ -38,7 +40,7 @@ class CreateSalesAgent extends React.Component {
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.agentData && newProps.agentData.Lists) {
             let editDatas = newProps.agentData.Lists
-            this.setState({ name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea == "undefined" || editDatas.surveyingArea == "null" ? "" : editDatas.surveyingArea, dcCode: editDatas.dcCode })
+            this.setState({ editDatas, name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea == "undefined" || editDatas.surveyingArea == "null" ? "" : editDatas.surveyingArea, dcCode: editDatas.dcCode, emailId: editDatas.emailId })
         }
 
         if (newProps.agentData && newProps.agentData.createdStatus == "200") {
@@ -66,10 +68,16 @@ class CreateSalesAgent extends React.Component {
         this.setState({
             submitted: true
         })
-        if (this.state.name && this.state.mobileNumber && this.state.dcCode) {
-
+        if (this.state.name && this.state.mobileNumber && this.state.dcCode && this.state.emailId) {
             const formData = new FormData();
-            formData.append("name", this.state.name);
+            if (this.state.salesAgentId) {
+                if (this.state.name != this.state.editDatas.name) {
+                    formData.append("name", this.state.name);
+                }
+            } else {
+                formData.append("name", this.state.name);
+            }
+            formData.append("emailId", this.state.emailId);
             formData.append("mobileNumber", this.state.mobileNumber);
             formData.append("surveyingArea", this.state.surveyingArea ? this.state.surveyingArea : null);
             formData.append("dcCode", this.state.dcCode);
@@ -115,6 +123,26 @@ class CreateSalesAgent extends React.Component {
                                     />
                                     {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['SALES_AGENT']['AGENT_NAME'] + window.strings['ISREQUIRED']}</div>}
                                 </div>
+
+                                <div className="form-group col-md-12">
+
+                                    <label>{window.strings['SALES_AGENT']['EMAIL'] + ' *'}</label>
+
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        className={classnames('form-control', {
+                                            'is-invalid': errors.emailId
+                                        })}
+                                        name="emailId"
+                                        onChange={this.handleInputChange}
+                                        onKeyPress={this.handleInputChange}
+                                        value={this.state.emailId}
+                                        required
+                                    />
+                                    {this.state.submitted && !this.state.emailId && <div className="mandatory">{window.strings['SALES_AGENT']['EMAIL'] + window.strings['ISREQUIRED']}</div>}
+                                </div>
+
                                 <div className="form-group col-md-12">
 
                                     <label>{window.strings['SALES_AGENT']['PHON_NO'] + ' *'}</label>
