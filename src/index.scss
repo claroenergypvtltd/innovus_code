@@ -1459,6 +1459,19 @@ select:focus {
   text-align: right;
   padding:5px 15px;
 }
+.cancel-btn{
+  color:$white;
+  background-image: $gradient-2;
+  border:none;
+  border-radius: 20px;
+  padding: 5px 15px 5px 9px;
+  border-color: $btn-text;
+  min-width: 125px;
+  margin-left: 0;
+  font-size: 15px;
+  font-weight: unset;
+  margin-bottom: 10px;
+}
 .tick-light{
   background-image: url(/static/media/Sprite_image.f8e75c05.png);
   background-repeat: no-repeat;
