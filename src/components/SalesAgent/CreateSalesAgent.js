@@ -38,7 +38,7 @@ class CreateSalesAgent extends React.Component {
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.agentData && newProps.agentData.Lists) {
             let editDatas = newProps.agentData.Lists
-            this.setState({ name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea, dcCode: editDatas.dcCode })
+            this.setState({ name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea == "undefined" || editDatas.surveyingArea == "null" ? "" : editDatas.surveyingArea, dcCode: editDatas.dcCode })
         }
 
         if (newProps.agentData && newProps.agentData.createdStatus == "200") {
@@ -71,7 +71,7 @@ class CreateSalesAgent extends React.Component {
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("mobileNumber", this.state.mobileNumber);
-            formData.append("surveyingArea", this.state.surveyingArea);
+            formData.append("surveyingArea", this.state.surveyingArea ? this.state.surveyingArea : null);
             formData.append("dcCode", this.state.dcCode);
             formData.append("role", "agent");
 

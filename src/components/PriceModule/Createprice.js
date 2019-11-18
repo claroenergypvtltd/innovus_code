@@ -214,6 +214,7 @@ class CreatePrice extends Component {
                 }
             }
         }
+
     }
     listPath = () => {
         this.props.history.goBack();
@@ -397,7 +398,7 @@ class CreatePrice extends Component {
                                                 required
 
                                             />
-                                            {/* {this.state.submitted && this.state.offerId && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>} */}
+                                            {this.state.submitted && this.state.offerId != 0 && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
 
