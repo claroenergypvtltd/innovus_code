@@ -51,4 +51,14 @@ export const SubmitOrderStatus = (statusData) => {
         console.error("error", error);
     })
 }
+export const updateOrderStatus = (statusData) => {
+    return httpServices.post('orderWareHouse', statusData).then(resp => {
+        if (resp) {
+            toastr.success(resp.message);
+            return resp
+        }
+    }).catch(error => {
+        console.error("error", error);
+    })
+}
 

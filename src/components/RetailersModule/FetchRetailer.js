@@ -326,7 +326,7 @@ class FetchRetailer extends React.Component {
         })
     }
     resetSelection = (event, picker) => {
-        console.log("picker", picker.autoUpdateInput);
+        console.log("picker", picker);
         // this.setState({
         //     startDate: moment(),
         //     endDate: moment()
@@ -450,6 +450,9 @@ class FetchRetailer extends React.Component {
             let shopAddressData = '';
             let selectBox = '';
             item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
+            item.shopAddrss1 = item.shopAddress && item.shopAddress.address1 ? item.shopAddress.address1 : '-'
+            item.shopLocalty = item.shopAddress && item.shopAddress.address2 ? item.shopAddress.address2 : '-'
+
             if (item && item.shopAddress && item.shopAddress.name) {
                 item.shopNames = item.shopAddress.name
             } else {

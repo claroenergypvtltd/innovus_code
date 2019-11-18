@@ -5,7 +5,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
-import { getOrderList, getTrackDetails } from '../../actions/orderAction'
+import { getOrderList, getTrackDetails, updateOrderStatus } from '../../actions/orderAction'
 import { toastr } from '../../services/toastr.services'
 import Store from '../../store/store';
 import { Link } from 'react-router-dom'
@@ -38,7 +38,6 @@ class FetchOrderDetails extends Component {
     componentDidMount() {
         this.getOrderList();
     }
-
     componentWillReceiveProps(newProps) {
         if (newProps.orderDetails && newProps.orderDetails.DetailsList && newProps.orderDetails.DetailsList.datas) {
             let respData = newProps.orderDetails.DetailsList.datas;
@@ -120,8 +119,29 @@ class FetchOrderDetails extends Component {
     redirectPage = () => {
         this.props.history.goBack();
     }
+    statusChange(ordId, status) {
+
+        let statusVal = status;
+        let message = window.strings.UPDATEMESSAGE;
+        const toastrConfirmOptions = {
+            onOk: () => {
+                let statusobj = {
+                    "orderId": ordId,
+                    "status": statusVal
+                }
+                updateOrderStatus(statusobj).then(resp => {
+                    // resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
+                    this.props.history.goBack();
+                })
+            },
+            onCancel: () => { }
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
+    }
 
     render() {
+        let ordId = this.props && this.props.match && this.props.match && this.props.match.params && this.props.match.params.id;
+        console.log('this.props.OrderLists', this.state.OrderLists);
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let fullShopAddrss;
             let add1;
@@ -172,6 +192,11 @@ class FetchOrderDetails extends Component {
                     <div className="title-card col-md-8">
                         <h4 className="user-title">LIST ORDER DETAIL</h4>
                     </div>
+                    {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7'
+                        && <div className="text-right col-md-4">
+                            <button className="cancel-btn" onClick={(e) => this.statusChange(ordId, 7)}>Order Cancel</button>
+                        </div>
+                    }
                 </div>
                 {this.state.trackDetails === false ? <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 /> : <TableData TableHead={this.state.TableHeadTwo} TableContent={OrderList}
