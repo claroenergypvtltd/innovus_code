@@ -174,7 +174,7 @@ class FetchOrderDetails extends Component {
             }
         })
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
-            return { "itemList": [formatDate(item.trackTime), item.activity, item.location] }
+            return { "itemList": [item.trackTime ? formatDate(item.trackTime) : '-', item.activity ? item.activity : '-', item.location ? item.location : "-"] }
         })
         let productList = this.state.productLists && this.state.productLists.map((item) => {
 

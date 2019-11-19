@@ -51,7 +51,7 @@ class CategoryForm extends Component {
         }
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas && nextProps.categoryData.specificData.data.datas.length > 0) {
             let Data = nextProps.categoryData.specificData.data.datas[0];
-            this.setState({ description: Data.description == 'null' ? ' ' : Data.description, name: Data.name, image: Data.image });
+            this.setState({ description: Data.description ? Data.description : '', name: Data.name, image: Data.image });
         }
 
     }
@@ -100,7 +100,7 @@ class CategoryForm extends Component {
         if (this.state.name && this.state.image) {
             const formData = new FormData();
             formData.append("name", this.state.name);
-            formData.append("description", this.state.description ? this.state.description : null);
+            formData.append("description", this.state.description ? this.state.description : "");
             formData.append("image", this.state.file);
             formData.append("categoryId", this.state.categoryId);
 
