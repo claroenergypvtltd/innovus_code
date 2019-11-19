@@ -70,11 +70,11 @@ export const resorceJSON = {
   ],
   CategoryList: [
     { name: 'Category Name', selector: 'name', sortable: true },
-    { name: 'Image', selector: 'image', sortable: true },
+    { name: 'Image', selector: 'image' },
     // imageBaseUrl
 
     { name: 'Description', selector: 'description', sortable: true },
-    { name: 'Crop', selector: 'cropButton', sortable: true },
+    { name: 'Crop', selector: 'cropButton' },
   ],
 
   VehicleList: [
