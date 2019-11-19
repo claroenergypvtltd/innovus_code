@@ -100,7 +100,7 @@ class StatusUpdate extends Component {
             },
             {
                 "id": "7",
-                "label": "cancel"
+                "label": "Order cancelled"
             }
         ];
         this.setState({ statusData });

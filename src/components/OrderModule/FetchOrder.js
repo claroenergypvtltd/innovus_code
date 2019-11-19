@@ -116,7 +116,7 @@ class FetchOrder extends Component {
             case 4: return "shipped";
             case 5: return "At distrubed Center";
             case 6: return "Delivered";
-            case 7: return "cancel";
+            case 7: return "Order cancelled";
         }
     }
 
