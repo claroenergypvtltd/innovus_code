@@ -98,3 +98,19 @@ export const getLocation = (Data) => {
         console.error("error", error);
     })
 }
+
+export const getShopType = () => {
+    return httpServices.get("shopType").then(resp => {
+        if (resp && resp.data) {
+            return resp.data
+            // toastr.success(resp && resp.message);
+            // dispatch({ type: "FETCH", createdStatus: resp.data })
+        }
+    }).catch((error) => {
+        console.error("error", error);
+        // dispatch({
+        //     type: GET_ERRORS,
+        //     payload: error
+        // });
+    })
+}
