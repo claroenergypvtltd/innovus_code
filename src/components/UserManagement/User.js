@@ -29,6 +29,7 @@ class User extends Component {
   }
 
   tabChange = tabIndex => {
+    sessionStorage.removeItem('retsearchDatas');
     let roleId =
       tabIndex == Constant.CONSTANT.ZERO
         ? Constant.CONSTANT.THREE
