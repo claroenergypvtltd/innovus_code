@@ -50,10 +50,38 @@ class FetchRetailer extends React.Component {
         }
     }
     componentWillMount() {
+        // const myKey = this.props 
+        // console.log(myKey)
+        // console.log('this.state',  this.context.router.route.location.state )
+        if (this.context.router.route.location.state && this.context.router.route.location.state.retlrbckTrack == "backTrue" && sessionStorage.retsearchDatas) {
+            var sessRetsearchDatas = JSON.parse(sessionStorage.retsearchDatas);
+            if (sessRetsearchDatas) {
+                this.setState({
+                    dcCode: sessRetsearchDatas.dcCode,
+                    stateId: sessRetsearchDatas.state,
+                    cityId: sessRetsearchDatas.city,
+                    StatusfilterId: sessRetsearchDatas.status,
+                    agentId: sessRetsearchDatas.agentId,
+                    selectedAgentOption: sessRetsearchDatas.selectedAgentOption,
+                    selectedStateOption: sessRetsearchDatas.selectedStateOption,
+                    selectedCityOption: sessRetsearchDatas.selectedCityOption,
+                    dcCodeObj: sessRetsearchDatas.dcCodeObj,
+                    advanceSearch: false
+
+                }, () => {
+                    this.callAllUserAPis();
+                    this.enableAdvanceSearch();
+                });
+            }
+        } else {
+            this.callAllUserAPis();
+        }
+    }
+    callAllUserAPis() {
         this.getRetailerList();
         this.getStateList();
         this.fetchAgents();
-        this.getDCData();
+        this.getDCData()
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
@@ -168,6 +196,7 @@ class FetchRetailer extends React.Component {
             this.setState({
                 cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: '', search: '', dcCode: '', dcCodeObj: ''
             }, () => {
+                sessionStorage.removeItem('retsearchDatas');
                 user.roleId = 2;
                 user.search = this.state.search;
                 this.props.fetchRetailers(user);
@@ -176,9 +205,12 @@ class FetchRetailer extends React.Component {
         else {
             if (this.state.stateId != 0) {
                 user.state = this.state.stateId
+                user.selectedStateOption = this.state.selectedStateOption
             }
             if (this.state.cityId != 0) {
                 user.city = this.state.cityId;
+                user.selectedCityOption = this.state.selectedCityOption
+
             }
             if (this.state.dateChanged) {
                 user.startTime = this.state.startDate;
@@ -192,13 +224,18 @@ class FetchRetailer extends React.Component {
             // }
             if (this.state.agentId) {
                 user.agentId = this.state.agentId;
+                user.selectedAgentOption = this.state.selectedAgentOption;
+
             }
             if (this.state.dcCode) {
+                user.dcCodeObj = this.state.dcCodeObj;
                 user.dcCode = this.state.dcCode;
             }
 
+
             user.roleId = 2;
             user.search = this.state.search;
+            sessionStorage.setItem('retsearchDatas', JSON.stringify(user));
             this.setState({
                 selectedDatas: []
             })
@@ -216,6 +253,8 @@ class FetchRetailer extends React.Component {
         this.context.router.history.push(redrctpath);
     };
     componentWillReceiveProps(newProps) {
+        //         var routeChanged = newProps.location !== this.props.location
+        // console.log('---routeChanged---',routeChanged)
         if (newProps.list.datas && !this.state.popup) {
             let selectlist = newProps.list.datas;
             let agentDataList = newProps.agentData;
@@ -359,10 +398,15 @@ class FetchRetailer extends React.Component {
         }
     };
     enableAdvanceSearch = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
+    // enableAdvanceshow = (e) => {
+    //     // e.preventDefault();
+    //     let enableSearch = this.state.advanceSearch ? false : true
+    //     this.setState({ advanceSearch: enableSearch })
+    // }
     searchResult = (e) => {
 
         e.preventDefault();
@@ -499,7 +543,7 @@ class FetchRetailer extends React.Component {
 
                 <div className="retailersearchdiv">
                     <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}
+                    <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}
                         {/* <span className="advance-icon"></span>Advance Search */}
                     </button>
                     <div className="retail-reset">

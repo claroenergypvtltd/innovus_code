@@ -31,7 +31,16 @@ class ShopDetails extends React.Component {
         }
     }
     redirectPage = () => {
-        this.context.router.history.goBack();
+        // this.props.history.push({
+        //     pathname: path.user.list,
+        //     state: {
+        //    response: "backTrue" 
+        //     parameter2: parameterBoolean2
+        //     }
+        //     });
+        //   this.props.history.push(path.user.list, { response: "backTrue" })
+        // this.props.histter.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } });
+        this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
     }
     updateStatus(RetId, status, isActive) {
         let message = window.strings.UPDATEMESSAGE;
@@ -87,7 +96,7 @@ class ShopDetails extends React.Component {
     uploadImage = (shopImg) => {
         let upload = true;
         const formData = new FormData();
-        formData.append("image", shopImg);
+        formData.append("image", this.state.rotation);
         formData.append("userId", this.props.profileData.address.userId);
         this.props.SubmitRetailer(formData, upload)
     }
@@ -189,12 +198,12 @@ class ShopDetails extends React.Component {
 
                         {/* <input type="button" value="left" onClick={this.rotateleft} />
                         <button onClick={() => { this.uploadImage(shopImg) }}>Upload</button> */}
-                        <div className="text-center mb-3">
+                        {/* <div className="text-center mb-3">
                             <button className="shop-btn" onClick={this.rotateleft}><i class="fa fa-rotate-right"></i>Rotate</button>
                             <button onClick={() => { this.uploadImage(shopImg) }} className="shop-btn">
                                 <i class="fa fa-upload" aria-hidden="true"></i>Upload</button>
 
-                        </div>
+                        </div> */}
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
