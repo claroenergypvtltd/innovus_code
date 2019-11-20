@@ -3,6 +3,9 @@ import React from 'react'
 export function TableData(props) {
 
   console.log(props);
+  const bgColor = {
+    background: 'white'
+  }
   return (
 
     <div className="table-wrapper">
@@ -23,7 +26,7 @@ export function TableData(props) {
         </thead>
 
         <tbody>
-          {props.TableContent && props.TableContent.length === 0 ? <tr><td colSpan="7" className="text-center">No data Found </td></tr> :
+          {props.TableContent && props.TableContent.length === 0 ? <tr><td colSpan="7" className="text-center" style={bgColor} >No data Found </td></tr> :
             props.TableContent && props.TableContent.map((item, index) => {
               return (
                 <tr key={index}>
