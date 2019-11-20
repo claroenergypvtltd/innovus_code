@@ -100,6 +100,17 @@ class ShopDetails extends React.Component {
         formData.append("userId", this.props.profileData.address.userId);
         this.props.SubmitRetailer(formData, upload)
     }
+    editShopDetails = () => {
+        // if(this.props.profileData && this.props.profileData.shopAddress){
+        //     let shopname=this.props.profileData.shopAddress.name
+        //     let address=this.props.profileData.shopAddress.address1
+        //     let address2=this.props.profileData.shopAddress.address2
+        //     let shopType=this.props.profileData.shopAddress.shopType
+        //     let shopTime=this.props.profileData.shopAddress.shopOpeningTime
+        // }
+
+        this.context.router.history.push({ pathname: path.retailer.add, state: this.props.profileData })
+    }
 
     render() {
         let shopAddLat;
@@ -126,6 +137,7 @@ class ShopDetails extends React.Component {
         return (
             <div className="farm-tab p-1 active-box">
                 {
+
                     (profile.status == 0 || profile.status == 1) && !this.state.rejectKey &&
                     <div className="assign-box">
                         {!this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 1, 'isActive')}>Active</button>}
@@ -207,6 +219,10 @@ class ShopDetails extends React.Component {
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
+                            {this.props.profileData && this.props.profileData.status == 0 && <div className="farmer-address col-md-6 mb-2">
+                                <button onClick={this.editShopDetails}>Edit</button>
+                            </div>}
+
                             <h4 className="user-title m-0">Shop Name</h4>
                             <p className="title">{profile.shopAddress && profile.shopAddress.name}</p>
                             {/* <span>
