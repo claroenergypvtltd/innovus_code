@@ -128,6 +128,9 @@ class ShopDetails extends React.Component {
                         {/* activeButton */}
 
                         {/* {profile.isActive == 1 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>Active</button>} */}
+                        <div>
+                            <button className="shop-edit"><i class="fa fa-pencil"></i>Edit</button>
+                        </div>
                     </div>
                 }
                 <div className="row">
@@ -257,8 +260,8 @@ class ShopDetails extends React.Component {
                         <button className="common-btn" onClick={this.redirectPage}>Back</button>
                     </div>
                     {this.state.showStatusBtn && profile.status == 0 && <div className="col-md-6 d-flex justify-content-end">
-                        <button className="accept-btn" onClick={(e) => this.updateStatus(profile.id, 1)}>Accept</button>
                         <button className="reject-btn" onClick={(e) => this.updateStatus(profile.id, 2)}>Reject</button>
+                        <button className="accept-btn" onClick={(e) => this.updateStatus(profile.id, 1)}>Accept</button>
                     </div>}
                 </div>
             </div >

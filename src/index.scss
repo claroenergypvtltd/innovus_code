@@ -1783,7 +1783,7 @@ padding: 5px;
 }
 .shop-btn{
   color:$white;
-  background-color: #82CAFF;
+  background-color: $deep-sea-blue;
   border: none;
   border-radius: 5px;
   padding: 6px;
@@ -1804,7 +1804,7 @@ padding: 5px;
 .active-btn{
   border: 2px solid $orange;
   background-color:$white;
-  color:$light-gray;
+  color:$primary-color;
   border-radius: 20px;
   padding: 6px;
   display: inline-block;
@@ -1814,26 +1814,13 @@ padding: 5px;
   min-width: 137px;
   font-size: 15px;
   position: absolute;
-  top: -61px;
+  top: -67px;
   right: 5px;
 }
-.accept-btn{
-  color:$white;
-  background-color: $accept-green;
-  border: none;
-  border-radius: 20px;
-  padding: 6px;
-  display: inline-block;
-  white-space: nowrap;
-  margin-right: 15px;
-  width: auto;
-  min-width: 137px;
-  font-size: 15px;
- }
- .reject-btn{
-  color:$white;
-  background-color: $reject-red;
-  border: none;
+.shop-edit{
+  border: 2px solid $deep-sea-blue;
+  background-color:$white;
+  color:$primary-color;
   border-radius: 20px;
   padding: 6px;
   display: inline-block;
@@ -1842,6 +1829,38 @@ padding: 5px;
   width: auto;
   min-width: 137px;
   font-size: 15px;
+  position: absolute;
+  top: -67px;
+  right: 150px;
+}
+.accept-btn{
+  color:$white;
+  background-color: $accept-green;
+  border: none;
+  border-radius: 20px;
+  padding: 6px;
+  display: inline-block;
+  margin-left: 0;
+  white-space: nowrap;
+  width: auto;
+  min-width: 137px;
+  font-size: 15px;
+  font-weight: 600;
+ }
+ .reject-btn{
+  color:$reject-red;
+  background-color: $white;
+  border: 2px solid $reject-red;
+  border-radius: 20px;
+  padding: 6px;
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 15px;
+  width: auto;
+  min-width: 137px;
+  font-size: 15px;
+  font-weight: 600;
+
  }
 /****************************Coupon Section************************/
 .line-wrapper{
