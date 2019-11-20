@@ -118,7 +118,7 @@ class DataTableDynamic extends React.Component {
           onRowSelected={this.handleRowChange}
           striped={true}
           clearSelectedRows={this.state.toggledClearRows}
-        // selectableRowsPreSelectedField={false}
+          paginationPerPage={10}
         />
       </div>
     );

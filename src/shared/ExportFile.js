@@ -23,8 +23,10 @@ export default class ExportFile extends React.Component {
             excelitem.OnboardedDate = item.created;
             excelitem.CustomerID = item.cusId && item.cusId === '-' ? '' : item.cusId;
             excelitem.ShopName = item.shopNames && item.shopNames === '-' ? '' : item.shopNames;
-            excelitem.ShopAddress = item.fullShopAddrss && item.fullShopAddrss === '-' ? '' : item.fullShopAddrss;
+            excelitem.ShopAddress = item.shopAddrss1 && item.shopAddrss1 === '-' ? '' : item.shopAddrss1;
+            excelitem.ShopLocalty = item.shopLocalty && item.shopLocalty === '-' ? '' : item.shopLocalty;
             excelitem.mobileNumber = item.mobileNumber && item.mobileNumber === '-' ? '' : item.mobileNumber;
+            excelitem.shopType = item.shopType && item.shopType === '-' ? '' : item.shopType;
             excelitem.AgentName = item.agentName && item.agentName === '-' ? '' : item.agentName;
             PrintexcelDatas.push(excelitem);
         });

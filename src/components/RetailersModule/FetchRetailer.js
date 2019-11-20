@@ -496,7 +496,7 @@ class FetchRetailer extends React.Component {
             item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
             item.shopAddrss1 = item.shopAddress && item.shopAddress.address1 ? item.shopAddress.address1 : '-'
             item.shopLocalty = item.shopAddress && item.shopAddress.address2 ? item.shopAddress.address2 : '-'
-
+            item.shopType = item.shopType && item.shopType.type ? item.shopType.type : item.shopType ? item.shopType : '-'
             if (item && item.shopAddress && item.shopAddress.name) {
                 item.shopNames = item.shopAddress.name
             } else {
@@ -515,7 +515,6 @@ class FetchRetailer extends React.Component {
             } else {
                 item.fullShopAddrss = '-'
             }
-            item.shopType = item.shopType && item.shopType.type
             item.cusId = item.cusId && item.cusId ? item.cusId : '-';
             item.created = moment(item.created).format("DD/MM/YYYY");
             // if (Object.keys(item.address).length > 1) {
@@ -703,9 +702,9 @@ class FetchRetailer extends React.Component {
                         </div>}
                     <DataTableDynamic
                         customCss="fetchretailer"
-                        title="Category List"
+                        title="Retailer List"
                         tableHead={this.state.columns}
-                        tableDatas={this.state.data}
+                        tableDatas={excelDatas}
                         // handleEdit={this.itemEdit}
                         handleView={this.itemView}
                         // handleDelete={this.handleDelete}
