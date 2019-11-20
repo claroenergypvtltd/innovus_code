@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import Select from 'react-select';
+import { getPriceList } from '../../actions/priceAction'
 
 class FetchShippingAdjustment extends Component {
     constructor(props) {
@@ -9,8 +11,38 @@ class FetchShippingAdjustment extends Component {
             errors: {}
         }
     }
+
+    componentDidMount() {
+        // agentDataList
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
+            let respData = newProps.priceData.Lists.datas;
+            this.setState({ PriceLists: respData, pageCount: newProps.priceData.Lists.totalCount / this.state.itemPerPage })
+        }
+    }
+
+    getProductList = () => {
+        let obj = {
+            "pages": this.state.currentPage ? this.state.currentPage : 0,
+            "rows": this.state.itemPerPage,
+            "search": this.state.search,
+            "dCCode": this.state.dCCode
+        }
+        this.props.getPriceList(obj)
+    }
+
     render() {
         const { errors } = this.state;
+
+        let productDropDown = [];
+
+        this.state.agentDataList && this.state.agentDataList.map((item) => {
+            let obj = { "label": item.agentName, "value": item.agentId, "name": "agentName" };
+            productDropDown.push(obj);
+
+        })
 
         return (
 
@@ -27,10 +59,30 @@ class FetchShippingAdjustment extends Component {
 
                                         <div className="form-group col-md-6">
                                             <label>{window.strings['ORDERS']['PRODUCT_ID']}</label>
-                                            <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleCategoryChange}>
+                                            {/* <select required name="parentId" className="form-control order-text" value={this.state.parentId} onChange={this.handleCategoryChange}>
                                                 <option value="0">Select Product ID</option>
-                                                {/* {categoryDropDown} */}
-                                            </select>
+                                            </select> */}
+
+
+                                            <Select
+                                                // styles={{
+                                                //     control: base => ({
+                                                //         ...base,
+                                                //         borderColor: 'hsl(0,0%,80%)',
+                                                //         boxShadow: '#FE988D',
+                                                //         '&:hover': {
+                                                //             borderColor: '#FE988D'
+                                                //         }
+                                                //     })
+                                                // }}
+                                                className="city-box ml-1"
+                                                value={this.state.selectedAgentOption}
+                                                onChange={(e) => this.handleAgentChange(e)}
+                                                // options={productDropDown}
+                                                placeholder="--Select Agent--"
+                                            />
+
+
                                             {this.state.submitted && !this.state.parentId && <div className="mandatory">{window.strings['CATEGORY']['CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
@@ -182,6 +234,7 @@ class FetchShippingAdjustment extends Component {
 }
 function mapStateToProps(state) {
     return {
+        priceData: state.price ? state.price : {}
     };
 }
-export default connect(mapStateToProps, {})(FetchShippingAdjustment);
+export default connect(mapStateToProps, { getPriceList })(FetchShippingAdjustment);
