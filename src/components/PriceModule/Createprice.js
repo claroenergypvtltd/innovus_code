@@ -201,25 +201,40 @@ class CreatePrice extends Component {
                 "discountUnit": this.state.offerId,
                 "flag": flag
             }
-            if (this.state.updateQuantity) {
-                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+            if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
+                if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
                     this.props.submitPrice(obj, isUpdate);
-                } else {
-                    toastr.error("Please increment/decrement in multiple of box quantity")
+                }
+                else if (this.state.updateQuantity && !this.state.offer && this.state.offerId == 0) {
+                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                        this.props.submitPrice(obj, isUpdate);
+                    } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
+                        this.props.submitPrice(obj, isUpdate);
+                    } else {
+                        toastr.error("Please increment/decrement in multiple of box quantity")
+                    }
+                }
+                else if (this.state.updateQuantity && this.state.offerId != 0 && this.state.offer) {
+                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                        this.props.submitPrice(obj, isUpdate);
+                    } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
+                        this.props.submitPrice(obj, isUpdate);
+                    } else {
+                        toastr.error("Please increment/decrement in multiple of box quantity")
+                    }
+                }
+                else if (!this.state.updateQuantity && this.state.offer && this.state.offerId == 0) {
+
+                }
+                else if (this.state.offerId == 0 && this.state.updateQuantity && this.state.offer) {
+
                 }
 
-                // if (this.state.offer || this.state.offerId != 0) {
-                //     if (this.state.offer && this.state.offerId != 0) {
-                //         this.props.submitPrice(obj, isUpdate);
-                //     }
-                // } else {
-                //     this.props.submitPrice(obj, isUpdate);
-                // }
-            } else {
+            }
+            else {
                 this.props.submitPrice(obj, isUpdate);
             }
         }
-
     }
     listPath = () => {
         this.props.history.goBack();
@@ -415,7 +430,7 @@ class CreatePrice extends Component {
                                                 <option value="1">Currency</option>
                                                 <option value="2">Percentage</option>
                                             </select>
-                                            {this.state.submitted && this.state.offer && this.state.offerId == 0 && <div className="mandatory">{window.strings['PRICE']['OFFER'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                            {(this.state.submitted && this.state.offer && this.state.offerId == 0) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
                                         </div>
 
                                     </form>
