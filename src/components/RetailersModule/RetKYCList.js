@@ -39,7 +39,7 @@ class RetKYCList extends React.Component {
 
                     {this.state.KycData && this.state.KycData.map((item, index) =>
                         <div className="col-md-4">
-                            <div className="farm-card main-wrapper">
+                            <div className="farm-card main-wrapper pb-2">
                                 <div className="retailer-details">
                                     <ImageZoom
                                         image={{
