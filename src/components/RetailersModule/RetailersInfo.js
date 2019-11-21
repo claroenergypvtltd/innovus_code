@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
-import { SubmitCategory, getSpecificCategory, getCategoryList } from '../../actions/categoryAction';
 import classnames from 'classnames';
-import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import PropTypes from "prop-types";
-import { toastr } from 'react-redux-toastr'
-import { CATEGORY_FETCH_SUCCESS, CATEGORY_CREATE_SUCCESS, CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
 import store from '../../store/store';
-import { TableData } from '../../shared/Table'
 import { getLocation, submitIrrigationSetting, getIrrigationSettingList, getShopType } from '../../actions/IrrigationSettingAction'
 import { SubmitRetailer, } from '../../actions/SubmitRetailerAction';
 
@@ -21,11 +16,11 @@ class IrrigationSetting extends Component {
         super(props);
         this.state = {
             submitted: false,
-            cityId: '',
-            stateId: '',
-            amount: '',
-            areaSize: '',
-            irrigationCostId: '',
+            name: '',
+            shopName: '',
+            shopAddress: '',
+            shopTime: '',
+            shopType: '',
             errors: {},
             shopTypeDatas: []
         }
@@ -33,17 +28,10 @@ class IrrigationSetting extends Component {
 
     componentDidMount() {
         this.getShop();
-        console.log(this.props.location.state)
         if (this.props.location && this.props.location.state) {
             this.setState({
                 name: this.props.location.state.name, shopName: this.props.location.state.shopAddress.name, shopAddress: this.props.location.state.shopAddress.address2,
                 shopTime: this.props.location.state.shopAddress.shopOpeningTime, shopType: this.props.location.state.shopAddress.shopType, userId: this.props.location.state.id
-            })
-        }
-        this.getStateList();
-        if (this.props.location && this.props.location.state && this.props.location.state.irrigationCostId) {
-            this.setState({ irrigationCostId: this.props.location.state.irrigationCostId }, () => {
-                this.getEditData();
             })
         }
     }
@@ -57,29 +45,9 @@ class IrrigationSetting extends Component {
     componentWillReceiveProps(newProps) {
         if (parseInt(newProps.status) == 200) {
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
-            toastr.success(newProps.message);
             this.props.history.goBack();
         }
-        if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.specificData && newProps.IrrigationSettingData.specificData[0]) {
-            let respData = newProps.IrrigationSettingData.specificData[0];
-            this.setState({ amount: respData.amount, areaSize: respData.areasize, stateId: respData.stateId, cityId: respData.cityId }, () => {
-                this.getCityList();
-            })
-        }
-
-        if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.createdStatus == "200") {
-            store.dispatch({ type: "IRRIGATION_SETTING_CREATE_SUCCESS", createdStatus: "" });
-            this.listPath();
-        }
-
-        if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.updatedStatus == "200") {
-            store.dispatch({ type: "IRRIGATION_SETTING_UPDATE_SUCCESS", updatedStatus: "" });
-            this.listPath();
-        }
-
     }
-
-
     getEditData = () => {
         // irrigationCostId
         let obj = {
@@ -96,9 +64,8 @@ class IrrigationSetting extends Component {
 
     handleInputChange = (e) => {
 
-        e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
+        this.setState({ [e.target.name]: e.target.value })
     }
-
 
     handleStateChange = (e) => {
         this.setState({ stateId: e.target.value }, () => {
@@ -106,27 +73,11 @@ class IrrigationSetting extends Component {
         })
     }
 
-
-    getCityList = () => {
-
-        let obj = {
-            "stateId": this.state.stateId
-        }
-        getLocation(obj).then(resp => {
-            if (resp) {
-                this.setState({ cityData: resp.data })
-
-            }
-        })
-    }
-
-
     listPath = () => {
         this.props.history.goBack();
     }
 
     handleSubmit = (e) => {
-
         e.preventDefault();
         this.setState({ submitted: true })
 
@@ -138,54 +89,22 @@ class IrrigationSetting extends Component {
             formData.append("shopAddress", this.state.shopAddress);
             formData.append("shopTime", this.state.shopTime);
             formData.append("shopType", this.state.shopType);
-
             formData.append("userId", this.state.userId);
             let updateRetailer = false;
             if (this.state.userId) {
                 updateRetailer = true;
             }
             this.props.SubmitRetailer(formData, updateRetailer);
-            this.props.history.goBack();
 
         }
-        // if (this.state.cityId && this.state.amount && this.state.areaSize) {
-
-
-        //     let obj = {
-        //         "irrigationCostId": this.state.irrigationCostId,
-        //         "stateId": this.state.stateId,
-        //         "cityId": this.state.cityId,
-        //         "amount": this.state.amount,
-        //         "areasize": this.state.areaSize
-        //     }
-        //     let isUpdate = false;
-        //     if (this.state.irrigationCostId) {
-        //         isUpdate = true;
-        //     }
-        //     this.props.submitIrrigationSetting(obj, isUpdate);
-
-        //     // this.props.submitPrice(obj, isUpdate);
-        // }
     }
-
-
-
     render() {
         const { errors } = this.state;
 
-        const stateDropDown = this.state.stateData && this.state.stateData.map((item, index) => {
-            return <option key={index}
-                value={item.id}> {item.name}</option>
-        });
         const shopTypeData = this.state.shopTypeDatas && this.state.shopTypeDatas.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.type}</option>
         });
-
-        // const weightDropDown = this.state.weightDatas && this.state.weightDatas.map((item, index) => {
-        //     return <option key={index}
-        //         value={item.id}> {item.name}</option>
-        // });
 
         return (
             <div className="irrigation-setting">
@@ -285,7 +204,7 @@ class IrrigationSetting extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    IrrigationSettingData: state.irrigationSetting ? state.irrigationSetting : {}
+    status: state.retailer.status
 })
 
-export default connect(mapStateToProps, { submitIrrigationSetting, getIrrigationSettingList, getShopType, SubmitRetailer })(IrrigationSetting)
+export default connect(mapStateToProps, { getShopType, SubmitRetailer })(IrrigationSetting)
