@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import store from '../../store/store';
 import { getLocation, submitIrrigationSetting, getIrrigationSettingList, getShopType } from '../../actions/IrrigationSettingAction'
 import { SubmitRetailer, } from '../../actions/SubmitRetailerAction';
+import TimePicker from 'rc-time-picker';
+import * as moment from 'moment';
 
 class IrrigationSetting extends Component {
     static contextTypes = {
@@ -22,16 +24,22 @@ class IrrigationSetting extends Component {
             shopTime: '',
             shopType: '',
             errors: {},
-            shopTypeDatas: []
+            shopTypeDatas: [],
+
         }
     }
 
     componentDidMount() {
         this.getShop();
         if (this.props.location && this.props.location.state) {
+            let getTime = this.props.location.state.shopAddress && this.props.location.state.shopAddress.shopOpeningTime;
+            let getTimeformat = getTime.split(':');
+            let getHoursFormat = getTimeformat && getTimeformat[1].split(' ')
+            // console.log('getTimeformat', getTimeformat);
+            // console.log('getTimeformat', getHoursFormat);
             this.setState({
-                name: this.props.location.state.name, shopName: this.props.location.state.shopAddress.name, shopAddress: this.props.location.state.shopAddress.address2,
-                shopTime: this.props.location.state.shopAddress.shopOpeningTime, shopType: this.props.location.state.shopAddress.shopType, userId: this.props.location.state.id
+                name: this.props.location.state.name, shopName: this.props.location.state.shopAddress.name, shopAddress: this.props.location.state.shopAddress.address1,
+                min: getTimeformat[0], sec: getHoursFormat[0], a: getHoursFormat[1], shopType: this.props.location.state.shopAddress.shopType, userId: this.props.location.state.id
             })
         }
     }
@@ -72,6 +80,20 @@ class IrrigationSetting extends Component {
             this.getCityList();
         })
     }
+    // handleTimePicker = (Data) => {
+    //     let data = Data._d;
+    //     debugger
+    //     this.setState({ transitionTime: data })
+    //     debugger
+    // }
+    handleTimePicker = value => {
+        let getTime = value && value.format('hh:mm a');
+        let getTimeformat = getTime && getTime.split(':');
+        console.log('getTimeformat', getTimeformat);
+        let getHoursFormat = getTimeformat && getTimeformat[1].split(' ');
+        console.log(value && value.format('h:mm a'));
+        this.setState({ min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1] });
+    };
 
     listPath = () => {
         this.props.history.goBack();
@@ -81,13 +103,13 @@ class IrrigationSetting extends Component {
         e.preventDefault();
         this.setState({ submitted: true })
 
-        if (this.state.name && this.state.shopName && this.state.shopAddress && this.state.shopTime && this.state.shopType != 0) {
+        if (this.state.name && this.state.shopName && this.state.shopAddress && this.state.min && this.state.shopType != 0) {
 
             const formData = new FormData();
             formData.append("name", this.state.name);
             formData.append("shopName", this.state.shopName);
-            formData.append("shopAddress", this.state.shopAddress);
-            formData.append("shopTime", this.state.shopTime);
+            formData.append("shopAddress1", this.state.shopAddress);
+            formData.append("shopOpeningTime", this.state.min + ':' + this.state.sec + ' ' + this.state.a);
             formData.append("shopType", this.state.shopType);
             formData.append("userId", this.state.userId);
             let updateRetailer = false;
@@ -105,6 +127,8 @@ class IrrigationSetting extends Component {
             return <option key={index}
                 value={item.id}> {item.type}</option>
         });
+        const format = 'hh:mm a';
+
 
         return (
             <div className="irrigation-setting">
@@ -121,7 +145,7 @@ class IrrigationSetting extends Component {
                                 <label>Retailer Name</label>
                                 <input
                                     type="text"
-                                    placeholder="retailer name"
+                                    placeholder="Retailer Name"
                                     className={classnames('form-control', {
                                         'is-invalid': errors.amount
                                     })}
@@ -137,7 +161,7 @@ class IrrigationSetting extends Component {
                                 <label>Shop Name</label>
                                 <input
                                     type="text"
-                                    placeholder="shop name"
+                                    placeholder="Shop Name"
                                     className={classnames('form-control', {
                                         'is-invalid': errors.amount
                                     })}
@@ -153,7 +177,7 @@ class IrrigationSetting extends Component {
                                 <label>Shop Address</label>
                                 <input
                                     type="text"
-                                    placeholder="shop address"
+                                    placeholder="Shop Address"
                                     className={classnames('form-control', {
                                         'is-invalid': errors.amount
                                     })}
@@ -166,10 +190,10 @@ class IrrigationSetting extends Component {
                             </div>
 
                             <div className="form-group col-md-6">
-                                <label>Shop Open time</label>
-                                <input
+                                <label>Shop Open Time</label>
+                                {/* <input
                                     type="text"
-                                    placeholder="shop open time"
+                                    placeholder="Shop Open Time"
                                     className={classnames('form-control', {
                                         'is-invalid': errors.amount
                                     })}
@@ -177,8 +201,18 @@ class IrrigationSetting extends Component {
                                     onChange={this.handleInputChange}
                                     value={this.state.shopTime}
                                     required
+                                /> */}
+                                <TimePicker className="time-pick"
+                                    value={moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)}
+                                    // value={this.state.value}
+                                    placeholder="Shop Open Time" showSecond={false}
+                                    onChange={this.handleTimePicker}
+                                    use12Hours
+                                    format={format}
+                                    inputReadOnly
+
                                 />
-                                {this.state.submitted && !this.state.shopTime && <div className="mandatory">Shop open time   {window.strings['ISREQUIRED']}</div>}
+                                {this.state.submitted && !this.state.min && <div className="mandatory">Shop Open Time   {window.strings['ISREQUIRED']}</div>}
                             </div>
 
                             <div className="form-group col-md-6">
