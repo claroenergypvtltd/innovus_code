@@ -71,7 +71,7 @@ class Login extends Component {
         return (
             <div className="clearfix loginAlign">
                 <div className="row login-sec clearfix">
-                    <div className="col-md-10 login-box">
+                    <div className="col-md-10 login-box justify-content-center">
                         <div className="col-md-5 leftWidget clearfix">
                             <div className="logo-img">
                                 <img src={logo} className="img-rounded" alt="img" />

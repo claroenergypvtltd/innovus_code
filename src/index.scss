@@ -51,9 +51,9 @@ $font-wt-600:600;
   float:right;
 }
 .login-box{
-  margin: 0 110px;
+ // margin: 0 110px;
   float: none;
-
+  margin: auto;
 }
 
 // .loader-section{
@@ -395,6 +395,7 @@ li {
   color: $primary-color;
   font-size: 17px;
   display: block;
+  text-decoration: none;
 }
 .menu-link{
   border-left:8px solid transparent;
@@ -750,7 +751,7 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
   box-shadow:$main-boxshadow;
 }
 .sub-wrapper{
-  height: 450px;
+  //height: 450px;
   margin-bottom: 15px;
 }
 .tab-wrapper{
@@ -845,9 +846,9 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
   box-shadow:$farm-boxshadow;
    margin-bottom: 15px;
   //margin: 36px 0 32px 40px;
-  padding-bottom: 10px;
+  //padding-bottom: 10px;
   position: relative;
-  height: 266px;
+  // height: 266px;
 }
 .farm-tab{
   margin: 20px;
@@ -1834,9 +1835,9 @@ padding: 5px;
   right: 150px;
 }
 .accept-btn{
-  color:$white;
-  background-color: $accept-green;
-  border: none;
+  color: $accept-green;
+  background-color: $white;
+  border: 2px solid  $accept-green;
   border-radius: 20px;
   padding: 6px;
   display: inline-block;
