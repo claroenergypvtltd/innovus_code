@@ -149,9 +149,9 @@ class ShopDetails extends React.Component {
                         {/* activeButton */}
 
                         {/* {profile.isActive == 1 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>Active</button>} */}
-                        <div>
-                            <button className="shop-edit"><i class="fa fa-pencil"></i>Edit</button>
-                        </div>
+                        {this.props.profileData && this.props.profileData.status == 0 && <div>
+                            <button className="shop-edit" onClick={this.editShopDetails}><i class="fa fa-pencil"></i>Edit</button>
+                        </div>}
                     </div>
                 }
                 <div className="row">
@@ -219,9 +219,9 @@ class ShopDetails extends React.Component {
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
-                            {this.props.profileData && this.props.profileData.status == 0 && <div className="farmer-address col-md-6 mb-2">
+                            {/* {this.props.profileData && this.props.profileData.status == 0 && <div className="farmer-address col-md-6 mb-2">
                                 <button onClick={this.editShopDetails}>Edit</button>
-                            </div>}
+                            </div>} */}
 
                             <h4 className="user-title m-0">Shop Name</h4>
                             <p className="title">{profile.shopAddress && profile.shopAddress.name}</p>
