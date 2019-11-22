@@ -541,8 +541,8 @@ class FetchRetailer extends React.Component {
                 <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
 
                 <div className="retailersearchdiv">
-                    <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                    <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}
+                    {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
+                    <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '-Search' : '+Search'}
                         {/* <span className="advance-icon"></span>Advance Search */}
                     </button>
                     <div className="retail-reset">
@@ -637,6 +637,7 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select City--"
                                         />
                                     </div>
+
                                     {/* <div className="col-md-4 city-filter"><label className="label-title">City:</label>
                                     <select name="cityId" value={this.state.cityId} className="city-select ml-1 red" onChange={this.handleInputChange}>
                                         <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
@@ -653,7 +654,12 @@ class FetchRetailer extends React.Component {
                             </div >
                             <div className="sub-filter">
                                 <div className="row ">
-                                    <div className="col-md-4 agent-filter"><label className="label-title label-line">Agent:</label>
+                                    <div className="ml-3">
+                                        {/* <label className="label-title">Search:</label> */}
+                                        <input type="text" placeholder="Search"
+                                            class="form-control" name="name" required="" value="" />
+                                    </div>
+                                    <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
                                         <Select
                                             styles={{
                                                 control: base => ({
@@ -673,13 +679,13 @@ class FetchRetailer extends React.Component {
                                         />
 
                                     </div>
-                                    <div className="col-md-4 status-filter"><label className="label-title">Status:</label>
+                                    <div className="col-md-3 status-filter pr-0"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
                                             <option value="" className="drop-option">-- Select Status--</option>
                                             {statusDropdown}
                                         </select>
                                     </div>
-                                    <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
+                                    <div className="col-md-3 code-filter pl-0"><label className="label-title">DC Code:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                         <Select className="state-box"
                                             styles={{
@@ -698,6 +704,7 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
+                                    <button className="data-search"> <i className="fa fa-search" aria-hidden="true"></i>Search</button>
                                 </div></div>
                         </div>}
                     <DataTableDynamic
