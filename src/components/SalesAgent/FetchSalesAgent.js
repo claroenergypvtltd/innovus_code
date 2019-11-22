@@ -35,7 +35,7 @@ class FetchSalesAgent extends React.Component {
     getSalesAgentList = () => {
         let obj = {
             roleId: "4",
-            pages: this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
+            page: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
             row: this.state.itemPerPage,
             search: this.state.search,
             dcCode: this.state.dcCode

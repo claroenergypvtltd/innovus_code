@@ -10,7 +10,7 @@ export function TableData(props) {
 
     <div className="table-wrapper">
       <table className="table table-striped">
-        <thead>
+        {props.TableContent && props.TableContent.length === 0 ? '' : <thead>
           <tr>
             {props.TableHead && props.TableHead.map((tableHead, index) => {
               return (
@@ -23,10 +23,10 @@ export function TableData(props) {
 
           </tr>
 
-        </thead>
+        </thead>}
 
         <tbody>
-          {props.TableContent && props.TableContent.length === 0 ? <tr><td colSpan="7" className="text-center" style={bgColor} >No data Found </td></tr> :
+          {props.TableContent && props.TableContent.length === 0 ? <tr><td colSpan="7" className="text-center" style={bgColor} >No Data Found </td></tr> :
             props.TableContent && props.TableContent.map((item, index) => {
               return (
                 <tr key={index}>
