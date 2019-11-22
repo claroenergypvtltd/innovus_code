@@ -27,7 +27,6 @@ class User extends Component {
       this.setState({ tabIndex: 1 })
     }
   }
-
   tabChange = tabIndex => {
     sessionStorage.removeItem('retsearchDatas');
     let roleId =
@@ -36,17 +35,14 @@ class User extends Component {
         : Constant.CONSTANT.TWO;
     this.setState({ tabIndex: tabIndex, selectedRoleId: roleId });
   };
-
   handlePageChange = e => {
     e.preventDefault();
     this.props.history.push(path.retailer.add);
   };
-
   handleSearch = e => {
     e.preventDefault();
     this.setState({ search: e.target.value })
   };
-
   searchResult = () => {
     if (this.state.search) {
       this.setState({ farmerSearch: this.state.search })

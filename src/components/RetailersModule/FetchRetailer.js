@@ -50,9 +50,6 @@ class FetchRetailer extends React.Component {
         }
     }
     componentWillMount() {
-        // const myKey = this.props 
-        // console.log(myKey)
-        // console.log('this.state',  this.context.router.route.location.state )
         if (this.context.router.route.location.state && this.context.router.route.location.state.retlrbckTrack == "backTrue" && sessionStorage.retsearchDatas) {
             var sessRetsearchDatas = JSON.parse(sessionStorage.retsearchDatas);
             if (sessRetsearchDatas) {
@@ -144,7 +141,7 @@ class FetchRetailer extends React.Component {
             })
         }
     }
-    handleStateChange = (e) => {
+    handleStateChange = (e, type) => {
         let obj = {};
         if (e.name == "stateId" || e.name == "cityId") {
             if (e.name == "stateId") {
@@ -157,7 +154,7 @@ class FetchRetailer extends React.Component {
                 this.setState({
                     [e.name]: e.value,
                 }, () => {
-                    this.getRetailerList();
+                    // this.getRetailerList();
                     obj = {
                         // "countryId": this.state.country,
                         "roleId": 2,
@@ -186,7 +183,9 @@ class FetchRetailer extends React.Component {
     };
 
     handleAgentChange = (e) => {
-        this.setState({ selectedAgentOption: e, agentId: e.value }, () => { this.getRetailerList() })
+        this.setState({ selectedAgentOption: e, agentId: e.value }, () => {
+            //this.getRetailerList() 
+        })
 
     };
     getRetailerList = (status) => {
@@ -326,7 +325,7 @@ class FetchRetailer extends React.Component {
     }
     statusFilter(e) {
         this.setState({ StatusfilterId: e.target.value }, () => {
-            this.getRetailerList();
+            //this.getRetailerList();
         })
     }
     handleDelete = (data, e) => {
@@ -361,11 +360,11 @@ class FetchRetailer extends React.Component {
             endDate: picker.endDate,
             closePicker: true
         }, () => {
-            this.getRetailerList();
+            // this.getRetailerList();
         })
     }
     resetSelection = (event, picker) => {
-        console.log("picker", picker);
+        //console.log("picker", picker);
         // this.setState({
         //     startDate: moment(),
         //     endDate: moment()
@@ -378,7 +377,7 @@ class FetchRetailer extends React.Component {
     }
     handleDcCodeChange = (Data) => {
         this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => {
-            this.getRetailerList()
+            // this.getRetailerList()
         })
     };
     onCloseModal = (type) => {
@@ -601,7 +600,7 @@ class FetchRetailer extends React.Component {
                                                 })
                                             }}
                                             value={this.state.selectedStateOption}
-                                            onChange={(e) => this.handleStateChange(e)}
+                                            onChange={(e) => this.handleStateChange(e, 'state')}
                                             options={stateDropDown}
                                             placeholder="--Select State--"
                                         />
@@ -704,7 +703,7 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button className="data-search"> <i className="fa fa-search" aria-hidden="true"></i>Search</button>
+                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList()}> <i className="fa fa-search" aria-hidden="true"></i>Search</button>
                                 </div></div>
                         </div>}
                     <DataTableDynamic
