@@ -97,7 +97,6 @@ class CreatePrice extends Component {
         }
     }
     componentDidUpdate(preProps) {
-
         if (preProps.priceData != this.props.priceData) {
             if (preProps.priceData && preProps.priceData.categoryAmount) {
                 this.setState({ weight: preProps.priceData.categoryAmount.rupeesize, price: preProps.priceData.categoryAmount.amount });
@@ -179,61 +178,65 @@ class CreatePrice extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
+        if (this.state.price >= this.state.offer || this.state.offerId == 2 && this.state.offer <= 100) {
+            if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
 
-            let isUpdate = false;
-            let flag;
-            this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
-            if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
-                isUpdate = true;
-            }
+                let isUpdate = false;
+                let flag;
+                this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
+                if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
+                    isUpdate = true;
+                }
 
-            let obj = {
-                "categoryId": this.state.categoryId,
-                "rupeesize": "RS/" + this.state.weightId,
-                "amount": this.state.price,
-                "boxQuantity": this.state.boxQuantity,
-                "totalQuantity": this.state.weight,
-                "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
-                "totalQuantitySize": this.state.weightId,
-                "boxQuantitySize": this.state.weightId,
-                "discountValue": this.state.offer,
-                "discountUnit": this.state.offerId,
-                "flag": flag
-            }
-            if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
-                if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
+                let obj = {
+                    "categoryId": this.state.categoryId,
+                    "rupeesize": "RS/" + this.state.weightId,
+                    "amount": this.state.price,
+                    "boxQuantity": this.state.boxQuantity,
+                    "totalQuantity": this.state.weight,
+                    "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
+                    "totalQuantitySize": this.state.weightId,
+                    "boxQuantitySize": this.state.weightId,
+                    "discountValue": parseInt(this.state.offer),
+                    "discountUnit": this.state.offerId,
+                    "flag": flag
+                }
+                if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
+                    if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
+                        this.props.submitPrice(obj, isUpdate);
+                    }
+                    else if (this.state.updateQuantity && !this.state.offer && this.state.offerId == 0) {
+                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                            this.props.submitPrice(obj, isUpdate);
+                        } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
+                            this.props.submitPrice(obj, isUpdate);
+                        } else {
+                            toastr.error("Please increment/decrement in multiple of box quantity")
+                        }
+                    }
+                    else if (this.state.updateQuantity && this.state.offerId != 0 && this.state.offer) {
+                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                            this.props.submitPrice(obj, isUpdate);
+                        } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
+                            this.props.submitPrice(obj, isUpdate);
+                        } else {
+                            toastr.error("Please increment/decrement in multiple of box quantity")
+                        }
+                    }
+                    else if (!this.state.updateQuantity && this.state.offer && this.state.offerId == 0) {
+
+                    }
+                    else if (this.state.offerId == 0 && this.state.updateQuantity && this.state.offer) {
+
+                    }
+
+                }
+                else {
                     this.props.submitPrice(obj, isUpdate);
                 }
-                else if (this.state.updateQuantity && !this.state.offer && this.state.offerId == 0) {
-                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                        this.props.submitPrice(obj, isUpdate);
-                    } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
-                        this.props.submitPrice(obj, isUpdate);
-                    } else {
-                        toastr.error("Please increment/decrement in multiple of box quantity")
-                    }
-                }
-                else if (this.state.updateQuantity && this.state.offerId != 0 && this.state.offer) {
-                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                        this.props.submitPrice(obj, isUpdate);
-                    } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
-                        this.props.submitPrice(obj, isUpdate);
-                    } else {
-                        toastr.error("Please increment/decrement in multiple of box quantity")
-                    }
-                }
-                else if (!this.state.updateQuantity && this.state.offer && this.state.offerId == 0) {
-
-                }
-                else if (this.state.offerId == 0 && this.state.updateQuantity && this.state.offer) {
-
-                }
-
             }
-            else {
-                this.props.submitPrice(obj, isUpdate);
-            }
+        } else {
+            toastr.error("please enter valid offer value")
         }
     }
     listPath = () => {
@@ -419,6 +422,8 @@ class CreatePrice extends Component {
 
                                             />
                                             {this.state.submitted && this.state.offerId != 0 && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && this.state.offerId == 1 && this.state.offer > this.state.price && <div className="mandatory">"Please enter valid offer"</div>}
+                                            {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">"Please enter valid offer"</div>}
                                         </div>
 
 

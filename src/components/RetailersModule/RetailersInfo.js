@@ -211,6 +211,7 @@ class IrrigationSetting extends Component {
                                     format={format}
                                     inputReadOnly
 
+
                                 />
                                 {this.state.submitted && !this.state.min && <div className="mandatory">Shop Open Time   {window.strings['ISREQUIRED']}</div>}
                             </div>

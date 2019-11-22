@@ -17,7 +17,7 @@ class FetchSalesAgent extends React.Component {
         super(props);
         this.state = {
             search: '',
-            currentPage: 1,
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
@@ -35,7 +35,7 @@ class FetchSalesAgent extends React.Component {
     getSalesAgentList = () => {
         let obj = {
             roleId: "4",
-            pages: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            pages: this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             row: this.state.itemPerPage,
             search: this.state.search,
             dcCode: this.state.dcCode

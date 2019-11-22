@@ -60,7 +60,7 @@ class CreateSalesAgent extends React.Component {
     }
 
     redirectPage = () => {
-        this.props.history.push({ pathname: path.farmer.list, tabNumber: 1 });
+        this.props.history.push({ pathname: path.user.list, tabNumber: 1 });
     }
 
     handleSubmit = (e) => {
