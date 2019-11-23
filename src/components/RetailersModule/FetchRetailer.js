@@ -21,7 +21,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import TransferAgent from './TransferAgent'
-import { SearchBar } from '../../shared'
+import { SearchBar, ReactPagination } from '../../shared'
 import { getDcCodeData } from '../../actions/salesAgentAction';
 
 
@@ -46,7 +46,12 @@ class FetchRetailer extends React.Component {
             advanceSearch: false,
             popup: false,
             dcCode: '',
-            clearCheck: true
+            clearCheck: true,
+            currentPage: 0,
+            itemPerPage: 5,
+            pageCount: resorceJSON.TablePageData.pageCount,
+            limitValue: resorceJSON.TablePageData.paginationLength,
+            filterWithPagination: true
         }
     }
     componentWillMount() {
@@ -63,8 +68,8 @@ class FetchRetailer extends React.Component {
                     selectedStateOption: sessRetsearchDatas.selectedStateOption,
                     selectedCityOption: sessRetsearchDatas.selectedCityOption,
                     dcCodeObj: sessRetsearchDatas.dcCodeObj,
-                    advanceSearch: false
-
+                    advanceSearch: false,
+                    currentPage: sessRetsearchDatas.pages
                 }, () => {
                     this.callAllUserAPis();
                     this.enableAdvanceSearch();
@@ -74,6 +79,27 @@ class FetchRetailer extends React.Component {
             this.callAllUserAPis();
         }
     }
+
+    componentWillReceiveProps(newProps) {
+        //         var routeChanged = newProps.location !== this.props.location
+        // console.log('---routeChanged---',routeChanged)
+        if (newProps.list.datas && !this.state.popup) {
+            let selectlist = newProps.list.datas;
+            let agentDataList = newProps.agentData;
+            let Lists = selectlist && selectlist.map(item => {
+                item.selectBox = this.viewCrop(item.id, item.status, item.isActive);
+                return item;
+            })
+            this.setState({
+                data: Lists, exceldatas: Lists, agentDataList: agentDataList.Lists.datas, pageCount: newProps.list.totalCount / this.state.itemPerPage
+            })
+        }
+        if (newProps.deletedData && newProps.deletedData == "200") {
+            store.dispatch({ type: RETAILER_DELETE_SUCCESS, resp: "" })
+            this.getRetailerList();
+        }
+    }
+
     callAllUserAPis() {
         this.getRetailerList();
         this.getStateList();
@@ -193,11 +219,15 @@ class FetchRetailer extends React.Component {
         let user = {};
         if (status == 'reset') {
             this.setState({
-                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0, StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '', agentId: '', search: '', dcCode: '', dcCodeObj: ''
+                cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0,
+                StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '',
+                agentId: '', search: '', dcCode: '', dcCodeObj: '', currentPage: 0
             }, () => {
                 sessionStorage.removeItem('retsearchDatas');
                 user.roleId = 2;
                 user.search = this.state.search;
+                user.pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
+                user.row = this.state.itemPerPage;
                 this.props.fetchRetailers(user);
             })
         }
@@ -231,9 +261,17 @@ class FetchRetailer extends React.Component {
                 user.dcCode = this.state.dcCode;
             }
 
-
             user.roleId = 2;
             user.search = this.state.search;
+            if (status == "onSearch") {
+                this.setState({ currentPage: 0 }, () => {
+                    user.pages = 0
+                })
+            } else {
+                user.pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
+            }
+
+            user.row = this.state.itemPerPage;
             sessionStorage.setItem('retsearchDatas', JSON.stringify(user));
             this.setState({
                 selectedDatas: []
@@ -251,26 +289,7 @@ class FetchRetailer extends React.Component {
         let redrctpath = path.retailer.add;
         this.context.router.history.push(redrctpath);
     };
-    componentWillReceiveProps(newProps) {
-        //         var routeChanged = newProps.location !== this.props.location
-        // console.log('---routeChanged---',routeChanged)
-        if (newProps.list.datas && !this.state.popup) {
-            let selectlist = newProps.list.datas;
-            let agentDataList = newProps.agentData;
-            let Lists = selectlist && selectlist.map(item => {
-                item.selectBox = this.viewCrop(item.id, item.status, item.isActive);
-                return item;
-            })
-            this.setState({
-                data: Lists, exceldatas: Lists, agentDataList: agentDataList.Lists.datas
-            })
 
-        }
-        if (newProps.deletedData && newProps.deletedData == "200") {
-            store.dispatch({ type: RETAILER_DELETE_SUCCESS, resp: "" })
-            this.getRetailerList();
-        }
-    }
     viewCrop(RetstatusId, status, isActive) {
         let statusClass;
 
@@ -413,7 +432,9 @@ class FetchRetailer extends React.Component {
             // let serObj = {
             // "search": this.state.search
             // };
-            this.getRetailerList();
+            this.setState({ currentPage: 0 }, () => {
+                this.getRetailerList();
+            })
         }
     }
     resetSearch = () => {
@@ -426,11 +447,14 @@ class FetchRetailer extends React.Component {
     handleSearch = (e) => {
         this.setState({ search: e.target.value })
     }
-    // handleClearRows = () => {
-    //     // this.setState({ toggledClearRows: !this.state.toggledClearRows})
-    //     return true
 
-    // }
+    onChange = (data) => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected, filterWithPagination: true }, () => {
+                this.getRetailerList();
+            });
+        }
+    }
 
     render() {
 
@@ -534,7 +558,6 @@ class FetchRetailer extends React.Component {
             excelDatas.push(item);
         })
         let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} clearRows={this.state.clearCheck} />
-
         return (
             <div className=" mt-4">
                 <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
@@ -703,7 +726,7 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList()}> <i className="fa fa-search" aria-hidden="true"></i>Search</button>
+                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}> <i className="fa fa-search" aria-hidden="true"></i>Search</button>
                                 </div></div>
                         </div>}
                     <DataTableDynamic
@@ -714,11 +737,13 @@ class FetchRetailer extends React.Component {
                         // handleEdit={this.itemEdit}
                         handleView={this.itemView}
                         // handleDelete={this.handleDelete}
-                        pagination={true}
+                        // pagination={true}
                         // checkbox={true}
                         onRowSelected={this.handleRowChange}
                         handleRowChange={this.handleRowChange}
                     />
+                    <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+
                     {/* <DataTableDynamic customCss="fetchretailer" title="Category List" tableHead={this.state.columns}
                         tableDatas={this.state.data} handleView={this.itemView}
                         pagination={true} onRowSelected={this.handleRowChange}

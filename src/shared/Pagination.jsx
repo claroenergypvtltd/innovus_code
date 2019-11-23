@@ -20,14 +20,16 @@ export function ReactPagination(props) {
 
       <ReactPaginate previousLabel={"<"}
         nextLabel={">"}
-        breakLabel={<a href="">...</a>}
+        breakLabel={<a>...</a>}
         breakClassName={"break-me"}
         pageCount={props.PageDetails.pageCount}
         marginPagesDisplayed={2}
         onPageChange={props.PageDetails.onPageChange}
         containerClassName={"pagination"}
         subContainerClassName={"pages pagination"}
-        activeClassName={"active"} />
+        activeClassName={"active"}
+        forcePage={props.PageDetails.activePage}
+      />
 
 
     </div >
