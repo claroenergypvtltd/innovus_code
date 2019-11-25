@@ -190,7 +190,7 @@ class CreatePrice extends Component {
                     }
 
                     let obj = {
-                        "categoryId": this.state.categoryId,
+                        "productId": this.state.categoryId,
                         "rupeesize": "RS/" + this.state.weightId,
                         "amount": this.state.price,
                         "boxQuantity": this.state.boxQuantity,

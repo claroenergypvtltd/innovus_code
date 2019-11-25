@@ -114,7 +114,7 @@ export const getCategoryDCCode = (dcCode, dcsubcat, type) => {
 		dCCode = '?categoryId=' + dcCode + '&dcCode=' + dcsubcat;
 	}
 	else {
-		dCCode = '?dcCode=' + dcCode
+		dCCode = '?parentId=' + dcCode
 	}
 	return httpServices.get(endPoint.products + dCCode).then(resp => {
 

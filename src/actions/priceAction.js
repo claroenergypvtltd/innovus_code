@@ -10,7 +10,7 @@ export const getPriceList = (formData) => dispatch => {
     formData.rows = formData.rows ? formData.rows : '';
     formData.search = formData.search ? formData.search : '';
     formData.dCCode = formData.dCCode ? formData.dCCode : '';
-    formData.flag = 1;
+    // formData.flag = 1;
 
     return httpServices.post(endPoint.price, formData).then(resp => {
         if (resp && resp.data) {
