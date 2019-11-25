@@ -66,7 +66,7 @@ class FetchCrop extends Component {
     getCropList() {
         let obj = {
             "isallcrop": true,
-            "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
+            "pages": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
         }

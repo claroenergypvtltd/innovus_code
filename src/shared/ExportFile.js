@@ -34,6 +34,7 @@ export default class ExportFile extends React.Component {
             <CSVLink filename='Retailers.csv' className="excel-btn ml-2" data={PrintexcelDatas} >
                 {window.strings.EXCELEXPORT}
             </CSVLink>
+            // <span className="tooltip-text">Export</span>
         )
     }
 }

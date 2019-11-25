@@ -5,10 +5,11 @@ import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import PropTypes from "prop-types";
 import store from '../../store/store';
-import { getLocation, submitIrrigationSetting, getIrrigationSettingList, getShopType } from '../../actions/IrrigationSettingAction'
+import { getLocation, getShopType } from '../../actions/IrrigationSettingAction'
 import { SubmitRetailer, } from '../../actions/SubmitRetailerAction';
 import TimePicker from 'rc-time-picker';
 import * as moment from 'moment';
+import { toastr } from '../../services/toastr.services'
 
 class IrrigationSetting extends Component {
     static contextTypes = {
@@ -25,7 +26,6 @@ class IrrigationSetting extends Component {
             shopType: '',
             errors: {},
             shopTypeDatas: [],
-
         }
     }
 
@@ -102,21 +102,28 @@ class IrrigationSetting extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-
         if (this.state.name && this.state.shopName && this.state.shopAddress && this.state.min && this.state.shopType != 0) {
-
-            const formData = new FormData();
-            formData.append("name", this.state.name);
-            formData.append("shopName", this.state.shopName);
-            formData.append("shopAddress1", this.state.shopAddress);
-            formData.append("shopOpeningTime", this.state.min + ':' + this.state.sec + ' ' + this.state.a);
-            formData.append("shopType", this.state.shopType);
-            formData.append("userId", this.state.userId);
-            let updateRetailer = false;
-            if (this.state.userId) {
-                updateRetailer = true;
+            if (this.state.a == 'pm') {
+                let message = window.strings.TIMEAMPMFORAMT;
+                const toastrConfirmOptions = {
+                    onOk: () => { },
+                    onCancel: () => { }
+                };
+                toastr.customConfirm(message, toastrConfirmOptions, window.strings.ALERT);
+            } else {
+                const formData = new FormData();
+                formData.append("name", this.state.name);
+                formData.append("shopName", this.state.shopName);
+                formData.append("shopAddress1", this.state.shopAddress);
+                formData.append("shopOpeningTime", this.state.min + ':' + this.state.sec + ' ' + this.state.a);
+                formData.append("shopType", this.state.shopType);
+                formData.append("userId", this.state.userId);
+                let updateRetailer = false;
+                if (this.state.userId) {
+                    updateRetailer = true;
+                }
+                this.props.SubmitRetailer(formData, updateRetailer);
             }
-            this.props.SubmitRetailer(formData, updateRetailer);
 
         }
     }

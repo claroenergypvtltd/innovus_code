@@ -59,6 +59,7 @@ class FetchRetailer extends React.Component {
             var sessRetsearchDatas = JSON.parse(sessionStorage.retsearchDatas);
             if (sessRetsearchDatas) {
                 this.setState({
+                    search: sessRetsearchDatas.search,
                     dcCode: sessRetsearchDatas.dcCode,
                     stateId: sessRetsearchDatas.state,
                     cityId: sessRetsearchDatas.city,
@@ -79,7 +80,6 @@ class FetchRetailer extends React.Component {
             this.callAllUserAPis();
         }
     }
-
     componentWillReceiveProps(newProps) {
         //         var routeChanged = newProps.location !== this.props.location
         // console.log('---routeChanged---',routeChanged)
@@ -99,7 +99,6 @@ class FetchRetailer extends React.Component {
             this.getRetailerList();
         }
     }
-
     callAllUserAPis() {
         this.getRetailerList();
         this.getStateList();
@@ -270,7 +269,6 @@ class FetchRetailer extends React.Component {
             } else {
                 user.pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
             }
-
             user.row = this.state.itemPerPage;
             sessionStorage.setItem('retsearchDatas', JSON.stringify(user));
             this.setState({
@@ -292,9 +290,6 @@ class FetchRetailer extends React.Component {
 
     viewCrop(RetstatusId, status, isActive) {
         let statusClass;
-
-
-
         // else {
         if (isActive == 0) {
             statusClass = window.strings.RETAILERS.INACTIVE
@@ -310,8 +305,6 @@ class FetchRetailer extends React.Component {
         //     statusClass = window.strings.RETAILERS.INACTIVE
         // }
         // }
-
-
         // statusClass = window.strings.RETAILERS.INACTIVE
 
         let ViewPage = <p className={statusClass} >{statusClass}</p>
@@ -445,6 +438,7 @@ class FetchRetailer extends React.Component {
         }
     }
     handleSearch = (e) => {
+        e.preventDefault();
         this.setState({ search: e.target.value })
     }
 
@@ -676,11 +670,14 @@ class FetchRetailer extends React.Component {
                             </div >
                             <div className="sub-filter">
                                 <div className="row ">
+
                                     <div className="ml-3">
                                         {/* <label className="label-title">Search:</label> */}
-                                        <input type="text" placeholder="Search"
-                                            class="form-control" name="name" required="" value="" />
+                                        <input type="text" placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
                                     </div>
+
                                     <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
                                         <Select
                                             styles={{

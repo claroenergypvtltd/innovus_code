@@ -14,7 +14,7 @@ export const getCategoryList = (Data) => dispatch => {
 	httpServices.get(endPoint.category + search).then(resp => {
 
 		if (resp && resp.data) {
-			dispatch({ type: CATEGORY_FETCH_SUCCESS, List: resp.data.datas, count: resp.data.totalCount })
+			dispatch({ type: CATEGORY_FETCH_SUCCESS, List: resp.data, count: resp.data.totalCount })
 		} else {
 			console.error("Error when getting CategoryList");
 		}
@@ -87,7 +87,7 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 		page = Data.page ? '&page=' + Data.page : '';
 		rows = Data.limit ? '&rows=' + Data.limit : '';
 		searchData = Data.search ? '&search=' + Data.search : '';
-		dcCode = Data.dcCode ? '&dcCode=' + Data.dcCode : '';
+		dcCode = Data.dcCode ? '&dcdCode=' + Data.dcCode : '';
 	}
 	let headerName;
 	if (Data.name == "subCategory") {

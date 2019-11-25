@@ -24,7 +24,8 @@ class CreatePrice extends Component {
             weightDatas: [],
             errors: {},
             weightId: 0,
-            offerId: 0
+            offerId: 0,
+            categoryData: []
         }
     }
 
@@ -104,7 +105,7 @@ class CreatePrice extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        this.setState({ categoryData: nextProps.getCategory })
+        this.setState({ categoryData: nextProps.getCategory.datas })
         let showweight = 0;
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
 
