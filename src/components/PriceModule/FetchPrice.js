@@ -26,7 +26,8 @@ class FetchPrice extends Component {
             currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
-            limitValue: resorceJSON.TablePageData.paginationLength
+            limitValue: resorceJSON.TablePageData.paginationLength,
+            PriceLists: []
         }
     }
     componentDidMount() {

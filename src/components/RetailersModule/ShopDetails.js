@@ -20,7 +20,8 @@ class ShopDetails extends React.Component {
             showStatusBtn: true,
             activeButton: false,
             rejectKey: false,
-            rotation: 0
+            rotation: 0,
+            profile: []
         };
     }
     componentWillReceiveProps(newProps) {
@@ -29,7 +30,16 @@ class ShopDetails extends React.Component {
         } else {
             this.setState({ activeButton: true });
         }
+        const Shopprofile = this.props.profileData ? this.props.profileData : [];
+        this.setState({ profile: Shopprofile });
+
+
     }
+    // componentDidMount() {
+    //     const Shopprofile = this.props.profileData ? this.props.profileData : [];
+    //     this.setState({ profile: Shopprofile });
+
+    // }
     redirectPage = () => {
         // this.props.history.push({
         //     pathname: path.user.list,
@@ -115,6 +125,8 @@ class ShopDetails extends React.Component {
     render() {
         let shopAddLat;
         let shopAddLong
+        let { sprofile } = this.state;
+        console.log('---profile---', this.state);
         const profile = this.props.profileData ? this.props.profileData : [];
         let shopAddress1 = profile.shopAddress && profile.shopAddress.address1 ? profile.shopAddress.address1 : '';
         let shopAddress2 = profile.shopAddress && profile.shopAddress.address2 ? profile.shopAddress.address2 : '';

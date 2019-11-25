@@ -44,7 +44,7 @@ class CreateCrop extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ categoryData: nextProps.getCategory })
+        this.setState({ categoryData: nextProps.getCategory.datas })
         if (nextProps && nextProps.categoryData && nextProps.categoryData.specificData
             && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas
             && nextProps.categoryData.specificData.data.datas.length > 0) {

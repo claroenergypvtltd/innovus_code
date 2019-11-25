@@ -18,7 +18,7 @@ class ViewCategory extends Component {
         super(props);
         this.state = {
             TableHead: ["Crop Name", "Image", "Description", "DC Code", "Action"],
-            CategoryListDatas: [],
+            // CategoryListDatas: props.getLists.datas,
             CategoryCount: props.getCount,
             currentPage: resorceJSON.TablePageData.currentPage,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
@@ -148,7 +148,9 @@ class ViewCategory extends Component {
     }
 
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 1 }, () => { this.getSpecificData() })
+        this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 1 }, () => {
+            //  this.getSpecificData() 
+        })
     };
 
     handleStatusUpdate = (isActive, subcategoryId) => {
@@ -174,6 +176,10 @@ class ViewCategory extends Component {
             }
         };
         toastr.customConfirm(message, toastrConfirmOptions, "Status Update")
+    }
+    handleSearch = (e) => {
+        e.preventDefault();
+        this.setState({ search: e.target.value })
     }
 
     render() {
@@ -229,8 +235,8 @@ class ViewCategory extends Component {
                 <div className="mb-2">
                     <div className="retailersearchdiv">
                         {/* <div d-flex justify-content-end> */}
-                        <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
+                        {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
+                        <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '-  Search' : '+  Search'}</button>
                         <div className="retail-reset">
                             <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
                         </div>
@@ -239,6 +245,12 @@ class ViewCategory extends Component {
                         {this.state.advanceSearch &&
                             <div className="main-filter">
                                 <div className="row">
+                                    <div className="ml-3">
+                                        {/* <label className="label-title">Search:</label> */}
+                                        <input type="text" placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
+                                    </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                         <Select className="state-box ml-4"
@@ -248,6 +260,8 @@ class ViewCategory extends Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
+                                    <button type="button" className="data-search" onClick={(e) => this.getSpecificData("onSearch")}>
+                                        <i className="fa fa-search" aria-hidden="true">Search</i></button>
                                 </div>
                             </div>
                         }
