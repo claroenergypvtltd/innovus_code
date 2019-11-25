@@ -24,10 +24,18 @@ export const getCategoryList = (Data) => dispatch => {
 }
 
 
-export const SubmitCategory = (category, Id) => dispatch => {
+export const SubmitCategory = (category, Id, isProduct) => dispatch => {
+
+	let apiHeader;
+	if (isProduct == "isProduct") {
+		apiHeader = endPoint.products
+	} else {
+		apiHeader = endPoint.category
+	}
+
 
 	if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
-		httpServices.put(endPoint.category, category).then(resp => {
+		httpServices.put(apiHeader, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
 				dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: resp.status })
@@ -38,7 +46,7 @@ export const SubmitCategory = (category, Id) => dispatch => {
 		})
 
 	} else {
-		httpServices.post(endPoint.category, category).then(resp => {
+		httpServices.post(apiHeader, category).then(resp => {
 			if (resp) {
 				toastr.success(resp.message);
 				dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: resp.status })
@@ -81,26 +89,34 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 		searchData = Data.search ? '&search=' + Data.search : '';
 		dcCode = Data.dcCode ? '&dcCode=' + Data.dcCode : '';
 	}
-
-	httpServices.get(endPoint.category + '?' + IdText + '=' + Data.categoryId + searchData + page + rows + dcCode).then(resp => {
-
+	let headerName;
+	if (Data.name == "subCategory") {
+		headerName = endPoint.products
+	} else {
+		headerName = endPoint.category
+	}
+	httpServices.get(headerName + '?' + IdText + '=' + Data.categoryId + searchData + page + rows + dcCode).then(resp => {
 		if (resp.data) {
 			dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
+		} else {
+			dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp: [] })
 		}
 	}).catch((error) => {
+		dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp: [] })
 		console.error("error", error.resp);
 	})
 }
 
 export const getCategoryDCCode = (dcCode, dcsubcat, type) => {
 	let dCCode = '';
+	let headerName;
 	if (type == 'getDcsubCat') {
 		dCCode = '?categoryId=' + dcCode + '&dcCode=' + dcsubcat;
 	}
 	else {
 		dCCode = '?dcCode=' + dcCode
 	}
-	return httpServices.get(endPoint.category + dCCode).then(resp => {
+	return httpServices.get(endPoint.products + dCCode).then(resp => {
 
 		if (resp.data) {
 			return resp

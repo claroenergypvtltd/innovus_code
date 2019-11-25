@@ -28,6 +28,13 @@ class FetchSalesAgent extends React.Component {
     }
 
     componentDidMount() {
+        if (this.context.router.route.location && this.context.router.route.location.state &&
+            this.context.router.route.location.state.salesAgentSearchDatas == "backTrue" && sessionStorage.salesAgentSearchDatas
+            && !this.state.salesAgentId) {
+            var salesAgentSearchDatas = JSON.parse(sessionStorage.salesAgentSearchDatas);
+
+            this.setState({ dcCodeObj: salesAgentSearchDatas.dcCodeObj, search: salesAgentSearchDatas.search, advanceSearch: true, currentPage: salesAgentSearchDatas.page });
+        }
         this.getDCData();
         this.getSalesAgentList();
     }
@@ -35,11 +42,13 @@ class FetchSalesAgent extends React.Component {
     getSalesAgentList = () => {
         let obj = {
             roleId: "4",
-            page: this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            pages: this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             row: this.state.itemPerPage,
             search: this.state.search,
-            dcCode: this.state.dcCode
+            dcCode: this.state.dcCode,
+            dcCodeObj: this.state.dcCodeObj
         }
+        sessionStorage.setItem('salesAgentSearchDatas', JSON.stringify(obj));
 
         this.props.fetchSalesAgent(obj);
     }
@@ -66,8 +75,8 @@ class FetchSalesAgent extends React.Component {
     }
 
     onChange = (data) => {
-        if (this.state.currentPage !== (data.selected + 1)) {
-            this.setState({ currentPage: data.selected + 1 }, () => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
                 this.getSalesAgentList();
             });
         }
@@ -87,7 +96,7 @@ class FetchSalesAgent extends React.Component {
             // let serObj = {
             //     "search": this.state.search
             // };
-            this.setState({ currentPage: 1 }, () => {
+            this.setState({ currentPage: 0 }, () => {
                 this.getSalesAgentList();
             })
         }
@@ -95,7 +104,8 @@ class FetchSalesAgent extends React.Component {
 
     resetSearch = () => {
         if (this.state.search || this.state.dcCodeObj || this.state.search == '') {
-            this.setState({ search: '', dcCodeObj: '', dcCode: '' }, () => {
+            sessionStorage.removeItem('salesAgentSearchDatas');
+            this.setState({ search: '', dcCodeObj: '', dcCode: '', currentPage: 0 }, () => {
                 this.getSalesAgentList();
             });
         }

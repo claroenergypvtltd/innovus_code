@@ -60,7 +60,8 @@ class CreateSalesAgent extends React.Component {
     }
 
     redirectPage = () => {
-        this.props.history.push({ pathname: path.user.list, tabNumber: 1 });
+        this.props.history.push({ pathname: path.user.list, state : {tabNumber: 1, salesAgentSearchDatas: "backTrue"} });
+        // this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
     }
 
     handleSubmit = (e) => {

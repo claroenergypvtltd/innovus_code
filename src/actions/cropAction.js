@@ -14,11 +14,11 @@ export const getCropList = (Data) => dispatch => {
         searchData = Data.search ? '&search=' + Data.search : '';
     }
 
-    httpServices.get(endPoint.category + '?' + Param + searchData + page + rows).then(resp => {
+    httpServices.get(endPoint.products + '?' + Param + searchData + page + rows).then(resp => {
         if (resp && resp.data) {
             dispatch({ type: GET_CROP_LIST, List: resp.data, count: resp.data.totalCount })
         } else {
-            console.log("Error when getting CategoryList");
+            console.log("Error when getting Product List");
         }
     }).catch((error) => {
         console.log("error", error);

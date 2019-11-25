@@ -18,7 +18,7 @@ class ViewCategory extends Component {
         super(props);
         this.state = {
             TableHead: ["Crop Name", "Image", "Description", "DC Code", "Action"],
-            CategoryListDatas: props.getLists,
+            CategoryListDatas: [],
             CategoryCount: props.getCount,
             currentPage: resorceJSON.TablePageData.currentPage,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
@@ -29,8 +29,8 @@ class ViewCategory extends Component {
 
     componentDidMount() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
-            this.getSpecificData();
             this.getDCData();
+            this.getSpecificData();
         }
     }
 
@@ -39,8 +39,7 @@ class ViewCategory extends Component {
             store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
             this.getSpecificData();
         }
-
-        if (nextProps.categoryData.specificData.data.datas) {
+        if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
             let Data = nextProps.categoryData.specificData.data;
             this.setState({ CategoryListDatas: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage })
         }
@@ -55,7 +54,8 @@ class ViewCategory extends Component {
                 "search": this.state.search,
                 "limit": this.state.itemPerPage,
                 "categoryId": this.props.location.state.categoryId,
-                "dcCode": this.state.dcCode
+                "dcCode": this.state.dcCode,
+                "name": "subCategory"
             }
 
             this.props.getSpecificCategory(obj, true);

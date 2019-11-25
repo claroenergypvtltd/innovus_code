@@ -23,7 +23,7 @@ class User extends Component {
   }
 
   componentDidMount() {
-    if (this.props && this.props.location && this.props.location.tabNumber == 1) {
+    if (this.props && this.props.location && this.props.location.state && this.props.location.state.tabNumber == 1) {
       this.setState({ tabIndex: 1 })
     }
   }
