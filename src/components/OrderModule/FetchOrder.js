@@ -22,7 +22,7 @@ class FetchOrder extends Component {
             OrderLists: props.orderData && props.orderData.Lists && props.orderData.Lists.datas ? props.orderData.Lists.datas : [],
             CategoryCount: props.getCount,
             search: '',
-            currentPage: 1,
+            currentPage: 0,
             orderId: '',
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
@@ -50,7 +50,7 @@ class FetchOrder extends Component {
 
         e.preventDefault();
         if (this.state.search) {
-            this.setState({ currentPage: 1 }, () => {
+            this.setState({ currentPage: 0 }, () => {
                 let serObj = {
                     "search": this.state.search
                 };
@@ -74,7 +74,7 @@ class FetchOrder extends Component {
 
     getOrderList() {
         let obj = {
-            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             "search": this.state.search,
             "limit": this.state.itemPerPage
         }
@@ -101,8 +101,8 @@ class FetchOrder extends Component {
 
     onChange = (data) => {
 
-        if (this.state.currentPage !== (data.selected + 1)) {
-            this.setState({ currentPage: data.selected + 1 }, () => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
                 this.getOrderList();
             });
         }

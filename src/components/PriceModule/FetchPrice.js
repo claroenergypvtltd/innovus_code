@@ -128,6 +128,17 @@ class FetchPrice extends Component {
             });
         }
     }
+
+    weightConversion = (Data) => {
+        if (Data == 1) {
+            return "Quindal"
+        } else if (Data == 2) {
+            return "Kg"
+        } else if (Data == 3) {
+            return "Ton"
+        }
+    }
+
     render() {
         let dcData = [];
         // this.state.dcCodeData = [{ name: "0987", id: 1 }]
@@ -136,15 +147,15 @@ class FetchPrice extends Component {
             dcData.push(obj);
         })
         let CategoryList = this.state.PriceLists && this.state.PriceLists.map((item, index) => {
-            let productId = item.categoryAmount && item.categoryAmount.id;
-            let dcCode = item.dcCode ? item.dcCode : '-';
+            let productId = item.productDetails && item.productDetails.id;
+            let dcCode = item.productDetails && item.productDetails.dcCode ? item.productDetails.dcCode : '-';
             let productName = item.name;
-            let totWeight = ((item.categoryAmount && item.categoryAmount.totalQuantity) + ' / ' + (item.categoryAmount && item.categoryAmount.rupeesize));
-            // let weightUnits = item.categoryAmount && item.categoryAmount.totalQuantitySize;
-            let amount = ((item.categoryAmount && item.categoryAmount.amount) + " Rs/" + (item.categoryAmount && item.categoryAmount.rupeesize));
-            // let priceUnit = item.categoryAmount && item.categoryAmount.rupeesize;
-            let boxQuantity = ((item.categoryAmount && item.categoryAmount.boxQuantity) + ' ' + (item.categoryAmount && item.categoryAmount.rupeesize));
-            // let boxQuantitySize = item.categoryAmount && item.categoryAmount.boxQuantitySize
+            let totWeight = ((item.productDetails && item.productDetails.totalQuantity) + ' / ' + (this.weightConversion(item.productDetails && item.productDetails.rupeesUnit)));
+            // let weightUnits = item.productDetails && item.productDetails.totalQuantitySize;
+            let amount = ((item.productDetails && item.productDetails.amount) + " Rs/" + (this.weightConversion(item.productDetails && item.productDetails.rupeesUnit)));
+            // let priceUnit = item.productDetails && item.productDetails.rupeesUnit;
+            let boxQuantity = ((item.productDetails && item.productDetails.boxQuantity) + ' ' + (this.weightConversion(item.productDetails && item.productDetails.rupeesUnit)));
+            // let boxQuantitySize = item.productDetails && item.productDetails.boxQuantitySize
 
             return {
                 "itemList": [productId, productName, dcCode,

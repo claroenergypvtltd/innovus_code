@@ -21,7 +21,7 @@ class FetchCrop extends Component {
             CropLists: props.getLists,
             CategoryCount: props.getCount,
             search: '',
-            currentPage: 1,
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
@@ -66,7 +66,7 @@ class FetchCrop extends Component {
     getCropList() {
         let obj = {
             "isallcrop": true,
-            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
         }
@@ -97,8 +97,8 @@ class FetchCrop extends Component {
     }
 
     onChange = (data) => {
-        if (this.state.currentPage !== (data.selected + 1)) {
-            this.setState({ currentPage: data.selected + 1 }, () => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
                 this.getCropList();
             });
         }
@@ -112,7 +112,6 @@ class FetchCrop extends Component {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
             return { "itemList": [item.name, catImg, item.description, item.dcCode], "itemId": item.id }
         })
-
         return (
             <div>
                 <div className="title-section row">

@@ -33,7 +33,7 @@ class FetchSalesAgent extends React.Component {
             && !this.state.salesAgentId) {
             var salesAgentSearchDatas = JSON.parse(sessionStorage.salesAgentSearchDatas);
 
-            this.setState({ dcCodeObj: salesAgentSearchDatas.dcCodeObj, search: salesAgentSearchDatas.search, advanceSearch: true, currentPage: salesAgentSearchDatas.page });
+            this.setState({ dcCodeObj: salesAgentSearchDatas.dcCodeObj, search: salesAgentSearchDatas.search, advanceSearch: true, currentPage: salesAgentSearchDatas.pages });
         }
         this.getDCData();
         this.getSalesAgentList();
