@@ -47,7 +47,6 @@ class ViewCategory extends Component {
 
     getSpecificData() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
-            this.setState({ categoryId: this.props.location.state.categoryId });
 
             let obj = {
                 "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
@@ -57,7 +56,6 @@ class ViewCategory extends Component {
                 "dcCode": this.state.dcCode,
                 "name": "subCategory"
             }
-
             this.props.getSpecificCategory(obj, true);
         }
     }
@@ -85,8 +83,6 @@ class ViewCategory extends Component {
         //     }
         // })
     }
-
-
 
     handleChange = (e) => {
         this.setState({ search: e.target.value })
@@ -167,10 +163,15 @@ class ViewCategory extends Component {
 
     handleStatusChange = (e, data) => {
         let message = "Are u sure want to update ?";
+        var statusValue = e.target.name
         let value = e.target.value
         const toastrConfirmOptions = {
             onOk: () => { this.handleStatusUpdate(value, data) },
-            onCancel: () => { this.getSpecificData() }
+            onCancel: () => {
+                // if (statusValue == data) {
+                //     this.state.status == 0 ? this.setState({ status: 0 }) : this.setState({ status: 1 })
+                // }
+            }
         };
         toastr.customConfirm(message, toastrConfirmOptions, "Status Update")
     }
@@ -190,12 +191,15 @@ class ViewCategory extends Component {
         let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
 
-
             let selectedValue = item.isActive;
-            let statusChange = <select onChange={(e) => this.handleStatusChange(e, item.id)}>
-                {/* {statusDropdown} */}
-                <option value="0" selected={selectedValue}>Active</option>
-                <option value="1" selected={selectedValue}>In Active</option>
+            let status = item.id;
+            const statusDropdown = resorceJSON.cropStatusOptions.map((item, index) => {
+                return <option value={index} selected={selectedValue == index ? true : false} className="drop-option">{item}</option>
+            })
+            let statusChange = <select value={this.state.status} name={status} onChange={(e) => this.handleStatusChange(e, item.id)}>
+                {statusDropdown}
+                {/* <option value="0" selected={selectedValue}>Active</option>
+                <option value="1" selected={selectedValue}>In Active</option> */}
             </select >
             let description = item.description == '' ? '-' : item.description;
             let dcCode = item.dcCode == '' ? '-' : item.dcCode;
@@ -274,8 +278,6 @@ class ViewCategory extends Component {
     }
 }
 
-
-
 function mapStateToProps(state) {
     return {
         categoryData: state.category,
@@ -290,7 +292,5 @@ const defaultProps = {
 }
 
 ViewCategory.defaultProps = defaultProps;
-
-
 
 export default connect(mapStateToProps, { DeleteCategory, getSpecificCategory, fetchSalesAgent, SubmitCategory })(ViewCategory);

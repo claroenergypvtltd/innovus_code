@@ -86,4 +86,6 @@ export const resorceJSON = {
   ],
 
   statusOptions: ['Pending', 'Accepted', 'Rejected', 'InActive'],
+
+  cropStatusOptions: ['Active', 'InActive']
 };
