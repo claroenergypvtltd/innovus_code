@@ -114,7 +114,7 @@ class CreateCrop extends Component {
             } else {
                 formData.append("parentId", this.state.parentId);
             }
-            this.props.SubmitCategory(formData, this.state.categoryId)
+            this.props.SubmitCategory(formData, this.state.categoryId, "isProduct")
         }
     }
 
