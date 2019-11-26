@@ -6,7 +6,7 @@ import { PRICE_FETCH_SUCCESS, PRICE_CREATE_SUCCESS, PRICE_DELETE_SUCCESS, PRICE_
 import { endPoint } from "../constants";
 
 export const getPriceList = (formData) => dispatch => {
-    formData.pages = formData.pages ? formData.pages - 1 : 0;
+    formData.pages = formData.pages ? formData.pages : 0;
     formData.rows = formData.rows ? formData.rows : '';
     formData.search = formData.search ? formData.search : '';
     formData.dCCode = formData.dCCode ? formData.dCCode : '';

@@ -89,8 +89,9 @@ class CreatePrice extends Component {
                             let respData = response.datas[0].productDetail;
                             this.setState({
                                 weight: respData.totalQuantity, price: respData.amount,
-                                weightId: respData.rupeesUnit, boxQuantity: respData.boxQuantity,
-                                offer: respData.discountValue == 0 ? '' : respData.discountValue, offerId: respData.discountUnit
+                                weightId: respData.rupeesize, boxQuantity: respData.boxQuantity,
+                                offer: respData.discountValue == 0 ? '' : respData.discountValue,
+                                offerId: respData.discountUnit, subCategoryLabel: response.datas[0].name
                             })
                         }
                     })
@@ -101,7 +102,7 @@ class CreatePrice extends Component {
     componentDidUpdate(preProps) {
         if (preProps.priceData != this.props.priceData) {
             if (preProps.priceData && preProps.priceData.categoryAmount) {
-                this.setState({ weight: preProps.priceData.categoryAmount.rupeesUnit, price: preProps.priceData.categoryAmount.amount });
+                this.setState({ weight: preProps.priceData.categoryAmount.rupeesize, price: preProps.priceData.categoryAmount.amount });
             }
         }
     }
@@ -193,7 +194,8 @@ class CreatePrice extends Component {
 
                     let obj = {
                         "id": this.state.categoryId,
-                        "rupeesUnit": "RS/" + this.state.weightId,
+                        "productId": this.state.categoryId,
+                        "rupeesize": "RS/" + this.state.weightId,
                         "amount": this.state.price,
                         "boxQuantity": this.state.boxQuantity,
                         "totalQuantity": this.state.weight,
@@ -262,7 +264,7 @@ class CreatePrice extends Component {
         });
 
         const subCategoryDropDown =
-            //  this.state.priceId ? this.state.editSubCategoryDatas && this.state.editSubCategoryDatas.map((item, index) => {
+            // this.state.priceId ? this.state.editSubCategoryDatas && this.state.editSubCategoryDatas.map((item, index) => {
             //     return <option key={index}
             //         value={item.id}> {item.name}</option>
             // })
@@ -280,6 +282,7 @@ class CreatePrice extends Component {
             return <option key={index}
                 value={item.id}> {"RS / " + item.name}</option>
         });
+        debugger;
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -293,7 +296,7 @@ class CreatePrice extends Component {
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-4">
                                             <label>{window.strings['CATEGORY']['CATEGORY_NAME'] + ' *'}</label>
-                                            <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleCategoryChange}>
+                                            <select required name="parentId" className="form-control" value={this.state.parentId} onChange={this.handleCategoryChange} disabled={this.state.priceId}>
                                                 <option value="0">Select Category</option>
                                                 {categoryDropDown}
                                             </select>
@@ -302,7 +305,7 @@ class CreatePrice extends Component {
                                         </div>
                                         <div className="form-group col-md-4 px-0">
                                             <label>{window.strings['CATEGORY']['DC_CODE'] + ' *'}</label>
-                                            <select required name="dcCode" className="form-control" value={this.state.dcCode} onChange={this.handleDcCodeSubCategory}>
+                                            <select required name="dcCode" className="form-control" value={this.state.dcCode} onChange={this.handleDcCodeSubCategory} disabled={this.state.priceId}>
                                                 <option value="-" >Select DC Code</option>
                                                 {dcCodeData}
                                             </select>
@@ -310,9 +313,10 @@ class CreatePrice extends Component {
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label>{window.strings['CATEGORY']['SUB_CATEGORY'] + ' *'}</label>
-                                            <select required name="categoryId" className="form-control" value={this.state.categoryId} onChange={this.handleSubCategory}>
-                                                <option value="0">Select SubCategory </option>
-                                                {subCategoryDropDown}
+                                            <select required name="categoryId" className="form-control" value={this.state.categoryId} onChange={this.handleSubCategory} disabled={this.state.priceId}>
+                                                {!this.state.priceId && <option value="0">Select SubCategory </option>}
+                                                {this.state.priceId && <option value={this.state.subCategoryLabel} selected>{this.state.subCategoryLabel}</option>}
+                                                {!this.state.priceId && subCategoryDropDown}
                                             </select>
                                             {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['CATEGORY']['SUB_CATEGORY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>

@@ -709,7 +709,7 @@ class FetchRetailer extends React.Component {
                                             {statusDropdown}
                                         </select>
                                     </div>
-                                    <div className="col-md-3 code-filter pl-0"><label className="label-title">DC Code:</label>
+                                    <div className="col-md-3 code-filter p-0"><label className="label-title">DC Code:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                         <Select className="state-box"
                                             styles={{
@@ -728,12 +728,12 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                    <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
                                         <i className="fa fa-search" aria-hidden="true"></i>Search
                                         <span className="tooltip-text">click to search</span>
                                     </button>
                                     <div className="retail-reset">
-                                        <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}>
+                                        <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
                                             <i className="fa fa-refresh" aria-hidden="true"></i>
                                             <span className="tooltip-text">reset</span>
                                         </button>
