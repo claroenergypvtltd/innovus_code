@@ -201,7 +201,7 @@ class FetchPrice extends Component {
                     </div>
                     <div id="menu">
                         {this.state.advanceSearch &&
-                            <div className="main-filter">
+                            <div className="sub-filter">
                                 <div className="row">
                                     <div className="input-tip">
                                         <input type="text" placeholder="Custom Search"

@@ -2514,6 +2514,9 @@ display: flex;
   .react-bootstrap-daterangepicker-container{
     max-width: 81%;
   }
+  .sub-filter{
+    margin-left: 17px;
+  }
 
 }
 @media screen and (min-width: 1200px) and (max-width: 1299px){
@@ -2523,16 +2526,24 @@ display: flex;
   .sub-filter .form-control{
     width: 143px;
   }
-
+  .sub-filter{
+    margin-left: 17px;
+  }
 }
 @media screen and (min-width: 991px) and (max-width: 1199px){
   .react-bootstrap-daterangepicker-container{
     max-width: 71%;
   }
+  .sub-filter{
+    margin-left: 17px;
+  }
 }
 @media screen and (min-width: 768px) and (max-width: 991px){
   .react-bootstrap-daterangepicker-container{
     max-width: 67%;
+  }
+  .sub-filter{
+    margin-left: 17px;
   }
 }
 
