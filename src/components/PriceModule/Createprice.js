@@ -65,7 +65,7 @@ class CreatePrice extends Component {
             }
             this.props.getPriceList(obj).then(resp => {
                 if (resp && resp.datas && resp.datas[0]) {
-                    this.setState({ parentId: resp.datas[0].parentId, dcCode: resp.datas[0].dcCode }, () => {
+                    this.setState({ parentId: resp.datas[0].parentId, dcCode: resp.datas[0].productDetails.dcCode }, () => {
                         getCategoryDCCode(this.state.parentId).then(resp => {
                             if (resp && resp.data && resp.data.datas) {
                                 this.setState({ dcCodeData: resp.data.datas })
@@ -85,11 +85,12 @@ class CreatePrice extends Component {
 
                     this.props.getPriceList(subCatId).then(response => {
                         this.setState({ categoryId: resp.datas[0].id });
-                        if (response && response.datas && response.datas[0] && response.datas[0].categoryAmount) {
+                        if (response && response.datas && response.datas[0] && response.datas[0].productDetails) {
+                            let respData = response.datas[0].productDetails;
                             this.setState({
-                                weight: response.datas[0].categoryAmount.totalQuantity, price: response.datas[0].categoryAmount.amount,
-                                weightId: response.datas[0].categoryAmount.rupeesize, boxQuantity: response.datas[0].categoryAmount.boxQuantity,
-                                offer: response.datas[0].categoryAmount.discountValue == 0 ? '' : response.datas[0].categoryAmount.discountValue, offerId: response.datas[0].categoryAmount.discountUnit
+                                weight: respData.totalQuantity, price: respData.amount,
+                                weightId: respData.rupeesUnit, boxQuantity: respData.boxQuantity,
+                                offer: respData.discountValue == 0 ? '' : respData.discountValue, offerId: respData.discountUnit
                             })
                         }
                     })
@@ -100,7 +101,7 @@ class CreatePrice extends Component {
     componentDidUpdate(preProps) {
         if (preProps.priceData != this.props.priceData) {
             if (preProps.priceData && preProps.priceData.categoryAmount) {
-                this.setState({ weight: preProps.priceData.categoryAmount.rupeesize, price: preProps.priceData.categoryAmount.amount });
+                this.setState({ weight: preProps.priceData.categoryAmount.rupeesUnit, price: preProps.priceData.categoryAmount.amount });
             }
         }
     }
@@ -191,8 +192,8 @@ class CreatePrice extends Component {
                     }
 
                     let obj = {
-                        "productId": this.state.categoryId,
-                        "rupeesize": "RS/" + this.state.weightId,
+                        "id": this.state.categoryId,
+                        "rupeesUnit": "RS/" + this.state.weightId,
                         "amount": this.state.price,
                         "boxQuantity": this.state.boxQuantity,
                         "totalQuantity": this.state.weight,
