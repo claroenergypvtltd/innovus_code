@@ -65,7 +65,7 @@ class CreatePrice extends Component {
             }
             this.props.getPriceList(obj).then(resp => {
                 if (resp && resp.datas && resp.datas[0]) {
-                    this.setState({ parentId: resp.datas[0].parentId, dcCode: resp.datas[0].productDetails.dcCode }, () => {
+                    this.setState({ parentId: resp.datas[0].parentId, dcCode: resp.datas[0].productDetail.dcCode }, () => {
                         getCategoryDCCode(this.state.parentId).then(resp => {
                             if (resp && resp.data && resp.data.datas) {
                                 this.setState({ dcCodeData: resp.data.datas })
@@ -85,8 +85,8 @@ class CreatePrice extends Component {
 
                     this.props.getPriceList(subCatId).then(response => {
                         this.setState({ categoryId: resp.datas[0].id });
-                        if (response && response.datas && response.datas[0] && response.datas[0].productDetails) {
-                            let respData = response.datas[0].productDetails;
+                        if (response && response.datas && response.datas[0] && response.datas[0].productDetail) {
+                            let respData = response.datas[0].productDetail;
                             this.setState({
                                 weight: respData.totalQuantity, price: respData.amount,
                                 weightId: respData.rupeesUnit, boxQuantity: respData.boxQuantity,
@@ -261,11 +261,13 @@ class CreatePrice extends Component {
             }
         });
 
-        const subCategoryDropDown = this.state.priceId ? this.state.editSubCategoryDatas && this.state.editSubCategoryDatas.map((item, index) => {
-            return <option key={index}
-                value={item.id}> {item.name}</option>
-        })
-            : this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {
+        const subCategoryDropDown =
+            //  this.state.priceId ? this.state.editSubCategoryDatas && this.state.editSubCategoryDatas.map((item, index) => {
+            //     return <option key={index}
+            //         value={item.id}> {item.name}</option>
+            // })
+            //     :
+            this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {
                 return <option key={index}
                     value={item.id}> {item.name}</option>
             });

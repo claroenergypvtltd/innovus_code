@@ -161,9 +161,9 @@ class ViewCategory extends Component {
 
         const formData = new FormData();
         formData.append("isActive", isActive);
-        formData.append("parentId", parentId);
-        formData.append("categoryId", subcategoryId);
-        this.props.SubmitCategory(formData, parentId)
+        // formData.append("parentId", parentId);
+        formData.append("id", subcategoryId);
+        this.props.SubmitCategory(formData, parentId, "isProduct")
     }
 
     handleStatusChange = (e, data) => {
