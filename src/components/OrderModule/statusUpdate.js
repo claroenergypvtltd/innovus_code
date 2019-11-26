@@ -119,8 +119,8 @@ class StatusUpdate extends Component {
         });
 
         return (
-            <div className="clearfix ">
-                <div className="row clearfix">
+            <div>
+                <div className="row">
                     <div className="col-md-12">
                         <div className="col-md-9">
                             <div className="create-crop">
