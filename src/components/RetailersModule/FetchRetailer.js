@@ -560,11 +560,11 @@ class FetchRetailer extends React.Component {
                     {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
                     <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '-Search' : '+Search'}
                         {/* <span className="advance-icon"></span>Advance Search */}
+                        <span className="tooltip-text">click to search</span>
                     </button>
-                    <div className="retail-reset">
+                    {/* <div className="retail-reset">
                         <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                    </div>
-                    <ExportFile className="export-search" csvData={this.state.data} />
+                    </div> */}
                 </div>
                 <div id="menu">
                     {/* <button className="advance-search"><span className="advance-icon"></span></button> */}
@@ -574,7 +574,12 @@ class FetchRetailer extends React.Component {
                         <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
+                        <div className="export-file">
+                            <ExportFile className="export-search" csvData={this.state.data} />
+                            <span className="tooltip-text">export</span>
+                        </div>
                     </div>
+
                     {/* <div className="main-filter d-flex justify-content-end">
                     <div className="row">
                         {/* <SearchBar className="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
@@ -670,12 +675,12 @@ class FetchRetailer extends React.Component {
                             </div >
                             <div className="sub-filter">
                                 <div className="row ">
-
-                                    <div className="ml-3">
+                                    {/* <div data-tip="custom search"> */}
+                                    <div className="input-tip">
                                         {/* <label className="label-title">Search:</label> */}
-                                        <input type="text" placeholder="Custom Search.."
-                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                        />
+                                        <input type="text" placeholder="Custom Search"
+                                            class="form-control" name="name" required="" value="" />
+                                        <span className="tooltip-text">custom search</span>
                                     </div>
 
                                     <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
@@ -698,7 +703,7 @@ class FetchRetailer extends React.Component {
                                         />
 
                                     </div>
-                                    <div className="col-md-3 status-filter pr-0"><label className="label-title">Status:</label>
+                                    <div className="status-filter pr-3"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
                                             <option value="" className="drop-option">-- Select Status--</option>
                                             {statusDropdown}
@@ -723,7 +728,16 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}> <i className="fa fa-search" aria-hidden="true"></i>Search</button>
+                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                        <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <span className="tooltip-text">click to search</span>
+                                    </button>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}>
+                                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                                            <span className="tooltip-text">reset</span>
+                                        </button>
+                                    </div>
                                 </div></div>
                         </div>}
                     <DataTableDynamic

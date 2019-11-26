@@ -167,7 +167,9 @@ background-size: cover;}
    
 }
 .label-title{ 
-  min-width: 58px; display: inline-block; vertical-align: middle;
+ // min-width: 58px; 
+  display: inline-block; 
+  vertical-align: middle;
   line-height: 36px;
 }
 .react-bootstrap-daterangepicker-container{
@@ -208,7 +210,7 @@ background-size: cover;}
   display: flex;
   .label-title{
     white-space: nowrap;
-    padding-right: 18px;
+    padding-right: 4px;
   }
 }
 .daterangepicker td.active, .daterangepicker td.active:hover {
@@ -636,7 +638,7 @@ li .activate .menu-list i{
 }
 .ticket-block{
   //border: 1px solid $gray;
-  border-right-style: inset;
+  border-right: 2px solid $inset-color;
   .profile-img{
     width: 100px;
     height: 100px;
@@ -853,12 +855,12 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
   height: 50px;
 }
 .split-farm{
-  border-right-style: inset;
+  border-right-style: $inset-color;
   border-width: 2px;
   width:50%;
 }
 .change-tab {
-  border-bottom: 1px inset;
+  border-bottom: 1px solid $inset-color;
   display:flex;
   padding: 0;
   font-family: open sans;
@@ -910,7 +912,7 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 // }
 
 .main-tab .main-panel {
-  //border-top: inset;
+  //border-top: $inset-color;
   margin: 10px 0;
 }
 .maincentext {
@@ -1002,7 +1004,7 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 }
 .btn-view .tooltip-text {
   visibility: hidden;
-  background-image: $gradient-1;
+  background:$tooltip-color;
   color: $white;
   text-align: center;
   border-radius: 3px;
@@ -1026,7 +1028,7 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 }
 .btn-trash .tooltip-text {
   visibility: hidden;
-  background-image: $gradient-1;
+  background:$tooltip-color;
   color: $white;
   text-align: center;
   border-radius: 3px;
@@ -1052,7 +1054,7 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 }
 .btn-edit .tooltip-text {
   visibility: hidden;
-  background-image: $gradient-1;
+  background:$tooltip-color;
   color: $white;
   text-align: center;
   border-radius: 3px;
@@ -1396,13 +1398,13 @@ input.form-control.search-btn:focus {
 .sub-contact{
   margin-bottom: 0;
   padding: 0 0 10px 10px;
-  border-bottom: 1px inset;
+  border-bottom: 1px solid $inset-color;
 }
 .contact{
   margin: 15px auto;
 }
 .personal-info{
- border-right: 1px inset;
+ border-right: 1px solid $inset-color;
 }
 .bottom-section{
   text-align: right;
@@ -1532,11 +1534,137 @@ select:focus {
   font-size: 15px;
   height: 25px;
   width: auto;
+  -moz-appearance: none;
 }
 .drop-option{
   color: $black;
   background-color: $white;
 }
+.advance-search .tooltip-text {
+  visibility: hidden;
+  background-color: $tooltip-color;
+  color: $white;
+  text-align: center;
+  border-radius: 3px;
+  display: block;
+  z-index: 1;
+  padding: 0 2px;
+  font-size: 10px; 
+  width: 72px;
+}
+.advance-search:hover .tooltip-text {
+  visibility: visible;
+}
+.export-file .tooltip-text {
+  visibility: hidden; 
+  background-color:$tooltip-color;
+  color: $white;
+  border-radius: 3px;
+  z-index: 1;
+  padding: 0 2px;
+  font-size: 10px;
+  width: 27px;
+  height: 15px;
+  line-height: 15px;
+  position: relative;
+  right: 13px;
+  top: -72px;
+}
+.export-file:hover .tooltip-text {
+  visibility: visible;
+}
+.data-search .tooltip-text {
+  visibility: hidden;
+  background-color: $tooltip-color;
+  color: $white;
+  text-align: center;
+  border-radius: 3px;
+  display: block;
+  z-index: 1;
+  padding: 0 2px;
+  font-size: 10px; 
+  width: 72px;
+  margin-top:8px;
+}
+.data-search:hover .tooltip-text {
+  visibility: visible;
+}
+.retail-reset .tooltip-text {
+  visibility: hidden;
+  background-color:$tooltip-color;
+  color: $white;
+  border-radius: 3px;
+  z-index: 1;
+  padding: 0 2px;
+  font-size: 10px;
+  width: 27px;
+  height: 15px;
+  line-height: 15px;
+  position: relative;
+  right: 6px;
+}
+.retail-reset:hover .tooltip-text {
+  visibility: visible;
+}
+.input-tip .tooltip-text {
+  visibility: hidden;
+  background-color: $tooltip-color;
+  color: $white;
+  text-align: center;
+  border-radius: 3px;
+  display: block;
+  z-index: 1;
+  padding: 0 2px;
+  font-size: 10px; 
+  width: 76px;
+  position: relative;
+  left: 41px;
+  margin-top: 5px;
+}
+.input-tip:hover .tooltip-text {
+  visibility: visible;
+}
+// [data-tip] {
+// 	position:relative;
+// }
+// // [data-tip]:before {
+// // 	content:'';
+// // 	/* hides the tooltip when not hovered */
+// // 	display:none;
+// // 	content:'';
+// // 	border-left: 5px solid transparent;
+// // 	border-right: 5px solid transparent;
+// // 	border-bottom: 5px solid $tooltip-color;	
+// // 	position:absolute;
+// //   top: 35px;
+// //   left: 76px;
+// //   z-index: 8;
+// //   font-size: 0;
+// //   line-height: 0;
+// //   width: 0;
+// //   height: 0;
+// // }
+// [data-tip]:after {
+// 	display:none;
+// 	content:attr(data-tip);
+// 	position:absolute;
+// 	top:40px;
+// 	left:42px;
+// 	padding:0 3px;
+// 	background:$tooltip-color;
+// 	color:$white;
+// 	z-index:9;
+// 	font-size: 0.75em;
+// 	-webkit-border-radius: 3px;
+// 	-moz-border-radius: 3px;
+// 	border-radius: 3px;
+// 	white-space:nowrap;
+// 	word-wrap:normal;
+// }
+// // [data-tip]:hover:before,
+// [data-tip]:hover:after {
+// 	display:block;
+// }
 /****************************Price Section************************/
 .sub-price{
   padding-top: 28px;
@@ -1761,6 +1889,7 @@ a.order-btn:hover {
     padding: 10px 0;
     border: none;
     border-radius: 7px;
+    text-decoration: none;
   }
   .box{
     background-image: url(../src/assets/images/Sprite_image_orders.png);
@@ -1930,7 +2059,7 @@ padding: 5px;
   font-size: 15px;
 }
 .main-shop{
-  border-right: 1px inset;
+  border-right: 1px solid $inset-color;
 }
 .active-box{
   position: relative;
@@ -2000,7 +2129,7 @@ padding: 5px;
 .line-wrapper{
   margin-bottom: 0;
   padding: 0 0 10px 10px;
-  border-bottom: 1px inset;
+  border-bottom: 1px solid $inset-color;
 }
 .box-wrapper{
   padding: 15px 7px 15px 7px;
@@ -2090,7 +2219,7 @@ bottom: 50%;
     border-radius: 25px;
     height: 25px;
     margin-top: 6px;
-    width:73px;
+    width:75px;
 }
 .data-search i.fa.fa-search {
   font-size: 12px;
@@ -2128,9 +2257,25 @@ text-align: right;
   font-size: 15px;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right:102px;
   // position: relative;
   // bottom: 72px;
+}
+.sales-btn{
+  color:$white;
+  background-image: $gradient-1;
+  border: none;
+  border-radius: 20px;
+  padding: 6px;
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: 0;
+  width: auto;
+  min-width: 137px;
+  font-size: 15px;
+  position: absolute;
+  top: 10px;
+  right:17px;
 }
 .sub-tab{
   position: relative;
@@ -2195,20 +2340,20 @@ display: flex;
 }
 
 .excel-btn{
-    display: block;
-    float: right;
-    background-image: $gradient-1;
-    color: $white;
-    border-radius: 5px;
-    padding: 0px 15pox;
-    font-size: 15px;
-    line-height: 33px;
-    /* margin-bottom: 25px; */
-    height: 33px;
-    padding: 0 5px;
+  background-image:  $gradient-1;
+  color: $white;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 34px;
+  height: 34px;
+  top: 12px;
+  right: 20px;
+  position: absolute;
 }
 .excel-btn:hover{
   color: $white;
+  text-decoration: none;
 }
 .retail-reset{
   margin: 6px 6px 0 0;
@@ -2379,7 +2524,7 @@ display: flex;
   .sub-filter .form-control{
     width: 143px;
   }
-  
+
 }
 @media screen and (min-width: 991px) and (max-width: 1199px){
   .react-bootstrap-daterangepicker-container{

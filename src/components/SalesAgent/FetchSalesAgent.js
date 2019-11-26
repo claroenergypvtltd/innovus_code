@@ -163,31 +163,32 @@ class FetchSalesAgent extends React.Component {
                 <div className="retailersearchdiv">
                     {/* <div d-flex justify-content-end> */}
                     {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
-                    <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}</button>
-                    <div className="retail-reset">
+                    <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
+                        <span className="tooltip-text">click to search</span>
+                    </button>
+                    {/* <div className="retail-reset">
                         <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                    </div>
+                    </div> */}
                 </div>
                 <div id="menu">
                     <div className="assign-box">
                         {/* <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT} */}
-                        <button className="assign-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Sales Agent</button>
+                        <button className="sales-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Sales Agent</button>
                         {/* </button> */}
                     </div>
 
                     {this.state.advanceSearch &&
                         <div className="main-filter">
                             <div className="row">
-                                <div className="ml-3">
-                                    {/* <label className="label-title">Search:</label> */}
+                                <div className="input-tip">
                                     <input type="text" placeholder="Custom Search.."
-                                        class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                    />
+                                        class="form-control" name="name" required="" value="" />
+                                    <span className="tooltip-text">custom search</span>
                                 </div>
                                 <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                     {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                                    <Select className="state-box ml-4"
+                                    <Select className="state-box"
                                         styles={{
                                             control: base => ({
                                                 ...base,
@@ -204,10 +205,16 @@ class FetchSalesAgent extends React.Component {
                                         placeholder="--Select DC Code--"
                                     />
                                 </div>
-                                <button type="button" className="data-search" onClick={(e) => this.getSalesAgentList("onSearch")}> <i className="fa fa-search" aria-hidden="true"></i>Search</button>
-                                {/* <div className="retail-reset">
-                                    <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                                </div> */}
+                                <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                    <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <span className="tooltip-text">click to search</span>
+                                </button>
+                                <div className="retail-reset">
+                                    <button type="button" className="reset ml-2" onClick={this.resetSearch}>
+                                        <i className="fa fa-refresh mrr5" aria-hidden="true"></i>
+                                        <span className="tooltip-text">reset</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     }

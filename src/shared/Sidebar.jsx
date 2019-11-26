@@ -119,7 +119,7 @@ export const Sidebar = [
     // },
     {
         name: (
-            <span className="menu-list product">
+            <span className="menu-list order">
                 <i />
                 {Label.VehicleManagement}
             </span>

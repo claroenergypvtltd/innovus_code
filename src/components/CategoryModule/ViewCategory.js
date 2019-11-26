@@ -239,32 +239,51 @@ class ViewCategory extends Component {
                     <div className="retailersearchdiv">
                         {/* <div d-flex justify-content-end> */}
                         {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
-                        <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '-  Search' : '+  Search'}</button>
-                        <div className="retail-reset">
+                        <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
+                            <span className="tooltip-text">click to search</span>
+                        </button>
+                        {/* <div className="retail-reset">
                             <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                        </div>
+                        </div> */}
                     </div>
                     <div id="menu">
                         {this.state.advanceSearch &&
                             <div className="main-filter">
                                 <div className="row">
-                                    <div className="ml-3">
-                                        {/* <label className="label-title">Search:</label> */}
-                                        <input type="text" placeholder="Custom Search.."
-                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                        />
+                                    <div className="input-tip">
+                                        <input type="text" placeholder="Custom Search"
+                                            class="form-control" name="name" required="" value="" />
+                                        <span className="tooltip-text">custom search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                                        <Select className="state-box ml-4"
+                                        <Select className="state-box"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
                                             value={this.state.dcCodeObj}
                                             onChange={(e) => this.handleDcCodeChange(e)}
                                             options={dcData}
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button type="button" className="data-search" onClick={(e) => this.getSpecificData("onSearch")}>
-                                        <i className="fa fa-search" aria-hidden="true">Search</i></button>
+                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                        <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <span className="tooltip-text">click to search</span>
+                                    </button>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-2" onClick={this.resetSearch}>
+                                            <i className="fa fa-refresh mrr5" aria-hidden="true"></i>
+                                            <span className="tooltip-text">reset</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         }

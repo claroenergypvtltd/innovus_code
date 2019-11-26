@@ -40,13 +40,13 @@ export function TableData(props) {
                       <span className="tooltip-text">View</span></div>
                     } */}
                     {props.handleEdit && (
-                      <button onClick={() => props.handleEdit(item.itemId)} className="btn-edit">
+                      <button onClick={() => props.handleEdit(item.itemId)} className="btn-edit p-0">
                         <i className="fa fa-pencil-square-o" />
                         <span className="tooltip-text">Edit</span>
                       </button>
                     )}
                     {props.handleDelete && (
-                      <button onClick={() => props.handleDelete(item.itemId)} className="btn-trash">
+                      <button onClick={() => props.handleDelete(item.itemId)} className="btn-trash p-0">
                         <i className="fa fa-trash" />
                         <span className="tooltip-text">Delete</span>
                       </button>

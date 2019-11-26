@@ -191,19 +191,26 @@ class FetchPrice extends Component {
                 </div>
                 <div className="mb-2">
                     <div className="retailersearchdiv">
-                        <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Advance Search' : '+  Advance Search'}</button>
-                        <div className="retail-reset">
+                        {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
+                        <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
+                            <span className="tooltip-text">click to search</span>
+                        </button>
+                        {/* <div className="retail-reset">
                             <button type="button" className="reset ml-2" onClick={(e) => this.resetSearch()}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                        </div>
+                        </div> */}
                     </div>
                     <div id="menu">
                         {this.state.advanceSearch &&
                             <div className="main-filter">
                                 <div className="row">
+                                    <div className="input-tip">
+                                        <input type="text" placeholder="Custom Search"
+                                            class="form-control" name="name" required="" value="" />
+                                        <span className="tooltip-text">custom search</span>
+                                    </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                                        <Select className="state-box ml-4"
+                                        <Select className="state-box"
                                             styles={{
                                                 control: base => ({
                                                     ...base,
@@ -219,6 +226,16 @@ class FetchPrice extends Component {
                                             options={dcData}
                                             placeholder="--Select DC Code--"
                                         />
+                                    </div>
+                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                        <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <span className="tooltip-text">click to search</span>
+                                    </button>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-2" onClick={this.resetSearch}>
+                                            <i className="fa fa-refresh mrr5" aria-hidden="true"></i>
+                                            <span className="tooltip-text">reset</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
