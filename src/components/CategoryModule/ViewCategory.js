@@ -29,8 +29,11 @@ class ViewCategory extends Component {
 
     componentDidMount() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
-            this.getDCData();
-            this.getSpecificData();
+            this.setState({ categoryId: this.props.location.state.categoryId }, () => {
+                this.getDCData();
+                this.getSpecificData();
+            })
+
         }
     }
 

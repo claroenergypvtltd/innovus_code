@@ -24,7 +24,8 @@ class FetchPrice extends Component {
             search: '',
             dcCode: '',
             currentPage: 0,
-            itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            // itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            itemPerPage: 1,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
             PriceLists: []
@@ -46,7 +47,7 @@ class FetchPrice extends Component {
         })
     }
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dCCode: Data.value, currentPage: 1 }, () => {
+        this.setState({ dcCodeObj: Data, dCCode: Data.value, currentPage: 0 }, () => {
             this.getPriceList()
         })
     };
@@ -67,7 +68,7 @@ class FetchPrice extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search || this.state.dCCode) {
-            this.setState({ currentPage: 1 }, () => {
+            this.setState({ currentPage: 0 }, () => {
                 let serObj = {
                     "search": this.state.search
                 };
@@ -123,8 +124,8 @@ class FetchPrice extends Component {
     }
     onChange = (data) => {
 
-        if (this.state.currentPage !== (data.selected + 1)) {
-            this.setState({ currentPage: data.selected + 1 }, () => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
                 this.getPriceList();
             });
         }
