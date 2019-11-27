@@ -32,11 +32,14 @@ class FetchSalesAgent extends React.Component {
             this.context.router.route.location.state.salesAgentSearchDatas == "backTrue" && sessionStorage.salesAgentSearchDatas
             && !this.state.salesAgentId) {
             var salesAgentSearchDatas = JSON.parse(sessionStorage.salesAgentSearchDatas);
-
-            this.setState({ dcCodeObj: salesAgentSearchDatas.dcCodeObj, search: salesAgentSearchDatas.search, advanceSearch: true, currentPage: salesAgentSearchDatas.pages });
+            this.setState({ dcCodeObj: salesAgentSearchDatas.dcCodeObj, dcCode: salesAgentSearchDatas.dcCode, search: salesAgentSearchDatas.search, advanceSearch: true, currentPage: salesAgentSearchDatas.pages }, () => {
+                this.getDCData();
+                this.getSalesAgentList();
+            });
+        } else {
+            this.getDCData();
+            this.getSalesAgentList();
         }
-        this.getDCData();
-        this.getSalesAgentList();
     }
 
     getSalesAgentList = (type) => {
@@ -205,7 +208,7 @@ class FetchSalesAgent extends React.Component {
                                         placeholder="--Select DC Code--"
                                     />
                                 </div>
-                                <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                <button type="button" className="data-search" onClick={(e) => this.getSalesAgentList("onSearch")}>
                                     <i className="fa fa-search" aria-hidden="true"></i>Search
                                         <span className="tooltip-text">click to search</span>
                                 </button>
