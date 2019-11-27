@@ -147,7 +147,6 @@ class FetchOrder extends Component {
             let link = <Link to={path.order.list + "/" + item.orderId} className="order-btn">{window.strings.ORDER.VIEWDETAILS}</Link>
 
             // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
-            debugger;
             let clasName = this.getClassNames(item.status);
             let status = <div>
                 <button className={"update-btn" + ' ' + clasName} onClick={() => { this.onOpenModal(item.orderId) }}>{this.getStatusName(item.status)}</button>
