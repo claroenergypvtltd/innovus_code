@@ -678,8 +678,9 @@ class FetchRetailer extends React.Component {
                                     {/* <div data-tip="custom search"> */}
                                     <div className="input-tip">
                                         {/* <label className="label-title">Search:</label> */}
-                                        <input type="text" placeholder="Custom Search"
-                                            class="form-control" name="name" required="" value="" />
+                                        <input type="text" placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
                                         <span className="tooltip-text">custom search</span>
                                     </div>
 
@@ -738,7 +739,8 @@ class FetchRetailer extends React.Component {
                                             <span className="tooltip-text">reset</span>
                                         </button>
                                     </div>
-                                </div></div>
+                                </div>
+                            </div>
                         </div>}
                     <DataTableDynamic
                         customCss="fetchretailer"

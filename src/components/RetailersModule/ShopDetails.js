@@ -292,7 +292,7 @@ class ShopDetails extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="row back-btn mb-2">
+                <div className="row back-btn">
                     <div className="col-md-6">
                         <button className="common-btn" onClick={this.redirectPage}>Back</button>
                     </div>

@@ -6,12 +6,14 @@ import { endPoint } from "../constants";
 
 export const getCategoryList = (Data) => dispatch => {
 
-	let search = "";
-	if (Data && Data.search) {
-		search = "?search=" + Data.search
+	let search = ""; let page = ""; let rows = "";
+	if (Data) {
+		search = Data.search ? "&search=" + Data.search : '';
+		page = (Data.page || Data.page == 0) ? "pages=" + Data.page : '';
+		rows = Data.limit ? "&rows=" + Data.limit : '';
 	}
 
-	httpServices.get(endPoint.category + search).then(resp => {
+	httpServices.get(endPoint.category + "?" + page + rows + search).then(resp => {
 
 		if (resp && resp.data) {
 			dispatch({ type: CATEGORY_FETCH_SUCCESS, List: resp.data, count: resp.data.totalCount })
@@ -87,7 +89,7 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 		page = Data.page ? '&page=' + Data.page : '';
 		rows = Data.limit ? '&rows=' + Data.limit : '';
 		searchData = Data.search ? '&search=' + Data.search : '';
-		dcCode = Data.dcCode ? '&dcdCode=' + Data.dcCode : '';
+		dcCode = Data.dcCode ? '&dcCode=' + Data.dcCode : '';
 	}
 	let headerName;
 	if (Data.name == "subCategory") {

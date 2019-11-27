@@ -56,11 +56,11 @@ class FetchCrop extends Component {
     }
 
     resetSearch = () => {
-        if (this.state.search) {
-            this.setState({ search: '' }, () => {
-                this.getCropList();
-            });
-        }
+        // if (this.state.search) {
+        this.setState({ search: '' }, () => {
+            this.getCropList();
+        });
+        // }
     }
 
     getCropList() {

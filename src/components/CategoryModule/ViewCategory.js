@@ -20,7 +20,7 @@ class ViewCategory extends Component {
             TableHead: ["Crop Name", "Image", "Description", "DC Code", "Action"],
             // CategoryListDatas: props.getLists.datas,
             CategoryCount: props.getCount,
-            currentPage: resorceJSON.TablePageData.currentPage,
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             categoryId: '',
             dcCode: ''
@@ -48,16 +48,23 @@ class ViewCategory extends Component {
         }
     }
 
-    getSpecificData() {
+    getSpecificData(type) {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
 
             let obj = {
-                "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+                // "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
                 "search": this.state.search,
                 "limit": this.state.itemPerPage,
                 "categoryId": this.props.location.state.categoryId,
                 "dcCode": this.state.dcCode,
                 "name": "subCategory"
+            }
+            if (type == "onSearch") {
+                this.setState({ currentPage: 0 }, () => {
+                    obj.page = 0
+                })
+            } else {
+                obj.page = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
             }
             this.props.getSpecificCategory(obj, true);
         }
@@ -94,12 +101,11 @@ class ViewCategory extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            this.setState({ currentPage: 1 }, () => {
+            this.setState({ currentPage: 0 }, () => {
                 this.getSpecificData();
             })
         }
     }
-
     resetSearch = () => {
         if (this.state.search || this.state.dcCode) {
             this.setState({ search: '', dcCodeObj: '', dcCode: '' }, () => {
@@ -133,8 +139,8 @@ class ViewCategory extends Component {
     }
 
     onChange = (data) => {
-        if (this.state.currentPage !== (data.selected + 1)) {
-            this.setState({ currentPage: data.selected + 1 }, () => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
                 this.getSpecificData();
             });
         }
@@ -151,7 +157,7 @@ class ViewCategory extends Component {
     }
 
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 1 }, () => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 0 }, () => {
             //  this.getSpecificData() 
         })
     };
@@ -251,8 +257,9 @@ class ViewCategory extends Component {
                             <div className="sub-filter">
                                 <div className="row">
                                     <div className="input-tip">
-                                        <input type="text" placeholder="Custom Search"
-                                            class="form-control" name="name" required="" value="" />
+                                        <input type="text" placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
                                         <span className="tooltip-text">custom search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
@@ -274,7 +281,7 @@ class ViewCategory extends Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                    <button type="button" className="data-search" onClick={(e) => this.getSpecificData("onSearch")}>
                                         <i className="fa fa-search" aria-hidden="true"></i>Search
                                         <span className="tooltip-text">click to search</span>
                                     </button>
