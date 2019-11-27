@@ -139,6 +139,16 @@ class FetchOrderDetails extends Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }
 
+    weightConversion = (Data) => {
+        if (Data == 1) {
+            return "Quindal"
+        } else if (Data == 2) {
+            return "Kg"
+        } else if (Data == 3) {
+            return "Ton"
+        }
+    }
+
     render() {
         let ordId = this.props && this.props.match && this.props.match && this.props.match.params && this.props.match.params.id;
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
@@ -178,9 +188,13 @@ class FetchOrderDetails extends Component {
         let productList = this.state.productLists && this.state.productLists.map((item) => {
             let productname = item.category && item.category.name ? item.category.name : '-';
             let boxAmount = item.productDetails && item.productDetails.boxQuantity ? item.productDetails.boxQuantity : 0;
-            let quantity = item.productDetails && item.productDetails.totalQuantity;
+
+
+            let quantity = item.cartDetails && item.cartDetails.quantity + ' ' + this.weightConversion(item.cartDetails.totalQuantityUnit) + '( ' + (item.cartDetails.quantity / item.cartDetails.boxQuantity) + "box)";
+
+
             let orderAmount = item.cartDetails && item.cartDetails.price;
-            return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity + ' ' + '( ' + quantity / boxAmount + "box)", item.productDetails && 'Rs. ' + orderAmount] }
+            return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity, item.productDetails && 'Rs. ' + orderAmount] }
         })
         let { status } = this.state;
         return (

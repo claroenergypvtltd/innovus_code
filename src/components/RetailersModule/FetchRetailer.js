@@ -816,7 +816,7 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select State--"
                                         />
                                     </div>
-                                    <div className="col-md-4 city-filter col-wrapper pr-0"><label className="label-title label-line">City:</label>
+                                    <div className="col-md-4 city-filter col-wrapper pr-0"><label className="label-title">City:</label>
                                         <Select className="city-box ml-1"
                                             styles={{
                                                 control: base => ({
