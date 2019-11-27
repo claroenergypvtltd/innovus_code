@@ -141,7 +141,6 @@ class FetchOrderDetails extends Component {
 
     render() {
         let ordId = this.props && this.props.match && this.props.match && this.props.match.params && this.props.match.params.id;
-        console.log('this.props.OrderLists', this.state.OrderLists);
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let fullShopAddrss;
             let add1;
@@ -177,15 +176,13 @@ class FetchOrderDetails extends Component {
             return { "itemList": [item.trackTime ? formatDate(item.trackTime) : '-', item.activity ? item.activity : '-', item.location ? item.location : "-"] }
         })
         let productList = this.state.productLists && this.state.productLists.map((item) => {
-
             let productname = item.category && item.category.name ? item.category.name : '-';
-            let boxAmount = item.categoryAmount && item.categoryAmount.boxQuantity ? item.categoryAmount.boxQuantity : 0;
-            let quantity = item.cartProductDetails && item.cartProductDetails.quantity;
-            return { "itemList": [item.cartProductDetails && item.cartProductDetails.productId, productname, quantity + ' ' + '( ' + quantity / boxAmount + "box)", item.cartProductDetails && 'Rs. ' + item.cartProductDetails.price] }
+            let boxAmount = item.productDetails && item.productDetails.boxQuantity ? item.productDetails.boxQuantity : 0;
+            let quantity = item.productDetails && item.productDetails.totalQuantity;
+            let orderAmount = item.cartDetails && item.cartDetails.price;
+            return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity + ' ' + '( ' + quantity / boxAmount + "box)", item.productDetails && 'Rs. ' + orderAmount] }
         })
-
         let { status } = this.state;
-
         return (
             <div className="order-details">
                 <div className="clearfix title-section row">

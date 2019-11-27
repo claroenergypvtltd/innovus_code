@@ -80,8 +80,8 @@ class CategoryList extends Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
     onChange = (data) => {
-        if (this.state.currentPage !== (data.selected + 1)) {
-            this.setState({ currentPage: data.selected + 1 }, () => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
                 this.getCategoryList();
             });
         }
@@ -90,15 +90,24 @@ class CategoryList extends Component {
         e.preventDefault();
         if (this.state.search) {
             let serObj = {
-                "search": this.state.search
+                "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
+                "search": this.state.search,
+                "limit": this.state.itemPerPage,
             };
-            this.props.getCategoryList(serObj);
+            this.setState({ currentPage: 0 }, () => {
+                this.props.getCategoryList(serObj);
+            })
         }
     }
     resetSearch = () => {
         if (this.state.search) {
-            this.setState({ search: '' }, () => {
-                this.props.getCategoryList();
+            this.setState({ search: '', currentPage: 0 }, () => {
+                let serObj = {
+                    "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
+                    "search": this.state.search,
+                    "limit": this.state.itemPerPage,
+                };
+                this.props.getCategoryList(serObj);
             });
         }
     }

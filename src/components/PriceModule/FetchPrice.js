@@ -25,7 +25,7 @@ class FetchPrice extends Component {
             dcCode: '',
             currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
-            // itemPerPage: 1,
+            //itemPerPage: 1,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
             PriceLists: []
@@ -48,7 +48,7 @@ class FetchPrice extends Component {
     }
     handleDcCodeChange = (Data) => {
         this.setState({ dcCodeObj: Data, dCCode: Data.value, currentPage: 0 }, () => {
-            this.getPriceList()
+            // this.getPriceList()
         })
     };
     componentWillReceiveProps(newProps) {
@@ -83,6 +83,10 @@ class FetchPrice extends Component {
                 this.getPriceList();
             });
         }
+    }
+    handleSearch = (e) => {
+        e.preventDefault();
+        this.setState({ search: e.target.value })
     }
     getPriceList() {
         // {
@@ -204,8 +208,9 @@ class FetchPrice extends Component {
                             <div className="sub-filter">
                                 <div className="row">
                                     <div className="input-tip">
-                                        <input type="text" placeholder="Custom Search"
-                                            class="form-control" name="name" required="" value="" />
+                                        <input type="text" placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
                                         <span className="tooltip-text">custom search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
@@ -227,7 +232,7 @@ class FetchPrice extends Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button type="button" className="data-search" onClick={(e) => this.getRetailerList("onSearch")}>
+                                    <button type="button" className="data-search" onClick={(e) => this.getPriceList("onSearch")}>
                                         <i className="fa fa-search" aria-hidden="true"></i>Search
                                         <span className="tooltip-text">click to search</span>
                                     </button>
