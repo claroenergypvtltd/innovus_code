@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { Form, Row, Col } from 'react-bootstrap';
 import { formatDate } from '../../shared/DateFormat'
 import StatusUpdate from './statusUpdate'
+import { getTwoToneColor } from 'antd/lib/icon/twoTonePrimaryColor';
 
 class FetchOrder extends Component {
 
@@ -120,6 +121,18 @@ class FetchOrder extends Component {
         }
     }
 
+    getClassNames = (ClsName) => {
+        switch (ClsName) {
+            case 1: return "place-color";
+            case 2: return "accept-color";
+            case 3: return "process-color";
+            case 4: return "ship-color";
+            case 5: return "center-color";
+            case 6: return "delivered-color";
+            case 7: return "cancel-color";
+        }
+    }
+
     onOpenModal = (orderId) => {
         this.setState({ open: true, orderId: orderId });
     };
@@ -134,9 +147,10 @@ class FetchOrder extends Component {
             let link = <Link to={path.order.list + "/" + item.orderId} className="order-btn">{window.strings.ORDER.VIEWDETAILS}</Link>
 
             // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
-
+            debugger;
+            let clasName = this.getClassNames(item.status);
             let status = <div>
-                <button className="update-btn" onClick={() => { this.onOpenModal(item.orderId) }}>{this.getStatusName(item.status)}</button>
+                <button className={"update-btn" + ' ' + clasName} onClick={() => { this.onOpenModal(item.orderId) }}>{this.getStatusName(item.status)}</button>
             </div>
 
 

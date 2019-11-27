@@ -164,7 +164,7 @@ class FetchSalesAgent extends React.Component {
                     {/* <div d-flex justify-content-end> */}
                     {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
                     <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
-                        <span className="tooltip-text">click to search</span>
+                        <span className="tooltip-text">Click to Search</span>
                     </button>
                     {/* <div className="retail-reset">
                         <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
@@ -183,9 +183,8 @@ class FetchSalesAgent extends React.Component {
                             <div className="row">
                                 <div className="input-tip">
                                     <input type="text" placeholder="Custom Search.."
-                                        class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                    />
-                                    <span className="tooltip-text">custom search</span>
+                                        class="form-control" name="name" required="" value="" />
+                                    <span className="tooltip-text">Custom Search</span>
                                 </div>
                                 <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                     {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
@@ -208,12 +207,12 @@ class FetchSalesAgent extends React.Component {
                                 </div>
                                 <button type="button" className="data-search" onClick={(e) => this.getSalesAgentList("onSearch")}>
                                     <i className="fa fa-search" aria-hidden="true"></i>Search
-                                        <span className="tooltip-text">click to search</span>
+                                        <span className="tooltip-text">Click to Search</span>
                                 </button>
                                 <div className="retail-reset">
                                     <button type="button" className="reset ml-2" onClick={this.resetSearch}>
                                         <i className="fa fa-refresh mrr5" aria-hidden="true"></i>
-                                        <span className="tooltip-text">reset</span>
+                                        <span className="tooltip-text">Reset</span>
                                     </button>
                                 </div>
                             </div>
