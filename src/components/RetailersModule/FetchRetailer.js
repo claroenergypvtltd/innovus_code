@@ -534,7 +534,6 @@ class FetchRetailer extends React.Component {
             }
             item.cusId = item.cusId && item.cusId ? item.cusId : '-';
             item.created = moment(item.created).format("DD/MM/YYYY");
-            debugger;
             // item.created = item.created;
 
 
