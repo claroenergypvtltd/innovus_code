@@ -30,9 +30,9 @@ class StatusUpdate extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps && newProps.orderDetails && newProps.orderDetails.trackLists && newProps.orderDetails.trackLists.orderWareHouse && newProps.orderDetails.trackLists.orderWareHouse[0]) {
-            let formDatas = newProps.orderDetails.trackLists.orderWareHouse[0]
-            this.setState({ status: formDatas.status, location: formDatas.location, activity: formDatas.activity });
+        if (newProps && newProps.orderDetails && newProps.orderDetails.trackLists) {
+            let formDatas = newProps.orderDetails.trackLists && newProps.orderDetails.trackLists.orderWareHouse && newProps.orderDetails.trackLists.orderWareHouse[0] ? newProps.orderDetails.trackLists.orderWareHouse[0] : {}
+            this.setState({ status: newProps.orderDetails.trackLists.status, location: formDatas.location, activity: formDatas.activity });
         }
     }
 
