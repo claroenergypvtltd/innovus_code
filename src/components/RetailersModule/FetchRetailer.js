@@ -560,7 +560,7 @@ class FetchRetailer extends React.Component {
                     {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
                     <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '-Search' : '+Search'}
                         {/* <span className="advance-icon"></span>Advance Search */}
-                        <span className="tooltip-text">click to search</span>
+                        <span className="tooltip-text">Click to Search</span>
                     </button>
                     {/* <div className="retail-reset">
                         <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
@@ -574,9 +574,8 @@ class FetchRetailer extends React.Component {
                         <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
-                        <div className="export-file">
+                        <div className="">
                             <ExportFile className="export-search" csvData={this.state.data} />
-                            <span className="tooltip-text">export</span>
                         </div>
                     </div>
 
@@ -588,9 +587,9 @@ class FetchRetailer extends React.Component {
                 </div> */}
                     {this.state.advanceSearch &&
                         <div className="">
-                            <div className="main-filter">
+                            <div className="sub-filter">
                                 <div className="row">
-                                    <div className="col-md-4 date-range"><label className="label-title">Date:</label>
+                                    {/* <div className="col-md-4 date-range"><label className="label-title">Date:</label>
                                         <DateRangePicker
                                             placeholder="Please select a date"
                                             autoUpdateInput={false}
@@ -607,9 +606,8 @@ class FetchRetailer extends React.Component {
                                             </div>
                                         </DateRangePicker>
                                     </div>
-
-                                    <div className="col-md-4 state-filter"><label className="label-title label-line">State:</label>
-                                        {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                    <div className="col-md-4 state-filter p-0"><label className="label-title label-line">State:</label>
+                                        // <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} />
                                         <Select className="state-box ml-1"
                                             styles={{
                                                 control: base => ({
@@ -626,64 +624,41 @@ class FetchRetailer extends React.Component {
                                             options={stateDropDown}
                                             placeholder="--Select State--"
                                         />
+                                        <div className="col-md-4 city-filter pr-0"><label className="label-title label-line">City:</label>
+                                            <Select className="city-box ml-1"
+                                                styles={{
+                                                    control: base => ({
+                                                        ...base,
+                                                        borderColor: 'hsl(0,0%,80%)',
+                                                        boxShadow: '#FE988D',
+                                                        '&:hover': {
+                                                            borderColor: '#FE988D'
+                                                        }
+                                                    })
+                                                }}
+                                                value={this.state.selectedCityOption}
+                                                onChange={(e) => this.handleStateChange(e)}
+                                                options={cityDropDown}
+                                                placeholder="--Select City--"
+                                            />
+                                        </div>
+                                        <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
+                                            <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <span className="tooltip-text">Click to Search</span>
+                                        </button>
+                                        <div className="retail-reset">
+                                            <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
+                                                <i className="fa fa-refresh" aria-hidden="true"></i>
+                                                <span className="tooltip-text">Reset</span>
+                                            </button>
+                                        </div> */}
 
-                                        {/* <select name="stateId" value={this.state.stateId} className="state-select ml-1 yellow" onChange={this.handleInputChange}>
-                                <option value="0" className="drop-option">--Select State--</option>{stateDropDown}
-                            </select> */}
-                                    </div>
-                                    {/* <div className="col-md-4 state-filter"><label className="label-title">State:</label>
-                                    <select name="stateId" value={this.state.stateId} className="state-select ml-1 yellow" onChange={this.handleInputChange}>
-                                        <option value="0" className="drop-option">--Select State--</option>{stateDropDown}
-                                    </select>
-                                </div> */}
-
-                                    <div className="col-md-4 city-filter"><label className="label-title label-line">City:</label>
-                                        {/* <select name="cityId" value={this.state.cityId} className="city-select ml-1 red" onChange={this.handleInputChange}>
-                                <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
-                            </select> */}
-                                        <Select className="city-box ml-1"
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            value={this.state.selectedCityOption}
-                                            onChange={(e) => this.handleStateChange(e)}
-                                            options={cityDropDown}
-                                            placeholder="--Select City--"
-                                        />
-                                    </div>
-
-                                    {/* <div className="col-md-4 city-filter"><label className="label-title">City:</label>
-                                    <select name="cityId" value={this.state.cityId} className="city-select ml-1 red" onChange={this.handleInputChange}>
-                                        <option value="0" className="drop-option">--Select City---</option>{cityDropDown}
-                                    </select>
-                                </div> */}
-
-                                    {/* <div className="col-md-2 status-filter"><label className="label-title">Status:</label>
-                                    <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                                        <option value="0" className="drop-option">-- Select --</option>
-                                        {statusDropdown}
-                                    </select>
-                                </div> */}
-                                </div>
-                            </div >
-                            <div className="sub-filter">
-                                <div className="row ">
                                     {/* <div data-tip="custom search"> */}
                                     <div className="input-tip">
-                                        {/* <label className="label-title">Search:</label> */}
                                         <input type="text" placeholder="Custom Search.."
-                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                        />
-                                        <span className="tooltip-text">custom search</span>
+                                            class="form-control" name="name" required="" value="" />
+                                        <span className="tooltip-text">Custom Search</span>
                                     </div>
-
                                     <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
                                         <Select
                                             styles={{
@@ -702,7 +677,6 @@ class FetchRetailer extends React.Component {
                                             options={agentListDropDown}
                                             placeholder="--Select Agent--"
                                         />
-
                                     </div>
                                     <div className="status-filter pr-3"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
@@ -712,6 +686,64 @@ class FetchRetailer extends React.Component {
                                     </div>
                                     <div className="col-md-3 code-filter p-0"><label className="label-title">DC Code:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                        <Select className="state-box"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    width: '105%',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            value={this.state.dcCodeObj}
+                                            onChange={(e) => this.handleDcCodeChange(e)}
+                                            options={dcData}
+                                            placeholder="--Select DC Code--"
+                                        />
+                                    </div>
+
+                                </div>
+                            </div >
+
+                            <div className="main-filter ">
+                                <div className="row ">
+                                    {/* 
+                                    // <div data-tip="custom search">
+                                    <div className="input-tip">
+                                        <input type="text" placeholder="Custom Search.."
+                                            class="form-control" name="name" required="" value="" />
+                                        <span className="tooltip-text">Custom Search</span>
+                                    </div>
+                                    <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
+                                        <Select
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            className="city-box ml-1"
+                                            value={this.state.selectedAgentOption}
+                                            onChange={(e) => this.handleAgentChange(e)}
+                                            options={agentListDropDown}
+                                            placeholder="--Select Agent--"
+                                        />
+                                    </div>
+                                    <div className="status-filter pr-3"><label className="label-title">Status:</label>
+                                        <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                                            <option value="" className="drop-option">-- Select Status--</option>
+                                            {statusDropdown}
+                                        </select>
+                                    </div>
+                                    <div className="col-md-3 code-filter p-0"><label className="label-title">DC Code:</label>
+                                        // <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} />
                                         <Select className="state-box"
                                             styles={{
                                                 control: base => ({
@@ -728,15 +760,83 @@ class FetchRetailer extends React.Component {
                                             options={dcData}
                                             placeholder="--Select DC Code--"
                                         />
-                                    </div>
-                                    <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
+                                    </div> */}
+                                    {/* <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
                                         <i className="fa fa-search" aria-hidden="true"></i>Search
-                                        <span className="tooltip-text">click to search</span>
+                                        <span className="tooltip-text">Click to Search</span>
                                     </button>
                                     <div className="retail-reset">
                                         <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
                                             <i className="fa fa-refresh" aria-hidden="true"></i>
-                                            <span className="tooltip-text">reset</span>
+                                            <span className="tooltip-text">Reset</span>
+                                        </button>
+                                    </div> */}
+
+                                    <div className="col-md-4 date-range col-wrapper pr-0">
+                                        <label className="label-title">Date:</label>
+                                        <DateRangePicker
+                                            placeholder="Please select a date"
+                                            autoUpdateInput={false}
+                                            onHide={this.resetSelection}
+                                            placeholder="-- Date -- "
+                                            startDate={this.state.startDate}
+                                            endDate={this.state.endDate}
+                                            onApply={this.handleApply}
+                                        >
+                                            <div className="date-box">
+                                                <input type="text" className="form-control date-form ml-1" value={label} />
+                                                <span className="date-group">
+                                                    <i className="date-btn fa fa-calendar" />
+                                                </span>
+                                            </div>
+                                        </DateRangePicker>
+                                    </div>
+
+                                    <div className="col-md-4 state-filter col-wrapper p-0"><label className="label-title">State:</label>
+                                        {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                        <Select className="state-box ml-1"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            value={this.state.selectedStateOption}
+                                            onChange={(e) => this.handleStateChange(e, 'state')}
+                                            options={stateDropDown}
+                                            placeholder="--Select State--"
+                                        />
+                                    </div>
+                                    <div className="col-md-4 city-filter col-wrapper pr-0"><label className="label-title label-line">City:</label>
+                                        <Select className="city-box ml-1"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            value={this.state.selectedCityOption}
+                                            onChange={(e) => this.handleStateChange(e)}
+                                            options={cityDropDown}
+                                            placeholder="--Select City--"
+                                        />
+                                    </div>
+                                    <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
+                                        <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <span className="tooltip-text">Click to Search</span>
+                                    </button>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
+                                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                                            <span className="tooltip-text">Reset</span>
                                         </button>
                                     </div>
                                 </div>

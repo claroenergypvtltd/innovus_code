@@ -90,14 +90,18 @@ export const toastr = {
                         <button className="btn btn-primary pull-right mrr10" onClick={() => { props.onOk()
                             onClose()}}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button> */}
 
-                            <button className="btn btn-primary delete-btn mr-2 mt-3" onClick={() => {
-                                props.onOk()
-                                onClose()
-                            }}>{window.strings.OK}</button>
-                            <button className="btn btn-default mt-3" onClick={() => {
+                            <button className="btn btn-default popup-cancel mt-3" onClick={() => {
                                 props.onCancel()
                                 onClose()
                             }}>{window.strings.CANCEL}</button>
+                            <button className="btn btn-primary delete-btn ml-2 mt-3" onClick={() => {
+                                props.onOk()
+                                onClose()
+                            }}>{window.strings.OK}</button>
+                            {/* <button className="btn btn-default mt-3" onClick={() => {
+                                props.onCancel()
+                                onClose()
+                            }}>{window.strings.CANCEL}</button> */}
 
 
 
