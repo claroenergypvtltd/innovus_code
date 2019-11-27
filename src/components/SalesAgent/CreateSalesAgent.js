@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { AGENT_CREATE_SUCCESS, AGENT_UPDATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
 import { path } from '../../constants';
-
+import { toastr } from '../../services';
+import { validation } from '../../libraries/formValidation'
 
 class CreateSalesAgent extends React.Component {
     constructor(props) {
@@ -59,8 +60,9 @@ class CreateSalesAgent extends React.Component {
             : this.setState({ [e.target.name]: e.target.value });
     }
 
+
     redirectPage = () => {
-        this.props.history.push({ pathname: path.user.list, state : {tabNumber: 1, salesAgentSearchDatas: "backTrue"} });
+        this.props.history.push({ pathname: path.user.list, state: { tabNumber: 1, salesAgentSearchDatas: "backTrue" } });
         // this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
     }
 
@@ -90,11 +92,11 @@ class CreateSalesAgent extends React.Component {
                 formData.append("userId", this.props.location.state.salesAgentId);
                 isEdit = true
             }
+            if (validation.checkValidation('email', this.state.emailId) && validation.checkValidation('mobile', this.state.mobileNumber)) {
 
-            this.props.submitSalesAgent(formData, isEdit);
-
+                this.props.submitSalesAgent(formData, isEdit);
+            }
         }
-
     }
 
     render() {
@@ -142,6 +144,8 @@ class CreateSalesAgent extends React.Component {
                                         required
                                     />
                                     {this.state.submitted && !this.state.emailId && <div className="mandatory">{window.strings['SALES_AGENT']['EMAIL'] + window.strings['ISREQUIRED']}</div>}
+                                    {/* {this.state.validation == false && <div className="mandatory">Enter valid Email </div>} */}
+                                    {this.state.submitted && this.state.emailId && !validation.checkValidation("email", this.state.email) && <div className="mandatory">Email is Invalid</div>}
                                 </div>
 
                                 <div className="form-group col-md-12">
@@ -161,6 +165,7 @@ class CreateSalesAgent extends React.Component {
 
                                     />
                                     {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['SALES_AGENT']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
+                                    {this.state.mobileNumber && !validation.checkValidation("mobile", this.state.mobileNumber) && <div className="mandatory">Mobile Number Invalid</div>}
                                 </div>
 
                                 <div className="form-group col-md-12">
