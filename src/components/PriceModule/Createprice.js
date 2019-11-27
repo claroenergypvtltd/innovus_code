@@ -181,8 +181,8 @@ class CreatePrice extends Component {
         this.setState({
             submitted: true
         })
-        if (this.state.price >= this.state.offer || this.state.offerId == 2 && this.state.offer <= 100) {
-            if ((this.state.offerId == 2 && this.state.offer <= 100) || (this.state.offerId == 1 && this.state.price >= this.state.offer) || this.state.offer == '') {
+        if (parseInt(this.state.price) >= parseInt(this.state.offer) || this.state.offerId == 2 && parseInt(this.state.offer) <= 100 || !this.state.offer && this.state.offerId == 0 || parseInt(this.state.offer)) {
+            if ((this.state.offerId == 2 && parseInt(this.state.offer <= 100)) || (this.state.offerId == 1 && parseInt(this.state.price) >= parseInt(this.state.offer)) || !this.state.offer && this.state.offerId == 0 || this.state.offer == null) {
                 if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
 
                     let isUpdate = false;
@@ -194,20 +194,20 @@ class CreatePrice extends Component {
 
                     let obj = {
                         "id": this.state.categoryId,
-                        "productId": this.state.categoryId,
                         "rupeesize": "RS/" + this.state.weightId,
                         "amount": this.state.price,
                         "boxQuantity": this.state.boxQuantity,
                         "totalQuantity": this.state.weight,
                         "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
                         "totalQuantitySize": this.state.weightId,
-                        "boxQuantitySize": this.state.weightId,
-                        "discountValue": this.state.offer ? this.state.offer : 0,
-                        "discountUnit": this.state.offerId,
+                        "boxQuantityUnit": this.state.weightId,
+                        "discountValue": this.state.offer,
+                        "discountUnit": this.state.offerId == 0 ? '' : this.state.offerId,
+                        "productId": this.state.categoryId,
                         "flag": flag
                     }
                     if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
-                        if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
+                        if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0 || this.state.offer == null) {
                             this.props.submitPrice(obj, isUpdate);
                         }
                         else if (this.state.updateQuantity && !this.state.offer && this.state.offerId == 0) {
@@ -239,13 +239,12 @@ class CreatePrice extends Component {
                         this.props.submitPrice(obj, isUpdate);
                     }
                 }
-            } else {
-                toastr.error("please enter valid offer value")
             }
-        } else {
-            toastr.error("please enter valid offer value")
+            else {
+                this.state.offerId == 1 && parseInt(this.state.price) < parseInt(this.state.offer) ? toastr.error("Select valid offer") : toastr.error("Select valid offer type")
+                //   this.state.offer > 100 ? toastr.error("Select valid offer type") : toastr.error("Select valid offer type") ;
+            }
         }
-
     }
     listPath = () => {
         this.props.history.goBack();
@@ -282,7 +281,6 @@ class CreatePrice extends Component {
             return <option key={index}
                 value={item.id}> {"RS / " + item.name}</option>
         });
-        debugger;
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -434,7 +432,7 @@ class CreatePrice extends Component {
 
                                             />
                                             {this.state.submitted && this.state.offerId != 0 && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
-                                            {this.state.submitted && this.state.offerId == 1 && this.state.offer > this.state.price && <div className="mandatory">Please enter valid offer</div>}
+                                            {this.state.submitted && this.state.offerId == 1 && (parseInt(this.state.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
                                             {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
                                         </div>
 
