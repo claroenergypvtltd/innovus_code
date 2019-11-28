@@ -72,7 +72,9 @@ class FetchRetailer extends React.Component {
                     selectedCityOption: sessRetsearchDatas.selectedCityOption,
                     dcCodeObj: sessRetsearchDatas.dcCodeObj,
                     advanceSearch: false,
-                    currentPage: sessRetsearchDatas.pages
+                    currentPage: sessRetsearchDatas.pages,
+                    // startDate: sessRetsearchDatas.startTime.format('DD-MM-YYYY'),
+                    // endDate: sessRetsearchDatas.endTime.format('DD-MM-YYYY')
                 }, () => {
                     this.callAllUserAPis();
                     this.enableAdvanceSearch();
@@ -413,14 +415,6 @@ class FetchRetailer extends React.Component {
             this.context.router.history.goBack();
         }
     };
-    onOpenModal = (e) => {
-        e.preventDefault();
-        if (this.state.selectedDatas && this.state.selectedDatas.length > 0) {
-            this.setState({ open: true, popup: true });
-        } else {
-            toastr.error("Please Select any Customer");
-        }
-    };
     enableAdvanceSearch = (e) => {
         // e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
@@ -454,7 +448,19 @@ class FetchRetailer extends React.Component {
         e.preventDefault();
         this.setState({ search: e.target.value })
     }
+    searchSubmit = (e) => {
+        e.preventDefault();
+        this.getRetailerList();
+    }
 
+    onOpenModal = (e) => {
+        e.preventDefault();
+        if (this.state.selectedDatas && this.state.selectedDatas.length > 0) {
+            this.setState({ open: true, popup: true });
+        } else {
+            toastr.error("Please Select any Customer");
+        }
+    };
     onChange = (data) => {
         if (this.state.currentPage !== (data.selected)) {
             this.setState({ currentPage: data.selected, filterWithPagination: true }, () => {
@@ -576,11 +582,11 @@ class FetchRetailer extends React.Component {
                     </div> */}
                 </div>
                 <div id="menu">
-                    {/* <button className="advance-search"><span className="advance-icon"></span></button> */}
+                    {/* <handlesearch className="advance-search"><span className="advance-icon"></span></button> */}
 
 
                     <div className="assign-box">
-                        <button className="assign-btn" onClick={this.getRetailerList} ><i className="fa fa-plus sub-plus"></i>
+                        <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
                         <div className="">
@@ -664,9 +670,13 @@ class FetchRetailer extends React.Component {
 
                                     {/* <div data-tip="custom search"> */}
                                     <div className="input-tip">
-                                        <input placeholder="Custom Search.." type="text"
-                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                        />
+                                        <form onSubmit={(e) => this.searchSubmit(e)}>
+                                            <input placeholder="Custom Search.."
+                                                class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                            />
+                                            <button type="submit" hidden></button>
+                                        </form>
+
                                         {/* <input type="submit" /> */}
                                         <span className="tooltip-text">Custom Search</span>
 

@@ -156,6 +156,11 @@ class ViewCategory extends Component {
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
+    searchSubmit = (e) => {
+        e.preventDefault();
+        this.getSpecificData();
+    }
+
 
     handleDcCodeChange = (Data) => {
         this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 0 }, () => {
@@ -258,9 +263,15 @@ class ViewCategory extends Component {
                             <div className="sub-filter">
                                 <div className="row">
                                     <div className="input-tip">
-                                        <input type="text" placeholder="Search by Crop Name.."
+                                        {/* <input type="text" placeholder="Search by Crop Name.."
                                             class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                        />
+                                        /> */}
+                                        <form onSubmit={(e) => this.searchSubmit(e)}>
+                                            <input placeholder="Search by Crop Name.."
+                                                class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                            />
+                                            <button type="submit" hidden></button>
+                                        </form>
                                         <span className="tooltip-text">Custom Search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
