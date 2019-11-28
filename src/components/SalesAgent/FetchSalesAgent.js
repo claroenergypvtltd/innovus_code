@@ -98,7 +98,10 @@ class FetchSalesAgent extends React.Component {
         this.context.router.history.push('user/salesAgent/add');
 
     }
-
+    searchSubmit = (e) => {
+        e.preventDefault();
+        this.getSalesAgentList();
+    }
 
     searchResult = (e) => {
 
@@ -131,7 +134,7 @@ class FetchSalesAgent extends React.Component {
     }
 
     enableAdvanceSearch = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
@@ -166,7 +169,7 @@ class FetchSalesAgent extends React.Component {
                 <div className="retailersearchdiv">
                     {/* <div d-flex justify-content-end> */}
                     {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
-                    <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
+                    <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
                         <span className="tooltip-text">Click to Search</span>
                     </button>
                     {/* <div className="retail-reset">
@@ -185,9 +188,12 @@ class FetchSalesAgent extends React.Component {
                         <div className="sub-filter">
                             <div className="row">
                                 <div className="input-tip">
-                                    <input type="text" placeholder="Custom Search.."
-                                        class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                    />
+                                    <form onSubmit={(e) => this.searchSubmit(e)}>
+                                        <input placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
+                                        <button type="submit" hidden></button>
+                                    </form>
                                     <span className="tooltip-text">Custom Search</span>
                                 </div>
                                 <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
