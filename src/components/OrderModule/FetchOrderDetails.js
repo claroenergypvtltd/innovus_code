@@ -193,7 +193,7 @@ class FetchOrderDetails extends Component {
             let quantity = item.cartDetails && item.cartDetails.quantity + ' ' + this.weightConversion(item.cartDetails.totalQuantityUnit) + '( ' + (item.cartDetails.quantity / item.cartDetails.boxQuantity) + "box)";
 
 
-            let orderAmount = item.cartDetails && item.cartDetails.price;
+            let orderAmount = item.cartDetails && item.cartDetails.amount;
             return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity, item.productDetails && 'Rs. ' + orderAmount] }
         })
         let { status } = this.state;
