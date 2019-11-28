@@ -89,12 +89,12 @@ class CategoryList extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            let serObj = {
-                "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
-                "search": this.state.search,
-                "limit": this.state.itemPerPage,
-            };
             this.setState({ currentPage: 0 }, () => {
+                let serObj = {
+                    "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
+                    "search": this.state.search,
+                    "limit": this.state.itemPerPage,
+                };
                 this.props.getCategoryList(serObj);
             })
         }

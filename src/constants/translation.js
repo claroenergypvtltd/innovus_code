@@ -142,7 +142,7 @@ export const Translation = {
         "UPDATEMESSAGE": "Are you sure you wish to Update this item?",
         "ROLEPERMISSIONTITLE": "Role Permission",
         "PASSWORDFORMAT": "(Should contains minimum 8 characters, one letter should be alpha-numeric values)",
-        "TIMEAMPMFORAMT": "Could not Save the Shop Opening Time in 'P.M' Format.Please Change in 'A.M' Format and continue.",
+        "TIMEAMPMFORAMT": "Selected shop opening time is Wrong.Please choose AM.",
         "ALERT": "TIME ALERT",
         "USER": {
             "DELETE_USER": "User?",

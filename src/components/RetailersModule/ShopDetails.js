@@ -66,6 +66,7 @@ class ShopDetails extends React.Component {
                 }
                 updateStatusRetailer(formData).then(resp => {
                     if (resp && resp.status == 200) {
+                        this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
                         // toastr.success(resp.message);
                         let activeKey;
                         if (this.state.activeButton) {
