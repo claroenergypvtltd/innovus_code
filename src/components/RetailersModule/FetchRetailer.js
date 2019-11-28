@@ -23,6 +23,7 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import TransferAgent from './TransferAgent'
 import { SearchBar, ReactPagination } from '../../shared'
 import { getDcCodeData } from '../../actions/salesAgentAction';
+import { imageBaseUrl } from '../../config/config';
 
 
 class FetchRetailer extends React.Component {
@@ -91,7 +92,7 @@ class FetchRetailer extends React.Component {
                 return item;
             })
             this.setState({
-                data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount:newProps.list.totalCount 
+                data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount
             })
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
@@ -548,25 +549,14 @@ class FetchRetailer extends React.Component {
             }
             item.cusId = item.cusId && item.cusId ? item.cusId : '-';
             item.created = moment(item.created).format("DD/MM/YYYY");
-            // item.created = item.created;
 
 
+            item.latitude = item.shopAddress.latitude
+            item.longitude = item.shopAddress.longitude
+            item.shopOpenTime = item.shopAddress.shopOpeningTime
+            item.retailerName = item.name
+            item.shopImageLink = imageBaseUrl + item.shopAddress.image
 
-            // if (Object.keys(item.address).length > 1) {
-            //     address = JSON.stringify(item.address).toString().replace(/"/g, '');
-            // }
-            // if (Object.keys(item.addressData).length > 1) {
-            //     addressData = JSON.stringify(item.addressData).toString().replace(/"/g, '');
-            // }
-            // if (Object.keys(item.role).length > 1) {
-            //     role = JSON.stringify(item.role).toString().replace(/"/g, '');
-            // }
-            // if (Object.keys(item.shopAddress).length > 1) {
-            //     shopAddress = JSON.stringify(item.shopAddress).toString().replace(/"/g, '');
-            // }
-            // item.address = address;
-            // item.role = role;
-            // item.shopAddress = shopAddress;
             excelDatas.push(item);
         })
         let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} clearRows={this.state.clearCheck} />
@@ -589,7 +579,7 @@ class FetchRetailer extends React.Component {
 
 
                     <div className="assign-box">
-                        <button className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
+                        <button className="assign-btn" onClick={this.getRetailerList} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
                         <div className="">
@@ -673,7 +663,7 @@ class FetchRetailer extends React.Component {
 
                                     {/* <div data-tip="custom search"> */}
                                     <div className="input-tip">
-                                        <input placeholder="Custom Search.."
+                                        <input placeholder="Custom Search.." type="text"
                                             class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                         />
                                         <span className="tooltip-text">Custom Search</span>

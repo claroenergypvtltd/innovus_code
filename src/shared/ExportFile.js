@@ -23,8 +23,6 @@ export default class ExportFile extends React.Component {
                 excelitem.Status = "Rejected";
             }
             excelitem.OnboardedDate = item.created && item.created === '-' ? '' : item.created;
-            // item.OnboardedDate = item.created ? moment(item.created).format("DD/MM/YYYY") : '-';
-
             excelitem.CustomerID = item.cusId && item.cusId === '-' ? '' : item.cusId;
             excelitem.ShopName = item.shopNames && item.shopNames === '-' ? '' : item.shopNames;
             excelitem.ShopAddress = item.shopAddrss1 && item.shopAddrss1 === '-' ? '' : item.shopAddrss1;
@@ -32,6 +30,11 @@ export default class ExportFile extends React.Component {
             excelitem.mobileNumber = item.mobileNumber && item.mobileNumber === '-' ? '' : item.mobileNumber;
             excelitem.shopType = item.shopType && item.shopType === '-' ? '' : item.shopType;
             excelitem.AgentName = item.agentName && item.agentName === '-' ? '' : item.agentName;
+            excelitem.Latitude = item.latitude && item.latitude === '-' ? '' : item.latitude;
+            excelitem.Longitude = item.longitude && item.longitude === '-' ? '' : item.longitude;
+            excelitem.ShopOpenTime = item.shopOpenTime && item.shopOpenTime === '-' ? '' : item.shopOpenTime;
+            excelitem.RetailerName = item.retailerName && item.retailerName === '-' ? '' : item.retailerName;
+            excelitem.ShopImageLink = item.shopImageLink && item.shopImageLink === '-' ? '' : item.shopImageLink;
             PrintexcelDatas.push(excelitem);
         });
         return (
