@@ -6,7 +6,7 @@ export function ModalData(props) {
 
         <Modal show={props.show} onHide={props.onHide} size="" backdrop={false}>
             <Modal.Header className="main-wrapper" closeButton>
-                <h4 className="user-title">{props.ModalTitle}</h4>
+                <h4 className="user-title m-0">{props.ModalTitle}</h4>
             </Modal.Header>
 
 

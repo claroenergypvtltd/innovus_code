@@ -216,9 +216,9 @@ class CreateVehicle extends Component {
 
         let TypeData = <div>
             <div>
-                <label>{window.strings['VEHICLE']['VEHICLE_TYPE']}</label>
+                <label className="label-title">{window.strings['VEHICLE']['VEHICLE_TYPE']}</label>
                 <input type="text" placeholder="Vehicle Type"
-                    className={classnames('form-control', { 'is-invalid': errors.category })}
+                    className={classnames('form-control col-md-7', { 'is-invalid': errors.category })}
                     name="category" onChange={this.handleInputChange} value={this.state.category} required
                 />
                 {this.state.typeSubmitted && !this.state.category && <div className="mandatory">{window.strings['VEHICLE']['VEHICLE_TYPE'] + window.strings['ISREQUIRED']}</div>}

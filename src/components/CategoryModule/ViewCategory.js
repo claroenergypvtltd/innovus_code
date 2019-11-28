@@ -174,7 +174,7 @@ class ViewCategory extends Component {
     }
 
     handleStatusChange = (e, data) => {
-        let message = "Are u sure want to update ?";
+        let message = "Are you sure you want to update ?";
         var statusValue = e.target.name
         let value = e.target.value
         const toastrConfirmOptions = {
@@ -212,7 +212,7 @@ class ViewCategory extends Component {
             const statusDropdown = resorceJSON.cropStatusOptions.map((item, index) => {
                 return <option value={index} selected={selectedValue == index ? true : false} className="drop-option">{item}</option>
             })
-            let statusChange = <select value={this.state.status} name={status} onChange={(e) => this.handleStatusChange(e, item.id)}>
+            let statusChange = <select className="active-inactive" value={this.state.status} name={status} onChange={(e) => this.handleStatusChange(e, item.id)}>
                 {statusDropdown}
                 {/* <option value="0" selected={selectedValue}>Active</option>
                 <option value="1" selected={selectedValue}>In Active</option> */}
