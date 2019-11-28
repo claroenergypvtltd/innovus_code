@@ -40,7 +40,7 @@ class FetchCrop extends Component {
 
         if (newProps.cropData.List) {
             let Data = newProps.cropData.List;
-            this.setState({ CropLists: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage })
+            this.setState({ CropLists: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage, totalCount: Data.totalCount })
         }
     }
 
@@ -129,7 +129,7 @@ class FetchCrop extends Component {
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
             </div>
         );
     }

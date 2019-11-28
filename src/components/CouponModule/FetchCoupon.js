@@ -32,7 +32,7 @@ class FetchCoupon extends Component {
 
         if (nextProps.couponList && nextProps.couponList.Lists && nextProps.couponList.Lists.datas) {
             let Data = nextProps.couponList.Lists;
-            this.setState({ CouponData: Data.datas, pageCount: nextProps.couponList.Lists.totalCount / this.state.itemPerPage })
+            this.setState({ CouponData: Data.datas, pageCount: nextProps.couponList.Lists.totalCount / this.state.itemPerPage, totalCount: nextProps.couponList.Lists.totalCount })
         }
 
         if (nextProps.couponList && nextProps.couponList.deletedStatus == "200") {
@@ -141,7 +141,7 @@ class FetchCoupon extends Component {
                         handleEdit={this.itemEdit} />
                     <ReactPagination PageDetails={{
                         pageCount: this.state.pageCount, onPageChange: this.onChange,
-                        activePage: this.state.currentPage, perPage: this.state.limitValue
+                        activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount
                     }} />
 
                 </div>

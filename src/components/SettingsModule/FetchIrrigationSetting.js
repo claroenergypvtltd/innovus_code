@@ -34,7 +34,7 @@ class FetchIrrigationSetting extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.Lists && newProps.IrrigationSettingData.Lists.datas) {
             let respData = newProps.IrrigationSettingData.Lists.datas;
-            this.setState({ irrigationSettingLists: respData, pageCount: newProps.IrrigationSettingData.Lists.totalCount / this.state.itemPerPage })
+            this.setState({ irrigationSettingLists: respData, pageCount: newProps.IrrigationSettingData.Lists.totalCount / this.state.itemPerPage, totalCount: newProps.IrrigationSettingData.Lists.totalCount })
         }
 
         if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.deletedStatus == "200") {
@@ -137,7 +137,7 @@ class FetchIrrigationSetting extends Component {
                     // handleDelete={this.handleDelete} 
                     handleEdit={this.itemEdit}
                 />
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
             </div>
         );
     }
