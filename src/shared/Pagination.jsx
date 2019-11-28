@@ -4,7 +4,6 @@ import { resorceJSON } from '../libraries'
 import ReactPaginate from 'react-paginate';
 
 export function ReactPagination(props) {
-  debugger;
   return (
     <div className="page text-right mt-2">
 
