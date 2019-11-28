@@ -38,7 +38,7 @@ class FetchCart extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
             let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData, pageCount: respData.totalCount / this.state.itemPerPage })
+            this.setState({ PriceLists: respData, pageCount: respData.totalCount / this.state.itemPerPage, totalCount: respData.totalCount })
         }
     }
 
@@ -126,7 +126,7 @@ class FetchCart extends Component {
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit} />
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
             </div>
         );
     }

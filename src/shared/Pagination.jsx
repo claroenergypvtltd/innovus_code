@@ -17,7 +17,7 @@ export function ReactPagination(props) {
         onChange={props.PageDetails.onPageChange}
         activeClassName={"active"}
       /> */}
-      <label className="label-title mb-0 pr-5 mr-5"> Total Number of Records : </label>
+      {props.PageDetails.totalCount != 0 && <label className="label-title mb-0 pr-5 mr-5"> Total Number of Records : {props.PageDetails.totalCount}</label>}
       <ReactPaginate previousLabel={"<"}
         nextLabel={">"}
         breakLabel={<a>...</a>}

@@ -49,7 +49,7 @@ class CategoryList extends Component {
             //     return item;
             // })
             // debugger;
-            this.setState({ data: newProps.getLists.datas, pageCount: newProps.getLists.totalCount / this.state.itemPerPage });
+            this.setState({ data: newProps.getLists.datas, pageCount: newProps.getLists.totalCount / this.state.itemPerPage, totalCount: newProps.getLists.totalCount });
         }
         if (newProps.categoryData && newProps.categoryData.deletedStatus == "200") {
             store.dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: "" })
@@ -153,7 +153,7 @@ class CategoryList extends Component {
                 <div className="sub-category">
                     {/* <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} pagination={true} /> */}
                     <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleEdit={this.itemEdit} />
-                    {CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />}
+                    {CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />}
 
                 </div>
             </div>

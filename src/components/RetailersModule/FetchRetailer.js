@@ -91,7 +91,7 @@ class FetchRetailer extends React.Component {
                 return item;
             })
             this.setState({
-                data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage
+                data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount:newProps.list.totalCount 
             })
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
@@ -874,7 +874,7 @@ class FetchRetailer extends React.Component {
                         onRowSelected={this.handleRowChange}
                         handleRowChange={this.handleRowChange}
                     />
-                    <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                    <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
 
                     {/* <DataTableDynamic customCss="fetchretailer" title="Category List" tableHead={this.state.columns}
                         tableDatas={this.state.data} handleView={this.itemView}

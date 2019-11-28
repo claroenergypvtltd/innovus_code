@@ -35,7 +35,7 @@ class FetchFAQ extends Component {
         if (nextProps.faqData && nextProps.faqData.Lists.data && nextProps.faqData.Lists.data.datas) {
 
             let Data = nextProps.faqData.Lists.data.datas;
-            this.setState({ FaqListDatas: Data, pageCount: nextProps.faqData.Lists.data.totalCount / this.state.itemPerPage })
+            this.setState({ FaqListDatas: Data, pageCount: nextProps.faqData.Lists.data.totalCount / this.state.itemPerPage, totalCount: nextProps.faqData.Lists.data.totalCount })
         }
 
 
@@ -151,7 +151,7 @@ class FetchFAQ extends Component {
                         handleEdit={this.itemEdit} />
                     <ReactPagination PageDetails={{
                         pageCount: this.state.pageCount, onPageChange: this.onChange,
-                        activePage: this.state.currentPage, perPage: this.state.limitValue
+                        activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount
                     }} />
                 </div>
             </div>

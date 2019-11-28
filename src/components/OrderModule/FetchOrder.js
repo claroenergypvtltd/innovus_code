@@ -39,7 +39,7 @@ class FetchOrder extends Component {
 
         if (newProps.orderData && newProps.orderData.Lists && newProps.orderData.Lists.datas) {
             let respData = newProps.orderData.Lists.datas;
-            this.setState({ OrderLists: respData, pageCount: newProps.orderData.Lists.totalCount / this.state.itemPerPage })
+            this.setState({ OrderLists: respData, pageCount: newProps.orderData.Lists.totalCount / this.state.itemPerPage, totalCount: newProps.orderData.Lists.totalCount })
         }
     }
 
@@ -149,7 +149,7 @@ class FetchOrder extends Component {
             // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
             let clasName = this.getClassNames(item.status);
             let status = <div>
-                <button className={"update-btn" + ' ' + clasName} onClick={() => { this.onOpenModal(item.orderId) }}>{this.getStatusName(item.status)}</button>
+                <button className={"update-btn" + ' ' + clasName} onClick={() => { this.onOpenModal(item.orderId) }} disabled={item.status == 7}>{this.getStatusName(item.status)}</button>
             </div>
 
 
@@ -202,7 +202,7 @@ class FetchOrder extends Component {
                 <TableData TableHead={this.state.TableHead} TableContent={OrderList} />
                 <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={statusUpdataData} ModalTitle="UPDATE TRACK" />
 
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
             </div>
         );
     }

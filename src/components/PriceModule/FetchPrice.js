@@ -54,7 +54,7 @@ class FetchPrice extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
             let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData, pageCount: newProps.priceData.Lists.totalCount / this.state.itemPerPage })
+            this.setState({ PriceLists: respData, pageCount: newProps.priceData.Lists.totalCount / this.state.itemPerPage, totalCount: newProps.priceData.Lists.totalCount })
         }
     }
     handleChange = (e) => {
@@ -252,7 +252,7 @@ class FetchPrice extends Component {
                     handleEdit={this.itemEdit} />
                 <ReactPagination PageDetails={{
                     pageCount: this.state.pageCount, onPageChange: this.onChange,
-                    activePage: this.state.currentPage, perPage: this.state.limitValue
+                    activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount
                 }} />
 
             </div>
