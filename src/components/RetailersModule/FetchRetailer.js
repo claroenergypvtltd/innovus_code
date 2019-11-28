@@ -58,6 +58,7 @@ class FetchRetailer extends React.Component {
     componentWillMount() {
         if (this.context.router.route.location.state && this.context.router.route.location.state.retlrbckTrack == "backTrue" && sessionStorage.retsearchDatas) {
             var sessRetsearchDatas = JSON.parse(sessionStorage.retsearchDatas);
+            // console.log("----sessRetsearchDatas----", sessRetsearchDatas);
             if (sessRetsearchDatas) {
                 this.setState({
                     search: sessRetsearchDatas.search,
@@ -666,7 +667,9 @@ class FetchRetailer extends React.Component {
                                         <input placeholder="Custom Search.." type="text"
                                             class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                         />
+                                        {/* <input type="submit" /> */}
                                         <span className="tooltip-text">Custom Search</span>
+
                                     </div>
                                     <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
                                         <Select

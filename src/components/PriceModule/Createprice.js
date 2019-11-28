@@ -115,8 +115,8 @@ class CreatePrice extends Component {
             this.setState({ editSubCategoryDatas: Data.datas })
         }
         if (nextProps.priceData && nextProps.priceData.specificData && nextProps.priceData.specificData.datas) {
-            if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].categoryAmount) {
-                showweight = nextProps.priceData.specificData.datas[0].categoryAmount.totalQuantity
+            if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].productDetail) {
+                showweight = nextProps.priceData.specificData.datas[0].productDetail.totalQuantity ? nextProps.priceData.specificData.datas[0].productDetail.totalQuantity : 0
             }
             // if (this.state.priceId) {
             store.dispatch({ type: PRICE_SPECIFIC_DATA_SUCCESS, specificData: "" })
@@ -150,7 +150,7 @@ class CreatePrice extends Component {
         })
     }
     handleDcCodeSubCategory = (e) => {
-        this.setState({ subCategoryDatas: [], editSubCategoryDatas: [], dcCode: e.target.value, categoryId: "" }, () => {
+        this.setState({ subCategoryDatas: [], editSubCategoryDatas: [], dcCode: e.target.value, categoryId: "", weight: "" }, () => {
             getCategoryDCCode(this.state.parentId, this.state.dcCode, 'getDcsubCat').then(resp => {
                 if (resp && resp.data && resp.data.datas) {
                     this.setState({ subCategoryDatas: resp.data.datas })
@@ -204,40 +204,128 @@ class CreatePrice extends Component {
                         "discountValue": this.state.offer ? this.state.offer : 0,
                         "discountUnit": this.state.offerId == 0 ? '' : this.state.offerId,
                         "productId": this.state.categoryId,
-                        "flag": flag
+                        "flag": flag,
+                        "dcCode": this.state.dcCode
                     }
                     if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
                         // if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
-                        //     this.props.submitPrice(obj, isUpdate);
+                        // this.props.submitPrice(obj, isUpdate);
                         // }
+                        // debugger
                         if (this.state.updateQuantity && this.state.offer == '' && !this.state.offerId) {
-                            if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                this.props.submitPrice(obj, isUpdate);
-                            } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
-                                this.props.submitPrice(obj, isUpdate);
-                            } else {
-                                toastr.error("Please increment/decrement in multiple of box quantity")
+                            if (this.state.weight == 0 && this.state.updateQuantity) {
+                                if (this.state.updateQuantity < 0) {
+                                    toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
+                                }
+                                else {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                    }
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
+                            }
+                            else if (this.state.weight != 0 && this.state.updateQuantity) {
+                                if (this.state.updateQuantity < 0) {
+                                    if (Math.abs(this.state.updateQuantity) > this.state.weight) {
+                                        toastr.error("Decrement Quantity should be Or equal to Available quantity.")
+                                    } else {
+                                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                            this.props.submitPrice(obj, isUpdate);
+                                        } else {
+                                            toastr.error("Please increment/decrement in multiple of box quantity")
+                                        }
+                                        // this.props.submitPrice(obj, isUpdate);
+                                    }
+                                }
+                                else {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                    }
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
                             }
                         }
+
                         else if (this.state.updateQuantity && this.state.offerId != 0 && this.state.offer) {
-                            if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                this.props.submitPrice(obj, isUpdate);
-                            } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
-                                this.props.submitPrice(obj, isUpdate);
-                            } else {
-                                toastr.error("Please increment/decrement in multiple of box quantity")
+
+                            if (this.state.weight == 0 && this.state.updateQuantity) {
+                                if (this.state.updateQuantity < 0) {
+                                    toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
+                                }
+                                else {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                    }
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
+                            }
+                            else if (this.state.weight != 0 && this.state.updateQuantity) {
+                                if (this.state.updateQuantity < 0) {
+                                    if (Math.abs(this.state.updateQuantity) > this.state.weight) {
+                                        toastr.error("Decrement Quantity should be Or equal to Available quantity.")
+                                    } else {
+                                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                            this.props.submitPrice(obj, isUpdate);
+                                        } else {
+                                            toastr.error("Please increment/decrement in multiple of box quantity")
+                                        }
+                                        // this.props.submitPrice(obj, isUpdate);
+                                    }
+                                }
+                                else {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                    }
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
                             }
                         }
                         else if (!this.state.updateQuantity && !this.state.offer && !this.state.offerId) {
                             this.props.submitPrice(obj, isUpdate);
                         }
                         else if (this.state.offerId == 0 && this.state.updateQuantity && !this.state.offer) {
-                            if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                this.props.submitPrice(obj, isUpdate);
-                            } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
-                                this.props.submitPrice(obj, isUpdate);
-                            } else {
-                                toastr.error("Please increment/decrement in multiple of box quantity")
+                            if (this.state.weight == 0 && this.state.updateQuantity) {
+                                if (this.state.updateQuantity < 0) {
+                                    toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
+                                }
+                                else {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                    }
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
+                            }
+                            else if (this.state.weight != 0 && this.state.updateQuantity) {
+                                if (this.state.updateQuantity < 0) {
+                                    if (Math.abs(this.state.updateQuantity) > this.state.weight) {
+                                        toastr.error("Decrement Quantity should be Or equal to Available quantity.")
+                                    } else {
+                                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                            this.props.submitPrice(obj, isUpdate);
+                                        } else {
+                                            toastr.error("Please increment/decrement in multiple of box quantity")
+                                        }
+                                        // this.props.submitPrice(obj, isUpdate);
+                                    }
+                                }
+                                else {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                    }
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
                             }
                         }
                         else if (this.state.offer && this.state.offerId == 2) {
@@ -260,10 +348,12 @@ class CreatePrice extends Component {
             }
             else {
                 this.state.offerId == 1 && parseInt(this.state.price) < parseInt(this.state.offer) || !this.state.offer ? toastr.error("Select valid offer") : toastr.error("Select valid offer type")
-                //   this.state.offer > 100 ? toastr.error("Select valid offer type") : toastr.error("Select valid offer type") ;
+                // this.state.offer > 100 ? toastr.error("Select valid offer type") : toastr.error("Select valid offer type") ;
             }
         }
     }
+
+
     listPath = () => {
         this.props.history.goBack();
     }

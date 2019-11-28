@@ -88,18 +88,26 @@ class FetchPrice extends Component {
         e.preventDefault();
         this.setState({ search: e.target.value })
     }
-    getPriceList() {
+    getPriceList(type) {
         // {
         //     "pages":"0",
         //     "rows":"10",
         //     "search":"",
         //     "dCCode":""
         //    }
+        let pages = 0;
+        if (type == "onSearch") {
+            this.setState({ currentPage: 0 }, () => {
+                pages = pages
+            })
+        } else {
+            pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO
+        }
         let obj = {
-            "pages": this.state.currentPage ? this.state.currentPage : 0,
-            "rows": this.state.itemPerPage,
-            "search": this.state.search,
-            "dCCode": this.state.dCCode
+            pages: pages,
+            rows: this.state.itemPerPage,
+            search: this.state.search,
+            dCCode: this.state.dCCode
         }
         this.props.getPriceList(obj)
     }
@@ -156,7 +164,7 @@ class FetchPrice extends Component {
             let productId = item.productDetail && item.productDetail.id;
             let dcCode = item.productDetail && item.productDetail.dcCode ? item.productDetail.dcCode : '-';
             let productName = item.name;
-            let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' / ' + (this.weightConversion(item.productDetail && item.productDetail.rupeesUnit)));
+            let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' ' + (this.weightConversion(item.productDetail && item.productDetail.rupeesUnit)));
             // let weightUnits = item.productDetail && item.productDetail.totalQuantitySize;
             let amount = ((item.productDetail && item.productDetail.amount) + " Rs/" + (this.weightConversion(item.productDetail && item.productDetail.rupeesUnit)));
             // let priceUnit = item.productDetail && item.productDetail.rupeesUnit;
