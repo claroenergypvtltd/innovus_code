@@ -84,9 +84,8 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 		IdText = endPoint.id;
 	}
 	let rows = ''; let page = ''; let searchData = ''; let dcCode = "";
-
 	if (Data && Data.limit) {
-		page = Data.page ? '&page=' + Data.page : '';
+		page = (Data.page || Data.page == 0) ? '&page=' + Data.page : '';
 		rows = Data.limit ? '&rows=' + Data.limit : '';
 		searchData = Data.search ? '&search=' + Data.search : '';
 		dcCode = Data.dcCode ? '&dcCode=' + Data.dcCode : '';

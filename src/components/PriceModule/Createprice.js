@@ -138,7 +138,7 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        !this.state.priceId && e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
+        e.target.name != "updateQuantity" && e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
     }
     handleCategoryChange = (e) => {
         this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], editSubCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
@@ -182,7 +182,7 @@ class CreatePrice extends Component {
             submitted: true
         })
         if (this.state.price >= this.state.offer || this.state.offerId == 2 && parseInt(this.state.offer) <= 100 || !this.state.offer && this.state.offerId == 0 || parseInt(this.state.offer)) {
-            if ((this.state.offerId == 2 && this.state.offer <= 100) || (this.state.offerId == 1 && parseInt(this.state.price) >= parseInt(this.state.offer)) || !this.state.offer && this.state.offerId == null || this.state.offerId == 0) {
+            if ((this.state.offerId == 2 && this.state.offer <= 100) || (this.state.offerId == 1 && parseInt(this.state.price) >= parseInt(this.state.offer)) || !this.state.offer && !this.state.offerId || this.state.offerId == 0) {
                 if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
 
                     let isUpdate = false;
@@ -199,9 +199,9 @@ class CreatePrice extends Component {
                         "boxQuantity": this.state.boxQuantity,
                         "totalQuantity": this.state.weight,
                         "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
-                        "totalQuantitySize": this.state.weightId,
+                        "totalQuantityUnit": this.state.weightId,
                         "boxQuantityUnit": this.state.weightId,
-                        "discountValue": this.state.offer,
+                        "discountValue": this.state.offer ? this.state.offer : 0,
                         "discountUnit": this.state.offerId == 0 ? '' : this.state.offerId,
                         "productId": this.state.categoryId,
                         "flag": flag
@@ -210,7 +210,7 @@ class CreatePrice extends Component {
                         // if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
                         //     this.props.submitPrice(obj, isUpdate);
                         // }
-                        if (this.state.updateQuantity && this.state.offer == '' && this.state.offerId == null) {
+                        if (this.state.updateQuantity && this.state.offer == '' && !this.state.offerId) {
                             if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
                                 this.props.submitPrice(obj, isUpdate);
                             } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
@@ -228,7 +228,7 @@ class CreatePrice extends Component {
                                 toastr.error("Please increment/decrement in multiple of box quantity")
                             }
                         }
-                        else if (!this.state.updateQuantity && !this.state.offer && this.state.offerId == null) {
+                        else if (!this.state.updateQuantity && !this.state.offer && !this.state.offerId) {
                             this.props.submitPrice(obj, isUpdate);
                         }
                         else if (this.state.offerId == 0 && this.state.updateQuantity && !this.state.offer) {

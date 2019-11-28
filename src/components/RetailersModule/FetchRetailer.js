@@ -85,13 +85,13 @@ class FetchRetailer extends React.Component {
         // console.log('---routeChanged---',routeChanged)
         if (newProps.list.datas && !this.state.popup) {
             let selectlist = newProps.list.datas;
-            let agentDataList = newProps.agentData;
+            // let agentDataList = newProps.agentData;
             let Lists = selectlist && selectlist.map(item => {
                 item.selectBox = this.viewCrop(item.id, item.status, item.isActive);
                 return item;
             })
             this.setState({
-                data: Lists, exceldatas: Lists, agentDataList: agentDataList.Lists.datas, pageCount: newProps.list.totalCount / this.state.itemPerPage
+                data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage
             })
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
@@ -278,9 +278,20 @@ class FetchRetailer extends React.Component {
         }
     };
     fetchAgents = () => {
-        let user = {};
-        user.roleId = 4;
-        this.props.fetchSalesAgent(user);
+        // let user = {};
+        // user.roleId = 4;
+        // user.flag = 2;
+        let obj = {
+            roleId: 4,
+            flag: 2,
+            search: this.state.dcCode
+        }
+        getDcCodeData(obj, "retailer").then(resp => {
+            if (resp) {
+                this.setState({ agentDataList: resp })
+            }
+        })
+        // this.props.fetchSalesAgent(user);
     }
     handlePageChange = e => {
         e.preventDefault();
@@ -482,7 +493,10 @@ class FetchRetailer extends React.Component {
         let nilAgent = { "label": '-- Nil ---', "value": "nill" };
         agentListDropDown.push(nilAgent);
         this.state.agentDataList && this.state.agentDataList.map((item) => {
-            let obj = { "label": item.agentName, "value": item.agentId, "name": "agentName" };
+            let agentData = item.split(',');
+
+
+            let obj = { "label": agentData[1], "value": agentData[0], "name": "agentName" };
             agentListDropDown.push(obj);
 
         })
@@ -659,8 +673,9 @@ class FetchRetailer extends React.Component {
 
                                     {/* <div data-tip="custom search"> */}
                                     <div className="input-tip">
-                                        <input type="text" placeholder="Custom Search.."
-                                            class="form-control" name="name" required="" value="" />
+                                        <input placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
                                         <span className="tooltip-text">Custom Search</span>
                                     </div>
                                     <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>

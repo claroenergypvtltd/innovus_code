@@ -50,14 +50,15 @@ class ViewCategory extends Component {
 
     getSpecificData(type) {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
+            let page = "page"
 
             let obj = {
-                // "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
-                "search": this.state.search,
-                "limit": this.state.itemPerPage,
-                "categoryId": this.props.location.state.categoryId,
-                "dcCode": this.state.dcCode,
-                "name": "subCategory"
+                page: this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
+                search: this.state.search,
+                limit: this.state.itemPerPage,
+                categoryId: this.props.location.state.categoryId,
+                dcCode: this.state.dcCode,
+                name: "subCategory"
             }
             if (type == "onSearch") {
                 this.setState({ currentPage: 0 }, () => {
@@ -257,8 +258,9 @@ class ViewCategory extends Component {
                             <div className="sub-filter">
                                 <div className="row">
                                     <div className="input-tip">
-                                        <input type="text" placeholder="Custom Search"
-                                            class="form-control" name="name" required="" value="" />
+                                        <input type="text" placeholder="Search by Crop Name.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
                                         <span className="tooltip-text">Custom Search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>

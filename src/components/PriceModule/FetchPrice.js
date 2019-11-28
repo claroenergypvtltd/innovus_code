@@ -208,8 +208,9 @@ class FetchPrice extends Component {
                             <div className="sub-filter">
                                 <div className="row">
                                     <div className="input-tip">
-                                        <input type="text" placeholder="Custom Search"
-                                            class="form-control" name="name" required="" value="" />
+                                        <input type="text" placeholder="Custom Search.."
+                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                        />
                                         <span className="tooltip-text">Custom Search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
