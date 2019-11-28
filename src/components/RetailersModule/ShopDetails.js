@@ -278,7 +278,7 @@ class ShopDetails extends React.Component {
                                 </div>
                                 <span>
                                     <button className="common-btn mt-2 ml-2">
-                                        <a target="_blank" href={mapPinString} className="text-white" ><i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>View on Map</a>
+                                        <a target="_blank" href={mapPinString} className="shop-map" ><i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>View on Map</a>
                                     </button>
                                     {/* <div className="color-title">
                                         <button className="common-btn mt-2 ml-0">
