@@ -181,8 +181,8 @@ class CreatePrice extends Component {
         this.setState({
             submitted: true
         })
-        if (parseInt(this.state.price) >= parseInt(this.state.offer) || this.state.offerId == 2 && parseInt(this.state.offer) <= 100 || !this.state.offer && this.state.offerId == 0 || parseInt(this.state.offer)) {
-            if ((this.state.offerId == 2 && parseInt(this.state.offer <= 100)) || (this.state.offerId == 1 && parseInt(this.state.price) >= parseInt(this.state.offer)) || !this.state.offer && this.state.offerId == 0 || this.state.offer == null) {
+        if (this.state.price >= this.state.offer || this.state.offerId == 2 && parseInt(this.state.offer) <= 100 || !this.state.offer && this.state.offerId == 0 || parseInt(this.state.offer)) {
+            if ((this.state.offerId == 2 && this.state.offer <= 100) || (this.state.offerId == 1 && parseInt(this.state.price) >= parseInt(this.state.offer)) || !this.state.offer && this.state.offerId == null || this.state.offerId == 0) {
                 if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
 
                     let isUpdate = false;
@@ -207,10 +207,10 @@ class CreatePrice extends Component {
                         "flag": flag
                     }
                     if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
-                        if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0 || this.state.offer == null) {
-                            this.props.submitPrice(obj, isUpdate);
-                        }
-                        else if (this.state.updateQuantity && !this.state.offer && this.state.offerId == 0) {
+                        // if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
+                        //     this.props.submitPrice(obj, isUpdate);
+                        // }
+                        if (this.state.updateQuantity && this.state.offer == '' && this.state.offerId == null) {
                             if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
                                 this.props.submitPrice(obj, isUpdate);
                             } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
@@ -228,11 +228,29 @@ class CreatePrice extends Component {
                                 toastr.error("Please increment/decrement in multiple of box quantity")
                             }
                         }
-                        else if (!this.state.updateQuantity && this.state.offer && this.state.offerId == 0) {
-
+                        else if (!this.state.updateQuantity && !this.state.offer && this.state.offerId == null) {
+                            this.props.submitPrice(obj, isUpdate);
                         }
-                        else if (this.state.offerId == 0 && this.state.updateQuantity && this.state.offer) {
-
+                        else if (this.state.offerId == 0 && this.state.updateQuantity && !this.state.offer) {
+                            if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                this.props.submitPrice(obj, isUpdate);
+                            } else if (this.state.boxQuantity % Number(this.state.updateQuantity) == 0) {
+                                this.props.submitPrice(obj, isUpdate);
+                            } else {
+                                toastr.error("Please increment/decrement in multiple of box quantity")
+                            }
+                        }
+                        else if (this.state.offer && this.state.offerId == 2) {
+                            if (parseInt(this.state.offer) <= 100) {
+                                this.props.submitPrice(obj, isUpdate);
+                            }
+                        }
+                        else if (this.state.offer && this.state.offerId == 1) {
+                            if (parseInt(this.state.offer) <= parseInt(this.state.price)) {
+                                this.props.submitPrice(obj, isUpdate);
+                            }
+                        } else if (this.state.offer && this.state.offerId == 0) {
+                            toastr.error("Select valid offer")
                         }
                     }
                     else {
@@ -241,7 +259,7 @@ class CreatePrice extends Component {
                 }
             }
             else {
-                this.state.offerId == 1 && parseInt(this.state.price) < parseInt(this.state.offer) ? toastr.error("Select valid offer") : toastr.error("Select valid offer type")
+                this.state.offerId == 1 && parseInt(this.state.price) < parseInt(this.state.offer) || !this.state.offer ? toastr.error("Select valid offer") : toastr.error("Select valid offer type")
                 //   this.state.offer > 100 ? toastr.error("Select valid offer type") : toastr.error("Select valid offer type") ;
             }
         }
@@ -431,7 +449,7 @@ class CreatePrice extends Component {
                                                 required
 
                                             />
-                                            {this.state.submitted && this.state.offerId != 0 && !this.state.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && this.state.offerId != 0 && !this.state.offer && this.state.offerId != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
                                             {this.state.submitted && this.state.offerId == 1 && (parseInt(this.state.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
                                             {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
                                         </div>
