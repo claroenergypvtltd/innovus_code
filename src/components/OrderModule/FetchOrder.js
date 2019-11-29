@@ -12,11 +12,13 @@ import { Form, Row, Col } from 'react-bootstrap';
 import { formatDate } from '../../shared/DateFormat'
 import StatusUpdate from './statusUpdate'
 import { getTwoToneColor } from 'antd/lib/icon/twoTonePrimaryColor';
+import PropTypes from 'prop-types';
 
 class FetchOrder extends Component {
-
+    static contextTypes = {
+        router: PropTypes.object,
+    };
     constructor(props) {
-
         super(props);
         this.state = {
             TableHead: ["Order No", "No of Product Items", "Order Date", "Order Amount", "Status", "View Order"],
@@ -32,7 +34,14 @@ class FetchOrder extends Component {
     }
 
     componentDidMount() {
-        this.getOrderList();
+        if (this.context.router.route.location && this.context.router.route.location.state && this.context.router.route.location.state.orderData == 'orderBack') {
+            var data = JSON.parse(sessionStorage.orderData)
+            this.setState({ currentPage: data.page, search: data.search }, () => {
+                this.getOrderList();
+            })
+        } else {
+            this.getOrderList();
+        }
     }
 
     componentWillReceiveProps(newProps) {
@@ -63,6 +72,7 @@ class FetchOrder extends Component {
 
     resetSearch = () => {
         if (this.state.search) {
+            sessionStorage.removeItem('orderData')
             this.setState({ search: '' }, () => {
                 this.getOrderList();
             });
@@ -79,6 +89,7 @@ class FetchOrder extends Component {
             "search": this.state.search,
             "limit": this.state.itemPerPage
         }
+        sessionStorage.setItem('orderData', JSON.stringify(obj))
         this.props.getOrderList(obj)
     }
 
@@ -207,8 +218,6 @@ class FetchOrder extends Component {
         );
     }
 }
-
-
 
 function mapStateToProps(state) {
     return {
