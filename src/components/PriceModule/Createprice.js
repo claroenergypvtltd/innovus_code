@@ -230,10 +230,6 @@ class CreatePrice extends Component {
                         "dcCode": this.state.dcCode
                     }
                     if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
-                        // if (!this.state.updateQuantity && this.state.offer && this.state.offerId != 0) {
-                        // this.props.submitPrice(obj, isUpdate);
-                        // }
-                        // debugger
                         if (this.state.updateQuantity && this.state.offer == '' && !this.state.offerId) {
                             if (weightValue == 1) {
                                 if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {

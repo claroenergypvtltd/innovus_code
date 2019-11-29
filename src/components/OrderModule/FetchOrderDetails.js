@@ -180,7 +180,7 @@ class FetchOrderDetails extends Component {
                 fullShopAddrss = ''
             }
             return {
-                "itemList": [item.id, shopAddrss, formatDate(item.created),
+                "itemList": [item.orderId, shopAddrss, formatDate(item.created),
                 timeformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id
             }
         })
