@@ -463,7 +463,12 @@ li .activate .menu-list i{
   background-position-x: -59px!important;
 }
 }
-
+.menu-btn{
+  background: none;
+  border: none;
+  font-size: 20px;
+  margin-left: 10px;
+}
 
 
 
@@ -1749,11 +1754,12 @@ select:focus {
 
 /****************************Order Section************************/
 .tick-color{
-  background-image: url(/static/media/Sprite_image.f8e75c05.png);
+  background-image: url(../src/assets/images/Deliveredcheck_icon1.png);
   background-repeat: no-repeat;
-  background-position: -9px -1843px;
+  //background-position: -9px -1843px;
+  background-position: -4px 1px;
   text-align: right;
-  padding:5px 15px;
+  padding:4px 12px;
 }
 .cancel-btn{
   color:$white;
@@ -1769,11 +1775,13 @@ select:focus {
   margin-bottom: 10px;
 }
 .tick-light{
-  background-image: url(/static/media/Sprite_image.f8e75c05.png);
+  background-image: url(../src/assets/images/Deliveredcheck_icon1.png);
   background-repeat: no-repeat;
-  background-position: -10px -1883px;
+  //background-position: -10px -1883px;
+  background-position: -4px -31px;
   text-align: right;
-  padding: 5px 15px;
+  //padding: 5px 15px;
+  padding: 4px 12px;
 }
 .order-btn {
   border: none;
@@ -1830,6 +1838,7 @@ a.order-btn:hover {
 }
 .bs-stepper-label {
   display: inline-block;
+  font-size: 14px;
   margin: .25rem;
 }
 .bs-stepper-line {
