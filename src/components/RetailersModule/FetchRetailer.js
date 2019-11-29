@@ -72,9 +72,10 @@ class FetchRetailer extends React.Component {
                     selectedCityOption: sessRetsearchDatas.selectedCityOption,
                     dcCodeObj: sessRetsearchDatas.dcCodeObj,
                     advanceSearch: false,
+                    dateChanged: true,
                     currentPage: sessRetsearchDatas.pages,
-                    // startDate: sessRetsearchDatas.startTime.format('DD-MM-YYYY'),
-                    // endDate: sessRetsearchDatas.endTime.format('DD-MM-YYYY')
+                    startDate: moment(sessRetsearchDatas.startTime),
+                    endDate: moment(sessRetsearchDatas.endTime)
                 }, () => {
                     this.callAllUserAPis();
                     this.enableAdvanceSearch();
@@ -107,7 +108,8 @@ class FetchRetailer extends React.Component {
         this.getRetailerList();
         this.getStateList();
         this.fetchAgents();
-        this.getDCData()
+        this.getDCData();
+        this.getCityList();
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
@@ -121,6 +123,23 @@ class FetchRetailer extends React.Component {
         getStateCity({ obj }).then(resp => {
             this.setState({ stateData: resp && resp.data })
         })
+    }
+    getCityList() {
+        let obj = {
+            // "countryId": this.state.country,
+            "roleId": 2,
+            "countryId": 101,
+            "stateId": this.state.stateId,
+        }
+        if (this.state.stateId != 0) {
+            getStateCity(obj).then(resp => {
+                if (obj.countryId && obj.stateId) {
+                    this.setState({ cityData: resp && resp.data })
+                } else {
+                    this.setState({ stateData: resp && resp.data })
+                }
+            })
+        }
     }
     getDCData = () => {
         let obj = {
@@ -288,7 +307,7 @@ class FetchRetailer extends React.Component {
         let obj = {
             roleId: 4,
             flag: 2,
-            search: this.state.dcCode
+            search: this.state.dcCode ? this.state.dcCode : ''
         }
         getDcCodeData(obj, "retailer").then(resp => {
             if (resp) {

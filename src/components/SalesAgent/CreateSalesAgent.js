@@ -123,12 +123,20 @@ class CreateSalesAgent extends React.Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="row clearfix">
-                <div className="col-md-12">
-                    <h4 className="user-title">{this.state.salesAgentId ? window.strings['SALES_AGENT']['EDIT_AGENT'] : window.strings['SALES_AGENT']['ADD_AGENT']}</h4>
+            <div className="clearfix">
+                <div >
+                    <div className="row">
+                        <div className="col-md-9">
+                            <h4 className="user-title">{this.state.salesAgentId ? window.strings['SALES_AGENT']['EDIT_AGENT'] : window.strings['SALES_AGENT']['ADD_AGENT']}</h4>
+                        </div>
+                        {this.state.salesAgentId && <div className="col-md-3 text-right">
+                            <button className="disable-btn" onClick={() => this.handleDisable(this.state.agentId)} > Disable</button>
+                        </div>
+                        }
+                    </div>
                     <div className="col-md-12 main-wrapper">
+
                         <div className="create-agent col-md-6">
-                            {this.state.salesAgentId && <button onClick={() => this.handleDisable(this.state.agentId)}>Disable</button>}
 
                             <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
                                 <div className="form-group col-md-12">

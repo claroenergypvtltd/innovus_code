@@ -1175,7 +1175,7 @@ input.form-control.search-btn:focus {
   font-size: 15px;
 }
 .rc-time-picker-panel-select li:last-child{
-  display: none;
+  // display: none;
 }
 .crop-table{
   font-size: 15px ;
@@ -1271,6 +1271,15 @@ input.form-control.search-btn:focus {
 .form-retailer{
   display: flex;
   float: right;
+}
+.disable-btn{
+  background: none;
+  border-radius: 35px;
+  width: 105px;
+  border:2px solid #EF531D;
+  color: #707070;
+  padding: 3px 10px;
+  margin: 0 5px 9px 0;
 }
 .search-box{
   display: flex;
