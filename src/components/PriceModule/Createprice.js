@@ -25,7 +25,8 @@ class CreatePrice extends Component {
             errors: {},
             weightId: 0,
             offerId: 0,
-            categoryData: []
+            categoryData: [],
+            flag: ''
         }
     }
 
@@ -187,11 +188,32 @@ class CreatePrice extends Component {
 
                     let isUpdate = false;
                     let flag;
+                    let weightValue;
                     this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
                     if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
                         isUpdate = true;
                     }
-
+                    if (this.state.weight == 0 && this.state.updateQuantity) {
+                        if (this.state.updateQuantity < 0) {
+                            toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
+                        } else {
+                            // this.props.submitPrice(obj, isUpdate);
+                            weightValue = 1;
+                        }
+                    }
+                    else if (this.state.weight != 0 && this.state.updateQuantity) {
+                        if (this.state.updateQuantity < 0) {
+                            if (Math.abs(this.state.updateQuantity) > this.state.weight) {
+                                toastr.error("Decrement Quantity should be Lesser Or equal to Available quantity.")
+                            } else {
+                                // this.props.submitPrice(obj, isUpdate);
+                                weightValue = 1;
+                            }
+                        } else {
+                            // this.props.submitPrice(obj, isUpdate);
+                            weightValue = 1;
+                        }
+                    }
                     let obj = {
                         "id": this.state.categoryId,
                         "rupeesize": "RS/" + this.state.weightId,
@@ -213,78 +235,21 @@ class CreatePrice extends Component {
                         // }
                         // debugger
                         if (this.state.updateQuantity && this.state.offer == '' && !this.state.offerId) {
-                            if (this.state.weight == 0 && this.state.updateQuantity) {
-                                if (this.state.updateQuantity < 0) {
-                                    toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
-                                }
-                                else {
-                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                        this.props.submitPrice(obj, isUpdate);
-                                    } else {
-                                        toastr.error("Please increment/decrement in multiple of box quantity")
-                                    }
-                                    // this.props.submitPrice(obj, isUpdate);
-                                }
-                            }
-                            else if (this.state.weight != 0 && this.state.updateQuantity) {
-                                if (this.state.updateQuantity < 0) {
-                                    if (Math.abs(this.state.updateQuantity) > this.state.weight) {
-                                        toastr.error("Decrement Quantity should be Or equal to Available quantity.")
-                                    } else {
-                                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                            this.props.submitPrice(obj, isUpdate);
-                                        } else {
-                                            toastr.error("Please increment/decrement in multiple of box quantity")
-                                        }
-                                        // this.props.submitPrice(obj, isUpdate);
-                                    }
-                                }
-                                else {
-                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                        this.props.submitPrice(obj, isUpdate);
-                                    } else {
-                                        toastr.error("Please increment/decrement in multiple of box quantity")
-                                    }
-                                    // this.props.submitPrice(obj, isUpdate);
+                            if (weightValue == 1) {
+                                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                    this.props.submitPrice(obj, isUpdate);
+                                } else {
+                                    toastr.error("Please increment/decrement in multiple of box quantity")
                                 }
                             }
                         }
 
                         else if (this.state.updateQuantity && this.state.offerId != 0 && this.state.offer) {
-
-                            if (this.state.weight == 0 && this.state.updateQuantity) {
-                                if (this.state.updateQuantity < 0) {
-                                    toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
-                                }
-                                else {
-                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                        this.props.submitPrice(obj, isUpdate);
-                                    } else {
-                                        toastr.error("Please increment/decrement in multiple of box quantity")
-                                    }
-                                    // this.props.submitPrice(obj, isUpdate);
-                                }
-                            }
-                            else if (this.state.weight != 0 && this.state.updateQuantity) {
-                                if (this.state.updateQuantity < 0) {
-                                    if (Math.abs(this.state.updateQuantity) > this.state.weight) {
-                                        toastr.error("Decrement Quantity should be Or equal to Available quantity.")
-                                    } else {
-                                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                            this.props.submitPrice(obj, isUpdate);
-                                        } else {
-                                            toastr.error("Please increment/decrement in multiple of box quantity")
-                                        }
-                                        // this.props.submitPrice(obj, isUpdate);
-                                    }
-                                }
-                                else {
-                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                        this.props.submitPrice(obj, isUpdate);
-                                    } else {
-                                        toastr.error("Please increment/decrement in multiple of box quantity")
-                                    }
-                                    // this.props.submitPrice(obj, isUpdate);
+                            if (weightValue == 1) {
+                                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                    this.props.submitPrice(obj, isUpdate);
+                                } else {
+                                    toastr.error("Please increment/decrement in multiple of box quantity")
                                 }
                             }
                         }
@@ -292,39 +257,11 @@ class CreatePrice extends Component {
                             this.props.submitPrice(obj, isUpdate);
                         }
                         else if (this.state.offerId == 0 && this.state.updateQuantity && !this.state.offer) {
-                            if (this.state.weight == 0 && this.state.updateQuantity) {
-                                if (this.state.updateQuantity < 0) {
-                                    toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
-                                }
-                                else {
-                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                        this.props.submitPrice(obj, isUpdate);
-                                    } else {
-                                        toastr.error("Please increment/decrement in multiple of box quantity")
-                                    }
-                                    // this.props.submitPrice(obj, isUpdate);
-                                }
-                            }
-                            else if (this.state.weight != 0 && this.state.updateQuantity) {
-                                if (this.state.updateQuantity < 0) {
-                                    if (Math.abs(this.state.updateQuantity) > this.state.weight) {
-                                        toastr.error("Decrement Quantity should be Or equal to Available quantity.")
-                                    } else {
-                                        if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                            this.props.submitPrice(obj, isUpdate);
-                                        } else {
-                                            toastr.error("Please increment/decrement in multiple of box quantity")
-                                        }
-                                        // this.props.submitPrice(obj, isUpdate);
-                                    }
-                                }
-                                else {
-                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                        this.props.submitPrice(obj, isUpdate);
-                                    } else {
-                                        toastr.error("Please increment/decrement in multiple of box quantity")
-                                    }
-                                    // this.props.submitPrice(obj, isUpdate);
+                            if (weightValue == 1) {
+                                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                    this.props.submitPrice(obj, isUpdate);
+                                } else {
+                                    toastr.error("Please increment/decrement in multiple of box quantity")
                                 }
                             }
                         }
@@ -484,7 +421,6 @@ class CreatePrice extends Component {
                                                 onChange={this.handleInputChange}
                                                 value={this.state.price}
                                                 required
-
                                             />
                                             {this.state.submitted && !this.state.price && <div className="mandatory">{window.strings['CROP']['PRICE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
@@ -525,7 +461,6 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['BOX_QUANTITY'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-
                                         <div className="form-group col-md-6">
                                             <label>{window.strings.PRICE.OFFER}</label>
                                             <input type="number"
@@ -537,17 +472,14 @@ class CreatePrice extends Component {
                                                 onChange={this.handleInputChange}
                                                 value={this.state.offer}
                                                 required
-
                                             />
                                             {this.state.submitted && this.state.offerId != 0 && !this.state.offer && this.state.offerId != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
                                             {this.state.submitted && this.state.offerId == 1 && (parseInt(this.state.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
                                             {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
                                         </div>
 
-
                                         <div className="form-group col-md-6 ">
                                             <label>{window.strings.PRICE.TYPE}</label>
-
                                             <select required name="offerId" className="form-control" value={this.state.offerId} onChange={this.handleInputChange} >
                                                 <option value="0">Select</option>
                                                 <option value="1">Currency</option>
@@ -555,13 +487,12 @@ class CreatePrice extends Component {
                                             </select>
                                             {(this.state.submitted && this.state.offer && this.state.offerId == 0) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
                                         </div>
-
                                     </form>
                                 </div>
+
                                 <div className="col-md-12 bottom-section">
                                     <button type="button" className="btn btn-default mb-2" onClick={this.listPath}>{window.strings.CANCEL}</button>
                                     <button type="submit" className="btn btn-primary mb-2" disabled={this.state.loading} onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
-
                                 </div>
                             </div>
                         </div>
@@ -572,12 +503,10 @@ class CreatePrice extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => ({
     categoryData: state.category,
     getCategory: state.category && state.category.Lists ? state.category.Lists : [],
     priceData: state.price ? state.price : {}
 })
-
 
 export default connect(mapStateToProps, { getCategoryList, getSpecificCategory, getPriceList, submitPrice })(CreatePrice)
