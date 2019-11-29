@@ -68,7 +68,7 @@ class RetKYCList extends React.Component {
                             </div>
                         </div>
                     )}
-                    {kyc && kyc.length == 0 && <div>{window.strings.NODATA}</div>}
+                    {kyc && kyc.length == 0 && <div className="data-center">{window.strings.NODATA}</div>}
 
                 </div>
                 <div className="back-btn">
