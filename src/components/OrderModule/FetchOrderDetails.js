@@ -11,7 +11,11 @@ import Store from '../../store/store';
 import { Link } from 'react-router-dom'
 import { formatDate, timeformat, dateformat } from '../../shared/DateFormat'
 import * as moment from 'moment';
+import PropTypes from 'prop-types';
 class FetchOrderDetails extends Component {
+    static contextTypes = {
+        router: PropTypes.object,
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -96,8 +100,6 @@ class FetchOrderDetails extends Component {
             });
     }
 
-
-
     onChange = (data) => {
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
@@ -117,7 +119,7 @@ class FetchOrderDetails extends Component {
     }
 
     redirectPage = () => {
-        this.props.history.goBack();
+        this.context.router.history.push({ pathname: path.order.list, state: { orderData: 'orderBack' } })
     }
     statusChange(ordId, status) {
 
@@ -288,8 +290,6 @@ class FetchOrderDetails extends Component {
         );
     }
 }
-
-
 
 function mapStateToProps(state) {
     return {
