@@ -63,6 +63,8 @@ export const Translation = {
         "SORT_DESEND": "sorting sort_desend",
         "SORTABLEKEY": ["productCode", "categoryName", "orderNumber", "dealerName", "catalogueName", "assignBy", "validatedBy", 'userName', 'email', 'mobileNumber', 'location', 'price', 'certificateName', 'currencyName', 'categoryName', 'status'],
         "ASSIGNVIEWS": "Maximum allowed views",
+        "DISABLE_AGENT": "Are you sure want to Disable this Agent?",
+        "DISABLE_CONFIRM": "Confirm disable",
         "CATEGORY": {
             "LISTTITLE": "CATEGORY LIST",
             "ADDBUTTON": "Add Category",

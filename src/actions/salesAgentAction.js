@@ -87,3 +87,16 @@ export const getDcCodeData = (dcData, type) => {
         console.error("error", error);
     })
 }
+
+export const DisableAgent = (id) => {
+    return httpServices.remove("agent", id).then(response => {
+        if (response && response.status == "200") {
+            toastr.success(response.message);
+            return response
+            // dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: response.status })
+        }
+    }).catch((error) => {
+        console.error("Delete :", error.response);
+        // dispatch({ type: CATEGORY_DELETE_SUCCESS, resp: error.status })
+    })
+}

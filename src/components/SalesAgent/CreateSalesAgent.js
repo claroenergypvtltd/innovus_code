@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import renderEmpty from 'antd/lib/config-provider/renderEmpty';
-import { submitSalesAgent, fetchSalesAgent } from '../../actions/salesAgentAction';
+import { submitSalesAgent, fetchSalesAgent, DisableAgent } from '../../actions/salesAgentAction';
 import { connect } from 'react-redux';
 import { AGENT_CREATE_SUCCESS, AGENT_UPDATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
@@ -41,7 +41,11 @@ class CreateSalesAgent extends React.Component {
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.agentData && newProps.agentData.Lists) {
             let editDatas = newProps.agentData.Lists
-            this.setState({ editDatas, name: editDatas.name, mobileNumber: editDatas.mobileNumber, surveyingArea: editDatas.surveyingArea == "undefined" || editDatas.surveyingArea == "null" ? "" : editDatas.surveyingArea, dcCode: editDatas.dcCode, emailId: editDatas.emailId })
+            this.setState({
+                editDatas, name: editDatas.name, mobileNumber: editDatas.mobileNumber,
+                surveyingArea: editDatas.surveyingArea == "undefined" || editDatas.surveyingArea == "null" ? "" : editDatas.surveyingArea,
+                dcCode: editDatas.dcCode, emailId: editDatas.emailId, agentId: editDatas.agentId
+            })
         }
 
         if (newProps.agentData && newProps.agentData.createdStatus == "200") {
@@ -64,6 +68,23 @@ class CreateSalesAgent extends React.Component {
     redirectPage = () => {
         this.props.history.push({ pathname: path.user.list, state: { tabNumber: 1, salesAgentSearchDatas: "backTrue" } });
         // this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
+    }
+
+    handleDisable = (data) => {
+        let message = window.strings.DISABLE_AGENT;
+        const toastrConfirmOptions = {
+            onOk: () => { this.disableAgent(data) },
+            onCancel: () => console.log('CANCEL: clicked')
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DISABLE_CONFIRM);
+    }
+
+    disableAgent = (id) => {
+        DisableAgent(id).then(resp => {
+            if (resp && resp.status) {
+                this.redirectPage();
+            }
+        });
     }
 
     handleSubmit = (e) => {
@@ -107,6 +128,8 @@ class CreateSalesAgent extends React.Component {
                     <h4 className="user-title">{this.state.salesAgentId ? window.strings['SALES_AGENT']['EDIT_AGENT'] : window.strings['SALES_AGENT']['ADD_AGENT']}</h4>
                     <div className="col-md-12 main-wrapper">
                         <div className="create-agent col-md-6">
+                            {this.state.salesAgentId && <button onClick={() => this.handleDisable(this.state.agentId)}>Disable</button>}
+
                             <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
                                 <div className="form-group col-md-12">
 

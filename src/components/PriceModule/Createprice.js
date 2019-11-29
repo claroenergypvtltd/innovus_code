@@ -292,7 +292,8 @@ class CreatePrice extends Component {
 
 
     listPath = () => {
-        this.props.history.goBack();
+        // this.props.history.goBack();
+        this.props.history.push({ pathname: path.price.list, state: { priceSearchDatas: "backTrue" } });
     }
     render() {
         const { errors } = this.state;

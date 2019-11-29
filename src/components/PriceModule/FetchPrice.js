@@ -32,8 +32,19 @@ class FetchPrice extends Component {
         }
     }
     componentDidMount() {
-        this.getPriceList();
-        this.getDCData();
+        if (this.props.location && this.props.location.state &&
+            this.props.location.state.priceSearchDatas == "backTrue" && sessionStorage.priceSearchDatas
+            && !this.state.priceId) {
+            var priceSearchDatas = JSON.parse(sessionStorage.priceSearchDatas);
+            this.setState({ dcCodeObj: priceSearchDatas.dcCodeObj, dcCode: priceSearchDatas.dCCode, search: priceSearchDatas.search, advanceSearch: true, currentPage: priceSearchDatas.pages }, () => {
+                this.getPriceList();
+                this.getDCData();
+            });
+        } else {
+            this.getPriceList();
+            this.getDCData();
+        }
+
     }
     getDCData = () => {
         let obj = {
@@ -93,12 +104,6 @@ class FetchPrice extends Component {
         this.setState({ search: e.target.value })
     }
     getPriceList(type) {
-        // {
-        //     "pages":"0",
-        //     "rows":"10",
-        //     "search":"",
-        //     "dCCode":""
-        //    }
         let pages = 0;
         if (type == "onSearch") {
             this.setState({ currentPage: 0 }, () => {
@@ -111,8 +116,11 @@ class FetchPrice extends Component {
             pages: pages,
             rows: this.state.itemPerPage,
             search: this.state.search,
-            dCCode: this.state.dCCode
+            dCCode: this.state.dCCode,
+            dcCodeObj: this.state.dcCodeObj
         }
+        sessionStorage.setItem('priceSearchDatas', JSON.stringify(obj));
+
         this.props.getPriceList(obj)
     }
     itemEdit = (priceId) => {
