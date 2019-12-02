@@ -72,7 +72,7 @@ class FetchRetailer extends React.Component {
                     selectedCityOption: sessRetsearchDatas.selectedCityOption,
                     dcCodeObj: sessRetsearchDatas.dcCodeObj,
                     advanceSearch: false,
-                    dateChanged: true,
+                    // dateChanged: true,
                     currentPage: sessRetsearchDatas.pages,
                     startDate: moment(sessRetsearchDatas.startTime),
                     endDate: moment(sessRetsearchDatas.endTime)

@@ -8,6 +8,7 @@ import { toastr } from '../../services/toastr.services'
 import { path } from '../../constants';
 import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
+// import ReactCrop from 'react-image-crop';
 
 class ShopDetails extends React.Component {
     static contextTypes = {
@@ -162,7 +163,7 @@ class ShopDetails extends React.Component {
                         {/* activeButton */}
 
                         {/* {profile.isActive == 1 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>Active</button>} */}
-                        {this.props.profileData && this.props.profileData.status == 0 && <div>
+                        {this.props.profileData && this.props.profileData.status == 0 || this.props.profileData.status == 1 && <div>
                             <button className="shop-edit" onClick={this.editShopDetails}><i class="fa fa-pencil"></i>Edit</button>
                         </div>}
                     </div>
