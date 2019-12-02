@@ -26,7 +26,7 @@ class FetchOrderDetails extends Component {
             // TableHeadTwo: ["Order Id", "Shipping Address", "From Time", "To Time"],
             TableHeadTwo: ["Order Id", "Shipping Address", "Ordered Date", "Expected Delivery Time"],
             TableHeadTrack: ["Date/Time", "Activity", "Location"],
-            TableProductHead: ["Product Id", "Product Name", "Quantity", "Order Amount"],
+            TableProductHead: ["Product Id", "Product Name", "Quantity", "Product Amount", "Offer", "Total Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
             CategoryCount: props.getCount,
             search: '',
@@ -151,6 +151,14 @@ class FetchOrderDetails extends Component {
         }
     }
 
+    getRupeeSymbol = (value) => {
+        if (value == "1") {
+            return "₹"
+        } else if (value == "2") {
+            return "%"
+        }
+    }
+
     render() {
         let ordId = this.props && this.props.match && this.props.match && this.props.match.params && this.props.match.params.id;
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
@@ -193,10 +201,15 @@ class FetchOrderDetails extends Component {
 
 
             let quantity = item.cartDetails && item.cartDetails.quantity + ' ' + this.weightConversion(item.cartDetails.totalQuantityUnit) + '( ' + (item.cartDetails.quantity / item.cartDetails.boxQuantity) + "box)";
+            // let totalAmount = item.cartDetails && item.cartDetails.totalAmount ? item.cartDetails.totalAmount : 0;
 
+            let offerValue = item.cartDetails && item.cartDetails.discountValue ? (item.cartDetails.discountValue + ' ' + this.getRupeeSymbol(item.cartDetails.discountUnit)) : '-';
 
-            let orderAmount = item.cartDetails && item.cartDetails.amount;
-            return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity, item.productDetails && 'Rs. ' + orderAmount] }
+            let orderAmount = item.productDetails && item.productDetails.amount ? item.productDetails.amount : '-';
+            let amount = item.cartDetails.amount
+            let discountAmount = (item.cartDetails.discountValue != "0") ? item.cartDetails.totalAmount : item.cartDetails.amount;
+
+            return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity, item.productDetails && 'Rs. ' + orderAmount, offerValue, 'Rs. ' + discountAmount] }
         })
         let { status } = this.state;
         return (
