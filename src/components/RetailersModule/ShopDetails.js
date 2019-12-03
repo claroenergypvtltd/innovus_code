@@ -25,6 +25,16 @@ class ShopDetails extends React.Component {
             profile: []
         };
     }
+    componentDidMount() {
+        if (this.props.profileData && this.props.profileData.isActive == "0") {
+            this.setState({ activeButton: false });
+        } else {
+            this.setState({ activeButton: true });
+        }
+        const Shopprofile = this.props.profileData ? this.props.profileData : [];
+        this.setState({ profile: Shopprofile });
+    }
+
     componentWillReceiveProps(newProps) {
         if (newProps.profileData && newProps.profileData.isActive == "0") {
             this.setState({ activeButton: false });
