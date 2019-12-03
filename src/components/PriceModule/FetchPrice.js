@@ -35,7 +35,6 @@ class FetchPrice extends Component {
         if (this.props.location && this.props.location.state &&
             this.props.location.state.priceSearchDatas == "backTrue" && sessionStorage.priceSearchDatas
             && !this.state.priceId) {
-            debugger;
             var priceSearchDatas = JSON.parse(sessionStorage.priceSearchDatas);
             this.setState({ dcCodeObj: priceSearchDatas.dcCodeObj, dCCode: priceSearchDatas.dCCode, search: priceSearchDatas.search, advanceSearch: true, currentPage: priceSearchDatas.pages }, () => {
                 this.getPriceList();
