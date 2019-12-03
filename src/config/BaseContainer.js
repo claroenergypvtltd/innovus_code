@@ -26,8 +26,18 @@ export class BaseContainer extends Component {
         this.state = {
             extension: false,
             PrevPath: "",
+
+            // visible: false,
         }
+        // this.toggleMenu = this.toggleMenu.bind(this);
+
     }
+
+    // toggleMenu = () => {
+    //     let flag = this.state.visible ? false : true;
+    //     this.setState({ visible: flag })
+
+    // }
 
     // onLogout = () => {
     //     const toastrConfirmation = {
@@ -105,8 +115,9 @@ export class BaseContainer extends Component {
                             <Header logOut={this.handleClick}></Header>
                             <div className="routerView">
                                 <div className="sideBarmenu">
-                                    <nav className="">
-                                        {/* <div className="menu-w collapse navbar-collapse" id="bs-example-navbar-collapse-1"> */}
+                                    <nav className="sidebar-toggle">
+                                        {/* <button className="menu-btn" onClick={this.toggleMenu}><i class="fa fa-bars" aria-hidden="true"></i></button>
+                                        {this.state.visible && */}
                                         <ul className="nav navbar-nav clearfix">
                                             {
                                                 Sidebar && Sidebar.map((item, index) => {
@@ -133,64 +144,11 @@ export class BaseContainer extends Component {
                                                     return (
                                                         <li>
                                                             {
-                                                                // item.hasOwnProperty('child') ?
-                                                                //     (renderDropdownNavbar(item, index)).length ?
-                                                                //         (pathName == orgPath) ?
-
-                                                                //             <div className='dropdown parent-menu li-menu-active'>
-                                                                //                 <p>{pathName + orgPath}</p>
-                                                                //                 <a className='dropdown-toggle menu-link a-menu-active'> {item.name}</a>
-
-                                                                //                 {/* {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension"> */}
-                                                                //                 {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension">
-
-                                                                //                     {
-                                                                //                         renderDropdownNavbar(item, index)
-                                                                //                     }
-                                                                //                 </ul>
-                                                                //                     :
-
-                                                                //                     <ul className="dropdown-menu ">
-                                                                //                         {
-                                                                //                             renderDropdownNavbar(item, index)
-                                                                //                         }
-                                                                //                     </ul>
-                                                                //                 }
-
-
-
-                                                                //             </div>
-                                                                //             :
-                                                                //             <div className='dropdown parent-menu '>
-                                                                //                 <a className='dropdown-toggle menu-link'> {item.name}</a>
-
-                                                                //                 {this.state.extension ? <ul className="dropdown-menu dropdown-menu_extension">
-                                                                //                     {
-                                                                //                         renderDropdownNavbar(item, index)
-                                                                //                     }
-                                                                //                 </ul>
-
-                                                                //                     :
-
-                                                                //                     <ul className="dropdown-menu">
-                                                                //                         {
-                                                                //                             renderDropdownNavbar(item, index)
-                                                                //                         }
-                                                                //                     </ul>
-                                                                //                 }
-                                                                //             </div>
-                                                                //         :
-                                                                //         ''
-                                                                //     :
-                                                                // (renderDropdownNavbar(item, index)).length &&
                                                                 (pathName == orgPath) ?
-
                                                                     <div className="parent-menu" key={'mykey' + index}>
                                                                         <Link className="menu-link activate" to={item.path}>{item.name} </Link>
                                                                     </div>
-
                                                                     :
-
                                                                     <div className="parent-menu" key={'mykey' + index}>
                                                                         <Link className="menu-link" to={item.path}>{item.name} </Link>
                                                                     </div>
@@ -200,7 +158,7 @@ export class BaseContainer extends Component {
                                                 })
                                             }
                                         </ul>
-                                        {/* </div>   */}
+                                        {/* } */}
                                     </nav>
 
                                 </div>
