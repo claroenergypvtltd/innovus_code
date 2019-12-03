@@ -26,18 +26,15 @@ export class BaseContainer extends Component {
         this.state = {
             extension: false,
             PrevPath: "",
-
-            // visible: false,
+            visible: false,
         }
-        // this.toggleMenu = this.toggleMenu.bind(this);
-
     }
 
-    // toggleMenu = () => {
-    //     let flag = this.state.visible ? false : true;
-    //     this.setState({ visible: flag })
+    toggleMenu = () => {
+        let flag = this.state.visible ? false : true;
+        this.setState({ visible: flag })
 
-    // }
+    }
 
     // onLogout = () => {
     //     const toastrConfirmation = {
