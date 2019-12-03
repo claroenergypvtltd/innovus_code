@@ -121,6 +121,7 @@ class FetchSalesAgent extends React.Component {
             sessionStorage.removeItem('salesAgentSearchDatas');
             this.setState({ search: '', dcCodeObj: '', dcCode: '', currentPage: 0 }, () => {
                 this.getSalesAgentList();
+                this.getDCData()
             });
         }
     }
