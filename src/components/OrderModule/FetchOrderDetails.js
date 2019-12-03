@@ -22,7 +22,7 @@ class FetchOrderDetails extends Component {
             // TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
             //TableHeadTrack: ["Data/Time", "Activity", "Location"],
             //TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
-            TableHead: ["Order Id", "Shipping Address", "Ordered Date", "Expected Delivery Time", "Track Orders"],
+            TableHead: ["Order Id", "Shipping Address", "Order Amount", "Ordered Date", "Expected Delivery Time", "Track Orders"],
             // TableHeadTwo: ["Order Id", "Shipping Address", "From Time", "To Time"],
             TableHeadTwo: ["Order Id", "Shipping Address", "Ordered Date", "Expected Delivery Time"],
             TableHeadTrack: ["Date/Time", "Activity", "Location"],
@@ -188,7 +188,7 @@ class FetchOrderDetails extends Component {
                 fullShopAddrss = ''
             }
             return {
-                "itemList": [item.orderId, shopAddrss, formatDate(item.created),
+                "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, formatDate(item.created),
                 timeformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id
             }
         })
