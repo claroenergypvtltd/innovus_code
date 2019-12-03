@@ -72,11 +72,15 @@ class FetchRetailer extends React.Component {
                     selectedCityOption: sessRetsearchDatas.selectedCityOption,
                     dcCodeObj: sessRetsearchDatas.dcCodeObj,
                     advanceSearch: false,
-                    // dateChanged: true,
                     currentPage: sessRetsearchDatas.pages,
-                    startDate: moment(sessRetsearchDatas.startTime),
-                    endDate: moment(sessRetsearchDatas.endTime)
                 }, () => {
+                    if (sessRetsearchDatas.startTime && sessRetsearchDatas.endTime) {
+                        this.setState({
+                            dateChanged: true,
+                            startDate: sessRetsearchDatas.startTime && moment(sessRetsearchDatas.startTime),
+                            endDate: sessRetsearchDatas.endTime && moment(sessRetsearchDatas.endTime)
+                        })
+                    }
                     this.callAllUserAPis();
                     this.enableAdvanceSearch();
                 });
@@ -499,8 +503,8 @@ class FetchRetailer extends React.Component {
             dcData.push(obj);
         })
 
-        let start = this.state.startDate.format('DD-MM-YYYY');
-        let end = this.state.endDate.format('DD-MM-YYYY');
+        let start = this.state.startDate && this.state.startDate.format('DD-MM-YYYY');
+        let end = this.state.endDate && this.state.endDate.format('DD-MM-YYYY');
         let label = start + ' - ' + end;
         if (this.state.dateChanged) {
             if (start === end) {
