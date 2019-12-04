@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import DataTableDynamic from '../../shared/DataTableDynamic';
-import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers } from '../../actions/SubmitRetailerAction';
+import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers, fetchAllRetailers } from '../../actions/SubmitRetailerAction';
 import { fetchSalesAgent } from '../../actions/salesAgentAction';
 import { RETAILER_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { connect } from 'react-redux';
@@ -52,7 +52,8 @@ class FetchRetailer extends React.Component {
             itemPerPage: 5,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
-            filterWithPagination: true
+            filterWithPagination: true,
+            exportAllData: []
         }
     }
     componentWillMount() {
@@ -114,6 +115,7 @@ class FetchRetailer extends React.Component {
         this.fetchAgents();
         this.getDCData();
         this.getCityList();
+        this.getAllretailer();
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
@@ -492,6 +494,15 @@ class FetchRetailer extends React.Component {
         }
     }
 
+    getAllretailer = () => {
+        let obj = {
+            roleId: 2
+        }
+        fetchAllRetailers(obj).then(resp => {
+            this.setState({ exportAllData: resp.datas })
+        })
+    }
+
     render() {
 
         let dcData = [];
@@ -515,6 +526,7 @@ class FetchRetailer extends React.Component {
         }
 
         let excelDatas = [];
+        let exportAllData = [];
         let stateDropDown = []; let cityDropDown = []; let agentListDropDown = [];
         const statusDropdown =
             resorceJSON.statusOptions.map((item, index) => {
@@ -589,6 +601,49 @@ class FetchRetailer extends React.Component {
 
             excelDatas.push(item);
         })
+
+        this.state.exportAllData && this.state.exportAllData.map((item, index) => {
+            let address = '';
+            let addressData = '';
+            let role = '';
+            let shopAddress = '';
+            let shopAddressData = '';
+            let selectBox = '';
+            item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
+            item.shopAddrss1 = item.shopAddress && item.shopAddress.address1 ? item.shopAddress.address1 : '-'
+            item.shopLocalty = item.shopAddress && item.shopAddress.address2 ? item.shopAddress.address2 : '-'
+            item.shopType = item.shopType && item.shopType.type ? item.shopType.type : item.shopType ? item.shopType : '-'
+            if (item && item.shopAddress && item.shopAddress.name) {
+                item.shopNames = item.shopAddress.name
+            } else {
+                item.shopNames = '-'
+            }
+            if (item && item.agentName) {
+                item.agentName = item.agentName
+            } else {
+                item.agentName = '-'
+            }
+            item.shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
+            item.shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
+            item.shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
+            if (item.shopAddrss && item.shopAddressDataCity && item.shopAddressDataState && item.shopAddressDataCountry) {
+                item.fullShopAddrss = item.shopAddrss + ',' + item.shopAddressDataCity + ',' + item.shopAddressDataState + ',' + item.shopAddressDataCountry + '.';
+            } else {
+                item.fullShopAddrss = '-'
+            }
+            item.cusId = item.cusId && item.cusId ? item.cusId : '-';
+            item.created = moment(item.created).format("DD/MM/YYYY");
+
+
+            item.latitude = item.shopAddress.latitude
+            item.longitude = item.shopAddress.longitude
+            item.shopOpenTime = item.shopAddress.shopOpeningTime
+            item.retailerName = item.name
+            item.shopImageLink = imageBaseUrl + item.shopAddress.image
+
+            exportAllData.push(item);
+        })
+
         let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} clearRows={this.state.clearCheck} />
         return (
             <div className=" mt-4">
@@ -613,7 +668,7 @@ class FetchRetailer extends React.Component {
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
                         <div className="">
-                            <ExportFile className="export-search" csvData={this.state.data} />
+                            <ExportFile className="export-search" csvData={this.state.exportAllData} getAllretailer={this.getAllretailer} />
                         </div>
                     </div>
 
@@ -627,71 +682,6 @@ class FetchRetailer extends React.Component {
                         <div className="">
                             <div className="sub-filter">
                                 <div className="row">
-                                    {/* <div className="col-md-4 date-range"><label className="label-title">Date:</label>
-                                        <DateRangePicker
-                                            placeholder="Please select a date"
-                                            autoUpdateInput={false}
-                                            onHide={this.resetSelection}
-                                            placeholder="-- Date -- "
-                                            startDate={this.state.startDate}
-                                            endDate={this.state.endDate}
-                                            onApply={this.handleApply}
-                                        >  <div className="date-box">
-                                                <input type="text" className="form-control date-form ml-1" value={label} />
-                                                <span className="date-group">
-                                                    <i className="date-btn fa fa-calendar" />
-                                                </span>
-                                            </div>
-                                        </DateRangePicker>
-                                    </div>
-                                    <div className="col-md-4 state-filter p-0"><label className="label-title label-line">State:</label>
-                                        // <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} />
-                                        <Select className="state-box ml-1"
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            value={this.state.selectedStateOption}
-                                            onChange={(e) => this.handleStateChange(e, 'state')}
-                                            options={stateDropDown}
-                                            placeholder="--Select State--"
-                                        />
-                                        <div className="col-md-4 city-filter pr-0"><label className="label-title label-line">City:</label>
-                                            <Select className="city-box ml-1"
-                                                styles={{
-                                                    control: base => ({
-                                                        ...base,
-                                                        borderColor: 'hsl(0,0%,80%)',
-                                                        boxShadow: '#FE988D',
-                                                        '&:hover': {
-                                                            borderColor: '#FE988D'
-                                                        }
-                                                    })
-                                                }}
-                                                value={this.state.selectedCityOption}
-                                                onChange={(e) => this.handleStateChange(e)}
-                                                options={cityDropDown}
-                                                placeholder="--Select City--"
-                                            />
-                                        </div>
-                                        <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
-                                            <i className="fa fa-search" aria-hidden="true"></i>Search
-                                        <span className="tooltip-text">Click to Search</span>
-                                        </button>
-                                        <div className="retail-reset">
-                                            <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
-                                                <i className="fa fa-refresh" aria-hidden="true"></i>
-                                                <span className="tooltip-text">Reset</span>
-                                            </button>
-                                        </div> */}
-
-                                    {/* <div data-tip="custom search"> */}
                                     <div className="input-tip">
                                         <form onSubmit={(e) => this.searchSubmit(e)}>
                                             <input placeholder="Custom Search.."
@@ -755,68 +745,6 @@ class FetchRetailer extends React.Component {
 
                             <div className="main-filter ">
                                 <div className="row ">
-                                    {/* 
-                                    // <div data-tip="custom search">
-                                    <div className="input-tip">
-                                        <input type="text" placeholder="Custom Search.."
-                                            class="form-control" name="name" required="" value="" />
-                                        <span className="tooltip-text">Custom Search</span>
-                                    </div>
-                                    <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
-                                        <Select
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            className="city-box ml-1"
-                                            value={this.state.selectedAgentOption}
-                                            onChange={(e) => this.handleAgentChange(e)}
-                                            options={agentListDropDown}
-                                            placeholder="--Select Agent--"
-                                        />
-                                    </div>
-                                    <div className="status-filter pr-3"><label className="label-title">Status:</label>
-                                        <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                                            <option value="" className="drop-option">-- Select Status--</option>
-                                            {statusDropdown}
-                                        </select>
-                                    </div>
-                                    <div className="col-md-3 code-filter p-0"><label className="label-title">DC Code:</label>
-                                        // <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} />
-                                        <Select className="state-box"
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            value={this.state.dcCodeObj}
-                                            onChange={(e) => this.handleDcCodeChange(e)}
-                                            options={dcData}
-                                            placeholder="--Select DC Code--"
-                                        />
-                                    </div> */}
-                                    {/* <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
-                                        <i className="fa fa-search" aria-hidden="true"></i>Search
-                                        <span className="tooltip-text">Click to Search</span>
-                                    </button>
-                                    <div className="retail-reset">
-                                        <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
-                                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                                            <span className="tooltip-text">Reset</span>
-                                        </button>
-                                    </div> */}
-
                                     <div className="col-md-4 date-range col-wrapper pr-0">
                                         <label className="label-title">Date:</label>
                                         <DateRangePicker

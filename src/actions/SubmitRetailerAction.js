@@ -129,4 +129,14 @@ export const getStateUsers = (obj) => {
     })
 }
 
+export const fetchAllRetailers = (user) => {
+    return httpServices.post(endPoint.user, user).then(resp => {
+        if (resp && resp.data) {
+            return resp.data
+        }
+    }).catch((error) => {
+        console.error(error);
+    })
+}
+
 
