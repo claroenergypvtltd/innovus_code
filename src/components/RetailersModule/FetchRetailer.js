@@ -257,6 +257,7 @@ class FetchRetailer extends React.Component {
                 user.pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
                 user.row = this.state.itemPerPage;
                 this.props.fetchRetailers(user);
+                this.getAllretailer();
             })
         }
         else {
@@ -304,6 +305,7 @@ class FetchRetailer extends React.Component {
                 selectedDatas: []
             })
             this.props.fetchRetailers(user);
+            this.getAllretailer();
         }
     };
     fetchAgents = () => {
@@ -495,13 +497,35 @@ class FetchRetailer extends React.Component {
     }
 
     getAllretailer = () => {
-        let obj = {
-            roleId: 2
+        let user = {};
+        if (this.state.stateId != 0) {
+            user.state = this.state.stateId
         }
-        fetchAllRetailers(obj).then(resp => {
-            this.setState({ exportAllData: resp.datas })
+        if (this.state.cityId != 0) {
+            user.city = this.state.cityId;
+        }
+        if (this.state.dateChanged) {
+            user.startTime = this.state.startDate;
+            user.endTime = this.state.endDate;
+        }
+        if (this.state.StatusfilterId) {
+            user.status = this.state.StatusfilterId;
+        }
+        if (this.state.agentId) {
+            user.agentId = this.state.agentId;
+        }
+        if (this.state.dcCode) {
+            user.dcCode = this.state.dcCode;
+        }
+        user.roleId = 2;
+        user.search = this.state.search;
+        user.pages = 0
+        fetchAllRetailers(user).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ exportAllData: resp.datas })
+            }
         })
-    }
+    };
 
     render() {
 
@@ -668,7 +692,7 @@ class FetchRetailer extends React.Component {
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
                         <div className="">
-                            <ExportFile className="export-search" csvData={this.state.exportAllData} getAllretailer={this.getAllretailer} />
+                            <ExportFile className="export-search" csvData={this.state.exportAllData} />
                         </div>
                     </div>
 
