@@ -3,7 +3,10 @@ import { labelResources, path } from '../constants';
 
 let Label = labelResources.Sidebar;
 
+
+
 export const Sidebar = [
+
     {
         name: (
             <span className="menu-list dashboard">
@@ -220,15 +223,23 @@ export const Sidebar = [
         ),
         path: path.faq.list,
     },
+
     {
         name: (
-            <span className="menu-list faq">
+            <span className="menu-list set">
                 <i />
                 {Label.Setting}
             </span>
         ),
-        path: path.appSetting.add,
+        logo: (
+            <span className="menu-list set">
+                <i />
+                {/* {Label.Setting} */}
+            </span>
+        ),
+        path: path.faq.list,
     },
+
     // {
     //     name: (
     //         <span className="menu-list static">
