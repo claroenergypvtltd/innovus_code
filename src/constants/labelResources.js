@@ -37,7 +37,8 @@ export const labelResources = {
     "orderLabel": "Orders",
     "staticTemplate": "Static Template",
     "CartLabel": "Cart",
-    "VehicleManagement": "Vehicle Management"
+    "VehicleManagement": "Vehicle Management",
+    "Setting": "Settings"
   }
 
 }

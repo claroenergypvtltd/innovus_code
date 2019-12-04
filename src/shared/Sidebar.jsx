@@ -220,6 +220,15 @@ export const Sidebar = [
         ),
         path: path.faq.list,
     },
+    {
+        name: (
+            <span className="menu-list faq">
+                <i />
+                {Label.Setting}
+            </span>
+        ),
+        path: path.appSetting.add,
+    },
     // {
     //     name: (
     //         <span className="menu-list static">

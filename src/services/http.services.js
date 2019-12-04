@@ -22,6 +22,8 @@ axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT,
 axios.defaults.headers.common["Accept"] = "application/json;multipart/form-data"
 axios.defaults.headers.common["Content-Type"] = "multipart/form-data";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*"
+axios.defaults.headers.common["deviceType"] = "web"
+
 
 axios.interceptors.response.use(
   function (response) {

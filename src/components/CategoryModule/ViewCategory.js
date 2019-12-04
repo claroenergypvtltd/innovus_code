@@ -188,6 +188,8 @@ class ViewCategory extends Component {
                 // if (statusValue == data) {
                 //     this.state.status == 0 ? this.setState({ status: 0 }) : this.setState({ status: 1 })
                 // }
+                this.props.history.push(path.category.list)
+                this.props.history.goBack()
             }
         };
         toastr.customConfirm(message, toastrConfirmOptions, "Status Update")

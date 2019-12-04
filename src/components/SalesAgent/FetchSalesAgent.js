@@ -66,8 +66,16 @@ class FetchSalesAgent extends React.Component {
 
     getDCData = () => {
 
-        let obj = {
-            search: this.state.dcCode
+        if (this.context.router.route.location && this.context.router.route.location.state &&
+            this.context.router.route.location.state.salesAgentSearchDatas == "backTrue" && sessionStorage.salesAgentSearchDatas
+            && !this.state.salesAgentId) {
+            var obj = {
+                search: ''
+            }
+        } else {
+            var obj = {
+                search: this.state.dcCode
+            }
         }
         getDcCodeData(obj).then(resp => {
             if (resp) {

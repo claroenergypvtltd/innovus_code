@@ -137,6 +137,9 @@ export const path = {
     plan: {
         add: process.env.PUBLIC_URL + '/setting/plan/add',
         edit: process.env.PUBLIC_URL + '/setting/plan/update/'
+    },
+    appSetting: {
+        add: process.env.PUBLIC_URL + '/appsetting'
     }
 }
 
