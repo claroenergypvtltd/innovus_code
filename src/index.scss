@@ -83,8 +83,8 @@ body{
   background-color: $background;
 }
 .sideBarmenu{
- // min-width: 252px;
-  //  max-width: 202x;
+  min-width: 252px;
+  max-width: 202x;
     background: $white;
     transition: all 0.3s;
 }
@@ -488,41 +488,41 @@ li .activate .menu-list i{
   margin-top: 25px;
 }
 
-.menu-btn{
-  background: none;
-  border: none;
-  font-size: 20px;
-  margin-left: 10px;
+// .menu-btn{
+//   background: none;
+//   border: none;
+//   font-size: 20px;
+//   margin-left: 10px;
 
-  position: fixed;
-  top: 20px;
-  right: 0;
-  bottom: 0;
-  left: 20px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  z-index: 1;
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+//   position: fixed;
+//   top: 20px;
+//   right: 0;
+//   bottom: 0;
+//   left: 20px;
+//   -webkit-transition: all 0.5s ease;
+//   -moz-transition: all 0.5s ease;
+//   transition: all 0.5s ease;
+//   z-index: 1;
+//   font-size: 30px;
+//   width: 30px;
+//   height: 30px;
+//   cursor: pointer;
 
-}
+// }
 
-.sideBarmenu .menu-btn{
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  position: absolute;
-  top: 60px;
-  right: 0;
-  bottom: 0px;
-  left: -3px;
-  height: 45px;
-  color: $primary-color;
-  z-index: 1; 
-}
+// .sideBarmenu .menu-btn{
+//   -webkit-transition: all 0.5s ease;
+//   -moz-transition: all 0.5s ease;
+//   transition: all 0.5s ease;
+//   position: absolute;
+//   top: 60px;
+//   right: 0;
+//   bottom: 0px;
+//   left: -3px;
+//   height: 45px;
+//   color: $primary-color;
+//   z-index: 1; 
+// }
 
 
 /****************************DashBoard page************************/
