@@ -11,6 +11,12 @@ export const Sidebar = [
                 {Label.dasboard}
             </span>
         ),
+        logo: (
+            <span className="menu-list dashboard">
+                <i />
+                {/* {Label.dasboard} */}
+            </span>
+        ),
         path: path.dashboard.list
     },
     {
@@ -18,6 +24,12 @@ export const Sidebar = [
             <span className="menu-list order">
                 <i />
                 {Label.orderLabel}
+            </span>
+        ),
+        logo: (
+            <span className="menu-list order">
+                <i />
+                {/* {Label.orderLabel} */}
             </span>
         ),
         path: path.order.list,
@@ -39,8 +51,12 @@ export const Sidebar = [
                 {Label.userLabel}
             </span>
         ),
-        // "path": path.user.add
-        path: path.farmer.list,
+        logo: (
+            <span className="menu-list user_manag">
+                <i />
+                {/* {Label.userLabel} */}
+            </span>
+        ), path: path.farmer.list,
     },
     // FetchIrrigationSetting
 
@@ -49,6 +65,12 @@ export const Sidebar = [
             <span className="menu-list prdt_cate">
                 <i />
                 {Label.categoryLabel}
+            </span>
+        ),
+        logo: (
+            <span className="menu-list prdt_cate">
+                <i />
+                {/* {Label.categoryLabel} */}
             </span>
         ),
         path: path.category.list,
@@ -60,6 +82,12 @@ export const Sidebar = [
                 {Label.paymentLabel}
             </span>
         ),
+        logo: (
+            <span className="menu-list pay_manag">
+                <i />
+                {/* {Label.paymentLabel} */}
+            </span>
+        ),
         path: path.inprogress.payment,
     },
 
@@ -68,6 +96,12 @@ export const Sidebar = [
             <span className="menu-list report_manag">
                 <i />
                 {Label.reportLabel}
+            </span>
+        ),
+        logo: (
+            <span className="menu-list report_manag">
+                <i />
+                {/* {Label.reportLabel} */}
             </span>
         ),
         path: path.inprogress.reports,
@@ -106,6 +140,12 @@ export const Sidebar = [
                 {Label.priceLabel}
             </span>
         ),
+        logo: (
+            <span className="menu-list product">
+                <i />
+                {/* {Label.priceLabel} */}
+            </span>
+        ),
         path: path.price.list,
     },
     // {
@@ -124,6 +164,12 @@ export const Sidebar = [
                 {Label.VehicleManagement}
             </span>
         ),
+        logo: (
+            <span className="menu-list order">
+                <i />
+                {/* {Label.VehicleManagement} */}
+            </span>
+        ),
         // path: path.inprogress.order,
 
         path: path.vehicle.list,
@@ -135,6 +181,12 @@ export const Sidebar = [
                 {Label.couponLabel}
             </span>
         ),
+        logo: (
+            <span className="menu-list coupon">
+                <i />
+                {/* {Label.couponLabel} */}
+            </span>
+        ),
         path: path.coupons.list,
     },
     {
@@ -144,8 +196,12 @@ export const Sidebar = [
                 {Label.settingLabel}
             </span>
         ),
-        // "path": path.user.add
-        path: path.setting.list,
+        logo: (
+            <span className="menu-list user_manag">
+                <i />
+                {/* {Label.settingLabel} */}
+            </span>
+        ), path: path.setting.list,
     },
 
 
@@ -154,6 +210,12 @@ export const Sidebar = [
             <span className="menu-list faq">
                 <i />
                 {Label.FAQLabel}
+            </span>
+        ),
+        logo: (
+            <span className="menu-list faq">
+                <i />
+                {/* {Label.FAQLabel} */}
             </span>
         ),
         path: path.faq.list,

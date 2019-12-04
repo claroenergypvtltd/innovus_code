@@ -112,10 +112,11 @@ export class BaseContainer extends Component {
                             <Header logOut={this.handleClick}></Header>
                             <div className="routerView">
                                 <div className="sideBarmenu">
-                                    <nav className="sidebar-toggle">
-                                        {/* <button className="menu-btn" onClick={this.toggleMenu}><i class="fa fa-bars" aria-hidden="true"></i></button>
-                                        {this.state.visible && */}
-                                        <ul className="nav navbar-nav clearfix">
+                                    <nav className="">
+                                        {/* <button className="menu-btn" onClick={this.toggleMenu}><i class="fa fa-bars" aria-hidden="true"></i></button> */}
+                                        {/* {this.state.visible && */}
+                                        {/* <ul className="nav navbar-nav clearfix"> */}
+                                        <ul className="sidebar-toggle p-0">
                                             {
                                                 Sidebar && Sidebar.map((item, index) => {
                                                     let isActive = '';
@@ -140,7 +141,16 @@ export class BaseContainer extends Component {
 
                                                     return (
                                                         <li>
-                                                            {
+                                                            {this.state.visible ?
+                                                                (pathName == orgPath) ?
+                                                                    <div className="parent-menu" key={'mykey' + index}>
+                                                                        <Link className="menu-link activate" to={item.path}>{item.logo} </Link>
+                                                                    </div>
+                                                                    :
+                                                                    <div className="parent-menu" key={'mykey' + index}>
+                                                                        <Link className="menu-link" to={item.path}>{item.logo} </Link>
+                                                                    </div>
+                                                                :
                                                                 (pathName == orgPath) ?
                                                                     <div className="parent-menu" key={'mykey' + index}>
                                                                         <Link className="menu-link activate" to={item.path}>{item.name} </Link>
