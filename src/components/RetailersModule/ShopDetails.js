@@ -136,6 +136,11 @@ class ShopDetails extends React.Component {
         //     "top":maptop,
         //     right:-40,
         //   })
+        // html2canvas(document.getElementById('capture'), { letterRendering: 1, allowTaint: true, background: '#FFFFF', useCORS: true, async: false }).then(canvas => {
+
+        let imgData = document.getElementById('capture');
+
+
         html2canvas(document.getElementById('capture'), { letterRendering: 1, allowTaint: true, background: '#FFFFF', useCORS: true, async: false }).then(canvas => {
             let data = canvas.toDataURL("image/png", 0.7);
             let trimdata = data.replace(/^data:image\/(png|jpeg|jpg|'');base64,/, '');
@@ -148,7 +153,40 @@ class ShopDetails extends React.Component {
             });
         });
 
+
+        //     html2canvas(imgData).then(canvas => {
+        //         var self = this;
+        //         let canvasImg = canvas.toDataURL("image/png");
+        //         let trimdata = canvasImg.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+        //         // self.saveImage(canvasImg, 'screenshot.png');
+        //         const imageBlob = self.dataURItoBlob(trimdata);
+        //         var blobfile = new File([imageBlob], 'screenshot.png', { type: 'application/png', lastModified: Date.now() });
+        //         self.setState({ file: blobfile, shopImg: canvasImg }, () => {
+        //             console.log('----shopImg-----', this.state.file);
+        //             console.log('----canvasImage-----', this.state.shopImg);
+        //             // this.uploadImage();
+        //         });
+        //     });
+        // }
+
+        // async generateScreenImg(data){
+        //     var self = this;
+        //     return new Promise(resolve => {
+        //     html2canvas(data).then(function (canvas) {
+        //     var canvasImg = canvas.toDataURL("image/png");
+        //     let trimdata = canvasImg.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+        //     self.saveImage(canvasImg,'screenshot.png');
+
+        //     const imageBlob = self.dataURItoBlob(trimdata);
+        //     var blobfile = new File([imageBlob], 'screenshot.png', { type: 'application/png', lastModified: Date.now() });
+        //     self.setimgData(blobfile);
+        //     resolve();
+        //     });
+        //     });
     }
+
+
+
     dataURItoBlob(dataURI) {
         const byteString = window.atob(dataURI);
         const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -219,12 +257,13 @@ class ShopDetails extends React.Component {
                     <div className="col-sm-4">
                         <div className="farm-card bg-white">
                             <div className="farm-image">
-                                <div id="capture">
+                                <div >
                                     <ImageZoom
                                         image={{
                                             src: shopImg,
                                             // className: "maincentext",
                                             className: "shop-centext",
+                                            id: "capture",
                                             style: { transform: `rotate(${rotation}deg)` }
                                         }}
                                         zoomImage={{

@@ -75,15 +75,20 @@ class FetchRetailer extends React.Component {
                     advanceSearch: false,
                     currentPage: sessRetsearchDatas.pages,
                 }, () => {
+                    debugger;
                     if (sessRetsearchDatas.startTime && sessRetsearchDatas.endTime) {
                         this.setState({
                             dateChanged: true,
                             startDate: sessRetsearchDatas.startTime && moment(sessRetsearchDatas.startTime),
                             endDate: sessRetsearchDatas.endTime && moment(sessRetsearchDatas.endTime)
+                        }, () => {
+                            this.callAllUserAPis();
+                            this.enableAdvanceSearch();
                         })
+                    } else {
+                        this.callAllUserAPis();
+                        this.enableAdvanceSearch();
                     }
-                    this.callAllUserAPis();
-                    this.enableAdvanceSearch();
                 });
             }
         } else {
