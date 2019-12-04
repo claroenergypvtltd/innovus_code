@@ -28,16 +28,21 @@ class AppSetting extends React.Component {
     handleSubmit = () => {
         this.setState({ submitted: true })
         if (this.state.currentVersion && this.state.supportVersion) {
-            let obj = {
-                supportedVersion: this.state.supportVersion,
-                currentVersion: this.state.currentVersion,
-                isActive: 1
-            }
-            SubmitSetting(obj).then(resp => {
-                if (resp && resp.status == 200) {
-                    toastr.success(resp.message);
+            if (this.state.supportVersion <= this.state.currentVersion) {
+                let obj = {
+                    supportedVersion: this.state.supportVersion,
+                    currentVersion: this.state.currentVersion,
+                    isActive: 1
                 }
-            });
+                SubmitSetting(obj).then(resp => {
+                    if (resp && resp.status == 200) {
+                        toastr.success(resp.message);
+                    }
+                });
+            }
+            else {
+                toastr.error("Supported Version should be Lesser than or equal to Current Version")
+            }
         }
     }
     redirect = () => {
