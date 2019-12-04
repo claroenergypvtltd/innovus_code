@@ -34,7 +34,7 @@ class AppSetting extends React.Component {
                 isActive: 1
             }
             SubmitSetting(obj).then(resp => {
-                if (resp.status == 200) {
+                if (resp && resp.status == 200) {
                     toastr.success(resp.message);
                 }
             });

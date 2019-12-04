@@ -9,10 +9,10 @@ export const getVersionControl = (Data) => {
             // dispatch({ type: APP_VERSION_FETCH_SUCCESS, resp: [] })
         }
     })
-    // .catch((error) => {
-    //     dispatch({ type: APP_VERSION_FETCH_SUCCESS, resp: [] })
-    //     console.error("error", error.resp);
-    // })
+        .catch((error) => {
+            // dispatch({ type: APP_VERSION_FETCH_SUCCESS, resp: [] })
+            console.error("error", error.resp);
+        })
 
 }
 
@@ -21,6 +21,9 @@ export const SubmitSetting = (Data) => {
         if (resp) {
             return resp;
         }
+    }).catch((error) => {
+        // dispatch({ type: APP_VERSION_FETCH_SUCCESS, resp: [] })
+        console.error("error", error.resp);
     })
 
 }
