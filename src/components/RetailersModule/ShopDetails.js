@@ -8,7 +8,8 @@ import { toastr } from '../../services/toastr.services'
 import { path } from '../../constants';
 import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
-// import ReactCrop from 'react-image-crop';
+import html2canvas from 'html2canvas';
+
 
 class ShopDetails extends React.Component {
     static contextTypes = {
@@ -22,7 +23,8 @@ class ShopDetails extends React.Component {
             activeButton: false,
             rejectKey: false,
             rotation: 0,
-            profile: []
+            profile: [],
+            canvasImage: ''
         };
     }
     componentDidMount() {
@@ -118,9 +120,44 @@ class ShopDetails extends React.Component {
     uploadImage = (shopImg) => {
         let upload = true;
         const formData = new FormData();
-        formData.append("image", this.state.rotation);
-        formData.append("userId", this.props.profileData.address.userId);
+        formData.append("shopImage", this.state.shopImg);
+        formData.append("userId", this.props.profileData && this.props.profileData.id);
         this.props.SubmitRetailer(formData, upload)
+    }
+    imageCapture(shopImg) {
+        let self = this;
+        //     var transform=$(".gm-style>div:first>div:first>div:last>div").css("transform")
+        //   var comp=transform.split(",") //split up the transform matrix
+        //   var mapleft=parseFloat(comp[4]) //get left value
+        //   var maptop=parseFloat(comp[5])  //get top value
+        //   $(".gm-style>div:first>div:first>div:last>div").css({ //get the map container. not sure if stable
+        //     "transform":"none",
+        //     "left":mapleft,
+        //     "top":maptop,
+        //     right:-40,
+        //   })
+        html2canvas(document.getElementById('capture'), { letterRendering: 1, allowTaint: true, background: '#FFFFF', useCORS: true, async: false }).then(canvas => {
+            let data = canvas.toDataURL("image/png", 0.7);
+            let trimdata = data.replace(/^data:image\/(png|jpeg|jpg|'');base64,/, '');
+            const imageBlob = self.dataURItoBlob(trimdata);
+            var blobfile = new File([imageBlob], 'rotated.png', { type: 'image/png', lastModified: Date.now() });
+            self.setState({ file: blobfile, shopImg: data }, () => {
+                console.log('----shopImg-----', this.state.file);
+                console.log('----canvasImage-----', this.state.shopImg);
+                // this.uploadImage();
+            });
+        });
+
+    }
+    dataURItoBlob(dataURI) {
+        const byteString = window.atob(dataURI);
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const int8Array = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+            int8Array[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([int8Array], { type: 'image/jpeg' });
+        return blob;
     }
     editShopDetails = () => {
         // if(this.props.profileData && this.props.profileData.shopAddress){
@@ -159,7 +196,7 @@ class ShopDetails extends React.Component {
 
         const { rotation } = this.state;
         return (
-            <div className="farm-tab p-1 active-box">
+            <div className="farm-tab p-1 active-box" >
                 {
 
                     (profile.status == 0 || profile.status == 1) && !this.state.rejectKey &&
@@ -180,28 +217,22 @@ class ShopDetails extends React.Component {
                 }
                 <div className="row">
                     <div className="col-sm-4">
-                        <div className="farm-card bg-white"
-                        >
-                            <span className="farm-image">
-                                {/* <Image
-                                src={shopImg}
-                                className="maincentext"
-                                roundedCircle
-                            /> */}
-                                {/* <img style={{ transform: `rotate(${rotation}deg)` }} src={shopImg} className="shop-centext" /> */}
-                                <ImageZoom
-                                    image={{
-                                        src: shopImg,
-                                        // className: "maincentext",
-                                        className: "shop-centext",
-                                        style: { transform: `rotate(${rotation}deg)` }
-                                    }}
-                                    zoomImage={{
-                                        src: { shopImg }
-                                    }}
-                                />
-                                {/* <button className="edit-icon" onClick={() => this.editPage(item.id)}><i class="fa fa-pencil"></i></button>  */}
-                            </span>
+                        <div className="farm-card bg-white">
+                            <div className="farm-image">
+                                <div id="capture">
+                                    <ImageZoom
+                                        image={{
+                                            src: shopImg,
+                                            // className: "maincentext",
+                                            className: "shop-centext",
+                                            style: { transform: `rotate(${rotation}deg)` }
+                                        }}
+                                        zoomImage={{
+                                            src: { shopImg }
+                                        }}
+                                    />
+                                </div>
+                            </div>
 
                             {/* <div className="farm-box">
                             <h5 className="centext title">{profile.shopAddress && profile.shopAddress.name}</h5>
@@ -234,12 +265,12 @@ class ShopDetails extends React.Component {
 
                         {/* <input type="button" value="left" onClick={this.rotateleft} />
                         <button onClick={() => { this.uploadImage(shopImg) }}>Upload</button> */}
-                        {/* <div className="text-center mb-3">
+                        <div className="text-center mb-3">
                             <button className="shop-btn" onClick={this.rotateleft}><i class="fa fa-rotate-right"></i>Rotate</button>
-                            <button onClick={() => { this.uploadImage(shopImg) }} className="shop-btn">
+                            <button onClick={() => { this.imageCapture(shopImg) }} className="shop-btn">
                                 <i class="fa fa-upload" aria-hidden="true"></i>Upload</button>
 
-                        </div> */}
+                        </div>
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
