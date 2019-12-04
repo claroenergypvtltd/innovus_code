@@ -136,17 +136,18 @@ class ShopDetails extends React.Component {
         //     "top":maptop,
         //     right:-40,
         //   })
-        html2canvas(document.getElementById('maincentext1'), { letterRendering: 1, allowTaint: true, background: '#FFFFF', useCORS: true }).then(canvas => {
+        html2canvas(document.getElementById('capture'), { letterRendering: 1, allowTaint: true, background: '#FFFFF', useCORS: true, async: false }).then(canvas => {
             let data = canvas.toDataURL("image/png", 0.7);
             let trimdata = data.replace(/^data:image\/(png|jpeg|jpg|'');base64,/, '');
             const imageBlob = self.dataURItoBlob(trimdata);
             var blobfile = new File([imageBlob], 'rotated.png', { type: 'image/png', lastModified: Date.now() });
-            self.setState({ shopImg: blobfile, file: data }, () => {
-                console.log('----file-----', this.state.file);
-                console.log('----shopImg-----', this.state.shopImg);
+            self.setState({ file: blobfile, shopImg: data }, () => {
+                console.log('----shopImg-----', this.state.file);
+                console.log('----canvasImage-----', this.state.shopImg);
                 // this.uploadImage();
             });
         });
+
     }
     dataURItoBlob(dataURI) {
         const byteString = window.atob(dataURI);
@@ -218,18 +219,18 @@ class ShopDetails extends React.Component {
                     <div className="col-sm-4">
                         <div className="farm-card bg-white">
                             <div className="farm-image">
-                                <div id="maincentext1">
-                                    <div>asddsadsdsddsfds</div>
-                                    {/* <ImageZoom
+                                <div id="capture">
+                                    <ImageZoom
                                         image={{
                                             src: shopImg,
-                                            // className: "shop-centext",
+                                            // className: "maincentext",
+                                            className: "shop-centext",
                                             style: { transform: `rotate(${rotation}deg)` }
                                         }}
                                         zoomImage={{
                                             src: { shopImg }
                                         }}
-                                    /> */}
+                                    />
                                 </div>
                             </div>
 
