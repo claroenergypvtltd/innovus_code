@@ -390,7 +390,11 @@ export const Translation = {
             "RRP": "Enter a RRP",
             "EMAIL_ADDRESS": "Enter a Email Address"
         },
-
+        "APPSETTING": {
+            "APPVERSIONCONTROL": "APP VERSION CONTROL",
+            "SUPPORTEDVERSION": "Supported Version",
+            "CURRENTVERSION": "Current Version"
+        }
 
     }
 

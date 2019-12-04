@@ -114,7 +114,6 @@ class CreateSalesAgent extends React.Component {
                 isEdit = true
             }
             if (validation.checkValidation('email', this.state.emailId) && validation.checkValidation('mobile', this.state.mobileNumber)) {
-
                 this.props.submitSalesAgent(formData, isEdit);
             }
         }
@@ -176,7 +175,7 @@ class CreateSalesAgent extends React.Component {
                                     />
                                     {this.state.submitted && !this.state.emailId && <div className="mandatory">{window.strings['SALES_AGENT']['EMAIL'] + window.strings['ISREQUIRED']}</div>}
                                     {/* {this.state.validation == false && <div className="mandatory">Enter valid Email </div>} */}
-                                    {this.state.submitted && this.state.emailId && validation.checkValidation("email", this.state.email) && <div className="mandatory">Email is Invalid</div>}
+                                    {this.state.submitted && this.state.emailId && !validation.checkValidation("email", this.state.emailId) && <div className="mandatory">Email is Invalid</div>}
                                 </div>
 
                                 <div className="form-group col-md-12">
