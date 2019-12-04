@@ -237,7 +237,7 @@ export const Sidebar = [
                 {/* {Label.Setting} */}
             </span>
         ),
-        path: path.faq.list,
+        path: path.appSetting.add,
     },
 
     // {
