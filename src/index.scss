@@ -455,27 +455,31 @@ li:hover .menu-link{
   border-image:$sidebar-active;
   color: $active-font-color;
 }
+.menu-list {
+  display: flex;
+  align-items: center;
+}
 .menu-list i{
   background-image: url(../src/assets/images/AgroSprit_menuicons.png);
   background-repeat: no-repeat;
-  background-position: -19px -23px;
+  background-position: -19px -30px;
     width: 24px;
     height: 30px;
     display: inline-block;
     margin: 0 8px;
 }
 .user_manag i{
-  background-position: -19px -92px;
+  background-position: -19px -99px;
 }
-.prdt_cate i{ background-position: -19px -381px;}
-.product i{ background-position: -19px -301px;}
-.order i{ background-position: -19px -513px;}
-.coupon i{ background-position: -19px -442px;}
-.pay_manag i{ background-position: -19px -161px;}
-.report_manag i{ background-position: -19px -230px;}
-.faq i{ background-position: -19px -584px;}
+.prdt_cate i{ background-position: -19px -382px;}
+.product i{ background-position: -19px -306px;}
+.order i{ background-position: -19px -520px;}
+.coupon i{ background-position: -19px -448px;}
+.pay_manag i{ background-position: -19px -167px;}
+.report_manag i{ background-position: -19px -237px;}
+.faq i{ background-position: -19px -589px;}
 .static i{ background-position: -19px -92px;}
-.set i{ background-position: -19px -654px;}
+.set i{ background-position: -19px -660px;}
 
 li:hover .menu-list i{
   background-position-x: -59px;
