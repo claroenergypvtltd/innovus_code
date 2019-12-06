@@ -143,7 +143,7 @@ class CategoryList extends Component {
         let CategoryList = this.state.data && this.state.data.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
             let viewCrop = <button className="view-btn" onClick={() => this.itemView(item)}>View Crop</button>
-            return { "itemList": [item.name, catImg, item.description, viewCrop], "itemId": item.id }
+            return { "itemList": [item.name, catImg, item.description ? item.description : '-', viewCrop], "itemId": item.id }
         })
 
         return (
