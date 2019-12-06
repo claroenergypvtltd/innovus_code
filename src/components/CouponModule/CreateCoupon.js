@@ -43,7 +43,7 @@ class CreateCoupon extends Component {
 
     fetchUsers() {
         let user = {
-            "roleId": 3
+            "roleId": 2
         };
         this.props.fetchUsers(user);
     }
@@ -171,7 +171,7 @@ class CreateCoupon extends Component {
 
         this.state.userData && this.state.userData.map((item) => {
 
-            let obj = { "label": item.userName, "value": item.id };
+            let obj = { "label": item.name, "value": item.id };
             dropDownData.push(obj);
         })
 

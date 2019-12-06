@@ -65,7 +65,7 @@ class CreateCrop extends Component {
     }
 
     redirectPage = () => {
-        this.props.history.goBack();
+        this.context.router.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId, cropSessionData: 'cropSessionBack' } });
     }
 
     handleInputChange = (e) => {
@@ -174,7 +174,6 @@ class CreateCrop extends Component {
     }
 
     render() {
-        console.log("test")
         const { errors } = this.state;
         let { imagePreviewUrl } = this.state;
         let imagePreview;

@@ -75,7 +75,6 @@ class FetchRetailer extends React.Component {
                     advanceSearch: false,
                     currentPage: sessRetsearchDatas.pages,
                 }, () => {
-                    debugger;
                     if (sessRetsearchDatas.startTime && sessRetsearchDatas.endTime) {
                         this.setState({
                             dateChanged: true,
