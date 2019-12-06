@@ -30,8 +30,16 @@ class CategoryList extends Component {
         }
     }
     componentDidMount() {
-        this.getCategoryList();
+        if (sessionStorage.categorySessionData && this.props.location && this.props.location.state &&
+            this.props.location.state.categoryBack == "categorySessionBack") {
+            var categorySesData = JSON.parse(sessionStorage.categorySessionData)
+            this.setState({ currentPage: categorySesData.page, search: categorySesData.search, itemPerPage: categorySesData.limit },
+                () => { this.getCategoryList() })
 
+        }
+        else {
+            this.getCategoryList()
+        }
     }
     handleChange = (e) => {
         this.setState({ search: e.target.value })
@@ -66,9 +74,21 @@ class CategoryList extends Component {
         this.props.getCategoryList(obj);
     }
     itemEdit = (itemId) => {
+        let obj = {
+            "page": this.state.currentPage,
+            "search": this.state.search,
+            "limit": this.state.itemPerPage
+        }
+        sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.category.edit + itemId, state: { categoryId: itemId } });
     }
     itemView = (Data) => {
+        let obj = {
+            "page": this.state.currentPage,
+            "search": this.state.search,
+            "limit": this.state.itemPerPage
+        }
+        sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id } });
     }
     handleDelete = (data) => {
@@ -100,7 +120,8 @@ class CategoryList extends Component {
         }
     }
     resetSearch = () => {
-        if (this.state.search) {
+        if (this.state.search || (!this.state.search)) {
+            sessionStorage.removeItem('categorySessionData')
             this.setState({ search: '', currentPage: 0 }, () => {
                 let serObj = {
                     "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
@@ -122,7 +143,7 @@ class CategoryList extends Component {
         let CategoryList = this.state.data && this.state.data.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
             let viewCrop = <button className="view-btn" onClick={() => this.itemView(item)}>View Crop</button>
-            return { "itemList": [item.name, catImg, item.description, viewCrop], "itemId": item.id }
+            return { "itemList": [item.name, catImg, item.description ? item.description : '-', viewCrop], "itemId": item.id }
         })
 
         return (

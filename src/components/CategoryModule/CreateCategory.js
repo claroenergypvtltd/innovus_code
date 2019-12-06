@@ -109,7 +109,7 @@ class CategoryForm extends Component {
     }
 
     listPath = () => {
-        this.props.history.goBack();
+        this.props.history.push({ pathname: path.category.list, state: { categoryBack: 'categorySessionBack' } })
     }
 
     render() {

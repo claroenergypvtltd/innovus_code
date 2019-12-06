@@ -28,12 +28,21 @@ class ViewCategory extends Component {
     }
 
     componentDidMount() {
-        if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
+        if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId
+            && this.props.location.state.cropSessionData == 'cropSessionBack') {
+            var subCatSessData = JSON.parse(sessionStorage.subCatSessionData)
+            let data = subCatSessData.search || subCatSessData.dcCode ? true : false;
+            this.setState({ categoryId: this.props.location.state.categoryId, currentPage: subCatSessData.page, itemPerPage: subCatSessData.limit, search: subCatSessData.search, advanceSearch: data, dcCodeObj: subCatSessData.dcCodeObj, dcCode: subCatSessData.dcCode }, () => {
+                this.getDCData();
+                this.getSpecificData();
+            })
+        }
+        else {
+            sessionStorage.removeItem('subCatSessionData')
             this.setState({ categoryId: this.props.location.state.categoryId }, () => {
                 this.getDCData();
                 this.getSpecificData();
             })
-
         }
     }
 
@@ -136,6 +145,14 @@ class ViewCategory extends Component {
     }
 
     formPath = () => {
+        let obj = {
+            "page": this.state.currentPage,
+            "limit": this.state.itemPerPage,
+            "search": this.state.search,
+            "dcCode": this.state.dcCode,
+            "dcCodeObj": this.state.dcCodeObj
+        }
+        sessionStorage.setItem('subCatSessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.crop.add, state: { cropId: this.state.categoryId } });
     }
 
@@ -148,7 +165,7 @@ class ViewCategory extends Component {
     }
 
     redirectPage = () => {
-        this.props.history.goBack();
+        this.props.history.push({ pathname: path.category.list, state: { categoryBack: 'categorySessionBack' } });
     }
 
     enableAdvanceSearch = (e) => {

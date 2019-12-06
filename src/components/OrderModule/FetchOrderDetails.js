@@ -24,7 +24,7 @@ class FetchOrderDetails extends Component {
             //TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
             TableHead: ["Order Id", "Shipping Address", "Order Amount", "Ordered Date", "Expected Delivery Time", "Track Orders"],
             // TableHeadTwo: ["Order Id", "Shipping Address", "From Time", "To Time"],
-            TableHeadTwo: ["Order Id", "Shipping Address", "Ordered Date", "Expected Delivery Time"],
+            TableHeadTwo: ["Order Id", "Shipping Address", "Order Amount", "Ordered Date", "Expected Delivery Time"],
             TableHeadTrack: ["Date/Time", "Activity", "Location"],
             TableProductHead: ["Product Id", "Product Name", "Quantity", "Product Amount", "Offer", "Total Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
