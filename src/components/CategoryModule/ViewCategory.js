@@ -70,10 +70,10 @@ class ViewCategory extends Component {
                 name: "subCategory"
             }
             if (type == "onSearch") {
-                this.setState({ currentPage: 0 }, () => {
-                    obj.page = 0
-                })
-            } else {
+                this.setState({ currentPage: 0 })
+                obj.page = 0
+            }
+            else {
                 obj.page = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
             }
             this.props.getSpecificCategory(obj, true);
