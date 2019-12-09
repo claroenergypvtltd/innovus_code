@@ -114,16 +114,19 @@ export class BaseContainer extends Component {
                                 <div className="sideBarmenu main-wrapper pr-1">
                                     <nav className="">
 
-                                        {/* <div className="sidebar-btn">
-                                            <button className="menu-btn" onClick={this.toggleMenu}>
+                                        <div className="sidebar-btn">
+                                            {!this.state.visible && <button className="menu-btn" onClick={this.toggleMenu}>
                                                 <i class="fa fa-bars" aria-hidden="true"></i>
                                                 <span className="tooltip-text">Menu</span>
                                             </button>
-                                            <button className="window-close" onClick={this.toggleMenu}>
+                                            }
+
+                                            {this.state.visible && <button className="window-close" onClick={this.toggleMenu}>
                                                 <i class="fa fa-window-close" aria-hidden="true"></i>
                                                 <span className="tooltip-text">Close</span>
                                             </button>
-                                        </div> */}
+                                            }
+                                        </div>
 
                                         {/* {this.state.visible &&
                                             <ul className="nav navbar-nav clearfix">  */}
@@ -149,7 +152,7 @@ export class BaseContainer extends Component {
 
                                                     return (
                                                         <li>
-                                                            {this.state.visible ?
+                                                            {!this.state.visible ?
                                                                 (pathName == orgPath) ?
                                                                     <div className="parent-menu" key={'mykey' + index}>
                                                                         <Link className="menu-link activate" to={item.path}>{item.logo} </Link>
@@ -181,11 +184,11 @@ export class BaseContainer extends Component {
                                     {this.props.children}
                                 </div> */}
 
-                                {this.state.visible && <div className="sidebar-container">
+                                {!this.state.visible && <div className="sidebar-container">
                                     {this.props.children}
                                 </div>}
 
-                                {!this.state.visible && <div className="main-container">
+                                {this.state.visible && <div className="main-container">
                                     {this.props.children}
                                 </div>}
                             </div>
