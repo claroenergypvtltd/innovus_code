@@ -114,7 +114,9 @@ export const getOrderReports = (gettype) => dispatch => {
 }
 export const updateStatusRetailer = (updateDatas) => {
     return httpServices.put(endPoint.user, updateDatas).then(resp => {
-        toastr.success(resp.message);
+        if (resp && resp.message) {
+            toastr.success("Shop details modified successfully");
+        }
         return resp;
     }).catch((error) => {
     })
