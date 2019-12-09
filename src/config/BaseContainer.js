@@ -16,7 +16,6 @@ import user from '../assets/images/Dashboard/avatar.png'
 import { history } from '../store/history';
 
 
-
 export class BaseContainer extends Component {
     static contextTypes = {
         router: PropTypes.object
@@ -73,6 +72,7 @@ export class BaseContainer extends Component {
     }
 
     render() {
+
         // To check loggedin credential
         const auth = () => {
             let user = userData();
@@ -111,12 +111,23 @@ export class BaseContainer extends Component {
                         <div className="main-content">
                             <Header logOut={this.handleClick}></Header>
                             <div className="routerView">
-                                <div className="sideBarmenu">
+                                <div className="sideBarmenu main-wrapper pr-1">
                                     <nav className="">
-                                        {/* <button className="menu-btn" onClick={this.toggleMenu}><i class="fa fa-bars" aria-hidden="true"></i></button> */}
-                                        {/* {this.state.visible && */}
-                                        {/* <ul className="nav navbar-nav clearfix"> */}
-                                        <ul className="sidebar-toggle p-0">
+
+                                        {/* <div className="sidebar-btn">
+                                            <button className="menu-btn" onClick={this.toggleMenu}>
+                                                <i class="fa fa-bars" aria-hidden="true"></i>
+                                                <span className="tooltip-text">Menu</span>
+                                            </button>
+                                            <button className="window-close" onClick={this.toggleMenu}>
+                                                <i class="fa fa-window-close" aria-hidden="true"></i>
+                                                <span className="tooltip-text">Close</span>
+                                            </button>
+                                        </div> */}
+
+                                        {/* {this.state.visible &&
+                                            <ul className="nav navbar-nav clearfix">  */}
+                                        < ul className="sidebar-toggle p-0">
                                             {
                                                 Sidebar && Sidebar.map((item, index) => {
                                                     let isActive = '';
@@ -133,11 +144,8 @@ export class BaseContainer extends Component {
                                                                 pathName = value.path;
                                                             }
                                                         })
-                                                    } else {
-                                                        if (orgPath && orgPath.includes(item.path)) {
-                                                            pathName = orgPath;
-                                                        }
                                                     }
+
 
                                                     return (
                                                         <li>
@@ -152,11 +160,11 @@ export class BaseContainer extends Component {
                                                                     </div>
                                                                 :
                                                                 (pathName == orgPath) ?
-                                                                    <div className="parent-menu" key={'mykey' + index}>
+                                                                    <div className="parent-menu tog" key={'mykey' + index}>
                                                                         <Link className="menu-link activate" to={item.path}>{item.name} </Link>
                                                                     </div>
                                                                     :
-                                                                    <div className="parent-menu" key={'mykey' + index}>
+                                                                    <div className="parent-menu tog" key={'mykey' + index}>
                                                                         <Link className="menu-link" to={item.path}>{item.name} </Link>
                                                                     </div>
                                                             }
@@ -169,9 +177,17 @@ export class BaseContainer extends Component {
                                     </nav>
 
                                 </div>
-                                <div className="main-container">
+                                {/* <div className="main-container">
                                     {this.props.children}
-                                </div>
+                                </div> */}
+
+                                {this.state.visible && <div className="sidebar-container">
+                                    {this.props.children}
+                                </div>}
+
+                                {!this.state.visible && <div className="main-container">
+                                    {this.props.children}
+                                </div>}
                             </div>
                             <footer className="page-footer">
                                 <div className="container-fluid">
