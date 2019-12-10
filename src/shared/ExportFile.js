@@ -13,15 +13,16 @@ export default class ExportFile extends React.Component {
         console.log(this.props.csvData, ' this.props.csvData');
         this.props.csvData && this.props.csvData.map((item, index) => {
             let excelitem = {};
-            if (item.status == 0) {
-                excelitem.Status = "Pending";
-            }
-            else if (item.status == 1) {
-                excelitem.Status = "Accepted";
-            }
-            else if (item.status == 2) {
-                excelitem.Status = "Rejected";
-            }
+            // if (item.status == 0) {
+            //     excelitem.Status = "Pending";
+            // }
+            // else if (item.status == 1) {
+            //     excelitem.Status = "Accepted";
+            // }
+            // else if (item.status == 2) {
+            //     excelitem.Status = "Rejected";
+            // }
+            excelitem.Status = item.selectBox && item.selectBox === '-' ? '' : item.selectBox;
             excelitem.OnboardedDate = item.created && item.created === '-' ? '' : item.created;
             excelitem.CustomerID = item.cusId && item.cusId === '-' ? '' : item.cusId;
             excelitem.ShopName = item.shopNames && item.shopNames === '-' ? '' : item.shopNames;
