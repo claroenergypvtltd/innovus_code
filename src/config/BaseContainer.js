@@ -104,6 +104,14 @@ export class BaseContainer extends Component {
         let constant = window.constant;
         // let settingsontrol = (role === constant.ONE || role === constant.TWO || role === constant.THREE) ? true : false;
 
+
+        let expandClassName = ""
+        if (this.state.visible) {
+            expandClassName = "main-container"
+        } else {
+            expandClassName = "sidebar-container"
+        }
+
         return (
             <div>
                 {
@@ -133,42 +141,21 @@ export class BaseContainer extends Component {
                                         < ul className="sidebar-toggle p-0">
                                             {
                                                 Sidebar && Sidebar.map((item, index) => {
-                                                    let isActive = '';
                                                     let pathName = '';
                                                     let orgPath = this.context.router.route.location.pathname;
-                                                    let editId = orgPath.split('/').pop();
-                                                    if (item.child) {
-                                                        item.child.map(value => {
-                                                            if (orgPath === value.path + "/add") {
-                                                                pathName = value.path + "/add";
-                                                            } else if (orgPath === value.path + "/update/" + editId) {
-                                                                pathName = value.path + "/update/" + editId;
-                                                            } else if (orgPath === value.path) {
-                                                                pathName = value.path;
-                                                            }
-                                                        })
+                                                    if (orgPath && orgPath.includes(item.path)) {
+                                                        pathName = orgPath;
                                                     }
-
-
                                                     return (
                                                         <li>
-                                                            {!this.state.visible ?
+                                                            {
                                                                 (pathName == orgPath) ?
                                                                     <div className="parent-menu" key={'mykey' + index}>
-                                                                        <Link className="menu-link activate" to={item.path}>{item.logo} </Link>
+                                                                        <Link className="menu-link activate" to={item.path}>{this.state.visible ? item.name : item.logo} </Link>
                                                                     </div>
                                                                     :
                                                                     <div className="parent-menu" key={'mykey' + index}>
-                                                                        <Link className="menu-link" to={item.path}>{item.logo} </Link>
-                                                                    </div>
-                                                                :
-                                                                (pathName == orgPath) ?
-                                                                    <div className="parent-menu tog" key={'mykey' + index}>
-                                                                        <Link className="menu-link activate" to={item.path}>{item.name} </Link>
-                                                                    </div>
-                                                                    :
-                                                                    <div className="parent-menu tog" key={'mykey' + index}>
-                                                                        <Link className="menu-link" to={item.path}>{item.name} </Link>
+                                                                        <Link className="menu-link" to={item.path}>{this.state.visible ? item.name : item.logo} </Link>
                                                                     </div>
                                                             }
                                                         </li>
@@ -176,21 +163,12 @@ export class BaseContainer extends Component {
                                                 })
                                             }
                                         </ul>
-                                        {/* } */}
                                     </nav>
 
                                 </div>
-                                {/* <div className="main-container">
+                                <div className={expandClassName}>
                                     {this.props.children}
-                                </div> */}
-
-                                {!this.state.visible && <div className="sidebar-container">
-                                    {this.props.children}
-                                </div>}
-
-                                {this.state.visible && <div className="main-container">
-                                    {this.props.children}
-                                </div>}
+                                </div>
                             </div>
                             <footer className="page-footer">
                                 <div className="container-fluid">

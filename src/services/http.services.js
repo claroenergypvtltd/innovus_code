@@ -60,24 +60,16 @@ axios.interceptors.response.use(
   }
 );
 
-
-
 function get(url) {
   PubSub.publish('msg', true);
   return axios.get(url).then(response => {
     if (response.data) {
-      setTimeout(function () {
-        PubSub.publish('msg', false);
-      }, 1000)
-    } else {
       PubSub.publish('msg', false);
+      return response;
     }
-
-    return response;
   }).catch((error) => {
     console.error("GetError", error);
     PubSub.publish('msg', false);
-
   });
 }
 
@@ -94,8 +86,10 @@ function get(url) {
 function post(url, params) {
   PubSub.publish('msg', true);
   return axios.post(url, params).then(response => {
-    PubSub.publish('msg', false);
-    return response;
+    if (response) {
+      PubSub.publish('msg', false);
+      return response;
+    }
   }).catch(e => {
     console.log(e);
     PubSub.publish('msg', false);

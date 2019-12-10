@@ -25,7 +25,6 @@ import { SearchBar, ReactPagination } from '../../shared'
 import { getDcCodeData } from '../../actions/salesAgentAction';
 import { imageBaseUrl } from '../../config/config';
 
-
 class FetchRetailer extends React.Component {
     static contextTypes = {
         router: PropTypes.object,
@@ -94,6 +93,7 @@ class FetchRetailer extends React.Component {
             this.callAllUserAPis();
         }
     }
+
     componentWillReceiveProps(newProps) {
         //         var routeChanged = newProps.location !== this.props.location
         // console.log('---routeChanged---',routeChanged)
@@ -107,6 +107,7 @@ class FetchRetailer extends React.Component {
             this.setState({
                 data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount
             })
+            this.getAllretailer();
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
             store.dispatch({ type: RETAILER_DELETE_SUCCESS, resp: "" })
@@ -119,7 +120,7 @@ class FetchRetailer extends React.Component {
         this.fetchAgents();
         this.getDCData();
         this.getCityList();
-        this.getAllretailer();
+        // this.getAllretailer();
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
@@ -261,7 +262,7 @@ class FetchRetailer extends React.Component {
                 user.pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
                 user.row = this.state.itemPerPage;
                 this.props.fetchRetailers(user);
-                this.getAllretailer();
+                // this.getAllretailer();
             })
         }
         else {
@@ -309,7 +310,7 @@ class FetchRetailer extends React.Component {
                 selectedDatas: []
             })
             this.props.fetchRetailers(user);
-            this.getAllretailer();
+            // this.getAllretailer();
         }
     };
     fetchAgents = () => {
@@ -363,6 +364,29 @@ class FetchRetailer extends React.Component {
         // </select >
         return ViewPage;
     }
+
+
+    getStatus(RetstatusId, status, isActive) {
+        let statusClass;
+        // else {
+        if (isActive == 0) {
+            return statusClass = window.strings.RETAILERS.INACTIVE
+        }
+        else if (status == 0 && isActive == 1) {
+            return statusClass = window.strings.RETAILERS.PENDING
+        } else if (status == 1 && isActive == 1) {
+            return statusClass = window.strings.RETAILERS.ACCEPTED
+        } else if (status == 2 && isActive == 1) {
+            return statusClass = window.strings.RETAILERS.REJECTED
+        }
+
+
+        // let ViewPage = <p className={statusClass} >{statusClass}</p>
+
+        // return ViewPage;
+    }
+
+
     statusChange(e, RetId) {
         let statusVal = e.target.value;
         let message = window.strings.UPDATEMESSAGE;
@@ -444,6 +468,8 @@ class FetchRetailer extends React.Component {
             // this.getRetailerList('transagent');
             this.context.router.history.push('/category');
             this.context.router.history.goBack();
+            // this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
+
         }
     };
     enableAdvanceSearch = (e) => {
@@ -524,9 +550,16 @@ class FetchRetailer extends React.Component {
         user.roleId = 2;
         user.search = this.state.search;
         user.pages = 0
+
+
+
         fetchAllRetailers(user).then(resp => {
             if (resp && resp.datas) {
-                this.setState({ exportAllData: resp.datas })
+                let Lists = resp.datas && resp.datas.map(item => {
+                    item.selectBox = this.getStatus(item.id, item.status, item.isActive);
+                    return item;
+                })
+                this.setState({ exportAllData: Lists })
             }
         })
     };
