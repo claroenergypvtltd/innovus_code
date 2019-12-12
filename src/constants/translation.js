@@ -122,6 +122,7 @@ export const Translation = {
             "LIST_PRICE": "INVENTORY LIST",
             "ADD_PRICE": "Add Inventory",
             "OFFER": "Offer",
+            "QUANTITY": "Quantity",
             "WEIGHT": "Weight",
             "TYPE": "Type"
         },
