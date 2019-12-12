@@ -38,7 +38,15 @@ import CreateSalesAgent from '../components/SalesAgent/CreateSalesAgent'
 
 import CreateVehicle from '../components/VehicleManagement/CreateVehicle'
 import FetchVehicle from '../components/VehicleManagement/FetchVehicle'
+
+import FetchDC from '../components/DCManagement/FetchDC'
+import CreateDC from '../components/DCManagement/CreateDC'
+
 import AppSetting from '../components/Setting/AppSetting';
+
+
+
+
 
 
 const root = ({ route }) => (
@@ -335,6 +343,16 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/vehicle',
                 component: FetchVehicle,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/dc',
+                component: FetchDC,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/dc/add',
+                component: CreateDC,
                 exact: true
             },
             {
