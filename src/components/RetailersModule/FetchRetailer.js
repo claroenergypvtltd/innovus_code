@@ -712,7 +712,7 @@ class FetchRetailer extends React.Component {
 
                 <div className="retailersearchdiv">
                     {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
-                    <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '-Search' : '+Search'}
+                    <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
                         {/* <span className="advance-icon"></span>Advance Search */}
                         <span className="tooltip-text">Click to Search</span>
                     </button>
@@ -742,9 +742,9 @@ class FetchRetailer extends React.Component {
                     {this.state.advanceSearch &&
                         <div className="">
                             <div className="sub-filter">
-                                <div className="row">
+                                <div className="d-flex justify-content-between">
                                     <div className="input-tip">
-                                        <form onSubmit={(e) => this.searchSubmit(e)}>
+                                        <form onSubmit={(e) => this.searchSubmit(e)} className="col-md-3">
                                             <input placeholder="Custom Search.."
                                                 class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                             />
@@ -755,13 +755,21 @@ class FetchRetailer extends React.Component {
                                         <span className="tooltip-text">Custom Search</span>
 
                                     </div>
-                                    <div className="col-md-3 agent-filter"><label className="label-title">Agent:</label>
+                                    <div className="col-md-3 agent-filter p-0"><label className="label-title">Agent:</label>
                                         <Select
                                             styles={{
                                                 control: base => ({
                                                     ...base,
                                                     borderColor: 'hsl(0,0%,80%)',
                                                     boxShadow: '#FE988D',
+                                                    // width: '270px',
+                                                    '@media screen and (min-width:768px)': {
+                                                        width: 'calc(100% + 2em)',
+                                                    },
+                                                    '@media screen and (min-width: 1300px)': {
+                                                        width: 'calc(116% + 2em)',
+
+                                                    },
                                                     '&:hover': {
                                                         borderColor: '#FE988D'
                                                     }
@@ -774,7 +782,7 @@ class FetchRetailer extends React.Component {
                                             placeholder="--Select Agent--"
                                         />
                                     </div>
-                                    <div className="status-filter pr-3"><label className="label-title">Status:</label>
+                                    <div className="status-filter pl-5"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
                                             <option value="" className="drop-option">-- Select Status--</option>
                                             {statusDropdown}
@@ -805,7 +813,7 @@ class FetchRetailer extends React.Component {
                             </div >
 
                             <div className="main-filter ">
-                                <div className="row ">
+                                <div className="d-flex justify-content-between">
                                     <div className="col-md-4 date-range col-wrapper pr-0">
                                         <label className="label-title">Date:</label>
                                         <DateRangePicker
@@ -896,7 +904,7 @@ class FetchRetailer extends React.Component {
                         pagination={true} onRowSelected={this.handleRowChange}
                     /> */}
                     {/* <GoogleMapPage /> */}
-                </div></div>
+                </div></div >
         );
     }
 }

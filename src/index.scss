@@ -1147,22 +1147,22 @@ input.form-control.search-btn:focus {
 .crop-section{
   width: 100%;
 }
-.time-pick{
-  .rc-time-picker-input{
-    width: 363px;
-  }
-}
-.main-container .time-pick .rc-time-picker-input {
-  width: 305px;
-}
-.dc-time{
-  .rc-time-picker-input{
-    width: 371px;
-  }
-}
-.main-container .dc-time .rc-time-picker-input {
-  width: 303px;
-}
+// .time-pick{
+//   .rc-time-picker-input{
+//     width: 363px;
+//   }
+// }
+// .main-container .time-pick .rc-time-picker-input {
+//   width: 305px;
+// }
+// .dc-time{
+//   .rc-time-picker-input{
+//     width: 371px;
+//   }
+// }
+// .main-container .dc-time .rc-time-picker-input {
+//   width: 303px;
+// }
 .rc-time-picker-clear{
   display: none!important;
 }
@@ -1719,6 +1719,12 @@ select:focus {
 /****************************Price Section************************/
 .sub-price{
   padding-top: 28px;
+}
+.add-del{
+  position: absolute;
+  top: 35px;
+  right: -61px;
+  font-size: 14px;
 }
 // .add-price{
 //   margin:auto;
