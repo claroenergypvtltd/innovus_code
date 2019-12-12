@@ -141,7 +141,7 @@ class IrrigationSetting extends Component {
             <div className="irrigation-setting">
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-7">
-                        <h4 className="user-title">Edit Shop Details</h4>
+                        <h4 className="user-title">EDIT SHOP DETAILS</h4>
                     </div>
                 </div>
                 <div className="main-wrapper p-3">

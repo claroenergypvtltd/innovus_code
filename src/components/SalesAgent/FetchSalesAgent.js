@@ -194,7 +194,7 @@ class FetchSalesAgent extends React.Component {
                     </div>
 
                     {this.state.advanceSearch &&
-                        <div className="sub-filter">
+                        <div className="sub-filter ml-4">
                             <div className="row">
                                 <div className="input-tip">
                                     <form onSubmit={(e) => this.searchSubmit(e)}>

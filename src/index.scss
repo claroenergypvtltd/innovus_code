@@ -83,11 +83,17 @@ body{
   background-color: $background;
 }
 .sideBarmenu{
-  // min-width: 252px;
-  // max-width: 202px;
+  //min-width: 252px;
+ // max-width: 202px;
+  //width:60px;
   background: $white;
-  transition: all 0.3s;
+   transition: all 0.3s;
+  -webkit-transition: width 2s, height 4s; /* For Safari 3.1 to 6.0 */
+  transition: width 2s, height 4s;
 }
+// .sideBarmenu .togs{
+//   width:232px;
+// }
 
 // .main-container{
   
@@ -423,10 +429,10 @@ li {
   display: block;
   text-decoration: none;
 
-  cursor: pointer;
-  -webkit-transition: all 0.5s ease-in;
-  -moz-transition: all 0.5s ease-in;
-  transition: all 0.5s ease-in;
+  // cursor: pointer;
+  // -webkit-transition: all 0.5s ease-in;
+  // -moz-transition: all 0.5s ease-in;
+  // transition: all 0.5s ease-in;
 
 }
 .menu-link{
@@ -523,14 +529,14 @@ li .activate .menu-list i{
  // top: 60px;
   right: 0;
   bottom: 0px;
-  left: -3px;
-  height: 45px;
+  left: 0;
+  height: 40px;
   color: $primary-color;
   z-index: 1; 
   background: none;
   border: none;
   font-size: 24px;
-  // margin-left: 10px;
+  margin-left: 5px;
 }
 .menu-btn .tooltip-text {
   visibility: hidden;
@@ -1141,6 +1147,22 @@ input.form-control.search-btn:focus {
 .crop-section{
   width: 100%;
 }
+.time-pick{
+  .rc-time-picker-input{
+    width: 363px;
+  }
+}
+.main-container .time-pick .rc-time-picker-input {
+  width: 305px;
+}
+.dc-time{
+  .rc-time-picker-input{
+    width: 371px;
+  }
+}
+.main-container .dc-time .rc-time-picker-input {
+  width: 303px;
+}
 .rc-time-picker-clear{
   display: none!important;
 }
@@ -1151,6 +1173,8 @@ input.form-control.search-btn:focus {
   width: 250px;
   height: 36px;
   font-size: 15px;
+  color: $form-color;
+  border:1px solid $input-status;
 }
 .rc-time-picker-panel-select li:last-child{
   // display: none;
@@ -1641,7 +1665,7 @@ select:focus {
   font-size: 10px; 
   width: 76px;
   position: relative;
-  left: 5px;
+  left: 15px;
   margin-top: 5px;
 }
 .input-tip:hover .tooltip-text {
@@ -2280,8 +2304,10 @@ bottom: 50%;
 }
 .sub-filter .form-control{
   display: inline-flex;
-// width: 173px;
- width: 262px;
+  width: 305px;
+}
+.main-container .sub-filter .form-control{
+  width: 263px;
 }
 input.form-control.date-form {
   width: auto;
@@ -2377,6 +2403,9 @@ display: flex;
 .sub-filter{
   margin-top: 10px;
 }
+// .sub-filter .col-md-3{
+//   flex: 0 0 21%;
+// }
 // .status-filter{
 //   text-align:right;
 //  // margin: 15px 0 0;
@@ -2575,7 +2604,7 @@ display: flex;
     max-width: 81%;
   }
   .sub-filter{
-    margin-left: 17px;
+    //margin-left: 17px;
   }
 
 }
@@ -2584,14 +2613,14 @@ display: flex;
     max-width: 78%;
   }
   .sub-filter .form-control{
-   width:210px;
+   width:274px;
   }
-  .sub-filter{
-    margin-left: 16px;
-  }
-  .sub-filter{
-    margin-left: 17px;
-  }
+  // .sub-filter{
+  //   margin-left: 16px;
+  // }
+  // .sub-filter{
+  //   margin-left: 17px;
+  // }
 }
 @media screen and (min-width: 991px) and (max-width: 1199px){
   .react-bootstrap-daterangepicker-container{
@@ -2601,6 +2630,11 @@ display: flex;
     margin-left: 0;
   }
 }
+@media screen and (min-width: 768px){
+  .sub-filter .col-md-3{
+    flex: 0 0 22%;
+  }
+}
 @media screen and (min-width: 768px) and (max-width: 991px){
   .react-bootstrap-daterangepicker-container{
     max-width: 67%;
@@ -2608,6 +2642,7 @@ display: flex;
   .sub-filter{
     margin-left: 0;
   }
+  
 }
 
 
