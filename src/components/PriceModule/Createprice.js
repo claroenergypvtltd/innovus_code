@@ -26,7 +26,8 @@ class CreatePrice extends Component {
             weightId: 0,
             offerId: 0,
             categoryData: [],
-            flag: ''
+            flag: '',
+            contactUs: [{ name: '' }],
         }
     }
 
@@ -229,6 +230,9 @@ class CreatePrice extends Component {
                         "flag": flag,
                         "dcCode": this.state.dcCode
                     }
+                    // sendDetails['contactUs'] = this.state.contactUs && this.state.contactUs.map(item => {
+                    //     return item.name 
+                    //   });
                     if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
                         if (this.state.updateQuantity && this.state.offer == '' && !this.state.offerId) {
                             if (weightValue == 1) {
@@ -291,6 +295,28 @@ class CreatePrice extends Component {
         // this.props.history.goBack();
         this.props.history.push({ pathname: path.price.list, state: { priceSearchDatas: "backTrue" } });
     }
+
+    handleChangeContactUs = (idx) => (evt) => {
+        const newContact = this.state.contactUs.map((ContactUsolder, sidx) => {
+            if (idx !== sidx) return ContactUsolder;
+            return { ...ContactUsolder, name: evt.target.value };
+        });
+
+        this.setState({ contactUs: newContact });
+    }
+
+    handleRemoveContact = (idx) => () => {
+        this.setState({
+            contactUs: this.state.contactUs.filter((s, sidx) => idx !== sidx)
+        });
+    }
+
+    handleAddcontactUs = () => {
+        this.setState({
+            contactUs: this.state.contactUs.concat([{ name: '' }])
+        });
+    }
+
     render() {
         const { errors } = this.state;
         const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
@@ -458,7 +484,24 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['BOX_QUANTITY'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group col-md-6">
+                                        {/* <div className="form-group col-md-6">
+                                            <label>{window.strings.PRICE.QUANTITY}</label>
+                                            <input type="number"
+                                                placeholder="Quantity"
+                                                className={classnames('form-control', {
+                                                    'is-invalid': errors.quantity
+                                                })}
+                                                name="quantity"
+                                                onChange={this.handleInputChange}
+                                                value={this.state.quantity}
+                                                required
+                                            />
+                                            {this.state.submitted && this.state.offerId != 0 && !this.state.offer && this.state.offerId != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && this.state.offerId == 1 && (parseInt(this.state.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
+                                            {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
+                                        </div> */}
+
+                                        {/* <div className="form-group col-md-6">
                                             <label>{window.strings.PRICE.OFFER}</label>
                                             <input type="number"
                                                 placeholder="Offer"
@@ -473,9 +516,9 @@ class CreatePrice extends Component {
                                             {this.state.submitted && this.state.offerId != 0 && !this.state.offer && this.state.offerId != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
                                             {this.state.submitted && this.state.offerId == 1 && (parseInt(this.state.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
                                             {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
-                                        </div>
+                                        </div> */}
 
-                                        <div className="form-group col-md-6 ">
+                                        {/* <div className="form-group col-md-6 ">
                                             <label>{window.strings.PRICE.TYPE}</label>
                                             <select required name="offerId" className="form-control" value={this.state.offerId} onChange={this.handleInputChange} >
                                                 <option value="0">Select</option>
@@ -483,8 +526,87 @@ class CreatePrice extends Component {
                                                 <option value="2">Percentage</option>
                                             </select>
                                             {(this.state.submitted && this.state.offer && this.state.offerId == 0) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
-                                        </div>
+                                        </div> */}
+
+
+
+                                        {this.state.contactUs.map((contactUs, idx) => (
+                                            <div className="form-group col-md-12 pd0" key={idx + 1}>
+                                                <div className="col-md-10 pd0">
+                                                    <label>{window.strings.PRICE.QUANTITY} {idx + 1} :</label>
+                                                    <input
+                                                        type="email"
+                                                        className="form-control"
+                                                        placeholder={`contactUs #${idx + 1} email`}
+                                                        value={contactUs.name}
+                                                        onChange={this.handleChangeContactUs(idx)}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="col-md-2 add-del">
+
+                                                    {/* {idx === 0 && this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
+                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
+                                                    <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+
+                                                </div>
+                                            </div>
+                                        ))}
+
+
+                                        {this.state.contactUs.map((contactUs, idx) => (
+                                            <div className="form-group col-md-12 pd0" key={idx + 1}>
+                                                <div className="col-md-10 pd0">
+                                                    <label>{window.strings.PRICE.OFFER} {idx + 1} :</label>
+                                                    <input
+                                                        type="email"
+                                                        className="form-control"
+                                                        placeholder={`contactUs #${idx + 1} email`}
+                                                        value={contactUs.name}
+                                                        onChange={this.handleChangeContactUs(idx)}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="col-md-2 add-del">
+
+                                                    {/* {idx === 0 && this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
+                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
+                                                    <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+
+                                                </div>
+                                            </div>
+                                        ))}
+
+
+                                        {this.state.contactUs.map((contactUs, idx) => (
+                                            <div className="form-group col-md-12 pd0" key={idx + 1}>
+                                                <div className="col-md-10 pd0">
+                                                    <label>{window.strings.PRICE.TYPE} {idx + 1} :</label>
+                                                    <input
+                                                        type="email"
+                                                        className="form-control"
+                                                        placeholder={`contactUs #${idx + 1} email`}
+                                                        value={contactUs.name}
+                                                        onChange={this.handleChangeContactUs(idx)}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="col-md-2 add-del">
+
+                                                    {/* {idx === 0 && this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
+                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
+                                                    <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+
+                                                </div>
+                                            </div>
+                                        ))}
+
                                     </form>
+                                    <button>add another field</button>
+
                                 </div>
 
                                 <div className="col-md-12 bottom-section">

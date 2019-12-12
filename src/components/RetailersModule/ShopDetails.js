@@ -304,12 +304,12 @@ class ShopDetails extends React.Component {
 
                         {/* <input type="button" value="left" onClick={this.rotateleft} />
                         <button onClick={() => { this.uploadImage(shopImg) }}>Upload</button> */}
-                        <div className="text-center mb-3">
+                        {/* <div className="text-center mb-3">
                             <button className="shop-btn" onClick={this.rotateleft}><i class="fa fa-rotate-right"></i>Rotate</button>
                             <button onClick={() => { this.imageCapture(shopImg) }} className="shop-btn">
                                 <i class="fa fa-upload" aria-hidden="true"></i>Upload</button>
 
-                        </div>
+                        </div> */}
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
