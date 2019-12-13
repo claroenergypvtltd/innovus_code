@@ -531,47 +531,49 @@ class CreatePrice extends Component {
 
 
                                         {this.state.contactUs.map((contactUs, idx) => (
-                                            <div className="form-group row col-md-12" key={idx + 1}>
-                                                <div className="col-md-4">
-                                                    <label>{window.strings.PRICE.QUANTITY} {idx + 1} </label>
-                                                    <input
-                                                        type="email"
-                                                        className="form-control"
-                                                        placeholder={`contactUs #${idx + 1} email`}
-                                                        value={contactUs.name}
-                                                        onChange={this.handleChangeContactUs(idx)}
-                                                        required
-                                                    />
-                                                </div>
-                                                {/* <div className="form-group col-md-4" key={idx + 1}> */}
-                                                <div className="col-md-4">
-                                                    <label>{window.strings.PRICE.OFFER} {idx + 1} </label>
-                                                    <input
-                                                        type="email"
-                                                        className="form-control"
-                                                        placeholder={`contactUs #${idx + 1} email`}
-                                                        value={contactUs.name}
-                                                        onChange={this.handleChangeContactUs(idx)}
-                                                        required
-                                                    />
-                                                    {/* </div> */}
-                                                </div>
-                                                {/* <div className="form-group col-md-4" key={idx + 1}> */}
-                                                <div className="col-md-4">
-                                                    <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
-                                                    <input
-                                                        type="email"
-                                                        className="form-control"
-                                                        placeholder={`contactUs #${idx + 1} email`}
-                                                        value={contactUs.name}
-                                                        onChange={this.handleChangeContactUs(idx)}
-                                                        required
-                                                    />
-                                                    {/* </div> */}
+                                            <div className="col-md-12">
+                                                <div className="form-group row" key={idx + 1}>
+                                                    <div className="col-md-4">
+                                                        <label>{window.strings.PRICE.QUANTITY} {idx + 1} </label>
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder={`contactUs #${idx + 1} email`}
+                                                            value={contactUs.name}
+                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    {/* <div className="form-group col-md-4" key={idx + 1}> */}
+                                                    <div className="col-md-4 px-0">
+                                                        <label>{window.strings.PRICE.OFFER} {idx + 1} </label>
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder={`contactUs #${idx + 1} email`}
+                                                            value={contactUs.name}
+                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            required
+                                                        />
+                                                        {/* </div> */}
+                                                    </div>
+                                                    {/* <div className="form-group col-md-4" key={idx + 1}> */}
+                                                    <div className="col-md-4">
+                                                        <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder={`contactUs #${idx + 1} email`}
+                                                            value={contactUs.name}
+                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            required
+                                                        />
+                                                        {/* </div> */}
 
-                                                    <div className="add-del">
-                                                        <button type="button" onClick={this.handleAddcontactUs} className="btn-outline-success rounded-circle add-btn mr-2"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                        {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+                                                        <div className="add-del">
+                                                            <button type="button" onClick={this.handleAddcontactUs} className="btn-outline-success rounded-circle add-btn mr-2"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                            {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
