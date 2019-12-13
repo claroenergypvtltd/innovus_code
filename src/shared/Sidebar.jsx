@@ -49,13 +49,13 @@ export const Sidebar = [
 
     {
         name: (
-            <span className="menu-list user_manag">
+            <span className="menu-list user-manag">
                 <i />
                 {Label.userLabel}
             </span>
         ),
         logo: (
-            <span className="menu-list user_manag">
+            <span className="menu-list user-manag">
                 <i />
                 {/* {Label.userLabel} */}
             </span>
@@ -65,13 +65,13 @@ export const Sidebar = [
 
     {
         name: (
-            <span className="menu-list prdt_cate">
+            <span className="menu-list prdt-cate">
                 <i />
                 {Label.categoryLabel}
             </span>
         ),
         logo: (
-            <span className="menu-list prdt_cate">
+            <span className="menu-list prdt-cate">
                 <i />
                 {/* {Label.categoryLabel} */}
             </span>
@@ -80,13 +80,13 @@ export const Sidebar = [
     },
     {
         name: (
-            <span className="menu-list pay_manag">
+            <span className="menu-list pay-manag">
                 <i />
                 {Label.paymentLabel}
             </span>
         ),
         logo: (
-            <span className="menu-list pay_manag">
+            <span className="menu-list pay-manag">
                 <i />
                 {/* {Label.paymentLabel} */}
             </span>
@@ -96,13 +96,13 @@ export const Sidebar = [
 
     {
         name: (
-            <span className="menu-list report_manag">
+            <span className="menu-list report-manag">
                 <i />
                 {Label.reportLabel}
             </span>
         ),
         logo: (
-            <span className="menu-list report_manag">
+            <span className="menu-list report-manag">
                 <i />
                 {/* {Label.reportLabel} */}
             </span>
@@ -162,13 +162,13 @@ export const Sidebar = [
     // },
     {
         name: (
-            <span className="menu-list order">
+            <span className="menu-list vehicle">
                 <i />
                 {Label.VehicleManagement}
             </span>
         ),
         logo: (
-            <span className="menu-list order">
+            <span className="menu-list vehicle">
                 <i />
                 {/* {Label.VehicleManagement} */}
             </span>
@@ -194,13 +194,13 @@ export const Sidebar = [
     },
     {
         name: (
-            <span className="menu-list user_manag">
+            <span className="menu-list dc-manag">
                 <i />
                 {Label.settingLabel}
             </span>
         ),
         logo: (
-            <span className="menu-list user_manag">
+            <span className="menu-list dc-manag">
                 <i />
                 {/* {Label.settingLabel} */}
             </span>
@@ -239,7 +239,21 @@ export const Sidebar = [
         ),
         path: path.appSetting.add,
     },
-
+    {
+        name: (
+            <span className="menu-list dc-manag">
+                <i />
+                {Label.DCLabel}
+            </span>
+        ),
+        logo: (
+            <span className="menu-list dc-manag">
+                <i />
+                {/* {Label.DCLabel} */}
+            </span>
+        ),
+        path: path.appSetting.add,
+    },
     // {
     //     name: (
     //         <span className="menu-list static">
