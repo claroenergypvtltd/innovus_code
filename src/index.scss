@@ -1147,22 +1147,22 @@ input.form-control.search-btn:focus {
 .crop-section{
   width: 100%;
 }
-.time-pick{
-  .rc-time-picker-input{
-    width: 363px;
-  }
-}
-.main-container .time-pick .rc-time-picker-input {
-  width: 305px;
-}
-.dc-time{
-  .rc-time-picker-input{
-    width: 371px;
-  }
-}
-.main-container .dc-time .rc-time-picker-input {
-  width: 303px;
-}
+// .time-pick{
+//   .rc-time-picker-input{
+//     width: 363px;
+//   }
+// }
+// .main-container .time-pick .rc-time-picker-input {
+//   width: 305px;
+// }
+// .dc-time{
+//   .rc-time-picker-input{
+//     width: 371px;
+//   }
+// }
+// .main-container .dc-time .rc-time-picker-input {
+//   width: 303px;
+// }
 .rc-time-picker-clear{
   display: none!important;
 }
@@ -1719,6 +1719,33 @@ select:focus {
 /****************************Price Section************************/
 .sub-price{
   padding-top: 28px;
+}
+.add-del{
+  position: absolute;
+  top: 35px;
+  right: -61px;
+  font-size: 14px;
+}
+.btn-outline-danger{
+  border: none;
+  border-color: $reject-red;
+  color: $reject-red;
+}
+.btn-outline-danger:hover{
+  border: none;
+  background-color: $reject-red;
+  color: $white;
+}
+.btn-outline-success{
+  border: none;
+  border-color: $accept-green;
+  color: $accept-green;
+}
+.btn-outline-success:hover{
+  border: none;
+  border-color: $accept-green;
+  background-color: $accept-green;
+  color: $white;
 }
 // .add-price{
 //   margin:auto;
@@ -2307,7 +2334,7 @@ bottom: 50%;
   width: 305px;
 }
 .main-container .sub-filter .form-control{
-  width: 263px;
+  width: 232px;
 }
 input.form-control.date-form {
   width: auto;

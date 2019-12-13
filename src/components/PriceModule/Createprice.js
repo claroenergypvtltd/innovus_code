@@ -531,9 +531,59 @@ class CreatePrice extends Component {
 
 
                                         {this.state.contactUs.map((contactUs, idx) => (
-                                            <div className="form-group col-md-12 pd0" key={idx + 1}>
-                                                <div className="col-md-10 pd0">
-                                                    <label>{window.strings.PRICE.QUANTITY} {idx + 1} :</label>
+                                            <div className="col-md-12">
+                                                <div className="form-group row" key={idx + 1}>
+                                                    <div className="col-md-4">
+                                                        <label>{window.strings.PRICE.QUANTITY} {idx + 1} </label>
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder={`contactUs #${idx + 1} email`}
+                                                            value={contactUs.name}
+                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    {/* <div className="form-group col-md-4" key={idx + 1}> */}
+                                                    <div className="col-md-4 px-0">
+                                                        <label>{window.strings.PRICE.OFFER} {idx + 1} </label>
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder={`contactUs #${idx + 1} email`}
+                                                            value={contactUs.name}
+                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            required
+                                                        />
+                                                        {/* </div> */}
+                                                    </div>
+                                                    {/* <div className="form-group col-md-4" key={idx + 1}> */}
+                                                    <div className="col-md-4">
+                                                        <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder={`contactUs #${idx + 1} email`}
+                                                            value={contactUs.name}
+                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            required
+                                                        />
+                                                        {/* </div> */}
+
+                                                        <div className="add-del">
+                                                            <button type="button" onClick={this.handleAddcontactUs} className="btn-outline-success rounded-circle add-btn mr-2"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                            {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+
+                                        {/* 
+                                        {this.state.contactUs.map((contactUs, idx) => (
+                                            <div className="form-group col-md-4" key={idx + 1}>
+                                                <div className="">
+                                                    <label>{window.strings.PRICE.OFFER} {idx + 1} </label>
                                                     <input
                                                         type="email"
                                                         className="form-control"
@@ -542,23 +592,15 @@ class CreatePrice extends Component {
                                                         onChange={this.handleChangeContactUs(idx)}
                                                         required
                                                     />
-                                                </div>
-                                                <div className="col-md-2 add-del">
-
-                                                    {/* {idx === 0 && this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
-                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
-                                                    <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
-
                                                 </div>
                                             </div>
                                         ))}
 
 
                                         {this.state.contactUs.map((contactUs, idx) => (
-                                            <div className="form-group col-md-12 pd0" key={idx + 1}>
-                                                <div className="col-md-10 pd0">
-                                                    <label>{window.strings.PRICE.OFFER} {idx + 1} :</label>
+                                            <div className="form-group col-md-4" key={idx + 1}>
+                                                <div className="">
+                                                    <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
                                                     <input
                                                         type="email"
                                                         className="form-control"
@@ -568,45 +610,17 @@ class CreatePrice extends Component {
                                                         required
                                                     />
                                                 </div>
-                                                <div className="col-md-2 add-del">
+                                                <div className="add-del">
 
                                                     {/* {idx === 0 && this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
                                                     {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
-                                                    <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
-
+                                        {/* <button type="button" onClick={this.handleAddcontactUs} className="btn-outline-success rounded-circle add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
                                                 </div>
                                             </div>
-                                        ))}
-
-
-                                        {this.state.contactUs.map((contactUs, idx) => (
-                                            <div className="form-group col-md-12 pd0" key={idx + 1}>
-                                                <div className="col-md-10 pd0">
-                                                    <label>{window.strings.PRICE.TYPE} {idx + 1} :</label>
-                                                    <input
-                                                        type="email"
-                                                        className="form-control"
-                                                        placeholder={`contactUs #${idx + 1} email`}
-                                                        value={contactUs.name}
-                                                        onChange={this.handleChangeContactUs(idx)}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="col-md-2 add-del">
-
-                                                    {/* {idx === 0 && this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
-                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
-                                                    <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
-
-                                                </div>
-                                            </div>
-                                        ))}
+                                        ))} */}
 
                                     </form>
-                                    <button>add another field</button>
-
                                 </div>
 
                                 <div className="col-md-12 bottom-section">
