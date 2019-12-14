@@ -39,8 +39,7 @@ axios.interceptors.response.use(
       window.location.reload();
     } else if (error.request.status === 401) {
       toast.warning(window.strings['INFORMATION'], error.response.message);
-      localStorage.removeItem('user');
-      localStorage.removeItem('jwtToken');
+      localStorage.clear();
       return Promise.reject(error);
     } else if (error.request.status === 500) {
       toast.error(error.response.message);

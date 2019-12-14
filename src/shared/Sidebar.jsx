@@ -256,21 +256,21 @@ export const Sidebar = [
         ),
         path: path.appSetting.add,
     },
-    {
-        name: (
-            <span className="menu-list dc-manag">
-                <i />
-                {Label.DCLabel}
-            </span>
-        ),
-        logo: (
-            <span className="menu-list dc-manag">
-                <i />
-                {/* {Label.DCLabel} */}
-            </span>
-        ),
-        path: path.appSetting.add,
-    },
+    // {
+    //     name: (
+    //         <span className="menu-list dc-manag">
+    //             <i />
+    //             {Label.DCLabel}
+    //         </span>
+    //     ),
+    //     logo: (
+    //         <span className="menu-list dc-manag">
+    //             <i />
+    //             {/* {Label.DCLabel} */}
+    //         </span>
+    //     ),
+    //     path: path.appSetting.add,
+    // },
     // {
     //     name: (
     //         <span className="menu-list static">
