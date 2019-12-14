@@ -20,12 +20,10 @@ class FetchPrice extends Component {
         super(props);
         this.state = {
             TableHead: ["Product ID", "Product Name", 'DC Code', "Total Available quantity(Unit)", "Price(Unit)", "Box Quantity(Unit)", "Actions"], PriceLists: props.getLists,
-            CategoryCount: props.getCount,
             search: '',
             dcCode: '',
             currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
-            //itemPerPage: 1,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
             PriceLists: []

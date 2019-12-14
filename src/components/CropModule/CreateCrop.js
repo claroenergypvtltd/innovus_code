@@ -36,6 +36,9 @@ class CreateCrop extends Component {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.cropId) {
             this.setState({ cropId: this.props.location.state.cropId })
         }
+        if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId) {
+            this.setState({ editId: this.props.location.state.categoryId })
+        }
     }
 
     componentDidMount() {
@@ -108,7 +111,7 @@ class CreateCrop extends Component {
             formData.append("description", this.state.description);
             formData.append("image", this.state.file);
             formData.append("dcCode", this.state.dcCode);
-            formData.append("categoryId", this.state.categoryId);
+            formData.append("id", this.state.editId);
             if (this.state.cropId) {
                 formData.append("parentId", this.state.cropId);
             } else {
@@ -126,11 +129,18 @@ class CreateCrop extends Component {
             let cId = this.props.location.state.categoryId;
             this.setState({ categoryId: cId });
 
+            // let obj = {
+            //     "categoryId": this.props.location.state.categoryId
+            // }
+
+
             let obj = {
-                "categoryId": this.props.location.state.categoryId
+                categoryId: this.state.editId,
+                name: "subCategory"
             }
 
-            this.props.getSpecificCategory(obj);
+            this.props.getSpecificCategory(obj, false);
+            // this.props.getSpecificCategory(obj);
         }
     }
 

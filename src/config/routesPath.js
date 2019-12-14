@@ -356,6 +356,11 @@ export const routesPath = [
                 exact: true
             },
             {
+                path: process.env.PUBLIC_URL + '/dc/edit/:id?',
+                component: CreateDC,
+                exact: true
+            },
+            {
                 path: process.env.PUBLIC_URL + '/appsetting',
                 component: AppSetting,
                 exact: true

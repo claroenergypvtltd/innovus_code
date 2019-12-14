@@ -14,6 +14,7 @@ import IrrigationSettingReducer from './IrrigationSettingReducer';
 import couponReducer from './couponReducer'
 import salesAgentReducer from './salesAgentReducer'
 import VehicleReducer from './VehicleReducer'
+import dcReducer from './dcReducer'
 
 export default combineReducers({
     errors: errorReducer,
@@ -30,6 +31,7 @@ export default combineReducers({
     irrigationSetting: IrrigationSettingReducer,
     coupon: couponReducer,
     salesAgent: salesAgentReducer,
-    Vehicle: VehicleReducer
+    Vehicle: VehicleReducer,
+    dc: dcReducer
 });
 

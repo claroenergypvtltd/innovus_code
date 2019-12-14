@@ -39,7 +39,8 @@ export const labelResources = {
     "CartLabel": "Cart",
     "VehicleManagement": "Vehicle Management",
     "Setting": "Settings",
-    "DCLabel": "DC Management"
+    "DCLabel": "DC Management",
+    "DCManagement": "DC Management"
   }
 
 }

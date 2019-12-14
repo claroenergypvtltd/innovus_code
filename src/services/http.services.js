@@ -31,6 +31,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     console.log(error);
+    PubSub.publish('msg', false);
     if (error.request.status === 403) {
       toast.warning(window.strings['INFORMATION'], error.response.message);
       localStorage.removeItem("user");

@@ -27,7 +27,8 @@ class CreatePrice extends Component {
             offerId: 0,
             categoryData: [],
             flag: '',
-            contactUs: [{ name: '' }],
+            offerArray: [{ id: '', quantity: '', offer: '', type: '' }],
+            removeArray: []
         }
     }
 
@@ -67,14 +68,26 @@ class CreatePrice extends Component {
             }
             this.props.getPriceList(obj).then(resp => {
                 if (resp && resp.datas && resp.datas[0]) {
-                    this.setState({ parentId: resp.datas[0].parentId, dcCode: resp.datas[0].productDetail.dcCode }, () => {
+                    let priceDatas = resp.datas[0]
+                    let contactArray = [];
+
+                    priceDatas && priceDatas.productOffers && priceDatas.productOffers.map((item, index) => {
+                        if (index <= 3) {
+                            let respObject = { id: item.id, quantity: item.quantity, offer: item.discountValue, type: item.discountUnit };
+                            contactArray.push(respObject)
+                        }
+                    })
+
+                    this.setState({
+                        parentId: priceDatas.parentId, dcCode: priceDatas.productDetail.dcCode,
+                        offerArray: contactArray.length == 0 ? this.state.offerArray : contactArray
+                    }, () => {
                         getCategoryDCCode(this.state.parentId).then(resp => {
                             if (resp && resp.data && resp.data.datas) {
-                                this.setState({ dcCodeData: resp.data.datas })
+                                let respData = resp.data.datas;
+                                this.setState({ dcCodeData: respData })
                             }
                         });
-
-
                     })
                     let obj = {
                         "categoryId": resp.datas[0].parentId
@@ -179,114 +192,184 @@ class CreatePrice extends Component {
         this.props.getCategoryList(user);
     }
     handleSubmit = (e) => {
+        console.log("offerArray", this.state.offerArray);
         e.preventDefault();
         this.setState({
             submitted: true
         })
-        if (this.state.price >= this.state.offer || this.state.offerId == 2 && parseInt(this.state.offer) <= 100 || !this.state.offer && this.state.offerId == 0 || parseInt(this.state.offer)) {
-            if ((this.state.offerId == 2 && this.state.offer <= 100) || (this.state.offerId == 1 && parseInt(this.state.price) >= parseInt(this.state.offer)) || !this.state.offer && !this.state.offerId || this.state.offerId == 0) {
-                if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
+        let formVal = false;
 
-                    let isUpdate = false;
-                    let flag;
-                    let weightValue;
-                    this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
-                    if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
-                        isUpdate = true;
-                    }
-                    if (this.state.weight == 0 && this.state.updateQuantity) {
-                        if (this.state.updateQuantity < 0) {
-                            toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.")
-                        } else {
-                            // this.props.submitPrice(obj, isUpdate);
-                            weightValue = 1;
-                        }
-                    }
-                    else if (this.state.weight != 0 && this.state.updateQuantity) {
-                        if (this.state.updateQuantity < 0) {
-                            if (Math.abs(this.state.updateQuantity) > this.state.weight) {
-                                toastr.error("Decrement Quantity should be Lesser Or equal to Available quantity.")
+        let isValid = true;
+        this.state.offerArray.map((item, index) => {
+            if (this.state.price >= item.offer || item.type == 2 && parseInt(item.offer) <= 100 || !item.offer && item.type == '' || parseInt(item.offer)) {
+                if ((item.type == 2 && item.offer <= 100) || (item.type == 1 && parseInt(this.state.price) >= parseInt(item.offer)) || !item.offer && !item.type || item.type == '') {
+                    if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
+                        let weightValue;
+                        if (this.state.weight == 0 && this.state.updateQuantity) {
+                            if (this.state.updateQuantity < 0) {
+                                isValid = false
+                                toastr.error("Available Quantity is Zero.Cannot Decrement.Please Enter Positive Value.");
+                                return;
                             } else {
-                                // this.props.submitPrice(obj, isUpdate);
                                 weightValue = 1;
                             }
-                        } else {
-                            // this.props.submitPrice(obj, isUpdate);
-                            weightValue = 1;
                         }
-                    }
-                    let obj = {
-                        "id": this.state.categoryId,
-                        "rupeesize": "RS/" + this.state.weightId,
-                        "amount": this.state.price,
-                        "boxQuantity": this.state.boxQuantity,
-                        "totalQuantity": this.state.weight,
-                        "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
-                        "totalQuantityUnit": this.state.weightId,
-                        "boxQuantityUnit": this.state.weightId,
-                        "discountValue": this.state.offer ? this.state.offer : 0,
-                        "discountUnit": this.state.offerId == 0 ? '' : this.state.offerId,
-                        "productId": this.state.categoryId,
-                        "flag": flag,
-                        "dcCode": this.state.dcCode
-                    }
-                    // sendDetails['contactUs'] = this.state.contactUs && this.state.contactUs.map(item => {
-                    //     return item.name 
-                    //   });
-                    if (this.state.updateQuantity || this.state.offer || this.state.offerId != 0) {
-                        if (this.state.updateQuantity && this.state.offer == '' && !this.state.offerId) {
-                            if (weightValue == 1) {
-                                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                    this.props.submitPrice(obj, isUpdate);
+                        else if (this.state.weight != 0 && this.state.updateQuantity) {
+                            if (this.state.updateQuantity < 0) {
+                                if (Math.abs(this.state.updateQuantity) > this.state.weight) {
+                                    isValid = false
+                                    toastr.error("Decrement Quantity should be Lesser Or equal to Available quantity.");
+                                    return;
                                 } else {
-                                    toastr.error("Please increment/decrement in multiple of box quantity")
+                                    weightValue = 1;
                                 }
+                            } else {
+                                weightValue = 1;
                             }
                         }
 
-                        else if (this.state.updateQuantity && this.state.offerId != 0 && this.state.offer) {
-                            if (weightValue == 1) {
-                                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                    this.props.submitPrice(obj, isUpdate);
-                                } else {
-                                    toastr.error("Please increment/decrement in multiple of box quantity")
+                        if (this.state.updateQuantity || item.offer || item.type != '') {
+                            if (this.state.updateQuantity && item.offer == '' && !item.type) {
+                                if (weightValue == 1) {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        // isValid = true
+                                        // this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                        isValid = false
+                                        return;
+                                    }
                                 }
                             }
-                        }
-                        else if (!this.state.updateQuantity && !this.state.offer && !this.state.offerId) {
-                            this.props.submitPrice(obj, isUpdate);
-                        }
-                        else if (this.state.offerId == 0 && this.state.updateQuantity && !this.state.offer) {
-                            if (weightValue == 1) {
-                                if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
-                                    this.props.submitPrice(obj, isUpdate);
-                                } else {
-                                    toastr.error("Please increment/decrement in multiple of box quantity")
+
+                            else if (this.state.updateQuantity && item.type != '' && item.offer) {
+                                if (weightValue == 1) {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        // isValid = true
+                                        // this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        isValid = false
+                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                        return;
+                                    }
                                 }
                             }
-                        }
-                        else if (this.state.offer && this.state.offerId == 2) {
-                            if (parseInt(this.state.offer) <= 100) {
-                                this.props.submitPrice(obj, isUpdate);
+                            else if (!this.state.updateQuantity && !item.offer && !item.type) {
+                                // isValid = true
+                                // this.props.submitPrice(obj, isUpdate);
+                            }
+                            else if (item.type == 0 && this.state.updateQuantity && !item.offer) {
+                                if (weightValue == 1) {
+                                    if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
+                                        // isValid = true
+                                        // this.props.submitPrice(obj, isUpdate);
+                                    } else {
+                                        isValid = false
+                                        toastr.error("Please increment/decrement in multiple of box quantity");
+                                        return;
+                                    }
+                                }
+                            }
+                            else if (item.offer && item.type == 2) {
+                                if (parseInt(item.offer) <= 100) {
+                                    // isValid = true
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
+                            }
+                            else if (item.offer && item.type == 1) {
+                                if (parseInt(item.offer) <= parseInt(this.state.price)) {
+                                    // isValid = true
+                                    // this.props.submitPrice(obj, isUpdate);
+                                }
+                            } else if (item.offer && item.type == 0) {
+                                isValid = false
+                                toastr.error("Select valid offer");
+                                return;
                             }
                         }
-                        else if (this.state.offer && this.state.offerId == 1) {
-                            if (parseInt(this.state.offer) <= parseInt(this.state.price)) {
-                                this.props.submitPrice(obj, isUpdate);
-                            }
-                        } else if (this.state.offer && this.state.offerId == 0) {
-                            toastr.error("Select valid offer")
+                        else {
+                            // isValid = true
+                            // this.props.submitPrice(obj, isUpdate);
                         }
                     }
-                    else {
-                        this.props.submitPrice(obj, isUpdate);
+                    if (item.quantity) {
+                        if (Number(item.quantity) % this.state.boxQuantity == 0) {
+                            // isValid = true
+                            // this.props.submitPrice(obj, isUpdate);                            
+                        } else {
+                            isValid = false
+                            toastr.error("Please increment/decrement in multiple of box quantity");
+                            return;
+                        }
                     }
                 }
+                else {
+                    isValid = false
+                    item.type == 1 && parseInt(this.state.price) < parseInt(item.offer) || !item.offer ? toastr.error("Select valid offer") : toastr.error("Select valid offer type");
+                    return;
+                }
             }
-            else {
-                this.state.offerId == 1 && parseInt(this.state.price) < parseInt(this.state.offer) || !this.state.offer ? toastr.error("Select valid offer") : toastr.error("Select valid offer type")
-                // this.state.offer > 100 ? toastr.error("Select valid offer type") : toastr.error("Select valid offer type") ;
+        })
+        if (isValid == true) {
+            let flag;
+            this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
+
+            let isUpdate = false;
+            if (this.props.location && this.props.location.state && this.props.location.state.priceId) {
+                isUpdate = true;
             }
+
+
+
+
+            let arrayData = [];
+
+            this.state.offerArray && this.state.offerArray.map(item => {
+                let sendObj = {}
+                sendObj.id = item.id;
+                if (item.quantity && item.offer && item.type) {
+                    sendObj.quantity = item.quantity;
+                    sendObj.discountValue = item.offer;
+                    sendObj.discountUnit = item.type;
+                    sendObj.quantityUnit = this.state.weightId
+                    arrayData.push(sendObj);
+                }
+            });
+
+            var isDuplicate = false;
+            var valueArr = this.state.offerArray.map(function (item) { return parseInt(item.quantity) });
+            isDuplicate = valueArr.some(function (item, idx) {
+                return valueArr.indexOf(item) != idx
+            });
+            this.state.removeArray && this.state.removeArray.map(item => {
+                arrayData.push(item);
+            })
+
+            let obj = {
+                "id": this.state.categoryId,
+                "rupeesize": "RS/" + this.state.weightId,
+                "amount": this.state.price,
+                "boxQuantity": this.state.boxQuantity,
+                "totalQuantity": this.state.weight,
+                "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
+                "totalQuantityUnit": this.state.weightId,
+                "boxQuantityUnit": this.state.weightId,
+                "discountValue": this.state.offer ? this.state.offer : 0,
+                // "discountUnit": this.state.offerId == 0 ? '' : this.state.offerId,
+                "productId": this.state.categoryId,
+                "flag": flag,
+                "dcCode": this.state.dcCode,
+                "offer": arrayData
+            }
+
+            if (!isDuplicate) {
+                this.props.submitPrice(obj, isUpdate);
+            } else {
+                toastr.error("Please remove duplicate quantity")
+            }
+
+        } else {
+            toastr.error("Mandatory fields are missing")
         }
     }
 
@@ -296,24 +379,51 @@ class CreatePrice extends Component {
         this.props.history.push({ pathname: path.price.list, state: { priceSearchDatas: "backTrue" } });
     }
 
-    handleChangeContactUs = (idx) => (evt) => {
-        const newContact = this.state.contactUs.map((ContactUsolder, sidx) => {
-            if (idx !== sidx) return ContactUsolder;
-            return { ...ContactUsolder, name: evt.target.value };
+    handleChangeQuantity = (idx) => (evt) => {
+        const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
+            if (idx !== sidx) return offerArrayolder;
+            return { ...offerArrayolder, quantity: evt.target.value };
         });
 
-        this.setState({ contactUs: newContact });
+        this.setState({ offerArray: newContact });
     }
 
-    handleRemoveContact = (idx) => () => {
+    handleChangeOffer = (idx) => (evt) => {
+        const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
+            if (idx !== sidx) return offerArrayolder;
+            return { ...offerArrayolder, offer: evt.target.value };
+        });
+
+        this.setState({ offerArray: newContact });
+    }
+
+    handleChangeType = (idx) => (evt) => {
+        const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
+            if (idx !== sidx) return offerArrayolder;
+            return { ...offerArrayolder, type: evt.target.value };
+        });
+
+        this.setState({ offerArray: newContact });
+    }
+
+    handleRemoveContact = (idx, removeId) => () => {
+        let removeArray = this.state.removeArray;
+        if (removeId) {
+            let obj = {
+                "id": removeId,
+                "isDeleted": 1
+            }
+            removeArray.push(obj);
+        }
+
         this.setState({
-            contactUs: this.state.contactUs.filter((s, sidx) => idx !== sidx)
+            offerArray: this.state.offerArray.filter((s, sidx) => idx !== sidx)
         });
     }
 
-    handleAddcontactUs = () => {
+    handleAddofferArray = () => {
         this.setState({
-            contactUs: this.state.contactUs.concat([{ name: '' }])
+            offerArray: this.state.offerArray.concat([{ quantity: '', offer: '', type: '' }])
         });
     }
 
@@ -530,49 +640,63 @@ class CreatePrice extends Component {
 
 
 
-                                        {this.state.contactUs.map((contactUs, idx) => (
+                                        {this.state.offerArray.map((offerArray, idx) => (
                                             <div className="col-md-12">
                                                 <div className="form-group row" key={idx + 1}>
                                                     <div className="col-md-4">
                                                         <label>{window.strings.PRICE.QUANTITY} {idx + 1} </label>
                                                         <input
-                                                            type="email"
+                                                            type="number"
                                                             className="form-control"
-                                                            placeholder={`contactUs #${idx + 1} email`}
-                                                            value={contactUs.name}
-                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            placeholder={`Quantity ${idx + 1} `}
+                                                            value={offerArray.quantity}
+                                                            onChange={this.handleChangeQuantity(idx)}
                                                             required
                                                         />
+                                                        {this.state.submitted && (offerArray.type || offerArray.offer) && !offerArray.quantity && <div className="mandatory">{window.strings['PRICE']['QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                                        {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.quantity) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid Quantity</div>}
+                                                        {this.state.submitted && offerArray.type == 2 && offerArray.quantity > 100 && <div className="mandatory">Please enter valid Quantity</div>}
+
                                                     </div>
                                                     {/* <div className="form-group col-md-4" key={idx + 1}> */}
                                                     <div className="col-md-4 px-0">
                                                         <label>{window.strings.PRICE.OFFER} {idx + 1} </label>
                                                         <input
-                                                            type="email"
+                                                            type="number"
                                                             className="form-control"
-                                                            placeholder={`contactUs #${idx + 1} email`}
-                                                            value={contactUs.name}
-                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            placeholder={`Offer ${idx + 1} `}
+                                                            value={offerArray.offer}
+                                                            onChange={this.handleChangeOffer(idx)}
                                                             required
                                                         />
+                                                        {this.state.submitted && offerArray.type != 0 && !offerArray.offer && offerArray.type != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                                        {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
+                                                        {this.state.submitted && offerArray.type == 2 && offerArray.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
+
                                                         {/* </div> */}
                                                     </div>
                                                     {/* <div className="form-group col-md-4" key={idx + 1}> */}
                                                     <div className="col-md-4">
                                                         <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
-                                                        <input
+                                                        {/* <input
                                                             type="email"
                                                             className="form-control"
-                                                            placeholder={`contactUs #${idx + 1} email`}
-                                                            value={contactUs.name}
-                                                            onChange={this.handleChangeContactUs(idx)}
+                                                            placeholder={`offerArray #${idx + 1} email`}
+                                                            value={offerArray.type}
+                                                            onChange={this.handleChangeType(idx)}
                                                             required
-                                                        />
-                                                        {/* </div> */}
+                                                        /> */}
+                                                        <select required name="offerId" className="form-control" value={offerArray.type} onChange={this.handleChangeType(idx)} >
+                                                            <option value="">Select</option>
+                                                            <option value="1">Currency</option>
+                                                            <option value="2">Percentage</option>
+                                                        </select>
+                                                        {(this.state.submitted && offerArray.offer && offerArray.type == 0) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
 
+                                                        {/* </div> */}
                                                         <div className="add-del">
-                                                            <button type="button" onClick={this.handleAddcontactUs} className="btn-outline-success rounded-circle add-btn mr-2"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                            {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+                                                            {idx == 0 && this.state.offerArray.length <= 3 && <button type="button" onClick={this.handleAddofferArray} className="btn-outline-success rounded-circle add-btn mr-2"><i class="fa fa-plus" aria-hidden="true"></i></button>}
+                                                            {this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx, offerArray.id)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -580,16 +704,16 @@ class CreatePrice extends Component {
                                         ))}
 
                                         {/* 
-                                        {this.state.contactUs.map((contactUs, idx) => (
+                                        {this.state.offerArray.map((offerArray, idx) => (
                                             <div className="form-group col-md-4" key={idx + 1}>
                                                 <div className="">
                                                     <label>{window.strings.PRICE.OFFER} {idx + 1} </label>
                                                     <input
                                                         type="email"
                                                         className="form-control"
-                                                        placeholder={`contactUs #${idx + 1} email`}
-                                                        value={contactUs.name}
-                                                        onChange={this.handleChangeContactUs(idx)}
+                                                        placeholder={`offerArray #${idx + 1} email`}
+                                                        value={offerArray.name}
+                                                        onChange={this.handleChangeQuantity(idx)}
                                                         required
                                                     />
                                                 </div>
@@ -597,25 +721,25 @@ class CreatePrice extends Component {
                                         ))}
 
 
-                                        {this.state.contactUs.map((contactUs, idx) => (
+                                        {this.state.offerArray.map((offerArray, idx) => (
                                             <div className="form-group col-md-4" key={idx + 1}>
                                                 <div className="">
                                                     <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
                                                     <input
                                                         type="email"
                                                         className="form-control"
-                                                        placeholder={`contactUs #${idx + 1} email`}
-                                                        value={contactUs.name}
-                                                        onChange={this.handleChangeContactUs(idx)}
+                                                        placeholder={`offerArray #${idx + 1} email`}
+                                                        value={offerArray.name}
+                                                        onChange={this.handleChangeQuantity(idx)}
                                                         required
                                                     />
                                                 </div>
                                                 <div className="add-del">
 
-                                                    {/* {idx === 0 && this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleAddcontactUs} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
-                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
-                                        {/* <button type="button" onClick={this.handleAddcontactUs} className="btn-outline-success rounded-circle add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    {this.state.contactUs.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+                                                    {/* {idx === 0 && this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleAddofferArray} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
+                                                    {this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
+                                        {/* <button type="button" onClick={this.handleAddofferArray} className="btn-outline-success rounded-circle add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                    {this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
                                                 </div>
                                             </div>
                                         ))} */}

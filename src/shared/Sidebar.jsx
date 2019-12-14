@@ -80,7 +80,24 @@ export const Sidebar = [
     },
     {
         name: (
-            <span className="menu-list pay-manag">
+            <span className="menu-list order">
+                <i />
+                {Label.DCManagement}
+            </span>
+        ),
+        logo: (
+            <span className="menu-list order">
+                <i />
+                {/* {Label.VehicleManagement} */}
+            </span>
+        ),
+        // path: path.inprogress.order,
+
+        path: path.dc.list,
+    },
+    {
+        name: (
+            <span className="menu-list pay_manag">
                 <i />
                 {Label.paymentLabel}
             </span>
