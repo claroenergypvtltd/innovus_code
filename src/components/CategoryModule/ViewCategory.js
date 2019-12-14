@@ -17,7 +17,7 @@ class ViewCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "Image", "Description", "DC Code", "Action"],
+            TableHead: ["Crop Name", "Image", "Description", "DC Code", "status", "Action"],
             // CategoryListDatas: props.getLists.datas,
             CategoryCount: props.getCount,
             currentPage: 0,
@@ -30,7 +30,7 @@ class ViewCategory extends Component {
     componentDidMount() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId
             && this.props.location.state.cropSessionData == 'cropSessionBack') {
-            var subCatSessData = JSON.parse(sessionStorage.subCatSessionData)
+            var subCatSessData = sessionStorage && sessionStorage.subCatSessionData && JSON.parse(sessionStorage.subCatSessionData)
             let data = subCatSessData.search || subCatSessData.dcCode ? true : false;
             this.setState({ categoryId: this.props.location.state.categoryId, currentPage: subCatSessData.page, itemPerPage: subCatSessData.limit, search: subCatSessData.search, advanceSearch: data, dcCodeObj: subCatSessData.dcCodeObj, dcCode: subCatSessData.dcCode }, () => {
                 this.getDCData();
@@ -126,7 +126,15 @@ class ViewCategory extends Component {
 
 
     itemEdit = (catId) => {
-        this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId } });
+        let obj = {
+            "page": this.state.currentPage,
+            "limit": this.state.itemPerPage,
+            "search": this.state.search,
+            "dcCode": this.state.dcCode,
+            "dcCodeObj": this.state.dcCodeObj
+        }
+        sessionStorage.setItem('subCatSessionData', JSON.stringify(obj))
+        this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId, cropId: this.state.categoryId } });
     }
 
 
@@ -336,8 +344,8 @@ class ViewCategory extends Component {
                     <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                 </div> */}
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
-                // handleDelete={this.handleDelete}
-                //     handleEdit={this.itemEdit} 
+                    // handleDelete={this.handleDelete}
+                    handleEdit={this.itemEdit}
                 // handleStatusChange={this.handleStatusChange}
 
                 />

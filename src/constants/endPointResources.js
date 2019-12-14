@@ -19,7 +19,8 @@ export const endPoint = {
     "crop": "/crop",
     "irrigation": "/irrigation",
     "kyc": "/kyc",
-
+    "distributeCentres": "/distributeCentres",
+    "distributeCentre": "/distributeCentre",
     "price": "/inventorys",
     "inventory": "/inventory",
 
