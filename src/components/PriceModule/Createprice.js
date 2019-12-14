@@ -27,7 +27,7 @@ class CreatePrice extends Component {
             offerId: 0,
             categoryData: [],
             flag: '',
-            offerArray: [{ id: '', quantity: '', offer: '', type: '' }],
+            offerArray: [{ quantity: '', offer: '', type: '' }],
             removeArray: []
         }
     }
@@ -205,6 +205,23 @@ class CreatePrice extends Component {
                 if ((item.type == 2 && item.offer <= 100) || (item.type == 1 && parseInt(this.state.price) >= parseInt(item.offer)) || !item.offer && !item.type || item.type == '') {
                     if (this.state.categoryId && this.state.price && this.state.weightId != 0 && this.state.boxQuantity) {
                         let weightValue;
+
+                        if (item.quantity || item.offer || item.type) {
+                            if (item.quantity && item.offer && item.type) {
+                                if (Number(item.quantity) % this.state.boxQuantity == 0) {
+                                    // isValid = true
+                                    // this.props.submitPrice(obj, isUpdate);                            
+                                } else {
+                                    isValid = false
+                                    toastr.error("Please increment/decrement in multiple of box quantity");
+                                    return;
+                                }
+                            } else {
+                                isValid = false
+                                return;
+                            }
+                        }
+
                         if (this.state.weight == 0 && this.state.updateQuantity) {
                             if (this.state.updateQuantity < 0) {
                                 isValid = false
@@ -292,16 +309,6 @@ class CreatePrice extends Component {
                             // this.props.submitPrice(obj, isUpdate);
                         }
                     }
-                    if (item.quantity) {
-                        if (Number(item.quantity) % this.state.boxQuantity == 0) {
-                            // isValid = true
-                            // this.props.submitPrice(obj, isUpdate);                            
-                        } else {
-                            isValid = false
-                            toastr.error("Please increment/decrement in multiple of box quantity");
-                            return;
-                        }
-                    }
                 }
                 else {
                     isValid = false
@@ -319,9 +326,6 @@ class CreatePrice extends Component {
                 isUpdate = true;
             }
 
-
-
-
             let arrayData = [];
 
             this.state.offerArray && this.state.offerArray.map(item => {
@@ -337,8 +341,13 @@ class CreatePrice extends Component {
             });
 
             var isDuplicate = false;
-            var valueArr = this.state.offerArray.map(function (item) { return parseInt(item.quantity) });
-            isDuplicate = valueArr.some(function (item, idx) {
+            debugger;
+            var valueArr = this.state.offerArray.map(function (item) {
+                if (item.quantity) {
+                    return parseInt(item.quantity)
+                }
+            });
+            isDuplicate = valueArr && valueArr.some(function (item, idx) {
                 return valueArr.indexOf(item) != idx
             });
             this.state.removeArray && this.state.removeArray.map(item => {
@@ -399,7 +408,7 @@ class CreatePrice extends Component {
 
     handleChangeType = (idx) => (evt) => {
         const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
-            if (idx !== sidx) return offerArrayolder;
+            // if (idx !== sidx) return offerArrayolder;
             return { ...offerArrayolder, type: evt.target.value };
         });
 
@@ -423,7 +432,7 @@ class CreatePrice extends Component {
 
     handleAddofferArray = () => {
         this.setState({
-            offerArray: this.state.offerArray.concat([{ quantity: '', offer: '', type: '' }])
+            offerArray: this.state.offerArray.concat([{ quantity: '', offer: '', type: this.state.offerArray[0].type }])
         });
     }
 
@@ -669,7 +678,7 @@ class CreatePrice extends Component {
                                                             onChange={this.handleChangeOffer(idx)}
                                                             required
                                                         />
-                                                        {this.state.submitted && offerArray.type != 0 && !offerArray.offer && offerArray.type != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
+                                                        {this.state.submitted && (offerArray.quantity || offerArray.type) && !offerArray.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
                                                         {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
                                                         {this.state.submitted && offerArray.type == 2 && offerArray.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
 
@@ -686,12 +695,12 @@ class CreatePrice extends Component {
                                                             onChange={this.handleChangeType(idx)}
                                                             required
                                                         /> */}
-                                                        <select required name="offerId" className="form-control" value={offerArray.type} onChange={this.handleChangeType(idx)} >
+                                                        <select required name="offerId" className="form-control" value={offerArray.type} onChange={this.handleChangeType(idx)} disabled={idx != 0}>
                                                             <option value="">Select</option>
                                                             <option value="1">Currency</option>
                                                             <option value="2">Percentage</option>
                                                         </select>
-                                                        {(this.state.submitted && offerArray.offer && offerArray.type == 0) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
+                                                        {(this.state.submitted && (offerArray.offer || offerArray.quantity) && !offerArray.type) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
 
                                                         {/* </div> */}
                                                         <div className="add-del">

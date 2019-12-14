@@ -25,6 +25,10 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillMount() {
+        localStorage.clear();
+    }
+
     handleInputChange(e) {
         this.setState({
             [e.target.name]: e.target.value
