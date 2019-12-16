@@ -61,7 +61,7 @@ class FetchIrrigationSetting extends Component {
     }
 
     resetSearch = () => {
-        if (this.state.search) {
+        if (this.state.search || !this.state.search) {
             this.setState({ search: '' }, () => {
                 this.getPriceList();
             });

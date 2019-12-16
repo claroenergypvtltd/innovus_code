@@ -76,7 +76,7 @@ class FetchPrice extends Component {
     }
     searchSubmit = (e) => {
         e.preventDefault();
-        this.getPriceList();
+        this.getPriceList("onSearch");
     }
     searchResult = (e) => {
         e.preventDefault();
@@ -91,7 +91,7 @@ class FetchPrice extends Component {
         }
     }
     resetSearch = () => {
-        if (this.state.search || this.state.dcCodeObj) {
+        if (this.state.search || this.state.dcCodeObj || !this.state.search) {
             this.setState({ search: '', dCCode: '', dcCodeObj: '' }, () => {
                 this.getPriceList();
             });

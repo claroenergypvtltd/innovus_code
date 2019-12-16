@@ -108,7 +108,7 @@ class FetchSalesAgent extends React.Component {
     }
     searchSubmit = (e) => {
         e.preventDefault();
-        this.getSalesAgentList();
+        this.getSalesAgentList("onSearch");
     }
 
     searchResult = (e) => {

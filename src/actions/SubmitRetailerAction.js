@@ -10,7 +10,7 @@ export const SubmitRetailer = (retailerData, updateRetailer) => dispatch => {
         httpServices.put(endPoint.user, retailerData).then(resp => {
             if (resp) {
                 dispatch({ type: RETAILER_CREATE_SUCCESS, status: resp.status, message: resp.message })
-                toastr.success(resp.message);
+                //toastr.success(resp.message);
             }
         }).catch((error) => {
             console.log("error", error);

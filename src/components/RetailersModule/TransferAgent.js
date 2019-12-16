@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import store from '../../store/store';
 import { fetchRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction'
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
-import { toastr } from '../../services/toastr.services'
+import { toastr } from 'react-redux-toastr'
 import { path } from '../../constants';
 
 
@@ -43,6 +43,7 @@ class TransferAgent extends Component {
             let redrctpath = path.user.list;
             this.context.router.history.push(redrctpath);
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
+            toastr.success("User details modified successfully")
             // this.props.getRetailerList();
             this.listPath('AgentAssignsuccess');
         }

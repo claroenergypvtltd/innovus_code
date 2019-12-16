@@ -254,7 +254,7 @@ class FetchRetailer extends React.Component {
             this.setState({
                 cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0,
                 StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '',
-                agentId: '', search: '', dcCode: '', dcCodeObj: '', currentPage: 0
+                agentId: '', search: '', dcCode: '', dcCodeObj: '', currentPage: 0, selectedDatas: []
             }, () => {
                 sessionStorage.removeItem('retsearchDatas');
                 user.roleId = 2;
@@ -466,8 +466,8 @@ class FetchRetailer extends React.Component {
         this.setState({ open: false, popup: false })
         if (type == 'AgentAssignsuccess') {
             // this.getRetailerList('transagent');
-            this.context.router.history.push('/category');
-            this.context.router.history.goBack();
+            this.context.router.history.push({ pathname: path.category.list, state: { retlrbckTrack: "backTrue" } });
+            // this.context.router.history.goBack();
             // this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
 
         }
@@ -507,7 +507,7 @@ class FetchRetailer extends React.Component {
     }
     searchSubmit = (e) => {
         e.preventDefault();
-        this.getRetailerList();
+        this.getRetailerList("onSearch");
     }
 
     onOpenModal = (e) => {
