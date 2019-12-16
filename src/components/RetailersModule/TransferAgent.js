@@ -83,11 +83,7 @@ class TransferAgent extends Component {
             formData.append("userId", userData);
             this.props.SubmitRetailer(formData, true)
         }
-
     }
-
-
-
 
     render() {
         const { errors } = this.state;
@@ -106,7 +102,7 @@ class TransferAgent extends Component {
                             <div className="form-group">
                                 <label>{window.strings['USERMANAGEMENT']['AGENT_LABEL']}</label>
                                 <select required name="agentId" className="form-control" value={this.state.agentId} onChange={this.handleInputChange} >
-                                    <option value="0">{window.strings['USERMANAGEMENT']['SELECT_AGENT']}</option>
+                                    <option value="">{window.strings['USERMANAGEMENT']['SELECT_AGENT']}</option>
                                     {agentDropDown}
                                 </select>
                                 {this.state.submitted && !this.state.agentId && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_LABEL'] + window.strings['ISREQUIRED']}</div>}
