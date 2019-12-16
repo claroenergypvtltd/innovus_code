@@ -144,7 +144,7 @@ class CreateDC extends Component {
                         <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
                             <div className="form-group col-md-6">
-                                <label>Name</label>
+                                <label>{window.strings.FARMERS.NAME + ' *'}</label>
                                 <input
                                     type="text"
                                     placeholder="Name"
@@ -160,7 +160,7 @@ class CreateDC extends Component {
                             </div>
 
                             <div className="form-group col-md-6">
-                                <label>Surveying Area</label>
+                                <label>{window.strings.SALES_AGENT.SURVEY_AREA + ' *'}</label>
                                 <input
                                     type="text"
                                     placeholder="Surveying Area"
@@ -176,7 +176,7 @@ class CreateDC extends Component {
                             </div>
 
                             <div className="form-group col-md-6">
-                                <label>Order Cutoff-time</label>
+                                <label>{window.strings.DC_MANAGEMENT.CUTOFF_TIME + ' *'}</label>
                                 {/* <TimePicker className="dc-time"
                                     value={moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)}
                                     // value={this.state.value}
@@ -193,7 +193,7 @@ class CreateDC extends Component {
                                     // value={""}
                                     // value={this.state.orderCutOffTime}
                                     value={timeData}
-                                    className="xxx"
+                                    className="xxx dc-time"
                                     onChange={this.handleTimePicker}
                                     format={format}
                                     use12Hours
@@ -205,7 +205,7 @@ class CreateDC extends Component {
                                     defaultValue={timeData}
                                     // value={""}
                                     // value={this.state.orderCutOffTime}
-                                    className="xxx"
+                                    className="xxx dc-time"
                                     onChange={this.handleTimePicker}
                                     format={format}
                                     use12Hours
@@ -216,7 +216,7 @@ class CreateDC extends Component {
                             </div>
 
                             <div className="form-group col-md-6">
-                                <label>Delivery Slot</label>
+                                <label>{window.strings.DC_MANAGEMENT.DELIVERY_SLOT + ' *'}</label>
                                 <input
                                     type="text"
                                     placeholder="Delivery Slot"

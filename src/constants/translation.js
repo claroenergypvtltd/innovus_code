@@ -395,6 +395,10 @@ export const Translation = {
             "APPVERSIONCONTROL": "APP VERSION CONTROL",
             "SUPPORTEDVERSION": "Supported Version",
             "CURRENTVERSION": "Current Version"
+        },
+        "DC_MANAGEMENT": {
+            "CUTOFF_TIME": "Order Cutoff-time",
+            "DELIVERY_SLOT": "Delivery Slot"
         }
 
     }
