@@ -53,6 +53,7 @@ class IrrigationSetting extends Component {
     componentWillReceiveProps(newProps) {
         if (parseInt(newProps.status) == 200) {
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
+            toastr.success("Shop Details modified successfully")
             this.props.history.goBack();
         }
     }

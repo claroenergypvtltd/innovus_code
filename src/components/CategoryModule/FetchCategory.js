@@ -29,6 +29,11 @@ class CategoryList extends Component {
             data: [],
         }
     }
+    componentWillMount() {
+        if (this.props.location && this.props.location.state && this.props.location.state.retlrbckTrack == "backTrue") {
+            this.props.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
+        }
+    }
     componentDidMount() {
         if (sessionStorage.categorySessionData && this.props.location && this.props.location.state &&
             this.props.location.state.categoryBack == "categorySessionBack") {

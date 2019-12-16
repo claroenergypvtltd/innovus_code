@@ -183,7 +183,7 @@ class ViewCategory extends Component {
     }
     searchSubmit = (e) => {
         e.preventDefault();
-        this.getSpecificData();
+        this.getSpecificData('onSearch');
     }
 
 

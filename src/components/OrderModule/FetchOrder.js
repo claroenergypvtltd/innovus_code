@@ -71,7 +71,7 @@ class FetchOrder extends Component {
     }
 
     resetSearch = () => {
-        if (this.state.search) {
+        if (this.state.search || !this.state.search) {
             sessionStorage.removeItem('orderData')
             this.setState({ search: '' }, () => {
                 this.getOrderList();
