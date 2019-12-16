@@ -76,18 +76,14 @@ class TransferAgent extends Component {
             userData.push(item.id)
         })
 
-        if (this.state.agentId && userData) {
+        if (this.state.agentId != 0 && userData) {
             const formData = new FormData();
             formData.append("agentId", this.state.agentId);
             formData.append("flag", 1);
             formData.append("userId", userData);
             this.props.SubmitRetailer(formData, true)
         }
-
     }
-
-
-
 
     render() {
         const { errors } = this.state;

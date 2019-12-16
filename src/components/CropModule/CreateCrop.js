@@ -11,6 +11,7 @@ import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { imageBaseUrl } from '../../config'
 import { fetchSalesAgent, getDcCodeData } from '../../actions/salesAgentAction';
 import Select from 'react-select';
+import { fetchDcList } from '../../actions/dcAction'
 
 class CreateCrop extends Component {
     static contextTypes = {
@@ -48,12 +49,12 @@ class CreateCrop extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({ categoryData: nextProps.getCategory.datas })
-        if (nextProps && nextProps.categoryData && nextProps.categoryData.specificData
+        if (this.state.editId && nextProps && nextProps.categoryData && nextProps.categoryData.specificData
             && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas
             && nextProps.categoryData.specificData.data.datas.length > 0) {
             let Data = nextProps.categoryData.specificData.data.datas[0];
-            let dcCodeObj = { "label": Data.dcCode, "value": Data.dcCode };
-            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj, dcCode: Data.dcCode });
+            let dcCodeObj = { "label": Data.productDetailsao.dcCode, "value": Data.productDetailsao.dcCode };
+            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj, dcCode: Data.productDetailsao.dcCode });
         }
 
 
@@ -65,6 +66,10 @@ class CreateCrop extends Component {
             store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
             this.redirectPage();
         }
+        if (nextProps.dcDatas && nextProps.dcDatas.Lists && nextProps.dcDatas.Lists.datas) {
+            let respData = nextProps.dcDatas.Lists.datas;
+            this.setState({ dcCodeData: nextProps.dcDatas.Lists.datas })
+        }
     }
 
     redirectPage = () => {
@@ -72,11 +77,12 @@ class CreateCrop extends Component {
     }
 
     handleInputChange = (e) => {
-        e.charCode == 32 && e.target.value == ' ' || e.target.value[0] == ' ' ? e.target.value = ''
+        e.charCode == 32 && e.target.value == '' || e.target.value[0] == '' ? e.target.value = ''
             : this.setState({ [e.target.name]: e.target.value });
     }
     listPage = () => {
         this.context.router.history.goBack();
+
     }
 
 
@@ -155,8 +161,8 @@ class CreateCrop extends Component {
     }
 
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => { this.getSalesAgentList() })
-    };
+        this.setState({ dcCodeObj: Data, dcCode: Data.value })
+    }
 
     getSalesAgentList = () => {
         let obj = {
@@ -171,16 +177,13 @@ class CreateCrop extends Component {
     }
 
     getDCData = () => {
-
+        let pages = 0;
         let obj = {
-            search: ''
+            pages: pages,
+            rows: this.state.itemPerPage,
+            search: this.state.search,
         }
-        getDcCodeData(obj).then(resp => {
-            if (resp) {
-
-                this.setState({ dcCodeData: resp })
-            }
-        })
+        this.props.fetchDcList(obj)
     }
 
     render() {
@@ -209,7 +212,7 @@ class CreateCrop extends Component {
 
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
 
-            let obj = { "label": item, "value": item };
+            let obj = { "label": item.dcCode, "value": item.dcCode };
             dcData.push(obj);
         })
 
@@ -259,8 +262,23 @@ class CreateCrop extends Component {
                                     <div className="form-group col-md-12">
 
                                         <label>{window.strings.SALES_AGENT.DC_CODE + ' *'}</label>
-
-                                        <input
+                                        <Select className="state-box"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            value={this.state.dcCodeObj}
+                                            onChange={(e) => this.handleDcCodeChange(e)}
+                                            options={dcData}
+                                            placeholder="--Select DC Code--"
+                                        />
+                                        {/* <input
                                             type="text"
                                             placeholder="DC Code"
                                             className={classnames('form-control', {
@@ -271,7 +289,7 @@ class CreateCrop extends Component {
                                             value={this.state.dcCode}
                                             required
 
-                                        />
+                                        /> */}
 
                                         {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
@@ -339,8 +357,9 @@ class CreateCrop extends Component {
 
 const mapStateToProps = (state) => ({
     categoryData: state.category,
-    getCategory: state.category && state.category.Lists ? state.category.Lists : []
+    getCategory: state.category && state.category.Lists ? state.category.Lists : [],
+    dcDatas: state && state.dc
 })
 
 
-export default connect(mapStateToProps, { SubmitCategory, getCategoryList, getSpecificCategory, fetchSalesAgent })(CreateCrop)
+export default connect(mapStateToProps, { SubmitCategory, getCategoryList, getSpecificCategory, fetchSalesAgent, fetchDcList })(CreateCrop)
