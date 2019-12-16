@@ -76,7 +76,7 @@ class TransferAgent extends Component {
             userData.push(item.id)
         })
 
-        if (this.state.agentId != 0 && userData) {
+        if (this.state.agentId && userData) {
             const formData = new FormData();
             formData.append("agentId", this.state.agentId);
             formData.append("flag", 1);
@@ -102,7 +102,7 @@ class TransferAgent extends Component {
                             <div className="form-group">
                                 <label>{window.strings['USERMANAGEMENT']['AGENT_LABEL']}</label>
                                 <select required name="agentId" className="form-control" value={this.state.agentId} onChange={this.handleInputChange} >
-                                    <option value="0">{window.strings['USERMANAGEMENT']['SELECT_AGENT']}</option>
+                                    <option value="">{window.strings['USERMANAGEMENT']['SELECT_AGENT']}</option>
                                     {agentDropDown}
                                 </select>
                                 {this.state.submitted && !this.state.agentId && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_LABEL'] + window.strings['ISREQUIRED']}</div>}
