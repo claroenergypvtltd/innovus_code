@@ -27,14 +27,11 @@ class CreateDC extends Component {
     }
 
     getSpecificDCData() {
-
-        // if (this.props.location && this.props.location.state && this.props.location.state.couponId) {
         let id = this.props.location.state.id;
         this.setState({ id }, () => {
 
             this.props.fetchDcList({ "id": this.state.id });
         });
-        // }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,13 +45,6 @@ class CreateDC extends Component {
         }
         if (this.state.id && nextProps.dcData && nextProps.dcData.specificData && nextProps.dcData.specificData.datas && nextProps.dcData.specificData.datas[0]) {
             let Data = nextProps.dcData.specificData.datas[0];
-            // let couponDate = Data.startDate
-
-            // "name": this.state.name,
-            // "surveyingArea": this.state.surveyingArea,
-            // "orderCutOffTime": this.state.orderCutOffTime,
-            // "deliverySlot": this.state.deliverySlot,
-            // "id": this.state.id
             let getTime = Data.orderCutOffTime;
             let getTimeformat = getTime && getTime.split(':');
             let getHoursFormat = getTimeformat && getTimeformat[1].split(' ')
@@ -83,27 +73,25 @@ class CreateDC extends Component {
         })
     }
 
-    // getSpecificCouponData() {
-
-    //     if (this.props.location && this.props.location.state && this.props.location.state.couponId) {
-    //         let id = this.props.location.state.couponId;
-    //         this.setState({ couponId: id });
-    //         this.props.getSpecificCouponData(this.props.location.state.couponId);
-    //     }
-    // }
-
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
 
         if (this.state.name && this.state.surveyingArea && this.state.orderCutOffTime && this.state.deliverySlot) {
+            let timeData = "";
+            if (typeof this.state.orderCutOffTime != "string") {
+                const format = 'h:mm a';
+                timeData = this.state.orderCutOffTime.format(format)
+            } else {
+                timeData = this.state.id ? this.state.min + ':' + this.state.sec + ' ' + this.state.a : this.state.orderCutOffTime
+            }
 
             const formData = new FormData();
             let obj = {
                 "name": this.state.name,
                 "surveyingArea": this.state.surveyingArea,
                 // "orderCutOffTime": this.state.orderCutOffTime,
-                "orderCutOffTime": this.state.id ? this.state.min + ':' + this.state.sec + ' ' + this.state.a : this.state.orderCutOffTime,
+                "orderCutOffTime": timeData,
                 "deliverySlot": this.state.deliverySlot,
                 "id": this.state.id
             }
@@ -123,14 +111,10 @@ class CreateDC extends Component {
         let timeData = ""
         const now = moment().hour(0).minute(0);
         if (this.state.id) {
-            // let data = moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)
-            // timeData = "value=" + data
             timeData = moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)
         }
         else {
-            timeData = moment().hour(0).minute(0);
-
-            // timeData = "defaultValue={this.state.orderCutOffTime}"
+            timeData = moment().hour(0).minute(0)
         }
         return (
             <div>
@@ -177,16 +161,6 @@ class CreateDC extends Component {
 
                             <div className="form-group col-md-6">
                                 <label>{window.strings.DC_MANAGEMENT.CUTOFF_TIME + ' *'}</label>
-                                {/* <TimePicker className="dc-time"
-                                    value={moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)}
-                                    // value={this.state.value}
-                                    defaultValue={now}
-                                    placeholder="Order Cutoff-time" showSecond={false}
-                                    onChange={this.handleTimePicker}
-                                    use12Hours
-                                    format={format}
-                                    inputReadOnly
-                                /> */}
                                 {this.state.id && <TimePicker
                                     showSecond={false}
                                     defaultValue={timeData}

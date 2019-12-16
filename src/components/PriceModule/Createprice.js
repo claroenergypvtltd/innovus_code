@@ -213,7 +213,7 @@ class CreatePrice extends Component {
                                     // this.props.submitPrice(obj, isUpdate);                            
                                 } else {
                                     isValid = false
-                                    toastr.error("Please increment/decrement in multiple of box quantity");
+                                    toastr.error("Please increment Offer Quantity in multiple of box quantity");
                                     return;
                                 }
                             } else {
@@ -317,7 +317,8 @@ class CreatePrice extends Component {
                 }
             }
         })
-        if (isValid == true) {
+
+        if (isValid == true && this.state.categoryId && this.state.weightId && this.state.price && this.state.boxQuantity && this.state.dcCode) {
             let flag;
             this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
 
@@ -341,7 +342,6 @@ class CreatePrice extends Component {
             });
 
             var isDuplicate = false;
-            debugger;
             var valueArr = this.state.offerArray.map(function (item) {
                 if (item.quantity) {
                     return parseInt(item.quantity)
@@ -391,7 +391,7 @@ class CreatePrice extends Component {
     handleChangeQuantity = (idx) => (evt) => {
         const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
             if (idx !== sidx) return offerArrayolder;
-            return { ...offerArrayolder, quantity: evt.target.value };
+            return { ...offerArrayolder, quantity: evt.target.value > 0 ? evt.target.value : '' };
         });
 
         this.setState({ offerArray: newContact });
@@ -400,9 +400,8 @@ class CreatePrice extends Component {
     handleChangeOffer = (idx) => (evt) => {
         const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
             if (idx !== sidx) return offerArrayolder;
-            return { ...offerArrayolder, offer: evt.target.value };
+            return { ...offerArrayolder, offer: evt.target.value > 0 ? evt.target.value : '' };
         });
-
         this.setState({ offerArray: newContact });
     }
 
