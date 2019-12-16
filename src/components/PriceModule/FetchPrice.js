@@ -225,7 +225,7 @@ class FetchPrice extends Component {
                         {this.state.advanceSearch &&
                             <div className="sub-filter ml-4">
                                 <div className="row">
-                                    <div className="input-tip">
+                                    <div className="search-tip">
                                         {/* <input type="text" placeholder="Custom Search.."
                                             class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                         /> */}

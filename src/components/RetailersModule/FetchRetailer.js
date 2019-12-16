@@ -773,7 +773,7 @@ class FetchRetailer extends React.Component {
                                                     '&:hover': {
                                                         borderColor: '#FE988D'
                                                     }
-                                                })
+                                                }),
                                             }}
                                             className="city-box ml-1"
                                             value={this.state.selectedAgentOption}
@@ -784,7 +784,7 @@ class FetchRetailer extends React.Component {
                                     </div>
                                     <div className="status-filter pl-5"><label className="label-title">Status:</label>
                                         <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                                            <option value="" className="drop-option">-- Select Status--</option>
+                                            <option value="" className="drop-option">--Select Status--</option>
                                             {statusDropdown}
                                         </select>
                                     </div>

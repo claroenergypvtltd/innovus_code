@@ -491,9 +491,14 @@ li:hover .menu-link{
   background-position:-18px -747px;
 }
 .dc-manag i{
-    background-image: url(../src/assets/images/AgroSprit_menuicons-new.png);
+    background-image: url(../src/assets/images/AgroSprit_icons.png);
     background-repeat: no-repeat;
-    background-position:-18px -817px;
+    background-position:-20px -45px;
+}
+.irrigation i{
+  background-image: url(../src/assets/images/AgroSprit_icons.png);
+  background-repeat: no-repeat;
+  background-position:-19px -114px;
 }
 
 li:hover .menu-list i{
@@ -1157,22 +1162,29 @@ input.form-control.search-btn:focus {
 .crop-section{
   width: 100%;
 }
-// .time-pick{
-//   .rc-time-picker-input{
-//     width: 363px;
-//   }
-// }
-// .main-container .time-pick .rc-time-picker-input {
-//   width: 305px;
-// }
-// .dc-time{
-//   .rc-time-picker-input{
-//     width: 371px;
-//   }
-// }
-// .main-container .dc-time .rc-time-picker-input {
-//   width: 303px;
-// }
+
+.time-form{
+  width: 270px;
+}
+.dc-time{
+  .rc-time-picker-input{
+    width: 270px;
+  }
+}
+.main-container{
+  .shop-time{
+    .rc-time-picker-input{
+      width: 305px;
+    }
+  }
+}  
+.sidebar-container{
+  .shop-time{
+    .rc-time-picker-input{
+      width: 361px;
+    }
+  }
+} 
 .rc-time-picker-clear{
   display: none!important;
 }
@@ -1663,6 +1675,23 @@ select:focus {
 .retail-reset:hover .tooltip-text {
   visibility: visible;
 }
+.search-tip .tooltip-text {
+  visibility: hidden;
+  background-color: $tooltip-color;
+  color: $white;
+  text-align: center;
+  border-radius: 3px;
+  display: block;
+  z-index: 1;
+  padding: 0 2px;
+  font-size: 10px; 
+  width: 76px;
+  position: absolute;
+  margin-top: 5px;
+}
+.search-tip:hover .tooltip-text {
+  visibility: visible;
+}
 .input-tip .tooltip-text {
   visibility: hidden;
   background-color: $tooltip-color;
@@ -1674,8 +1703,8 @@ select:focus {
   padding: 0 2px;
   font-size: 10px; 
   width: 76px;
-  position: relative;
-  left: 15px;
+  position: absolute;
+  left: 34px;
   margin-top: 5px;
 }
 .input-tip:hover .tooltip-text {
@@ -2432,7 +2461,7 @@ display: flex;
 }
 .main-filter{
   //margin-right: 30px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .col-wrapper{
   max-width: 28.333333%;

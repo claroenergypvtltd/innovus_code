@@ -80,13 +80,13 @@ export const Sidebar = [
     },
     {
         name: (
-            <span className="menu-list order">
+            <span className="menu-list dc-manag">
                 <i />
                 {Label.DCManagement}
             </span>
         ),
         logo: (
-            <span className="menu-list order">
+            <span className="menu-list dc-manag">
                 <i />
                 {/* {Label.VehicleManagement} */}
             </span>
@@ -97,7 +97,7 @@ export const Sidebar = [
     },
     {
         name: (
-            <span className="menu-list pay_manag">
+            <span className="menu-list pay-manag">
                 <i />
                 {Label.paymentLabel}
             </span>
@@ -211,13 +211,13 @@ export const Sidebar = [
     },
     {
         name: (
-            <span className="menu-list dc-manag">
+            <span className="menu-list irrigation">
                 <i />
                 {Label.settingLabel}
             </span>
         ),
         logo: (
-            <span className="menu-list dc-manag">
+            <span className="menu-list irrigation">
                 <i />
                 {/* {Label.settingLabel} */}
             </span>

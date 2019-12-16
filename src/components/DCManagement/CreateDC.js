@@ -148,7 +148,7 @@ class CreateDC extends Component {
                                 <input
                                     type="text"
                                     placeholder="Name"
-                                    className={classnames('form-control', {
+                                    className={classnames('form-control time-form', {
                                         'is-invalid': errors.name
                                     })}
                                     name="name"
@@ -164,7 +164,7 @@ class CreateDC extends Component {
                                 <input
                                     type="text"
                                     placeholder="Surveying Area"
-                                    className={classnames('form-control', {
+                                    className={classnames('form-control time-form', {
                                         'is-invalid': errors.surveyingArea
                                     })}
                                     name="surveyingArea"
@@ -220,7 +220,7 @@ class CreateDC extends Component {
                                 <input
                                     type="text"
                                     placeholder="Delivery Slot"
-                                    className={classnames('form-control', {
+                                    className={classnames('form-control time-form', {
                                         'is-invalid': errors.deliverySlot
                                     })}
                                     name="deliverySlot"
