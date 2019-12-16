@@ -764,10 +764,10 @@ class FetchRetailer extends React.Component {
                                                     boxShadow: '#FE988D',
                                                     // width: '270px',
                                                     '@media screen and (min-width:768px)': {
-                                                        width: 'calc(100% + 2em)',
+                                                        width: 'calc(116% + 2em)',
                                                     },
                                                     '@media screen and (min-width: 1300px)': {
-                                                        width: 'calc(116% + 2em)',
+                                                        width: 'calc(117% + 2em)',
 
                                                     },
                                                     '&:hover': {
@@ -805,7 +805,7 @@ class FetchRetailer extends React.Component {
                                             value={this.state.dcCodeObj}
                                             onChange={(e) => this.handleDcCodeChange(e)}
                                             options={dcData}
-                                            placeholder="--Select DC Code--"
+                                            placeholder="--Select DC--"
                                         />
                                     </div>
 
