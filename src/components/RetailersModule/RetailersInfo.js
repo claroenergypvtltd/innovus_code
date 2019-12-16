@@ -148,7 +148,7 @@ class IrrigationSetting extends Component {
                     <div className="col-md-8">
                         <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 time-form">
                                 <label>Retailer Name</label>
                                 <input
                                     type="text"
@@ -164,7 +164,7 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.name && <div className="mandatory">Retailer Name  {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 time-form">
                                 <label>Shop Name</label>
                                 <input
                                     type="text"
@@ -180,7 +180,7 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.shopName && <div className="mandatory">Shop Name  {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 time-form">
                                 <label>Shop Address</label>
                                 <input
                                     type="text"
@@ -196,7 +196,7 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.shopAddress && <div className="mandatory">Shop Address  {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 time-form">
                                 <label>Shop Open Time</label>
                                 {/* <input
                                     type="text"
@@ -209,7 +209,7 @@ class IrrigationSetting extends Component {
                                     value={this.state.shopTime}
                                     required
                                 /> */}
-                                <TimePicker className="time-pick"
+                                <TimePicker className="shop-time"
                                     value={moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)}
                                     // value={this.state.value}
                                     placeholder="Shop Open Time" showSecond={false}
@@ -223,7 +223,7 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.min && <div className="mandatory">Shop Open Time   {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 time-form">
                                 <label>Shop Type</label>
                                 <select required name="shopType" className="form-control" value={this.state.shopType} onChange={this.handleInputChange} disabled={this.state.irrigationCostId}>
                                     <option value="0">Select Shop Type </option>
