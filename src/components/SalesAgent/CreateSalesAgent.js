@@ -8,6 +8,8 @@ import store from '../../store/store';
 import { path } from '../../constants';
 import { toastr } from '../../services';
 import { validation } from '../../libraries/formValidation'
+import { fetchDcList } from '../../actions/dcAction'
+import Select from 'react-select';
 
 class CreateSalesAgent extends React.Component {
     constructor(props) {
@@ -26,6 +28,7 @@ class CreateSalesAgent extends React.Component {
             this.setState({ salesAgentId: this.props.location.state.salesAgentId })
             this.getEditData();
         }
+        this.getDcData()
     }
 
     getEditData = () => {
@@ -37,14 +40,22 @@ class CreateSalesAgent extends React.Component {
 
         this.props.fetchSalesAgent(obj);
     }
+    getDcData = () => {
+        let pages = 0
+        let obj = {
+            pages: pages
+        }
+        this.props.fetchDcList(obj)
+    }
 
     componentWillReceiveProps(newProps) {
-        if (newProps && newProps.agentData && newProps.agentData.Lists) {
+        if (this.state.salesAgentId && newProps && newProps.agentData && newProps.agentData.Lists) {
             let editDatas = newProps.agentData.Lists
+            let dcCodeObj = { "label": editDatas.dcCode, "value": editDatas.dcCode }
             this.setState({
                 editDatas, name: editDatas.name, mobileNumber: editDatas.mobileNumber,
-                surveyingArea: editDatas.surveyingArea == "undefined" || editDatas.surveyingArea == "null" ? "" : editDatas.surveyingArea,
-                dcCode: editDatas.dcCode, emailId: editDatas.emailId, agentId: editDatas.agentId
+                surveyingArea: editDatas.surveyingArea == 'null' ? "" : editDatas.surveyingArea,
+                dcCodeObj: dcCodeObj, dcCode: editDatas.dcCode, emailId: editDatas.emailId, agentId: editDatas.agentId
             })
         }
 
@@ -56,11 +67,14 @@ class CreateSalesAgent extends React.Component {
             store.dispatch({ type: AGENT_UPDATE_SUCCESS, resp: "" })
             this.redirectPage();
         }
+        if (newProps && newProps.dcData && newProps.dcData.Lists && newProps.dcData.Lists.datas) {
+            this.setState({ dcCodeData: newProps.dcData.Lists.datas })
+        }
 
     }
 
     handleInputChange = (e) => {
-        e.charCode == 32 && e.target.value == ' ' || e.target.value[0] == ' ' ? e.target.value = ''
+        e.charCode == 32 && e.target.value == '' || e.target.value[0] == '' ? e.target.value = ''
             : this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -86,7 +100,9 @@ class CreateSalesAgent extends React.Component {
             }
         });
     }
-
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value })
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
@@ -121,6 +137,11 @@ class CreateSalesAgent extends React.Component {
 
     render() {
         const { errors } = this.state;
+        let dcData = []
+        this.state.dcCodeData && this.state.dcCodeData.map(item => {
+            let obj = { "label": item.dcCode, "value": item.dcCode }
+            dcData.push(obj)
+        })
         return (
             <div className="clearfix">
                 <div >
@@ -221,17 +242,21 @@ class CreateSalesAgent extends React.Component {
 
                                     <label>{window.strings['SALES_AGENT']['DC_CODE'] + ' *'}</label>
 
-                                    <input
-                                        type="text"
-                                        placeholder={window.strings['SALES_AGENT']['DC_CODE']}
-                                        className={classnames('form-control', {
-                                            'is-invalid': errors.dcCode
-                                        })}
-                                        name="dcCode"
-                                        onChange={this.handleInputChange}
-                                        value={this.state.dcCode}
-                                        required
-
+                                    <Select className="state-box"
+                                        styles={{
+                                            control: base => ({
+                                                ...base,
+                                                borderColor: 'hsl(0,0%,80%)',
+                                                boxShadow: '#FE988D',
+                                                '&:hover': {
+                                                    borderColor: '#FE988D'
+                                                }
+                                            })
+                                        }}
+                                        value={this.state.dcCodeObj}
+                                        onChange={(e) => this.handleDcCodeChange(e)}
+                                        options={dcData}
+                                        placeholder="--Select DC Code--"
                                     />
                                     {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                 </div>
@@ -253,8 +278,9 @@ class CreateSalesAgent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    agentData: state.salesAgent
+    agentData: state.salesAgent,
+    dcData: state.dc
 })
 
 
-export default connect(mapStateToProps, { submitSalesAgent, fetchSalesAgent })(CreateSalesAgent)
+export default connect(mapStateToProps, { submitSalesAgent, fetchSalesAgent, fetchDcList })(CreateSalesAgent)
