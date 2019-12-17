@@ -1851,6 +1851,18 @@ select:focus {
   font-weight: unset;
   margin-bottom: 10px;
 }
+.credit-btn{
+  color:$white;
+  background-color:$credit-btn;
+  border:none;
+  border-radius: 20px;
+  padding: 3px 10px;
+  border-color: $btn-text;
+  margin-left: 0;
+  font-size: 15px;
+  font-weight: unset;
+  margin-bottom: 10px;
+}
 .tick-light{
   background-image: url(../src/assets/images/Deliveredcheck_icon1.png);
   background-repeat: no-repeat;
