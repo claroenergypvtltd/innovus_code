@@ -218,11 +218,16 @@ class FetchOrderDetails extends Component {
                     <div className="title-card col-md-8">
                         <h4 className="user-title">LIST ORDER DETAIL</h4>
                     </div>
-                    {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7'
-                        && <div className="text-right col-md-4">
-                            <button className="cancel-btn" onClick={(e) => this.statusChange(ordId, 7)}>Order Cancel</button>
+                    <div className="col-md-4 d-flex justify-content-end">
+                        <div className="pr-3">
+                            <button className="credit-btn">Order Credit</button>
                         </div>
-                    }
+                        {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7'
+                            && <div className="text-right">
+                                <button className="cancel-btn" onClick={(e) => this.statusChange(ordId, 7)}>Order Cancel</button>
+                            </div>
+                        }
+                    </div>
                 </div>
                 {this.state.trackDetails === false ? <TableData TableHead={this.state.TableHead} TableContent={OrderList}
                 /> : <TableData TableHead={this.state.TableHeadTwo} TableContent={OrderList}
