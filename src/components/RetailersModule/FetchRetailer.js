@@ -24,8 +24,11 @@ import TransferAgent from './TransferAgent'
 import { SearchBar, ReactPagination } from '../../shared'
 import { getDcCodeData } from '../../actions/salesAgentAction';
 import { imageBaseUrl } from '../../config/config';
+import { httpServices } from '../../services/http.services'
+import { CSVLink, CSVDownload } from "react-csv";
 
 class FetchRetailer extends React.Component {
+    csvLink = React.createRef()
     static contextTypes = {
         router: PropTypes.object,
     };
@@ -107,7 +110,7 @@ class FetchRetailer extends React.Component {
             this.setState({
                 data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount
             })
-            this.getAllretailer();
+            // this.getAllretailer();
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
             store.dispatch({ type: RETAILER_DELETE_SUCCESS, resp: "" })
@@ -552,6 +555,16 @@ class FetchRetailer extends React.Component {
         user.pages = 0
 
 
+        // httpServices.post("user", user).then(resp => {
+        //     if (resp && resp.data) {
+        //         // return resp.data
+        //         this.setState({ exportAllData: resp.data })
+        //     }
+        // })
+
+
+
+        // this.setState({ exportAllData: this.state.data })
 
         fetchAllRetailers(user).then(resp => {
             if (resp && resp.datas) {
@@ -560,9 +573,13 @@ class FetchRetailer extends React.Component {
                     return item;
                 })
                 this.setState({ exportAllData: Lists })
+                this.csvLink.current.link.click()
             }
         })
     };
+
+    getExportData = () => {
+    }
 
     render() {
 
@@ -662,7 +679,6 @@ class FetchRetailer extends React.Component {
 
             excelDatas.push(item);
         })
-
         this.state.exportAllData && this.state.exportAllData.map((item, index) => {
             let address = '';
             let addressData = '';
@@ -706,8 +722,43 @@ class FetchRetailer extends React.Component {
         })
 
         let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} clearRows={this.state.clearCheck} />
+
+
+        let PrintexcelDatas = [];
+        exportAllData && exportAllData.map((item, index) => {
+            let excelitem = {};
+            excelitem.Status = item.selectBox && item.selectBox === '-' ? '' : item.selectBox;
+            excelitem.OnboardedDate = item.created && item.created === '-' ? '' : item.created;
+            excelitem.CustomerID = item.cusId && item.cusId === '-' ? '' : item.cusId;
+            excelitem.ShopName = item.shopNames && item.shopNames === '-' ? '' : item.shopNames;
+            excelitem.ShopAddress = item.shopAddrss1 && item.shopAddrss1 === '-' ? '' : item.shopAddrss1;
+            excelitem.ShopLocalty = item.shopLocalty && item.shopLocalty === '-' ? '' : item.shopLocalty;
+            excelitem.mobileNumber = item.mobileNumber && item.mobileNumber === '-' ? '' : item.mobileNumber;
+            excelitem.shopType = item.shopType && item.shopType === '-' ? '' : item.shopType;
+            excelitem.AgentName = item.agentName && item.agentName === '-' ? '' : item.agentName;
+            excelitem.Latitude = item.latitude && item.latitude === '-' ? '' : item.latitude;
+            excelitem.Longitude = item.longitude && item.longitude === '-' ? '' : item.longitude;
+            excelitem.ShopOpenTime = item.shopOpenTime && item.shopOpenTime === '-' ? '' : item.shopOpenTime;
+            excelitem.RetailerName = item.retailerName && item.retailerName === '-' ? '' : item.retailerName;
+            excelitem.ShopImageLink = item.shopImageLink && item.shopImageLink === '-' ? '' : item.shopImageLink;
+            PrintexcelDatas.push(excelitem);
+        });
+
         return (
             <div className=" mt-4">
+                {/* <form> */}
+                <button type="button" className="excel-btn export-file ml-2" onClick={() => this.getAllretailer()}>Export</button>
+
+
+
+                <CSVLink ref={this.csvLink} handleLegacy={true} filename='Retailers.csv' data={PrintexcelDatas} >
+                    {/* {window.strings.EXCELEXPORT}
+                    <span className="tooltip-text">Export</span> */}
+                </CSVLink >
+
+
+
+                {/* </form> */}
                 <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
 
                 <div className="retailersearchdiv">
@@ -728,11 +779,8 @@ class FetchRetailer extends React.Component {
                         <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
-                        <div className="export-section">
-                            <ExportFile className="export-search" csvData={this.state.exportAllData} />
-                            <button className="excel-btn export-file ml-2">{window.strings.EXCELEXPORT}
-                                <span className="tooltip-text">Export</span>
-                            </button>
+                        <div className="">
+                            {/* <ExportFile className="export-search" csvData={PrintexcelDatas} getExportData={this.getAllretailer} /> */}
                         </div>
                     </div>
 

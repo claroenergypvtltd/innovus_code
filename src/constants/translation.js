@@ -203,6 +203,8 @@ export const Translation = {
             "LOCATION": "Location",
             "STATUS": "Status",
             "ACTIVITY": "Activity",
+            "AMOUNT": "Amount",
+            "REASON": "Reason",
             "TABLEHEAD": { 'orderNumber': 'Order Number', 'dealerName': 'Dealer Name', 'storeName': 'Store Name', 'quantity': 'Quantity', 'price': 'Total price', 'viewDetails': 'View details' },
             "TABLEHEAD1": ['Product Code', 'Gram wt', 'Diamond wt', 'GemStone wt', 'Quantity', 'Ordered Date', 'Delivery Date', 'Status', 'Remarks']
         },

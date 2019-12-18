@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
-import { resorceJSON } from '../../libraries'
+import { resorceJSON, ModalData } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { getOrderList, getTrackDetails, updateOrderStatus } from '../../actions/orderAction'
@@ -12,6 +12,11 @@ import { Link } from 'react-router-dom'
 import { formatDate, timeformat, dateformat } from '../../shared/DateFormat'
 import * as moment from 'moment';
 import PropTypes from 'prop-types';
+// import StatusUpdate from './statusUpdate'
+import CreateCredit from './CreateCredit'
+
+
+
 class FetchOrderDetails extends Component {
     static contextTypes = {
         router: PropTypes.object,
@@ -22,7 +27,7 @@ class FetchOrderDetails extends Component {
             // TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
             //TableHeadTrack: ["Data/Time", "Activity", "Location"],
             //TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
-            TableHead: ["Order Id", "Shipping Address", "Order Amount", "Ordered Date", "Expected Delivery Time", "Track Orders"],
+            TableHead: ["Order Id", "Shipping Address", "Order Amount", "Order Credit", "Ordered Date", "Expected Delivery Time", "Track Orders"],
             // TableHeadTwo: ["Order Id", "Shipping Address", "From Time", "To Time"],
             TableHeadTwo: ["Order Id", "Shipping Address", "Order Amount", "Ordered Date", "Expected Delivery Time"],
             TableHeadTrack: ["Date/Time", "Activity", "Location"],
@@ -45,7 +50,12 @@ class FetchOrderDetails extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.orderDetails && newProps.orderDetails.DetailsList && newProps.orderDetails.DetailsList.datas) {
             let respData = newProps.orderDetails.DetailsList.datas;
-            this.setState({ OrderLists: respData, productLists: respData[0] && respData[0].items, pageCount: newProps.orderDetails.DetailsList.totalCount / this.state.itemPerPage })
+            this.setState({
+                OrderLists: respData, productLists: respData[0] && respData[0].items,
+                pageCount: newProps.orderDetails.DetailsList.totalCount / this.state.itemPerPage,
+                userId: respData[0] && respData[0].userId, creditStatus: respData[0] && respData[0].creditStatus,
+                orderStatus: respData[0] && respData[0].status
+            })
         }
 
         if (newProps.orderDetails && newProps.orderDetails.trackLists) {
@@ -77,7 +87,8 @@ class FetchOrderDetails extends Component {
 
     getOrderList() {
         let obj = {
-            "orderId": this.props.match.params.id
+            "orderId": this.props.location.state.orderId,
+            "userId": this.props.location.state.userId
         }
         this.props.getOrderList(obj)
     }
@@ -159,8 +170,17 @@ class FetchOrderDetails extends Component {
         }
     }
 
+    onOpenModal = (orderId) => {
+        this.setState({ open: true, orderId: orderId });
+    };
+
+    onCloseModal = () => {
+        this.getOrderList();
+        this.setState({ open: false });
+    };
+
     render() {
-        let ordId = this.props && this.props.match && this.props.match && this.props.match.params && this.props.match.params.id;
+        let ordId = this.props && this.props.match && this.props.match && this.props.location.state && this.props.location.state.orderId;
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let fullShopAddrss;
             let add1;
@@ -188,7 +208,7 @@ class FetchOrderDetails extends Component {
                 fullShopAddrss = ''
             }
             return {
-                "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, formatDate(item.created),
+                "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, item.wallet && item.wallet.walletPrice, formatDate(item.created),
                 timeformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id
             }
         })
@@ -212,6 +232,9 @@ class FetchOrderDetails extends Component {
             return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity, item.productDetails && 'Rs. ' + orderAmount, offerValue, 'Rs. ' + discountAmount] }
         })
         let { status } = this.state;
+
+        let statusUpdataData = < CreateCredit userId={this.state.userId} onCloseModal={this.onCloseModal} />
+
         return (
             <div className="order-details">
                 <div className="clearfix title-section row">
@@ -219,9 +242,9 @@ class FetchOrderDetails extends Component {
                         <h4 className="user-title">LIST ORDER DETAIL</h4>
                     </div>
                     <div className="col-md-4 d-flex justify-content-end">
-                        <div className="">
-                            <button className="credit-btn">Order Credit</button>
-                        </div>
+                        {!this.state.creditStatus && this.state.orderStatus == 6 && <div className="">
+                            <button className="credit-btn" onClick={() => this.onOpenModal(2)} >Order Credit</button>
+                        </div>}
                         {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7'
                             && <div className="pl-3">
                                 <button className="cancel-btn" onClick={(e) => this.statusChange(ordId, 7)}>Order Cancel</button>
@@ -233,6 +256,7 @@ class FetchOrderDetails extends Component {
                 /> : <TableData TableHead={this.state.TableHeadTwo} TableContent={OrderList}
                     />}
 
+                <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={statusUpdataData} ModalTitle="ORDER CREDIT" />
 
                 {this.state.viewtrack && <div className="pt-3">
                     <div class="bs-stepper-header">

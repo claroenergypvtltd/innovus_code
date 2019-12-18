@@ -8,6 +8,10 @@ export default class ExportFile extends React.Component {
         this.state = {
         }
     }
+
+    getExportData = () => {
+        this.props.getExportData()
+    }
     render() {
         let PrintexcelDatas = [];
         console.log(this.props.csvData, ' this.props.csvData');
@@ -39,13 +43,11 @@ export default class ExportFile extends React.Component {
             PrintexcelDatas.push(excelitem);
         });
         return (
-            <CSVLink filename='Retailers.csv' className="" data={PrintexcelDatas} >
-            </CSVLink>
-            //     ---reference---
-            //<CSVLink filename='Retailers.csv' className="excel-btn export-file ml-2" data={PrintexcelDatas} >
-            //     {window.strings.EXCELEXPORT}
-            //     <span className="tooltip-text">Export</span>
-            // </CSVLink>
+            <CSVLink handleLegacy={true} filename='Retailers.csv' className="excel-btn export-file ml-2" data={PrintexcelDatas} onClick={this.getExportData}>
+                {window.strings.EXCELEXPORT}
+                <span className="tooltip-text">Export</span>
+            </CSVLink >
+            // <span className="tooltip-text">Export</span>
         )
     }
 }

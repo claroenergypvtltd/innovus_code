@@ -42,7 +42,7 @@ import FetchVehicle from '../components/VehicleManagement/FetchVehicle'
 import FetchDC from '../components/DCManagement/FetchDC'
 import CreateDC from '../components/DCManagement/CreateDC'
 
-import CreateCredit from '../components/OrderModule/CreateCredit'
+// import CreateCredit from '../components/OrderModule/CreateCredit'
 
 import AppSetting from '../components/Setting/AppSetting';
 
@@ -367,11 +367,11 @@ export const routesPath = [
                 component: AppSetting,
                 exact: true
             },
-            {
-                path: process.env.PUBLIC_URL + '/credit',
-                component: CreateCredit,
-                exact: true
-            },
+            // {
+            //     path: process.env.PUBLIC_URL + '/credit',
+            //     component: CreateCredit,
+            //     exact: true
+            // },
             {
                 path: '*',
                 component: wildCardRouterPath

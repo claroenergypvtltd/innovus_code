@@ -7,15 +7,16 @@ import { endPoint } from "../constants";
 
 export const getOrderList = (Data) => dispatch => {
 
-    let rows = ''; let page = ''; let searchData = ''; let orderId = ''
+    let rows = ''; let page = ''; let searchData = ''; let orderId = ''; let userId = '';
 
     if (Data) {
         page = (Data.page || Data.page == 0) ? '&page=' + (Data.page) : '';
         rows = Data.limit ? '&rows=' + Data.limit : '';
         searchData = Data.search ? '&search=' + Data.search : '';
-        orderId = Data.orderId ? Data.orderId : ''
+        orderId = Data.orderId ? Data.orderId : '';
+        userId = Data.userId ? '&userId=' + Data.userId : '';
     }
-    httpServices.get('order' + '?orderId=' + orderId + searchData + page + rows).then(resp => {
+    httpServices.get('order' + '?orderId=' + orderId + userId + searchData + page + rows).then(resp => {
         if (resp && resp.data) {
             if (Data.orderId) {
                 dispatch({ type: ORDERDETAILS_FETCH_SUCCESS, Lists: resp.data })
@@ -53,6 +54,17 @@ export const SubmitOrderStatus = (statusData) => {
 }
 export const updateOrderStatus = (statusData) => {
     return httpServices.post('orderWareHouse', statusData).then(resp => {
+        if (resp) {
+            toastr.success(resp.message);
+            return resp
+        }
+    }).catch(error => {
+        console.error("error", error);
+    })
+}
+
+export const SubmitOrderCredit = (Data) => {
+    return httpServices.post('credit', Data).then(resp => {
         if (resp) {
             toastr.success(resp.message);
             return resp
