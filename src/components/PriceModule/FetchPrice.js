@@ -230,12 +230,12 @@ class FetchPrice extends Component {
                                             class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                         /> */}
                                         <form onSubmit={(e) => this.searchSubmit(e)}>
-                                            <input placeholder="Custom Search.."
+                                            <input placeholder="Key Search.."
                                                 class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                             />
                                             <button type="submit" hidden></button>
                                         </form>
-                                        <span className="tooltip-text">Custom Search</span>
+                                        <span className="tooltip-text">Key Search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                         {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}

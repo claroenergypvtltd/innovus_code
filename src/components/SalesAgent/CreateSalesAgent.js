@@ -54,7 +54,7 @@ class CreateSalesAgent extends React.Component {
             let dcCodeObj = { "label": editDatas.dcCode, "value": editDatas.dcCode }
             this.setState({
                 editDatas, name: editDatas.name, mobileNumber: editDatas.mobileNumber,
-                surveyingArea: editDatas.surveyingArea == 'null' ? "" : editDatas.surveyingArea,
+                surveyingArea: (!editDatas.surveyingArea) ? "" : editDatas.surveyingArea,
                 dcCodeObj: dcCodeObj, dcCode: editDatas.dcCode, emailId: editDatas.emailId, agentId: editDatas.agentId
             })
         }
@@ -119,7 +119,7 @@ class CreateSalesAgent extends React.Component {
             }
             formData.append("emailId", this.state.emailId);
             formData.append("mobileNumber", this.state.mobileNumber);
-            formData.append("surveyingArea", this.state.surveyingArea ? this.state.surveyingArea : null);
+            formData.append("surveyingArea", this.state.surveyingArea);
             formData.append("dcCode", this.state.dcCode);
             formData.append("role", "agent");
 

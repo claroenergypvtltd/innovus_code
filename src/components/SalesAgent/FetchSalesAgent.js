@@ -125,13 +125,11 @@ class FetchSalesAgent extends React.Component {
     }
 
     resetSearch = () => {
-        if (this.state.search || this.state.dcCodeObj || this.state.search == '') {
-            sessionStorage.removeItem('salesAgentSearchDatas');
-            this.setState({ search: '', dcCodeObj: '', dcCode: '', currentPage: 0 }, () => {
-                this.getSalesAgentList();
-                this.getDCData()
-            });
-        }
+        sessionStorage.removeItem('salesAgentSearchDatas');
+        this.setState({ search: '', dcCodeObj: '', dcCode: '', currentPage: 0 }, () => {
+            this.getSalesAgentList();
+            this.getDCData()
+        });
     }
 
     handleChange = (e) => {
@@ -170,7 +168,7 @@ class FetchSalesAgent extends React.Component {
 
         let salesAgentList = this.state.salesAgentData && this.state.salesAgentData.map((item, index) => {
             let createdDate = item.created.split("T");
-            return { "itemList": [createdDate[0], item.agentId, item.name, item.mobileNumber, item.surveyingArea == "undefined" || item.surveyingArea == "null" ? '-' : item.surveyingArea, item.emailId, item.dcCode], "itemId": item.id }
+            return { "itemList": [createdDate[0], item.agentId, item.name, item.mobileNumber, (!item.surveyingArea) ? '-' : item.surveyingArea, item.emailId, item.dcCode], "itemId": item.id }
         })
 
         return (
@@ -198,12 +196,12 @@ class FetchSalesAgent extends React.Component {
                             <div className="row">
                                 <div className="input-tip">
                                     <form onSubmit={(e) => this.searchSubmit(e)}>
-                                        <input placeholder="Custom Search.."
+                                        <input placeholder="Key Search.."
                                             class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                         />
                                         <button type="submit" hidden></button>
                                     </form>
-                                    <span className="tooltip-text">Custom Search</span>
+                                    <span className="tooltip-text">Key Search</span>
                                 </div>
                                 <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                     {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}

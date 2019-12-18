@@ -23,7 +23,7 @@ export const path = {
     crop: {
         add: process.env.PUBLIC_URL + '/category/crop/add',
         list: process.env.PUBLIC_URL + '/crop',
-        edit: process.env.PUBLIC_URL + '/crop/edit/',
+        edit: process.env.PUBLIC_URL + '/category/crop/edit/',
     },
     cart: {
         add: process.env.PUBLIC_URL + '/cart/add',
