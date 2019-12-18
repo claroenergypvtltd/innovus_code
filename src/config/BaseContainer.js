@@ -119,7 +119,7 @@ export class BaseContainer extends Component {
                         <div className="main-content">
                             <Header logOut={this.handleClick}></Header>
                             <div className="routerView">
-                                <div className="sideBarmenu main-wrapper pr-1">
+                                <div className="sideBarmenu main-wrapper pr-1 mt-1">
                                     <nav className="">
 
                                         <div className="sidebar-btn">

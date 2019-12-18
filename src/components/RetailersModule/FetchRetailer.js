@@ -728,8 +728,11 @@ class FetchRetailer extends React.Component {
                         <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
-                        <div className="">
+                        <div className="export-section">
                             <ExportFile className="export-search" csvData={this.state.exportAllData} />
+                            <button className="excel-btn export-file ml-2">{window.strings.EXCELEXPORT}
+                                <span className="tooltip-text">Export</span>
+                            </button>
                         </div>
                     </div>
 
