@@ -150,7 +150,7 @@ class IrrigationSetting extends Component {
                         <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
                             <div className="form-group col-md-6 time-form">
-                                <label>Retailer Name</label>
+                                <label>Retailer Name  *</label>
                                 <input
                                     type="text"
                                     placeholder="Retailer Name"
@@ -166,7 +166,7 @@ class IrrigationSetting extends Component {
                             </div>
 
                             <div className="form-group col-md-6 time-form">
-                                <label>Shop Name</label>
+                                <label>Shop Name  *</label>
                                 <input
                                     type="text"
                                     placeholder="Shop Name"
@@ -182,7 +182,7 @@ class IrrigationSetting extends Component {
                             </div>
 
                             <div className="form-group col-md-6 time-form">
-                                <label>Shop Address</label>
+                                <label>Shop Address  *</label>
                                 <input
                                     type="text"
                                     placeholder="Shop Address"
@@ -198,7 +198,7 @@ class IrrigationSetting extends Component {
                             </div>
 
                             <div className="form-group col-md-6 time-form">
-                                <label>Shop Open Time</label>
+                                <label>Shop Open Time  *</label>
                                 {/* <input
                                     type="text"
                                     placeholder="Shop Open Time"
@@ -225,7 +225,7 @@ class IrrigationSetting extends Component {
                             </div>
 
                             <div className="form-group col-md-6 time-form">
-                                <label>Shop Type</label>
+                                <label>Shop Type  *</label>
                                 <select required name="shopType" className="form-control" value={this.state.shopType} onChange={this.handleInputChange} disabled={this.state.irrigationCostId}>
                                     <option value="0">Select Shop Type </option>
                                     {shopTypeData}

@@ -153,7 +153,7 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        e.target.name != "updateQuantity" && e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
+        e.target.name != "updateQuantity" && e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: parseInt(e.target.value) })
     }
     handleCategoryChange = (e) => {
         this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], editSubCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
@@ -391,7 +391,7 @@ class CreatePrice extends Component {
     handleChangeQuantity = (idx) => (evt) => {
         const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
             if (idx !== sidx) return offerArrayolder;
-            return { ...offerArrayolder, quantity: evt.target.value > 0 ? evt.target.value : '' };
+            return { ...offerArrayolder, quantity: evt.target.value > 0 ? parseInt(evt.target.value) : '' };
         });
 
         this.setState({ offerArray: newContact });
@@ -400,7 +400,7 @@ class CreatePrice extends Component {
     handleChangeOffer = (idx) => (evt) => {
         const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
             if (idx !== sidx) return offerArrayolder;
-            return { ...offerArrayolder, offer: evt.target.value > 0 ? evt.target.value : '' };
+            return { ...offerArrayolder, offer: evt.target.value > 0 ? parseInt(evt.target.value) : '' };
         });
         this.setState({ offerArray: newContact });
     }

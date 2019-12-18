@@ -219,7 +219,7 @@ export const routesPath = [
                 exact: true,
             },
             {
-                path: process.env.PUBLIC_URL + '/crop/edit/:categoryId?',
+                path: process.env.PUBLIC_URL + '/category/crop/edit/:categoryId?',
                 component: CreateCrop,
                 exact: true
             },
