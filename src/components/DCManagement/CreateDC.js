@@ -101,8 +101,8 @@ class CreateDC extends Component {
     }
 
     listPath = () => {
-        // this.props.history.push({ pathname: path.dc.list })
-        this.props.history.goBack();
+        this.props.history.push({ pathname: path.dc.list, state: { dcSearchDatas: "backTrue" } })
+        // this.props.history.goBack();
     }
 
     render() {

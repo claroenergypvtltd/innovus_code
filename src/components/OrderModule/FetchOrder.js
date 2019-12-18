@@ -93,23 +93,23 @@ class FetchOrder extends Component {
         this.props.getOrderList(obj)
     }
 
-    handleDelete = (data) => {
-        let message = window.strings.DELETEMESSAGE;
-        const toastrConfirmOptions = {
-            onOk: () => { this.itemDelete(data) },
-            onCancel: () => console.log('CANCEL: clicked')
-        };
-        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
-    }
+    // handleDelete = (data) => {
+    //     let message = window.strings.DELETEMESSAGE;
+    //     const toastrConfirmOptions = {
+    //         onOk: () => { this.itemDelete(data) },
+    //         onCancel: () => console.log('CANCEL: clicked')
+    //     };
+    //     toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
+    // }
 
-    itemDelete = (id) => {
-        this.props.DeleteCategory(id)
-            .then(resp => {
-                if (resp) {
-                    this.getOrderList();
-                }
-            });
-    }
+    // itemDelete = (id) => {
+    //     this.props.DeleteCategory(id)
+    //         .then(resp => {
+    //             if (resp) {
+    //                 this.getOrderList();
+    //             }
+    //         });
+    // }
 
     onChange = (data) => {
 
@@ -153,9 +153,14 @@ class FetchOrder extends Component {
         this.setState({ open: false });
     };
 
+    detailsPage = (orderId, userId) => {
+        this.props.history.push({ pathname: path.order.list + orderId, state: { orderId: orderId, userId: userId } });
+    }
+
     render() {
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
-            let link = <Link to={path.order.list + "/" + item.orderId} className="order-btn">{window.strings.ORDER.VIEWDETAILS}</Link>
+            let link = <button className="order-btn" onClick={() => this.detailsPage(item.orderId, item.userId)}>{window.strings.ORDER.VIEWDETAILS}</button>
+            // <Link to={path.order.list + "/" + item.orderId} Data={{ orderId: item.orderId, userId: item.userId }} className="order-btn">{window.strings.ORDER.VIEWDETAILS}</Link>
 
             // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
             let clasName = this.getClassNames(item.status);
@@ -164,7 +169,7 @@ class FetchOrder extends Component {
             </div>
 
 
-            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), ' RS. ' + item.orderAmount, status, link], "itemId": item.id }
+            return { "itemList": [item.orderId, item.items && item.items.length, formatDate(item.created), ' RS. ' + item.orderAmount, status, link], "itemId": { orderId: item.id, userId: item.userId } }
         })
 
         let statusUpdataData = < StatusUpdate orderId={this.state.orderId} onCloseModal={this.onCloseModal} />

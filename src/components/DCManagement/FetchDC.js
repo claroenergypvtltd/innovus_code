@@ -61,7 +61,7 @@ class FetchDC extends Component {
         }
         let obj = {
             pages: pages,
-            rows: this.state.itemPerPage,
+            row: this.state.itemPerPage,
             search: this.state.search,
         }
         sessionStorage.setItem('dcSearchDatas', JSON.stringify(obj));

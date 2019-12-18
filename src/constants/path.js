@@ -108,7 +108,7 @@ export const path = {
         template: process.env.PUBLIC_URL + '/template/contactus/update/'
     },
     order: {
-        list: process.env.PUBLIC_URL + '/order',
+        list: process.env.PUBLIC_URL + '/order/',
         add: process.env.PUBLIC_URL + '/order/add',
         edit: process.env.PUBLIC_URL + '/order/update/',
     },
@@ -116,7 +116,7 @@ export const path = {
         list: process.env.PUBLIC_URL + '/order',
     },
     orderDetails: {
-        list: process.env.PUBLIC_URL + '/orderDetails'
+        list: process.env.PUBLIC_URL + '/orderDetails',
     },
     location: {
         add: process.env.PUBLIC_URL + '/location/add',

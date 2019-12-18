@@ -1,44 +1,103 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import { SubmitOrderCredit } from '../../actions/orderAction'
 
-
-export default class CreateCredit extends Component {
+class CreateCredit extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            amount: '',
+            reason: '',
+            submitted: false
+        }
+    }
+
+    handleInputChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    redirectPage = () => {
+        this.props.onCloseModal();
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({
+            submitted: true
+        })
+        if (this.state.amount) {
+
+            let obj = {
+                "walletPrice": this.state.amount,
+                "activity": this.state.reason,
+                "userId": this.props.userId
+            }
+
+            SubmitOrderCredit(obj).then(resp => {
+                if (resp) {
+                    this.props.onCloseModal();
+                }
+            });
+
+
+        }
+
+
     }
 
     render() {
         return (
             <div>
-                <h4> ORDER CREDIT </h4>
+                {/* <h4> ORDER CREDIT </h4> */}
                 <div className="row">
-                    <div className="col-md-6">
-                        <form onSubmit={this.handleSubmit} noValidate className="pt-3 m-0">
-                            <div className="form-group col-md-12">
-                                <label>Amount</label>
-                                <input
-                                    type=""
-                                    placeholder="Amount"
-                                    className={classnames('form-control', {
-                                    })}
-                                />
-                            </div>
-                            <div className="form-group col-md-12">
-                                <label>Reason</label>
-                                <textarea
-                                    type="text"
-                                    placeholder="Reason.."
-                                    className={classnames('form-control', {
-                                    })}
-                                />
-                            </div>
-                        </form>
+                    <div className="col-md-12">
+                        <div className="col-md-9">
+                            <form onSubmit={this.handleSubmit} noValidate className="pt-3 m-0">
+                                <div className="form-group col-md-12">
+                                    <label>{window.strings.ORDER.AMOUNT + ' *'}</label>
+                                    <input
+                                        type="number"
+                                        name="amount"
+                                        placeholder="Amount"
+                                        onChange={this.handleInputChange}
+                                        className={classnames('form-control', {
+                                        })}
+                                    />
+                                    {this.state.submitted && !this.state.amount && <div className="mandatory">{window.strings['ORDER']['AMOUNT'] + window.strings['ISREQUIRED']}</div>}
+
+                                </div>
+                                <div className="form-group col-md-12">
+                                    <label>{window.strings.ORDER.REASON}</label>
+                                    <textarea
+                                        type="text"
+                                        name="reason"
+                                        placeholder="Reason.."
+                                        onChange={this.handleInputChange}
+                                        className={classnames('form-control', {
+                                        })}
+                                    />
+                                </div>
+                            </form>
+                        </div>
+                        <div className="col-md-12 bottom-section">
+                            <button type="button" className="btn btn-default" onClick={this.redirectPage}>{window.strings.CANCEL}</button>
+                            <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>{window.strings.SUBMIT}</button>
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+
+const mapStateToProps = (state) => ({
+    orderDetails: state.order ? state.order : {}
+})
+
+
+export default connect(mapStateToProps)(CreateCredit)
