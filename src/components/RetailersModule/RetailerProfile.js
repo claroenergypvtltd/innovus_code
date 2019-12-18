@@ -47,7 +47,7 @@ class RetailerProfile extends React.Component {
         }
         return (
 
-            <Container>
+            <Container className="retailer-container">
                 {/* <div classsName="back-btn">
                     <button className="common-button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                 </div> */}

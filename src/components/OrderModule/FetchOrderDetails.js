@@ -219,11 +219,11 @@ class FetchOrderDetails extends Component {
                         <h4 className="user-title">LIST ORDER DETAIL</h4>
                     </div>
                     <div className="col-md-4 d-flex justify-content-end">
-                        <div className="pr-3">
+                        <div className="">
                             <button className="credit-btn">Order Credit</button>
                         </div>
                         {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7'
-                            && <div className="text-right">
+                            && <div className="pl-3">
                                 <button className="cancel-btn" onClick={(e) => this.statusChange(ordId, 7)}>Order Cancel</button>
                             </div>
                         }

@@ -2507,6 +2507,7 @@ display: flex;
 .excel-btn{
   background-image:  $gradient-1;
   color: $white;
+  border: none;
   border-radius: 6px;
   padding: 0 10px;
   font-size: 15px;
@@ -2665,12 +2666,16 @@ display: flex;
 @media (max-width: 767px) { }
 @media (max-width: 480px) { }
 
+@media (min-width: 1200px){
+.retailer-container {
+    max-width: 1259px;
+}
+}
 
 @media screen and (max-width:1140px){
   .ticket-block .profile-img img{
-    width:85px;
+    width:83px;
     height: auto;
-    background-color: red;
   }
   .ticket-block .profile-img{
     width:85px;

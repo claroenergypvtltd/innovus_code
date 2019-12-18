@@ -39,11 +39,13 @@ export default class ExportFile extends React.Component {
             PrintexcelDatas.push(excelitem);
         });
         return (
-            <CSVLink filename='Retailers.csv' className="excel-btn export-file ml-2" data={PrintexcelDatas} >
-                {window.strings.EXCELEXPORT}
-                <span className="tooltip-text">Export</span>
+            <CSVLink filename='Retailers.csv' className="" data={PrintexcelDatas} >
             </CSVLink>
-            // <span className="tooltip-text">Export</span>
+            //     ---reference---
+            //<CSVLink filename='Retailers.csv' className="excel-btn export-file ml-2" data={PrintexcelDatas} >
+            //     {window.strings.EXCELEXPORT}
+            //     <span className="tooltip-text">Export</span>
+            // </CSVLink>
         )
     }
 }
