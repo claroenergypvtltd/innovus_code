@@ -796,14 +796,14 @@ class FetchRetailer extends React.Component {
                                 <div className="d-flex justify-content-between">
                                     <div className="input-tip">
                                         <form onSubmit={(e) => this.searchSubmit(e)} className="col-md-3">
-                                            <input placeholder="Custom Search.."
+                                            <input placeholder="Key Search.."
                                                 class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                             />
                                             <button type="submit" hidden></button>
                                         </form>
 
                                         {/* <input type="submit" /> */}
-                                        <span className="tooltip-text">Custom Search</span>
+                                        <span className="tooltip-text">Key Search</span>
 
                                     </div>
                                     <div className="col-md-3 agent-filter p-0"><label className="label-title">Agent:</label>
