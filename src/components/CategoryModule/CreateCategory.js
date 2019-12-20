@@ -36,14 +36,13 @@ class CategoryForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
         if (nextProps.categoryData && nextProps.categoryData.createdStatus == "200") {
             store.dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: "" })
             this.props.history.goBack();
         }
         if (nextProps.categoryData && nextProps.categoryData.updatedStatus == "200") {
             store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
-            this.props.history.goBack();
+            this.props.history.push({ pathname: path.category.list, state: { categoryBack: 'categorySessionBack' } })
         }
 
         if (nextProps.getCategory) {
