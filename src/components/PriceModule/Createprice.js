@@ -337,8 +337,10 @@ class CreatePrice extends Component {
                     sendObj.discountValue = item.offer;
                     sendObj.discountUnit = item.type;
                     sendObj.quantityUnit = this.state.weightId
-                    arrayData.push(sendObj);
+                } else {
+                    sendObj.isDeleted = 1
                 }
+                arrayData.push(sendObj);
             });
 
             var isDuplicate = false;

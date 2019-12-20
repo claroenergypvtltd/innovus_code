@@ -1863,6 +1863,14 @@ select:focus {
   font-weight: unset;
   margin-bottom: 10px;
 }
+.credit-count{  
+  h4{
+    color:#77a8a8;
+    font-weight: 600;
+    margin-bottom: 0;
+    line-height: 30px;
+  }
+}
 .tick-light{
   background-image: url(../src/assets/images/Deliveredcheck_icon1.png);
   background-repeat: no-repeat;
