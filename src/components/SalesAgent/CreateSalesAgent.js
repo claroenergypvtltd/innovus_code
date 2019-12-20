@@ -18,6 +18,7 @@ class CreateSalesAgent extends React.Component {
             name: '',
             mobileNumber: '',
             emailId: '',
+            surveyingArea: '',
             editDatas: [],
             errors: {}
         }
@@ -122,7 +123,6 @@ class CreateSalesAgent extends React.Component {
             formData.append("surveyingArea", this.state.surveyingArea);
             formData.append("dcCode", this.state.dcCode);
             formData.append("role", "agent");
-
             let isEdit = false;
 
             if (this.props.location && this.props.location.state && this.props.location.state.salesAgentId) {

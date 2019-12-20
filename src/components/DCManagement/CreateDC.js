@@ -8,7 +8,6 @@ import { fetchDcList, SubmitDC, DeleteDC } from '../../actions/dcAction';
 import store from '../../store/store';
 import { DC_FETCH_SUCCESS, DC_CREATE_SUCCESS, DC_UPDATE_SUCCESS, DC_DELETE_SUCCESS, DC_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes'
 
-
 class CreateDC extends Component {
     constructor(props) {
         super(props);
@@ -41,7 +40,7 @@ class CreateDC extends Component {
         }
         if (nextProps.dcData && nextProps.dcData.updatedStatus == "200") {
             store.dispatch({ type: DC_UPDATE_SUCCESS, resp: "" })
-            this.props.history.push(path.dc.list)
+            this.props.history.push({ pathname: path.dc.list, state: { dcSearchDatas: "backTrue" } })
         }
         if (this.state.id && nextProps.dcData && nextProps.dcData.specificData && nextProps.dcData.specificData.datas && nextProps.dcData.specificData.datas[0]) {
             let Data = nextProps.dcData.specificData.datas[0];
