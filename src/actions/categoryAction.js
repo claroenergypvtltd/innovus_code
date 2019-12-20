@@ -39,7 +39,7 @@ export const SubmitCategory = (category, Id, isProduct) => dispatch => {
 	if (Id) {  // Check whether the Id is empty or not then respectively hit Add and Update
 		httpServices.put(apiHeader, category).then(resp => {
 			if (resp) {
-				toastr.success(resp.message);
+				resp.message && toastr.success(resp.message);
 				dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: resp.status })
 			}
 		}).catch((error) => {
@@ -50,7 +50,7 @@ export const SubmitCategory = (category, Id, isProduct) => dispatch => {
 	} else {
 		httpServices.post(apiHeader, category).then(resp => {
 			if (resp) {
-				toastr.success(resp.message);
+				resp.message && toastr.success(resp.message);
 				dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: resp.status })
 			}
 		}).catch(error => {

@@ -193,46 +193,49 @@ class FetchSalesAgent extends React.Component {
 
                     {this.state.advanceSearch &&
                         <div className="sub-filter ml-4">
-                            <div className="row">
-                                <div className="input-tip">
-                                    <form onSubmit={(e) => this.searchSubmit(e)}>
-                                        <input placeholder="Key Search.."
-                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                            <form onSubmit={(e) => this.searchSubmit(e)}>
+                                <div className="row">
+                                    <div className="input-tip">
+                                        <form onSubmit={(e) => this.searchSubmit(e)}>
+                                            <input placeholder="Key Search.."
+                                                class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                            />
+                                            <button type="submit" hidden></button>
+                                        </form>
+                                        <span className="tooltip-text">Key Search</span>
+                                    </div>
+                                    <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
+                                        {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                        <Select className="state-box"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            value={this.state.dcCodeObj}
+                                            onChange={(e) => this.handleDcCodeChange(e)}
+                                            options={dcData}
+                                            placeholder="--Select DC Code--"
                                         />
-                                        <button type="submit" hidden></button>
-                                    </form>
-                                    <span className="tooltip-text">Key Search</span>
-                                </div>
-                                <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
-                                    {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                                    <Select className="state-box"
-                                        styles={{
-                                            control: base => ({
-                                                ...base,
-                                                borderColor: 'hsl(0,0%,80%)',
-                                                boxShadow: '#FE988D',
-                                                '&:hover': {
-                                                    borderColor: '#FE988D'
-                                                }
-                                            })
-                                        }}
-                                        value={this.state.dcCodeObj}
-                                        onChange={(e) => this.handleDcCodeChange(e)}
-                                        options={dcData}
-                                        placeholder="--Select DC Code--"
-                                    />
-                                </div>
-                                <button type="button" className="data-search" onClick={(e) => this.getSalesAgentList("onSearch")}>
-                                    <i className="fa fa-search" aria-hidden="true"></i>Search
+                                    </div>
+                                    {/* </div> */}
+                                    <button type="button" className="data-search" onClick={(e) => this.getSalesAgentList("onSearch")}>
+                                        <i className="fa fa-search" aria-hidden="true"></i>Search
                                         <span className="tooltip-text">Click to Search</span>
-                                </button>
-                                <div className="retail-reset">
-                                    <button type="button" className="reset ml-2" onClick={this.resetSearch}>
-                                        <i className="fa fa-refresh mrr5" aria-hidden="true"></i>
-                                        <span className="tooltip-text">Reset</span>
                                     </button>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-2" onClick={this.resetSearch}>
+                                            <i className="fa fa-refresh mrr5" aria-hidden="true"></i>
+                                            <span className="tooltip-text">Reset</span>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     }
 

@@ -27,9 +27,9 @@ class FetchOrderDetails extends Component {
             // TableHead: ["Order Id", "Shipping Address", "Order Date", "Expected Delivery Date/Time", "Track Orders"],
             //TableHeadTrack: ["Data/Time", "Activity", "Location"],
             //TableProductHead: ["Product Id", "Product Name", "Quantity", "Discount Value", "Offer Price", "Order Date", "Order Amount"],
-            TableHead: ["Order Id", "Shipping Address", "Order Amount", "Order Credit", "Ordered Date", "Expected Delivery Time", "Track Orders"],
+            TableHead: ["Order Id", "Shipping Address", "Order Amount", "Redeem", "Ordered Date", "Expected Delivery Time", "Track Orders"],
             // TableHeadTwo: ["Order Id", "Shipping Address", "From Time", "To Time"],
-            TableHeadTwo: ["Order Id", "Shipping Address", "Order Amount", "Ordered Date", "Expected Delivery Time"],
+            TableHeadTwo: ["Order Id", "Shipping Address", "Order Amount", "Redeem", "Ordered Date", "Expected Delivery Time"],
             TableHeadTrack: ["Date/Time", "Activity", "Location"],
             TableProductHead: ["Product Id", "Product Name", "Quantity", "Product Amount", "Offer", "Total Amount"],
             OrderLists: props.orderData && props.orderData.DetailsList && props.orderData.DetailsList.datas ? props.orderData.DetailsList.datas : [],
@@ -180,6 +180,8 @@ class FetchOrderDetails extends Component {
     };
 
     render() {
+        var orderTotalAmount = "";
+        var credits = "";
         let ordId = this.props && this.props.match && this.props.match && this.props.location.state && this.props.location.state.orderId;
         let OrderList = this.state.OrderLists && this.state.OrderLists.map((item, index) => {
             let fullShopAddrss;
@@ -207,14 +209,18 @@ class FetchOrderDetails extends Component {
             } else {
                 fullShopAddrss = ''
             }
+            orderTotalAmount = item.orderAmount ? item.orderAmount : '-';
+            credits = item.wallet && item.wallet.walletPrice ? item.wallet.walletPrice : '-';
             return {
-                "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, item.wallet && item.wallet.walletPrice, formatDate(item.created),
+                "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, "RS. " + item.orderRedeem, formatDate(item.created),
                 timeformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id
             }
         })
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
             return { "itemList": [item.trackTime ? formatDate(item.trackTime) : '-', item.activity ? item.activity : '-', item.location ? item.location : "-"] }
         })
+
+
         let productList = this.state.productLists && this.state.productLists.map((item) => {
             let productname = item.category && item.category.name ? item.category.name : '-';
             let boxAmount = item.productDetails && item.productDetails.boxQuantity ? item.productDetails.boxQuantity : 0;
@@ -232,8 +238,7 @@ class FetchOrderDetails extends Component {
             return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity, item.productDetails && 'Rs. ' + orderAmount, offerValue, 'Rs. ' + discountAmount] }
         })
         let { status } = this.state;
-
-        let statusUpdataData = < CreateCredit userId={this.state.userId} onCloseModal={this.onCloseModal} />
+        let statusUpdataData = < CreateCredit userId={this.state.userId} orderId={this.props.location.state.orderId} orderAmount={orderTotalAmount} onCloseModal={this.onCloseModal} />
 
         return (
             <div className="order-details">
@@ -245,11 +250,24 @@ class FetchOrderDetails extends Component {
                         {!this.state.creditStatus && this.state.orderStatus == 6 && <div className="">
                             <button className="credit-btn" onClick={() => this.onOpenModal(2)} >Order Credit</button>
                         </div>}
+                        {(this.state.creditStatus && credits) ?
+                            <div className="credit-count">
+                                {/* "Hoiiii" */}
+                                <h4> Credits : {credits}</h4>
+                            </div> : ''
+                        }
                         {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7'
                             && <div className="pl-3">
                                 <button className="cancel-btn" onClick={(e) => this.statusChange(ordId, 7)}>Order Cancel</button>
                             </div>
                         }
+
+                        {/* {(this.state.creditStatus && credits) ?
+                            <div className="pl-3">
+                                "Hoiiii"
+                                <h4> Credits : {credits}</h4>
+                            </div> : ''
+                        } */}
                     </div>
                 </div>
                 {this.state.trackDetails === false ? <TableData TableHead={this.state.TableHead} TableContent={OrderList}

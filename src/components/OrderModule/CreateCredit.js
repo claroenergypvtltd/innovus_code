@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { SubmitOrderCredit } from '../../actions/orderAction'
+import { toastr } from '../../services';
 
 class CreateCredit extends Component {
 
@@ -30,23 +31,25 @@ class CreateCredit extends Component {
             submitted: true
         })
         if (this.state.amount) {
-
-            let obj = {
-                "walletPrice": this.state.amount,
-                "activity": this.state.reason,
-                "userId": this.props.userId
-            }
-
-            SubmitOrderCredit(obj).then(resp => {
-                if (resp) {
-                    this.props.onCloseModal();
+            if (this.state.amount <= this.props.orderAmount) {
+                let obj = {
+                    "walletPrice": this.state.amount,
+                    "activity": this.state.reason,
+                    "userId": this.props.userId,
+                    "orderId": this.props.orderId,
+                    "orderAmount": this.props.orderAmount
                 }
-            });
-
-
+                SubmitOrderCredit(obj).then(resp => {
+                    if (resp) {
+                        this.props.onCloseModal();
+                    }
+                });
+            } else {
+                toastr.error("Invalid Order Credit")
+            }
+        } else {
+            toastr.error('Mandatory Fields are missing')
         }
-
-
     }
 
     render() {
@@ -68,7 +71,7 @@ class CreateCredit extends Component {
                                         })}
                                     />
                                     {this.state.submitted && !this.state.amount && <div className="mandatory">{window.strings['ORDER']['AMOUNT'] + window.strings['ISREQUIRED']}</div>}
-
+                                    {this.state.submitted && (this.state.amount >= this.props.orderAmount) && <div className="mandatory">{window.strings['INVALID'] + ' ' + window.strings['ORDER']['AMOUNT']}</div>}
                                 </div>
                                 <div className="form-group col-md-12">
                                     <label>{window.strings.ORDER.REASON}</label>

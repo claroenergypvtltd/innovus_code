@@ -266,6 +266,7 @@ class FetchRetailer extends React.Component {
                 user.row = this.state.itemPerPage;
                 this.props.fetchRetailers(user);
                 // this.getAllretailer();
+                this.redirectCategoryPath();
             })
         }
         else {
@@ -382,11 +383,6 @@ class FetchRetailer extends React.Component {
         } else if (status == 2 && isActive == 1) {
             return statusClass = window.strings.RETAILERS.REJECTED
         }
-
-
-        // let ViewPage = <p className={statusClass} >{statusClass}</p>
-
-        // return ViewPage;
     }
 
 
@@ -468,30 +464,24 @@ class FetchRetailer extends React.Component {
     onCloseModal = (type) => {
         this.setState({ open: false, popup: false })
         if (type == 'AgentAssignsuccess') {
-            // this.getRetailerList('transagent');
-            this.context.router.history.push({ pathname: path.category.list, state: { retlrbckTrack: "backTrue" } });
-            // this.context.router.history.goBack();
-            // this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
-
+            this.redirectCategoryPath();
         }
     };
+
+    redirectCategoryPath = () => {
+        this.context.router.history.push({ pathname: path.category.list, state: { retlrbckTrack: "backTrue" } });
+    }
+
     enableAdvanceSearch = (e) => {
         // e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
-    // enableAdvanceshow = (e) => {
-    //     // e.preventDefault();
-    //     let enableSearch = this.state.advanceSearch ? false : true
-    //     this.setState({ advanceSearch: enableSearch })
-    // }
+
     searchResult = (e) => {
 
         e.preventDefault();
         if (this.state.search) {
-            // let serObj = {
-            // "search": this.state.search
-            // };
             this.setState({ currentPage: 0 }, () => {
                 this.getRetailerList();
             })
@@ -501,6 +491,7 @@ class FetchRetailer extends React.Component {
         if (this.state.search) {
             this.setState({ search: '' }, () => {
                 this.getRetailerList();
+                this.redirectCategoryPath();
             });
         }
     }
@@ -553,19 +544,6 @@ class FetchRetailer extends React.Component {
         user.roleId = 2;
         user.search = this.state.search;
         user.pages = 0
-
-
-        // httpServices.post("user", user).then(resp => {
-        //     if (resp && resp.data) {
-        //         // return resp.data
-        //         this.setState({ exportAllData: resp.data })
-        //     }
-        // })
-
-
-
-        // this.setState({ exportAllData: this.state.data })
-
         fetchAllRetailers(user).then(resp => {
             if (resp && resp.datas) {
                 let Lists = resp.datas && resp.datas.map(item => {
@@ -578,20 +556,12 @@ class FetchRetailer extends React.Component {
         })
     };
 
-    getExportData = () => {
-    }
-
     render() {
-
         let dcData = [];
-        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
-
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
-
             let obj = { "label": item, "value": item };
             dcData.push(obj);
         })
-
         let start = this.state.startDate && this.state.startDate.format('DD-MM-YYYY');
         let end = this.state.endDate && this.state.endDate.format('DD-MM-YYYY');
         let label = start + ' - ' + end;
@@ -686,12 +656,12 @@ class FetchRetailer extends React.Component {
             let shopAddress = '';
             let shopAddressData = '';
             let selectBox = '';
-            item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
-            item.shopAddrss1 = item.shopAddress && item.shopAddress.address1 ? item.shopAddress.address1 : '-'
-            item.shopLocalty = item.shopAddress && item.shopAddress.address2 ? item.shopAddress.address2 : '-'
-            item.shopType = item.shopType && item.shopType.type ? item.shopType.type : item.shopType ? item.shopType : '-'
-            if (item && item.shopAddress && item.shopAddress.name) {
-                item.shopNames = item.shopAddress.name
+            item.shopAddrss = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address1 + ',' + item.shopAddres[0].address2;
+            item.shopAddrss1 = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address1 ? item.shopAddres[0].address1 : '-'
+            item.shopLocalty = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address2 ? item.shopAddres[0].address2 : '-'
+            item.shopType = item.shopTypes && item.shopTypes[0] && item.shopTypes[0].type ? item.shopTypes[0].type : item.shopTypes[0] ? item.shopTypes[0] : '-'
+            if (item && item.shopAddres && item.shopAddres[0] && item.shopAddres[0].name) {
+                item.shopNames = item.shopAddres[0].name
             } else {
                 item.shopNames = '-'
             }
@@ -712,11 +682,11 @@ class FetchRetailer extends React.Component {
             item.created = moment(item.created).format("DD/MM/YYYY");
 
 
-            item.latitude = item.shopAddress.latitude
-            item.longitude = item.shopAddress.longitude
-            item.shopOpenTime = item.shopAddress.shopOpeningTime
+            item.latitude = item.shopAddres && item.shopAddres[0].latitude
+            item.longitude = item.shopAddres && item.shopAddres[0].longitude
+            item.shopOpenTime = item.shopAddres && item.shopAddres[0].shopOpeningTime
             item.retailerName = item.name
-            item.shopImageLink = imageBaseUrl + item.shopAddress.image
+            item.shopImageLink = imageBaseUrl + item.shopAddres[0].image
 
             exportAllData.push(item);
         })
@@ -746,21 +716,9 @@ class FetchRetailer extends React.Component {
 
         return (
             <div className=" mt-4">
-                {/* <form> */}
                 <button type="button" className="excel-btn export-file ml-2" onClick={() => this.getAllretailer()}>Export</button>
-
-
-
-                <CSVLink ref={this.csvLink} handleLegacy={true} filename='Retailers.csv' data={PrintexcelDatas} >
-                    {/* {window.strings.EXCELEXPORT}
-                    <span className="tooltip-text">Export</span> */}
-                </CSVLink >
-
-
-
-                {/* </form> */}
+                <CSVLink ref={this.csvLink} handleLegacy={true} filename='Retailers.csv' data={PrintexcelDatas}></CSVLink >
                 <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
-
                 <div className="retailersearchdiv">
                     {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
                     <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
@@ -792,148 +750,150 @@ class FetchRetailer extends React.Component {
                 </div> */}
                     {this.state.advanceSearch &&
                         <div className="">
-                            <div className="sub-filter">
-                                <div className="d-flex justify-content-between">
-                                    <div className="input-tip">
-                                        <form onSubmit={(e) => this.searchSubmit(e)} className="col-md-3">
-                                            <input placeholder="Key Search.."
-                                                class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                            <form onSubmit={(e) => this.searchSubmit(e)}>
+                                <div className="sub-filter">
+                                    <div className="d-flex justify-content-between">
+                                        <div className="input-tip">
+                                            <form onSubmit={(e) => this.searchSubmit(e)} className="col-md-3">
+                                                <input placeholder="Key Search.."
+                                                    class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                                />
+                                                <button type="submit" hidden></button>
+                                            </form>
+
+                                            {/* <input type="submit" /> */}
+                                            <span className="tooltip-text">Key Search</span>
+
+                                        </div>
+                                        <div className="col-md-3 agent-filter p-0"><label className="label-title">Agent:</label>
+                                            <Select
+                                                styles={{
+                                                    control: base => ({
+                                                        ...base,
+                                                        borderColor: 'hsl(0,0%,80%)',
+                                                        boxShadow: '#FE988D',
+                                                        // width: '270px',
+                                                        '@media screen and (min-width:768px)': {
+                                                            width: 'calc(116% + 2em)',
+                                                        },
+                                                        '@media screen and (min-width: 1300px)': {
+                                                            width: 'calc(117% + 2em)',
+
+                                                        },
+                                                        '&:hover': {
+                                                            borderColor: '#FE988D'
+                                                        }
+                                                    }),
+                                                }}
+                                                className="city-box ml-1"
+                                                value={this.state.selectedAgentOption}
+                                                onChange={(e) => this.handleAgentChange(e)}
+                                                options={agentListDropDown}
+                                                placeholder="--Select Agent--"
                                             />
-                                            <button type="submit" hidden></button>
-                                        </form>
+                                        </div>
+                                        <div className="status-filter pl-5"><label className="label-title">Status:</label>
+                                            <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
+                                                <option value="" className="drop-option">--Select Status--</option>
+                                                {statusDropdown}
+                                            </select>
+                                        </div>
+                                        <div className="col-md-3 code-filter p-0"><label className="label-title">DC Code:</label>
+                                            {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                            <Select className="state-box"
+                                                styles={{
+                                                    control: base => ({
+                                                        ...base,
+                                                        borderColor: 'hsl(0,0%,80%)',
+                                                        boxShadow: '#FE988D',
+                                                        width: '105%',
+                                                        '&:hover': {
+                                                            borderColor: '#FE988D'
+                                                        }
+                                                    })
+                                                }}
+                                                value={this.state.dcCodeObj}
+                                                onChange={(e) => this.handleDcCodeChange(e)}
+                                                options={dcData}
+                                                placeholder="--Select DC--"
+                                            />
+                                        </div>
 
-                                        {/* <input type="submit" /> */}
-                                        <span className="tooltip-text">Key Search</span>
+                                    </div>
+                                </div >
 
-                                    </div>
-                                    <div className="col-md-3 agent-filter p-0"><label className="label-title">Agent:</label>
-                                        <Select
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    // width: '270px',
-                                                    '@media screen and (min-width:768px)': {
-                                                        width: 'calc(116% + 2em)',
-                                                    },
-                                                    '@media screen and (min-width: 1300px)': {
-                                                        width: 'calc(117% + 2em)',
+                                <div className="main-filter ">
+                                    <div className="d-flex justify-content-between">
+                                        <div className="col-md-4 date-range col-wrapper pr-0">
+                                            <label className="label-title">Date:</label>
+                                            <DateRangePicker
+                                                placeholder="Please select a date"
+                                                autoUpdateInput={false}
+                                                onHide={this.resetSelection}
+                                                placeholder="-- Date -- "
+                                                startDate={this.state.startDate}
+                                                endDate={this.state.endDate}
+                                                onApply={this.handleApply}
+                                            >
+                                                <div className="date-box">
+                                                    <input type="text" className="form-control date-form ml-1" value={label} />
+                                                    <span className="date-group">
+                                                        <i className="date-btn fa fa-calendar" />
+                                                    </span>
+                                                </div>
+                                            </DateRangePicker>
+                                        </div>
 
-                                                    },
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                }),
-                                            }}
-                                            className="city-box ml-1"
-                                            value={this.state.selectedAgentOption}
-                                            onChange={(e) => this.handleAgentChange(e)}
-                                            options={agentListDropDown}
-                                            placeholder="--Select Agent--"
-                                        />
-                                    </div>
-                                    <div className="status-filter pl-5"><label className="label-title">Status:</label>
-                                        <select name="StatusfilterId" value={this.state.StatusfilterId} className="drop-select ml-1 green" onChange={(e) => this.statusFilter(e)}>
-                                            <option value="" className="drop-option">--Select Status--</option>
-                                            {statusDropdown}
-                                        </select>
-                                    </div>
-                                    <div className="col-md-3 code-filter p-0"><label className="label-title">DC Code:</label>
-                                        {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                                        <Select className="state-box"
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    width: '105%',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            value={this.state.dcCodeObj}
-                                            onChange={(e) => this.handleDcCodeChange(e)}
-                                            options={dcData}
-                                            placeholder="--Select DC--"
-                                        />
-                                    </div>
-
-                                </div>
-                            </div >
-
-                            <div className="main-filter ">
-                                <div className="d-flex justify-content-between">
-                                    <div className="col-md-4 date-range col-wrapper pr-0">
-                                        <label className="label-title">Date:</label>
-                                        <DateRangePicker
-                                            placeholder="Please select a date"
-                                            autoUpdateInput={false}
-                                            onHide={this.resetSelection}
-                                            placeholder="-- Date -- "
-                                            startDate={this.state.startDate}
-                                            endDate={this.state.endDate}
-                                            onApply={this.handleApply}
-                                        >
-                                            <div className="date-box">
-                                                <input type="text" className="form-control date-form ml-1" value={label} />
-                                                <span className="date-group">
-                                                    <i className="date-btn fa fa-calendar" />
-                                                </span>
-                                            </div>
-                                        </DateRangePicker>
-                                    </div>
-
-                                    <div className="col-md-4 state-filter col-wrapper p-0"><label className="label-title">State:</label>
-                                        {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
-                                        <Select className="state-box ml-1"
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            value={this.state.selectedStateOption}
-                                            onChange={(e) => this.handleStateChange(e, 'state')}
-                                            options={stateDropDown}
-                                            placeholder="--Select State--"
-                                        />
-                                    </div>
-                                    <div className="col-md-4 city-filter col-wrapper pr-0"><label className="label-title">City:</label>
-                                        <Select className="city-box ml-1"
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            value={this.state.selectedCityOption}
-                                            onChange={(e) => this.handleStateChange(e)}
-                                            options={cityDropDown}
-                                            placeholder="--Select City--"
-                                        />
-                                    </div>
-                                    <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
-                                        <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <div className="col-md-4 state-filter col-wrapper p-0"><label className="label-title">State:</label>
+                                            {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
+                                            <Select className="state-box ml-1"
+                                                styles={{
+                                                    control: base => ({
+                                                        ...base,
+                                                        borderColor: 'hsl(0,0%,80%)',
+                                                        boxShadow: '#FE988D',
+                                                        '&:hover': {
+                                                            borderColor: '#FE988D'
+                                                        }
+                                                    })
+                                                }}
+                                                value={this.state.selectedStateOption}
+                                                onChange={(e) => this.handleStateChange(e, 'state')}
+                                                options={stateDropDown}
+                                                placeholder="--Select State--"
+                                            />
+                                        </div>
+                                        <div className="col-md-4 city-filter col-wrapper pr-0"><label className="label-title">City:</label>
+                                            <Select className="city-box ml-1"
+                                                styles={{
+                                                    control: base => ({
+                                                        ...base,
+                                                        borderColor: 'hsl(0,0%,80%)',
+                                                        boxShadow: '#FE988D',
+                                                        '&:hover': {
+                                                            borderColor: '#FE988D'
+                                                        }
+                                                    })
+                                                }}
+                                                value={this.state.selectedCityOption}
+                                                onChange={(e) => this.handleStateChange(e)}
+                                                options={cityDropDown}
+                                                placeholder="--Select City--"
+                                            />
+                                        </div>
+                                        <button type="button" className="data-search ml-1" onClick={(e) => this.getRetailerList("onSearch")}>
+                                            <i className="fa fa-search" aria-hidden="true"></i>Search
                                         <span className="tooltip-text">Click to Search</span>
-                                    </button>
-                                    <div className="retail-reset">
-                                        <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
-                                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                                            <span className="tooltip-text">Reset</span>
                                         </button>
+                                        <div className="retail-reset">
+                                            <button type="button" className="reset ml-1" onClick={(e) => this.getRetailerList('reset')}>
+                                                <i className="fa fa-refresh" aria-hidden="true"></i>
+                                                <span className="tooltip-text">Reset</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>}
                     <DataTableDynamic
                         customCss="fetchretailer"
@@ -949,12 +909,6 @@ class FetchRetailer extends React.Component {
                         handleRowChange={this.handleRowChange}
                     />
                     <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
-
-                    {/* <DataTableDynamic customCss="fetchretailer" title="Category List" tableHead={this.state.columns}
-                        tableDatas={this.state.data} handleView={this.itemView}
-                        pagination={true} onRowSelected={this.handleRowChange}
-                    /> */}
-                    {/* <GoogleMapPage /> */}
                 </div></div >
         );
     }
