@@ -18,7 +18,6 @@ import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Select from 'react-select';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap/dist/css/bootstrap.css';
-// you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import TransferAgent from './TransferAgent'
 import { SearchBar, ReactPagination } from '../../shared'
@@ -33,7 +32,6 @@ class FetchRetailer extends React.Component {
         router: PropTypes.object,
     };
     constructor(props, context) {
-
         super(props);
         this.state = {
             roleId: props.roleId,
@@ -61,7 +59,6 @@ class FetchRetailer extends React.Component {
     componentWillMount() {
         if (this.context.router.route.location.state && this.context.router.route.location.state.retlrbckTrack == "backTrue" && sessionStorage.retsearchDatas) {
             var sessRetsearchDatas = JSON.parse(sessionStorage.retsearchDatas);
-            // console.log("----sessRetsearchDatas----", sessRetsearchDatas);
             if (sessRetsearchDatas) {
                 this.setState({
                     search: sessRetsearchDatas.search,
@@ -98,11 +95,8 @@ class FetchRetailer extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        //         var routeChanged = newProps.location !== this.props.location
-        // console.log('---routeChanged---',routeChanged)
         if (newProps.list.datas && !this.state.popup) {
             let selectlist = newProps.list.datas;
-            // let agentDataList = newProps.agentData;
             let Lists = selectlist && selectlist.map(item => {
                 item.selectBox = this.viewCrop(item.id, item.status, item.isActive);
                 return item;
@@ -110,7 +104,6 @@ class FetchRetailer extends React.Component {
             this.setState({
                 data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount
             })
-            // this.getAllretailer();
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
             store.dispatch({ type: RETAILER_DELETE_SUCCESS, resp: "" })
@@ -123,7 +116,6 @@ class FetchRetailer extends React.Component {
         this.fetchAgents();
         this.getDCData();
         this.getCityList();
-        // this.getAllretailer();
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
@@ -140,7 +132,6 @@ class FetchRetailer extends React.Component {
     }
     getCityList() {
         let obj = {
-            // "countryId": this.state.country,
             "roleId": 2,
             "countryId": 101,
             "stateId": this.state.stateId,
@@ -178,7 +169,6 @@ class FetchRetailer extends React.Component {
                 }, () => {
                     this.getRetailerList();
                     obj = {
-                        // "countryId": this.state.country,
                         "roleId": 2,
                         "countryId": 101,
                         "stateId": this.state.stateId,
@@ -216,9 +206,7 @@ class FetchRetailer extends React.Component {
                 this.setState({
                     [e.name]: e.value,
                 }, () => {
-                    // this.getRetailerList();
                     obj = {
-                        // "countryId": this.state.country,
                         "roleId": 2,
                         "countryId": 101,
                         "stateId": this.state.stateId,
@@ -246,12 +234,10 @@ class FetchRetailer extends React.Component {
 
     handleAgentChange = (e) => {
         this.setState({ selectedAgentOption: e, agentId: e.value }, () => {
-            //this.getRetailerList() 
         })
 
     };
     getRetailerList = (status) => {
-        // this.onCloseModal();
         let user = {};
         if (status == 'reset') {
             this.setState({
@@ -265,7 +251,6 @@ class FetchRetailer extends React.Component {
                 user.pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO;
                 user.row = this.state.itemPerPage;
                 this.props.fetchRetailers(user);
-                // this.getAllretailer();
                 this.redirectCategoryPath();
             })
         }
@@ -286,9 +271,6 @@ class FetchRetailer extends React.Component {
             if (this.state.StatusfilterId) {
                 user.status = this.state.StatusfilterId;
             }
-            // if (status != "transagent") {
-
-            // }
             if (this.state.agentId) {
                 user.agentId = this.state.agentId;
                 user.selectedAgentOption = this.state.selectedAgentOption;
@@ -298,7 +280,6 @@ class FetchRetailer extends React.Component {
                 user.dcCodeObj = this.state.dcCodeObj;
                 user.dcCode = this.state.dcCode;
             }
-
             user.roleId = 2;
             user.search = this.state.search;
             if (status == "onSearch") {
@@ -314,13 +295,9 @@ class FetchRetailer extends React.Component {
                 selectedDatas: []
             })
             this.props.fetchRetailers(user);
-            // this.getAllretailer();
         }
     };
     fetchAgents = () => {
-        // let user = {};
-        // user.roleId = 4;
-        // user.flag = 2;
         let obj = {
             roleId: 4,
             flag: 2,
@@ -331,7 +308,6 @@ class FetchRetailer extends React.Component {
                 this.setState({ agentDataList: resp })
             }
         })
-        // this.props.fetchSalesAgent(user);
     }
     handlePageChange = e => {
         e.preventDefault();
@@ -341,7 +317,6 @@ class FetchRetailer extends React.Component {
 
     viewCrop(RetstatusId, status, isActive) {
         let statusClass;
-        // else {
         if (isActive == 0) {
             statusClass = window.strings.RETAILERS.INACTIVE
         }
@@ -352,27 +327,12 @@ class FetchRetailer extends React.Component {
         } else if (status == 2 && isActive == 1) {
             statusClass = window.strings.RETAILERS.REJECTED
         }
-        //  else if (isActive == 0) {
-        //     statusClass = window.strings.RETAILERS.INACTIVE
-        // }
-        // }
-        // statusClass = window.strings.RETAILERS.INACTIVE
-
         let ViewPage = <p className={statusClass} >{statusClass}</p>
-        // const statusDropdown = resorceJSON.statusOptions.map((item, index) => {
-        //     return <option value={index} selected={status == index ? true : false} className="drop-option">{item}</option>
-        // })
-        // let ViewPage = <select className={statusClass} onChange={(e) => this.statusChange(e, RetstatusId)}>
-        //     {/* className="drop-select" */}
-        //     {statusDropdown}
-        // </select >
         return ViewPage;
     }
 
-
     getStatus(RetstatusId, status, isActive) {
         let statusClass;
-        // else {
         if (isActive == 0) {
             return statusClass = window.strings.RETAILERS.INACTIVE
         }
@@ -385,7 +345,6 @@ class FetchRetailer extends React.Component {
         }
     }
 
-
     statusChange(e, RetId) {
         let statusVal = e.target.value;
         let message = window.strings.UPDATEMESSAGE;
@@ -396,7 +355,6 @@ class FetchRetailer extends React.Component {
                 formData.append("roleId", 2);
                 formData.append("status", statusVal);
                 updateStatusRetailer(formData).then(resp => {
-                    // resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
                     this.getRetailerList();
                 })
             },
@@ -405,9 +363,7 @@ class FetchRetailer extends React.Component {
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
     }
     statusFilter(e) {
-        this.setState({ StatusfilterId: e.target.value }, () => {
-            //this.getRetailerList();
-        })
+        this.setState({ StatusfilterId: e.target.value })
     }
     handleDelete = (data, e) => {
         e.preventDefault();
@@ -440,26 +396,13 @@ class FetchRetailer extends React.Component {
             startDate: picker.startDate,
             endDate: picker.endDate,
             closePicker: true
-        }, () => {
-            // this.getRetailerList();
         })
-    }
-    resetSelection = (event, picker) => {
-        //console.log("picker", picker);
-        // this.setState({
-        //     startDate: moment(),
-        //     endDate: moment()
-        // }, () => {
-        //     // this.getRetailerList();
-        // })
     }
     handleRowChange = (Data) => {
         this.setState({ selectedDatas: Data })
     }
     handleDcCodeChange = (Data) => {
-        this.setState({ dcCodeObj: Data, dcCode: Data.value }, () => {
-            // this.getRetailerList()
-        })
+        this.setState({ dcCodeObj: Data, dcCode: Data.value })
     };
     onCloseModal = (type) => {
         this.setState({ open: false, popup: false })
@@ -467,19 +410,15 @@ class FetchRetailer extends React.Component {
             this.redirectCategoryPath();
         }
     };
-
     redirectCategoryPath = () => {
         this.context.router.history.push({ pathname: path.category.list, state: { retlrbckTrack: "backTrue" } });
     }
-
     enableAdvanceSearch = (e) => {
         // e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
-
     searchResult = (e) => {
-
         e.preventDefault();
         if (this.state.search) {
             this.setState({ currentPage: 0 }, () => {
@@ -519,7 +458,6 @@ class FetchRetailer extends React.Component {
             });
         }
     }
-
     getAllretailer = () => {
         let user = {};
         if (this.state.stateId != 0) {
@@ -555,7 +493,6 @@ class FetchRetailer extends React.Component {
             }
         })
     };
-
     render() {
         let dcData = [];
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
@@ -572,7 +509,6 @@ class FetchRetailer extends React.Component {
         } else {
             label = ''
         }
-
         let excelDatas = [];
         let exportAllData = [];
         let stateDropDown = []; let cityDropDown = []; let agentListDropDown = [];
@@ -580,16 +516,12 @@ class FetchRetailer extends React.Component {
             resorceJSON.statusOptions.map((item, index) => {
                 return <option value={index} className="drop-option"> {item}</option>
             })
-
         let nilAgent = { "label": '-- Nil ---', "value": "nill" };
         agentListDropDown.push(nilAgent);
         this.state.agentDataList && this.state.agentDataList.map((item) => {
             let agentData = item.split(',');
-
-
             let obj = { "label": agentData[1], "value": agentData[0], "name": "agentName" };
             agentListDropDown.push(obj);
-
         })
         this.state.stateData && this.state.stateData.map((item) => {
             let obj = { "label": item.name, "value": item.id, "name": "stateId" };
@@ -599,22 +531,7 @@ class FetchRetailer extends React.Component {
             let obj = { "label": item.name, "value": item.id, "name": "cityId" };
             cityDropDown.push(obj);
         })
-
-        // const stateDropDown = this.state.stateData && this.state.stateData.map((item, index) => {
-        //     return <option key={index}
-        //         value={item.id} className="drop-option"> {item.name}</option>
-        // });
-        // const cityDropDown = this.state.cityData && this.state.cityData.map((item, index) => {
-        //     return <option key={index}
-        //         value={item.id} className="drop-option"> {item.name}</option>
-        // });
         this.state.exceldatas && this.state.exceldatas.map((item, index) => {
-            let address = '';
-            let addressData = '';
-            let role = '';
-            let shopAddress = '';
-            let shopAddressData = '';
-            let selectBox = '';
             item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
             item.shopAddrss1 = item.shopAddress && item.shopAddress.address1 ? item.shopAddress.address1 : '-'
             item.shopLocalty = item.shopAddress && item.shopAddress.address2 ? item.shopAddress.address2 : '-'
@@ -639,23 +556,14 @@ class FetchRetailer extends React.Component {
             }
             item.cusId = item.cusId && item.cusId ? item.cusId : '-';
             item.created = moment(item.created).format("DD/MM/YYYY");
-
-
             item.latitude = item.shopAddress.latitude
             item.longitude = item.shopAddress.longitude
             item.shopOpenTime = item.shopAddress.shopOpeningTime
             item.retailerName = item.name
             item.shopImageLink = imageBaseUrl + item.shopAddress.image
-
             excelDatas.push(item);
         })
         this.state.exportAllData && this.state.exportAllData.map((item, index) => {
-            let address = '';
-            let addressData = '';
-            let role = '';
-            let shopAddress = '';
-            let shopAddressData = '';
-            let selectBox = '';
             item.shopAddrss = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address1 + ',' + item.shopAddres[0].address2;
             item.shopAddrss1 = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address1 ? item.shopAddres[0].address1 : '-'
             item.shopLocalty = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address2 ? item.shopAddres[0].address2 : '-'
@@ -680,20 +588,14 @@ class FetchRetailer extends React.Component {
             }
             item.cusId = item.cusId && item.cusId ? item.cusId : '-';
             item.created = moment(item.created).format("DD/MM/YYYY");
-
-
             item.latitude = item.shopAddres && item.shopAddres[0].latitude
             item.longitude = item.shopAddres && item.shopAddres[0].longitude
             item.shopOpenTime = item.shopAddres && item.shopAddres[0].shopOpeningTime
             item.retailerName = item.name
             item.shopImageLink = imageBaseUrl + item.shopAddres[0].image
-
             exportAllData.push(item);
         })
-
         let TransferAgentData = < TransferAgent onCloseModal={this.onCloseModal} getRetailerList={this.getRetailerList} selectedDatas={this.state.selectedDatas} clearRows={this.state.clearCheck} />
-
-
         let PrintexcelDatas = [];
         exportAllData && exportAllData.map((item, index) => {
             let excelitem = {};
@@ -713,41 +615,22 @@ class FetchRetailer extends React.Component {
             excelitem.ShopImageLink = item.shopImageLink && item.shopImageLink === '-' ? '' : item.shopImageLink;
             PrintexcelDatas.push(excelitem);
         });
-
         return (
             <div className=" mt-4">
                 <button type="button" className="excel-btn export-file ml-2" onClick={() => this.getAllretailer()}>Export</button>
                 <CSVLink ref={this.csvLink} handleLegacy={true} filename='Retailers.csv' data={PrintexcelDatas}></CSVLink >
                 <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
                 <div className="retailersearchdiv">
-                    {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
                     <button type="button" className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
-                        {/* <span className="advance-icon"></span>Advance Search */}
                         <span className="tooltip-text">Click to Search</span>
                     </button>
-                    {/* <div className="retail-reset">
-                        <button type="button" className="reset ml-2" onClick={(e) => this.getRetailerList('reset')}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                    </div> */}
                 </div>
                 <div id="menu">
-                    {/* <handlesearch className="advance-search"><span className="advance-icon"></span></button> */}
-
-
                     <div className="assign-box">
                         <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
-                        <div className="">
-                            {/* <ExportFile className="export-search" csvData={PrintexcelDatas} getExportData={this.getAllretailer} /> */}
-                        </div>
                     </div>
-
-                    {/* <div className="main-filter d-flex justify-content-end">
-                    <div className="row">
-                        {/* <SearchBar className="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleSearch, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                        <ExportFile className="col-md-6" csvData={this.state.data} /> 
-                    </div>
-                </div> */}
                     {this.state.advanceSearch &&
                         <div className="">
                             <form onSubmit={(e) => this.searchSubmit(e)}>
@@ -760,10 +643,7 @@ class FetchRetailer extends React.Component {
                                                 />
                                                 <button type="submit" hidden></button>
                                             </form>
-
-                                            {/* <input type="submit" /> */}
                                             <span className="tooltip-text">Key Search</span>
-
                                         </div>
                                         <div className="col-md-3 agent-filter p-0"><label className="label-title">Agent:</label>
                                             <Select
@@ -799,7 +679,6 @@ class FetchRetailer extends React.Component {
                                             </select>
                                         </div>
                                         <div className="col-md-3 code-filter p-0"><label className="label-title">DC Code:</label>
-                                            {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                             <Select className="state-box"
                                                 styles={{
                                                     control: base => ({
@@ -818,10 +697,8 @@ class FetchRetailer extends React.Component {
                                                 placeholder="--Select DC--"
                                             />
                                         </div>
-
                                     </div>
                                 </div >
-
                                 <div className="main-filter ">
                                     <div className="d-flex justify-content-between">
                                         <div className="col-md-4 date-range col-wrapper pr-0">
@@ -829,12 +706,11 @@ class FetchRetailer extends React.Component {
                                             <DateRangePicker
                                                 placeholder="Please select a date"
                                                 autoUpdateInput={false}
-                                                onHide={this.resetSelection}
+                                                // onHide={this.resetSelection}
                                                 placeholder="-- Date -- "
                                                 startDate={this.state.startDate}
                                                 endDate={this.state.endDate}
-                                                onApply={this.handleApply}
-                                            >
+                                                onApply={this.handleApply} >
                                                 <div className="date-box">
                                                     <input type="text" className="form-control date-form ml-1" value={label} />
                                                     <span className="date-group">
@@ -845,7 +721,6 @@ class FetchRetailer extends React.Component {
                                         </div>
 
                                         <div className="col-md-4 state-filter col-wrapper p-0"><label className="label-title">State:</label>
-                                            {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                             <Select className="state-box ml-1"
                                                 styles={{
                                                     control: base => ({
@@ -900,11 +775,7 @@ class FetchRetailer extends React.Component {
                         title="Retailer List"
                         tableHead={this.state.columns}
                         tableDatas={excelDatas}
-                        // handleEdit={this.itemEdit}
                         handleView={this.itemView}
-                        // handleDelete={this.handleDelete}
-                        // pagination={true}
-                        // checkbox={true}
                         onRowSelected={this.handleRowChange}
                         handleRowChange={this.handleRowChange}
                     />
@@ -913,13 +784,11 @@ class FetchRetailer extends React.Component {
         );
     }
 }
-
 const mapStateToProps = state => ({
     list: state.retailer.Lists ? state.retailer.Lists : [],
     deletedData: state.retailer.deletedData,
     agentData: state.salesAgent
 });
-
 export default connect(
     mapStateToProps,
     { fetchRetailers, deleteRetailer, fetchSalesAgent },
