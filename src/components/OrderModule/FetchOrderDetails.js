@@ -210,7 +210,7 @@ class FetchOrderDetails extends Component {
                 fullShopAddrss = ''
             }
             orderTotalAmount = item.orderAmount ? item.orderAmount : '-';
-            credits = item.wallet && item.wallet.walletPrice ? item.wallet.walletPrice : '-';
+            credits = (item.orderCredit || item.orderCredit == 0) ? item.orderCredit : '';
             return {
                 "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, "RS. " + item.orderRedeem, formatDate(item.created),
                 timeformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id
@@ -250,7 +250,7 @@ class FetchOrderDetails extends Component {
                         {!this.state.creditStatus && this.state.orderStatus == 6 && <div className="">
                             <button className="credit-btn" onClick={() => this.onOpenModal(2)} >Order Credit</button>
                         </div>}
-                        {(this.state.creditStatus && credits) ?
+                        {(this.state.creditStatus && (credits || credits == 0)) ?
                             <div className="credit-count">
                                 {/* "Hoiiii" */}
                                 <h4> Credits : {credits}</h4>
