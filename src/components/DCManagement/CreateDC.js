@@ -67,7 +67,7 @@ class CreateDC extends Component {
 
 
     handleInputChange = (e) => {
-        this.setState({
+        e.charCode == 32 && e.target.value == '' || e.target.value[0] == ' ' ? e.target.value = '' : this.setState({
             [e.target.name]: e.target.value
         })
     }
@@ -136,6 +136,7 @@ class CreateDC extends Component {
                                     })}
                                     name="name"
                                     onChange={this.handleInputChange}
+                                    onKeyPress={this.handleInputChange}
                                     value={this.state.name}
                                     required
                                 />
@@ -152,6 +153,7 @@ class CreateDC extends Component {
                                     })}
                                     name="surveyingArea"
                                     onChange={this.handleInputChange}
+                                    onKeyPress={this.handleInputChange}
                                     value={this.state.surveyingArea}
                                     required
                                 />
@@ -198,6 +200,7 @@ class CreateDC extends Component {
                                     })}
                                     name="deliverySlot"
                                     onChange={this.handleInputChange}
+                                    onKeyPress={this.handleInputChange}
                                     value={this.state.deliverySlot}
                                     required
                                 />
