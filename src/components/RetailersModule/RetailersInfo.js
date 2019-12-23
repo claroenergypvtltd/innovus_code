@@ -72,7 +72,6 @@ class IrrigationSetting extends Component {
     }
 
     handleInputChange = (e) => {
-
         this.setState({ [e.target.name]: e.target.value })
     }
 
@@ -81,12 +80,7 @@ class IrrigationSetting extends Component {
             this.getCityList();
         })
     }
-    // handleTimePicker = (Data) => {
-    //     let data = Data._d;
-    //     debugger
-    //     this.setState({ transitionTime: data })
-    //     debugger
-    // }
+
     handleTimePicker = value => {
         let getTime = value && value.format('hh:mm a');
         let getTimeformat = getTime && getTime.split(':');

@@ -125,7 +125,6 @@ class CreatePrice extends Component {
         this.setState({ categoryData: nextProps.getCategory.datas })
         let showweight = 0;
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
-
             let Data = nextProps.categoryData.specificData.data;
             this.setState({ editSubCategoryDatas: Data.datas })
         }
@@ -133,12 +132,8 @@ class CreatePrice extends Component {
             if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].productDetail) {
                 showweight = nextProps.priceData.specificData.datas[0].productDetail.totalQuantity ? nextProps.priceData.specificData.datas[0].productDetail.totalQuantity : 0
             }
-            // if (this.state.priceId) {
             store.dispatch({ type: PRICE_SPECIFIC_DATA_SUCCESS, specificData: "" })
-
             this.setState({ weight: showweight })
-
-            // }
         }
 
 
@@ -171,11 +166,6 @@ class CreatePrice extends Component {
                     this.setState({ subCategoryDatas: resp.data.datas })
                 }
             });
-
-            // let obj = {
-            //     "categoryId": this.state.categoryId
-            // }
-            // this.props.getPriceList(obj);
         })
     }
     handleSubCategory = (e) => {
@@ -317,8 +307,7 @@ class CreatePrice extends Component {
                 }
             }
         })
-
-        if (isValid == true && this.state.categoryId && this.state.weightId && this.state.price && this.state.boxQuantity && this.state.dcCode) {
+        if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId && this.state.price && this.state.boxQuantity && this.state.dcCode) {
             let flag;
             this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
 
@@ -386,7 +375,6 @@ class CreatePrice extends Component {
 
 
     listPath = () => {
-        // this.props.history.goBack();
         this.props.history.push({ pathname: path.price.list, state: { priceSearchDatas: "backTrue" } });
     }
 
@@ -451,11 +439,6 @@ class CreatePrice extends Component {
         });
 
         const subCategoryDropDown =
-            // this.state.priceId ? this.state.editSubCategoryDatas && this.state.editSubCategoryDatas.map((item, index) => {
-            //     return <option key={index}
-            //         value={item.id}> {item.name}</option>
-            // })
-            //     :
             this.state.subCategoryDatas && this.state.subCategoryDatas.map((item, index) => {
                 return <option key={index}
                     value={item.id}> {item.name}</option>
@@ -504,11 +487,9 @@ class CreatePrice extends Component {
                                                 {this.state.priceId && <option value={this.state.subCategoryLabel} selected>{this.state.subCategoryLabel}</option>}
                                                 {!this.state.priceId && subCategoryDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.categoryId && <div className="mandatory">{window.strings['CATEGORY']['SUB_CATEGORY'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !parseInt(this.state.categoryId) && <div className="mandatory">{window.strings['CATEGORY']['SUB_CATEGORY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        {/* </div> */}
 
-                                        {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-4">
                                             <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
                                             <input
@@ -549,9 +530,7 @@ class CreatePrice extends Component {
                                             </select>
                                             {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        {/* </div> */}
 
-                                        {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-6">
                                             <label>{window.strings.CROP.PRICE + ' *'}</label>
                                             <input type="number"
@@ -576,9 +555,7 @@ class CreatePrice extends Component {
                                             </select>
                                             {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['PRICE'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        {/* </div> */}
 
-                                        {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-6">
                                             <label>{window.strings.CROP.BOX_QUANTITY + ' *'}</label>
                                             <input type="number"
@@ -603,52 +580,6 @@ class CreatePrice extends Component {
                                             </select>
                                             {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['BOX_QUANTITY'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
-
-                                        {/* <div className="form-group col-md-6">
-                                            <label>{window.strings.PRICE.QUANTITY}</label>
-                                            <input type="number"
-                                                placeholder="Quantity"
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.quantity
-                                                })}
-                                                name="quantity"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.quantity}
-                                                required
-                                            />
-                                            {this.state.submitted && this.state.offerId != 0 && !this.state.offer && this.state.offerId != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
-                                            {this.state.submitted && this.state.offerId == 1 && (parseInt(this.state.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
-                                            {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
-                                        </div> */}
-
-                                        {/* <div className="form-group col-md-6">
-                                            <label>{window.strings.PRICE.OFFER}</label>
-                                            <input type="number"
-                                                placeholder="Offer"
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.offer
-                                                })}
-                                                name="offer"
-                                                onChange={this.handleInputChange}
-                                                value={this.state.offer}
-                                                required
-                                            />
-                                            {this.state.submitted && this.state.offerId != 0 && !this.state.offer && this.state.offerId != null && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
-                                            {this.state.submitted && this.state.offerId == 1 && (parseInt(this.state.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
-                                            {this.state.submitted && this.state.offerId == 2 && this.state.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
-                                        </div> */}
-
-                                        {/* <div className="form-group col-md-6 ">
-                                            <label>{window.strings.PRICE.TYPE}</label>
-                                            <select required name="offerId" className="form-control" value={this.state.offerId} onChange={this.handleInputChange} >
-                                                <option value="0">Select</option>
-                                                <option value="1">Currency</option>
-                                                <option value="2">Percentage</option>
-                                            </select>
-                                            {(this.state.submitted && this.state.offer && this.state.offerId == 0) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
-                                        </div> */}
-
-
 
                                         {this.state.offerArray.map((offerArray, idx) => (
                                             <div className="col-md-12">
@@ -683,27 +614,15 @@ class CreatePrice extends Component {
                                                         {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
                                                         {this.state.submitted && offerArray.type == 2 && offerArray.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
 
-                                                        {/* </div> */}
                                                     </div>
-                                                    {/* <div className="form-group col-md-4" key={idx + 1}> */}
                                                     <div className="col-md-4">
                                                         <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
-                                                        {/* <input
-                                                            type="email"
-                                                            className="form-control"
-                                                            placeholder={`offerArray #${idx + 1} email`}
-                                                            value={offerArray.type}
-                                                            onChange={this.handleChangeType(idx)}
-                                                            required
-                                                        /> */}
                                                         <select required name="offerId" className="form-control" value={offerArray.type} onChange={this.handleChangeType(idx)} disabled={idx != 0}>
                                                             <option value="">Select</option>
                                                             <option value="1">Currency</option>
                                                             <option value="2">Percentage</option>
                                                         </select>
                                                         {(this.state.submitted && (offerArray.offer || offerArray.quantity) && !offerArray.type) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
-
-                                                        {/* </div> */}
                                                         <div className="add-del">
                                                             {idx == 0 && this.state.offerArray.length <= 3 && <button type="button" onClick={this.handleAddofferArray} className="btn-outline-success rounded-circle add-btn mr-2"><i class="fa fa-plus" aria-hidden="true"></i></button>}
                                                             {this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx, offerArray.id)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
@@ -712,48 +631,6 @@ class CreatePrice extends Component {
                                                 </div>
                                             </div>
                                         ))}
-
-                                        {/* 
-                                        {this.state.offerArray.map((offerArray, idx) => (
-                                            <div className="form-group col-md-4" key={idx + 1}>
-                                                <div className="">
-                                                    <label>{window.strings.PRICE.OFFER} {idx + 1} </label>
-                                                    <input
-                                                        type="email"
-                                                        className="form-control"
-                                                        placeholder={`offerArray #${idx + 1} email`}
-                                                        value={offerArray.name}
-                                                        onChange={this.handleChangeQuantity(idx)}
-                                                        required
-                                                    />
-                                                </div>
-                                            </div>
-                                        ))}
-
-
-                                        {this.state.offerArray.map((offerArray, idx) => (
-                                            <div className="form-group col-md-4" key={idx + 1}>
-                                                <div className="">
-                                                    <label>{window.strings.PRICE.TYPE} {idx + 1} </label>
-                                                    <input
-                                                        type="email"
-                                                        className="form-control"
-                                                        placeholder={`offerArray #${idx + 1} email`}
-                                                        value={offerArray.name}
-                                                        onChange={this.handleChangeQuantity(idx)}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className="add-del">
-
-                                                    {/* {idx === 0 && this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleAddofferArray} className="btn btn-success add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>}
-                                                    {this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn btn-danger del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>} */}
-                                        {/* <button type="button" onClick={this.handleAddofferArray} className="btn-outline-success rounded-circle add-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    {this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
-                                                </div>
-                                            </div>
-                                        ))} */}
-
                                     </form>
                                 </div>
 

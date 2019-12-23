@@ -45,7 +45,6 @@ class FetchOrder extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-
         if (newProps.orderData && newProps.orderData.Lists && newProps.orderData.Lists.datas) {
             let respData = newProps.orderData.Lists.datas;
             this.setState({ OrderLists: respData, pageCount: newProps.orderData.Lists.totalCount / this.state.itemPerPage, totalCount: newProps.orderData.Lists.totalCount })
@@ -57,7 +56,6 @@ class FetchOrder extends Component {
     }
 
     searchResult = (e) => {
-
         e.preventDefault();
         if (this.state.search) {
             this.setState({ currentPage: 0 }, () => {
@@ -93,26 +91,7 @@ class FetchOrder extends Component {
         this.props.getOrderList(obj)
     }
 
-    // handleDelete = (data) => {
-    //     let message = window.strings.DELETEMESSAGE;
-    //     const toastrConfirmOptions = {
-    //         onOk: () => { this.itemDelete(data) },
-    //         onCancel: () => console.log('CANCEL: clicked')
-    //     };
-    //     toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
-    // }
-
-    // itemDelete = (id) => {
-    //     this.props.DeleteCategory(id)
-    //         .then(resp => {
-    //             if (resp) {
-    //                 this.getOrderList();
-    //             }
-    //         });
-    // }
-
     onChange = (data) => {
-
         if (this.state.currentPage !== (data.selected)) {
             this.setState({ currentPage: data.selected }, () => {
                 this.getOrderList();

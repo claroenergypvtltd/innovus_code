@@ -252,7 +252,6 @@ class FetchOrderDetails extends Component {
                         </div>}
                         {(this.state.creditStatus && (credits || credits == 0)) ?
                             <div className="credit-count">
-                                {/* "Hoiiii" */}
                                 <h4> Credits : {credits}</h4>
                             </div> : ''
                         }
