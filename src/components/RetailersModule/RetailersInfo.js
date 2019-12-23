@@ -149,12 +149,12 @@ class IrrigationSetting extends Component {
                     <div className="col-md-8">
                         <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
-                            <div className="form-group col-md-6 time-form">
+                            <div className="form-group col-md-6">
                                 <label>Retailer Name  *</label>
                                 <input
                                     type="text"
                                     placeholder="Retailer Name"
-                                    className={classnames('form-control', {
+                                    className={classnames('form-control time-form', {
                                         'is-invalid': errors.amount
                                     })}
                                     name="name"
@@ -165,12 +165,12 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.name && <div className="mandatory">Retailer Name  {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6 time-form">
+                            <div className="form-group col-md-6">
                                 <label>Shop Name  *</label>
                                 <input
                                     type="text"
                                     placeholder="Shop Name"
-                                    className={classnames('form-control', {
+                                    className={classnames('form-control time-form', {
                                         'is-invalid': errors.amount
                                     })}
                                     name="shopName"
@@ -181,12 +181,12 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.shopName && <div className="mandatory">Shop Name  {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6 time-form">
+                            <div className="form-group col-md-6">
                                 <label>Shop Address  *</label>
                                 <input
                                     type="text"
                                     placeholder="Shop Address"
-                                    className={classnames('form-control', {
+                                    className={classnames('form-control time-form', {
                                         'is-invalid': errors.amount
                                     })}
                                     name="shopAddress"
@@ -197,12 +197,12 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.shopAddress && <div className="mandatory">Shop Address  {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6 time-form">
+                            <div className="form-group col-md-6">
                                 <label>Shop Open Time  *</label>
                                 {/* <input
                                     type="text"
                                     placeholder="Shop Open Time"
-                                    className={classnames('form-control', {
+                                    className={classnames('form-control ', {
                                         'is-invalid': errors.amount
                                     })}
                                     name="shopTime"
@@ -224,9 +224,9 @@ class IrrigationSetting extends Component {
                                 {this.state.submitted && !this.state.min && <div className="mandatory">Shop Open Time   {window.strings['ISREQUIRED']}</div>}
                             </div>
 
-                            <div className="form-group col-md-6 time-form">
+                            <div className="form-group col-md-6">
                                 <label>Shop Type  *</label>
-                                <select required name="shopType" className="form-control" value={this.state.shopType} onChange={this.handleInputChange} disabled={this.state.irrigationCostId}>
+                                <select required name="shopType" className="form-control time-form" value={this.state.shopType} onChange={this.handleInputChange} disabled={this.state.irrigationCostId}>
                                     <option value="0">Select Shop Type </option>
                                     {shopTypeData}
                                 </select>

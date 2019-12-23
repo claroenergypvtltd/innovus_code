@@ -312,7 +312,19 @@ class CreateCoupon extends Component {
                                         </div>
                                         <div className="form-group col-md-12 pt-2">
                                             <label>User</label>
-                                            <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} />
+                                            <ReactMultiSelectCheckboxes className="select-box"
+                                                styles={{
+                                                    control: base => ({
+                                                        ...base,
+                                                        borderColor: 'hsl(0,0%,80%)',
+                                                        boxShadow: '#FE988D',
+                                                        '&:hover': {
+                                                            borderColor: '#FE988D'
+                                                        }
+                                                    })
+                                                }}
+                                                options={dropDownData}
+                                                onChange={this.checkbox} />
                                         </div>
                                     </form>
                                 </div>
