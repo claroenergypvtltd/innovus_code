@@ -166,7 +166,7 @@ class CreateDC extends Component {
                                     // value={""}
                                     // value={this.state.orderCutOffTime}
                                     value={timeData}
-                                    className="xxx dc-time"
+                                    className="xxx shop-time"
                                     onChange={this.handleTimePicker}
                                     format={format}
                                     use12Hours
@@ -178,7 +178,7 @@ class CreateDC extends Component {
                                     defaultValue={timeData}
                                     // value={""}
                                     // value={this.state.orderCutOffTime}
-                                    className="xxx dc-time"
+                                    className="xxx shop-time"
                                     onChange={this.handleTimePicker}
                                     format={format}
                                     use12Hours

@@ -493,7 +493,7 @@ li:hover .menu-link{
 .dc-manag i{
     background-image: url(../src/assets/images/AgroSprit_icons.png);
     background-repeat: no-repeat;
-    background-position:-20px -45px;
+    background-position:-19px -44px;  
 }
 .irrigation i{
   background-image: url(../src/assets/images/AgroSprit_icons.png);
@@ -508,8 +508,12 @@ li .activate .menu-list i{
   background-position-x: -59px!important;
 }
 }
-
-
+.sideBarmenu li:hover .dc-manag i{
+  background-position-x: -60px;
+}
+.sideBarmenu li:hover .irrigation i{
+  background-position-x: -64px;
+}
 // .sidebar-toggle{
 //   margin-top: 35px;
 // }
@@ -1163,25 +1167,31 @@ input.form-control.search-btn:focus {
   width: 100%;
 }
 
-.time-form{
-  width: 270px;
+.main-container .time-form{
+  width: 275px;
 }
-.dc-time{
-  .rc-time-picker-input{
-    width: 270px;
-  }
-}
+// .dc-time{
+//   .rc-time-picker-input{
+//     width: 270px;
+//   }
+// }
 .main-container{
   .shop-time{
     .rc-time-picker-input{
-      width: 305px;
+      width:275px;
     }
   }
 }  
+.sidebar-container {
+  .time-form{
+    width: 326px;
+  }
+}
+
 .sidebar-container{
   .shop-time{
     .rc-time-picker-input{
-      width: 361px;
+      width: 326px;
     }
   }
 } 
@@ -1245,6 +1255,21 @@ input.form-control.search-btn:focus {
   border: none;
   margin: 10px;
  // background-image: linear-gradient(to right, #C064F8, #D795FC);
+}
+
+
+body .main-header .navbar{
+  padding: 0.1rem 1rem;
+}
+.navbar-brand{
+  padding: 0;
+}
+.map-icon{
+  color:$white;
+  padding: 0 6px;
+}
+.data-center{
+  margin-left: 43%;
 }
 
 /****************************User Management-Advanced search************************/
@@ -2640,6 +2665,12 @@ display: flex;
   width: 80px;
   text-align: center;
 }
+//***************************************Coupon*************************************//
+.select-box{
+  box-shadow: 0 1px 1px 1px rgba(0,0,0,0.08);
+}
+
+
 // #datepicker{
 //   color: $accept-green;
 // }
@@ -2790,16 +2821,3 @@ display: flex;
 //   }
 // }
 
-body .main-header .navbar{
-  padding: 0.1rem 1rem;
-}
-.navbar-brand{
-  padding: 0;
-}
-.map-icon{
-  color:$white;
-  padding: 0 6px;
-}
-.data-center{
-  margin-left: 43%;
-}
