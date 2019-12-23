@@ -54,14 +54,7 @@ class CategoryList extends Component {
         return ViewPage;
     }
     componentWillReceiveProps(newProps) {
-        if (newProps.getLists) {
-            // let Lists = newProps.getLists.map(item => {
-            //     item.cropButton = this.viewCrop(item);
-            //     item.image = item.image ? <img src={imageBaseUrl + item.image} height="40px" width="40px" /> : <img src={noimg} height="40px" width="40px" />;
-            //     item.description = item.description == '' || item.description == 'null' ? '-' : item.description;
-            //     return item;
-            // })
-            // debugger;
+        if (newProps.getLists) {           
             this.setState({ data: newProps.getLists.datas, pageCount: newProps.getLists.totalCount / this.state.itemPerPage, totalCount: newProps.getLists.totalCount });
         }
         if (newProps.categoryData && newProps.categoryData.deletedStatus == "200") {

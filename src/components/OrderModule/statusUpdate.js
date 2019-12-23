@@ -41,9 +41,16 @@ class StatusUpdate extends Component {
     }
 
     handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name == "status") {
+            this.setState({
+                [e.target.name]: e.target.value,
+                activity: '', location: ''
+            })
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     handleSubmit = (e) => {
@@ -112,12 +119,10 @@ class StatusUpdate extends Component {
 
     render() {
         const { errors } = this.state;
-
         const statusDropDown = this.state.statusData && this.state.statusData.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.label}</option>
         });
-
         return (
             <div>
                 <div className="row">
@@ -126,7 +131,7 @@ class StatusUpdate extends Component {
                             <div className="create-crop">
                                 <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
                                     <div className="form-group col-md-12">
-                                        <label>{window.strings['ORDER']['STATUS']}</label>
+                                        <label>{window.strings['ORDER']['STATUS']}  *</label>
                                         <select required name="status" className="form-control" value={this.state.status} onChange={this.handleInputChange}>
                                             <option value="0">Select Status</option>
                                             {statusDropDown}
@@ -136,7 +141,7 @@ class StatusUpdate extends Component {
                                     </div>
 
                                     <div className="form-group col-md-12">
-                                        <label>{window.strings.ORDER.LOCATION}</label>
+                                        <label>{window.strings.ORDER.LOCATION} *</label>
                                         <input
                                             type="text"
                                             placeholder={window.strings.ORDER.LOCATION}
@@ -152,7 +157,7 @@ class StatusUpdate extends Component {
                                     </div>
 
                                     <div className="form-group col-md-12">
-                                        <label>{window.strings.ORDER.ACTIVITY}</label>
+                                        <label>{window.strings.ORDER.ACTIVITY} *</label>
                                         <textarea
                                             placeholder={window.strings.ORDER.ACTIVITY}
                                             className={classnames('form-control form-control-lg', {
@@ -178,7 +183,6 @@ class StatusUpdate extends Component {
         )
     }
 }
-
 
 const mapStateToProps = (state) => ({
     orderDetails: state.order ? state.order : {}
