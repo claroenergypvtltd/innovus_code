@@ -72,7 +72,7 @@ class IrrigationSetting extends Component {
     }
 
     handleInputChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+        e.charCode == 32 && e.target.value == '' || e.target.value[0] == ' ' ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
     }
 
     handleStateChange = (e) => {
@@ -153,6 +153,7 @@ class IrrigationSetting extends Component {
                                     })}
                                     name="name"
                                     onChange={this.handleInputChange}
+                                    onKeyPress={this.handleInputChange}
                                     value={this.state.name}
                                     required
                                 />
@@ -169,6 +170,7 @@ class IrrigationSetting extends Component {
                                     })}
                                     name="shopName"
                                     onChange={this.handleInputChange}
+                                    onKeyPress={this.handleInputChange}
                                     value={this.state.shopName}
                                     required
                                 />
@@ -185,6 +187,7 @@ class IrrigationSetting extends Component {
                                     })}
                                     name="shopAddress"
                                     onChange={this.handleInputChange}
+                                    onKeyPress={this.handleInputChange}
                                     value={this.state.shopAddress}
                                     required
                                 />
