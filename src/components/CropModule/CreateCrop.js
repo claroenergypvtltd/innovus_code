@@ -77,7 +77,7 @@ class CreateCrop extends Component {
     }
 
     handleInputChange = (e) => {
-        e.charCode == 32 && e.target.value == '' || e.target.value[0] == '' ? e.target.value = ''
+        e.charCode == 32 && e.target.value == '' || e.target.value[0] == ' ' ? e.target.value = ''
             : this.setState({ [e.target.name]: e.target.value });
     }
     listPage = () => {
