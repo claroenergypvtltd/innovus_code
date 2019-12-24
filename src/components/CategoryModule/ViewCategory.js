@@ -8,7 +8,7 @@ import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
 import store from '../../store/store';
-import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
+import { CATEGORY_DELETE_SUCCESS, CATEGORY_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import Select from 'react-select';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import { fetchSalesAgent, getDcCodeData } from '../../actions/salesAgentAction';
@@ -54,6 +54,10 @@ class ViewCategory extends Component {
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
             let Data = nextProps.categoryData.specificData.data;
             this.setState({ CategoryListDatas: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage, totalCount: Data.totalCount })
+        }
+        if (nextProps.categoryData && nextProps.categoryData.updatedStatus == "200") {
+            store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
+            // this.redirectPage();
         }
     }
 
