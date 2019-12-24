@@ -80,13 +80,18 @@ class FetchDC extends Component {
     //     toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
     // }
 
-    itemEdit = (id) => {
-        this.props.history.push({ pathname: path.dc.edit + id, state: { id: id } });
+    itemEdit = (Data) => {
+        this.props.history.push({ pathname: path.dc.edit + Data.id, state: { id: Data.id } });
     }
     handleDelete = (data) => {
-        let message = window.strings.DELETEMESSAGE;
+        let message = '';
+        if (data.productCount > 0) {
+            message = window.strings.DELETEDC;
+        } else {
+            message = window.strings.DELETEMESSAGE;
+        }
         const toastrConfirmOptions = {
-            onOk: () => { this.itemDelete(data) },
+            onOk: () => { this.itemDelete(data.id) },
             onCancel: () => console.log('CANCEL: clicked')
         };
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
@@ -141,7 +146,7 @@ class FetchDC extends Component {
     render() {
         let DcList = this.state.dcList && this.state.dcList.map((item, index) => {
             return {
-                "itemList": [item.dcCode, item.name, item.surveyingArea, item.orderCutOffTime, item.deliverySlot], "itemId": item.id
+                "itemList": [item.dcCode, item.name, item.surveyingArea, item.orderCutOffTime, item.deliverySlot], "itemId": { id: item.id, productCount: item.productCount }
             }
         })
 
@@ -165,7 +170,9 @@ class FetchDC extends Component {
                     </div>
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={DcList}
-                    handleEdit={this.itemEdit} handleDelete={this.handleDelete} />
+                    handleEdit={this.itemEdit}
+                // handleDelete={this.handleDelete} 
+                />
                 <ReactPagination PageDetails={{
                     pageCount: this.state.pageCount, onPageChange: this.onChange,
                     activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount
