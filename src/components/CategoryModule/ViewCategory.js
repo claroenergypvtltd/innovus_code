@@ -191,22 +191,23 @@ class ViewCategory extends Component {
         })
     };
 
-    handleStatusUpdate = (isActive, subcategoryId) => {
+    handleStatusUpdate = (isActive, subcategoryId, dcCode) => {
         let parentId = this.props.location && this.props.location.state && this.props.location.state.categoryId
 
         const formData = new FormData();
         formData.append("isActive", isActive);
         // formData.append("parentId", parentId);
         formData.append("id", subcategoryId);
+        formData.append("dcCode", dcCode);
         this.props.SubmitCategory(formData, parentId, "isProduct")
     }
 
-    handleStatusChange = (e, data) => {
+    handleStatusChange = (e, data, dcCode) => {
         let message = "Are you sure you want to update ?";
         var statusValue = e.target.name
         let value = e.target.value
         const toastrConfirmOptions = {
-            onOk: () => { this.handleStatusUpdate(value, data) },
+            onOk: () => { this.handleStatusUpdate(value, data, dcCode) },
             onCancel: () => {
                 // if (statusValue == data) {
                 //     this.state.status == 0 ? this.setState({ status: 0 }) : this.setState({ status: 1 })
@@ -242,13 +243,13 @@ class ViewCategory extends Component {
             const statusDropdown = resorceJSON.cropStatusOptions.map((item, index) => {
                 return <option value={index} selected={selectedValue == index ? true : false} className="drop-option">{item}</option>
             })
-            let statusChange = <select className="active-inactive" value={this.state.status} name={status} onChange={(e) => this.handleStatusChange(e, item.id)}>
+            let dcCode = item.dcCode && item.productDetailsao.dcCode == '' ? '-' : item.productDetailsao.dcCode;
+            let statusChange = <select className="active-inactive" value={this.state.status} name={status} onChange={(e) => this.handleStatusChange(e, item.id, dcCode)}>
                 {statusDropdown}
                 {/* <option value="0" selected={selectedValue}>Active</option>
                 <option value="1" selected={selectedValue}>In Active</option> */}
             </select >
             let description = item.description == '' ? '-' : item.description;
-            let dcCode = item.dcCode && item.productDetailsao.dcCode == '' ? '-' : item.productDetailsao.dcCode;
             return { "itemList": [item.name, catImg, description, dcCode, statusChange], "itemId": item.id }
         })
 

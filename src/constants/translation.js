@@ -142,6 +142,7 @@ export const Translation = {
         "OFFICE": "Phone Number",
         "WEBSITE": "Website",
         "DELETEMESSAGE": "Are you sure you wish to delete this item?",
+        "DELETEDC": "This Data has dependencies.. Are you sure you wish to delete this item?",
         "UPDATEMESSAGE": "Are you sure you wish to Update this item?",
         "ROLEPERMISSIONTITLE": "Role Permission",
         "PASSWORDFORMAT": "(Should contains minimum 8 characters, one letter should be alpha-numeric values)",

@@ -456,6 +456,7 @@ class FetchRetailer extends React.Component {
             this.setState({ currentPage: data.selected, filterWithPagination: true }, () => {
                 this.getRetailerList();
             });
+            let selectedDatas = this.state.selectedDatas.splice(0)
         }
     }
     getAllretailer = () => {
