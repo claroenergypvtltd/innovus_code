@@ -217,9 +217,9 @@ class FetchOrderDetails extends Component {
             }
         })
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
-            return { "itemList": [item.trackTime ? formatDate(item.trackTime) : '-', item.activity ? item.activity : '-', item.location ? item.location : "-"] }
+            let location = item.location ? (item.location == "0.0" ? '-' : item.location) : '-';
+            return { "itemList": [item.trackTime ? formatDate(item.trackTime) : '-', item.activity ? item.activity : '-', location] }
         })
-
 
         let productList = this.state.productLists && this.state.productLists.map((item) => {
             let productname = item.category && item.category.name ? item.category.name : '-';
@@ -255,7 +255,7 @@ class FetchOrderDetails extends Component {
                                 <h4> Credits : {credits}</h4>
                             </div> : ''
                         }
-                        {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7'
+                        {this.state.OrderLists && this.state.OrderLists[0] && this.state.OrderLists[0].status != '7' && this.state.OrderLists[0].status != '6'
                             && <div className="pl-3">
                                 <button className="cancel-btn" onClick={(e) => this.statusChange(ordId, 7)}>Order Cancel</button>
                             </div>

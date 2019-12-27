@@ -18,6 +18,7 @@ class StatusUpdate extends Component {
             location: '',
             activity: '',
             farmDatas: this.props.getFarmData,
+            constStatus: '1',
             errors: {}
         }
     }
@@ -33,7 +34,7 @@ class StatusUpdate extends Component {
         if (newProps && newProps.orderDetails && newProps.orderDetails.trackLists) {
             let formDatas = newProps.orderDetails.trackLists && newProps.orderDetails.trackLists.orderWareHouse && newProps.orderDetails.trackLists.orderWareHouse[0] ? newProps.orderDetails.trackLists.orderWareHouse[0] : {}
             let location = formDatas.location ? (formDatas.location == "0.0" ? '' : formDatas.location) : '';
-            this.setState({ status: newProps.orderDetails.trackLists.status, location: location, activity: formDatas.activity });
+            this.setState({ status: newProps.orderDetails.trackLists.status, constStatus: newProps.orderDetails.trackLists.status, location: location, activity: formDatas.activity });
         }
     }
 
@@ -121,8 +122,11 @@ class StatusUpdate extends Component {
     render() {
         const { errors } = this.state;
         const statusDropDown = this.state.statusData && this.state.statusData.map((item, index) => {
-            return <option key={index}
-                value={item.id}> {item.label}</option>
+            if (this.state.constStatus <= item.id) {
+                return <option key={index}
+                    value={item.id}> {item.label}</option>
+            }
+
         });
         return (
             <div>
@@ -134,7 +138,7 @@ class StatusUpdate extends Component {
                                     <div className="form-group col-md-12">
                                         <label>{window.strings['ORDER']['STATUS']}  *</label>
                                         <select required name="status" className="form-control" value={this.state.status} onChange={this.handleInputChange}>
-                                            <option value="0">Select Status</option>
+                                            <option value="">Select Status</option>
                                             {statusDropDown}
                                         </select>
 

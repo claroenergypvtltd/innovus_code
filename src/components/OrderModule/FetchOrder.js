@@ -144,7 +144,7 @@ class FetchOrder extends Component {
             // let link = <button className="view-btn">{window.strings.ORDER.VIEWDETAILS}</button>
             let clasName = this.getClassNames(item.status);
             let status = <div>
-                <button className={"update-btn" + ' ' + clasName} onClick={() => { this.onOpenModal(item.orderId) }} disabled={item.status == 7}>{this.getStatusName(item.status)}</button>
+                <button className={"update-btn" + ' ' + clasName} onClick={() => { this.onOpenModal(item.orderId) }} disabled={item.status == 6 || item.status == 7}>{this.getStatusName(item.status)}</button>
             </div>
 
 
