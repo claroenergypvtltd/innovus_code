@@ -65,11 +65,10 @@ class FetchVehicle extends Component {
     }
 
     resetSearch = () => {
-        if (this.state.search) {
-            this.setState({ search: '' }, () => {
-                this.getPriceList();
-            });
+        let obj = {
+            search: ""
         }
+        this.setState({ search: '' }, () => { this.props.fetchVehicle(obj); })
     }
 
     getVehicleList() {

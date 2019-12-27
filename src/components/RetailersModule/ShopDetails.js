@@ -9,7 +9,7 @@ import { path } from '../../constants';
 import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
 import html2canvas from 'html2canvas';
-
+import { TableData } from '../../shared/Table'
 
 class ShopDetails extends React.Component {
     static contextTypes = {
@@ -24,7 +24,8 @@ class ShopDetails extends React.Component {
             rejectKey: false,
             rotation: 0,
             profile: [],
-            canvasImage: ''
+            canvasImage: '',
+            TableHead: ['Shop Image', 'Shop Name', 'Distance', 'Shop Address', 'Agent Name', "Action"]
         };
     }
     componentDidMount() {
@@ -233,6 +234,7 @@ class ShopDetails extends React.Component {
         // const getname = profile.name.split('_');
 
         const { rotation } = this.state;
+
         return (
             <div className="farm-tab p-1 active-box" >
                 {
@@ -374,6 +376,12 @@ class ShopDetails extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                {profile && profile.status == 0 && <div className="farm-tab p-1 active-box">
+
+                    <TableData TableHead={this.state.TableHead} />
+                </div>}
+
                 <div className="row back-btn">
                     <div className="col-md-6">
                         <button className="common-btn" onClick={this.redirectPage}>Back</button>
