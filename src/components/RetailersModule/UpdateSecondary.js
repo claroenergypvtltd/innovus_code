@@ -64,9 +64,9 @@ class UpdateSecondary extends Component {
         }
     }
 
-    // listPath = (e) => {
-    //     this.props.history.push(path.faq.list);   
-    // }
+    listPath = (e) => {
+        this.props.onCloseModal();
+    }
 
 
     render() {

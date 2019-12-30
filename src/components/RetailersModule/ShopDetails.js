@@ -25,7 +25,8 @@ class ShopDetails extends React.Component {
             rotation: 0,
             profile: [],
             canvasImage: '',
-            TableHead: ['Shop Image', 'Shop Name', 'Distance', 'Shop Address', 'Agent Name', "Action"]
+            pendingShops: [],
+            TableHead: ['Shop Image', 'Shop Status', 'Shop Name', 'Distance', 'Shop Address', 'Agent Name', "Action"]
         };
     }
     componentDidMount() {
@@ -46,24 +47,24 @@ class ShopDetails extends React.Component {
         }
         const Shopprofile = this.props.profileData ? this.props.profileData : [];
         this.setState({ profile: Shopprofile });
-
-
+        this.pendingShops();
     }
-    // componentDidMount() {
-    //     const Shopprofile = this.props.profileData ? this.props.profileData : [];
-    //     this.setState({ profile: Shopprofile });
 
-    // }
+    pendingShops = () => {
+        let pendingArray = [
+            {
+                shopImage: 'Hii',
+                shopStatus: 'Pending',
+                shopName: 'kumar shop',
+                distance: '10 Km',
+                shopAddress: '14/A mahal street madurai - 1',
+                agentName: 'kumar'
+            }
+        ];
+        this.setState({ pendingShops: pendingArray })
+    }
+
     redirectPage = () => {
-        // this.props.history.push({
-        //     pathname: path.user.list,
-        //     state: {
-        //    response: "backTrue" 
-        //     parameter2: parameterBoolean2
-        //     }
-        //     });
-        //   this.props.history.push(path.user.list, { response: "backTrue" })
-        // this.props.histter.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } });
         this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
     }
     updateStatus(RetId, status, isActive) {
@@ -81,7 +82,6 @@ class ShopDetails extends React.Component {
                 updateStatusRetailer(formData).then(resp => {
                     if (resp && resp.status == 200) {
                         this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
-                        // toastr.success(resp.message);
                         let activeKey;
                         if (this.state.activeButton) {
                             activeKey = false
@@ -95,14 +95,11 @@ class ShopDetails extends React.Component {
                         } else {
                             this.setState({ showStatusBtn: false });
                         }
-
                         if (resp.data && resp.data.status == "2") {
                             this.setState({ rejectKey: true });
                         }
-
                     }
                 })
-                // this.context.router.history.goBack();
             },
             onCancel: () => { }
         };
@@ -127,21 +124,6 @@ class ShopDetails extends React.Component {
     }
     imageCapture(shopImg) {
         let self = this;
-        //     var transform=$(".gm-style>div:first>div:first>div:last>div").css("transform")
-        //   var comp=transform.split(",") //split up the transform matrix
-        //   var mapleft=parseFloat(comp[4]) //get left value
-        //   var maptop=parseFloat(comp[5])  //get top value
-        //   $(".gm-style>div:first>div:first>div:last>div").css({ //get the map container. not sure if stable
-        //     "transform":"none",
-        //     "left":mapleft,
-        //     "top":maptop,
-        //     right:-40,
-        //   })
-        // html2canvas(document.getElementById('capture'), { letterRendering: 1, allowTaint: true, background: '#FFFFF', useCORS: true, async: false }).then(canvas => {
-
-        let imgData = document.getElementById('capture');
-
-
         html2canvas(document.getElementById('capture'), { letterRendering: 1, allowTaint: true, background: '#FFFFF', useCORS: true, async: false }).then(canvas => {
             let data = canvas.toDataURL("image/png", 0.7);
             let trimdata = data.replace(/^data:image\/(png|jpeg|jpg|'');base64,/, '');
@@ -153,40 +135,7 @@ class ShopDetails extends React.Component {
                 // this.uploadImage();
             });
         });
-
-
-        //     html2canvas(imgData).then(canvas => {
-        //         var self = this;
-        //         let canvasImg = canvas.toDataURL("image/png");
-        //         let trimdata = canvasImg.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
-        //         // self.saveImage(canvasImg, 'screenshot.png');
-        //         const imageBlob = self.dataURItoBlob(trimdata);
-        //         var blobfile = new File([imageBlob], 'screenshot.png', { type: 'application/png', lastModified: Date.now() });
-        //         self.setState({ file: blobfile, shopImg: canvasImg }, () => {
-        //             console.log('----shopImg-----', this.state.file);
-        //             console.log('----canvasImage-----', this.state.shopImg);
-        //             // this.uploadImage();
-        //         });
-        //     });
-        // }
-
-        // async generateScreenImg(data){
-        //     var self = this;
-        //     return new Promise(resolve => {
-        //     html2canvas(data).then(function (canvas) {
-        //     var canvasImg = canvas.toDataURL("image/png");
-        //     let trimdata = canvasImg.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
-        //     self.saveImage(canvasImg,'screenshot.png');
-
-        //     const imageBlob = self.dataURItoBlob(trimdata);
-        //     var blobfile = new File([imageBlob], 'screenshot.png', { type: 'application/png', lastModified: Date.now() });
-        //     self.setimgData(blobfile);
-        //     resolve();
-        //     });
-        //     });
     }
-
-
 
     dataURItoBlob(dataURI) {
         const byteString = window.atob(dataURI);
@@ -199,31 +148,15 @@ class ShopDetails extends React.Component {
         return blob;
     }
     editShopDetails = () => {
-        // if(this.props.profileData && this.props.profileData.shopAddress){
-        //     let shopname=this.props.profileData.shopAddress.name
-        //     let address=this.props.profileData.shopAddress.address1
-        //     let address2=this.props.profileData.shopAddress.address2
-        //     let shopType=this.props.profileData.shopAddress.shopType
-        //     let shopTime=this.props.profileData.shopAddress.shopOpeningTime
-        // }
-
         this.context.router.history.push({ pathname: path.retailer.add, state: this.props.profileData })
     }
 
-    render() {
-        let shopAddLat;
-        let shopAddLong
-        let { sprofile } = this.state;
-        console.log('---profile---', this.state);
-        const profile = this.props.profileData ? this.props.profileData : [];
-        let shopAddress1 = profile.shopAddress && profile.shopAddress.address1 ? profile.shopAddress.address1 : '';
-        let shopAddress2 = profile.shopAddress && profile.shopAddress.address2 ? profile.shopAddress.address2 : '';
-        // let loc = [{ "lat": "9.91783", "long": "78.1213" }]
-        // let locc = profile.shopAddress && profile.shopAddress.location.replace(/[\[\]']+/g, '');
-        // let splitLoc = locc && locc.split(",");
-        // let shopAddressLat = splitLoc && splitLoc[0] ? splitLoc[0].replace(/"/g, "") : '';
-        // let shopAddressLng = splitLoc && splitLoc[1] ? splitLoc[1].replace(/"/g, "") : '';
+    transferSecondary = () => {
 
+    }
+
+    render() {
+        const profile = this.props.profileData ? this.props.profileData : [];
         let shopAddressLat = profile.shopAddress && profile.shopAddress.latitude ? profile.shopAddress.latitude : '';
         let shopAddressLng = profile.shopAddress && profile.shopAddress.longitude ? profile.shopAddress.longitude : '';
         let shopImg = noimg;
@@ -231,9 +164,24 @@ class ShopDetails extends React.Component {
             shopImg = imageBaseUrl + profile.shopAddress.image
         }
         let mapPinString = "http://www.google.com/maps/place/" + shopAddressLat + ',' + shopAddressLng
-        // const getname = profile.name.split('_');
-
         const { rotation } = this.state;
+        let pendingShops = this.state.pendingShops && this.state.pendingShops.map(item => {
+            let imageZoom = <div >
+                <ImageZoom
+                    image={{
+                        src: shopImg,
+                        className: "zoom-img",
+                        id: "capture",
+                        style: { transform: `rotate(${rotation}deg)` }
+                    }}
+                    zoomImage={{
+                        src: { shopImg }
+                    }}
+                />
+            </div>
+            let transfer = <button onClick={this.transferSecondary}>Transfer</button>
+            return { "itemList": [imageZoom, item.shopStatus, item.shopName, item.distance, item.shopAddress, item.agentName, transfer], "itemId": item.id }
+        })
 
         return (
             <div className="farm-tab p-1 active-box" >
@@ -243,13 +191,6 @@ class ShopDetails extends React.Component {
                     <div className="assign-box">
                         {!this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 1, 'isActive')}>Active</button>}
                         {this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>InActive</button>}
-
-                        {/* {!this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>InActive</button>}
-                        {this.state.activeButton && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 1, 'isActive')}>Active</button>} */}
-
-                        {/* activeButton */}
-
-                        {/* {profile.isActive == 1 && <button className="active-btn" onClick={(e) => this.updateStatus(profile.id, 0, 'isActive')}>Active</button>} */}
                         {((this.props.profileData && this.props.profileData.status == 0) || (this.props.profileData.status == 1)) && <div>
                             <button className="shop-edit" onClick={this.editShopDetails}><i class="fa fa-pencil"></i>Edit</button>
                         </div>}
@@ -274,68 +215,17 @@ class ShopDetails extends React.Component {
                                     />
                                 </div>
                             </div>
-
-                            {/* <div className="farm-box">
-                            <h5 className="centext title">{profile.shopAddress && profile.shopAddress.name}</h5>
-                            <span>
-                                <div className="centext color-title">
-                                    <i class="fa fa-map-marker map-icon" aria-hidden="true"></i>{profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name}
-                                </div>
-                            </span>
-                            <div className="farmer-details pl-4">
-                                <div className="farmer-address">
-                                    <h5 className="title">Address</h5>
-                                    <p className="centext user-title sub-farm">
-                                        <p>{shopAddress1}</p>
-                                        <p></p>
-                                        <p>{shopAddress2}</p>
-                                        <p></p>
-                                        {profile.shopAddressData && profile.shopAddressData.cities && profile.shopAddressData.cities.name + ','}
-                                        {profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name + ','}
-                                        <p></p>
-                                        {profile.shopAddressData && profile.shopAddressData.countrys && profile.shopAddressData.countrys.name + '.'}
-                                    </p>
-                                </div>
-                                {/* <div className="farmer-area">
-              <h5 className="title mt-4">Total farm area</h5>
-              <p className="centext user-title sub-farm">{item.areaSize + 'Sq.ft'}</p>
-              </div> */}
-                            {/* </div>
-                        </div> */}
                         </div>
-
-                        {/* <input type="button" value="left" onClick={this.rotateleft} />
-                        <button onClick={() => { this.uploadImage(shopImg) }}>Upload</button> */}
-                        {/* <div className="text-center mb-3">
-                            <button className="shop-btn" onClick={this.rotateleft}><i class="fa fa-rotate-right"></i>Rotate</button>
-                            <button onClick={() => { this.imageCapture(shopImg) }} className="shop-btn">
-                                <i class="fa fa-upload" aria-hidden="true"></i>Upload</button>
-
-                        </div> */}
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
-                            {/* {this.props.profileData && this.props.profileData.status == 0 && <div className="farmer-address col-md-6 mb-2">
-                                <button onClick={this.editShopDetails}>Edit</button>
-                            </div>} */}
-
                             <h4 className="user-title m-0">Shop Name</h4>
                             <p className="title">{profile.shopAddress && profile.shopAddress.name}</p>
-                            {/* <span>
-                                {/* <div className="centext color-title"> */}
-                            {/* <div className="color-title">
-                                    <i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>{profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name}
-                                </div>
-                            </span> */}
                             <div className="farmer-details row mt-3">
                                 <div className="farmer-address col-md-6 mb-2">
                                     <h4 className="user-title m-0">Shop Address</h4>
                                     <p className="centext title sub-farm">
                                         {profile.shopAddress && profile.shopAddress.address1}
-                                        {/* {profile.shopAddress && profile.shopAddress.address2 + ','}
-                                        {profile.shopAddressData && profile.shopAddressData.cities && profile.shopAddressData.cities.name + ','}
-                                        {profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name + ','}
-                                        {profile.shopAddressData && profile.shopAddressData.countrys && profile.shopAddressData.countrys.name + '.'} */}
                                     </p>
                                 </div>
                                 <div className="farmer-address col-md-6 mb-2">
@@ -344,15 +234,12 @@ class ShopDetails extends React.Component {
                                         {profile.shopType && profile.shopType.type}
                                     </p>
                                 </div>
-
                                 <div className="farmer-address col-md-6 mb-2">
                                     <h4 className="user-title m-0">Shop Locality</h4>
                                     <p className="centext title sub-farm">
                                         {profile.shopAddress && profile.shopAddress.address2}
                                     </p>
                                 </div>
-
-
                                 <div className="farmer-address col-md-6 mb-2">
                                     <h4 className="user-title m-0">Shop Time</h4>
                                     <p className="centext title sub-farm">
@@ -363,14 +250,6 @@ class ShopDetails extends React.Component {
                                     <button className="common-btn mt-2 ml-2">
                                         <a target="_blank" href={mapPinString} className="shop-map" ><i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>View on Map</a>
                                     </button>
-                                    {/* <div className="color-title">
-                                        <button className="common-btn mt-2 ml-0">
-                                            <a target="_blank" href={mapPinString} ><i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>View on Map</a>
-                                        </button> */}
-
-                                    {/* <i class="fa fa-map-marker map-icon pl-0" aria-hidden="true"></i>{profile.shopAddressData && profile.shopAddressData.states && profile.shopAddressData.states.name} */}
-                                    {/* </div> */}
-                                    {/* <a href={mapPinString} target="_blank">Open in google map</a> */}
                                 </span>
                             </div>
                         </div>
@@ -378,10 +257,8 @@ class ShopDetails extends React.Component {
                 </div>
 
                 {profile && profile.status == 0 && <div className="farm-tab p-1 active-box">
-
-                    <TableData TableHead={this.state.TableHead} />
+                    <TableData TableHead={this.state.TableHead} TableContent={pendingShops} />
                 </div>}
-
                 <div className="row back-btn">
                     <div className="col-md-6">
                         <button className="common-btn" onClick={this.redirectPage}>Back</button>
@@ -392,53 +269,9 @@ class ShopDetails extends React.Component {
                     </div>}
                 </div>
             </div >
-            // <Container>
-            //     <Row className="show-grid white-bg">
-            //         <Col sm={6} md={3} className="ticket-block">
-            //             <div className="profile-box">
-            //                 <div className="profile-img">
-            //                     <Image
-            //                         src={imageBaseUrl + profile.shopAddress.image}
-            //                         className="centext"
-            //                         roundedCircle
-            //                     />
-            //                 </div>
-            //                 <div className="centext">{profile.shopAddress.name}</div>
-            //                 <div className="centext">{'Retailer'}</div>
-            //             </div>
-            //             <div className="count-box" />
-            //         </Col>
-            //         <Col sm={6} md={9} className="row">
-            //             <Col sm={6} md={4}>
-            //                 <h5>{'Shop Address 1'}</h5>
-            //                 <br />
-            //                 <h5>{profile.shopAddress.address1}</h5>
-            //             </Col>
-            //             <Col sm={6} md={4}>
-            //                 <h5>{'Shop Address 2'}</h5>
-            //                 <br />
-            //                 <h5>{profile.shopAddress.address2}</h5>
-            //             </Col>
-            //             <Col sm={6} md={3}>
-            //                 <h5>{'GST'}</h5>
-            //                 <br />
-            //                 <h5>{profile.shopAddress.gst}</h5>
-            //             </Col>
-            //             <Col sm={6} md={5}>
-            //                 <h5>{'Shop Location'}</h5>
-            //                 <br />
-            //                 <h5>{profile.shopAddress.location}</h5>
-            //             </Col>
-            //         </Col>
-            //         <div className="white-bg">
-            //             <Button className="EditRetailerInfo" onClick={this.pageRedirect}>{'Edit'}</Button>
-            //         </div>
-            //     </Row>
-            // </Container>
         )
     }
 }
-// export default ShopDetails;
 const mapStatetoProps = (state) => ({
 
 })

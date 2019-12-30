@@ -233,8 +233,8 @@ class FetchOrderDetails extends Component {
             let offerValue = item.cartDetails && item.cartDetails.discountValue ? (item.cartDetails.discountValue + ' ' + this.getRupeeSymbol(item.cartDetails.discountUnit)) : '-';
 
             let orderAmount = item.productDetails && item.productDetails.amount ? item.productDetails.amount : '-';
-            let amount = item.cartDetails.amount
-            let discountAmount = (item.cartDetails.discountValue != "0") ? item.cartDetails.totalAmount : item.cartDetails.amount;
+            let discountAmount = item.cartDetails && item.cartDetails.amount ? item.cartDetails.amount : '-'
+            // let discountAmount = (item.cartDetails.discountValue != "0") ? item.cartDetails.totalAmount : item.cartDetails.amount;
 
             return { "itemList": [item.productDetails && item.productDetails.id, productname, quantity, item.productDetails && 'Rs. ' + orderAmount, offerValue, 'Rs. ' + discountAmount] }
         })

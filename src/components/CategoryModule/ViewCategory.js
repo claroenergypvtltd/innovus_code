@@ -220,7 +220,7 @@ class ViewCategory extends Component {
                 this.props.history.goBack()
             }
         };
-        toastr.customConfirm(message, toastrConfirmOptions, "Status Update")
+        toastr.confirm(message, toastrConfirmOptions, "Status Update")
     }
     handleSearch = (e) => {
         e.preventDefault();

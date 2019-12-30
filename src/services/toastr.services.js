@@ -34,6 +34,7 @@ export const toastr = {
         const options = {
             title: title,
             message: message,
+            closeOnClickOutside: false,
             buttons: [
                 {
                     label: 'Yes',
