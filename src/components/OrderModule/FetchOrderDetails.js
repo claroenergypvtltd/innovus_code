@@ -209,7 +209,8 @@ class FetchOrderDetails extends Component {
             } else {
                 fullShopAddrss = ''
             }
-            orderTotalAmount = item.orderAmount ? item.orderAmount : '-';
+            let orderRedeem = item.orderRedeem ? item.orderRedeem : 0
+            orderTotalAmount = item.orderAmount + orderRedeem;
             credits = (item.orderCredit || item.orderCredit == 0) ? item.orderCredit : '';
             return {
                 "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, "RS. " + item.orderRedeem, formatDate(item.created),
@@ -226,7 +227,7 @@ class FetchOrderDetails extends Component {
             let boxAmount = item.productDetails && item.productDetails.boxQuantity ? item.productDetails.boxQuantity : 0;
 
 
-            let quantity = item.cartDetails && item.cartDetails.quantity + ' ' + this.weightConversion(item.cartDetails.totalQuantityUnit) + '( ' + (item.cartDetails.quantity / item.cartDetails.boxQuantity) + "box)";
+            let quantity = item.cartDetails && item.cartDetails.quantity + ' ' + item.quantityUnits.name + '( ' + (item.cartDetails.quantity / item.cartDetails.boxQuantity) + "box)";
             // let totalAmount = item.cartDetails && item.cartDetails.totalAmount ? item.cartDetails.totalAmount : 0;
 
             let offerValue = item.cartDetails && item.cartDetails.discountValue ? (item.cartDetails.discountValue + ' ' + this.getRupeeSymbol(item.cartDetails.discountUnit)) : '-';

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { fetchRetailers } from '../../actions/SubmitRetailerAction';
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { formatDate } from '../../shared/DateFormat'
+import UpdateSecondary from './UpdateSecondary'
+import { resorceJSON, ModalData } from '../../libraries'
 
 class RetailerProfile extends React.Component {
     constructor(props) {
@@ -28,6 +30,19 @@ class RetailerProfile extends React.Component {
     //     }
     // }
 
+    addSecondary = () => {
+        this.setState({ open: true })
+    }
+
+    onOpenModal = (orderId) => {
+        this.setState({ open: true, orderId: orderId });
+    };
+
+    onCloseModal = () => {
+        // this.getOrderList();
+        this.setState({ open: false });
+    };
+
 
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
@@ -45,55 +60,12 @@ class RetailerProfile extends React.Component {
         } else {
             statusClass = window.strings.RETAILERS.REJECTED
         }
+        let UpdateSecondaryData = <UpdateSecondary orderId={this.state.orderId} onCloseModal={this.onCloseModal} />
+
         return (
 
             <Container className="retailer-container">
-                {/* <div classsName="back-btn">
-                    <button className="common-button"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                </div> */}
                 <Row className="show-grid white-bg">
-                    {/* <Col md={3} className="ticket-block">
-                        <div className="profile-box">
-                            <div className="profile-img">
-                                <Image src={RetImg} className="centext" roundedCircle />
-                            </div>
-                            <div className="profile-title">
-                                <h5 className="centext title">{getname[0]} {getname[1]}</h5>
-                                <span className="centext color-title">{"Retailer"}</span>
-                            </div>
-                        </div>
-                        <div className="count-box">
-
-                        </div>
-                        <div className="count-box" />
-                    </Col>
-                    <Col md={9} className="row pt-5 m-0">
-                        <Col md={2} className="p-0">
-                            <h4 className="title">{"Customer Id"}</h4>
-                            <p className="user-subtitle">{profile.cusId}</p>
-                        </Col>
-                        <Col md={2} className="p-0">
-                            <h4 className="title">{"Agent Id"}</h4>
-                            <p className="user-subtitle">{profile.agentId}</p>
-                        </Col>
-                        <Col md={2} className="p-0">
-                            <h4 className="title">{"Email"}</h4>
-                            <p className="user-subtitle">{profile.emailId ? profile.emailId : '-'}</p>
-                        </Col>
-                        <Col md={2} className="p-0">
-                            <h4 className="title">{"Phone"}</h4>
-                            <p className="user-subtitle">{profile.mobileNumber ? profile.mobileNumber : '-'}</p>
-
-                        </Col>
-                        <Col md={3} className="p-0">
-                            <h4 className="title">{"Address"}</h4>
-                            <p className="user-subtitle">{profile.address && profile.address.address1 ? profile.address.address1 : '-'}</p>
-                        </Col>
-                    </Col> */}
-
-
-                    {/* RESPONSIVE */}
-
                     <Col md={3} sm={6} xs={12} className="ticket-block">
                         <div className="profile-box">
                             <div className="profile-img">
@@ -104,36 +76,20 @@ class RetailerProfile extends React.Component {
                                 <span className="centext color-title">{"Retailer"}</span>
                             </div>
                         </div>
-                        {/* <div className="count-box">
-
-                        </div>
-                        <div className="count-box" /> */}
                     </Col>
                     <Col md={9} sm={6} xs={12} className="row pt-5 m-0">
                         <Col md={2} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Customer Id"}</h4>
                             <p className="user-subtitle">{profile.cusId}</p>
                         </Col>
-                        {/* <Col md={2} sm={6} xs={12} className="p-0">
-                            <h4 className="title">{"Agent Id"}</h4>
-                            <p className="user-subtitle">{profile.agentId}</p>
-                        </Col> */}
                         <Col md={2} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Agent Name"}</h4>
                             <p className="user-subtitle">{profile.agentName ? profile.agentName : '-'}</p>
                         </Col>
-                        {/* <Col md={2} sm={6} xs={12} className="p-0">
-                            <h4 className="title">{"Email"}</h4>
-                            <p className="user-subtitle">{profile.emailId ? profile.emailId : '-'}</p>
-                        </Col> */}
                         <Col md={2} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Phone"}</h4>
                             <p className="user-subtitle">{profile.mobileNumber ? profile.mobileNumber : '-'}</p>
                         </Col>
-                        {/* <Col md={3} sm={6} xs={12} className="p-0">
-                            <h4 className="title">{"Address"}</h4>
-                            <p className="user-subtitle">{profile.address && profile.address.address1 ? profile.address.address1 : '-'}</p>
-                        </Col> */}
                         <Col md={2} sm={6} xs={12} className="p-0">
                             <h4 className="title">{"Status"}</h4>
                             <p className={'user-subtitle '}>{statusClass}</p>
@@ -144,6 +100,9 @@ class RetailerProfile extends React.Component {
                         </Col>
                     </Col>
                 </Row>
+                {/* {statusClass == "accepted" && <button onClick={this.addSecondary}>Add Secondary Level</button>} */}
+                <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={UpdateSecondaryData} ModalTitle="UPDATE Secondary Field" />
+
             </Container >
         );
     }

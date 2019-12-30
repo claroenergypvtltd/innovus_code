@@ -16,9 +16,13 @@ class CreateCredit extends Component {
     }
 
     handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name == "amount") {
+            e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value });
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     redirectPage = () => {
@@ -65,19 +69,21 @@ class CreateCredit extends Component {
                                     <input
                                         type="number"
                                         name="amount"
+                                        value={this.state.amount}
                                         placeholder="Amount"
                                         onChange={this.handleInputChange}
                                         className={classnames('form-control', {
                                         })}
                                     />
                                     {this.state.submitted && !this.state.amount && <div className="mandatory">{window.strings['ORDER']['AMOUNT'] + window.strings['ISREQUIRED']}</div>}
-                                    {this.state.submitted && (this.state.amount >= this.props.orderAmount) && <div className="mandatory">{window.strings['INVALID'] + ' ' + window.strings['ORDER']['AMOUNT']}</div>}
+                                    {this.state.submitted && (this.state.amount > this.props.orderAmount) && <div className="mandatory">{window.strings['INVALID'] + ' ' + window.strings['ORDER']['AMOUNT']}</div>}
                                 </div>
                                 <div className="form-group col-md-12">
                                     <label>{window.strings.ORDER.REASON}</label>
                                     <textarea
                                         type="text"
                                         name="reason"
+                                        value={this.state.reason}
                                         placeholder="Reason.."
                                         onChange={this.handleInputChange}
                                         className={classnames('form-control', {

@@ -6,7 +6,7 @@ import { path } from '../../constants';
 import '../../assets/css/login.scss';
 import store from '../../store/store';
 import { PRICE_CREATE_SUCCESS, PRICE_UPDATE_SUCCESS, PRICE_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
-import { getPriceList, submitPrice } from '../../actions/priceAction'
+import { getPriceList, submitPrice, getTypes } from '../../actions/priceAction'
 import { toastr } from '../../services/toastr.services'
 
 class CreatePrice extends Component {
@@ -38,27 +38,33 @@ class CreatePrice extends Component {
             this.setState({ priceId: this.props.location.state.priceId })
         }
         this.setState({ weight: '', subCategoryDatas: [] }, () => {
+            this.getWeightDatas();
             this.editPrice();
-            this.setWeightData();
             this.getCategoryList();
         })
 
     }
 
-    setWeightData() {
-        let obj = [{
-            "name": "Quindal",
-            "id": "Quindal"
-        }, {
-            "name": "KG",
-            "id": "Kg",
-        },
-        {
-            "name": "Ton",
-            "id": "Ton"
-        }]
+    getWeightDatas = () => {
+        getTypes().then(resp => {
+            if (resp) {
+                this.setState({ typeDatas: resp }, () => {
+                    this.setWeightData();
+                })
+            }
+        })
+    }
 
-        this.setState({ weightDatas: obj });
+    setWeightData() {
+        let typeArray = [];
+        this.state.typeDatas && this.state.typeDatas.map(item => {
+            let obj = {
+                "name": item.name,
+                "id": item.name,
+            }
+            typeArray.push(obj);
+        })
+        this.setState({ weightDatas: typeArray });
     }
 
     editPrice() {
