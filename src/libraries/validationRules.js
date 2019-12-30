@@ -10,7 +10,7 @@ let validationRules = {
         }
     },
     email: (value, form, component) => {
-        var emailRegex = /^([a-z])+([a-z0-9_\.\-])+\@(([a-z\-])+\.)+([a-z]{3})$/;
+        var emailRegex = /^([a-z])+([a-z0-9_\.\-])+\@(([a-z\-])+\.)+([a-z]{2,3})$/;
         if (!emailRegex.test(value)) {
             return "invalidEmial"
         }

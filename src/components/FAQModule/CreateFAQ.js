@@ -125,6 +125,7 @@ class CreateFAQ extends Component {
                                     name="description"
                                     onChange={this.handleChange}
                                     value={this.state.description}
+                                    maxLength="150"
                                     required
                                 ></textarea>
                                 {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>}

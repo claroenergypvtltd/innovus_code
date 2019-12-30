@@ -216,7 +216,7 @@ class CreateSalesAgent extends React.Component {
 
                                     />
                                     {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['SALES_AGENT']['PHON_NO'] + window.strings['ISREQUIRED']}</div>}
-                                    {this.state.mobileNumber && !validation.checkValidation("mobile", this.state.mobileNumber) && <div className="mandatory">Mobile Number Invalid</div>}
+                                    {this.state.submitted && this.state.mobileNumber && !validation.checkValidation("mobile", this.state.mobileNumber) && <div className="mandatory">Mobile Number Invalid</div>}
                                 </div>
 
                                 <div className="form-group col-md-12">
