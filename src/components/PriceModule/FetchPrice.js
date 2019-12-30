@@ -153,16 +153,6 @@ class FetchPrice extends Component {
         }
     }
 
-    weightConversion = (Data) => {
-        if (Data == 1) {
-            return "Quindal"
-        } else if (Data == 2) {
-            return "Kg"
-        } else if (Data == 3) {
-            return "Ton"
-        }
-    }
-
     render() {
         let dcData = [];
         // this.state.dcCodeData = [{ name: "0987", id: 1 }]
@@ -174,11 +164,11 @@ class FetchPrice extends Component {
             let productId = item.productDetail && item.productDetail.id;
             let dcCode = item.productDetail && item.productDetail.dcCode ? item.productDetail.dcCode : '-';
             let productName = item.name;
-            let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' ' + (this.weightConversion(item.productDetail && item.productDetail.rupeesUnit)));
+            let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize));
             // let weightUnits = item.productDetail && item.productDetail.totalQuantitySize;
-            let amount = ((item.productDetail && item.productDetail.amount) + " Rs/" + (this.weightConversion(item.productDetail && item.productDetail.rupeesUnit)));
+            let amount = ((item.productDetail && item.productDetail.amount) + " Rs/" + (item.productDetail && item.productDetail.rupeesize));
             // let priceUnit = item.productDetail && item.productDetail.rupeesUnit;
-            let boxQuantity = ((item.productDetail && item.productDetail.boxQuantity) + ' ' + (this.weightConversion(item.productDetail && item.productDetail.rupeesUnit)));
+            let boxQuantity = ((item.productDetail && item.productDetail.boxQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize));
             // let boxQuantitySize = item.productDetail && item.productDetail.boxQuantitySize
 
             return {

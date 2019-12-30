@@ -62,3 +62,13 @@ export const submitPrice = (formData, isUpdate) => dispatch => {
     }
 }
 
+export const getTypes = () => {
+    return httpServices.get("quantityUnits").then(resp => {
+        if (resp.data && resp.data.datas) {
+            return resp.data.datas
+        }
+    }).catch((error) => {
+        console.error("error", error.resp);
+    })
+}
+

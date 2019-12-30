@@ -126,32 +126,17 @@ class CreateCrop extends Component {
             this.props.SubmitCategory(formData, this.state.categoryId, "isProduct")
         }
     }
-
-
-
     getSpecificCategory() {
-
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             let cId = this.props.location.state.categoryId;
             this.setState({ categoryId: cId });
-
-            // let obj = {
-            //     "categoryId": this.props.location.state.categoryId
-            // }
-
-
             let obj = {
                 categoryId: this.state.editId,
                 name: "subCategory"
             }
-
             this.props.getSpecificCategory(obj, false);
-            // this.props.getSpecificCategory(obj);
         }
     }
-
-
-
     listPath = () => {
         if (this.state.cropId) {
             this.props.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId } });
@@ -208,8 +193,6 @@ class CreateCrop extends Component {
         });
 
         let dcData = [];
-        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
-
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
 
             let obj = { "label": item.dcCode, "value": item.dcCode };
@@ -277,6 +260,7 @@ class CreateCrop extends Component {
                                             onChange={(e) => this.handleDcCodeChange(e)}
                                             options={dcData}
                                             placeholder="--Select DC Code--"
+                                            isDisabled={this.state.editId}
                                         />
                                         {/* <input
                                             type="text"

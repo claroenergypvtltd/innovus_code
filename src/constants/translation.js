@@ -227,7 +227,9 @@ export const Translation = {
             "PLANROUTE": "Plan Route",
             "SHIPPINGADJUSTMENT": "Shipping Adjustment",
             "OUTOFDELIVERY": "Out Of Delivery",
-            "DELIVERED": "Delivery"
+            "DELIVERED": "Delivery",
+            "AGENT_NAME": "Agent Name",
+            "MOBILE_NUMBER": "Mobile Number"
         },
         "ABOUTUS": {
             "TITLE": "About Us",
