@@ -93,9 +93,9 @@ class UpdateSecondary extends Component {
                                 {this.state.submitted && !this.state.agentName && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_NAME']}</div>}
                             </div>
                             <div className="form-group col-md-12 pt-2">
-                                <label>{window.strings.USERMANAGEMENT.MOBILE_NUMBER}</label>
+                                <label>{window.strings.USERMANAGEMENT.PHONE_NUMBER}</label>
                                 <input type="number"
-                                    placeholder="Mobile Number"
+                                    placeholder="Phone Number"
                                     className={classnames('form-control', {
                                         'is-invalid': errors.mobileNumber
                                     })}

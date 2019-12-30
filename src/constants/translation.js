@@ -229,7 +229,7 @@ export const Translation = {
             "OUTOFDELIVERY": "Out Of Delivery",
             "DELIVERED": "Delivery",
             "AGENT_NAME": "Agent Name",
-            "MOBILE_NUMBER": "Mobile Number"
+            "PHONE_NUMBER": "Phone Number"
         },
         "ABOUTUS": {
             "TITLE": "About Us",
