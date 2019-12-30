@@ -292,6 +292,7 @@ class CreateCrop extends Component {
                                             name="description"
                                             onChange={this.handleInputChange}
                                             value={this.state.description}
+                                            maxLength="150"
                                             required
 
                                         ></textarea>

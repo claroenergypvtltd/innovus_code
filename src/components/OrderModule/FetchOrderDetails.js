@@ -144,7 +144,7 @@ class FetchOrderDetails extends Component {
                 }
                 updateOrderStatus(statusobj).then(resp => {
                     // resp && resp.status == 200 ? toastr.success(resp.message) : toastr.failure(resp.message);
-                    this.props.history.goBack();
+                    this.context.router.history.push({ pathname: path.order.list, state: { orderData: 'orderBack' } })
                 })
             },
             onCancel: () => { }
