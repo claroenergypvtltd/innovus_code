@@ -9,7 +9,7 @@ import { getOrderList, getTrackDetails, updateOrderStatus } from '../../actions/
 import { toastr } from '../../services/toastr.services'
 import Store from '../../store/store';
 import { Link } from 'react-router-dom'
-import { formatDate, timeformat, dateformat } from '../../shared/DateFormat'
+import { formatDate, timeformat, dateformat, StampTimeFormat } from '../../shared/DateFormat'
 import * as moment from 'moment';
 import PropTypes from 'prop-types';
 // import StatusUpdate from './statusUpdate'
@@ -219,7 +219,7 @@ class FetchOrderDetails extends Component {
         })
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
             let location = item.location ? (item.location == "0.0" ? '-' : item.location) : '-';
-            return { "itemList": [item.trackTime ? formatDate(item.trackTime) : '-', item.activity ? item.activity : '-', location] }
+            return { "itemList": [item.trackTime ? formatDate(item.trackTime) + " " + ' / ' + StampTimeFormat(item.trackTime) : '-', item.activity ? item.activity : '-', location] }
         })
 
         let productList = this.state.productLists && this.state.productLists.map((item) => {
