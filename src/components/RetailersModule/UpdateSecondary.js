@@ -61,10 +61,10 @@ class UpdateSecondary extends Component {
                     <div className="col-md-10">
                         <form onSubmit={this.handleSubmit} >
                             <div className="form-group col-md-12">
-                                <label>{window.strings.USERMANAGEMENT.AGENT_NAME}</label>
+                                <label>{window.strings.USERMANAGEMENT.NAME}</label>
                                 <input
                                     type="text"
-                                    placeholder="Agent Name"
+                                    placeholder="Name"
                                     className={classnames('form-control', {
                                         'is-invalid': errors.agentName
                                     })}

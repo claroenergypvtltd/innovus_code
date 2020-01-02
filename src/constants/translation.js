@@ -234,7 +234,8 @@ export const Translation = {
             "OUTOFDELIVERY": "Out Of Delivery",
             "DELIVERED": "Delivery",
             "AGENT_NAME": "Agent Name",
-            "PHONE_NUMBER": "Phone Number"
+            "PHONE_NUMBER": "Phone Number",
+            "NAME": "Name"
         },
         "ABOUTUS": {
             "TITLE": "About Us",

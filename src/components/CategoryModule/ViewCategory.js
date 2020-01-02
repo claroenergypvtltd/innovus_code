@@ -220,7 +220,7 @@ class ViewCategory extends Component {
                 this.props.history.goBack()
             }
         };
-        toastr.confirm(message, toastrConfirmOptions, "Status Update")
+        toastr.confirm(message, toastrConfirmOptions, " Update Status")
     }
     handleSearch = (e) => {
         e.preventDefault();
@@ -266,14 +266,8 @@ class ViewCategory extends Component {
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
                     </div>
                     <div className="right-title col-md-5">
-                        <div className="row">
-                            <div className="pr-0 col-md-7">
-                                {/* <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
-
-                            </div>
-                            <div className="col-md-5">
-                                <button className="common-btn col-md-4" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button>
-                            </div>
+                        <div className="d-flex justify-content-end">
+                            <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add Crop</button>
                         </div>
                     </div>
                 </div>
