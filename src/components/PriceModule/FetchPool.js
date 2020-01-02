@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TableData } from '../../shared/Table'
-
+import { path } from '../../constants/path'
 
 export default class FetchPool extends Component {
     constructor(props) {
@@ -17,6 +17,12 @@ export default class FetchPool extends Component {
         let enableSearch = this.state.advanceSearch ? false : true
         this.setState({ advanceSearch: enableSearch })
     }
+    addPath = () => {
+        this.props.history.push(path.pool.add)
+    }
+    handleSearch = (Data) => {
+
+    }
     render() {
         return (
             <div className="pool">
@@ -27,7 +33,7 @@ export default class FetchPool extends Component {
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">
-                            <button className="common-btn float-right"><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_POOL}</button>
+                            <button className="common-btn float-right" onClick={this.addPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_POOL}</button>
                         </div>
                     </div>
                 </div>
@@ -51,7 +57,7 @@ export default class FetchPool extends Component {
                                         <span className="tooltip-text">Key Search</span>
                                     </div>
                                     <div className="ml-2">
-                                        <button type="button" className="data-search" onClick={(e) => this.getPriceList("onSearch")}>
+                                        <button type="button" className="data-search">
                                             <i className="fa fa-search" aria-hidden="true"></i>Search
                                             <span className="tooltip-text">Click to Search</span>
                                         </button>

@@ -3,12 +3,57 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import Select from 'react-select';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
+import { getTypes } from '../../actions/priceAction'
 
 export default class CreatePool extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: {}
+            errors: {},
+            submitted: false,
+            weightDatas: [],
+            weightId: 0
+        }
+    }
+    componentDidMount() {
+        this.getWeightDatas();
+    }
+    getWeightDatas = () => {
+        getTypes().then(resp => {
+            if (resp) {
+                this.setState({ typeDatas: resp }, () => {
+                    this.setWeightData();
+                })
+            }
+        })
+    }
+    setWeightData() {
+        let typeArray = [];
+        this.state.typeDatas && this.state.typeDatas.map(item => {
+            let obj = {
+                "name": item.name,
+                "id": item.name,
+            }
+            typeArray.push(obj);
+        })
+        this.setState({ weightDatas: typeArray });
+    }
+    listPath = () => {
+        this.props.history.goBack()
+    }
+    handleInputChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value })
+    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({ submitted: true })
+        let obj = {
+            "name": this.state.name,
+            "updateQuantity": this.state.updateQuantity,
+            "weight": this.state.weightId
         }
     }
     render() {
@@ -37,8 +82,12 @@ export default class CreatePool extends Component {
                                         <input
                                             type="text"
                                             placeholder="Name"
+                                            name="name"
+                                            onChange={this.handleInputChange}
+                                            value={this.state.name}
                                             className={classnames('form-control')}
                                         />
+                                        {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
                                     <div className="col-md-6 form-group">
                                         <label>{window.strings.PRICE.SELECT_ITEM}</label>
@@ -53,10 +102,11 @@ export default class CreatePool extends Component {
                                                     }
                                                 })
                                             }}
-                                            // value={this.state.dcCodeObj}
-                                            // onChange={(e) => this.handleDcCodeChange(e)}
-                                            // options={dcData}
+                                            value={this.state.dcCodeObj}
+                                            onChange={(e) => this.handleDcCodeChange(e)}
+                                            //  options={options}
                                             placeholder="--Select Item--"
+                                            isMulti
                                         />
                                     </div>
                                     {/* <div className="form-group col-md-6 pt-2">
@@ -106,7 +156,7 @@ export default class CreatePool extends Component {
                                     </div>
                                     <div className="form-group col-md-4">
                                         <label>{window.strings.PRICE.TYPE}</label>
-                                        <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} Z>
+                                        <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} >
                                             <option value="0">Select</option>
                                             {weightDropDown}
                                         </select>

@@ -152,7 +152,9 @@ class FetchPrice extends Component {
             });
         }
     }
-
+    poolPath = () => {
+        this.props.history.push(path.pool.list)
+    }
     render() {
         let dcData = [];
         // this.state.dcCodeData = [{ name: "0987", id: 1 }]
@@ -192,7 +194,7 @@ class FetchPrice extends Component {
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">
-                            <button className="common-btn"><i class="fa fa-users sub-plus" aria-hidden="true"></i>{window.strings.PRICE.POOL_NAME}</button>
+                            <button className="common-btn" onClick={this.poolPath}><i class="fa fa-users sub-plus" aria-hidden="true" ></i>{window.strings.PRICE.POOL_NAME}</button>
                             <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
                         </div>
                     </div>
