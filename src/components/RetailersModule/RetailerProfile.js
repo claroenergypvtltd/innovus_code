@@ -2,37 +2,35 @@ import React from 'react';
 import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import { connect } from 'react-redux';
-import { fetchRetailers } from '../../actions/SubmitRetailerAction';
+import { fetchRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction';
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { formatDate } from '../../shared/DateFormat'
 import UpdateSecondary from './UpdateSecondary'
 import { resorceJSON, ModalData } from '../../libraries'
+import { path } from '../../constants';
+import PropTypes from "prop-types";
 
 class RetailerProfile extends React.Component {
+    static contextTypes = {
+        router: PropTypes.object
+    }
     constructor(props) {
         super(props);
         this.state = {};
     }
 
-
-    // componentWillReceiveProps(newProps) {
-    //     let retailerData = newProps.retailerdetails.Lists;
-    //     this.setState({ profileData: newProps.retailerdetails.Lists })
-
-    // }
-
-    // componentDidMount() {
-    //     if (this.props.retailerId) {
-    //         let user = {};
-    //         user.retailerId = this.props.retailerId;
-    //         user.isEdit = true;
-    //         this.props.fetchRetailers(user);
-    //     }
-    // }
-
     addSecondary = (e) => {
         e.preventDefault();
         this.setState({ open: true })
+    }
+
+    removeSecondary = (userId) => {
+        const formData = new FormData();
+        formData.append("mobileNumbers", '');
+        formData.append("name", '');
+        formData.append("userId", userId);
+        formData.append("flag", 5);
+        this.props.SubmitRetailer(formData, true);
     }
 
     onOpenModal = (orderId) => {
@@ -40,10 +38,12 @@ class RetailerProfile extends React.Component {
     };
 
     onCloseModal = () => {
-        // this.getOrderList();
         this.setState({ open: false });
     };
 
+    redirectPage = () => {
+        this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
+    }
 
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
@@ -61,7 +61,11 @@ class RetailerProfile extends React.Component {
         } else {
             statusClass = window.strings.RETAILERS.REJECTED
         }
-        let UpdateSecondaryData = <UpdateSecondary orderId={this.state.orderId} onCloseModal={this.onCloseModal} />
+        let paramObj = {
+            "mobileNumber": profile.mobileNumber,
+            "userId": profile.id
+        }
+        let UpdateSecondaryData = <UpdateSecondary onHide={this.onCloseModal} orderId={this.state.orderId} onCloseModal={this.onCloseModal} Data={paramObj} redirect={this.redirectPage} />
         return (
 
             <Container className="retailer-container">
@@ -110,7 +114,7 @@ class RetailerProfile extends React.Component {
                                     <p className="user-subtitle">{profile.mobileNumbers}</p>
                                 </Col>
                                 <Col md={2} sm={6} xs={12} className="p-0">
-                                    <button className="remove-btn">Remove</button>
+                                    <button className="remove-btn" onClick={() => this.removeSecondary(profile.id)}>Remove</button>
                                 </Col>
                             </div>
                         }
@@ -127,6 +131,6 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { fetchRetailers },
+    { fetchRetailers, SubmitRetailer },
 )(RetailerProfile);
 

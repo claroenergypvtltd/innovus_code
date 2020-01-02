@@ -85,12 +85,6 @@ export const toastr = {
                         <h4 className="delete-popup-header">{title}</h4>
                         <div className="delete-popup-message p-2">
                             <p>{message}</p>
-                            {/* <button className="btn btn-default pull-right mrr10" onClick={()=>{
-                        props.onCancel() 
-                        onClose()}}><i className="fa fa-close mr15"></i>{window.strings.CANCEL}</button>
-                        <button className="btn btn-primary pull-right mrr10" onClick={() => { props.onOk()
-                            onClose()}}><i className="fa fa-send-o mr15"></i>{window.strings.OK}</button> */}
-
                             <button className="btn btn-default popup-cancel mt-3" onClick={() => {
                                 props.onCancel()
                                 onClose()
@@ -99,13 +93,6 @@ export const toastr = {
                                 props.onOk()
                                 onClose()
                             }}>{window.strings.OK}</button>
-                            {/* <button className="btn btn-default mt-3" onClick={() => {
-                                props.onCancel()
-                                onClose()
-                            }}>{window.strings.CANCEL}</button> */}
-
-
-
                         </div>
                     </div>
                 )
@@ -113,4 +100,4 @@ export const toastr = {
         })
     }
 };
-
+// onClickOutside: () => {},
