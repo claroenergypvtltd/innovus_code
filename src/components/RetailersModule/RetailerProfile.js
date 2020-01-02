@@ -62,7 +62,6 @@ class RetailerProfile extends React.Component {
             statusClass = window.strings.RETAILERS.REJECTED
         }
         let UpdateSecondaryData = <UpdateSecondary orderId={this.state.orderId} onCloseModal={this.onCloseModal} />
-
         return (
 
             <Container className="retailer-container">
@@ -100,19 +99,23 @@ class RetailerProfile extends React.Component {
                             <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>
                         <div className="">
-                            {statusClass == "accepted" ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a> : ''}
+                            {statusClass == "accepted" && !profile.name && !profile.mobileNumbers ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
+                                :
+                                <div className="d-flex">
+                                    <div className="pl-0 col-md-8">
+                                        <h4 className="title">{"Agent Name"}</h4>
+                                        <p className="user-subtitle">{profile.name}</p>
+                                    </div>
+                                    <div className="pl-0 col-md-4">
+                                        <h4 className="title">{"Phone"}</h4>
+                                        <p className="user-subtitle">{profile.mobileNumbers}</p>
+                                    </div>
+                                    <button>Remove</button>
+                                </div>
+                            }
                             <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={UpdateSecondaryData} ModalTitle="UPDATE SECONDARY FIELD" />
                         </div>
-                        <div className="d-flex">
-                            <div className="pl-0 col-md-8">
-                                <h4 className="title">{"Agent Name"}</h4>
-                                <p className="user-subtitle">Tin</p>
-                            </div>
-                            <div className="pl-0 col-md-4">
-                                <h4 className="title">{"Phone"}</h4>
-                                <p className="user-subtitle">9182736451</p>
-                            </div>
-                        </div>
+
                     </Col>
                 </Row>
             </Container >
