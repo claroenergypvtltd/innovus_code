@@ -1287,6 +1287,25 @@ a.level-btn:hover {
   font-weight: unset;
   font-size: 10px;
 }
+.secondary-level{
+  display: contents;
+}
+.remove-btn{
+  background: none;
+  border: 2px solid $light-brown;
+  color: $primary-color;
+  border-radius: 20px;
+  width: 100px;
+  padding: 2px 10px;
+}
+.trans-btn{
+  background: $trans-purple;
+  border: none;
+  border-radius: 20px;
+  padding: 2px 10px;
+  width: 90px;
+  color: $white;
+}
 /****************************User Management-Advanced search************************/
 #menu #list {
   max-height: 0;
