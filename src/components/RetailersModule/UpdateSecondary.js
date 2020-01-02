@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import '../../assets/css/login.scss';
 import { Form, Row } from 'react-bootstrap';
 import { path } from '../../constants';
-import { SubmitFaq, getSpecificFaq } from '../../actions/faqAction';
+import { SubmitFaq } from '../../actions/faqAction';
 import { FAQ_CREATE_SUCCESS, FAQ_UPDATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
 import '../../assets/css/login.scss'
@@ -17,23 +17,16 @@ class UpdateSecondary extends Component {
             submitted: false,
             instructionId: '',
             agentName: '',
-            mobileNumber: '',
+            mobileNumbers: '',
             errors: {}
         }
     }
 
     componentDidMount() {
 
-        // if (this.props.location && this.props.location.state && this.props.location.state.instructionId) {
-        //     this.getSpecificFaq();
-        // }
     }
 
-
-
-
     handleChange = (e) => {
-
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -43,24 +36,14 @@ class UpdateSecondary extends Component {
         e.preventDefault();
         this.setState({ submitted: true })
 
-        if (this.state.agentName && this.state.mobileNumber) {
+        if (this.state.agentName && this.state.mobileNumbers) {
 
             const formData = new FormData();
 
             formData.append("agentName", this.state.agentName);
-            formData.append("mobileNumber", this.state.mobileNumber);
-            formData.append("instructionId", this.state.instructionId)
-            this.props.SubmitFaq(formData, this.state.instructionId);
-        }
-    }
-
-
-    getSpecificFaq() {
-
-        if (this.props.location && this.props.location.state && this.props.location.state.instructionId) {
-            let fId = this.props.location.state.instructionId;
-            this.setState({ instructionId: fId });
-            this.props.getSpecificFaq(this.props.location.state.instructionId);
+            formData.append("mobileNumbers", this.state.mobileNumbers);
+            formData.append("userId", this.state.instructionId)
+            // this.props.SubmitFaq(formData, this.state.instructionId);
         }
     }
 
@@ -97,15 +80,15 @@ class UpdateSecondary extends Component {
                                 <input type="number"
                                     placeholder="Phone Number"
                                     className={classnames('form-control', {
-                                        'is-invalid': errors.mobileNumber
+                                        'is-invalid': errors.mobileNumbers
                                     })}
                                     rows="5"
-                                    name="mobileNumber"
+                                    name="mobileNumbers"
                                     onChange={this.handleChange}
-                                    value={this.state.mobileNumber}
+                                    value={this.state.mobileNumbers}
                                     required
                                 />
-                                {this.state.submitted && !this.state.mobileNumber && <div className="mandatory">{window.strings['USERMANAGEMENT']['MOBILE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
+                                {this.state.submitted && !this.state.mobileNumbers && <div className="mandatory">{window.strings['USERMANAGEMENT']['MOBILE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
                             </div>
 
                         </form>
@@ -124,4 +107,4 @@ const mapStateToProps = (state) => ({
     faqData: state.faq
 })
 
-export default connect(mapStateToProps, { SubmitFaq, getSpecificFaq })(UpdateSecondary)
+export default connect(mapStateToProps)(UpdateSecondary)

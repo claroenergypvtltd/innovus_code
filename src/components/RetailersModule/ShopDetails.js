@@ -10,6 +10,8 @@ import ImageZoom from 'react-medium-image-zoom'
 import { connect } from 'react-redux';
 import html2canvas from 'html2canvas';
 import { TableData } from '../../shared/Table'
+import store from '../../store/store';
+import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
 
 class ShopDetails extends React.Component {
     static contextTypes = {
@@ -25,7 +27,6 @@ class ShopDetails extends React.Component {
             rotation: 0,
             profile: [],
             canvasImage: '',
-            pendingShops: [],
             TableHead: ['Shop Image', 'Shop Status', 'Shop Name', 'Distance', 'Shop Address', 'Agent Name', "Action"]
         };
     }
@@ -40,6 +41,11 @@ class ShopDetails extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
+        if (newProps.status == 200) {
+            store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
+            toastr.success(newProps.message);
+            this.redirectPage();
+        }
         if (newProps.profileData && newProps.profileData.isActive == "0") {
             this.setState({ activeButton: false });
         } else {
@@ -47,21 +53,6 @@ class ShopDetails extends React.Component {
         }
         const Shopprofile = this.props.profileData ? this.props.profileData : [];
         this.setState({ profile: Shopprofile });
-        this.pendingShops();
-    }
-
-    pendingShops = () => {
-        let pendingArray = [
-            {
-                shopImage: 'Hii',
-                shopStatus: 'Pending',
-                shopName: 'kumar shop',
-                distance: '10 Km',
-                shopAddress: '14/A mahal street madurai - 1',
-                agentName: 'kumar'
-            }
-        ];
-        this.setState({ pendingShops: pendingArray })
     }
 
     redirectPage = () => {
@@ -151,8 +142,11 @@ class ShopDetails extends React.Component {
         this.context.router.history.push({ pathname: path.retailer.add, state: this.props.profileData })
     }
 
-    transferSecondary = () => {
-
+    transferSecondary = (userId, mobileNumbers) => {
+        const formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("mobileNumbers", mobileNumbers);
+        this.props.SubmitRetailer(formData, true);
     }
 
     render() {
@@ -163,24 +157,32 @@ class ShopDetails extends React.Component {
         if (profile.shopAddress && profile.shopAddress.image) {
             shopImg = imageBaseUrl + profile.shopAddress.image
         }
-        let mapPinString = "http://www.google.com/maps/place/" + shopAddressLat + ',' + shopAddressLng
+        let mapPinString = "http://www.google.com/maps/place/" + shopAddressLat + ',' + shopAddressLng;
+        let mobileNumbers = profile && profile.mobileNumber ? profile.mobileNumber : '';
         const { rotation } = this.state;
-        let pendingShops = this.state.pendingShops && this.state.pendingShops.map(item => {
+        let pendingShops = this.props.profileData && this.props.profileData.shopLocation && this.props.profileData.shopLocation.map(item => {
+            let imgName = noimg
+            if (item.image) {
+                imgName = imageBaseUrl + item.image
+            }
             let imageZoom = <div >
                 <ImageZoom
                     image={{
-                        src: shopImg,
+                        src: imgName,
                         className: "zoom-img",
                         id: "capture",
                         style: { transform: `rotate(${rotation}deg)` }
                     }}
                     zoomImage={{
-                        src: { shopImg }
+                        src: { imgName }
                     }}
                 />
             </div>
-            let transfer = <button onClick={this.transferSecondary}>Transfer</button>
-            return { "itemList": [imageZoom, item.shopStatus, item.shopName, item.distance, item.shopAddress, item.agentName, transfer], "itemId": item.id }
+            let transfer = <button onClick={() => this.transferSecondary(item.userId, mobileNumbers)}>Transfer</button>
+            let distance = item.distance ? item.distance : '-';
+            let status = item.shopStatus ? item.shopStatus : '-';
+
+            return { "itemList": [imageZoom, status, item.name, distance, item.address1 + item.address2, item.agentName, transfer], "itemId": item.id }
         })
 
         return (
@@ -273,6 +275,7 @@ class ShopDetails extends React.Component {
     }
 }
 const mapStatetoProps = (state) => ({
-
+    status: state.retailer.status,
+    message: state.retailer.message
 })
 export default connect(mapStatetoProps, { SubmitRetailer })(ShopDetails)

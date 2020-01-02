@@ -188,14 +188,12 @@ class CreatePrice extends Component {
         this.props.getCategoryList(user);
     }
     handleSubmit = (e) => {
-        console.log("offerArray", this.state.offerArray);
         e.preventDefault();
         this.setState({
             submitted: true
         })
-        let formVal = false;
-
         let isValid = true;
+        let isQuantityValid = true;
         this.state.offerArray.map((item, index) => {
             if (this.state.price >= item.offer || item.type == 2 && parseInt(item.offer) <= 100 || !item.offer && item.type == '' || parseInt(item.offer)) {
                 if ((item.type == 2 && item.offer <= 100) || (item.type == 1 && parseInt(this.state.price) >= parseInt(item.offer)) || !item.offer && !item.type || item.type == '') {
@@ -254,15 +252,15 @@ class CreatePrice extends Component {
                                     }
                                 }
                             }
-
                             else if (this.state.updateQuantity && item.type != '' && item.offer) {
                                 if (weightValue == 1) {
                                     if (Number(this.state.updateQuantity) % this.state.boxQuantity == 0) {
                                         // isValid = true
                                         // this.props.submitPrice(obj, isUpdate);
                                     } else {
-                                        isValid = false
-                                        toastr.error("Please increment/decrement in multiple of box quantity")
+                                        isValid = false;
+                                        isQuantityValid = false;
+                                        // toastr.error("Please increment/decrement in multiple of box quantity") //
                                         return;
                                     }
                                 }
@@ -313,6 +311,10 @@ class CreatePrice extends Component {
                 }
             }
         })
+
+        if (!isQuantityValid) {
+            toastr.error("Please increment/decrement in multiple of box quantity")
+        }
         if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId && this.state.price && this.state.boxQuantity && this.state.dcCode) {
             let flag;
             this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
