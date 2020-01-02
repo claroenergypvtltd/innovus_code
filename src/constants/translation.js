@@ -124,7 +124,12 @@ export const Translation = {
             "OFFER": "Offer",
             "QUANTITY": "Quantity",
             "WEIGHT": "Weight",
-            "TYPE": "Type"
+            "TYPE": "Type",
+            "POOL_LIST": "POOL LIST",
+            "ADD_POOL": "Add Pool",
+            "POOLTITLE": "ADD POOL",
+            "SELECT_ITEM": "Select Item",
+            "POOL_NAME": "Pool"
         },
 
         "SUBMIT": "Save",
