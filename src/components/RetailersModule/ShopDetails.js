@@ -148,6 +148,15 @@ class ShopDetails extends React.Component {
         formData.append("mobileNumbers", mobileNumbers);
         this.props.SubmitRetailer(formData, true);
     }
+    handleTransferChange = (Id, mobileNumbers) => {
+        let message = "Are you sure you want to Transfer ?";
+        const toastrConfirmOptions = {
+            onOk: () => { this.transferSecondary(Id, mobileNumbers) },
+            onCancel: () => {
+            }
+        };
+        toastr.confirm(message, toastrConfirmOptions, "Transfer")
+    }
 
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
@@ -178,7 +187,7 @@ class ShopDetails extends React.Component {
                     }}
                 />
             </div>
-            let transfer = <button onClick={() => this.transferSecondary(item.userId, mobileNumbers)}>Transfer</button>
+            let transfer = <button onClick={() => this.handleTransferChange(item.userId, mobileNumbers)}>Transfer</button>
             let distance = item.distance ? item.distance : '-';
             let status = item.shopStatus ? item.shopStatus : '-';
 
