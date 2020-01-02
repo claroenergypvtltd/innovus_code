@@ -20,6 +20,8 @@ import CreateCropDetails from '../components/FarmersModule/CreateCropDetails'
 import CreateIrrigationSchedule from '../components/FarmersModule/CreateIrrigationSchedule'
 import FetchPrice from '../components/PriceModule/FetchPrice'
 import CreatePrice from '../components/PriceModule/Createprice'
+import FetchPool from '../components/PriceModule/FetchPool'
+import CreatePool from '../components/PriceModule/CreatePool'
 import FetchCart from '../components/CartModule/FetchCart'
 import FetchOrder from '../components/OrderModule/FetchOrder'
 import FetchOrderDetails from '../components/OrderModule/FetchOrderDetails'
@@ -240,7 +242,16 @@ export const routesPath = [
                 component: CreatePrice,
                 exact: true,
             },
-
+            {
+                path: process.env.PUBLIC_URL + '/pool',
+                component: FetchPool,
+                exact: true,
+            },
+            {
+                path: process.env.PUBLIC_URL + '/pool/add',
+                component: CreatePool,
+                exact: true,
+            },
             {
                 path: process.env.PUBLIC_URL + '/cart',
                 component: FetchCart,

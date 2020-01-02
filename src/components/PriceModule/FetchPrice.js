@@ -191,13 +191,9 @@ class FetchPrice extends Component {
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>{window.strings.PRICE.LIST_PRICE}</button> */}
                     </div>
                     <div className="right-title col-md-5">
-                        <div className="row">
-                            <div className="col-md-7 pr-0">
-                                {/* <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
-                            </div>
-                            <div className="col-md-5 pl-0">
-                                <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
-                            </div>
+                        <div className="d-flex justify-content-end">
+                            <button className="common-btn"><i class="fa fa-users sub-plus" aria-hidden="true"></i>{window.strings.PRICE.POOL_NAME}</button>
+                            <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_PRICE}</button>
                         </div>
                     </div>
                 </div>
