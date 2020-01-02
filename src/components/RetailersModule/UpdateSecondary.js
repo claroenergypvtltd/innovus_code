@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import '../../assets/css/login.scss';
 import { Form, Row } from 'react-bootstrap';
 import { path } from '../../constants';
-import { SubmitFaq } from '../../actions/faqAction';
-import { FAQ_CREATE_SUCCESS, FAQ_UPDATE_SUCCESS } from '../../constants/actionTypes'
+import { updateStatusRetailer, SubmitRetailer } from '../../actions/SubmitRetailerAction';
+import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
 import '../../assets/css/login.scss'
 import classnames from 'classnames';
+import { toastr } from '../../services/toastr.services'
 
 
 class UpdateSecondary extends Component {
@@ -21,11 +22,14 @@ class UpdateSecondary extends Component {
             errors: {}
         }
     }
-
-    componentDidMount() {
-
+    componentWillReceiveProps(newProps) {
+        if (newProps.status == 200) {
+            store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
+            toastr.success(newProps.message);
+            this.props.redirect()
+            // this.props.onHide();
+        }
     }
-
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -35,15 +39,12 @@ class UpdateSecondary extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-
         if (this.state.agentName && this.state.mobileNumbers) {
-
             const formData = new FormData();
-
-            formData.append("agentName", this.state.agentName);
-            formData.append("mobileNumbers", this.state.mobileNumbers);
-            formData.append("userId", this.state.instructionId)
-            // this.props.SubmitFaq(formData, this.state.instructionId);
+            formData.append("name", this.state.agentName);
+            formData.append("mobileNumbers", this.state.mobileNumbers); //secondary Number
+            formData.append("userId", this.props.Data.userId);
+            this.props.SubmitRetailer(formData, true);
         }
     }
 
@@ -104,7 +105,8 @@ class UpdateSecondary extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    faqData: state.faq
+    status: state.retailer.status,
+    message: state.retailer.message
 })
 
-export default connect(mapStateToProps)(UpdateSecondary)
+export default connect(mapStateToProps, { SubmitRetailer })(UpdateSecondary)
