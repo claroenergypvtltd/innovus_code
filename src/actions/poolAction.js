@@ -25,10 +25,10 @@ export const submitPool = (Id) => dispatch => {
     }
 }
 
-export const getPoolList = () => dispatch => {
-    httpServices.get().then(resp => {
-        if (resp) {
-            //  dispatch({type :POOL_FETCH_SUCCESS, Lists : resp })
+export const getPoolList = (Data) => dispatch => {
+    httpServices.post('pooling', Data).then(resp => {
+        if (resp && resp.data && resp.data) {
+            dispatch({ type: POOL_FETCH_SUCCESS, Lists: resp.data })
         }
     }).catch((error) => {
         console.error("error", error);

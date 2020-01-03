@@ -277,6 +277,7 @@ class FetchOrderDetails extends Component {
                 <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={statusUpdataData} ModalTitle="ORDER CREDIT" />
 
                 {this.state.viewtrack && <div className="pt-3">
+                    <h4 className="user-title">TRACKING LIST<br /></h4>
                     <div class="bs-stepper-header">
 
                         <div class="step active">
@@ -335,7 +336,6 @@ class FetchOrderDetails extends Component {
                         </div>
                         {/* <div class="bs-stepper-line"></div> */}
                     </div>
-
                     <TableData TableHead={this.state.TableHeadTrack} TableContent={trackList} />
                     {this.state.viewtrack && <button className="common-btn" onClick={this.productPage}>Back To Product List</button>}
                 </div>}
