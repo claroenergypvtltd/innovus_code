@@ -37,13 +37,14 @@ export const toastr = {
             closeOnClickOutside: false,
             buttons: [
                 {
-                    label: 'Yes',
-                    onClick: () => { props.onOk() }
+                    label: 'Cancel',
+                    onClick: () => { props.onCancel() }
                 },
                 {
-                    label: 'No',
-                    onClick: () => { props.onCancel() }
+                    label: 'Ok',
+                    onClick: () => { props.onOk() }
                 }
+
             ]
         }
         confirmAlert(options)

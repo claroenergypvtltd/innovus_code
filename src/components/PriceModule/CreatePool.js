@@ -89,27 +89,7 @@ export default class CreatePool extends Component {
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
-                                    <div className="col-md-6 form-group">
-                                        <label>{window.strings.PRICE.SELECT_ITEM}</label>
-                                        <Select className="state-box"
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            value={this.state.dcCodeObj}
-                                            onChange={(e) => this.handleDcCodeChange(e)}
-                                            //  options={options}
-                                            placeholder="--Select Item--"
-                                            isMulti
-                                        />
-                                    </div>
-                                    {/* <div className="form-group col-md-6 pt-2">
+                                    <div className="form-group col-md-6 react-checker">
                                         <label>{window.strings.PRICE.SELECT_ITEM}</label>
                                         <ReactMultiSelectCheckboxes className="select-box"
                                             styles={{
@@ -124,7 +104,7 @@ export default class CreatePool extends Component {
                                             }}
                                             options={dropDownData}
                                             onChange={this.checkbox} />
-                                    </div> */}
+                                    </div>
                                     <div className="form-group col-md-4">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
                                         <input
