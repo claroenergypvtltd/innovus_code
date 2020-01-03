@@ -2,15 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TableData } from '../../shared/Table'
 import { path } from '../../constants/path'
+import { getPoolList } from '../../actions/poolAction'
+import { ReactPagination } from '../../shared'
+import { resorceJSON } from '../../libraries'
 
-export default class FetchPool extends Component {
+class FetchPool extends Component {
     constructor(props) {
         super(props);
         this.state = {
             TableHead: ["Pool ID", "Pool Name", "Total Available quantity(Unit)", "Number of Item", "Actions"],
-            advanceSearch: false
+            advanceSearch: false,
+            itemPerPage: resorceJSON.TablePageData.itemPerPage,
 
         }
+    }
+    componentDidMount() {
+        this.getPoolList();
+    }
+    componentWillReceiveProps(newProps) {
+        if (newProps && newProps.poolData && newProps.poolData.Lists.datas) {
+            let poolRespData = newProps.poolData.Lists;
+            this.setState({ poolListData: poolRespData.datas, pageCount: poolRespData.totalCount / this.state.itemPerPage, totalCount: poolRespData.totalCount })
+        }
+    }
+    getPoolList = () => {
+        let obj = {
+            "page": 0,
+            "rows": 1
+        }
+        this.props.getPoolList(obj)
     }
     enableAdvanceSearch = (e) => {
         e.preventDefault();
@@ -20,10 +40,34 @@ export default class FetchPool extends Component {
     addPath = () => {
         this.props.history.push(path.pool.add)
     }
-    handleSearch = (Data) => {
-
+    handleSearch = (e) => {
+        e.preventDefault();
+        this.setState({ search: e.target.value })
+    }
+    getPoolsearch = (Data) => {
+        if (Data == 'search') {
+            let obj = {
+                "page": 0,
+                "rows": 1,
+                "search": this.state.search
+            }
+            this.props.getPoolList(obj)
+        }
+    }
+    itemEdit = (itemId) => {
+        this.props.history.push({ pathname: path.pool.add, state: { poolId: itemId } })
+    }
+    searchSubmit = (e) => {
+        e.preventDefault();
+        this.getPoolsearch('search');
+    }
+    resetSearch = () => {
+        this.setState({ search: '' }, () => { this.getPoolList() })
     }
     render() {
+        const poolList = this.state.poolListData && this.state.poolListData.map(item => {
+            return { "itemList": [item.id, item.name, item.quantity, item.quantityUnit], "itemId": item.id }
+        })
         return (
             <div className="pool">
                 <div className="clearfix title-section row">
@@ -57,7 +101,7 @@ export default class FetchPool extends Component {
                                         <span className="tooltip-text">Key Search</span>
                                     </div>
                                     <div className="ml-2">
-                                        <button type="button" className="data-search">
+                                        <button type="button" className="data-search" onClick={(e) => this.getPoolsearch('search')}>
                                             <i className="fa fa-search" aria-hidden="true"></i>Search
                                             <span className="tooltip-text">Click to Search</span>
                                         </button>
@@ -73,9 +117,17 @@ export default class FetchPool extends Component {
                         }
                     </div>
                 </div>
-                <TableData TableHead={this.state.TableHead}
+                <TableData TableHead={this.state.TableHead} TableContent={poolList}
                     handleEdit={this.itemEdit} />
+                < ReactPagination PageDetails={{ pageCount: this.state.pageCount, totalCount: this.state.totalCount }} />
             </div>
         );
     }
 }
+function mapStateToProps(state) {
+    return {
+        poolData: state.pool
+    };
+}
+
+export default connect(mapStateToProps, { getPoolList })(FetchPool);

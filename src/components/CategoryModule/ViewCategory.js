@@ -53,7 +53,8 @@ class ViewCategory extends Component {
         }
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
             let Data = nextProps.categoryData.specificData.data;
-            this.setState({ CategoryListDatas: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage, totalCount: Data.totalCount })
+            let categoryHeading = Data && Data.datas[0] && Data.datas[0].categoryName;
+            this.setState({ CategoryListDatas: Data.datas, ParentCategoryHeading: categoryHeading, pageCount: Data.totalCount / this.state.itemPerPage, totalCount: Data.totalCount })
         }
         if (nextProps.categoryData && nextProps.categoryData.updatedStatus == "200") {
             store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
@@ -262,7 +263,7 @@ class ViewCategory extends Component {
                 <div className="title-section row">
                     <div className="title-card col-md-7">
                         {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
-                        <h4 className="user-title">VIEW CROP</h4>
+                        <h4 className="user-title">VIEW CROP - {this.state.ParentCategoryHeading} </h4>
                         {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
                     </div>
                     <div className="right-title col-md-5">
