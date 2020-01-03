@@ -221,7 +221,7 @@ class ViewCategory extends Component {
                 this.props.history.goBack()
             }
         };
-        toastr.confirm(message, toastrConfirmOptions, " Update Status")
+        toastr.confirm(message, toastrConfirmOptions, "Update Status")
     }
     handleSearch = (e) => {
         e.preventDefault();

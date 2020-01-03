@@ -311,7 +311,7 @@ class CreateCoupon extends Component {
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                             {/* <img className="pre-view" src={imagePreviewUrl} /> */}
                                         </div>
-                                        <div className="form-group col-md-12 pt-2">
+                                        <div className="form-group col-md-12 pt-2 react-checker">
                                             <label>User</label>
                                             <ReactMultiSelectCheckboxes className="select-box"
                                                 styles={{

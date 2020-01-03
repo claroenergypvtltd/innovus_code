@@ -1437,6 +1437,23 @@ a.level-btn:hover {
   border-radius: 5px;
   color:$primary-color;
 }
+.react-confirm-alert-body > h1{
+  font-size: 20px;
+}
+.react-confirm-alert-button-group{
+  display: flex;
+  justify-content: flex-end;
+}
+.react-confirm-alert-button-group > button:last-child{
+  background-image:  $gradient-1;
+  color: $white;
+  font-size: 15px;
+}
+.react-confirm-alert-button-group > button:first-child{
+  background-color: $white;
+  color: $btn-text;
+  font-size: 15px;
+}
 /****************************Dashboard section************************/
 .dashboard-table{
   padding: 20px 20px 0 20px
@@ -2390,6 +2407,20 @@ background-position:270px -2670px;
   position: relative;
   left: 190px;
   top: 70px;
+  }
+
+  .react-checker > div > button{
+    width: 100%;
+    border: 1px solid $input-status;
+    border-radius: 5px;
+    border-radius: 0.25rem;
+    box-shadow :none;
+  }
+  .react-checker > div > button:hover{
+    border-color: $hover-focus;
+  }
+  .react-checker > div > button > span::placeholder{
+    color: $form-color;
   }
 
 /****************************Irrigation setting Section************************/
