@@ -252,6 +252,9 @@ class CreateSalesAgent extends React.Component {
                                                 '&:hover': {
                                                     borderColor: '#FE988D'
                                                 }
+                                            }),
+                                            placeholder: base => ({
+                                                color: '#9EA0B7'
                                             })
                                         }}
                                         value={this.state.dcCodeObj}

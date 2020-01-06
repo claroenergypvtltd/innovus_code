@@ -106,7 +106,7 @@ export const Translation = {
         },
 
         "FAQ": {
-            "ADD_NEW_FAQ": "ADD NEW FAQ",
+            "ADD_NEW_FAQ": "ADD FAQ",
             "EDIT_FAQ": "EDIT FAQ",
             "FAQ_DETAILS": "FAQ Details",
             "QUESTION_TITLE": "Questions Title",
@@ -176,7 +176,7 @@ export const Translation = {
             "COUPON_LIST": "Coupon list",
             "ADD_COUPON": "Add Coupon",
             "EDIT_COUPON": "EDIT COUPON",
-            "ADD_NEW_COUPON": "ADD NEW COUPON",
+            "ADD_NEW_COUPON": "ADD COUPON",
             "COUPON_DETAILS": "Coupon Details",
             "COUPON_TITLE": "Coupon Title",
             "COUPON_TYPE": "Coupon Type",
@@ -249,7 +249,7 @@ export const Translation = {
             "DESCRIPTION": "Description",
         },
         "RETAILERS": {
-            "ADD_NEW_RETAIER": "ADD NEW RETAILER",
+            "ADD_NEW_RETAIER": "ADD RETAILER",
             "RET_PERS_IMG_UPLOAD": "Personal Image Upload",
             "RET_SHOP_IMG_UPLOAD": "Shop Image Upload",
             "SHOP_NAME": "Shop Name",
@@ -284,6 +284,8 @@ export const Translation = {
             "LIST_IRRIGATION": "IRRIGATION SETTINGS LIST",
             "ADD_IRRIGATION": "Add Irrigation Setting",
             "EDIT_IRRIGATION": "Edit Irrigation Setting",
+            "ADD_IRRIGATION_LIST": "ADD IRRIGATION LIST",
+            "EDIT_IRRIGATION_LIST": "EDIT IRRIGATION LIST",
             "STATE_LABEL": "State",
             "CITY_LABEL": "City",
             "SELECT_STATE": "Select State",
@@ -411,7 +413,9 @@ export const Translation = {
         },
         "DC_MANAGEMENT": {
             "CUTOFF_TIME": "Order Cutoff-time",
-            "DELIVERY_SLOT": "Delivery Slot"
+            "DELIVERY_SLOT": "Delivery Slot",
+            "ADD_DC": "ADD DC",
+            "EDIT_DC": "EDIT DC"
         }
 
     }

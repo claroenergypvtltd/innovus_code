@@ -1195,6 +1195,23 @@ input.form-control.search-btn:focus {
     }
   }
 } 
+.main-container{
+  .time-pick{
+    .rc-time-picker-input{
+      width:254px;
+    }
+  }
+}  
+.sidebar-container{
+  .time-pick{
+    .rc-time-picker-input{
+      width: 303px;
+    }
+  }
+} 
+.time-pick .rc-time-picker-input::placeholder {
+  color:$form-color;
+}
 .rc-time-picker-clear{
   display: none!important;
 }
@@ -1765,6 +1782,10 @@ select:focus {
 .search-tip:hover .tooltip-text {
   visibility: visible;
 }
+.search-tip .form-control::placeholder {
+  font-size: 14px;
+  color:$primary-color;
+}
 .input-tip .tooltip-text {
   visibility: hidden;
   background-color: $tooltip-color;
@@ -1828,6 +1849,15 @@ select:focus {
 // [data-tip]:hover:after {
 // 	display:block;
 // }
+/****************************Vehicle Management Section************************/
+
+.vehicle-box{
+  border: none;
+  background-color:$sea-blue;
+  border-radius: 5px;
+  padding: 4px 10px;
+  color:$white;
+}
 /****************************Price Section************************/
 .sub-price{
   padding-top: 28px;
@@ -2799,6 +2829,9 @@ display: flex;
 @media screen and (min-width: 1200px) and (max-width: 1299px){
   .react-bootstrap-daterangepicker-container{
     max-width: 78%;
+  }
+  .date-vehicle .react-bootstrap-daterangepicker-container{
+    max-width: 91%;
   }
   .sub-filter .form-control{
    width:274px;
