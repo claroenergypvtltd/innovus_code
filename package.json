@@ -51,6 +51,7 @@
     "react-rte": "^0.16.1",
     "react-scripts": "3.0.1",
     "react-select": "^2.4.4",
+    "react-select-checked": "^0.1.12",
     "react-spinners-kit": "^1.8.0",
     "react-stepper-horizontal": "^1.0.11",
     "react-tabs": "^3.0.0",

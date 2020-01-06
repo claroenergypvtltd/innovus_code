@@ -253,6 +253,11 @@ export const routesPath = [
                 exact: true,
             },
             {
+                path: process.env.PUBLIC_URL + '/price/pool/edit/:id?',
+                component: CreatePool,
+                exact: true,
+            },
+            {
                 path: process.env.PUBLIC_URL + '/cart',
                 component: FetchCart,
                 exact: true,

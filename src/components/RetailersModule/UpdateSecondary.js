@@ -41,7 +41,7 @@ class UpdateSecondary extends Component {
         this.setState({ submitted: true })
         if (this.state.agentName && this.state.mobileNumbers) {
             const formData = new FormData();
-            formData.append("name", this.state.agentName);
+            formData.append("names", this.state.agentName);
             formData.append("mobileNumbers", this.state.mobileNumbers); //secondary Number
             formData.append("userId", this.props.Data.userId);
             this.props.SubmitRetailer(formData, true);
