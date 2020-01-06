@@ -18,7 +18,7 @@ class CreateCoupon extends Component {
         super(props);
         var today = new Date(),
             dateValue = today.getDate() >= 10 ? today.getDate() : ('0' + today.getDate()),
-            monthValue = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : ('0' + today.getMonth() + 1),
+            monthValue = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1)),
             date = today.getFullYear() + '-' + monthValue + '-' + dateValue
 
         this.state = {
@@ -75,14 +75,7 @@ class CreateCoupon extends Component {
     }
 
     handleChange = (e) => {
-        if (e.target.value < 0) {
-
-        }
-        else {
-            this.setState({
-                [e.target.name]: e.target.value
-            })
-        }
+        e.target.value > 0 ? this.setState({ [e.target.name]: e.target.value }) : this.setState({ [e.target.name]: '' })
     }
 
     onhandleImageChange = (e) => {
@@ -145,7 +138,6 @@ class CreateCoupon extends Component {
             this.setState({ couponId: id })
 
             this.props.getSpecificCouponData(this.props.location.state.couponId)
-
         }
     }
 
