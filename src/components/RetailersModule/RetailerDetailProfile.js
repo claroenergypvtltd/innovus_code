@@ -19,6 +19,10 @@ class RetailerDetailProfile extends React.Component {
     }
 
     componentDidMount() {
+        this.getRetailer();
+    }
+
+    getRetailer = () => {
         if (this.state.retailerId) {
             let user = {};
             user.retailerId = this.state.retailerId;
@@ -26,14 +30,15 @@ class RetailerDetailProfile extends React.Component {
             this.props.fetchRetailers(user);
         }
     }
-
-
+    redirectViewPage = () => {
+        this.getRetailer();
+    }
     render() {
         return (
 
             <div className="main-wrapper1">
                 <div className="main-wrapper">
-                    <RetailerProfile profileData={this.state.profileData} />
+                    <RetailerProfile profileData={this.state.profileData} redirectViewPage={this.redirectViewPage} />
                 </div>
                 <div className="main-wrapper sub-wrapper">
                     <div className="tab-wrapper">

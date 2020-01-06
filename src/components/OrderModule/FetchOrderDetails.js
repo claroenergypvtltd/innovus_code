@@ -135,7 +135,7 @@ class FetchOrderDetails extends Component {
     statusChange(ordId, status) {
 
         let statusVal = status;
-        let message = window.strings.UPDATEMESSAGE;
+        let message = window.strings.DELETE_ORDERDETAILSS;
         const toastrConfirmOptions = {
             onOk: () => {
                 let statusobj = {
@@ -149,7 +149,7 @@ class FetchOrderDetails extends Component {
             },
             onCancel: () => { }
         };
-        toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.ORDER_POPUP);
     }
 
     weightConversion = (Data) => {

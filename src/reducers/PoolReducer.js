@@ -17,7 +17,7 @@ export default function (state = initialState, action) {
         case POOL_UPDATE_SUCCESS:
             return state = {
                 ...state,
-                updateStatus: action.resp
+                updateStatus: action.updateStatus
             }
         case POOL_CREATE_SUCCESS:
             return state = {

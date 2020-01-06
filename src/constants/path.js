@@ -149,7 +149,8 @@ export const path = {
     },
     pool: {
         list: process.env.PUBLIC_URL + '/price/pool',
-        add: process.env.PUBLIC_URL + '/price/pool/add'
+        add: process.env.PUBLIC_URL + '/price/pool/add',
+        edit: process.env.PUBLIC_URL + '/price/pool/edit/',
     }
 }
 

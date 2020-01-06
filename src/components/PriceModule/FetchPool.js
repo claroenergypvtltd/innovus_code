@@ -58,7 +58,7 @@ class FetchPool extends Component {
         }
     }
     itemEdit = (itemId) => {
-        this.props.history.push({ pathname: path.pool.add, state: { poolId: itemId } })
+        this.props.history.push({ pathname: path.pool.edit + itemId, state: { poolId: itemId } })
     }
     searchSubmit = (e) => {
         e.preventDefault();

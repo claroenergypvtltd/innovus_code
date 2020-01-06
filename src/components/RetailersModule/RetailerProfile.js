@@ -42,7 +42,8 @@ class RetailerProfile extends React.Component {
     };
 
     redirectPage = () => {
-        this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
+        this.props.redirectViewPage();
+        this.onCloseModal();
     }
 
     render() {
@@ -102,21 +103,21 @@ class RetailerProfile extends React.Component {
                             <h4 className="title">{"Onboarded Date"}</h4>
                             <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>
-                        {statusClass == "accepted" && !profile.name && !profile.mobileNumbers ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
-                            :
-                            <div className="secondary-level">
-                                <Col md={2} sm={6} xs={12} className="p-0">
-                                    <h4 className="title">{"Name"}</h4>
-                                    <p className="user-subtitle">{profile.name}</p>
-                                </Col>
-                                <Col md={2} sm={6} xs={12} className="p-0">
-                                    <h4 className="title">{"Phone"}</h4>
-                                    <p className="user-subtitle">{profile.mobileNumbers}</p>
-                                </Col>
-                                <Col md={2} sm={6} xs={12} className="p-0">
-                                    <button className="remove-btn" onClick={() => this.removeSecondary(profile.id)}>Remove</button>
-                                </Col>
-                            </div>
+                        {statusClass == "accepted" && !profile.names && !profile.mobileNumbers ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
+                            : (profile.names && profile.mobileNumbers) ?
+                                <div className="secondary-level">
+                                    <Col md={2} sm={6} xs={12} className="p-0">
+                                        <h4 className="title">{"Secondary Name"}</h4>
+                                        <p className="user-subtitle">{profile.names}</p>
+                                    </Col>
+                                    <Col md={2} sm={6} xs={12} className="p-0">
+                                        <h4 className="title">{"Secondary Phone"}</h4>
+                                        <p className="user-subtitle">{profile.mobileNumbers}</p>
+                                    </Col>
+                                    <Col md={2} sm={6} xs={12} className="p-0">
+                                        <button className="remove-btn" onClick={() => this.removeSecondary(profile.id)}>Remove</button>
+                                    </Col>
+                                </div> : ''
                         }
                         <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={UpdateSecondaryData} ModalTitle="UPDATE SECONDARY FIELD" />
                     </Col>
