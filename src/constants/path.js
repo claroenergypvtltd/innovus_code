@@ -148,8 +148,8 @@ export const path = {
         add: process.env.PUBLIC_URL + '/appsetting'
     },
     pool: {
-        list: process.env.PUBLIC_URL + '/pool',
-        add: process.env.PUBLIC_URL + '/pool/add'
+        list: process.env.PUBLIC_URL + '/price/pool',
+        add: process.env.PUBLIC_URL + '/price/pool/add'
     }
 }
 

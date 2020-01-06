@@ -113,7 +113,7 @@ class FetchCoupon extends Component {
 
     render() {
 
-        let coupondata = this.state.CouponData.length !== 0 && this.state.CouponData.map((item, index) => {
+        let coupondata = this.state.CouponData && this.state.CouponData.map((item, index) => {
             let discountUnit = item.discountUnit == 1 ? 'Percentage' : 'Discount';
             return { "itemList": [item.name, item.description, discountUnit, 'Rs. ' + item.discountValue, formatDate(item.startDate), formatDate(item.expiryDate)], "itemId": item.id }
         })

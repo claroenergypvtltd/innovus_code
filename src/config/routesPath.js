@@ -243,12 +243,12 @@ export const routesPath = [
                 exact: true,
             },
             {
-                path: process.env.PUBLIC_URL + '/pool',
+                path: process.env.PUBLIC_URL + '/price/pool',
                 component: FetchPool,
                 exact: true,
             },
             {
-                path: process.env.PUBLIC_URL + '/pool/add',
+                path: process.env.PUBLIC_URL + '/price/pool/add',
                 component: CreatePool,
                 exact: true,
             },

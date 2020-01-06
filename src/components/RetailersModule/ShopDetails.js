@@ -188,8 +188,8 @@ class ShopDetails extends React.Component {
                 />
             </div>
             let transfer = <button onClick={() => this.handleTransferChange(item.userId, mobileNumbers)} className="trans-btn">Transfer</button>
-            let distance = item.distance ? item.distance : '-';
-            let status = item.shopStatus ? item.shopStatus : '-';
+            let distance = item.distance ? item.distance.toFixed(2) : '-';
+            let status = item.isActive == 0 ? <p> Pending </p> : <p>Accepted</p>
 
             return { "itemList": [imageZoom, status, item.name, distance, item.address1 + item.address2, item.agentName, transfer], "itemId": item.id }
         })

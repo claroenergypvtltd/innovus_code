@@ -13,6 +13,9 @@ class FetchPool extends Component {
             TableHead: ["Pool ID", "Pool Name", "Total Available quantity(Unit)", "Number of Item", "Actions"],
             advanceSearch: false,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
+            currentPage: 0,
+            limitValue: resorceJSON.TablePageData.paginationLength,
+            pageCount: resorceJSON.TablePageData.pageCount
 
         }
     }
@@ -27,8 +30,8 @@ class FetchPool extends Component {
     }
     getPoolList = () => {
         let obj = {
-            "page": 0,
-            "rows": 1
+            "pages": this.state.currentPage ? this.state.currentPage : 0,
+            "row": 10
         }
         this.props.getPoolList(obj)
     }
@@ -47,8 +50,8 @@ class FetchPool extends Component {
     getPoolsearch = (Data) => {
         if (Data == 'search') {
             let obj = {
-                "page": 0,
-                "rows": 1,
+                "pages": 0,
+                "row": 10,
                 "search": this.state.search
             }
             this.props.getPoolList(obj)
@@ -63,6 +66,13 @@ class FetchPool extends Component {
     }
     resetSearch = () => {
         this.setState({ search: '' }, () => { this.getPoolList() })
+    }
+    onChange = (data) => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
+                this.getPoolList();
+            });
+        }
     }
     render() {
         const poolList = this.state.poolListData && this.state.poolListData.map(item => {
@@ -119,7 +129,7 @@ class FetchPool extends Component {
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={poolList}
                     handleEdit={this.itemEdit} />
-                < ReactPagination PageDetails={{ pageCount: this.state.pageCount, totalCount: this.state.totalCount }} />
+                < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: 10, totalCount: this.state.totalCount }} />
             </div>
         );
     }
