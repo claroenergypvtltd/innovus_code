@@ -3,6 +3,7 @@ import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import { connect } from 'react-redux';
 import { fetchRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction';
+import { toastr } from '../../services/toastr.services'
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { formatDate } from '../../shared/DateFormat'
 import UpdateSecondary from './UpdateSecondary'
@@ -25,6 +26,16 @@ class RetailerProfile extends React.Component {
     }
 
     removeSecondary = (userId) => {
+        let message = "Are you sure you want to Remove ?";
+        const toastrConfirmOptions = {
+            onOk: () => { this.removeRetailer(userId) },
+            onCancel: () => {
+            }
+        };
+        toastr.confirm(message, toastrConfirmOptions, "Remove")
+    }
+
+    removeRetailer = (userId) => {
         const formData = new FormData();
         formData.append("mobileNumbers", '');
         formData.append("name", '');
@@ -32,6 +43,8 @@ class RetailerProfile extends React.Component {
         formData.append("flag", 5);
         this.props.SubmitRetailer(formData, true);
     }
+
+
 
     onOpenModal = (orderId) => {
         this.setState({ open: true, orderId: orderId });

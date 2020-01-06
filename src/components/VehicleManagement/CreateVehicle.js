@@ -187,7 +187,7 @@ class CreateVehicle extends Component {
             "id": "15"
         }];
         let AddType = {
-            "label": <button onClick={this.addNewType}>+ Add Vehicle Type</button>,
+            "label": <button onClick={this.addNewType} className="vehicle-box">+ Add Vehicle Type</button>,
             isDisabled: true
             // "id": ''
         }
@@ -248,13 +248,14 @@ class CreateVehicle extends Component {
                                                     ...base,
                                                     borderColor: 'hsl(0,0%,80%)',
                                                     boxShadow: '#FE988D',
-                                                    // '&:placeholder': {
-                                                    //     color: '#9EA0B7'
-                                                    // },
                                                     '&:hover': {
                                                         borderColor: '#FE988D'
                                                     }
 
+                                                }),
+                                                placeholder: base => ({
+                                                    ...base,
+                                                    color: '#9EA0B7'
                                                 })
                                             }}
                                             value={this.state.vehicleType}
@@ -296,7 +297,7 @@ class CreateVehicle extends Component {
                                         {this.state.submitted && !this.state.vehicleName && <div className="mandatory">{window.strings['VEHICLE']['VEHICLE_NAME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
-                                    <div className="form-group col-md-6">
+                                    <div className="form-group col-md-6 date-vehicle">
                                         <label>{window.strings['VEHICLE']['TIME_WINDOW_AT_OPERATION']}</label>
                                         <DateRangePicker className="daterange"
                                             startDate={this.state.startDate}

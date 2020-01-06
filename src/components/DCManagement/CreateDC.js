@@ -119,7 +119,9 @@ class CreateDC extends Component {
             <div>
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-7">
-                        <h4 className="user-title">ADD DC</h4>
+                        {/* <h4 className="user-title">ADD DC</h4> */}
+                        <h4 className="user-title">{!this.state.id ? window.strings.DC_MANAGEMENT.ADD_DC : window.strings.DC_MANAGEMENT.EDIT_DC}</h4>
+
                     </div>
                 </div>
                 <div className="main-wrapper p-3">
