@@ -20,7 +20,7 @@ class FetchIrrigationSetting extends Component {
             irrigationSettingLists: [],
             CategoryCount: props.getCount,
             search: '',
-            currentPage: 1,
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength
@@ -51,7 +51,7 @@ class FetchIrrigationSetting extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            this.setState({ currentPage: 1 }, () => {
+            this.setState({ currentPage: 0 }, () => {
                 let serObj = {
                     "search": this.state.search
                 };
@@ -61,16 +61,14 @@ class FetchIrrigationSetting extends Component {
     }
 
     resetSearch = () => {
-        if (this.state.search || !this.state.search) {
-            this.setState({ search: '' }, () => {
-                this.getPriceList();
-            });
-        }
+        this.setState({ search: '' }, () => {
+            this.getPriceList();
+        });
     }
 
     getPriceList() {
         let obj = {
-            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
             "categoryId": ""

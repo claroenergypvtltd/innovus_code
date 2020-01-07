@@ -17,7 +17,7 @@ class FetchFAQ extends Component {
             FaqListDatas: [],
             FaqCount: props.getCount,
             search: '',
-            currentPage: 1,
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength
@@ -83,7 +83,7 @@ class FetchFAQ extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            this.setState({ currentPage: 1 }, () => {
+            this.setState({ currentPage: 0 }, () => {
                 let serObj = {
                     "search": this.state.search
                 };
@@ -96,7 +96,7 @@ class FetchFAQ extends Component {
     getFaqList() {
         let obj = {
             "search": this.state.search,
-            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             "limit": this.state.itemPerPage
         };
         // user.search = this.props.searchText;

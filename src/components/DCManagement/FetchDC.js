@@ -15,7 +15,7 @@ class FetchDC extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["DC Code", "Name", 'Surveying Area', "Order Cutoff-time", "Delivery Slot", "Action"],
+            TableHead: ["DC Code", "Name", 'Surveying Area', 'Order Start-time', "Order Cutoff-time", "Delivery Slot", "Action"],
             search: '',
             currentPage: 0,
             id: '',
@@ -146,7 +146,7 @@ class FetchDC extends Component {
     render() {
         let DcList = this.state.dcList && this.state.dcList.map((item, index) => {
             return {
-                "itemList": [item.dcCode, item.name, item.surveyingArea, item.orderCutOffTime, item.deliverySlot], "itemId": { id: item.id, productCount: item.productCount }
+                "itemList": [item.dcCode, item.name, item.surveyingArea, item.orderStartTime, item.orderCutOffTime, item.deliverySlot], "itemId": { id: item.id, productCount: item.productCount }
             }
         })
 
