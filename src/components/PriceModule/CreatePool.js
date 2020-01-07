@@ -17,6 +17,7 @@ class CreatePool extends Component {
             submitted: false,
             weightDatas: [],
             weightId: 0,
+            weight: 0,
             currentSelection: []
         }
     }
@@ -24,6 +25,7 @@ class CreatePool extends Component {
         this.getWeightDatas();
         this.getPriceList();
         if (this.props.location && this.props.location.state && this.props.location.state.poolId) {
+            this.setState({ poolId: this.props.location.state.poolId })
             this.getPoolList();
         }
     }
@@ -43,20 +45,22 @@ class CreatePool extends Component {
                 this.redirectPage();
             }
         }
-        if (newProps && newProps.poolData && newProps.poolData.Lists && newProps.poolData.Lists.datas && newProps.poolData.Lists.datas[0]) {
+        if (this.props.location && this.props.location.state && this.props.location.state.poolId && newProps && newProps.poolData && newProps.poolData.Lists && newProps.poolData.Lists.datas && newProps.poolData.Lists.datas[0]) {
             let editData = newProps.poolData.Lists.datas[0];
             let poolAry = [];
-            editData.pools && editData.pools.map(item => {
-                editData.productName && editData.productName.map(productName => {
-                    let obj = {
-                        "label": productName + ' ' + item.dcCode,
-                        "value": item.productId + ' ' + item.dcCode
-                    }
-                    poolAry.push(obj);
-                })
 
+            editData.pools && editData.pools.map(item => {
+                let productName = "";
+                editData.productName && editData.productName.map(name => {
+                    productName = name;
+                })
+                let obj = {
+                    "label": productName + '-' + item.dcCode,
+                    "value": productName + '-' + item.dcCode + '-' + item.productId
+                }
+                poolAry.push(obj);
             })
-            this.setState({ name: editData.name, weightId: editData.quantityUnit, updateQuantity: editData.quantity, currentSelection: poolAry })
+            this.setState({ name: editData.name, weightId: editData.quantityUnit, weight: editData.quantity, currentSelection: poolAry })
         }
     }
 
@@ -107,27 +111,27 @@ class CreatePool extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-        let poolAry = [];
-        this.state.currentSelection && this.state.currentSelection.map(item => {
-            let poolData = item.value && item.value.split(' ');
+        if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0 && this.state.weightId) {
+            let poolAry = [];
+            this.state.currentSelection && this.state.currentSelection.map(item => {
+                let poolData = item.value && item.value.split('-');
+                let obj = {
+                    productId: poolData[2],
+                    dcCode: poolData[1]
+                }
+                poolAry.push(obj);
+            })
             let obj = {
-                productId: poolData[0],
-                dcCode: poolData[1]
+                "name": this.state.name,
+                "quantity": (Number(this.state.weight) + Number(this.state.updateQuantity)),
+                "quantityUnit": this.state.weightId,
+                "pools": poolAry,
+                "id": this.props.location && this.props.location.state && this.props.location.state.poolId
             }
-            poolAry.push(obj);
-        })
-
-        let obj = {
-            "name": this.state.name,
-            "quantity": this.state.updateQuantity,
-            "quantityUnit": this.state.weightId,
-            "pools": poolAry,
-            "id": this.props.location && this.props.location.state && this.props.location.state.poolId
+            this.props.submitPool(obj);
         }
-        this.props.submitPool(obj);
     }
     redirectPage = () => {
-
         this.props.history.push({ pathname: path.pool.list, state: { poolSessionData: 'poolSessionBack' } });
     }
 
@@ -144,9 +148,16 @@ class CreatePool extends Component {
         });
         let pollData = [];
         this.state.PriceLists && this.state.PriceLists.map((item) => {
-            let obj = { "label": item.name + ' ' + item.productDetail.dcCode, "value": item.productDetail.id + ' ' + item.productDetail.dcCode, indeterminate: true };
+            let obj = { "label": item.name + '-' + item.productDetail.dcCode, "value": item.name + '-' + item.productDetail.dcCode + '-' + item.productDetail.id, indeterminate: true };
             pollData.push(obj);
         })
+        let plcHolder = "";
+        if (this.state.currentSelection && this.state.currentSelection.length > 0) {
+            plcHolder = this.state.currentSelection.length + ' ' + 'Selected'
+        } else {
+            plcHolder = "Select"
+        }
+
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -156,7 +167,7 @@ class CreatePool extends Component {
                             <div className="col-md-10">
                                 <form onSubmit={this.handleSubmit} noValidate className="row m-0">
                                     <div className="form-group col-md-6">
-                                        <label>{window.strings.FARMERS.NAME}</label>
+                                        <label>{window.strings.FARMERS.NAME} *</label>
                                         <input
                                             type="text"
                                             placeholder="Name"
@@ -164,17 +175,22 @@ class CreatePool extends Component {
                                             onChange={this.handleInputChange}
                                             value={this.state.name}
                                             className={classnames('form-control')}
+                                            disabled={this.state.poolId}
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
                                     <div className="form-group col-md-6 react-checker">
-                                        <label>{window.strings.PRICE.SELECT_ITEM}</label>
+                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
                                         <CheckedSelect
                                             name="form-field-name"
                                             value={this.state.currentSelection}
                                             options={pollData}
+                                            placeholder={plcHolder}
                                             onChange={(e) => this.handlePoolChange(e)}
+                                            noResultsText="Nothing"
+                                            disabled={this.state.poolId}
                                         />
+                                        {this.state.submitted && this.state.currentSelection.length < 1 && <div className="mandatory">{window.strings['PRICE']['SELECT_POOL'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
                                     <div className="form-group col-md-4">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
@@ -197,7 +213,7 @@ class CreatePool extends Component {
                                             type="number"
                                             placeholder="Increase/Decrease Quantity"
                                             className={classnames('form-control', {
-                                                'is-invalid': errors.weight
+                                                'is-invalid': errors.updateQuantity
                                             })}
                                             name="updateQuantity"
                                             onChange={this.handleInputChange}
@@ -206,12 +222,12 @@ class CreatePool extends Component {
                                         />
                                     </div>
                                     <div className="form-group col-md-4">
-                                        <label>{window.strings.PRICE.TYPE}</label>
+                                        <label>{window.strings.PRICE.TYPE} *</label>
                                         <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} >
-                                            <option value="0">Select</option>
+                                            <option value="">Select</option>
                                             {weightDropDown}
                                         </select>
-                                        {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                        {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
                                 </form>
                             </div>
