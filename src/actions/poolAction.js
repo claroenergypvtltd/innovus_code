@@ -2,12 +2,12 @@ import { httpServices } from "../services/http.services"
 import { GET_ERRORS, POOL_CREATE_SUCCESS, POOL_FETCH_SUCCESS, POOL_DELETE_SUCCESS, POOL_UPDATE_SUCCESS, POOL_FETCH_SPECIFIC_DATA } from '../constants/actionTypes'
 import { toastr } from 'react-redux-toastr'
 
-export const submitPool = (Data, Id) => dispatch => {
-    if (Id) {
-        httpServices.put('productPool', Data).then(resp => {
+export const submitPool = (Data) => dispatch => {
+    if (Data && Data.id) {
+        httpServices.put('pooling', Data).then(resp => {
             if (resp) {
                 toastr.success(resp.message);
-                dispatch({ type: POOL_UPDATE_SUCCESS, updatedStatus: resp.status })
+                dispatch({ type: POOL_UPDATE_SUCCESS, updateStatus: resp.status })
             }
         }).catch((error) => {
             console.error("error", error);

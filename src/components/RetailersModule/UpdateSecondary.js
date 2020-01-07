@@ -62,7 +62,7 @@ class UpdateSecondary extends Component {
                     <div className="col-md-10">
                         <form onSubmit={this.handleSubmit} >
                             <div className="form-group col-md-12">
-                                <label>{window.strings.USERMANAGEMENT.NAME}</label>
+                                <label>{window.strings.USERMANAGEMENT.AGENT_NAME}</label>
                                 <input
                                     type="text"
                                     placeholder="Name"
@@ -74,7 +74,7 @@ class UpdateSecondary extends Component {
                                     value={this.state.agentName}
                                     required
                                 />
-                                {this.state.submitted && !this.state.agentName && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_NAME']}</div>}
+                                {this.state.submitted && !this.state.agentName && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_NAME'] + window.strings['ISREQUIRED']}</div>}
                             </div>
                             <div className="form-group col-md-12 pt-2">
                                 <label>{window.strings.USERMANAGEMENT.PHONE_NUMBER}</label>
@@ -89,7 +89,7 @@ class UpdateSecondary extends Component {
                                     value={this.state.mobileNumbers}
                                     required
                                 />
-                                {this.state.submitted && !this.state.mobileNumbers && <div className="mandatory">{window.strings['USERMANAGEMENT']['MOBILE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
+                                {this.state.submitted && !this.state.mobileNumbers && <div className="mandatory">{window.strings['USERMANAGEMENT']['PHONE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
                             </div>
 
                         </form>

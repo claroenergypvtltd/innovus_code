@@ -38,7 +38,7 @@ class RetailerProfile extends React.Component {
     removeRetailer = (userId) => {
         const formData = new FormData();
         formData.append("mobileNumbers", '');
-        formData.append("name", '');
+        formData.append("names", '');
         formData.append("userId", userId);
         formData.append("flag", 5);
         this.props.SubmitRetailer(formData, true);

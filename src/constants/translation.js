@@ -130,6 +130,7 @@ export const Translation = {
             "ADD_POOL": "Add Pool",
             "POOLTITLE": "ADD POOL",
             "SELECT_ITEM": "Select Item",
+            "SELECT_POOL": "Pool",
             "POOL_NAME": "Pool"
         },
 

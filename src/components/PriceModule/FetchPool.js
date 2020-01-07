@@ -76,7 +76,7 @@ class FetchPool extends Component {
     }
     render() {
         const poolList = this.state.poolListData && this.state.poolListData.map(item => {
-            return { "itemList": [item.id, item.name, item.quantity, item.quantityUnit], "itemId": item.id }
+            return { "itemList": [item.id, item.name, item.quantity, item.pools.length], "itemId": item.id }
         })
         return (
             <div className="pool">
