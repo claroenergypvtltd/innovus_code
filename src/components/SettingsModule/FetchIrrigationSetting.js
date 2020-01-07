@@ -13,7 +13,6 @@ import { IRRIGATION_SETTING_DELETE_SUCCESS } from '../../constants/actionTypes'
 class FetchIrrigationSetting extends Component {
 
     constructor(props) {
-
         super(props);
         this.state = {
             TableHead: ["State", "City", "Price", "Area Feet", "Actions"],
@@ -26,7 +25,6 @@ class FetchIrrigationSetting extends Component {
             limitValue: resorceJSON.TablePageData.paginationLength
         }
     }
-
     componentDidMount() {
         this.getPriceList();
     }
@@ -39,7 +37,6 @@ class FetchIrrigationSetting extends Component {
 
         if (newProps.IrrigationSettingData && newProps.IrrigationSettingData.deletedStatus == "200") {
             Store.dispatch({ type: IRRIGATION_SETTING_DELETE_SUCCESS, deletedStatus: "" })
-
             this.getPriceList();
         }
     }
@@ -73,14 +70,12 @@ class FetchIrrigationSetting extends Component {
             "limit": this.state.itemPerPage,
             "categoryId": ""
         }
-
         this.props.getIrrigationSettingList(obj)
     }
 
     itemEdit = (id) => {
         this.props.history.push({ pathname: path.setting.edit + id, state: { irrigationCostId: id } });
     }
-
 
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
@@ -100,7 +95,6 @@ class FetchIrrigationSetting extends Component {
     }
 
     onChange = (data) => {
-
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
                 this.getPriceList();
@@ -140,14 +134,10 @@ class FetchIrrigationSetting extends Component {
         );
     }
 }
-
-
-
 function mapStateToProps(state) {
     return {
         // getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
         IrrigationSettingData: state.irrigationSetting ? state.irrigationSetting : {}
     };
 }
-
 export default connect(mapStateToProps, { getIrrigationSettingList, DeleteIrrigationSetting })(FetchIrrigationSetting);

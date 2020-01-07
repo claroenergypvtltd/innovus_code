@@ -68,18 +68,6 @@ class FetchDC extends Component {
         this.props.fetchDcList(obj)
     }
 
-    // itemEdit = (priceId) => {
-    //     this.props.history.push({ pathname: path.price.edit + priceId, state: { priceId: priceId } });
-    // }
-    // handleDelete = (data) => {
-    //     let message = window.strings.DELETEMESSAGE;
-    //     const toastrConfirmOptions = {
-    //         onOk: () => { this.itemDelete(data) },
-    //         onCancel: () => console.log('CANCEL: clicked')
-    //     };
-    //     toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
-    // }
-
     itemEdit = (Data) => {
         this.props.history.push({ pathname: path.dc.edit + Data.id, state: { id: Data.id } });
     }
@@ -98,11 +86,6 @@ class FetchDC extends Component {
     }
     itemDelete = (id) => {
         this.props.DeleteDC(id)
-        // .then(resp => {
-        //     if (resp) {
-        //         this.getDcList();
-        //     }
-        // });
     }
 
     formPath = () => {
@@ -127,20 +110,15 @@ class FetchDC extends Component {
         e.preventDefault();
         if (this.state.search) {
             this.setState({ currentPage: 0 }, () => {
-                // let serObj = {
-                //     "search": this.state.search
-                // };
                 this.getDcList();
             })
         }
     }
 
     resetSearch = () => {
-        // if (this.state.search) {
         this.setState({ search: '' }, () => {
             this.getDcList();
         });
-        // }
     }
 
     render() {
@@ -171,7 +149,6 @@ class FetchDC extends Component {
                 </div>
                 <TableData TableHead={this.state.TableHead} TableContent={DcList}
                     handleEdit={this.itemEdit}
-                // handleDelete={this.handleDelete} 
                 />
                 <ReactPagination PageDetails={{
                     pageCount: this.state.pageCount, onPageChange: this.onChange,
@@ -181,11 +158,6 @@ class FetchDC extends Component {
         )
     }
 }
-// function mapStateToProps(state) {
-//     return {
-//     };
-// }
-
 function mapStateToProps(state) {
     return {
         dcDatas: state && state.dc,

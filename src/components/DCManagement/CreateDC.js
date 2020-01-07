@@ -56,14 +56,6 @@ class CreateDC extends Component {
                 orderStartTime: Data.orderStartTime ? Data.orderStartTime : "12:00 am", deliverySlot: Data.deliverySlot, min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1]
             })
         }
-        // if (this.state.id && nextProps.dcData && nextProps.dcData.specificData && nextProps.dcData.specificData.datas && nextProps.dcData.specificData.datas[0]) {
-        //     let Data = nextProps.dcData.specificData.datas[0];
-        //     let getTime = Data.orderCutOffTime;
-        //     let getTimeformat = getTime && getTime.split(':');
-        //     let getHoursFormat = getTimeformat && getTimeformat[1].split(' ')
-        //     this.setState({ min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1], name: Data.name, surveyingArea: Data.surveyingArea, orderCutOffTime: Data.orderCutOffTime, orderStartTime: Data.orderStartTime, deliverySlot: Data.deliverySlot })
-        // }
-
     }
     handleStartTimePicker = value => {
         if (this.state.id) {
@@ -114,7 +106,6 @@ class CreateDC extends Component {
             let obj = {
                 "name": this.state.name,
                 "surveyingArea": this.state.surveyingArea,
-                // "orderCutOffTime": this.state.orderCutOffTime,
                 "orderStartTime": startTimeData,
                 "orderCutOffTime": cutOffTimeData,
                 "deliverySlot": this.state.deliverySlot,
@@ -127,7 +118,6 @@ class CreateDC extends Component {
 
     listPath = () => {
         this.props.history.push({ pathname: path.dc.list, state: { dcSearchDatas: "backTrue" } })
-        // this.props.history.goBack();
     }
 
     render() {
@@ -148,7 +138,6 @@ class CreateDC extends Component {
             <div>
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-7">
-                        {/* <h4 className="user-title">ADD DC</h4> */}
                         <h4 className="user-title">{!this.state.id ? window.strings.DC_MANAGEMENT.ADD_DC : window.strings.DC_MANAGEMENT.EDIT_DC}</h4>
 
                     </div>
@@ -195,8 +184,6 @@ class CreateDC extends Component {
                                 {this.state.id && <TimePicker
                                     showSecond={false}
                                     defaultValue={startTimeData}
-                                    // value={""}
-                                    // value={this.state.orderCutOffTime}
                                     value={startTimeData}
                                     className="xxx shop-time"
                                     onChange={this.handleStartTimePicker}
@@ -208,8 +195,6 @@ class CreateDC extends Component {
                                 {!this.state.id && <TimePicker
                                     showSecond={false}
                                     defaultValue={startTimeData}
-                                    // value={""}
-                                    // value={this.state.orderCutOffTime}
                                     className="xxx shop-time"
                                     onChange={this.handleStartTimePicker}
                                     format={format}
@@ -225,8 +210,6 @@ class CreateDC extends Component {
                                 {this.state.id && <TimePicker
                                     showSecond={false}
                                     defaultValue={cutOffTimeData}
-                                    // value={""}
-                                    // value={this.state.orderCutOffTime}
                                     value={cutOffTimeData}
                                     className="xxx shop-time"
                                     onChange={this.handleCutTimePicker}
@@ -238,8 +221,6 @@ class CreateDC extends Component {
                                 {!this.state.id && <TimePicker
                                     showSecond={false}
                                     defaultValue={cutOffTimeData}
-                                    // value={""}
-                                    // value={this.state.orderCutOffTime}
                                     className="xxx shop-time"
                                     onChange={this.handleCutTimePicker}
                                     format={format}
