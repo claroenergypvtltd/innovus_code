@@ -13,7 +13,8 @@ class CreateDC extends Component {
         super(props);
         this.state = {
             errors: {},
-
+            orderStartTime: '',
+            orderCutOffTime: ''
         }
     }
     componentDidMount() {
@@ -21,7 +22,7 @@ class CreateDC extends Component {
             this.getSpecificDCData();
         } else {
             const now = moment().hour(0).minute(0);
-            this.setState({ orderCutOffTime: now });
+            this.setState({ orderCutOffTime: now, orderStartTime: now });
         }
     }
 
@@ -44,16 +45,19 @@ class CreateDC extends Component {
         }
         if (this.state.id && nextProps.dcData && nextProps.dcData.specificData && nextProps.dcData.specificData.datas && nextProps.dcData.specificData.datas[0]) {
             let Data = nextProps.dcData.specificData.datas[0];
-            let getTime = Data.orderCutOffTime;
+            let getTime = Data.orderStartTime ? Data.orderStartTime : "12:00 am";
             let getTimeformat = getTime && getTime.split(':');
             let getHoursFormat = getTimeformat && getTimeformat[1].split(' ')
-            this.setState({ min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1], name: Data.name, surveyingArea: Data.surveyingArea, orderCutOffTime: Data.orderCutOffTime, deliverySlot: Data.deliverySlot })
+            let getTimeOne = Data.orderCutOffTime;
+            let getTimeFormatOne = getTimeOne && getTimeOne.split(':');
+            let getHoursFormatOne = getTimeFormatOne && getTimeFormatOne[1].split(' ')
+            this.setState({
+                minOne: getTimeFormatOne && getTimeFormatOne[0], secOne: getHoursFormatOne && getHoursFormatOne[0], aOne: getHoursFormatOne && getHoursFormatOne[1], name: Data.name, surveyingArea: Data.surveyingArea, orderCutOffTime: Data.orderCutOffTime,
+                orderStartTime: Data.orderStartTime ? Data.orderStartTime : "12:00 am", deliverySlot: Data.deliverySlot, min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1]
+            })
         }
-
     }
-
-
-    handleTimePicker = value => {
+    handleStartTimePicker = value => {
         if (this.state.id) {
             let getTime = value && value.format('hh:mm a');
             let getTimeformat = getTime && getTime.split(':');
@@ -61,10 +65,21 @@ class CreateDC extends Component {
             this.setState({ min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1] });
         } else {
             const format = 'h:mm a';
-            this.setState({ orderCutOffTime: value.format(format) })
+            this.setState({ orderStartTime: value.format(format) })
         }
     };
 
+    handleCutTimePicker = value => {
+        if (this.state.id) {
+            let getTime = value && value.format('hh:mm a');
+            let getTimeformat = getTime && getTime.split(':');
+            let getHoursFormat = getTimeformat && getTimeformat[1] && getTimeformat[1].split(' ');
+            this.setState({ minOne: getTimeformat && getTimeformat[0], secOne: getHoursFormat && getHoursFormat[0], aOne: getHoursFormat && getHoursFormat[1] });
+        } else {
+            const format = 'h:mm a';
+            this.setState({ orderCutOffTime: value.format(format) })
+        }
+    };
 
     handleInputChange = (e) => {
         e.charCode == 32 && e.target.value == '' || e.target.value[0] == ' ' ? e.target.value = '' : this.setState({
@@ -75,22 +90,24 @@ class CreateDC extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-
-        if (this.state.name && this.state.surveyingArea && this.state.orderCutOffTime && this.state.deliverySlot) {
-            let timeData = "";
-            if (typeof this.state.orderCutOffTime != "string") {
+        if (this.state.name && this.state.surveyingArea && this.state.orderCutOffTime && this.state.orderStartTime && this.state.deliverySlot) {
+            let startTimeData = ""
+            let cutOffTimeData = ""
+            if (typeof this.state.orderCutOffTime != "string" && typeof this.state.orderStartTime != "string") {
                 const format = 'h:mm a';
-                timeData = this.state.orderCutOffTime.format(format)
+                startTimeData = this.state.orderStartTime.format(format)
+                cutOffTimeData = this.state.orderCutOffTime.format(format)
             } else {
-                timeData = this.state.id ? this.state.min + ':' + this.state.sec + ' ' + this.state.a : this.state.orderCutOffTime
+                startTimeData = this.state.id ? this.state.min + ':' + this.state.sec + ' ' + this.state.a : this.state.orderStartTime
+                cutOffTimeData = this.state.id ? this.state.minOne + ':' + this.state.secOne + ' ' + this.state.aOne : this.state.orderCutOffTime
             }
 
             const formData = new FormData();
             let obj = {
                 "name": this.state.name,
                 "surveyingArea": this.state.surveyingArea,
-                // "orderCutOffTime": this.state.orderCutOffTime,
-                "orderCutOffTime": timeData,
+                "orderStartTime": startTimeData,
+                "orderCutOffTime": cutOffTimeData,
                 "deliverySlot": this.state.deliverySlot,
                 "id": this.state.id
             }
@@ -101,25 +118,26 @@ class CreateDC extends Component {
 
     listPath = () => {
         this.props.history.push({ pathname: path.dc.list, state: { dcSearchDatas: "backTrue" } })
-        // this.props.history.goBack();
     }
 
     render() {
         const { errors } = this.state;
         const format = 'hh:mm a';
-        let timeData = ""
+        let startTimeData = ""
+        let cutOffTimeData = ""
         const now = moment().hour(0).minute(0);
         if (this.state.id) {
-            timeData = moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)
+            startTimeData = moment(`${this.state.min}:${this.state.sec}: ${this.state.a}`, format)
+            cutOffTimeData = moment(`${this.state.minOne}:${this.state.secOne}: ${this.state.aOne}`, format)
         }
         else {
-            timeData = moment().hour(0).minute(0)
+            startTimeData = moment().hour(0).minute(0)
+            cutOffTimeData = moment().hour(0).minute(0)
         }
         return (
             <div>
                 <div className="clearfix title-section row">
                     <div className="title-card col-md-7">
-                        {/* <h4 className="user-title">ADD DC</h4> */}
                         <h4 className="user-title">{!this.state.id ? window.strings.DC_MANAGEMENT.ADD_DC : window.strings.DC_MANAGEMENT.EDIT_DC}</h4>
 
                     </div>
@@ -161,17 +179,14 @@ class CreateDC extends Component {
                                 />
                                 {this.state.submitted && !this.state.surveyingArea && <div className="mandatory">Surveying Area  {window.strings['ISREQUIRED']}</div>}
                             </div>
-
                             <div className="form-group col-md-6">
-                                <label>{window.strings.DC_MANAGEMENT.CUTOFF_TIME + ' *'}</label>
+                                <label>{window.strings.DC_MANAGEMENT.STARTING_TIME + ' *'}</label>
                                 {this.state.id && <TimePicker
                                     showSecond={false}
-                                    defaultValue={timeData}
-                                    // value={""}
-                                    // value={this.state.orderCutOffTime}
-                                    value={timeData}
+                                    defaultValue={startTimeData}
+                                    value={startTimeData}
                                     className="xxx shop-time"
-                                    onChange={this.handleTimePicker}
+                                    onChange={this.handleStartTimePicker}
                                     format={format}
                                     use12Hours
                                     inputReadOnly
@@ -179,11 +194,35 @@ class CreateDC extends Component {
 
                                 {!this.state.id && <TimePicker
                                     showSecond={false}
-                                    defaultValue={timeData}
-                                    // value={""}
-                                    // value={this.state.orderCutOffTime}
+                                    defaultValue={startTimeData}
                                     className="xxx shop-time"
-                                    onChange={this.handleTimePicker}
+                                    onChange={this.handleStartTimePicker}
+                                    format={format}
+                                    use12Hours
+                                    inputReadOnly
+                                />
+                                }
+                                {this.state.submitted && !this.state.orderStartTime && <div className="mandatory">Order Start-time{window.strings['ISREQUIRED']}</div>}
+                            </div>
+
+                            <div className="form-group col-md-6">
+                                <label>{window.strings.DC_MANAGEMENT.CUTOFF_TIME + ' *'}</label>
+                                {this.state.id && <TimePicker
+                                    showSecond={false}
+                                    defaultValue={cutOffTimeData}
+                                    value={cutOffTimeData}
+                                    className="xxx shop-time"
+                                    onChange={this.handleCutTimePicker}
+                                    format={format}
+                                    use12Hours
+                                    inputReadOnly
+                                />}
+
+                                {!this.state.id && <TimePicker
+                                    showSecond={false}
+                                    defaultValue={cutOffTimeData}
+                                    className="xxx shop-time"
+                                    onChange={this.handleCutTimePicker}
                                     format={format}
                                     use12Hours
                                     inputReadOnly

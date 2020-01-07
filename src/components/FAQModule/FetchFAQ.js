@@ -17,20 +17,16 @@ class FetchFAQ extends Component {
             FaqListDatas: [],
             FaqCount: props.getCount,
             search: '',
-            currentPage: 1,
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength
-
         }
     }
 
     componentDidMount() {
         this.getFaqList();
-
     }
-
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.faqData && nextProps.faqData.Lists.data && nextProps.faqData.Lists.data.datas) {
 
@@ -38,14 +34,10 @@ class FetchFAQ extends Component {
             this.setState({ FaqListDatas: Data, pageCount: nextProps.faqData.Lists.data.totalCount / this.state.itemPerPage, totalCount: nextProps.faqData.Lists.data.totalCount })
         }
 
-
-
         if (nextProps.faqData && nextProps.faqData.deletedStatus == "200") {
             store.dispatch({ type: FAQ_DELETE_SUCCESS, resp: "" })
             this.getFaqList();
         }
-
-
     }
 
     handleDelete = (data) => {
@@ -61,21 +53,13 @@ class FetchFAQ extends Component {
         this.props.DeleteFaq(id);
     }
 
-
-
     itemEdit = (Data) => {
-
         this.props.history.push({ pathname: path.faq.edit + Data, state: { instructionId: Data } })
     }
-
-
 
     formPath = () => {
         this.props.history.push(path.faq.add)
     }
-
-    //Search
-
     handleChange = (e) => {
         this.setState({ search: e.target.value })
     }
@@ -83,7 +67,7 @@ class FetchFAQ extends Component {
     searchResult = (e) => {
         e.preventDefault();
         if (this.state.search) {
-            this.setState({ currentPage: 1 }, () => {
+            this.setState({ currentPage: 0 }, () => {
                 let serObj = {
                     "search": this.state.search
                 };
@@ -92,14 +76,12 @@ class FetchFAQ extends Component {
         }
     }
 
-
     getFaqList() {
         let obj = {
             "search": this.state.search,
-            "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
+            "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             "limit": this.state.itemPerPage
         };
-        // user.search = this.props.searchText;
         this.props.getFaqList(obj);
     }
 
@@ -112,7 +94,6 @@ class FetchFAQ extends Component {
     }
 
     onChange = (data) => {
-
         if (this.state.currentPage !== (data.selected + 1)) {
             this.setState({ currentPage: data.selected + 1 }, () => {
                 this.getFaqList();
@@ -120,14 +101,11 @@ class FetchFAQ extends Component {
         }
     }
 
-
     render() {
 
         let FaqList = this.state.FaqListDatas && this.state.FaqListDatas.map((item, index) => {
             return { "itemList": [item.title, item.description], "itemId": item.id }
         })
-
-
         return (
             <div className="faq-table">
                 <div className="clearfix title-section row">
@@ -155,18 +133,12 @@ class FetchFAQ extends Component {
                     }} />
                 </div>
             </div>
-
         );
     }
-
 }
 
-
 const mapStateToProps = (state) => ({
-    faqData: state.faq,
-    // getLists: state && state.faq && state.faq.Lists ? state.faq.Lists : [],
+    faqData: state.faq
 })
-
-
 
 export default connect(mapStateToProps, { getFaqList, DeleteFaq })(FetchFAQ)
