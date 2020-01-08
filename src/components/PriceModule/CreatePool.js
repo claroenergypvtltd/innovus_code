@@ -104,13 +104,9 @@ class CreatePool extends Component {
         this.props.history.goBack()
     }
     handleInputChange = (e) => {
-        if (e.target.name == "updateQuantity") {
-            if (e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) {
-                toastr.error("Increase/Decrease quantity should be lesser or equal to Available Quantity")
-                this.setState({ [e.target.name]: '' })
-            } else {
-                this.setState({ [e.target.name]: e.target.value })
-            }
+        if (e.target.name == "updateQuantity" && e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) {
+            toastr.error("Increase/Decrease quantity should be lesser or equal to Available Quantity")
+            this.setState({ [e.target.name]: '' })
         } else {
             this.setState({ [e.target.name]: e.target.value })
         }
