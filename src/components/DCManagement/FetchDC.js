@@ -116,7 +116,7 @@ class FetchDC extends Component {
     }
 
     resetSearch = () => {
-        this.setState({ search: '' }, () => {
+        this.setState({ search: '', currentPage: 0 }, () => {
             this.getDcList();
         });
     }

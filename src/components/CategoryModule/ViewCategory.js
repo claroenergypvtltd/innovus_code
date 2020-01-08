@@ -122,7 +122,7 @@ class ViewCategory extends Component {
         }
     }
     resetSearch = () => {
-        this.setState({ search: '', dcCodeObj: '', dcCode: '' }, () => {
+        this.setState({ search: '', dcCodeObj: '', dcCode: '', currentPage: 0 }, () => {
             this.getSpecificData();
         });
     }

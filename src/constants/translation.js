@@ -127,8 +127,8 @@ export const Translation = {
             "WEIGHT": "Weight",
             "TYPE": "Type",
             "POOL_LIST": "POOL LIST",
-            "ADD_POOL": "Add Pool",
-            "POOLTITLE": "ADD POOL",
+            "ADD_POOL": "ADD POOL",
+            "EDIT_POOL": "EDIT POOL",
             "SELECT_ITEM": "Select Item",
             "SELECT_POOL": "Pool",
             "POOL_NAME": "Pool"

@@ -65,7 +65,7 @@ class FetchPool extends Component {
         this.getPoolsearch('search');
     }
     resetSearch = () => {
-        this.setState({ search: '' }, () => { this.getPoolList() })
+        this.setState({ search: '', currentPage: 0 }, () => { this.getPoolList() })
     }
     onChange = (data) => {
         if (this.state.currentPage !== (data.selected)) {
