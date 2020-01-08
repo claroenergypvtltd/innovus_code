@@ -9,6 +9,7 @@ import store from '../../store/store';
 import { path } from '../../constants';
 import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr';
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 
 class CreatePool extends Component {
     constructor(props) {
@@ -188,7 +189,7 @@ class CreatePool extends Component {
                                     </div>
                                     <div className="form-group col-md-6 react-checker">
                                         <label>{window.strings.PRICE.SELECT_POOL} *</label>
-                                        <CheckedSelect
+                                        {/* <CheckedSelect
                                             name="form-field-name"
                                             value={this.state.currentSelection}
                                             options={pollData}
@@ -196,7 +197,21 @@ class CreatePool extends Component {
                                             onChange={(e) => this.handlePoolChange(e)}
                                             noResultsText="Nothing"
                                             disabled={this.state.poolId}
-                                        />
+                                        /> */}
+                                        <ReactMultiSelectCheckboxes
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            options={pollData}
+                                            placeholder={plcHolder}
+                                            onChange={(e) => this.handlePoolChange(e)} />
                                         {this.state.submitted && this.state.currentSelection.length < 1 && <div className="mandatory">{window.strings['PRICE']['SELECT_POOL'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
                                     <div className="form-group col-md-4">

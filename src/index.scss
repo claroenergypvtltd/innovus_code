@@ -1400,7 +1400,14 @@ a.level-btn:hover {
 // .pt-search-btn .reset-btn {
 //   background: none;
 // }
-
+.otp-btn{
+  margin-top:39px;
+  background-color: $turquoise;
+  color:$white;
+}
+.otp-btn:hover{
+  color: $white;
+}
 /****************************User Management Page icon************************/
 .icon{
  background-image: url("../src/assets/images/Sprite_image.png");
@@ -1892,7 +1899,18 @@ select:focus {
 // .add-price{
 //   margin:auto;
 // }
-
+.Select-control{
+  height:calc(1.5em + 0.75rem + 4px);
+  border: 1px solid $input-status;
+  border-radius: 0.25rem;
+}
+.Select-control:hover{
+  box-shadow:none;
+  border-color: $hover-focus;
+}
+.Select-placeholder{
+  color: $form-color;
+}
 /****************************Pagination Section************************/
 
 .pagination {
