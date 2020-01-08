@@ -8,6 +8,7 @@ import { submitPool, getPoolList } from '../../actions/poolAction'
 import store from '../../store/store';
 import { path } from '../../constants';
 import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS } from '../../constants/actionTypes';
+import { toastr } from 'react-redux-toastr';
 
 class CreatePool extends Component {
     constructor(props) {
@@ -103,7 +104,16 @@ class CreatePool extends Component {
         this.props.history.goBack()
     }
     handleInputChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+        if (e.target.name == "updateQuantity") {
+            if (e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) {
+                toastr.error("Increase/Decrease quantity should be lesser or equal to Available Quantity")
+                this.setState({ [e.target.name]: '' })
+            } else {
+                this.setState({ [e.target.name]: e.target.value })
+            }
+        } else {
+            this.setState({ [e.target.name]: e.target.value })
+        }
     }
     handlePoolChange = (Data) => {
         this.setState({ currentSelection: Data });
@@ -111,6 +121,7 @@ class CreatePool extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
+
         if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0 && this.state.weightId) {
             let poolAry = [];
             this.state.currentSelection && this.state.currentSelection.map(item => {
@@ -162,7 +173,7 @@ class CreatePool extends Component {
             <div className="clearfix ">
                 <div className="row clearfix">
                     <div className="col-md-12">
-                        <h4 className="user-title">{this.state.priceId ? window.strings['PRICE']['POOLTITLE'] : window.strings['PRICE']['POOLTITLE']}</h4>
+                        <h4 className="user-title">{this.state.poolId ? window.strings['PRICE']['EDIT_POOL'] : window.strings['PRICE']['ADD_POOL']}</h4>
                         <div className="main-wrapper pt-3">
                             <div className="col-md-10">
                                 <form onSubmit={this.handleSubmit} noValidate className="row m-0">

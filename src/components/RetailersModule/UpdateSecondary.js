@@ -9,7 +9,7 @@ import store from '../../store/store';
 import '../../assets/css/login.scss'
 import classnames from 'classnames';
 import { toastr } from '../../services/toastr.services'
-
+import { validation } from '../../libraries/formValidation'
 
 class UpdateSecondary extends Component {
     constructor(props) {
@@ -31,9 +31,7 @@ class UpdateSecondary extends Component {
         }
     }
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        e.target.value > 0 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
     }
 
     handleSubmit = (e) => {
@@ -44,7 +42,9 @@ class UpdateSecondary extends Component {
             formData.append("names", this.state.agentName);
             formData.append("mobileNumbers", this.state.mobileNumbers); //secondary Number
             formData.append("userId", this.props.Data.userId);
-            this.props.SubmitRetailer(formData, true);
+            if (validation.checkValidation('mobile', this.state.mobileNumbers)) {
+                this.props.SubmitRetailer(formData, true);
+            }
         }
     }
 
@@ -90,6 +90,7 @@ class UpdateSecondary extends Component {
                                     required
                                 />
                                 {this.state.submitted && !this.state.mobileNumbers && <div className="mandatory">{window.strings['USERMANAGEMENT']['PHONE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
+                                {this.state.submitted && this.state.mobileNumbers && !validation.checkValidation('mobile', this.state.mobileNumbers) && <div className="mandatory">{window.strings['USERMANAGEMENT']['PHONE_NUMBER'] + ' is Invalid'}</div>}
                             </div>
 
                         </form>

@@ -91,11 +91,9 @@ class FetchPrice extends Component {
         }
     }
     resetSearch = () => {
-        if (this.state.search || this.state.dcCodeObj || !this.state.search) {
-            this.setState({ search: '', dCCode: '', dcCodeObj: '' }, () => {
-                this.getPriceList();
-            });
-        }
+        this.setState({ search: '', dCCode: '', dcCodeObj: '', currentPage: 0 }, () => {
+            this.getPriceList();
+        });
     }
     handleSearch = (e) => {
         e.preventDefault();
