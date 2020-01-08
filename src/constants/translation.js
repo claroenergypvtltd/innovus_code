@@ -238,7 +238,11 @@ export const Translation = {
             "DELIVERED": "Delivery",
             "AGENT_NAME": "Agent Name",
             "PHONE_NUMBER": "Phone Number",
-            "NAME": "Name"
+            "NAME": "Name",
+            "SECONDARY_NAME": "Secondary Name",
+            "SECONDARY_PHONE": "Secondary Phone",
+            "SEND_OTP": "Send OTP",
+            "ENTER_OTP": "Enter OTP"
         },
         "ABOUTUS": {
             "TITLE": "About Us",

@@ -51,7 +51,9 @@ class UpdateSecondary extends Component {
     listPath = (e) => {
         this.props.onCloseModal();
     }
-
+    getOtpData = () => {
+        this.setState({ otpText: true })
+    }
 
     render() {
         const { errors } = this.state;
@@ -61,8 +63,8 @@ class UpdateSecondary extends Component {
                 <div className="col-md-12 content form-adjust">
                     <div className="col-md-10">
                         <form onSubmit={this.handleSubmit} >
-                            <div className="form-group col-md-12">
-                                <label>{window.strings.USERMANAGEMENT.AGENT_NAME}</label>
+                            <div className="form-group col-md-10">
+                                <label>{window.strings.USERMANAGEMENT.SECONDARY_NAME}</label>
                                 <input
                                     type="text"
                                     placeholder="Name"
@@ -76,23 +78,43 @@ class UpdateSecondary extends Component {
                                 />
                                 {this.state.submitted && !this.state.agentName && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_NAME'] + window.strings['ISREQUIRED']}</div>}
                             </div>
-                            <div className="form-group col-md-12 pt-2">
-                                <label>{window.strings.USERMANAGEMENT.PHONE_NUMBER}</label>
-                                <input type="number"
-                                    placeholder="Phone Number"
-                                    className={classnames('form-control', {
-                                        'is-invalid': errors.mobileNumbers
-                                    })}
-                                    rows="5"
-                                    name="mobileNumbers"
-                                    onChange={this.handleChange}
-                                    value={this.state.mobileNumbers}
-                                    required
-                                />
-                                {this.state.submitted && !this.state.mobileNumbers && <div className="mandatory">{window.strings['USERMANAGEMENT']['PHONE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
-                                {this.state.submitted && this.state.mobileNumbers && !validation.checkValidation('mobile', this.state.mobileNumbers) && <div className="mandatory">{window.strings['USERMANAGEMENT']['PHONE_NUMBER'] + ' is Invalid'}</div>}
+                            <div className="d-flex">
+                                <div className="form-group col-md-10 pt-2">
+                                    <label>{window.strings.USERMANAGEMENT.SECONDARY_PHONE}</label>
+                                    <input type="number"
+                                        placeholder="Phone Number"
+                                        className={classnames('form-control', {
+                                            'is-invalid': errors.mobileNumbers
+                                        })}
+                                        rows="5"
+                                        name="mobileNumbers"
+                                        onChange={this.handleChange}
+                                        value={this.state.mobileNumbers}
+                                        required
+                                    />
+                                    {this.state.submitted && !this.state.mobileNumbers && <div className="mandatory">{window.strings['USERMANAGEMENT']['SECONDARY_PHONE'] + window.strings['ISREQUIRED']}</div>}
+                                    {this.state.submitted && this.state.mobileNumbers && !validation.checkValidation('mobile', this.state.mobileNumbers) && <div className="mandatory">{window.strings['USERMANAGEMENT']['SECONDARY_PHONE'] + ' is Invalid'}</div>}
+                                </div>
+                                <div className="col-md-2">
+                                    <button type="button" className="btn btn-default otp-btn" onClick={this.getOtpData}>{window.strings.USERMANAGEMENT.SEND_OTP}</button>
+                                </div>
                             </div>
-
+                            {
+                                this.state.otpText &&
+                                <div className="form-group col-md-10 pt-2">
+                                    <label>{window.strings.USERMANAGEMENT.ENTER_OTP}</label>
+                                    <input type="number"
+                                        placeholder="Enter OTP"
+                                        className={classnames('form-control', {
+                                            'is-invalid': errors.otp
+                                        })}
+                                        onChange={this.handleChange}
+                                        value={this.state.otp}
+                                        required
+                                    />
+                                    {this.state.submitted && !this.state.otp && <div className="mandatory">{window.strings['USERMANAGEMENT']['ENTER_OTP'] + window.strings['ISREQUIRED']}</div>}
+                                </div>
+                            }
                         </form>
                     </div>
                     <div className="col-md-12 bottom-section">
