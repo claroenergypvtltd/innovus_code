@@ -17,7 +17,7 @@ class CreateCredit extends Component {
 
     handleInputChange = (e) => {
         if (e.target.name == "amount") {
-            e.target.value < 0 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value });
+            e.target.value < 0 || e.target.value.includes('.') ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value });
         } else {
             this.setState({
                 [e.target.name]: e.target.value
