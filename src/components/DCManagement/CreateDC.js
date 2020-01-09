@@ -48,7 +48,7 @@ class CreateDC extends Component {
             let Data = nextProps.dcData.specificData.datas[0];
             let getTime = Data.orderStartTime;
             let getTimeformat = getTime && getTime.split(':');
-            let getHoursFormat = getTimeformat && getTimeformat[1].split(' ')
+            let getHoursFormat = getTimeformat && getTimeformat[1] && getTimeformat[1].split(' ')
             let getTimeOne = Data.orderCutOffTime;
             let getTimeFormatOne = getTimeOne && getTimeOne.split(':');
             let getHoursFormatOne = getTimeFormatOne && getTimeFormatOne[1].split(' ')
@@ -136,7 +136,7 @@ class CreateDC extends Component {
                     "deliverySlot": this.state.deliverySlot,
                     "id": this.state.id
                 }
-                //  this.props.SubmitDC(obj);
+                this.props.SubmitDC(obj);
             }
         }
     }

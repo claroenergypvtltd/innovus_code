@@ -377,7 +377,7 @@ class CreatePrice extends Component {
             }
 
         } else {
-            toastr.error("Mandatory fields are missing")
+            toastr.error("Fields are Invalid or Missing")
         }
     }
 

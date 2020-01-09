@@ -52,9 +52,7 @@ class UpdateSecondary extends Component {
             }
             otpAuthentication(obj, "otpVerify").then(resp => {
                 if (resp && resp.status == "200") {
-                    if (validation.checkValidation('mobile', this.state.mobileNumbers)) {
-                        this.props.SubmitRetailer(formData, true);
-                    }
+                    this.props.SubmitRetailer(formData, true);
                 }
             })
         }
@@ -68,11 +66,17 @@ class UpdateSecondary extends Component {
             mobileNumbers: this.state.mobileNumbers,
             flag: 2
         }
-        otpAuthentication(obj, "resendOTP").then(resp => {
-            if (resp && resp.data) {
-                this.setState({ otpValue: resp.data.otp, otpText: true });
-            }
-        })
+        if (validation.checkValidation('mobile', this.state.mobileNumbers)) {
+            otpAuthentication(obj, "resendOTP").then(resp => {
+                if (resp && resp.data) {
+                    toastr.success("OTP Send Successfully");
+                    this.setState({ otpValue: resp.data.otp, otpText: true });
+                }
+            })
+        } else {
+            toastr.error("Invalid Phone number")
+        }
+
     }
     render() {
         const { errors } = this.state;
@@ -122,12 +126,13 @@ class UpdateSecondary extends Component {
                                 this.state.otpText &&
                                 <div className="form-group col-md-10 pt-2">
                                     <label>{window.strings.USERMANAGEMENT.ENTER_OTP}</label>
-                                    <input type="number"
+                                    <input type="text"
                                         placeholder="Enter OTP"
                                         className={classnames('form-control', {
                                             'is-invalid': errors.otp
                                         })}
                                         name="otp"
+                                        maxlength="4"
                                         onChange={this.handleChange}
                                         value={this.state.otp}
                                         required
