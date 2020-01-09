@@ -115,7 +115,7 @@ class CreateDC extends Component {
             let getTimeFormatCut = getTimeCut && getTimeCut.split(':');
             let getHoursFormatCut = getTimeFormatCut && getTimeFormatCut[1] && getTimeFormatCut[1].split(' ');
             let formatCut = getHoursFormatCut[1]
-            if (format && formatCut == "am") {
+            if (format == "am" && formatCut == "am") {
                 if (getTimeformat[0] <= getTimeFormatCut[0]) {
                     timeValidate = 1
                 }
