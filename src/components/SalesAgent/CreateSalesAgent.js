@@ -75,14 +75,11 @@ class CreateSalesAgent extends React.Component {
     }
 
     handleInputChange = (e) => {
-        e.charCode == 32 && e.target.value == '' || e.target.value[0] == ' ' ? e.target.value = ''
-            : this.setState({ [e.target.name]: e.target.value });
+        e.target.value && e.target.value[0].includes(" ") ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value });
     }
-
 
     redirectPage = () => {
         this.props.history.push({ pathname: path.user.list, state: { tabNumber: 1, salesAgentSearchDatas: "backTrue" } });
-        // this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
     }
 
     handleDisable = (data) => {
@@ -171,7 +168,6 @@ class CreateSalesAgent extends React.Component {
                                         })}
                                         name="name"
                                         onChange={this.handleInputChange}
-                                        onKeyPress={this.handleInputChange}
                                         value={this.state.name}
                                         required
                                     />
@@ -190,7 +186,6 @@ class CreateSalesAgent extends React.Component {
                                         })}
                                         name="emailId"
                                         onChange={this.handleInputChange}
-                                        onKeyPress={this.handleInputChange}
                                         value={this.state.emailId}
                                         required
                                     />
@@ -231,7 +226,6 @@ class CreateSalesAgent extends React.Component {
                                         })}
                                         name="surveyingArea"
                                         onChange={this.handleInputChange}
-                                        onKeyPress={this.handleInputChange}
                                         value={this.state.surveyingArea}
                                         required
 
@@ -274,17 +268,14 @@ class CreateSalesAgent extends React.Component {
                     </div>
                 </div>
 
-
             </div>
         )
     }
-
 }
 
 const mapStateToProps = (state) => ({
     agentData: state.salesAgent,
     dcData: state.dc
 })
-
 
 export default connect(mapStateToProps, { submitSalesAgent, fetchSalesAgent, fetchDcList })(CreateSalesAgent)

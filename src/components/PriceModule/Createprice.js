@@ -154,7 +154,7 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        e.target.name != "updateQuantity" && e.target.value < 0 || e.target.name != "price" && e.target.value.includes('.') ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
+        e.charCode == 45 || e.charCode == 43 || (e.target.name != "updateQuantity" && e.target.value < 0) || (e.target.name != "price" && e.target.value.includes('.')) ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
     }
     handleCategoryChange = (e) => {
         this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], editSubCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
@@ -525,6 +525,7 @@ class CreatePrice extends Component {
                                                 })}
                                                 name="updateQuantity"
                                                 onChange={this.handleInputChange}
+                                                onKeyPress={this.handleInputChange}
                                                 value={this.state.updateQuantity}
                                                 required
                                             />
