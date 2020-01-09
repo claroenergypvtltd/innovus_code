@@ -106,10 +106,10 @@ class CreatePool extends Component {
     }
     handleInputChange = (e) => {
         if (e.target.name == "updateQuantity" && e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) {
-            toastr.error("Increase/Decrease quantity should be lesser or equal to Available Quantity")
+            toastr.error("Invalid Increase/Decrease quantity")
             this.setState({ [e.target.name]: '' })
         } else {
-            this.setState({ [e.target.name]: e.target.value })
+            e.charCode == 45 || e.charCode == 43 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
         }
     }
     handlePoolChange = (Data) => {
@@ -239,6 +239,7 @@ class CreatePool extends Component {
                                             })}
                                             name="updateQuantity"
                                             onChange={this.handleInputChange}
+                                            onKeyPress={this.handleInputChange}
                                             value={this.state.updateQuantity}
                                             required
                                         />

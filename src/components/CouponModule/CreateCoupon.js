@@ -75,7 +75,7 @@ class CreateCoupon extends Component {
     }
 
     handleChange = (e) => {
-        e.target.value > 0 ? this.setState({ [e.target.name]: e.target.value }) : this.setState({ [e.target.name]: '' })
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     onhandleImageChange = (e) => {
