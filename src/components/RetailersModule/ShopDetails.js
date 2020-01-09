@@ -146,6 +146,7 @@ class ShopDetails extends React.Component {
         const formData = new FormData();
         formData.append("userId", userId);
         formData.append("mobileNumbers", mobileNumbers);
+        formData.append("isActive", 1);
         this.props.SubmitRetailer(formData, true);
     }
     handleTransferChange = (Id, mobileNumbers) => {
@@ -189,7 +190,7 @@ class ShopDetails extends React.Component {
             </div>
             let transfer = <button onClick={() => this.handleTransferChange(item.userId, mobileNumbers)} className="trans-btn">Transfer</button>
             let distance = item.distance ? item.distance.toFixed(2) : '-';
-            let status = item.isActive == 0 ? <p> Pending </p> : <p>Accepted</p>
+            let status = item.isActive == 0 ? <p> Pending </p> : item.isActive == 1 ? <p>Accepted</p> : <p>Rejected</p>
 
             return { "itemList": [imageZoom, status, item.name, distance, item.address1 + item.address2, item.agentName, transfer], "itemId": item.id }
         })

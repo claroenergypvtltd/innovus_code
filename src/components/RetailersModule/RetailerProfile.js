@@ -117,7 +117,7 @@ class RetailerProfile extends React.Component {
                             <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>
                         {statusClass == "accepted" && !profile.names && !profile.mobileNumbers ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
-                            : (profile.names && profile.mobileNumbers) ?
+                            : (profile.names || profile.mobileNumbers) ?
                                 <div className="secondary-level">
                                     <Col md={2} sm={6} xs={12} className="p-0">
                                         <h4 className="title">{"Secondary Name"}</h4>

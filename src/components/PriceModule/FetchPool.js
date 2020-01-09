@@ -43,6 +43,9 @@ class FetchPool extends Component {
     addPath = () => {
         this.props.history.push(path.pool.add)
     }
+    redirectPage = () => {
+        this.props.history.push({ pathname: path.price.list, state: { priceSearchDatas: "backTrue" } });
+    }
     handleSearch = (e) => {
         e.preventDefault();
         this.setState({ search: e.target.value })
@@ -76,7 +79,8 @@ class FetchPool extends Component {
     }
     render() {
         const poolList = this.state.poolListData && this.state.poolListData.map(item => {
-            return { "itemList": [item.id, item.name, item.quantity, item.pools.length], "itemId": item.id }
+            let data = item.rupeesUnits && item.rupeesUnits.name ? item.rupeesUnits.name.split('/') : [];
+            return { "itemList": [item.id, item.name, item.quantity + ' ' + data[1], item.pools.length], "itemId": item.id }
         })
         return (
             <div className="pool">

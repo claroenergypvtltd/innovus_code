@@ -2470,6 +2470,19 @@ background-position:270px -2670px;
   .react-checker > div > button > span::placeholder{
     color: $form-color;
   }
+  .react-disable-checker > div > button{
+    pointer-events: none;
+    cursor: not-allowed;
+    background: $disable-color;
+    width: 100%;
+    border: 1px solid $input-status;
+    border-radius: 5px;
+    border-radius: 0.25rem;
+    box-shadow :none;
+  }
+  .react-disable-checker > div > button > span::placeholder{
+    color: $form-color;
+  }
 
 /****************************Irrigation setting Section************************/
 input:-webkit-autofill {

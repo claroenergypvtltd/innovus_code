@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { CheckedSelect } from 'react-select-checked';
+// import { CheckedSelect } from 'react-select-checked';
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import { getTypes } from '../../actions/priceAction'
 import { getPriceList } from '../../actions/priceAction'
 import { submitPool, getPoolList } from '../../actions/poolAction'
@@ -9,7 +10,6 @@ import store from '../../store/store';
 import { path } from '../../constants';
 import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr';
-import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 
 class CreatePool extends Component {
     constructor(props) {
@@ -187,9 +187,7 @@ class CreatePool extends Component {
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
-                                    <div className="form-group col-md-6 react-checker">
-                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
-                                        {/* <CheckedSelect
+                                    {/* <CheckedSelect
                                             name="form-field-name"
                                             value={this.state.currentSelection}
                                             options={pollData}
@@ -198,6 +196,8 @@ class CreatePool extends Component {
                                             noResultsText="Nothing"
                                             disabled={this.state.poolId}
                                         /> */}
+                                    {this.state.poolId && <div className="form-group col-md-6 react-disable-checker">
+                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
                                         <ReactMultiSelectCheckboxes
                                             styles={{
                                                 control: base => ({
@@ -210,10 +210,28 @@ class CreatePool extends Component {
                                                 })
                                             }}
                                             options={pollData}
-                                            placeholder={plcHolder}
+                                            placeholderButtonLabel={plcHolder}
                                             onChange={(e) => this.handlePoolChange(e)} />
                                         {this.state.submitted && this.state.currentSelection.length < 1 && <div className="mandatory">{window.strings['PRICE']['SELECT_POOL'] + window.strings['ISREQUIRED']}</div>}
-                                    </div>
+                                    </div>}
+                                    {!this.state.poolId && <div className="form-group col-md-6 react-checker">
+                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
+                                        <ReactMultiSelectCheckboxes
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            options={pollData}
+                                            placeholderButtonLabel={plcHolder}
+                                            onChange={(e) => this.handlePoolChange(e)} />
+                                        {this.state.submitted && this.state.currentSelection.length < 1 && <div className="mandatory">{window.strings['PRICE']['SELECT_POOL'] + window.strings['ISREQUIRED']}</div>}
+                                    </div>}
                                     <div className="form-group col-md-4">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
                                         <input
