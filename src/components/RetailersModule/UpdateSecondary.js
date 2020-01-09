@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import '../../assets/css/login.scss';
 import { Form, Row } from 'react-bootstrap';
 import { path } from '../../constants';
-import { updateStatusRetailer, SubmitRetailer } from '../../actions/SubmitRetailerAction';
+import { updateStatusRetailer, SubmitRetailer, otpAuthentication } from '../../actions/SubmitRetailerAction';
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes'
 import store from '../../store/store';
 import '../../assets/css/login.scss'
@@ -19,6 +19,8 @@ class UpdateSecondary extends Component {
             instructionId: '',
             agentName: '',
             mobileNumbers: '',
+            otp: '',
+            verifyDone: false,
             errors: {}
         }
     }
@@ -31,30 +33,47 @@ class UpdateSecondary extends Component {
         }
     }
     handleChange = (e) => {
-        e.target.value > 0 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
+        e.target.name == "mobileNumbers" && e.target.value < 0 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-        if (this.state.agentName && this.state.mobileNumbers) {
+        if (this.state.agentName && this.state.mobileNumbers && this.state.otp) {
             const formData = new FormData();
             formData.append("names", this.state.agentName);
             formData.append("mobileNumbers", this.state.mobileNumbers); //secondary Number
             formData.append("userId", this.props.Data.userId);
-            if (validation.checkValidation('mobile', this.state.mobileNumbers)) {
-                this.props.SubmitRetailer(formData, true);
+            formData.append("otp", this.state.otp);
+            let obj = {
+                userId: this.props.Data.userId,
+                otp: this.state.otp,
+                flag: 2
             }
+            otpAuthentication(obj, "otpVerify").then(resp => {
+                if (resp && resp.status == "200") {
+                    if (validation.checkValidation('mobile', this.state.mobileNumbers)) {
+                        this.props.SubmitRetailer(formData, true);
+                    }
+                }
+            })
         }
     }
-
     listPath = (e) => {
         this.props.onCloseModal();
     }
     getOtpData = () => {
-        this.setState({ otpText: true })
+        let obj = {
+            userId: this.props.Data.userId,
+            mobileNumbers: this.state.mobileNumbers,
+            flag: 2
+        }
+        otpAuthentication(obj, "resendOTP").then(resp => {
+            if (resp && resp.data) {
+                this.setState({ otpValue: resp.data.otp, otpText: true });
+            }
+        })
     }
-
     render() {
         const { errors } = this.state;
 
@@ -108,6 +127,7 @@ class UpdateSecondary extends Component {
                                         className={classnames('form-control', {
                                             'is-invalid': errors.otp
                                         })}
+                                        name="otp"
                                         onChange={this.handleChange}
                                         value={this.state.otp}
                                         required

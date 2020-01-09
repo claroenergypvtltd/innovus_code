@@ -141,4 +141,14 @@ export const fetchAllRetailers = (user) => {
     })
 }
 
+export const otpAuthentication = (Data, param) => {
+    return httpServices.post(param, Data).then(resp => {
+        if (resp) {
+            return resp
+        }
+    }).catch((error) => {
+        console.error(error);
+    })
+}
+
 
