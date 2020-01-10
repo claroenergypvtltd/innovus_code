@@ -317,6 +317,7 @@ class FetchRetailer extends React.Component {
 
     viewCrop(RetstatusId, status, isActive) {
         let statusClass;
+
         if (isActive == 0) {
             statusClass = window.strings.RETAILERS.INACTIVE
         }
@@ -327,12 +328,18 @@ class FetchRetailer extends React.Component {
         } else if (status == 2 && isActive == 1) {
             statusClass = window.strings.RETAILERS.REJECTED
         }
+        if (status == 2) {
+            statusClass = window.strings.RETAILERS.REJECTED
+        }
         let ViewPage = <p className={statusClass} >{statusClass}</p>
         return ViewPage;
     }
 
     getStatus(RetstatusId, status, isActive) {
         let statusClass;
+        if (status == 2) {
+            return statusClass = window.strings.RETAILERS.REJECTED
+        }
         if (isActive == 0) {
             return statusClass = window.strings.RETAILERS.INACTIVE
         }

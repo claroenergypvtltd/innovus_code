@@ -96,6 +96,7 @@ export const Translation = {
             "WEIGHT": "Total Weight",
             "PRICE": "Price",
             "BOX_QUANTITY": "Box Quantity",
+            "SET_QUANTITY": "Set Quantity",
             "CREATETITLE": "ADD CROP",
             "EDITTITLE": "Edit Crop",
             "CROP_NAME": "Crop Name",

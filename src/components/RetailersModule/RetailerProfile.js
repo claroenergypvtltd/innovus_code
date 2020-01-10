@@ -17,7 +17,9 @@ class RetailerProfile extends React.Component {
     }
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            statusClass: ''
+        };
     }
 
     addSecondary = (e) => {
@@ -59,6 +61,23 @@ class RetailerProfile extends React.Component {
         this.onCloseModal();
     }
 
+    // getStatus() {
+    //     let profileData = this.props.profileData
+    //     if (profileData.isActive == 0) {
+    //         statusClass = window.strings.RETAILERS.INACTIVE
+    //     }
+    //     else if (profileData.status == 0 && profileData.isActive == 1) {
+    //         statusClass = window.strings.RETAILERS.PENDING
+    //     }
+    //     else if (profileData.status == 1 && profileData.isActive == 1) {
+    //         statusClass = window.strings.RETAILERS.ACCEPTED
+    //     }
+    //     else if (profileData.status == 2 && profileData.isActive == 1) {
+    //         statusClass = window.strings.RETAILERS.REJECTED
+    //     }
+    //     this.setState({ statusClass })
+    // }
+
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
         const getname = profile && profile.name ? profile.name.split('_') : '';
@@ -68,13 +87,30 @@ class RetailerProfile extends React.Component {
             RetImg = imageBaseUrl + profile.image
         }
         let statusClass;
-        if (status == 0) {
+        // if (status == 0) {
+        //     statusClass = window.strings.RETAILERS.PENDING
+        // } else if (status == 1) {
+        //     statusClass = window.strings.RETAILERS.ACCEPTED
+        // } else {
+        //     statusClass = window.strings.RETAILERS.REJECTED
+        // }
+
+        if (profile.isActive == 0) {
+            statusClass = window.strings.RETAILERS.INACTIVE
+        }
+        else if (profile.status == 0 && profile.isActive == 1) {
             statusClass = window.strings.RETAILERS.PENDING
-        } else if (status == 1) {
+        }
+        else if (profile.status == 1 && profile.isActive == 1) {
             statusClass = window.strings.RETAILERS.ACCEPTED
-        } else {
+        }
+        else if (profile.status == 2 && profile.isActive == 1) {
             statusClass = window.strings.RETAILERS.REJECTED
         }
+        if (profile.status == 2) {
+            statusClass = window.strings.RETAILERS.REJECTED
+        }
+
         let paramObj = {
             "mobileNumber": profile.mobileNumber,
             "userId": profile.id
@@ -117,7 +153,7 @@ class RetailerProfile extends React.Component {
                             <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>
                         {statusClass == "accepted" && !profile.names && !profile.mobileNumbers ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
-                            : (profile.names || profile.mobileNumbers) ?
+                            : ((profile.names || profile.mobileNumbers) && statusClass != "inactive") ?
                                 <div className="secondary-level">
                                     <Col md={2} sm={6} xs={12} className="p-0">
                                         <h4 className="title">{"Secondary Name"}</h4>

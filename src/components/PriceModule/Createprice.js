@@ -352,11 +352,11 @@ class CreatePrice extends Component {
             this.state.removeArray && this.state.removeArray.map(item => {
                 arrayData.push(item);
             })
-
+            let priceVal = Number(this.state.price)
             let obj = {
                 "id": this.state.categoryId,
                 "rupeesize": "RS/" + this.state.weightId,
-                "amount": this.state.price,
+                "amount": priceVal.toFixed(1),
                 "boxQuantity": this.state.boxQuantity,
                 "totalQuantity": this.state.weight,
                 "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
@@ -568,9 +568,9 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.CROP.BOX_QUANTITY + ' *'}</label>
+                                            <label>{window.strings.CROP.SET_QUANTITY + ' *'}</label>
                                             <input type="number"
-                                                placeholder="Box Quantity"
+                                                placeholder="Set Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.boxQuantity
                                                 })}

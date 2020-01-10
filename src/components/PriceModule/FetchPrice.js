@@ -165,20 +165,14 @@ class FetchPrice extends Component {
             let dcCode = item.productDetail && item.productDetail.dcCode ? item.productDetail.dcCode : '-';
             let productName = item.name;
             let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize));
-            // let weightUnits = item.productDetail && item.productDetail.totalQuantitySize;
-            let amount = ((item.productDetail && item.productDetail.amount) + " Rs/" + (item.productDetail && item.productDetail.rupeesize));
-            // let priceUnit = item.productDetail && item.productDetail.rupeesUnit;
+            let amount = ((item.productDetail && item.productDetail.amount) + " Rs/set");
+            // " Rs/" + (item.productDetail && item.productDetail.rupeesize));
             let boxQuantity = ((item.productDetail && item.productDetail.boxQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize));
-            // let boxQuantitySize = item.productDetail && item.productDetail.boxQuantitySize
-
             return {
                 "itemList": [productId, productName, dcCode,
                     totWeight.includes("null") ? '-' : totWeight,
-                    // weightUnits, 
                     amount.includes("null") ? '-' : amount,
-                    // priceUnit,
                     boxQuantity.includes("null") ? '-' : boxQuantity,
-                    // boxQuantitySize
                 ], "itemId": item.id
             }
         })

@@ -268,7 +268,7 @@ class ShopDetails extends React.Component {
                     </div>
                 </div>
 
-                {profile && profile.status == 0 && <div className="farm-tab p-1 active-box">
+                {profile && profile.status == 0 && profile.isActive == 1 && <div className="farm-tab p-1 active-box">
                     <TableData TableHead={this.state.TableHead} TableContent={pendingShops} />
                 </div>}
                 <div className="row back-btn">
