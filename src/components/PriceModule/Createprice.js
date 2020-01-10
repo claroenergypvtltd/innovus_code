@@ -315,7 +315,7 @@ class CreatePrice extends Component {
         if (!isQuantityValid) {
             toastr.error("Please increment/decrement in multiple of box quantity")
         }
-        if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId && this.state.price && this.state.boxQuantity && this.state.dcCode) {
+        if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.price && this.state.boxQuantity && this.state.dcCode) {
             let flag;
             this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
 
@@ -377,7 +377,9 @@ class CreatePrice extends Component {
             }
 
         } else {
-            toastr.error("Fields are Invalid or Missing")
+            if (isValid == true) {
+                toastr.error("Fields are Invalid or Missing")
+            }
         }
     }
 
@@ -604,7 +606,7 @@ class CreatePrice extends Component {
                                                             required
                                                         />
                                                         {this.state.submitted && (offerArray.type || offerArray.offer) && !offerArray.quantity && <div className="mandatory">{window.strings['PRICE']['QUANTITY'] + window.strings['ISREQUIRED']}</div>}
-                                                        {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.quantity) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid Quantity</div>}
+                                                        {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.quantity) % parseInt(this.state.boxQuantity) != 0) && offerArray.quantity && <div className="mandatory">Please enter valid Quantity</div>}
                                                         {this.state.submitted && offerArray.type == 2 && offerArray.quantity > 100 && <div className="mandatory">Please enter valid Quantity</div>}
 
                                                     </div>
