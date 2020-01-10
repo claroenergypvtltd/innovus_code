@@ -31,7 +31,6 @@ class CreateVehicle extends Component {
             vehicleName: '',
             vehicleType: '',
             volume: '',
-            transitionTime: null,
             operatingHour: '',
             vehicleId: '',
             category: '',
@@ -43,9 +42,13 @@ class CreateVehicle extends Component {
 
     componentDidMount() {
         if (this.props.location && this.props.location.state && this.props.location.state.vehicleId) {
-            this.getEditData();
+            this.setState({ vehicleId: this.props.location.state.vehicleId }, () => { this.getEditData() })
         }
-        this.getVehicleType();
+        else {
+            this.setState({ transitionTime: undefined }, () => {
+                this.getVehicleType()
+            })
+        }
     }
 
     getVehicleType = () => {
@@ -56,12 +59,13 @@ class CreateVehicle extends Component {
         });
     }
     componentWillReceiveProps(newProps) {
-        if (newProps.VehicleData && newProps.VehicleData.specificData && newProps.VehicleData.specificData[0]) {
+        if (this.state.vehicleId && newProps.VehicleData && newProps.VehicleData.specificData && newProps.VehicleData.specificData[0]) {
             let respData = newProps.VehicleData.specificData[0];
-            let date = respData && respData.operatingHour && respData.operatingHour.split('-');
+            let date = respData && respData.operatingHour && respData.operatingHour.split(' ');
+            let transitionTime = respData && respData.transitionTime && respData.transitionTime.split(':')
             this.setState({
-                vehicleType: { 'label': respData.vehicleCategory.vehicleType, 'value': respData.vehicleCategory.id }, vehicleName: respData.vehiclename,
-                volume: respData.volume, transitionTime: respData.transitionTime, startDate: formatDate(respData.created), endDate: date && formatDate(date[1]), vehicleId: respData.id
+                vehicleType: { 'label': respData.vehicleCategory.vehicleType, 'value': respData.vehicleCategory.id }, vehicleName: respData.vehiclename, min: transitionTime[0],
+                sec: transitionTime[1], volume: respData.volume, transitionTime: respData.transitionTime, startDate: date && date[0], endDate: date && date[2], vehicleId: respData.id
             })
         }
         if (newProps.VehicleData && newProps.VehicleData.createdStatus == "200") {
@@ -86,8 +90,16 @@ class CreateVehicle extends Component {
         })
     }
 
-    handleTimePicker = (Data) => {
-        this.setState({ transitionTime: Data._i })
+    handleTimePicker = (value) => {
+        if (this.state.vehicleId) {
+            let getTime = value && value.format('HH:mm');
+            let getTimeformat = getTime && getTime.split(':');
+            this.setState({ min: getTimeformat && getTimeformat[0], sec: getTimeformat && getTimeformat[1], });
+        }
+        else {
+            const format = 'HH:mm ';
+            this.setState({ transitionTime: value.format(format) })
+        }
     }
 
 
@@ -106,13 +118,11 @@ class CreateVehicle extends Component {
         this.setState({ submitted: true })
         if (this.state.vehicleName && this.state.vehicleType && this.state.volume && this.state.transitionTime && this.state.startDate && this.state.endDate) {
 
-
-
             let obj = {
                 "vehicleName": this.state.vehicleName,
                 "vehicleType": this.state.vehicleType.value,
                 "volume": this.state.volume,
-                "transitionTime": this.state.transitionTime,
+                "transitionTime": this.state.vehicleId ? this.state.min + ":" + this.state.sec : this.state.transitionTime,
                 // "operatingHour": this.state.startDate && this.state.startDate.format('DD-MM-YYYY') + ' - ' + this.state.endDate.format('DD-MM-YYYY'),
                 "id": this.props.location && this.props.location.state && this.props.location.state.vehicleId
             }
@@ -179,9 +189,9 @@ class CreateVehicle extends Component {
 
     render() {
         const { errors } = this.state;
-
+        const format = 'hh:mm ';
         let vehicleTypeDatas = [];
-
+        let transitionTime = ''
         let transtactionTimeData = [{
             "label": 15,
             "id": "15"
@@ -201,6 +211,7 @@ class CreateVehicle extends Component {
             return <option key={index}
                 value={item.id}> {item.name}</option>
         });
+
         let label;
         if (this.state.startDate && this.state.startDate._locale) {
             let start = this.state.startDate && this.state.startDate.format('DD-MM-YYYY');
@@ -212,7 +223,12 @@ class CreateVehicle extends Component {
         } else {
             label = this.state.startDate + ' - ' + this.state.endDate;
         }
-
+        if (this.state.vehicleId) {
+            transitionTime = moment(`${this.state.min}:${this.state.sec}`, format)
+        }
+        else {
+            transitionTime = undefined
+        }
 
         let TypeData = <div>
             <div>
@@ -236,7 +252,7 @@ class CreateVehicle extends Component {
                 <div className="row clearfix">
                     <div className="col-md-12">
                         {/* <h4 className="user-title">{!this.state.vehicleId ? window.strings.SETTING.ADD_VEHICLE : window.strings.SETTING.EDIT_VEHICLE}</h4> */}
-                        <h4 className="user-title">ADD VEHICLE</h4>
+                        <h4 className="user-title">{this.state.vehicleId ? 'EDIT VEHICLE' : 'ADD VEHICLE'}</h4>
                         <div className="main-wrapper pt-3">
                             <div className="col-md-8 ">
                                 <form onSubmit={this.handleSubmit} noValidate className="row m-0">
@@ -274,10 +290,14 @@ class CreateVehicle extends Component {
                                             options={transtactionTimeData}
                                             placeholder="--Select Transaction Time--"
                                         /> */}
-                                        <TimePicker className="time-pick"
-                                            placeholder="--Transaction Time--" defaultValue={this.state.transitionTime} showSecond={false} minuteStep={15}
+                                        {this.state.vehicleId && <TimePicker className="time-pick"
+                                            placeholder="--Transaction Time--" defaultValue={transitionTime} value={transitionTime} showSecond={false}
+                                            minuteStep={15} onChange={this.handleTimePicker}
+                                        />}
+                                        {!this.state.vehicleId && <TimePicker className="time-pick"
+                                            placeholder="--Transaction Time--" defaultValue={transitionTime} showSecond={false} minuteStep={15}
                                             onChange={this.handleTimePicker}
-                                        />
+                                        />}
                                         {this.state.submitted && !this.state.transitionTime && <div className="mandatory">{window.strings['VEHICLE']['TRANSACTION_TIME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
@@ -303,6 +323,7 @@ class CreateVehicle extends Component {
                                             startDate={this.state.startDate}
                                             endDate={this.state.endDate}
                                             onApply={this.handleApply}
+                                            placeholder="Date"
                                         >  <div className="date-box">
                                                 <input type="text" className="form-control date-form ml-1" value={label} />
                                                 <span className="date-group">
