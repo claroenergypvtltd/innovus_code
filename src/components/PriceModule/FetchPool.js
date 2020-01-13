@@ -20,7 +20,13 @@ class FetchPool extends Component {
         }
     }
     componentDidMount() {
-        this.getPoolList();
+        if (sessionStorage.poolSessionData && this.props && this.props.location && this.props.location.state && this.props.location.state.poolSessionData == 'poolSessionBack') {
+            var poolSessData = JSON.parse(sessionStorage.poolSessionData)
+            this.setState({ currentPage: poolSessData.page, search: poolSessData.search }, () => { this.getPoolList() })
+        }
+        else {
+            this.getPoolList();
+        }
     }
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.poolData && newProps.poolData.Lists.datas) {
@@ -31,7 +37,8 @@ class FetchPool extends Component {
     getPoolList = () => {
         let obj = {
             "pages": this.state.currentPage ? this.state.currentPage : 0,
-            "row": 10
+            "row": 10,
+            "search": this.state.search
         }
         this.props.getPoolList(obj)
     }
@@ -61,6 +68,11 @@ class FetchPool extends Component {
         }
     }
     itemEdit = (itemId) => {
+        let obj = {
+            "page": this.state.currentPage,
+            "search": this.state.search
+        }
+        sessionStorage.setItem('poolSessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.pool.edit + itemId, state: { poolId: itemId } })
     }
     searchSubmit = (e) => {
@@ -68,6 +80,7 @@ class FetchPool extends Component {
         this.getPoolsearch('search');
     }
     resetSearch = () => {
+        sessionStorage.removeItem('poolSessionData')
         this.setState({ search: '', currentPage: 0 }, () => { this.getPoolList() })
     }
     onChange = (data) => {

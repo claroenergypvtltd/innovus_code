@@ -7,10 +7,10 @@ import { endPoint } from "../constants";
 // distributeCentre
 // distributeCentres
 
-export const fetchDcList = (dcData) => dispatch => {
+export const fetchDcList = (dcData, isDc) => dispatch => {
     httpServices.post(endPoint.distributeCentres, dcData).then(resp => {
         if (resp && resp.data) {
-            if (dcData && dcData.id) {
+            if (dcData && dcData.id && !isDc) {
                 dispatch({ type: DC_SPECIFIC_DATA_SUCCESS, Lists: resp.data })
             } else {
                 dispatch({ type: DC_FETCH_SUCCESS, Lists: resp.data })
