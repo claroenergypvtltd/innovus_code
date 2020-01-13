@@ -1228,6 +1228,9 @@ input.form-control.search-btn:focus {
 .rc-time-picker-panel-select li:last-child{
   // display: none;
 }
+li.rc-time-picker-panel-select-option-selected{
+    background: $light-blue;
+  }
 .crop-table{
   font-size: 15px ;
   background-color: $white;
@@ -1322,6 +1325,11 @@ a.level-btn:hover {
   padding: 2px 10px;
   width: 90px;
   color: $white;
+}
+.fa-check-circle.secondary-check{
+    color:$secondary-tick;
+    font-size: 27px;
+    margin-top: 42px;
 }
 /****************************User Management-Advanced search************************/
 #menu #list {
