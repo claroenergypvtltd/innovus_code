@@ -21,28 +21,28 @@ class RetailerProfile extends React.Component {
             statusClass: ''
         };
     }
-
     addSecondary = (e) => {
         e.preventDefault();
         this.setState({ open: true })
     }
 
-    removeSecondary = (userId) => {
+    removeSecondary = (userId, Id) => {
         let message = "Are you sure you want to Remove ?";
         const toastrConfirmOptions = {
-            onOk: () => { this.removeRetailer(userId) },
+            onOk: () => { this.removeRetailer(userId, Id) },
             onCancel: () => {
             }
         };
         toastr.confirm(message, toastrConfirmOptions, "Remove")
     }
 
-    removeRetailer = (userId) => {
+    removeRetailer = (userId, Id) => {
         const formData = new FormData();
         formData.append("mobileNumbers", '');
         formData.append("names", '');
-        formData.append("userId", userId);
+        formData.append("userId", Id);
         formData.append("flag", 5);
+        formData.append("id", userId);
         this.props.SubmitRetailer(formData, true);
     }
 
@@ -60,7 +60,6 @@ class RetailerProfile extends React.Component {
         this.props.redirectViewPage();
         this.onCloseModal();
     }
-
     // getStatus() {
     //     let profileData = this.props.profileData
     //     if (profileData.isActive == 0) {
@@ -80,6 +79,8 @@ class RetailerProfile extends React.Component {
 
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
+        const secName = profile && profile.userMobiles && profile.userMobiles[0] && profile.userMobiles[0].name;
+        const secMobile = profile && profile.userMobiles && profile.userMobiles[0] && profile.userMobiles[0].mobileNumber;
         const getname = profile && profile.name ? profile.name.split('_') : '';
         let status = profile.status
         let RetImg = noimg;
@@ -152,19 +153,19 @@ class RetailerProfile extends React.Component {
                             <h4 className="title">{"Onboarded Date"}</h4>
                             <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>
-                        {statusClass == "accepted" && !profile.names && !profile.mobileNumbers ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
-                            : ((profile.names || profile.mobileNumbers) && statusClass != "inactive") ?
+                        {statusClass == "accepted" && !secName && !secMobile ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
+                            : ((secName || secMobile) && statusClass != "inactive") ?
                                 <div className="secondary-level">
                                     <Col md={2} sm={6} xs={12} className="p-0">
                                         <h4 className="title">{"Secondary Name"}</h4>
-                                        <p className="user-subtitle">{profile.names}</p>
+                                        <p className="user-subtitle">{secName}</p>
                                     </Col>
                                     <Col md={2} sm={6} xs={12} className="p-0">
                                         <h4 className="title">{"Secondary Phone"}</h4>
-                                        <p className="user-subtitle">{profile.mobileNumbers}</p>
+                                        <p className="user-subtitle">{secMobile}</p>
                                     </Col>
                                     <Col md={2} sm={6} xs={12} className="p-0">
-                                        <button className="remove-btn" onClick={() => this.removeSecondary(profile.id)}>Remove</button>
+                                        <button className="remove-btn" onClick={() => this.removeSecondary(profile.userMobiles[0].id, profile.id)}>Remove</button>
                                     </Col>
                                 </div> : ''
                         }

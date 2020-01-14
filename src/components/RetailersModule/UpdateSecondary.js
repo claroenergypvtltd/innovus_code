@@ -42,6 +42,7 @@ class UpdateSecondary extends Component {
         if (this.state.agentName && this.state.mobileNumbers && this.state.otp) {
             const formData = new FormData();
             formData.append("names", this.state.agentName);
+            formData.append("mobileNumber", this.props.Data.mobileNumber)
             formData.append("mobileNumbers", this.state.mobileNumbers); //secondary Number
             formData.append("userId", this.props.Data.userId);
             formData.append("otp", this.state.otp);
