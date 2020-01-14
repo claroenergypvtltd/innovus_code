@@ -154,7 +154,20 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        e.charCode == 45 || e.charCode == 43 || (e.target.name != "updateQuantity" && e.target.value < 0) || (e.target.name != "price" && e.target.value.includes('.')) ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
+        if (e.target.name == "boxQuantity") {
+            if (e.target.value.includes('.')) {
+                let value = Number(e.target.value).toFixed(1)
+                this.setState({ [e.target.name]: value })
+            } else {
+                this.setState({ [e.target.name]: e.target.value })
+            }
+        } else {
+            if (e.charCode == 45 || e.charCode == 43 || (e.target.name != "updateQuantity" && e.target.value < 0) || (e.target.name != "price" && e.target.value.includes('.'))) {
+                e.target.value = ''
+            } else {
+                this.setState({ [e.target.name]: e.target.value })
+            }
+        }
     }
     handleCategoryChange = (e) => {
         this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], editSubCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
@@ -391,7 +404,13 @@ class CreatePrice extends Component {
     handleChangeQuantity = (idx) => (evt) => {
         const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
             if (idx !== sidx) return offerArrayolder;
-            return { ...offerArrayolder, quantity: evt.target.value > 0 ? parseInt(evt.target.value) : '' };
+            let quantityValue = '';
+            if ((evt.target.value.includes('.'))) {
+                quantityValue = Number(evt.target.value).toFixed(1)
+            } else {
+                quantityValue = Number(evt.target.value)
+            }
+            return { ...offerArrayolder, quantity: evt.target.value > 0 ? quantityValue : '' };
         });
 
         this.setState({ offerArray: newContact });
