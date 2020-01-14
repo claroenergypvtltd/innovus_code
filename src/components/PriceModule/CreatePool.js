@@ -10,6 +10,8 @@ import store from '../../store/store';
 import { path } from '../../constants';
 import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr';
+import Select, { components } from "react-select";
+import createClass from "create-react-class";
 
 class CreatePool extends Component {
     constructor(props) {
@@ -50,15 +52,10 @@ class CreatePool extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.poolId && newProps && newProps.poolData && newProps.poolData.Lists && newProps.poolData.Lists.datas && newProps.poolData.Lists.datas[0]) {
             let editData = newProps.poolData.Lists.datas[0];
             let poolAry = [];
-
-            editData.pools && editData.pools.map(item => {
-                let productName = "";
-                editData.productName && editData.productName.map(name => {
-                    productName = name;
-                })
+            editData.pools && editData.pools.forEach((item, index) => {
                 let obj = {
-                    "label": productName + '-' + item.dcCode,
-                    "value": productName + '-' + item.dcCode + '-' + item.productId
+                    "label": editData.productName[index] + '-' + item.dcCode,
+                    "value": editData.productName[index] + '-' + item.dcCode + '-' + item.productId
                 }
                 poolAry.push(obj);
             })
@@ -102,7 +99,7 @@ class CreatePool extends Component {
         this.setState({ weightDatas: typeArray });
     }
     listPath = () => {
-        this.props.history.push({ pathname: path.pool.list, state: { poolSessionData: 'poolSessionBack' } });
+        this.props.history.goBack()
     }
     handleInputChange = (e) => {
         if (e.target.name == "updateQuantity" && e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) {
@@ -125,7 +122,8 @@ class CreatePool extends Component {
                 let poolData = item.value && item.value.split('-');
                 let obj = {
                     productId: poolData[2],
-                    dcCode: poolData[1]
+                    dcCode: poolData[1],
+                    names: poolData[0]
                 }
                 poolAry.push(obj);
             })
@@ -166,6 +164,23 @@ class CreatePool extends Component {
             plcHolder = "Select"
         }
 
+        const Option = createClass({
+            render() {
+                return (
+                    <div>
+                        <components.Option {...this.props}>
+                            <input
+                                type="checkbox"
+                                checked={this.props.isSelected}
+                                onChange={e => null}
+                            />{" "}
+                            <label>{this.props.value} </label>
+                        </components.Option>
+                    </div>
+                );
+            }
+        });
+
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -187,51 +202,31 @@ class CreatePool extends Component {
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
-                                    {/* <CheckedSelect
-                                            name="form-field-name"
+                                    <div className="col-md-6">
+                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
+                                        <Select
+
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            closeMenuOnSelect={false}
+                                            isMulti
+                                            components={{ Option }}
+                                            options={pollData}
+                                            hideSelectedOptions={false}
                                             value={this.state.currentSelection}
-                                            options={pollData}
-                                            placeholder={plcHolder}
+                                            backspaceRemovesValue={false}
                                             onChange={(e) => this.handlePoolChange(e)}
-                                            noResultsText="Nothing"
-                                            disabled={this.state.poolId}
-                                        /> */}
-                                    {this.state.poolId && <div className="form-group col-md-6 react-disable-checker">
-                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
-                                        <ReactMultiSelectCheckboxes
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            options={pollData}
-                                            placeholderButtonLabel={plcHolder}
-                                            onChange={(e) => this.handlePoolChange(e)} />
-                                        {this.state.submitted && this.state.currentSelection.length < 1 && <div className="mandatory">{window.strings['PRICE']['SELECT_POOL'] + window.strings['ISREQUIRED']}</div>}
-                                    </div>}
-                                    {!this.state.poolId && <div className="form-group col-md-6 react-checker">
-                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
-                                        <ReactMultiSelectCheckboxes
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            options={pollData}
-                                            placeholderButtonLabel={plcHolder}
-                                            onChange={(e) => this.handlePoolChange(e)} />
-                                        {this.state.submitted && this.state.currentSelection.length < 1 && <div className="mandatory">{window.strings['PRICE']['SELECT_POOL'] + window.strings['ISREQUIRED']}</div>}
-                                    </div>}
+                                        />
+                                    </div>
+
                                     <div className="form-group col-md-4">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
                                         <input

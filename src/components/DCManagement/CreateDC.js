@@ -105,43 +105,10 @@ class CreateDC extends Component {
                 cutOffTimeData = this.state.id ? this.state.minOne + ':' + this.state.secOne + ' ' + this.state.aOne : this.state.orderCutOffTime
             }
 
-            // const formData = new FormData();
-            // let timeValidate = ""
-            // let getTime = startTimeData
-            // let getTimeformat = getTime && getTime.split(':');
-            // let getHoursFormat = getTimeformat && getTimeformat[1] && getTimeformat[1].split(' ');
-            // let format = getHoursFormat[1]
-            // let getTimeCut = cutOffTimeData
-            // let getTimeFormatCut = getTimeCut && getTimeCut.split(':');
-            // let getHoursFormatCut = getTimeFormatCut && getTimeFormatCut[1] && getTimeFormatCut[1].split(' ');
-            // let formatCut = getHoursFormatCut[1]
-            // if (format == "am" && formatCut == "am") {
-            //     if (getTimeformat[0] <= getTimeFormatCut[0]) {
-            //         timeValidate = 1
-            //     }
-            //     else {
-            //         toastr.error("please select valid time")
-            //     }
-            // }
-            // if (format == "pm" && formatCut == "pm") {
-            //     if (getTimeformat[0] <= getTimeFormatCut[0]) {
-            //         timeValidate = 1
-            //     }
-            //     else {
-            //         toastr.error("please select valid time")
-            //     }
-            // }
-            // else {
-            //     timeValidate = 1
-            // }
-            // if (timeValidate == 1) {
-
-
-
             // let fromTime = startTimeData && startTimeData.split(' ');
             // let toTime = cutOffTimeData && cutOffTimeData.split(' ');
-            // if ((fromTime[1] == "am" && toTime[1] == "am") || (fromTime[1] == "pm" && toTime[1] == " pm")) {
-            //     if (fromTime[0] >= toTime[0]) {
+            // if ((fromTime[1] == "am" && toTime[1] == "am") || (fromTime[1] == "pm" && toTime[1] == "pm") || (fromTime[1] == "am" && toTime[1] == "pm")) {
+            //     if (fromTime[0] <= toTime[0]) {
             //         let obj = {
             //             "name": this.state.name,
             //             "surveyingArea": this.state.surveyingArea,
@@ -155,18 +122,22 @@ class CreateDC extends Component {
             //         toastr.error("please select valid time")
             //     }
             // } else {
-            //     let obj = {
-            //         "name": this.state.name,
-            //         "surveyingArea": this.state.surveyingArea,
-            //         "orderStartTime": startTimeData,
-            //         "orderCutOffTime": cutOffTimeData,
-            //         "deliverySlot": this.state.deliverySlot,
-            //         "id": this.state.id
+            //     if ((fromTime[1] == "pm" && toTime[1] == "am")) {
+            //         debugger;
+            //         if (toTime[0] >= "12:00") {
+            //             let obj = {
+            //                 "name": this.state.name,
+            //                 "surveyingArea": this.state.surveyingArea,
+            //                 "orderStartTime": startTimeData,
+            //                 "orderCutOffTime": cutOffTimeData,
+            //                 "deliverySlot": this.state.deliverySlot,
+            //                 "id": this.state.id
+            //             }
+            //             this.props.SubmitDC(obj);
+            //         } else {
+            //             toastr.error("Cut-off time will be in same day")
+            //         }
             //     }
-            //     this.props.SubmitDC(obj);
-            // }
-
-
             // }
 
             let obj = {
