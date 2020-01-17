@@ -227,7 +227,7 @@ class FetchOrderDetails extends Component {
             let boxAmount = item.productDetails && item.productDetails.boxQuantity ? item.productDetails.boxQuantity : 0;
 
 
-            let quantity = item.cartDetails && item.cartDetails.quantity + ' ' + item.quantityUnits.name + '( ' + (item.cartDetails.quantity / item.cartDetails.boxQuantity) + "box)";
+            let quantity = item.cartDetails && item.cartDetails.quantity + ' ' + item.quantityUnits.name + '( ' + (item.cartDetails.quantity / item.cartDetails.boxQuantity) + " set)";
             // let totalAmount = item.cartDetails && item.cartDetails.totalAmount ? item.cartDetails.totalAmount : 0;
 
             let offerValue = item.cartDetails && item.cartDetails.discountValue ? (item.cartDetails.discountValue + ' ' + this.getRupeeSymbol(item.cartDetails.discountUnit)) : '-';

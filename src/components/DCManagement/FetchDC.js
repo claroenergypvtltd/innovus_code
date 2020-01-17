@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TableData } from '../../shared/Table'
 import { confirmAlert } from 'react-confirm-alert';
-import { fetchDcList, SubmitDC, DeleteDC } from '../../actions/dcAction';
+import { fetchDcList, SubmitDC, DeleteDC, fetchDcCodeList } from '../../actions/dcAction';
 import { resorceJSON } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
@@ -34,9 +34,11 @@ class FetchDC extends Component {
             var dcSearchDatas = JSON.parse(sessionStorage.dcSearchDatas);
             this.setState({ search: dcSearchDatas.search, advanceSearch: true, currentPage: dcSearchDatas.pages, dcCode: dcSearchDatas.dcCode, dcCodeObj: dcSearchDatas.dcCodeObj }, () => {
                 this.getDcList("onSearch");
+                this.getDcCodeData()
             });
         } else {
             this.getDcList();
+            this.getDcCodeData()
         }
     }
 
@@ -52,11 +54,10 @@ class FetchDC extends Component {
     }
 
     getDcList = (type) => {
-        let pages = 0;
         let dcSearchId;
         let dcSplit = ''
         let obj = {
-            pages: pages,
+            pages: this.state.currentPage,
             row: this.state.itemPerPage,
             search: this.state.search,
             dcCode: this.state.dcCode,
@@ -65,19 +66,29 @@ class FetchDC extends Component {
         if (type == "onSearch") {
             dcSplit = this.state.dcCode && this.state.dcCode.split("C")
             dcSearchId = dcSplit[1]
-            this.setState({ currentPage: 0 }, () => {
-                pages = pages
-            })
+            this.state.dcCode ? obj.pages = 0 : obj.pages = this.state.currentPage
             obj.id = dcSearchId
             this.props.fetchDcList(obj, true)
         } else {
-            pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO
+            obj.pages = this.state.currentPage ? this.state.currentPage : window.constant.ZERO
             this.props.fetchDcList(obj)
         }
         sessionStorage.setItem('dcSearchDatas', JSON.stringify(obj));
     }
-
+    getDcCodeData = () => {
+        let obj = { search: this.state.search }
+        fetchDcCodeList(obj).then(resp => {
+            this.setState({ dcDropData: resp.datas })
+        })
+    }
     itemEdit = (Data) => {
+        let obj = {
+            search: this.state.search,
+            pages: this.state.currentPage,
+            dcCode: this.state.dcCode,
+            dcCodeObj: this.state.dcCodeObj
+        }
+        sessionStorage.setItem('dcSearchDatas', JSON.stringify(obj))
         this.props.history.push({ pathname: path.dc.edit + Data.id, state: { id: Data.id } });
     }
     handleDelete = (data) => {
@@ -102,7 +113,6 @@ class FetchDC extends Component {
     }
 
     onChange = (data) => {
-
         if (this.state.currentPage !== (data.selected)) {
             this.setState({ currentPage: data.selected }, () => {
                 this.getDcList();
@@ -148,14 +158,11 @@ class FetchDC extends Component {
                 "itemList": [item.dcCode, item.name, item.surveyingArea, item.orderStartTime, item.orderCutOffTime, item.deliverySlot], "itemId": { id: item.id, productCount: item.productCount }
             }
         })
-        let dcData = [];
+        let dcDropData = [];
 
-        this.state.dcList && this.state.dcList.map((item) => {
-            if (item.dcCode) {
-                let obj = { "label": item.dcCode, "value": item.dcCode };
-                dcData.push(obj);
-            }
-
+        this.state.dcDropData && this.state.dcDropData.map((item) => {
+            let obj = { "label": item.dcCode, "value": item.dcCode };
+            dcDropData.push(obj);
         })
 
         return (
@@ -207,7 +214,7 @@ class FetchDC extends Component {
                                             }}
                                             value={this.state.dcCodeObj}
                                             onChange={(e) => this.handleDcCodeChange(e)}
-                                            options={dcData}
+                                            options={dcDropData}
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
@@ -244,5 +251,5 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { fetchDcList, DeleteDC })(FetchDC);
+export default connect(mapStateToProps, { fetchDcList, DeleteDC, fetchDcCodeList })(FetchDC);
 

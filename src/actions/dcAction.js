@@ -58,3 +58,13 @@ export const DeleteDC = (id) => dispatch => {
         dispatch({ type: DC_DELETE_SUCCESS, resp: error.status })
     })
 }
+
+export const fetchDcCodeList = (Data) => {
+    return httpServices.post(endPoint.distributeCentres, Data).then(resp => {
+        if (resp && resp.data) {
+            return resp.data
+        }
+    }).catch((error) => {
+        console.error("error", error);
+    })
+}

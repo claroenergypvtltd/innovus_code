@@ -154,7 +154,7 @@ class CreatePool extends Component {
         });
         let pollData = [];
         this.state.PriceLists && this.state.PriceLists.map((item) => {
-            let obj = { "label": item.name + '-' + item.productDetail.dcCode, "value": item.name + '-' + item.productDetail.dcCode + '-' + item.productDetail.id, indeterminate: true };
+            let obj = { "label": item.name + '-' + item.productDetail.dcCode, "value": item.name + '-' + item.productDetail.dcCode, indeterminate: true };
             pollData.push(obj);
         })
         let plcHolder = "";

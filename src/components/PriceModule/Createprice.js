@@ -157,9 +157,9 @@ class CreatePrice extends Component {
         if (e.target.name == "boxQuantity") {
             if (e.target.value.includes('.')) {
                 let value = Number(e.target.value).toFixed(1)
-                this.setState({ [e.target.name]: value })
+                e.target.value < 0 ? e.target.value = '' : this.setState({ [e.target.name]: value })
             } else {
-                this.setState({ [e.target.name]: e.target.value })
+                e.target.value < 0 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
             }
         } else {
             if (e.charCode == 45 || e.charCode == 43 || (e.target.name != "updateQuantity" && e.target.value < 0) || (e.target.name != "price" && e.target.value.includes('.'))) {
