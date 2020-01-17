@@ -19,7 +19,7 @@ class FetchPrice extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Product ID", "Product Name", 'DC Code', "Total Available quantity(Unit)", "Price(Unit)", "Box Quantity(Unit)", "Actions"], PriceLists: props.getLists,
+            TableHead: ["Product ID", "Product Name", 'DC Code', "Total Available quantity(Unit)", "Price(Unit)", "Set Quantity(Unit)", "Actions"], PriceLists: props.getLists,
             search: '',
             dcCode: '',
             currentPage: 0,
@@ -164,7 +164,8 @@ class FetchPrice extends Component {
             let productId = item.productDetail && item.productDetail.id;
             let dcCode = item.productDetail && item.productDetail.dcCode ? item.productDetail.dcCode : '-';
             let productName = item.name;
-            let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize));
+            let totSet = (item.productDetail.totalQuantity / item.productDetail.boxQuantity)
+            let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize) + ' (' + parseInt(totSet) + ' set)');
             let amount = ((item.productDetail && item.productDetail.amount) + " Rs/set");
             // " Rs/" + (item.productDetail && item.productDetail.rupeesize));
             let boxQuantity = ((item.productDetail && item.productDetail.boxQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize));
