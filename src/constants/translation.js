@@ -132,7 +132,9 @@ export const Translation = {
             "EDIT_POOL": "EDIT POOL",
             "SELECT_ITEM": "Select Item",
             "SELECT_POOL": "Pool",
-            "POOL_NAME": "Pool"
+            "POOL_NAME": "Pool",
+            "SET_PRICE": "Set Price",
+            "SET_QUANTITY": "Set Quantity",
         },
 
         "SUBMIT": "Save",
