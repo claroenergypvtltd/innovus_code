@@ -54,8 +54,8 @@ class CreatePool extends Component {
             let poolAry = [];
             editData.pools && editData.pools.forEach((item, index) => {
                 let obj = {
-                    "label": editData.productName[index] + '-' + item.dcCode,
-                    "value": editData.productName[index] + '-' + item.dcCode + '-' + item.productId + '-' + item.id
+                    "value": editData.productName[index] + '-' + item.dcCode,
+                    "label": editData.productName[index] + '-' + item.dcCode + '-' + item.productId + '-' + item.id
                 }
                 poolAry.push(obj);
             })
@@ -119,7 +119,7 @@ class CreatePool extends Component {
         if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0 && this.state.weightId) {
             let poolAry = [];
             this.state.currentSelection && this.state.currentSelection.map(item => {
-                let poolData = item.value && item.value.split('-');
+                let poolData = item.label && item.label.split('-');
                 let id = this.state.poolId ? poolData[3] : 0
                 let obj = {
                     productId: poolData[2],
@@ -156,7 +156,7 @@ class CreatePool extends Component {
         });
         let pollData = [];
         this.state.PriceLists && this.state.PriceLists.map((item) => {
-            let obj = { "label": item.name + '-' + item.productDetail.dcCode, "value": item.name + '-' + item.productDetail.dcCode + '-' + item.id + '-' + item.parentId, indeterminate: true };
+            let obj = { "value": item.name + '-' + item.productDetail.dcCode, "label": item.name + '-' + item.productDetail.dcCode + '-' + item.id + '-' + item.parentId, indeterminate: true };
             pollData.push(obj);
         })
         let plcHolder = "";
