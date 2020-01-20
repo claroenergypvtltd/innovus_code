@@ -165,7 +165,7 @@ class CreatePrice extends Component {
             if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || (e.target.name != "updateQuantity" && e.target.value < 0) || (e.target.name != "price" && e.target.value.includes('.'))) {
                 e.target.value = ''
             } else {
-                e.target.name == "weightId" || e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
+                e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
             }
         }
     }
