@@ -8,6 +8,7 @@ import { fetchDcList, SubmitDC, DeleteDC } from '../../actions/dcAction';
 import store from '../../store/store';
 import { DC_FETCH_SUCCESS, DC_CREATE_SUCCESS, DC_UPDATE_SUCCESS, DC_DELETE_SUCCESS, DC_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes'
 import { toastr } from 'react-redux-toastr'
+import Select, { components } from "react-select";
 
 class CreateDC extends Component {
     constructor(props) {
@@ -25,7 +26,29 @@ class CreateDC extends Component {
             // const now = moment().hour(0).minute(0);
             this.setState({ orderCutOffTime: undefined, orderStartTime: undefined });
         }
+        this.getTimeList();
     }
+    getTimeList = () => {
+        let timeList = [
+            {
+                time: "1:00 Hour"
+            },
+            {
+                time: "1:30 Hour"
+            },
+            {
+                time: "2:00 Hour"
+            },
+            {
+                time: "2:30 Hour"
+            },
+            {
+                time: "3:00 Hour"
+            },
+        ]
+        this.setState({ timeList: timeList })
+    }
+
 
     getSpecificDCData() {
         let id = this.props.location.state.id;
@@ -52,9 +75,10 @@ class CreateDC extends Component {
             let getTimeOne = Data.orderCutOffTime;
             let getTimeFormatOne = getTimeOne && getTimeOne.split(':');
             let getHoursFormatOne = getTimeFormatOne && getTimeFormatOne[1].split(' ')
+            let deliverySlot = { label: Data.deliverySlot, value: Data.deliverySlot }
             this.setState({
                 minOne: getTimeFormatOne && getTimeFormatOne[0], secOne: getHoursFormatOne && getHoursFormatOne[0], aOne: getHoursFormatOne && getHoursFormatOne[1], name: Data.name, surveyingArea: Data.surveyingArea, orderCutOffTime: Data.orderCutOffTime,
-                orderStartTime: Data.orderStartTime, deliverySlot: Data.deliverySlot, min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1]
+                orderStartTime: Data.orderStartTime, deliverySlot, min: getTimeformat && getTimeformat[0], sec: getHoursFormat && getHoursFormat[0], a: getHoursFormat && getHoursFormat[1]
             })
         }
     }
@@ -145,7 +169,7 @@ class CreateDC extends Component {
                 "surveyingArea": this.state.surveyingArea,
                 "orderStartTime": startTimeData,
                 "orderCutOffTime": cutOffTimeData,
-                "deliverySlot": this.state.deliverySlot,
+                "deliverySlot": this.state.deliverySlot.value,
                 "id": this.state.id
             }
             this.props.SubmitDC(obj);
@@ -154,6 +178,10 @@ class CreateDC extends Component {
 
     listPath = () => {
         this.props.history.push({ pathname: path.dc.list, state: { dcSearchDatas: "backTrue" } })
+    }
+
+    handleTimeChange = (Data) => {
+        this.setState({ deliverySlot: Data });
     }
 
     render() {
@@ -170,6 +198,12 @@ class CreateDC extends Component {
             startTimeData = undefined
             cutOffTimeData = undefined
         }
+        let timeData = [];
+        this.state.timeList && this.state.timeList.map((item) => {
+            let obj = { "label": item.time, "value": item.time, indeterminate: true };
+            timeData.push(obj);
+        })
+
         return (
             <div>
                 <div className="clearfix title-section row">
@@ -271,21 +305,27 @@ class CreateDC extends Component {
 
                             <div className="form-group col-md-6">
                                 <label>{window.strings.DC_MANAGEMENT.DELIVERY_SLOT + ' *'}</label>
-                                <input
-                                    type="text"
-                                    placeholder="Delivery Slot"
-                                    className={classnames('form-control time-form', {
-                                        'is-invalid': errors.deliverySlot
-                                    })}
-                                    name="deliverySlot"
-                                    onChange={this.handleInputChange}
+                                <Select
+                                    styles={{
+                                        control: base => ({
+                                            ...base,
+                                            borderColor: 'hsl(0,0%,80%)',
+                                            boxShadow: '#FE988D',
+                                            '&:hover': {
+                                                borderColor: '#FE988D'
+                                            }
+                                        })
+                                    }}
+                                    closeMenuOnSelect={false}
+                                    options={timeData}
+                                    hideSelectedOptions={false}
                                     value={this.state.deliverySlot}
-                                    required
+                                    backspaceRemovesValue={false}
+                                    onChange={(e) => this.handleTimeChange(e)}
                                 />
                                 {this.state.submitted && !this.state.deliverySlot && <div className="mandatory">Delivery Slot{window.strings['ISREQUIRED']}</div>}
                             </div>
                         </form>
-
                     </div>
                     <div className="col-md-12 bottom-section">
                         <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>

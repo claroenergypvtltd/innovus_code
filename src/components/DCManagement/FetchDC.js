@@ -78,7 +78,9 @@ class FetchDC extends Component {
     getDcCodeData = () => {
         let obj = { search: this.state.search }
         fetchDcCodeList(obj).then(resp => {
-            this.setState({ dcDropData: resp.datas })
+            if (resp && resp.datas) {
+                this.setState({ dcDropData: resp.datas })
+            }
         })
     }
     itemEdit = (Data) => {
