@@ -420,7 +420,7 @@ export const Translation = {
             "CURRENTVERSION": "Current Version"
         },
         "DC_MANAGEMENT": {
-            "STARTING_TIME": "Starting Time",
+            "STARTING_TIME": "Order Starting Time",
             "CUTOFF_TIME": "Order Cutoff-time",
             "DELIVERY_SLOT": "Delivery Slot",
             "ADD_DC": "ADD DC",
