@@ -99,7 +99,7 @@ class CreatePool extends Component {
         this.setState({ weightDatas: typeArray });
     }
     listPath = () => {
-        this.props.history.goBack()
+        this.props.history.push({ pathname: path.pool.list, state: { poolSessionData: 'poolSessionBack' } })
     }
     handleInputChange = (e) => {
         if (e.target.name == "updateQuantity" && e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) {
@@ -124,7 +124,7 @@ class CreatePool extends Component {
                 let obj = {
                     productId: poolData[2],
                     dcCode: poolData[1],
-                    names: poolData[0],
+                    names: poolData[0].split(' ').join(''),
                     id: id
                 }
                 poolAry.push(obj);

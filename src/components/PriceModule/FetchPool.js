@@ -22,7 +22,7 @@ class FetchPool extends Component {
     componentDidMount() {
         if (sessionStorage.poolSessionData && this.props && this.props.location && this.props.location.state && this.props.location.state.poolSessionData == 'poolSessionBack') {
             var poolSessData = JSON.parse(sessionStorage.poolSessionData)
-            this.setState({ currentPage: poolSessData.page, search: poolSessData.search }, () => { this.getPoolList() })
+            this.setState({ currentPage: poolSessData.page, search: poolSessData.search, advanceSearch: true }, () => { this.getPoolList() })
         }
         else {
             this.getPoolList();
