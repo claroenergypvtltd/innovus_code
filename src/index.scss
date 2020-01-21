@@ -1069,7 +1069,7 @@ a.shop-map{
 .btn-trash:hover .tooltip-text {
   visibility: visible;
 }
-.btn-edit {
+.btn-edit { 
   position: relative;
   display: inline-block;
   border:none;
@@ -1305,7 +1305,7 @@ a.level-btn:hover {
   text-decoration: underline;
   padding: 1px;
   font-weight: unset;
-  font-size: 10px;
+  font-size: 14px;
 }
 .secondary-level{
   display: contents;
@@ -1485,6 +1485,13 @@ a.level-btn:hover {
   background-color: $white;
   color: $btn-text;
   font-size: 15px;
+}
+.react-confirm-alert-overlay{
+  z-index: 1051;
+
+}
+.modal{
+  z-index: 1050;
 }
 /****************************Dashboard section************************/
 .dashboard-table{
