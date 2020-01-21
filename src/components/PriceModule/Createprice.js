@@ -226,7 +226,7 @@ class CreatePrice extends Component {
             } else {
                 quantityValue = Number(evt.target.value)
             }
-            return { ...offerArrayolder, quantity: evt.target.value > 0 ? quantityValue : '' };
+            return { ...offerArrayolder, quantity: evt.target.value > 0 && evt.target.value.toString().length <= 6 ? quantityValue : '' };
         });
 
         this.setState({ offerArray: newContact });
@@ -235,7 +235,7 @@ class CreatePrice extends Component {
     handleChangeOffer = (idx) => (evt) => {
         const newContact = this.state.offerArray.map((offerArrayolder, sidx) => {
             if (idx !== sidx) return offerArrayolder;
-            return { ...offerArrayolder, offer: evt.target.value > 0 ? parseInt(evt.target.value) : '' };
+            return { ...offerArrayolder, offer: evt.target.value > 0 && evt.target.value.toString().length <= 6 ? parseInt(evt.target.value) : '' };
         });
         this.setState({ offerArray: newContact });
     }
