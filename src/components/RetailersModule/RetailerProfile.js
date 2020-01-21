@@ -10,6 +10,7 @@ import UpdateSecondary from './UpdateSecondary'
 import { resorceJSON, ModalData } from '../../libraries'
 import { path } from '../../constants';
 import PropTypes from "prop-types";
+import ViewSecondary from './ViewSecondary'
 
 class RetailerProfile extends React.Component {
     static contextTypes = {
@@ -26,25 +27,34 @@ class RetailerProfile extends React.Component {
         this.setState({ open: true })
     }
 
-    removeSecondary = (userId, Id) => {
-        let message = "Are you sure you want to Remove ?";
-        const toastrConfirmOptions = {
-            onOk: () => { this.removeRetailer(userId, Id) },
-            onCancel: () => {
-            }
-        };
-        toastr.confirm(message, toastrConfirmOptions, "Remove")
+    viewSecondary = (e) => {
+        e.preventDefault();
+        this.setState({ openView: true })
     }
 
-    removeRetailer = (userId, Id) => {
-        const formData = new FormData();
-        formData.append("mobileNumbers", '');
-        formData.append("names", '');
-        formData.append("userId", Id);
-        formData.append("flag", 5);
-        formData.append("id", userId);
-        this.props.SubmitRetailer(formData, true);
-    }
+    onCloseViewModal = () => {
+        this.setState({ openView: false });
+    };
+
+    // removeSecondary = (userId, Id) => {
+    //     let message = "Are you sure you want to Remove ?";
+    //     const toastrConfirmOptions = {
+    //         onOk: () => { this.removeRetailer(userId, Id) },
+    //         onCancel: () => {
+    //         }
+    //     };
+    //     toastr.confirm(message, toastrConfirmOptions, "Remove")
+    // }
+
+    // removeRetailer = (userId, Id) => {
+    //     const formData = new FormData();
+    //     formData.append("mobileNumbers", '');
+    //     formData.append("names", '');
+    //     formData.append("userId", Id);
+    //     formData.append("flag", 5);
+    //     formData.append("id", userId);
+    //     this.props.SubmitRetailer(formData, true);
+    // }
 
 
 
@@ -117,6 +127,8 @@ class RetailerProfile extends React.Component {
             "userId": profile.id
         }
         let UpdateSecondaryData = <UpdateSecondary onHide={this.onCloseModal} orderId={this.state.orderId} onCloseModal={this.onCloseModal} Data={paramObj} redirect={this.redirectPage} />
+        let viewSecondaryData = <ViewSecondary onHide={this.onCloseModal} orderId={this.state.orderId} onCloseModal={this.onCloseViewModal} Data={profile.userMobiles} redirect={this.redirectPage} />
+
         return (
 
             <Container className="retailer-container">
@@ -153,7 +165,8 @@ class RetailerProfile extends React.Component {
                             <h4 className="title">{"Onboarded Date"}</h4>
                             <p className={'user-subtitle'}>{formatDate(profile.created)}</p>
                         </Col>
-                        {statusClass == "accepted" && !secName && !secMobile ? <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
+                        {/* {statusClass == "accepted" && !secName && !secMobile ? <div><a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
+                            <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn"><i className=" level-plus"></i>  View Secondary Level</a></div>
                             : ((secName || secMobile) && statusClass != "inactive") ?
                                 <div className="secondary-level">
                                     <Col md={2} sm={6} xs={12} className="p-0">
@@ -168,8 +181,17 @@ class RetailerProfile extends React.Component {
                                         <button className="remove-btn" onClick={() => this.removeSecondary(profile.userMobiles[0].id, profile.id)}>Remove</button>
                                     </Col>
                                 </div> : ''
+                        } */}
+                        {statusClass == "accepted" && statusClass != "inactive" ?
+                            <div>
+                                <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
+                                <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn"><i className=" level-plus"></i>  View Secondary Level</a>
+                            </div>
+                            :
+                            ''
                         }
                         <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={UpdateSecondaryData} ModalTitle="UPDATE SECONDARY FIELD" />
+                        <ModalData show={this.state.openView} onHide={this.onCloseViewModal} modalData={viewSecondaryData} ModalTitle="VIEW SECONDARY DATA" />
                     </Col>
                 </Row>
             </Container >

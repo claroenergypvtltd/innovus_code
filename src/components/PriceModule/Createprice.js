@@ -142,7 +142,6 @@ class CreatePrice extends Component {
             this.setState({ weight: showweight })
         }
 
-
         if (nextProps.priceData && nextProps.priceData.createdData == "200") {
             store.dispatch({ type: PRICE_CREATE_SUCCESS, createdData: '' });
             this.listPath();
@@ -154,21 +153,34 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        if (e.target.name == "boxQuantity") {
-            if (e.target.value.includes('.')) {
-                let value = Number(e.target.value).toFixed(1)
-                e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
-            } else {
-                e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
-            }
+        if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || (e.target.name != "price" && e.target.value.includes('.'))) {
+            e.target.value = ''
         } else {
-            if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || (e.target.name != "updateQuantity" && e.target.value < 0) || (e.target.name != "price" && e.target.value.includes('.'))) {
-                e.target.value = ''
+            e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
+        }
+    }
+
+    handleChangeUpdateQuantity = (e) => {
+        if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46) {
+            e.target.value = ''
+        } else {
+            if (e.target.value.includes('-')) {
+                e.target.value.toString().length <= 7 && this.setState({ [e.target.name]: e.target.value })
             } else {
                 e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
             }
         }
     }
+
+    handleBoxQuantityChange = (e) => {
+        if (e.target.value.includes('.')) {
+            let value = Number(e.target.value).toFixed(1)
+            e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+        } else {
+            e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
+        }
+    }
+
     handleCategoryChange = (e) => {
         this.setState({ weight: '', dcCode: '', dcCodeData: [], subCategoryDatas: [], editSubCategoryDatas: [], parentId: e.target.value, categoryId: '' }, () => {
             getCategoryDCCode(this.state.parentId).then(resp => {
@@ -451,7 +463,7 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-4">
-                                            <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
+                                            <label>{window.strings.CROP.TOTAL_QUANTITY}{" (Set)"}</label>
                                             <input
                                                 type="number"
                                                 placeholder="Available Quantity"
@@ -467,22 +479,6 @@ class CreatePrice extends Component {
                                             {/* {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
-                                        <div className="form-group col-md-4 px-0">
-                                            <label>{window.strings.CROP.UPDATE_QUANTITY}</label>
-                                            <input
-                                                type="number"
-                                                placeholder="Increase/Decrease Quantity"
-                                                className={classnames('form-control', {
-                                                    'is-invalid': errors.weight
-                                                })}
-                                                name="updateQuantity"
-                                                onChange={this.handleInputChange}
-                                                onKeyPress={this.handleInputChange}
-                                                value={this.state.updateQuantity}
-                                                required
-                                            />
-                                            {/* {this.state.submitted && !this.state.updateQuantity && <div className="mandatory">{window.strings['CROP']['UPDATE_QUANTITY'] + window.strings['ISREQUIRED']}</div>} */}
-                                        </div>
                                         <div className="form-group col-md-4">
                                             <label>{window.strings.PRICE.TYPE + ' *'}</label>
                                             <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} Z>
@@ -490,6 +486,23 @@ class CreatePrice extends Component {
                                                 {weightDropDown}
                                             </select>
                                             {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+
+                                        <div className="form-group col-md-4 px-0">
+                                            <label>{window.strings.CROP.UPDATE_QUANTITY}{" (Set)"}</label>
+                                            <input
+                                                type="number"
+                                                placeholder="Increase/Decrease Quantity"
+                                                className={classnames('form-control', {
+                                                    'is-invalid': errors.weight
+                                                })}
+                                                name="updateQuantity"
+                                                onChange={this.handleChangeUpdateQuantity}
+                                                onKeyPress={this.handleChangeUpdateQuantity}
+                                                value={this.state.updateQuantity}
+                                                required
+                                            />
+                                            {/* {this.state.submitted && !this.state.updateQuantity && <div className="mandatory">{window.strings['CROP']['UPDATE_QUANTITY'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
                                         <div className="form-group col-md-6">
@@ -525,7 +538,7 @@ class CreatePrice extends Component {
                                                     'is-invalid': errors.boxQuantity
                                                 })}
                                                 name="boxQuantity"
-                                                onChange={this.handleInputChange}
+                                                onChange={this.handleBoxQuantityChange}
                                                 value={this.state.boxQuantity}
                                                 required
 
@@ -546,11 +559,11 @@ class CreatePrice extends Component {
                                             <div className="col-md-12">
                                                 <div className="form-group row" key={idx + 1}>
                                                     <div className="col-md-4">
-                                                        <label>{window.strings.PRICE.QUANTITY} {idx + 1} </label>
+                                                        <label>{window.strings.PRICE.QUANTITY} {idx + 1} {" (Set)"}</label>
                                                         <input
                                                             type="number"
                                                             className="form-control"
-                                                            placeholder={`Quantity ${idx + 1} `}
+                                                            placeholder={`Quantity ${idx + 1}  (Set)`}
                                                             value={offerArray.quantity}
                                                             onChange={this.handleChangeQuantity(idx)}
                                                             required
