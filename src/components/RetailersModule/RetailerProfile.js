@@ -185,7 +185,8 @@ class RetailerProfile extends React.Component {
                         {statusClass == "accepted" && statusClass != "inactive" ?
                             <div>
                                 <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
-                                <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn"><i className=" level-plus"></i>  View Secondary Level</a>
+
+                                <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn ml-3"><i className="fa fa-eye level-plus" />View Secondary Level</a>
                             </div>
                             :
                             ''
