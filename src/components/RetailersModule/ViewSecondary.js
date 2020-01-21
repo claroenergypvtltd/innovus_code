@@ -8,6 +8,7 @@ import { ReactPagination, SearchBar } from '../../shared'
 import { resorceJSON } from '../../libraries'
 import Select from 'react-select';
 import { toastr } from '../../services/toastr.services'
+import { SubmitRetailer } from '../../actions/SubmitRetailerAction';
 
 
 class ViewSecondary extends React.Component {
@@ -25,18 +26,10 @@ class ViewSecondary extends React.Component {
         this.setState({ secondaryData: this.props.Data })
     }
 
-    componentWillReceiveProps(newProps) {
-        // if (newProps && newProps.agentData && newProps.agentData.Lists.datas) {
-        //     this.setState({
-        //         salesAgentData: newProps.agentData.Lists.datas, pageCount: newProps.agentData.Lists.totalCount / this.state.itemPerPage, totalCount: newProps.agentData.Lists.totalCount
-        //     })
-        // }
-    }
-
-    removeSecondary = (userId, Id) => {
+    removeSecondary = (data) => {
         let message = "Are you sure you want to Remove ?";
         const toastrConfirmOptions = {
-            onOk: () => { this.removeRetailer(userId, Id) },
+            onOk: () => { this.removeRetailer(data.userId, data.id) },
             onCancel: () => {
             }
         };
@@ -47,20 +40,18 @@ class ViewSecondary extends React.Component {
         const formData = new FormData();
         formData.append("mobileNumbers", '');
         formData.append("names", '');
-        formData.append("userId", Id);
+        formData.append("userId", userId);
         formData.append("flag", 5);
-        formData.append("id", userId);
+        formData.append("id", Id);
         this.props.SubmitRetailer(formData, true);
     }
-
     render() {
         let secondaryList = this.state.secondaryData && this.state.secondaryData.map((item, index) => {
-            return { "itemList": [item.name, item.mobileNumber], "itemId": item.id }
+            return { "itemList": [item.name, item.mobileNumber], "itemId": { userId: item.userId, id: item.id } }
         })
-
         return (
             <div className="mt-4">
-                <TableData TableHead={this.state.TableHead} TableContent={secondaryList} handleEdit={this.itemEdit} handleDelete={this.removeSecondary} />
+                <TableData TableHead={this.state.TableHead} TableContent={secondaryList} handleDelete={this.removeSecondary} />
                 {/* <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} /> */}
                 {/* </div> */}
             </div>
@@ -74,4 +65,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps)(ViewSecondary)
+export default connect(mapStateToProps, { SubmitRetailer })(ViewSecondary)

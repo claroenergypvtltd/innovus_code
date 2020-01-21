@@ -214,7 +214,7 @@ class FetchOrderDetails extends Component {
             credits = (item.orderCredit || item.orderCredit == 0) ? item.orderCredit : '';
             return {
                 "itemList": [item.orderId, shopAddrss, "RS. " + item.orderAmount, "RS. " + item.orderRedeem, formatDate(item.created),
-                timeformat(item.startTime) + ' - ' + timeformat(item.endTime), link], "itemId": item.id
+                item.deliveryTime, link], "itemId": item.id
             }
         })
         let trackList = this.state.trackLists && this.state.trackLists.map((item) => {
