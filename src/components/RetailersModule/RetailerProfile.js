@@ -2,8 +2,6 @@ import React from 'react';
 import { Row, Col, Image, Button, Grid, Container } from 'react-bootstrap';
 import { imageBaseUrl } from '../../config/config';
 import { connect } from 'react-redux';
-import { fetchRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction';
-import { toastr } from '../../services/toastr.services'
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { formatDate } from '../../shared/DateFormat'
 import UpdateSecondary from './UpdateSecondary'
@@ -121,16 +119,13 @@ class RetailerProfile extends React.Component {
         if (profile.status == 2) {
             statusClass = window.strings.RETAILERS.REJECTED
         }
-
         let paramObj = {
             "mobileNumber": profile.mobileNumber,
             "userId": profile.id
         }
         let UpdateSecondaryData = <UpdateSecondary onHide={this.onCloseModal} orderId={this.state.orderId} onCloseModal={this.onCloseModal} Data={paramObj} redirect={this.redirectPage} />
         let viewSecondaryData = <ViewSecondary onHide={this.onCloseModal} orderId={this.state.orderId} onCloseModal={this.onCloseViewModal} Data={profile.userMobiles} redirect={this.redirectPage} />
-
         return (
-
             <Container className="retailer-container">
                 <Row className="show-grid white-bg">
                     <Col md={3} sm={6} xs={12} className="ticket-block">
@@ -184,8 +179,7 @@ class RetailerProfile extends React.Component {
                         } */}
                         {statusClass == "accepted" && statusClass != "inactive" ?
                             <div>
-                                <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>
-
+                                {profile.userMobiles.length <= 10 && <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>}
                                 <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn ml-3"><i className="fa fa-eye level-plus" />View Secondary Level</a>
                             </div>
                             :
@@ -203,8 +197,5 @@ const mapStateToProps = state => ({
     retailerdetails: state.retailer,
 });
 
-export default connect(
-    mapStateToProps,
-    { fetchRetailers, SubmitRetailer },
-)(RetailerProfile);
+export default connect(mapStateToProps)(RetailerProfile);
 
