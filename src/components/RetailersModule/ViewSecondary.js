@@ -18,7 +18,7 @@ class ViewSecondary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Secondary Name", "Secondary Phone"]
+            TableHead: ["No", "Secondary Name", "Secondary Phone"]
         }
     }
 
@@ -47,7 +47,7 @@ class ViewSecondary extends React.Component {
     }
     render() {
         let secondaryList = this.state.secondaryData && this.state.secondaryData.map((item, index) => {
-            return { "itemList": [item.name, item.mobileNumber], "itemId": { userId: item.userId, id: item.id } }
+            return { "itemList": [index + 1, item.name, item.mobileNumber], "itemId": { userId: item.userId, id: item.id } }
         })
         return (
             <div className="mt-4">

@@ -69,9 +69,9 @@ class UpdateSecondary extends Component {
         }
         if (validation.checkValidation('mobile', this.state.mobileNumbers)) {
             otpAuthentication(obj, "resendOTP").then(resp => {
-                if (resp && resp.data) {
+                if (resp && resp.status == "200") {
                     toastr.success("OTP Send Successfully");
-                    this.setState({ otpValue: resp.data.otp, otpText: true });
+                    this.setState({ otpText: true });
                 }
             })
         } else {
@@ -115,6 +115,7 @@ class UpdateSecondary extends Component {
                                         onChange={this.handleChange}
                                         value={this.state.mobileNumbers}
                                         required
+                                        disabled={this.state.otpText}
                                     />
                                     {this.state.submitted && !this.state.mobileNumbers && <div className="mandatory">{window.strings['USERMANAGEMENT']['SECONDARY_PHONE'] + window.strings['ISREQUIRED']}</div>}
                                     {this.state.submitted && this.state.mobileNumbers && !validation.checkValidation('mobile', this.state.mobileNumbers) && <div className="mandatory">{window.strings['USERMANAGEMENT']['SECONDARY_PHONE'] + ' is Invalid'}</div>}
