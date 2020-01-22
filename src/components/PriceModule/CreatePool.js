@@ -22,6 +22,7 @@ class CreatePool extends Component {
             weightDatas: [],
             weightId: 0,
             weight: 0,
+            updateQuantity: '',
             currentSelection: []
         }
     }

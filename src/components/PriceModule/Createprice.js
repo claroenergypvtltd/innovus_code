@@ -153,7 +153,7 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || (e.target.name != "price" && e.target.value.includes('.'))) {
+        if (e.target.value < 0 || e.charCode == 45 || e.charCode == 43) {
             e.target.value = ''
         } else {
             e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
@@ -161,7 +161,7 @@ class CreatePrice extends Component {
     }
 
     handleChangeUpdateQuantity = (e) => {
-        if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46) {
+        if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || e.target.value.includes('.')) {
             e.target.value = ''
         } else {
             if (e.target.value.includes('-')) {
@@ -173,12 +173,17 @@ class CreatePrice extends Component {
     }
 
     handleBoxQuantityChange = (e) => {
-        if (e.target.value.includes('.')) {
-            let value = Number(e.target.value).toFixed(1)
-            e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+        if (e.charCode == 45 || e.charCode == 43) {
+            e.target.value = ''
         } else {
-            e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
+            if (e.target.value.includes('.')) {
+                let value = Number(e.target.value).toFixed(1)
+                e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+            } else {
+                e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
+            }
         }
+
     }
 
     handleCategoryChange = (e) => {
@@ -471,7 +476,7 @@ class CreatePrice extends Component {
                                                     'is-invalid': errors.weight
                                                 })}
                                                 name="weight"
-                                                onChange={this.handleInputChange}
+                                                // onChange={this.handleInputChange}
                                                 value={this.state.weight}
                                                 required
                                                 disabled
@@ -481,7 +486,7 @@ class CreatePrice extends Component {
 
                                         <div className="form-group col-md-4">
                                             <label>{window.strings.PRICE.TYPE + ' *'}</label>
-                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} Z>
+                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange}>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
                                             </select>
@@ -514,6 +519,7 @@ class CreatePrice extends Component {
                                                 })}
                                                 name="price"
                                                 min="0"
+                                                onKeyPress={this.handleInputChange}
                                                 onChange={this.handleInputChange}
                                                 value={this.state.price}
                                                 required
@@ -539,6 +545,7 @@ class CreatePrice extends Component {
                                                 })}
                                                 name="boxQuantity"
                                                 onChange={this.handleBoxQuantityChange}
+                                                onKeyPress={this.handleBoxQuantityChange}
                                                 value={this.state.boxQuantity}
                                                 required
 
