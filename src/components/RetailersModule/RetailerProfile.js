@@ -177,13 +177,15 @@ class RetailerProfile extends React.Component {
                                     </Col>
                                 </div> : ''
                         } */}
-                        {statusClass == "accepted" && statusClass != "inactive" ?
+                        {statusClass == "accepted" ?
                             <div>
-                                {profile.userMobiles.length <= 10 && <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>}
-                                <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn ml-3"><i className="fa fa-eye level-plus" />View Secondary Level</a>
+                                {profile.userMobiles && profile.userMobiles.length <= 9 && <a href="" onClick={(e) => this.addSecondary(e)} className="level-btn"><i className="fa fa-plus level-plus"></i>Add Secondary Level</a>}
+                                {profile.userMobiles && profile.userMobiles.length > 0 && <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn ml-3"><i className="fa fa-eye level-plus" />View Secondary Level</a>}
                             </div>
                             :
-                            ''
+                            <div>
+                                {profile.userMobiles && profile.userMobiles.length > 0 && <a href="" onClick={(e) => this.viewSecondary(e)} className="level-btn ml-3"><i className="fa fa-eye level-plus" />View Secondary Level</a>}
+                            </div>
                         }
                         <ModalData show={this.state.open} onHide={this.onCloseModal} onClick={this.handleSubmit} modalData={UpdateSecondaryData} ModalTitle="UPDATE SECONDARY FIELD" />
                         <ModalData show={this.state.openView} onHide={this.onCloseViewModal} modalData={viewSecondaryData} ModalTitle="VIEW SECONDARY DATA" />
