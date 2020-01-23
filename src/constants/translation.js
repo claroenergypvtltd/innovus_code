@@ -135,6 +135,11 @@ export const Translation = {
             "POOL_NAME": "Pool",
             "SET_PRICE": "Set Price",
             "SET_QUANTITY": "Set Quantity",
+            "TIGGER_QUANTITY": "Tigger Left Quantity",
+            "SET_START_QUANTITY": "Set Start Quantity",
+            "SET_END_QUANTITY": "Set End Quantity",
+            "SET_QUANTITY_TYPE": "Set Quantity Type"
+
         },
 
         "SUBMIT": "Save",
