@@ -36,19 +36,20 @@ class CreateVehicle extends Component {
             category: '',
             startDate: moment(),
             endDate: moment(),
-            errors: {}
+            errors: {},
+            transitionTime: undefined
         }
     }
 
     componentDidMount() {
         if (this.props.location && this.props.location.state && this.props.location.state.vehicleId) {
-            this.setState({ vehicleId: this.props.location.state.vehicleId }, () => { this.getEditData() })
+            this.setState({ vehicleId: this.props.location.state.vehicleId }, () => { this.getEditData(); this.getVehicleType() })
         }
-        else {
-            this.setState({ transitionTime: undefined }, () => {
-                this.getVehicleType()
-            })
-        }
+        // else {
+        //     this.setState({ transitionTime: undefined }, () => {
+        //         this.getVehicleType()
+        //     })
+        // }
     }
 
     getVehicleType = () => {
@@ -298,7 +299,7 @@ class CreateVehicle extends Component {
                                             placeholder="--Transaction Time--" defaultValue={transitionTime} showSecond={false} minuteStep={15}
                                             onChange={this.handleTimePicker}
                                         />}
-                                        {this.state.submitted && !this.state.transitionTime && <div className="mandatory">{window.strings['VEHICLE']['TRANSACTION_TIME'] + window.strings['ISREQUIRED']}</div>}
+                                        {this.state.submitted && !this.state.transitionTime && <div className="mandatory">{window.strings['VEHICLE']['ESTIMATED_TRANSACTION_TIME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
                                     <div className="form-group col-md-6">

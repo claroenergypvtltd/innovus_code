@@ -89,6 +89,7 @@ export const Translation = {
             "UPDATE_QUANTITY": "Update Quantity",
             "UPDATE_WEIGHT": "Update Weight",
             "SUB_CATEGORY": "Sub Category",
+            "QUALITY": "Quality",
             "TABLEHEAD": { 'categoryName': 'Category Name', 'categoryImage': 'Category Image', 'parentCategory ': 'Parent Category' }
         },
         "DESCRIPTION": "Description",

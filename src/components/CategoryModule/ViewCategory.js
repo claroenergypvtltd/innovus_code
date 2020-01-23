@@ -17,7 +17,7 @@ class ViewCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Crop Name", "Image", "Description", "DC Code", "status", "Action"],
+            TableHead: ["Crop Name", "Image", "Quality", "DC Code", "status", "Action"],
             // CategoryListDatas: props.getLists.datas,
             CategoryCount: props.getCount,
             currentPage: 0,
@@ -86,27 +86,12 @@ class ViewCategory extends Component {
     }
 
     getDCData = () => {
-
-        // let obj = {
-        //     "page": this.state.currentPage ? this.state.currentPage : window.constant.ONE,
-        //     "search": this.state.search,
-        //     "limit": this.state.itemPerPage,
-        // "categoryId": this.props.location.state.categoryId,
         let dcCode = this.props.location.state.categoryId
-        // }
-
         getCategoryDCCode(dcCode).then(resp => {
             if (resp && resp.data && resp.data.datas) {
                 this.setState({ dcCodeData: resp.data.datas })
             }
-
         });
-        // getDcCodeData(obj).then(resp => {
-        //     if (resp) {
-
-        //         this.setState({ dcCodeData: resp })
-        //     }
-        // })
     }
 
     handleChange = (e) => {
@@ -127,7 +112,6 @@ class ViewCategory extends Component {
         });
     }
 
-
     itemEdit = (catId) => {
         let obj = {
             "page": this.state.currentPage,
@@ -140,7 +124,6 @@ class ViewCategory extends Component {
         this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId, cropId: this.state.categoryId } });
     }
 
-
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
         const toastrConfirmOptions = {
@@ -149,7 +132,6 @@ class ViewCategory extends Component {
         };
         toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM)
     }
-
 
     itemDelete = (id) => {
         this.props.DeleteCategory(id);
@@ -188,7 +170,6 @@ class ViewCategory extends Component {
         e.preventDefault();
         this.getSpecificData('onSearch');
     }
-
 
     handleDcCodeChange = (Data) => {
         this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 0 }, () => {
@@ -230,14 +211,12 @@ class ViewCategory extends Component {
 
     render() {
         let dcData = [];
-        // this.state.dcCodeData = [{ name: "0987", id: 1 }]
 
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
             if (item.dcCode) {
                 let obj = { "label": item.dcCode, "value": item.dcCode };
                 dcData.push(obj);
             }
-
         })
 
         let CategoryList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
@@ -254,17 +233,15 @@ class ViewCategory extends Component {
                 {/* <option value="0" selected={selectedValue}>Active</option>
                 <option value="1" selected={selectedValue}>In Active</option> */}
             </select >
-            let description = item.description == '' ? '-' : item.description;
-            return { "itemList": [item.name, catImg, description, dcCode, statusChange], "itemId": item.id }
+            let quality = item.quality == '' ? '-' : item.quality;
+            return { "itemList": [item.name, catImg, quality, dcCode, statusChange], "itemId": item.id }
         })
 
         return (
             <div>
                 <div className="title-section row">
                     <div className="title-card col-md-7">
-                        {/* <h2>{window.strings.CATEGORY.VIEWTITLE}</h2> */}
                         <h4 className="user-title">VIEW CROP - {this.state.ParentCategoryHeading} </h4>
-                        {/* <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button> */}
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">
@@ -274,23 +251,15 @@ class ViewCategory extends Component {
                 </div>
                 <div className="mb-2">
                     <div className="retailersearchdiv">
-                        {/* <div d-flex justify-content-end> */}
-                        {/* <SearchBar searchclassName="Retailersearch" SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} /> */}
                         <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
                             <span className="tooltip-text">Click to Search</span>
                         </button>
-                        {/* <div className="retail-reset">
-                            <button type="button" className="reset ml-2" onClick={this.resetSearch}><i className="fa fa-refresh mrr5" aria-hidden="true"></i></button>
-                        </div> */}
                     </div>
                     <div id="menu">
                         {this.state.advanceSearch &&
                             <div className="sub-filter ml-4">
                                 <div className="row">
                                     <div className="search-tip">
-                                        {/* <input type="text" placeholder="Search by Crop Name.."
-                                            class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
-                                        /> */}
                                         <form onSubmit={(e) => this.searchSubmit(e)}>
                                             <input placeholder="Search by Crop Name.."
                                                 class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
@@ -300,7 +269,6 @@ class ViewCategory extends Component {
                                         <span className="tooltip-text">Custom Search</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
-                                        {/* <ReactMultiSelectCheckboxes options={dropDownData} onChange={this.checkbox} /> */}
                                         <Select className="state-box"
                                             styles={{
                                                 control: base => ({
@@ -334,18 +302,10 @@ class ViewCategory extends Component {
 
                     </div>
                 </div>
-                {/* <div>
-                    <h2>List Crop</h2>
-                    <button className="btn btn-warning float-right" onClick={this.formPath}>Add Crop</button>
-                </div>
-                <div className="col-md-6 s-left">
-                    <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                </div> */}
                 <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
                     // handleDelete={this.handleDelete}
                     handleEdit={this.itemEdit}
                 // handleStatusChange={this.handleStatusChange}
-
                 />
                 <div className="row">
                     <div className="back-btn col-md-2"><button class="common-btn" onClick={this.redirectPage}>Back</button></div>
