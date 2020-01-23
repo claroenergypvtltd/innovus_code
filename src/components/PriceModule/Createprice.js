@@ -467,7 +467,7 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !parseInt(this.state.categoryId) && <div className="mandatory">{window.strings['CATEGORY']['SUB_CATEGORY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group col-md-4">
+                                        <div className="form-group col-md-6">
                                             <label>{window.strings.CROP.TOTAL_QUANTITY}{" (Set)"}</label>
                                             <input
                                                 type="number"
@@ -484,16 +484,7 @@ class CreatePrice extends Component {
                                             {/* {this.state.submitted && !this.state.weight && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
-                                        <div className="form-group col-md-4">
-                                            <label>{window.strings.PRICE.TYPE + ' *'}</label>
-                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange}>
-                                                <option value="0">Select</option>
-                                                {weightDropDown}
-                                            </select>
-                                            {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['CROP']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
-                                        </div>
-
-                                        <div className="form-group col-md-4 px-0">
+                                        <div className="form-group col-md-6">
                                             <label>{window.strings.CROP.UPDATE_QUANTITY}{" (Set)"}</label>
                                             <input
                                                 type="number"
@@ -511,7 +502,7 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.PRICE.SET_PRICE + ' *'}</label>
+                                            <label>{window.strings.PRICE.SET_PRICE}{" (Set)"}</label>
                                             <input type="number"
                                                 placeholder="Price"
                                                 className={classnames('form-control', {
@@ -527,17 +518,25 @@ class CreatePrice extends Component {
                                             {this.state.submitted && !this.state.price && <div className="mandatory">{window.strings['PRICE']['SET_PRICE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group col-md-6 ">
-                                            <label>{window.strings.PRICE.TYPE + ' *'}</label>
-                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
-                                                <option value="0">Select</option>
-                                                {priceDropDown}
-                                            </select>
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['PRICE'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                        <div className="form-group col-md-6">
+                                            <label>{window.strings.PRICE.TIGGER_QUANTITY + ' *'}</label>
+                                            <input type="number"
+                                                placeholder="Price"
+                                                className={classnames('form-control', {
+                                                    'is-invalid': errors.price
+                                                })}
+                                                name="price"
+                                                min="0"
+                                                onKeyPress={this.handleInputChange}
+                                                onChange={this.handleInputChange}
+                                                value={this.state.price}
+                                                required
+                                            />
+                                            {this.state.submitted && !this.state.price && <div className="mandatory">{window.strings['PRICE']['SET_PRICE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-                                        <div className="form-group col-md-6">
-                                            <label>{window.strings.CROP.SET_QUANTITY + ' *'}</label>
+                                        <div className="form-group col-md-4">
+                                            <label>{window.strings.PRICE.SET_START_QUANTITY + ' *'}</label>
                                             <input type="number"
                                                 placeholder="Set Quantity"
                                                 className={classnames('form-control', {
@@ -550,16 +549,31 @@ class CreatePrice extends Component {
                                                 required
 
                                             />
-                                            {this.state.submitted && !this.state.boxQuantity && <div className="mandatory">{window.strings['CROP']['BOX_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.boxQuantity && <div className="mandatory">{window.strings['PRICE']['BOX_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
+                                        <div className="form-group col-md-4 px-0">
+                                            <label>{window.strings.PRICE.SET_END_QUANTITY}</label>
+                                            <input type="number"
+                                                placeholder="Set Quantity"
+                                                className={classnames('form-control', {
+                                                    'is-invalid': errors.boxQuantity
+                                                })}
+                                                name="boxQuantity"
+                                                onChange={this.handleBoxQuantityChange}
+                                                onKeyPress={this.handleBoxQuantityChange}
+                                                value={this.state.boxQuantity}
+                                                required
 
-                                        <div className="form-group col-md-6 ">
-                                            <label>{window.strings.PRICE.TYPE + ' *'}</label>
-                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled>
+                                            />
+                                            {this.state.submitted && !this.state.boxQuantity && <div className="mandatory">{window.strings['PRICE']['BOX_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                        </div>
+                                        <div className="form-group col-md-4">
+                                            <label>{window.strings.PRICE.SET_QUANTITY_TYPE}</label>
+                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange}>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
                                             </select>
-                                            {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['CROP']['BOX_QUANTITY'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                         {this.state.offerArray.map((offerArray, idx) => (
