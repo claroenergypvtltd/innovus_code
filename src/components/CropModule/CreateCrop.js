@@ -22,7 +22,7 @@ class CreateCrop extends Component {
         this.state = {
             submitted: false,
             name: '',
-            description: '',
+            quality: '',
             image: '',
             categoryId: '',
             parentId: '',
@@ -54,7 +54,7 @@ class CreateCrop extends Component {
             && nextProps.categoryData.specificData.data.datas.length > 0) {
             let Data = nextProps.categoryData.specificData.data.datas[0];
             let dcCodeObj = { "label": Data.productDetailsao.dcCode, "value": Data.productDetailsao.dcCode };
-            this.setState({ description: Data.description, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj, dcCode: Data.productDetailsao.dcCode });
+            this.setState({ quality: Data.quality, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj, dcCode: Data.productDetailsao.dcCode, disableStatus: Data.inventoryStatus });
         }
 
 
@@ -112,7 +112,7 @@ class CreateCrop extends Component {
         if (this.state.name && this.state.dcCode && this.state.image) {
             const formData = new FormData();
             formData.append("name", this.state.name);
-            formData.append("description", this.state.description);
+            formData.append("quality", this.state.quality);
             formData.append("image", this.state.file);
             formData.append("dcCode", this.state.dcCode);
             formData.append("id", this.state.editId);
@@ -208,7 +208,6 @@ class CreateCrop extends Component {
 
 
                                     <div className="form-group col-md-12">
-
                                         <label>{window.strings.CROP.CROP_NAME + ' *'}</label>
 
                                         <input
@@ -220,24 +219,11 @@ class CreateCrop extends Component {
                                             name="name"
                                             onChange={this.handleInputChange}
                                             value={this.state.name}
+                                            disabled={this.state.disableStatus == 1}
                                             required
-
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CROP']['CROP_NAME'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
-
-                                    {/* <div className="form-group col-md-12">
-
-                                        <label>{window.strings.SALES_AGENT.DC_CODE}</label>
-
-                                        <Select
-                                            value={this.state.dcCodeObj}
-                                            onChange={(e) => this.handleDcCodeChange(e)}
-                                            options={dcData}
-                                            placeholder="--Select DC Code--"
-                                        />
-                                        {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
-                                    </div> */}
 
                                     <div className="form-group col-md-12">
 
@@ -260,47 +246,30 @@ class CreateCrop extends Component {
                                             onChange={(e) => this.handleDcCodeChange(e)}
                                             options={dcData}
                                             placeholder="--Select DC Code--"
-                                            isDisabled={this.state.editId}
+                                            isDisabled={this.state.disableStatus == 1}
                                         />
-                                        {/* <input
-                                            type="text"
-                                            placeholder="DC Code"
-                                            className={classnames('form-control', {
-                                                'is-invalid': errors.dcCode
-                                            })}
-                                            name="dcCode"
-                                            onChange={this.handleInputChange}
-                                            value={this.state.dcCode}
-                                            required
-
-                                        /> */}
-
                                         {this.state.submitted && !this.state.dcCode && <div className="mandatory">{window.strings['SALES_AGENT']['DC_CODE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
 
-
-
                                     <div className="form-group col-md-12">
+                                        <label>{window.strings.CATEGORY.QUALITY}</label>
 
-                                        <label>{window.strings.CATEGORY.DESCRIPTION}</label>
-
-                                        <textarea
-                                            placeholder="Description"
+                                        <input
+                                            type="text"
+                                            placeholder="Quality"
                                             className={classnames('form-control', {
-                                                'is-invalid': errors.description
+                                                'is-invalid': errors.name
                                             })}
-                                            name="description"
+                                            name="quality"
                                             onChange={this.handleInputChange}
-                                            value={this.state.description}
-                                            maxLength="150"
+                                            value={this.state.quality}
+                                            disabled={this.state.disableStatus == 1}
                                             required
-
-                                        ></textarea>
-                                        {/* {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>} */}
+                                        />
+                                        {/* {this.state.submitted && !this.state.quality && <div className="mandatory">{window.strings['CATEGORY']['QUALITY'] + window.strings['ISREQUIRED']}</div>} */}
                                     </div>
 
                                     <div className="form-group col-md-12">
-
                                         <label>{window.strings.CATEGORY.IMAGE + ' *'}</label>
 
                                         <input
@@ -318,13 +287,6 @@ class CreateCrop extends Component {
                                         {imagePreview}
                                         {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
-
-                                    {/* <div className="col-md-12 pt-3 p-0">
-                                            <div className="login-btn float-right">
-                                                <button type="submit" className="btn btn-info" disabled={this.state.loading}>{window.strings.SUBMIT}</button>
-                                                <button type="button" className="btn btn-info" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                                            </div>
-                                        </div> */}
                                 </form>
                             </div>
                             <div className="col-md-12 bottom-section">
@@ -339,12 +301,10 @@ class CreateCrop extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => ({
     categoryData: state.category,
     getCategory: state.category && state.category.Lists ? state.category.Lists : [],
     dcDatas: state && state.dc
 })
-
 
 export default connect(mapStateToProps, { SubmitCategory, getCategoryList, getSpecificCategory, fetchSalesAgent, fetchDcList })(CreateCrop)

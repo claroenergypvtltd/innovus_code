@@ -17,12 +17,12 @@ class FetchVehicle extends Component {
 
         super(props);
         this.state = {
-            // TableHead: ["Vehicle Type", "Vehicle Name", "Volme(mc)", "Transaction Time", "Operating Hours", "Actions"],
-            TableHead: resorceJSON.VehicleList,
+            TableHead: ["Vehicle Type", "Vehicle Name", "Volme(mc)", "Estimated Transaction Time", "Time Window at Operation", "Actions"],
+            // TableHead: resorceJSON.VehicleList,
             irrigationSettingLists: [],
             CategoryCount: props.getCount,
             search: '',
-            currentPage: 1,
+            currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength
@@ -40,9 +40,8 @@ class FetchVehicle extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.VehicleData && newProps.VehicleData.Lists && newProps.VehicleData.Lists.datas) {
             let respData = newProps.VehicleData.Lists.datas;
-            this.setState({ data: respData, pageCount: newProps.VehicleData.Lists.totalCount / this.state.itemPerPage })
+            this.setState({ data: respData, pageCount: newProps.VehicleData.Lists.totalCount / this.state.itemPerPage, totalCount: newProps.VehicleData.Lists.totalCount })
         }
-
         // if (newProps.VehicleData && newProps.VehicleData.deletedStatus == "200") {
         //     Store.dispatch({ type: IRRIGATION_SETTING_DELETE_SUCCESS, deletedStatus: "" })
 
@@ -79,7 +78,7 @@ class FetchVehicle extends Component {
     }
 
     itemEdit = (Data) => {
-        this.props.history.push({ pathname: path.vehicle.edit + Data.id, state: { vehicleId: Data.id } });
+        this.props.history.push({ pathname: path.vehicle.edit + Data, state: { vehicleId: Data } });
     }
 
 
@@ -110,9 +109,9 @@ class FetchVehicle extends Component {
     }
 
     render() {
-        // let CategoryList = this.state.irrigationSettingLists && this.state.irrigationSettingLists.map((item, index) => {
-        //     return { "itemList": [item && item.vehicleType ? item.vehicleType : '-', item.vehiclename && item.vehiclename ? item.vehiclename : '-', item.volume ? item.volume : '-', item.transitionTime ? item.transitionTime : '-', item.operatingHour ? item.operatingHour : '-'], "itemId": item.id }
-        // })
+        let CategoryList = this.state.data && this.state.data.map((item, index) => {
+            return { "itemList": [item && item.vehicleType ? item.vehicleType : '-', item.vehiclename && item.vehiclename ? item.vehiclename : '-', item.volume ? item.volume : '-', item.transitionTime ? item.transitionTime : '-', item.operatingHour ? item.operatingHour : '-'], "itemId": item.id }
+        })
 
         return (
             <div className="fetch-vehicle">
@@ -132,12 +131,11 @@ class FetchVehicle extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
+                <TableData TableHead={this.state.TableHead} TableContent={CategoryList}
                     // handleDelete={this.handleDelete} 
                     handleEdit={this.itemEdit}
                 />
-                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue }} /> */}
-                <DataTableDynamic title="Vehicle List" tableHead={this.state.TableHead} tableDatas={this.state.data} handleEdit={this.itemEdit} pagination={true} />
+                <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
             </div>
         );
     }
@@ -145,10 +143,8 @@ class FetchVehicle extends Component {
 
 
 
-function mapStateToProps(state) {
-    return {
-        VehicleData: state.Vehicle ? state.Vehicle : {}
-    };
-}
+const mapStateToProps = (state) => ({
+    VehicleData: state.Vehicle ? state.Vehicle : {}
+})
 
 export default connect(mapStateToProps, { fetchVehicle })(FetchVehicle);
