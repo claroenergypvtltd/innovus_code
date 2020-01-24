@@ -93,7 +93,9 @@ class FetchPool extends Component {
     render() {
         const poolList = this.state.poolListData && this.state.poolListData.map(item => {
             let data = item.rupeesUnits && item.rupeesUnits.name ? item.rupeesUnits.name.split('/') : [];
-            return { "itemList": [item.id, item.name, item.quantity + ' ' + data[1], item.pools.length], "itemId": item.id }
+            let quantitySet = ' (' + item.quantity + ' set )'
+            let totQuantity = item.boxQuantity * item.quantity
+            return { "itemList": [item.id, item.name, totQuantity + ' ' + data[1] + quantitySet, item.pools.length], "itemId": item.id }
         })
         return (
             <div className="pool">
