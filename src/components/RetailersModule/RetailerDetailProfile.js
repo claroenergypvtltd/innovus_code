@@ -3,6 +3,7 @@ import RetailerProfile from './RetailerProfile';
 import Shops from './Shops'
 import { connect } from 'react-redux';
 import { fetchRetailers } from '../../actions/SubmitRetailerAction';
+import Geocode from "react-geocode";
 
 class RetailerDetailProfile extends React.Component {
     constructor(props) {
@@ -13,9 +14,49 @@ class RetailerDetailProfile extends React.Component {
         }
     }
     componentWillReceiveProps(newProps) {
-        let retailerData = newProps.retailerdetails.Lists;
-        this.setState({ profileData: newProps.retailerdetails.Lists })
+        Geocode.setApiKey("AIzaSyAHsNiCWANHwz9j7vrYA70c37dOgHQyAvU");
+        Geocode.setLanguage("en");
+        Geocode.setRegion("es");
+        Geocode.enableDebug();
 
+        Geocode.fromLatLng(newProps.retailerdetails.Lists.shopAddress.latitude, newProps.retailerdetails.Lists.shopAddress.longitude).then(resp => {
+            if (resp && resp.results && resp.results[0] && resp.results[0].address_components) {
+
+                let locality = resp.results[0].address_components
+                let subLocalty = "";
+                let district = "";
+                let state = "";
+                let pincode = "";
+
+                locality.map(item => {
+                    if (item.types.includes("sublocality")) {
+                        subLocalty = item.long_name
+                    }
+                    if (item.types.includes("locality")) {
+                        district = item.long_name
+                    }
+                    if (item.types.includes("administrative_area_level_1")) {
+                        state = item.long_name
+                    }
+                    if (item.types.includes("postal_code")) {
+                        pincode = item.long_name
+                    }
+                })
+
+
+
+
+                // let locality = resp.results[0].address_components
+                // let subLocalty = locality[1].short_name
+                // let district = locality[2].short_name
+                // let state = locality[3].short_name
+                // let pincode = locality[5].short_name
+
+                newProps.retailerdetails.Lists.shopLocalty = subLocalty + '  ' + district + ', ' + state + ', ' + pincode
+                this.setState({ profileData: newProps.retailerdetails.Lists })
+
+            }
+        });
     }
 
     componentDidMount() {
@@ -34,6 +75,7 @@ class RetailerDetailProfile extends React.Component {
         this.getRetailer();
     }
     render() {
+
         return (
 
             <div className="main-wrapper1">

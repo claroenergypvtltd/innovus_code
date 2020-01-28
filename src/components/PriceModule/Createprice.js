@@ -27,6 +27,7 @@ class CreatePrice extends Component {
             offerId: 0,
             categoryData: [],
             flag: '',
+            boxEndQuantity: '',
             offerArray: [{ quantity: '', offer: '', type: '' }],
             removeArray: []
         }
@@ -108,11 +109,15 @@ class CreatePrice extends Component {
                         this.setState({ categoryId: resp.datas[0].id });
                         if (response && response.datas && response.datas[0] && response.datas[0].productDetail) {
                             let respData = response.datas[0].productDetail;
+                            //                 "prioritys": this.state.prioritys,
+                            // "boxEndQuantity": Number(this.state.boxEndQuantity)
+                            // "triggerQuantity" : this.state.triggerQuantity,
                             this.setState({
                                 weight: respData.totalQuantity, price: respData.amount,
                                 weightId: respData.rupeesize, boxQuantity: respData.boxQuantity,
                                 offer: respData.discountValue == 0 ? '' : respData.discountValue,
-                                offerId: respData.discountUnit, subCategoryLabel: response.datas[0].name
+                                offerId: respData.discountUnit, subCategoryLabel: response.datas[0].name,
+                                prioritys: respData.prioritys, boxEndQuantity: respData.boxEndQuantity, triggerQuantity: respData.triggerQuantity
                             })
                         }
                     })
@@ -153,7 +158,7 @@ class CreatePrice extends Component {
         }
     }
     handleInputChange = (e) => {
-        if (e.target.value < 0 || e.charCode == 45 || e.charCode == 43) {
+        if (e.target.value < 0 || e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || e.target.value.includes('.')) {
             e.target.value = ''
         } else {
             e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
@@ -183,7 +188,6 @@ class CreatePrice extends Component {
                 e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
             }
         }
-
     }
 
     handleCategoryChange = (e) => {
@@ -275,6 +279,11 @@ class CreatePrice extends Component {
         });
     }
 
+    checkBoxChange = (e) => {
+        let prioritys = (!this.state.prioritys ? true : false);
+        this.setState({ prioritys: prioritys })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
@@ -282,59 +291,81 @@ class CreatePrice extends Component {
         })
         let isValid = true;
         let isQuantityValid = true;
+        let isDuplicateCheck = true;
         this.state.offerArray.map((item, index) => {
-            if (this.state.price && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.boxQuantity && this.state.dcCode) {
+            if (this.state.price && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.boxQuantity) {
                 if (item.quantity || item.offer || item.type) {
                     if (!item.quantity || !item.offer || !item.type) {
                         isValid = false
                         return;
                     }
                 }
-                let multipleVal = Number(this.state.updateQuantity) * this.state.boxQuantity;
-                if (this.state.updateQuantity || item.offer || item.type != '') {
-                    if (this.state.updateQuantity && item.offer == '' && !item.type) {
-                        if (multipleVal + this.state.weight < 0) {
-                            toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
-                            isValid = false
-                            return;
-                        }
-                    }
-                    else if (this.state.updateQuantity && item.type != '' && item.offer) {
-                        if (multipleVal + this.state.weight < 0) {
-                            isValid = false;
-                            isQuantityValid = false;
-                            return;
-                        }
-                    }
-                    else if (item.type == 0 && this.state.updateQuantity && !item.offer) {
-                        if (multipleVal + this.state.weight < 0) {
-                            isValid = false
-                            toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
-                            return;
-                        }
-                    }
-                    else if (item.offer && item.type == 2) {
-                        if (parseInt(item.offer) >= 100) {
+                // let multipleVal = Number(this.state.updateQuantity) * this.state.boxQuantity;
+                // if (this.state.updateQuantity || item.offer || item.type != '') {
+                // if (this.state.updateQuantity && item.offer == '' && !item.type) {
+                //     if (multipleVal + this.state.weight < 0) {
+                //         toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
+                //         isValid = false
+                //         return;
+                //     }
+                // }
+                // else if (this.state.updateQuantity && item.type != '' && item.offer) {
+                //     if (multipleVal + this.state.weight < 0) {
+                //         isValid = false;
+                //         isQuantityValid = false;
+                //         return;
+                //     }
+                // }
+                // else if (item.type == 0 && this.state.updateQuantity && !item.offer) {
+                //     if (multipleVal + this.state.weight < 0) {
+                //         isValid = false
+                //         toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
+                //         return;
+                //     }
+                // }
+
+
+                if (item.offer) {
+                    if (item.type == 2) {
+                        if (parseInt(item.offer) > 100) {
                             isValid = false
                             toastr.error("Select valid offer type")
                             return;
                         }
-                    }
-                    else if (item.offer && item.type == 1) {
-                        if (Number(item.offer) >= Number(this.state.price)) {
+                    } else if (item.type == 1) {
+                        if (Number(item.offer) > Number(this.state.price)) {
                             isValid = false
                             toastr.error("Select valid offer")
                             return;
                         }
                     }
                 }
+                if (this.state.boxEndQuantity) {
+                    if (this.state.boxQuantity >= this.state.boxEndQuantity) {
+                        toastr.error("Set End Quantity must be greater or equal to Set start quantity");
+                        isValid = false
+                        return
+                    }
+                }
+
+
+                if (!this.state.boxEndQuantity && !this.state.prioritys) {
+                    // toastr.error("Checkbox or Set End Quantity must be required");
+                    isValid = false
+                    isDuplicateCheck = false
+                    return
+                }
             }
         })
 
-        if (!isQuantityValid) {
-            toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
+        // if (!isQuantityValid) {
+        //     toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
+        // }
+        // debugger;
+        if (!isDuplicateCheck) {
+            toastr.error("Checkbox or Set End Quantity must be required");
         }
-        if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.price && this.state.boxQuantity && this.state.dcCode) {
+        if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.price && this.state.boxQuantity && this.state.dcCode && this.state.triggerQuantity) {
             let flag;
             this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
 
@@ -376,12 +407,15 @@ class CreatePrice extends Component {
                 "id": this.state.categoryId,
                 "rupeesize": "RS/" + this.state.weightId,
                 "amount": priceVal.toFixed(1),
+                "prioritys": this.state.prioritys,
                 "boxQuantity": Number(this.state.boxQuantity),
+                "boxEndQuantity": Number(this.state.boxEndQuantity),
                 "totalQuantity": this.state.weight,
                 "updateQuantity": this.state.updateQuantity ? Math.abs(this.state.updateQuantity) : 0,
                 "totalQuantityUnit": this.state.weightId,
                 "boxQuantityUnit": this.state.weightId,
                 "discountValue": this.state.offer ? this.state.offer : 0,
+                "triggerQuantity": this.state.triggerQuantity,
                 // "discountUnit": this.state.offerId == 0 ? '' : this.state.offerId,
                 "productId": this.state.categoryId,
                 "flag": flag,
@@ -436,7 +470,7 @@ class CreatePrice extends Component {
                         <h4 className="user-title">{this.state.priceId ? window.strings['PRICE']['EDITTITLE'] : window.strings['PRICE']['CREATETITLE']}</h4>
                         <div className="">
                             <div className="main-wrapper pt-3">
-                                <div className="col-md-10 add-price">
+                                <div className="col-md-10 add-price ml-4">
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0">
 
                                         {/* <div className="col-md-4 row"> */}
@@ -502,7 +536,7 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.PRICE.SET_PRICE}{" (Set)"}</label>
+                                            <label>{window.strings.PRICE.SET_PRICE}{' *'} </label>
                                             <input type="number"
                                                 placeholder="Price"
                                                 className={classnames('form-control', {
@@ -521,21 +555,28 @@ class CreatePrice extends Component {
                                         <div className="form-group col-md-6">
                                             <label>{window.strings.PRICE.TIGGER_QUANTITY + ' *'}</label>
                                             <input type="number"
-                                                placeholder="Price"
+                                                placeholder="triggerQuantity"
                                                 className={classnames('form-control', {
-                                                    'is-invalid': errors.price
+                                                    'is-invalid': errors.triggerQuantity
                                                 })}
-                                                name="price"
+                                                name="triggerQuantity"
                                                 min="0"
                                                 onKeyPress={this.handleInputChange}
                                                 onChange={this.handleInputChange}
-                                                value={this.state.price}
+                                                value={this.state.triggerQuantity}
                                                 required
                                             />
-                                            {this.state.submitted && !this.state.price && <div className="mandatory">{window.strings['PRICE']['SET_PRICE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.triggerQuantity && <div className="mandatory">{window.strings['PRICE']['TIGGER_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
+                                        {/* <div> */}
 
-                                        <div className="form-group col-md-4">
+                                        {/* </div> */}
+                                        <div className="form-group col-md-1">
+                                            <input type="checkbox" name="prioritys" value={this.state.prioritys} onChange={this.checkBoxChange} checked={this.state.prioritys} className="check-input" />
+                                            <span class="form-control tilde-code">&#8765;</span>
+                                        </div>
+                                        <div className="form-group col-md-3 pl-0">
+                                            {/* <input type="checkbox" name="prioritys" value={this.state.prioritys} onChange={this.checkBoxChange} checked={this.state.prioritys} /><br /> */}
                                             <label>{window.strings.PRICE.SET_START_QUANTITY + ' *'}</label>
                                             <input type="number"
                                                 placeholder="Set Quantity"
@@ -547,33 +588,33 @@ class CreatePrice extends Component {
                                                 onKeyPress={this.handleBoxQuantityChange}
                                                 value={this.state.boxQuantity}
                                                 required
-
+                                                disabled={this.state.priceId}
                                             />
-                                            {this.state.submitted && !this.state.boxQuantity && <div className="mandatory">{window.strings['PRICE']['BOX_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.boxQuantity && <div className="mandatory">{window.strings['PRICE']['SET_START_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="form-group col-md-4 px-0">
                                             <label>{window.strings.PRICE.SET_END_QUANTITY}</label>
                                             <input type="number"
                                                 placeholder="Set Quantity"
                                                 className={classnames('form-control', {
-                                                    'is-invalid': errors.boxQuantity
+                                                    'is-invalid': errors.boxEndQuantity
                                                 })}
-                                                name="boxQuantity"
+                                                name="boxEndQuantity"
                                                 onChange={this.handleBoxQuantityChange}
                                                 onKeyPress={this.handleBoxQuantityChange}
-                                                value={this.state.boxQuantity}
+                                                value={this.state.boxEndQuantity}
                                                 required
-
+                                                disabled={this.state.priceId}
                                             />
-                                            {this.state.submitted && !this.state.boxQuantity && <div className="mandatory">{window.strings['PRICE']['BOX_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.boxEndQuantity && <div className="mandatory">{window.strings['PRICE']['BOX_QUANTITY'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         <div className="form-group col-md-4">
-                                            <label>{window.strings.PRICE.SET_QUANTITY_TYPE}</label>
-                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange}>
+                                            <label>{window.strings.PRICE.SET_QUANTITY_TYPE + ' *'}</label>
+                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled={this.state.priceId}>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
                                             </select>
-                                            {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['PRICE']['WEIGHT'] + ' ' + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && this.state.weightId == 0 && <div className="mandatory">{window.strings['PRICE']['SET_QUANTITY_TYPE'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                         {this.state.offerArray.map((offerArray, idx) => (

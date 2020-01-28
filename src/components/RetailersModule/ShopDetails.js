@@ -158,7 +158,6 @@ class ShopDetails extends React.Component {
         };
         toastr.confirm(message, toastrConfirmOptions, "Transfer")
     }
-
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
         let shopAddressLat = profile.shopAddress && profile.shopAddress.latitude ? profile.shopAddress.latitude : '';
@@ -249,7 +248,8 @@ class ShopDetails extends React.Component {
                                 <div className="farmer-address col-md-6 mb-2">
                                     <h4 className="user-title m-0">Shop Locality</h4>
                                     <p className="centext title sub-farm">
-                                        {profile.shopAddress && profile.shopAddress.address2}
+                                        {profile.shopLocalty}
+                                        {/* {profile.shopAddress && profile.shopAddress.address2} */}
                                     </p>
                                 </div>
                                 <div className="farmer-address col-md-6 mb-2">

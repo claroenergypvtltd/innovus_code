@@ -104,7 +104,7 @@ class CreatePool extends Component {
         this.props.history.push({ pathname: path.pool.list, state: { poolSessionData: 'poolSessionBack' } })
     }
     handleInputChange = (e) => {
-        if (e.target.name == "updateQuantity" && e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) {
+        if (e.target.name == "updateQuantity" && (e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) || e.target.name == "updateQuantity" && (e.target.value.includes("."))) {
             toastr.error("Invalid Increase/Decrease quantity")
             this.setState({ [e.target.name]: '' })
         } else {
@@ -199,7 +199,7 @@ class CreatePool extends Component {
                                             onChange={this.handleInputChange}
                                             value={this.state.name}
                                             className={classnames('form-control')}
-                                            disabled={this.state.poolId}
+                                        // disabled={this.state.poolId}
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
@@ -229,7 +229,7 @@ class CreatePool extends Component {
                                     </div>
 
                                     <div className="form-group col-md-4">
-                                        <label>{window.strings.CROP.TOTAL_QUANTITY}</label>
+                                        <label>{window.strings.CROP.TOTAL_QUANTITY} {" (Set)"}</label>
                                         <input
                                             type="number"
                                             placeholder="Available Quantity"
@@ -244,7 +244,7 @@ class CreatePool extends Component {
                                         />
                                     </div>
                                     <div className="form-group col-md-4 px-0">
-                                        <label>{window.strings.CROP.UPDATE_QUANTITY}</label>
+                                        <label>{window.strings.CROP.UPDATE_QUANTITY}{" (Set)"}</label>
                                         <input
                                             type="number"
                                             placeholder="Increase/Decrease Quantity"
