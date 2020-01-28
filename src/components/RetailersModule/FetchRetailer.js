@@ -25,6 +25,7 @@ import { getDcCodeData } from '../../actions/salesAgentAction';
 import { imageBaseUrl } from '../../config/config';
 import { httpServices } from '../../services/http.services'
 import { CSVLink, CSVDownload } from "react-csv";
+import Geocode from "react-geocode";
 
 class FetchRetailer extends React.Component {
     csvLink = React.createRef()
@@ -49,11 +50,12 @@ class FetchRetailer extends React.Component {
             dcCode: '',
             clearCheck: true,
             currentPage: 0,
-            itemPerPage: 5,
+            itemPerPage: 10,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
             filterWithPagination: true,
-            exportAllData: []
+            exportAllData: [],
+            localityData: []
         }
     }
     componentWillMount() {
@@ -97,12 +99,13 @@ class FetchRetailer extends React.Component {
     componentWillReceiveProps(newProps) {
         if (newProps.list.datas && !this.state.popup) {
             let selectlist = newProps.list.datas;
+            this.getLocalty(selectlist);
             let Lists = selectlist && selectlist.map(item => {
                 item.selectBox = this.viewCrop(item.id, item.status, item.isActive);
                 return item;
             })
             this.setState({
-                data: Lists, exceldatas: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount
+                data: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount
             })
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
@@ -110,18 +113,66 @@ class FetchRetailer extends React.Component {
             this.getRetailerList();
         }
     }
+
+    getLocalty = (excelDatas) => {
+        let locArray = [];
+        let excelCount = excelDatas.length;
+        let count = 1;
+        excelDatas && excelDatas.forEach((item, index) => {
+            Geocode.fromLatLng(item.shopAddress.latitude, item.shopAddress.longitude).then(resp => {
+                if (resp && resp.results && resp.results[0] && resp.results[0].address_components) {
+                    let locality = resp.results[0].address_components
+                    let subLocalty = "";
+                    let district = "";
+                    let state = "";
+                    let pincode = "";
+
+                    locality.map(item => {
+                        if (item.types.includes("sublocality")) {
+                            subLocalty = item.long_name
+                        }
+                        if (item.types.includes("locality")) {
+                            district = item.long_name
+                        }
+                        if (item.types.includes("administrative_area_level_1")) {
+                            state = item.long_name
+                        }
+                        if (item.types.includes("postal_code")) {
+                            pincode = item.long_name
+                        }
+                    })
+                    excelDatas[index].shopLocalty = subLocalty + ' ' + district + ', ' + state + ', ' + pincode
+                    if (count == excelCount) {
+                        this.setState({ exceldatas: excelDatas })
+                    }
+                    count++
+
+                }
+            });
+        })
+    }
+
     callAllUserAPis() {
         this.getRetailerList();
         this.getStateList();
         this.fetchAgents();
         this.getDCData();
         this.getCityList();
+        this.setApiKey();
     }
     componentDidUpdate(preProps) {
         if (preProps.searchText != this.props.searchText) {
             this.getRetailerList();
         }
     }
+
+    setApiKey = () => {
+        Geocode.setApiKey("AIzaSyAHsNiCWANHwz9j7vrYA70c37dOgHQyAvU");
+        Geocode.setLanguage("en");
+        Geocode.setRegion("es");
+        Geocode.enableDebug();
+    }
+
     getStateList() {
         let obj = {
             "countryId": 101
@@ -501,6 +552,15 @@ class FetchRetailer extends React.Component {
             }
         })
     };
+
+    handleCountChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        }, () => {
+            this.getRetailerList();
+        })
+    }
+
     render() {
         let dcData = [];
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
@@ -539,10 +599,10 @@ class FetchRetailer extends React.Component {
             let obj = { "label": item.name, "value": item.id, "name": "cityId" };
             cityDropDown.push(obj);
         })
-        this.state.exceldatas && this.state.exceldatas.map((item, index) => {
+
+        this.state.exceldatas && this.state.exceldatas.forEach((item, index) => {
             item.shopAddrss = item.shopAddress && item.shopAddress.address1 + ',' + item.shopAddress.address2;
             item.shopAddrss1 = item.shopAddress && item.shopAddress.address1 ? item.shopAddress.address1 : '-'
-            item.shopLocalty = item.shopAddress && item.shopAddress.address2 ? item.shopAddress.address2 : '-'
             item.shopType = item.shopType && item.shopType.type ? item.shopType.type : item.shopType ? item.shopType : '-'
             if (item && item.shopAddress && item.shopAddress.name) {
                 item.shopNames = item.shopAddress.name
@@ -554,6 +614,7 @@ class FetchRetailer extends React.Component {
             } else {
                 item.agentName = '-'
             }
+
             item.shopAddressDataCountry = item.shopAddressData && item.shopAddressData.countrys && item.shopAddressData.countrys.name;
             item.shopAddressDataState = item.shopAddressData && item.shopAddressData.states && item.shopAddressData.states.name
             item.shopAddressDataCity = item.shopAddressData && item.shopAddressData.cities && item.shopAddressData.cities.name;
@@ -571,6 +632,7 @@ class FetchRetailer extends React.Component {
             item.shopImageLink = imageBaseUrl + item.shopAddress.image
             excelDatas.push(item);
         })
+
         this.state.exportAllData && this.state.exportAllData.map((item, index) => {
             item.shopAddrss = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address1 + ',' + item.shopAddres[0].address2;
             item.shopAddrss1 = item.shopAddres && item.shopAddres[0] && item.shopAddres[0].address1 ? item.shopAddres[0].address1 : '-'
@@ -623,6 +685,7 @@ class FetchRetailer extends React.Component {
             excelitem.ShopImageLink = item.shopImageLink && item.shopImageLink === '-' ? '' : item.shopImageLink;
             PrintexcelDatas.push(excelitem);
         });
+
         return (
             <div className=" mt-4">
                 <button type="button" className="excel-btn export-file ml-2" onClick={() => this.getAllretailer()}>Export</button>
@@ -787,6 +850,16 @@ class FetchRetailer extends React.Component {
                         onRowSelected={this.handleRowChange}
                         handleRowChange={this.handleRowChange}
                     />
+                    <div className="page-box">
+                        <label className="mr-3">Show / Page:</label>
+                        <select required name="itemPerPage" className="" value={this.state.itemPerPage} onChange={this.handleCountChange}>
+                            <option value="">Select</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
                     <ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
                 </div></div >
         );

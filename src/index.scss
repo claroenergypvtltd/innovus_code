@@ -1926,6 +1926,15 @@ select:focus {
 .Select-placeholder{
   color: $form-color;
 }
+.check-input{
+  font-size: 20px;
+}
+.tilde-code{
+  margin-top: 8px;
+  font-size: 33px;
+  height: 38px;
+  line-height: 13px;
+}
 /****************************Pagination Section************************/
 
 .pagination {
@@ -1964,7 +1973,11 @@ select:focus {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-
+.page-box{
+  position: absolute;
+    bottom: 0;
+    left: 40px;
+}
 /****************************Order Section************************/
 .tick-color{
   background-image: url(../src/assets/images/Deliveredcheck_icon1.png);
