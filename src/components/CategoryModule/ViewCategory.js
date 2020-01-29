@@ -23,16 +23,21 @@ class ViewCategory extends Component {
             currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             categoryId: '',
-            dcCode: ''
+            dcCode: '',
+            ParentCategoryHeading: ''
         }
     }
-
+    componentWillMount() {
+        if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryName) {
+            this.setState({ ParentCategoryHeading: this.props.location.state.categoryName })
+        }
+    }
     componentDidMount() {
         if (this.props && this.props.location && this.props.location.state && this.props.location.state.categoryId
             && this.props.location.state.cropSessionData == 'cropSessionBack') {
             var subCatSessData = sessionStorage && sessionStorage.subCatSessionData && JSON.parse(sessionStorage.subCatSessionData)
             let data = subCatSessData.search || subCatSessData.dcCode ? true : false;
-            this.setState({ categoryId: this.props.location.state.categoryId, currentPage: subCatSessData.page, itemPerPage: subCatSessData.limit, search: subCatSessData.search, advanceSearch: data, dcCodeObj: subCatSessData.dcCodeObj, dcCode: subCatSessData.dcCode }, () => {
+            this.setState({ categoryId: this.props.location.state.categoryId, ParentCategoryHeading: subCatSessData.parentCatName, currentPage: subCatSessData.page, itemPerPage: subCatSessData.limit, search: subCatSessData.search, advanceSearch: data, dcCodeObj: subCatSessData.dcCodeObj, dcCode: subCatSessData.dcCode }, () => {
                 this.getDCData();
                 this.getSpecificData();
             })
@@ -53,8 +58,7 @@ class ViewCategory extends Component {
         }
         if (nextProps.categoryData && nextProps.categoryData.specificData && nextProps.categoryData.specificData.data && nextProps.categoryData.specificData.data.datas) {
             let Data = nextProps.categoryData.specificData.data;
-            let categoryHeading = Data && Data.datas[0] && Data.datas[0].categoryName;
-            this.setState({ CategoryListDatas: Data.datas, ParentCategoryHeading: categoryHeading, pageCount: Data.totalCount / this.state.itemPerPage, totalCount: Data.totalCount })
+            this.setState({ CategoryListDatas: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage, totalCount: Data.totalCount })
         }
         if (nextProps.categoryData && nextProps.categoryData.updatedStatus == "200") {
             store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
@@ -118,7 +122,8 @@ class ViewCategory extends Component {
             "limit": this.state.itemPerPage,
             "search": this.state.search,
             "dcCode": this.state.dcCode,
-            "dcCodeObj": this.state.dcCodeObj
+            "dcCodeObj": this.state.dcCodeObj,
+            "parentCatName": this.state.ParentCategoryHeading
         }
         sessionStorage.setItem('subCatSessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId, cropId: this.state.categoryId } });
@@ -143,7 +148,8 @@ class ViewCategory extends Component {
             "limit": this.state.itemPerPage,
             "search": this.state.search,
             "dcCode": this.state.dcCode,
-            "dcCodeObj": this.state.dcCodeObj
+            "dcCodeObj": this.state.dcCodeObj,
+            "parentCatName": this.state.ParentCategoryHeading
         }
         sessionStorage.setItem('subCatSessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.crop.add, state: { cropId: this.state.categoryId } });

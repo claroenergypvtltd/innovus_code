@@ -23,7 +23,8 @@ class CreatePool extends Component {
             weightId: 0,
             weight: 0,
             updateQuantity: '',
-            currentSelection: []
+            currentSelection: [],
+            quantityUnit: ''
         }
     }
     componentDidMount() {
@@ -53,15 +54,16 @@ class CreatePool extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.poolId && newProps && newProps.poolData && newProps.poolData.Lists && newProps.poolData.Lists.datas && newProps.poolData.Lists.datas[0]) {
             let editData = newProps.poolData.Lists.datas[0];
             let poolAry = [];
+            let rupeesUnit = editData.quantityUnit
             editData.pools && editData.pools.forEach((item, index) => {
                 let obj = {
                     "value": editData.productName[index] + '-' + item.dcCode,
                     "label": editData.productName[index] + '-' + item.dcCode,
-                    "parentId": item.productId
+                    "parentQuantityData": { "parentId": item.productId, "rupeesUnit": rupeesUnit }
                 }
                 poolAry.push(obj);
             })
-            this.setState({ name: editData.name, weightId: editData.quantityUnit, weight: editData.quantity, currentSelection: poolAry })
+            this.setState({ name: editData.name, quantityUnit: editData.quantityUnit, weight: editData.quantity, currentSelection: poolAry })
         }
     }
 
@@ -117,21 +119,23 @@ class CreatePool extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-
-        if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0 && this.state.weightId) {
+        let rupeesUnit = 0;
+        if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0) {
             let poolAry = [];
             this.state.currentSelection && this.state.currentSelection.map(item => {
                 let poolData = item.label && item.label.split('-');
+                rupeesUnit = item.parentQuantityData.rupeesUnit;
                 let obj = {
-                    productId: item.parentId,
+                    productId: item.parentQuantityData && item.parentQuantityData.parentId,
                     dcCode: poolData[1]
                 }
                 poolAry.push(obj);
             })
+
             let obj = {
                 "name": this.state.name,
                 "quantity": (Number(this.state.weight) + Number(this.state.updateQuantity)),
-                "quantityUnit": this.state.weightId,
+                "quantityUnit": rupeesUnit,
                 "pools": poolAry,
                 "id": this.props.location && this.props.location.state && this.props.location.state.poolId
             }
@@ -149,13 +153,9 @@ class CreatePool extends Component {
             let obj = { "label": item.name, "value": item.id };
             dropDownData.push(obj);
         })
-        const weightDropDown = this.state.weightDatas && this.state.weightDatas.map((item, index) => {
-            return <option key={index}
-                value={item.id}> {item.name}</option>
-        });
         let pollData = [];
         this.state.PriceLists && this.state.PriceLists.map((item) => {
-            let obj = { "value": item.name + '-' + item.productDetail.dcCode, "label": item.name + '-' + item.productDetail.dcCode, indeterminate: true, "parentId": item.id };
+            let obj = { "value": item.name + '-' + item.productDetail.dcCode, "label": item.name + '-' + item.productDetail.dcCode, indeterminate: true, "parentQuantityData": { "parentId": item.id, "rupeesUnit": item.productDetail.rupeesUnit } };
             pollData.push(obj);
         })
         let plcHolder = "";
@@ -203,7 +203,7 @@ class CreatePool extends Component {
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="form-group col-md-6">
                                         <label>{window.strings.PRICE.SELECT_POOL} *</label>
                                         <Select
 
@@ -228,7 +228,7 @@ class CreatePool extends Component {
                                         />
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group col-md-6">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY} {" (Set)"}</label>
                                         <input
                                             type="number"
@@ -243,7 +243,7 @@ class CreatePool extends Component {
                                             disabled
                                         />
                                     </div>
-                                    <div className="form-group col-md-4 px-0">
+                                    <div className="form-group col-md-6">
                                         <label>{window.strings.CROP.UPDATE_QUANTITY}{" (Set)"}</label>
                                         <input
                                             type="number"
@@ -257,14 +257,6 @@ class CreatePool extends Component {
                                             value={this.state.updateQuantity}
                                             required
                                         />
-                                    </div>
-                                    <div className="form-group col-md-4">
-                                        <label>{window.strings.PRICE.TYPE} *</label>
-                                        <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} >
-                                            <option value="">Select</option>
-                                            {weightDropDown}
-                                        </select>
-                                        {this.state.submitted && !this.state.weightId && <div className="mandatory">{window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div>}
                                     </div>
                                 </form>
                             </div>
@@ -280,11 +272,9 @@ class CreatePool extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        priceData: state.price ? state.price : {},
-        poolData: state.pool
-    };
-}
+const mapStateToProps = (state) => ({
+    priceData: state.price ? state.price : {},
+    poolData: state.pool
+})
 
 export default connect(mapStateToProps, { getPriceList, submitPool, getPoolList })(CreatePool);

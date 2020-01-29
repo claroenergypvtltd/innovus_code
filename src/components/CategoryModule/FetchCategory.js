@@ -54,7 +54,7 @@ class CategoryList extends Component {
         return ViewPage;
     }
     componentWillReceiveProps(newProps) {
-        if (newProps.getLists) {           
+        if (newProps.getLists) {
             this.setState({ data: newProps.getLists.datas, pageCount: newProps.getLists.totalCount / this.state.itemPerPage, totalCount: newProps.getLists.totalCount });
         }
         if (newProps.categoryData && newProps.categoryData.deletedStatus == "200") {
@@ -87,7 +87,7 @@ class CategoryList extends Component {
             "limit": this.state.itemPerPage
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
-        this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id } });
+        this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id, categoryName: Data.name } });
     }
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
