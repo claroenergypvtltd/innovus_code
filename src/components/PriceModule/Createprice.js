@@ -141,7 +141,7 @@ class CreatePrice extends Component {
         }
         if (nextProps.priceData && nextProps.priceData.specificData && nextProps.priceData.specificData.datas) {
             if (nextProps.priceData.specificData.datas && nextProps.priceData.specificData.datas[0] && nextProps.priceData.specificData.datas[0].productDetail) {
-                showweight = nextProps.priceData.specificData.datas[0].productDetail.totalQuantity ? nextProps.priceData.specificData.datas[0].productDetail.totalQuantity : 0
+                showweight = Number.isInteger(nextProps.priceData.specificData.datas[0].productDetail.totalQuantity) ? nextProps.priceData.specificData.datas[0].productDetail.totalQuantity : 0
             }
             store.dispatch({ type: PRICE_SPECIFIC_DATA_SUCCESS, specificData: "" })
             this.setState({ weight: showweight })
@@ -231,7 +231,7 @@ class CreatePrice extends Component {
             if (idx !== sidx) return offerArrayolder;
             let quantityValue = '';
             if ((evt.target.value.includes('.'))) {
-                quantityValue = Number(evt.target.value).toFixed(0)
+                quantityValue = parseInt(evt.target.value)
             } else {
                 quantityValue = Number(evt.target.value)
             }
@@ -341,12 +341,22 @@ class CreatePrice extends Component {
                     }
                 }
                 if (this.state.boxEndQuantity) {
-                    if (this.state.boxQuantity >= this.state.boxEndQuantity) {
+                    if (parseInt(this.state.boxQuantity) > parseInt(this.state.boxEndQuantity)) {
                         toastr.error("Set End Quantity must be greater or equal to Set start quantity");
                         isValid = false
                         return
                     }
                 }
+                if (this.state.updateQuantity && this.state.updateQuantity.includes('-')) {
+                    if (Math.abs(this.state.updateQuantity) > this.state.weight) {
+                        debugger
+                        toastr.error("Increase/Decrease Quantity must be greater than Available quantity");
+                        isValid = false
+                        return
+                    }
+                }
+                // }
+                //  (this.state.updateQuantity < this.state.weight)
 
 
                 if (!this.state.boxEndQuantity && !this.state.prioritys) {
@@ -365,7 +375,7 @@ class CreatePrice extends Component {
         if (!isDuplicateCheck) {
             toastr.error("Checkbox or Set End Quantity must be required");
         }
-        if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.price && this.state.boxQuantity && this.state.dcCode && this.state.triggerQuantity) {
+        if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.price && this.state.boxQuantity && this.state.dcCode) {
             let flag;
             this.state.updateQuantity < 0 ? flag = 1 : flag = 0;
 
@@ -553,9 +563,9 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.PRICE.TIGGER_QUANTITY + ' *'}</label>
+                                            <label>{window.strings.PRICE.TIGGER_QUANTITY + " (Set)"}</label>
                                             <input type="number"
-                                                placeholder="triggerQuantity"
+                                                placeholder="TriggerQuantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.triggerQuantity
                                                 })}
@@ -566,7 +576,7 @@ class CreatePrice extends Component {
                                                 value={this.state.triggerQuantity}
                                                 required
                                             />
-                                            {this.state.submitted && !this.state.triggerQuantity && <div className="mandatory">{window.strings['PRICE']['TIGGER_QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.submitted && !this.state.triggerQuantity && <div className="mandatory">{window.strings['PRICE']['TIGGER_QUANTITY'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         {/* <div> */}
 

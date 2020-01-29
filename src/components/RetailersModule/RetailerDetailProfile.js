@@ -52,7 +52,7 @@ class RetailerDetailProfile extends React.Component {
                 // let state = locality[3].short_name
                 // let pincode = locality[5].short_name
 
-                newProps.retailerdetails.Lists.shopLocalty = subLocalty + '  ' + district + ', ' + state + ', ' + pincode
+                newProps.retailerdetails.Lists.shopLocalty = (subLocalty ? subLocalty + ', ' : '') + district + ', ' + state + ', ' + pincode
                 this.setState({ profileData: newProps.retailerdetails.Lists })
 
             }
