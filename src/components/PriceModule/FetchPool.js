@@ -10,7 +10,7 @@ class FetchPool extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Pool ID", "Pool Name", "Total Available quantity(Unit)", "Number of Item", "Actions"],
+            TableHead: ["Pool ID", "Pool Name", "Total Available quantity (Set)", "Number of Item", "Actions"],
             advanceSearch: false,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             currentPage: 0,
