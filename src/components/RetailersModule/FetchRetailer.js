@@ -141,7 +141,7 @@ class FetchRetailer extends React.Component {
                             pincode = item.long_name
                         }
                     })
-                    excelDatas[index].shopLocalty = subLocalty + ' ' + district + ', ' + state + ', ' + pincode
+                    excelDatas[index].shopLocalty = (subLocalty ? subLocalty + ', ' : '') + district + ', ' + state + ', ' + pincode
                     if (count == excelCount) {
                         this.setState({ exceldatas: excelDatas })
                     }
