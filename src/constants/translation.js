@@ -430,7 +430,8 @@ export const Translation = {
             "CUTOFF_TIME": "Order Cutoff-time",
             "DELIVERY_SLOT": "Delivery Slot",
             "ADD_DC": "ADD DC",
-            "EDIT_DC": "EDIT DC"
+            "EDIT_DC": "EDIT DC",
+            "REGION": "Region"
         }
 
     }
