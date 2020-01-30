@@ -47,6 +47,7 @@ import CreateDC from '../components/DCManagement/CreateDC'
 import FetchRegion from '../components/DCManagement/FetchRegion'
 // import CreateCredit from '../components/OrderModule/CreateCredit'
 
+import setting from '../components/Setting/setting'
 import AppSetting from '../components/Setting/AppSetting';
 
 
@@ -382,6 +383,11 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/dc/region',
                 component: FetchRegion,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/setting',
+                component: setting,
                 exact: true
             },
             {

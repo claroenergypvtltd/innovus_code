@@ -136,7 +136,7 @@ export const Translation = {
             "POOL_NAME": "Pool",
             "SET_PRICE": "Set Price",
             "SET_QUANTITY": "Set Quantity",
-            "TIGGER_QUANTITY": "Trigger Left Quantity",
+            "TRIGGER_QUANTITY": "Trigger Left Quantity",
             "SET_START_QUANTITY": "Set Start Quantity",
             "SET_END_QUANTITY": "Set End Quantity",
             "SET_QUANTITY_TYPE": "Set Quantity Type"
@@ -421,9 +421,13 @@ export const Translation = {
             "EMAIL_ADDRESS": "Enter a Email Address"
         },
         "APPSETTING": {
+            "SETTING": "SETTING",
             "APPVERSIONCONTROL": "APP VERSION CONTROL",
+            "QUANTITYTYPECONTROL": "QUANTITY TYPE CONTROL",
             "SUPPORTEDVERSION": "Supported Version",
-            "CURRENTVERSION": "Current Version"
+            "CURRENTVERSION": "Current Version",
+            "QUANTITY_TYPE_CONTROL": "Quantity Type Control",
+            "APP_VERSION_CONTROL": "App Version Control"
         },
         "DC_MANAGEMENT": {
             "STARTING_TIME": "Order Starting Time",
