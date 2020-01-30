@@ -46,6 +46,7 @@ export const path = {
         add: process.env.PUBLIC_URL + '/dc/add',
         list: process.env.PUBLIC_URL + '/dc',
         edit: process.env.PUBLIC_URL + '/dc/edit/',
+        region: process.env.PUBLIC_URL + '/dc/region'
     },
 
     reports: {
