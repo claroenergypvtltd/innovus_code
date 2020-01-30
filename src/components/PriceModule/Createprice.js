@@ -565,7 +565,7 @@ class CreatePrice extends Component {
                                         <div className="form-group col-md-6">
                                             <label>{window.strings.PRICE.TIGGER_QUANTITY + " (Set)"}</label>
                                             <input type="number"
-                                                placeholder="TriggerQuantity"
+                                                placeholder="Trigger Left Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.triggerQuantity
                                                 })}
@@ -583,13 +583,13 @@ class CreatePrice extends Component {
                                         {/* </div> */}
                                         <div className="form-group col-md-1">
                                             <input type="checkbox" name="prioritys" value={this.state.prioritys} onChange={this.checkBoxChange} checked={this.state.prioritys} className="check-input" />
-                                            <span class="form-control tilde-code">&#8765;</span>
+                                            <span class="form-control check-tilde">&#8765;</span>
                                         </div>
                                         <div className="form-group col-md-3 pl-0">
                                             {/* <input type="checkbox" name="prioritys" value={this.state.prioritys} onChange={this.checkBoxChange} checked={this.state.prioritys} /><br /> */}
                                             <label>{window.strings.PRICE.SET_START_QUANTITY + ' *'}</label>
                                             <input type="number"
-                                                placeholder="Set Quantity"
+                                                placeholder="Set Start Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.boxQuantity
                                                 })}
@@ -605,7 +605,7 @@ class CreatePrice extends Component {
                                         <div className="form-group col-md-4 px-0">
                                             <label>{window.strings.PRICE.SET_END_QUANTITY}</label>
                                             <input type="number"
-                                                placeholder="Set Quantity"
+                                                placeholder="Set End Quantity"
                                                 className={classnames('form-control', {
                                                     'is-invalid': errors.boxEndQuantity
                                                 })}

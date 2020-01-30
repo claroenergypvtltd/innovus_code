@@ -1927,13 +1927,15 @@ select:focus {
   color: $form-color;
 }
 .check-input{
-  font-size: 20px;
+  font-size: 23px;
 }
-.tilde-code{
-  margin-top: 8px;
+.check-tilde{
+  display: flex;
+  justify-content: center;
   font-size: 33px;
-  height: 38px;
-  line-height: 13px;
+  height: 37px;
+  line-height: 21px;
+  margin-top: 8px;
 }
 /****************************Pagination Section************************/
 
@@ -2727,7 +2729,7 @@ display: flex;
   width: 20px;
   padding: 10px 28px 0 0;
 }
-  /****************************Temporary datatable Section************************/
+  /****************************Datatable Section************************/
 
   .crop-table .rdt_TableCol_Sortable {
   font-weight: 600 ;
@@ -2853,6 +2855,59 @@ display: flex;
 // ::-webkit-scrollbar-thumb:window-inactive {
 //   background:rgba(0,0,0,0.05);
 // }
+
+
+//***************************************APP-SETTING*************************************//
+.set-title{
+  font-family: open sans;
+  font-weight: 600;
+  font-size: 15px;
+  margin-left: 50px;
+  margin-top: 20px;
+}
+.wrap-box{
+  height: 175px;
+  padding: 20px 0;
+}
+.set-title a{
+  color:$primary-color;
+}
+.set-title li {
+  margin-bottom: 18px;
+  list-style: circle;
+}
+.set-title a:hover{
+  color: $active-font-color;
+  //text-decoration: none;
+}
+.setting-tab{
+  // border-bottom: 1px solid $inset-color;
+  font-family: open sans;
+  font-weight: 600;
+  font-size: 15px;
+  position: relative;
+  bottom: 0;
+  margin: 0% auto;
+  display: grid;
+  padding: 16em 0;
+  justify-content: center;
+}
+.setting-tab li{
+  padding: 15px 30px;
+}
+.setting-select {
+  display: inline-block;
+  border-bottom: 3px solid $select-border;
+  cursor: pointer;
+  font-family: open sans;
+  color: $primary-color;
+}
+.setting-change {
+  color: $secondary-color;
+  cursor: pointer;
+  outline: none;
+}
+
 
 @media (min-width: 1200px) { }
 @media (min-width: 991px) and (max-width: 1199px) { }
