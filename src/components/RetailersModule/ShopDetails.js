@@ -158,6 +158,23 @@ class ShopDetails extends React.Component {
         };
         toastr.confirm(message, toastrConfirmOptions, "Transfer")
     }
+    viewCrop(status, isActive) {
+        let statusClass;
+        if (isActive == 0) {
+            statusClass = window.strings.RETAILERS.INACTIVE
+        }
+        else if (status == 0 && isActive == 1) {
+            statusClass = window.strings.RETAILERS.PENDING
+        } else if (status == 1 && isActive == 1) {
+            statusClass = window.strings.RETAILERS.ACCEPTED
+        } else if (status == 2 && isActive == 1) {
+            statusClass = window.strings.RETAILERS.REJECTED
+        }
+        if (status == 2) {
+            statusClass = window.strings.RETAILERS.REJECTED
+        }
+        return statusClass;
+    }
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
         let shopAddressLat = profile.shopAddress && profile.shopAddress.latitude ? profile.shopAddress.latitude : '';
@@ -189,8 +206,8 @@ class ShopDetails extends React.Component {
             </div>
             let transfer = <button onClick={() => this.handleTransferChange(item.userId, mobileNumbers)} className="trans-btn">Transfer</button>
             let distance = item.distance ? item.distance.toFixed(2) : '-';
-            let status = item.status == 1 && item.isActive == 1 ? <p> Accepted </p> : item.isActive == 0 && item.status == 1 ? <p> InActive</p> : item.status == 0 ? <p>Pending</p> : <p>Rejected</p>
-
+            let status = this.viewCrop(item.status, item.isActive)
+            // item.status == 1 && item.isActive == 1 ? <p> Accepted </p> : item.isActive == 0 ? <p> InActive</p> : item.status == 0 ? <p>Pending</p> : <p>Rejected</p>
             return { "itemList": [imageZoom, status, item.name, distance, item.address1 + item.address2, item.agentName, transfer], "itemId": item.id }
         })
 
