@@ -50,7 +50,8 @@ import FetchRegion from '../components/DCManagement/FetchRegion'
 import setting from '../components/Setting/setting'
 import AppSetting from '../components/Setting/AppSetting';
 import CreateRegion from '../components/DCManagement/CreateRegion'
-
+import FetchQuantityType from '../components/Setting/FetchQuantityType'
+import CreateQuantityType from '../components/Setting/CreateQuantityType';
 
 
 
@@ -403,6 +404,16 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/setting/appVersion',
                 component: AppSetting,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/setting/fetchquantitytype',
+                component: FetchQuantityType,
+                exact: true
+            }, ,
+            {
+                path: process.env.PUBLIC_URL + '/setting/createquantitytype',
+                component: CreateQuantityType,
                 exact: true
             },
             // {
