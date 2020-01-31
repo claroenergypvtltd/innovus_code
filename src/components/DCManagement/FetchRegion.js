@@ -4,6 +4,7 @@ import { TableData } from '../../shared/Table'
 import { ReactPagination } from '../../shared'
 import { resorceJSON } from '../../libraries'
 import { path } from '../../constants';
+import { getRegion } from '../../actions/regionAction'
 
 class FetchRegion extends Component {
     constructor(props) {
@@ -15,6 +16,24 @@ class FetchRegion extends Component {
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength
         }
+    }
+    componentDidMount() {
+        this.getRegionList()
+    }
+    componentWillReceiveProps(newProps) {
+        if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
+            this.setState({ regionListData: newProps.regionList.Lists.datas })
+        }
+    }
+    getRegionList = () => {
+        let obj = {
+            page: this.state.currentPage,
+            rows: this.state.itemPerPage
+        }
+        this.props.getRegion(obj)
+    }
+    itemEdit = (Data) => {
+        this.props.history.push({ pathname: path.region.add, state: { regionId: Data } })
     }
     formPath = () => {
         this.props.history.push({ pathname: path.region.add })
@@ -28,6 +47,15 @@ class FetchRegion extends Component {
         }
     }
     render() {
+        const regionData = this.state.regionListData && this.state.regionListData.map((item) => {
+            let dcCode = item.dcDatas && item.dcDatas.map((item) => {
+                return item.dcCode + " "
+            })
+            let dcName = item.dcDatas && item.dcDatas.map((item) => {
+                return item.name + " "
+            })
+            return { "itemList": [item.name, dcCode, dcName], "itemId": item.id }
+        })
         return (
             <div>
                 <div className="title-section row">
@@ -40,7 +68,7 @@ class FetchRegion extends Component {
                         </div>
                     </div>
                     <div className="col-12">
-                        <TableData TableHead={this.state.TableHead} handleEdit={this.itemEdit} />
+                        <TableData TableHead={this.state.TableHead} TableContent={regionData} handleEdit={this.itemEdit} />
                         <div className="row">
                             <div className="back-btn col-md-2"><button class="common-btn" onClick={this.redirectPage}>Back</button></div>
                             <div className="col-md-10">
@@ -53,7 +81,7 @@ class FetchRegion extends Component {
         )
     }
 }
-const mapStateToProps = (state) => {
-
-}
-export default connect(mapStateToProps, {})(FetchRegion)
+const mapStateToProps = (state) => ({
+    regionList: state.region
+})
+export default connect(mapStateToProps, { getRegion })(FetchRegion)
