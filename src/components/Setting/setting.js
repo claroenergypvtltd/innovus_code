@@ -14,13 +14,19 @@ export default class setting extends Component {
         }
     }
 
+    // appVersion
+    redirectControlPage = () => {
+
+        this.props.history.push({ pathname: path.appSetting.appVersion })
+    }
+
     render() {
         return (
             <div>
                 <h4 className="user-title">{window.strings.APPSETTING.SETTING}</h4>
                 <div className="main-wrapper wrap-box">
                     <ul className="set-title">
-                        <li><a href="#">{window.strings.APPSETTING.APPVERSIONCONTROL}</a></li>
+                        <li><a href="#" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}</a></li>
                         <li><a href="#">{window.strings.APPSETTING.QUANTITYTYPECONTROL}</a></li>
 
                     </ul>

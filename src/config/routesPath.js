@@ -49,6 +49,7 @@ import FetchRegion from '../components/DCManagement/FetchRegion'
 
 import setting from '../components/Setting/setting'
 import AppSetting from '../components/Setting/AppSetting';
+import CreateRegion from '../components/DCManagement/CreateRegion'
 
 
 
@@ -384,6 +385,15 @@ export const routesPath = [
                 path: process.env.PUBLIC_URL + '/dc/region',
                 component: FetchRegion,
                 exact: true
+            }, {
+                path: process.env.PUBLIC_URL + '/dc/region/add',
+                component: CreateRegion,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/dc/region/edit/:id?',
+                component: CreateRegion,
+                exact: true
             },
             {
                 path: process.env.PUBLIC_URL + '/setting',
@@ -391,7 +401,7 @@ export const routesPath = [
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/appsetting',
+                path: process.env.PUBLIC_URL + '/setting/appVersion',
                 component: AppSetting,
                 exact: true
             },

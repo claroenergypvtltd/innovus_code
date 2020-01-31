@@ -435,7 +435,11 @@ export const Translation = {
             "DELIVERY_SLOT": "Delivery Slot",
             "ADD_DC": "ADD DC",
             "EDIT_DC": "EDIT DC",
-            "REGION": "Region"
+            "REGION": "Region",
+            "ADD_REGION": "ADD REGION",
+            "EDIT_REGION": "EDIT REGION",
+            "REGION_NAME": "Region Name",
+            "SELECT_DC": "Select DC"
         }
 
     }
