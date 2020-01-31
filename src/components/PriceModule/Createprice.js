@@ -349,7 +349,6 @@ class CreatePrice extends Component {
                 }
                 if (this.state.updateQuantity && this.state.updateQuantity.includes('-')) {
                     if (Math.abs(this.state.updateQuantity) > this.state.weight) {
-                        debugger
                         toastr.error("Increase/Decrease Quantity must be greater than Available quantity");
                         isValid = false
                         return

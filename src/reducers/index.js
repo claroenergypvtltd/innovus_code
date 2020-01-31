@@ -16,6 +16,7 @@ import salesAgentReducer from './salesAgentReducer'
 import VehicleReducer from './VehicleReducer'
 import dcReducer from './dcReducer'
 import PoolReducer from './PoolReducer'
+import regionReducer from './regionReducer'
 
 export default combineReducers({
     errors: errorReducer,
@@ -34,6 +35,7 @@ export default combineReducers({
     salesAgent: salesAgentReducer,
     Vehicle: VehicleReducer,
     dc: dcReducer,
-    pool: PoolReducer
+    pool: PoolReducer,
+    region: regionReducer
 });
 

@@ -31,11 +31,11 @@ export default function (state = initialState, action) {
                 updatedData: action.updatedData
             }
 
-        case PRICE_DELETE_SUCCESS:
-            return state = {
-                ...state,
-                deleteStatus: action.deleteStatus
-            }
+        // case PRICE_DELETE_SUCCESS:
+        //     return state = {
+        //         ...state,
+        //         deleteStatus: action.deleteStatus
+        //     }
         default:
             return state;
     }

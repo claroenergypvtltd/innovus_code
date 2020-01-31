@@ -156,7 +156,9 @@ export const path = {
     },
     appSetting: {
         appVersion: process.env.PUBLIC_URL + '/setting/appVersion',
-        list: process.env.PUBLIC_URL + '/setting'
+        list: process.env.PUBLIC_URL + '/setting',
+        createQuantity: process.env.PUBLIC_URL + '/setting/createquantitytype',
+        fetchQuantity: process.env.PUBLIC_URL + '/setting/fetchquantitytype',
     },
     pool: {
         list: process.env.PUBLIC_URL + '/price/pool',

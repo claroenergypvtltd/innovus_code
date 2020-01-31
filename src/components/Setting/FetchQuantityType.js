@@ -4,6 +4,7 @@ import { TableData } from '../../shared/Table'
 import { ReactPagination } from '../../shared'
 import { resorceJSON } from '../../libraries'
 import { path } from '../../constants';
+import { getQuantityType, removeQuantityType } from '../../actions/appSettingAction'
 
 class FetchQuantityType extends Component {
     constructor(props) {
@@ -16,13 +17,29 @@ class FetchQuantityType extends Component {
             limitValue: resorceJSON.TablePageData.paginationLength
         }
     }
+    componentDidMount() {
+        this.getQuantityTypeList()
+    }
+    getQuantityTypeList = () => {
+        getQuantityType().then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ quantityTypeList: resp.datas, totalCount: resp.datas.length })
+            }
+        })
+    }
+    handleDelete = (Data) => {
+        removeQuantityType(Data)
+    }
     formPath = () => {
-        this.props.history.push('/setting/createquantitytype')
+        this.props.history.push({ pathname: path.appSetting.createQuantity })
     }
     redirectPage = () => {
         this.props.history.push({ pathname: path.appSetting.list })
     }
     render() {
+        const quantityList = this.state.quantityTypeList && this.state.quantityTypeList.map((item) => {
+            return { "itemList": [item.name], "itemId": item.id }
+        })
         return (
             <div>
                 <div className="title-section row">
@@ -35,7 +52,7 @@ class FetchQuantityType extends Component {
                         </div>
                     </div>
                     <div className="col-12">
-                        <TableData TableHead={this.state.TableHead} handleEdit={this.itemEdit} />
+                        <TableData TableHead={this.state.TableHead} TableContent={quantityList} handleDelete={this.handleDelete} />
                         <div className="row">
                             <div className="back-btn col-md-2"><button class="common-btn" onClick={this.redirectPage}>Back</button></div>
                             <div className="col-md-10">
