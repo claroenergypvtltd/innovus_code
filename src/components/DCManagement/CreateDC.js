@@ -164,15 +164,23 @@ class CreateDC extends Component {
             //     }
             // }
 
-            let obj = {
-                "name": this.state.name,
-                "surveyingArea": this.state.surveyingArea,
-                "orderStartTime": startTimeData,
-                "orderCutOffTime": cutOffTimeData,
-                "deliverySlot": this.state.deliverySlot.value,
-                "id": this.state.id
+            let fromTime = startTimeData && startTimeData.split(' ');
+            let toTime = cutOffTimeData && cutOffTimeData.split(' ');
+            if (fromTime[0] == toTime[0] && fromTime[1] == toTime[1]) {
+                toastr.error("please select valid time")
+            } else {
+                let obj = {
+                    "name": this.state.name,
+                    "surveyingArea": this.state.surveyingArea,
+                    "orderStartTime": startTimeData,
+                    "orderCutOffTime": cutOffTimeData,
+                    "deliverySlot": this.state.deliverySlot.value,
+                    "id": this.state.id
+                }
+                this.props.SubmitDC(obj);
             }
-            this.props.SubmitDC(obj);
+
+
         }
     }
 

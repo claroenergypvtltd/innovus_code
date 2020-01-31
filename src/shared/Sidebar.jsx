@@ -254,7 +254,7 @@ export const Sidebar = [
                 {/* {Label.Setting} */}
             </span>
         ),
-        path: path.appSetting.add,
+        path: path.appSetting.appVersion,
     },
     // {
     //     name: (

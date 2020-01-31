@@ -46,7 +46,7 @@ class AppSetting extends React.Component {
         }
     }
     redirect = () => {
-        this.props.history.push(path.dashboard.list)
+        this.props.history.goBack()
     }
     render() {
         const { errors } = this.state;

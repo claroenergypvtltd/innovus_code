@@ -155,7 +155,7 @@ class FetchDC extends Component {
         })
     };
     regionPath = () => {
-        this.props.history.push({ pathname: path.dc.region })
+        this.props.history.push({ pathname: path.region.list })
     }
     render() {
         let DcList = this.state.dcList && this.state.dcList.map((item, index) => {
@@ -178,7 +178,7 @@ class FetchDC extends Component {
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">
-                            <button className="common-btn" onClick={this.regionPath}>{window.strings.DC_MANAGEMENT.REGION}</button>
+                            {/* <button className="common-btn" onClick={this.regionPath}>{window.strings.DC_MANAGEMENT.REGION}</button> */}
                             <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>Add DC</button>
                         </div>
                     </div>

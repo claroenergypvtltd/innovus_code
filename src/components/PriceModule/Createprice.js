@@ -355,12 +355,8 @@ class CreatePrice extends Component {
                         return
                     }
                 }
-                // }
-                //  (this.state.updateQuantity < this.state.weight)
 
-
-                if (!this.state.boxEndQuantity && !this.state.prioritys) {
-                    // toastr.error("Checkbox or Set End Quantity must be required");
+                if (!this.state.boxEndQuantity && !this.state.prioritys || this.state.boxEndQuantity && this.state.prioritys) {
                     isValid = false
                     isDuplicateCheck = false
                     return
@@ -373,7 +369,7 @@ class CreatePrice extends Component {
         // }
         // debugger;
         if (!isDuplicateCheck) {
-            toastr.error("Checkbox or Set End Quantity must be required");
+            toastr.error("Any one of Checkbox or Set End Quantity must be required");
         }
         if (isValid == true && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.price && this.state.boxQuantity && this.state.dcCode) {
             let flag;
@@ -563,7 +559,7 @@ class CreatePrice extends Component {
                                         </div>
 
                                         <div className="form-group col-md-6">
-                                            <label>{window.strings.PRICE.TIGGER_QUANTITY + " (Set)"}</label>
+                                            <label>{window.strings.PRICE.TRIGGER_QUANTITY + " (Set)"}</label>
                                             <input type="number"
                                                 placeholder="Trigger Left Quantity"
                                                 className={classnames('form-control', {

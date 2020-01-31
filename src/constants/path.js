@@ -45,8 +45,13 @@ export const path = {
     dc: {
         add: process.env.PUBLIC_URL + '/dc/add',
         list: process.env.PUBLIC_URL + '/dc',
-        edit: process.env.PUBLIC_URL + '/dc/edit/',
-        region: process.env.PUBLIC_URL + '/dc/region'
+        edit: process.env.PUBLIC_URL + '/dc/edit/'
+    },
+
+    region: {
+        add: process.env.PUBLIC_URL + '/dc/region/add',
+        list: process.env.PUBLIC_URL + '/dc/region',
+        edit: process.env.PUBLIC_URL + '/dc/region/edit/',
     },
 
     reports: {
@@ -146,7 +151,8 @@ export const path = {
         edit: process.env.PUBLIC_URL + '/setting/plan/update/'
     },
     appSetting: {
-        add: process.env.PUBLIC_URL + '/appsetting'
+        appVersion: process.env.PUBLIC_URL + '/setting/appVersion',
+        list: process.env.PUBLIC_URL + '/setting'
     },
     pool: {
         list: process.env.PUBLIC_URL + '/price/pool',
