@@ -151,7 +151,7 @@ class FetchPool extends Component {
                 <div className="row">
                     <div className="back-btn col-md-2"><button class="common-btn" onClick={this.redirectPage}>Back</button></div>
                     <div className="col-md-10">
-                        < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: 10, totalCount: this.state.totalCount }} />
+                        < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />
                     </div>
                 </div>
             </div>

@@ -20,6 +20,9 @@ export default class setting extends Component {
         this.props.history.push({ pathname: path.appSetting.appVersion })
     }
 
+    quantityPath = () => {
+        this.props.history.push('/setting/fetchquantitytype')
+    }
     render() {
         return (
             <div>
@@ -27,7 +30,7 @@ export default class setting extends Component {
                 <div className="main-wrapper wrap-box">
                     <ul className="set-title">
                         <li><a href="#" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}</a></li>
-                        <li><a href="#">{window.strings.APPSETTING.QUANTITYTYPECONTROL}</a></li>
+                        <li><a href="#" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}</a></li>
 
                     </ul>
                 </div>

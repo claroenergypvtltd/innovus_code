@@ -53,7 +53,11 @@ export const path = {
         list: process.env.PUBLIC_URL + '/dc/region',
         edit: process.env.PUBLIC_URL + '/dc/region/edit/',
     },
-
+    region: {
+        add: process.env.PUBLIC_URL + '/dc/region/add',
+        list: process.env.PUBLIC_URL + '/dc/region',
+        edit: process.env.PUBLIC_URL + '/dc/region/edit/',
+    },
     reports: {
         add: process.env.PUBLIC_URL + '/reports/add',
         list: process.env.PUBLIC_URL + '/reports',

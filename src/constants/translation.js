@@ -427,7 +427,8 @@ export const Translation = {
             "SUPPORTEDVERSION": "Supported Version",
             "CURRENTVERSION": "Current Version",
             "QUANTITY_TYPE_CONTROL": "Quantity Type Control",
-            "APP_VERSION_CONTROL": "App Version Control"
+            "APP_VERSION_CONTROL": "App Version Control",
+            "ADD_QUANTITY_TYPE_CONTROL": "Add Quantity Type Control"
         },
         "DC_MANAGEMENT": {
             "STARTING_TIME": "Order Starting Time",

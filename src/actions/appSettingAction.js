@@ -27,3 +27,12 @@ export const SubmitSetting = (Data) => {
     })
 
 }
+
+export const getQuantityType = () => {
+    httpServices.get().then(resp => {
+
+    }).catch((error) => {
+        console.error("error", error);
+        // dispatch({ type: GET_ERRORS, payload: error });
+    })
+}

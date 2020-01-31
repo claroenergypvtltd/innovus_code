@@ -5,11 +5,11 @@ import { ReactPagination } from '../../shared'
 import { resorceJSON } from '../../libraries'
 import { path } from '../../constants';
 
-class FetchRegion extends Component {
+class FetchQuantityType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["Region Name", "Dc Code", "Dc Name", "Action"],
+            TableHead: ["QUANTITY TYPE CONTROL"],
             currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
@@ -17,26 +17,21 @@ class FetchRegion extends Component {
         }
     }
     formPath = () => {
-        this.props.history.push({ pathname: path.region.add })
+        this.props.history.push('/setting/createquantitytype')
     }
     redirectPage = () => {
-        this.props.history.push({ pathname: path.dc.list })
-    }
-    onChange = (data) => {
-        if (this.state.currentPage != data.selected) {
-            this.setState({ currentPage: data.selected })
-        }
+        this.props.history.push({ pathname: path.appSetting.list })
     }
     render() {
         return (
             <div>
                 <div className="title-section row">
                     <div className="title-card col-md-7">
-                        <h4 className="user-title">REGION</h4>
+                        <h4 className="user-title">{window.strings.APPSETTING.QUANTITY_TYPE_CONTROL}</h4>
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">
-                            <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.DC_MANAGEMENT.ADD_REGION}</button>
+                            <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.APPSETTING.ADD_QUANTITY_TYPE_CONTROL}</button>
                         </div>
                     </div>
                     <div className="col-12">
@@ -49,11 +44,12 @@ class FetchRegion extends Component {
                         </div>
                     </div>
                 </div>
+
             </div>
         )
     }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
 
 }
-export default connect(mapStateToProps, {})(FetchRegion)
+export default connect(mapStateToProps, {})(FetchQuantityType)
