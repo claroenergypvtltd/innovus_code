@@ -22,13 +22,13 @@ export default function (state = initialState, action) {
         case REGION_CREATE_SUCCESS:
             return state = {
                 ...state,
-                createdData: action.createdData
+                createdStatus: action.resp
             }
 
         case REGION_UPDATE_SUCCESS:
             return state = {
                 ...state,
-                updatedData: action.updatedData
+                updateStatus: action.resp
             }
 
         // case PRICE_DELETE_SUCCESS:

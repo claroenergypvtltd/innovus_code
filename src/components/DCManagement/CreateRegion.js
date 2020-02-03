@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { getTypes } from '../../actions/priceAction'
-import { getPriceList } from '../../actions/priceAction'
-import { submitPool, getPoolList } from '../../actions/poolAction'
 import store from '../../store/store';
 import { path } from '../../constants';
-import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS } from '../../constants/actionTypes';
+import { REGION_CREATE_SUCCESS, REGION_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr';
 import Select from "react-select";
+import { getSpecificRegion, submitRegion } from '../../actions/regionAction'
+import { fetchDcCodeList } from '../../actions/dcAction';
 
 class CreateRegion extends Component {
     constructor(props) {
@@ -17,94 +16,70 @@ class CreateRegion extends Component {
             errors: {},
             submitted: false,
             name: '',
-            currentSelection: []
+            currentSelection: [],
+            currentPage: 0,
+            itemPerPage: 10
         }
     }
     componentDidMount() {
-        this.getWeightDatas();
-        this.getPriceList();
-        if (this.props.location && this.props.location.state && this.props.location.state.poolId) {
-            this.setState({ poolId: this.props.location.state.poolId })
-            this.getPoolList();
+        this.getDcCodeData()
+        if (this.props.location && this.props.location.state && this.props.location.state.id) {
+            this.setState({ regionId: this.props.location.state.id })
+            this.getSpecificRegion();
         }
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps && newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
-            let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData })
-        }
-        if (newProps && newProps.poolData) {
-            if (newProps.poolData.createdStatus == "200") {
-                store.dispatch({ type: POOL_CREATE_SUCCESS, createdStatus: "" })
+        if (newProps && newProps.regionData) {
+            if (newProps.regionData.createdStatus == "200") {
+                store.dispatch({ type: REGION_CREATE_SUCCESS, createdStatus: "" })
                 this.redirectPage();
             }
-            if (newProps.poolData.updateStatus == "200") {
-                store.dispatch({ type: POOL_UPDATE_SUCCESS, updateStatus: "" })
+            if (newProps.regionData.updateStatus == "200") {
+                store.dispatch({ type: REGION_UPDATE_SUCCESS, updateStatus: "" })
                 this.redirectPage();
             }
         }
-        if (this.props.location && this.props.location.state && this.props.location.state.poolId && newProps && newProps.poolData && newProps.poolData.Lists && newProps.poolData.Lists.datas && newProps.poolData.Lists.datas[0]) {
-            let editData = newProps.poolData.Lists.datas[0];
+        if (this.props.location && this.props.location.state && this.props.location.state.id && newProps && newProps.regionData && newProps.regionData.specificData && newProps.regionData.specificData.datas && newProps.regionData.specificData.datas[0]) {
+            let editData = newProps.regionData.specificData.datas[0];
             let poolAry = [];
-            let rupeesUnit = editData.quantityUnit
-            editData.pools && editData.pools.forEach((item, index) => {
+            editData.dcDatas && editData.dcDatas.map((item) => {
                 let obj = {
-                    "value": editData.productName[index] + '-' + item.dcCode,
-                    "label": editData.productName[index] + '-' + item.dcCode,
-                    "parentQuantityData": { "parentId": item.productId, "rupeesUnit": rupeesUnit }
+                    "value": item.dcCode,
+                    "label": item.dcCode
                 }
                 poolAry.push(obj);
             })
-            this.setState({ name: editData.name, quantityUnit: editData.quantityUnit, weight: editData.quantity, currentSelection: poolAry })
+            this.setState({ name: editData.name, currentSelection: poolAry })
         }
     }
-
-    getPoolList = () => {
-        let obj = {
-            poolId: this.props.location.state.poolId
-        }
-        this.props.getPoolList(obj);
-    }
-
-    getWeightDatas = () => {
-        getTypes().then(resp => {
-            if (resp) {
-                this.setState({ typeDatas: resp }, () => {
-                    this.setWeightData();
-                })
+    getDcCodeData = () => {
+        let obj = { search: this.state.search }
+        fetchDcCodeList(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ dcDropData: resp.datas })
             }
         })
     }
-
-    getPriceList(type) {
+    getRegionList = () => {
         let obj = {
-            pages: 0
+            page: this.state.currentPage,
+            rows: this.state.itemPerPage
         }
-        this.props.getPriceList(obj)
+        this.props.getRegion(obj)
+    }
+    getSpecificRegion = () => {
+        let obj = {
+            id: this.props.location.state.id
+        }
+        this.props.getSpecificRegion(obj);
     }
 
-    setWeightData() {
-        let typeArray = [];
-        this.state.typeDatas && this.state.typeDatas.map(item => {
-            let obj = {
-                "name": item.name,
-                "id": item.id,
-            }
-            typeArray.push(obj);
-        })
-        this.setState({ weightDatas: typeArray });
-    }
     listPath = () => {
-        this.props.history.push({ pathname: path.region.list, state: { poolSessionData: 'regionSessionBack' } })
+        this.props.history.push({ pathname: path.region.list, state: { regionSessionData: 'regionSessionBack' } })
     }
     handleInputChange = (e) => {
-        if (e.target.name == "updateQuantity" && (e.target.value.includes("-") && Math.abs(e.target.value) > this.state.weight) || e.target.name == "updateQuantity" && (e.target.value.includes("."))) {
-            toastr.error("Invalid Increase/Decrease quantity")
-            this.setState({ [e.target.name]: '' })
-        } else {
-            e.charCode == 45 || e.charCode == 43 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
-        }
+        this.setState({ [e.target.name]: e.target.value })
     }
     handlePoolChange = (Data) => {
         this.setState({ currentSelection: Data });
@@ -112,15 +87,12 @@ class CreateRegion extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-        let rupeesUnit = 0;
         if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0) {
             let poolAry = [];
             this.state.currentSelection && this.state.currentSelection.map(item => {
-                let poolData = item.label && item.label.split('-');
-                rupeesUnit = item.parentQuantityData.rupeesUnit;
+                let dcId = item.label && item.label.split('DC');
                 let obj = {
-                    productId: item.parentQuantityData && item.parentQuantityData.parentId,
-                    dcCode: poolData[1]
+                    dcId: dcId[1]
                 }
                 poolAry.push(obj);
             })
@@ -128,13 +100,13 @@ class CreateRegion extends Component {
             let obj = {
                 "name": this.state.name,
                 "regionDc": poolAry,
-                "id": this.props.location && this.props.location.state && this.props.location.state.poolId
+                "id": this.props.location && this.props.location.state && this.props.location.state.id
             }
-            this.props.submitPool(obj);
+            this.props.submitRegion(obj);
         }
     }
     redirectPage = () => {
-        this.props.history.push({ pathname: path.pool.list, state: { poolSessionData: 'poolSessionBack' } });
+        this.props.history.push({ pathname: path.region.list, state: { poolSessionData: 'poolSessionBack' } });
     }
 
     render() {
@@ -145,8 +117,8 @@ class CreateRegion extends Component {
             dropDownData.push(obj);
         })
         let pollData = [];
-        this.state.PriceLists && this.state.PriceLists.map((item) => {
-            let obj = { "value": item.name + '-' + item.productDetail.dcCode, "label": item.name + '-' + item.productDetail.dcCode, indeterminate: true, "parentQuantityData": { "parentId": item.id, "rupeesUnit": item.productDetail.rupeesUnit } };
+        this.state.dcDropData && this.state.dcDropData.map((item) => {
+            let obj = { "value": item.dcCode, "label": item.dcCode, indeterminate: true };
             pollData.push(obj);
         })
         let plcHolder = "";
@@ -216,8 +188,7 @@ class CreateRegion extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    priceData: state.price ? state.price : {},
-    poolData: state.pool
+    regionData: state.region
 })
 
-export default connect(mapStateToProps, { getPriceList, submitPool, getPoolList })(CreateRegion);
+export default connect(mapStateToProps, { getSpecificRegion, fetchDcCodeList, submitRegion })(CreateRegion);

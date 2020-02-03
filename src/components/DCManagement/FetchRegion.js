@@ -22,7 +22,7 @@ class FetchRegion extends Component {
     }
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
-            this.setState({ regionListData: newProps.regionList.Lists.datas })
+            this.setState({ regionListData: newProps.regionList.Lists.datas, totalCount: newProps.regionList.Lists.totalCount })
         }
     }
     getRegionList = () => {
@@ -33,7 +33,7 @@ class FetchRegion extends Component {
         this.props.getRegion(obj)
     }
     itemEdit = (Data) => {
-        this.props.history.push({ pathname: path.region.add, state: { regionId: Data } })
+        this.props.history.push({ pathname: path.region.edit + Data, state: { id: Data } })
     }
     formPath = () => {
         this.props.history.push({ pathname: path.region.add })
