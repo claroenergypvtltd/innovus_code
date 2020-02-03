@@ -49,3 +49,14 @@ export const removeQuantityType = (Data) => {
         // dispatch({ type: GET_ERRORS, payload: error });
     })
 }
+
+export const SubmitQuantityType = (Data) => {
+    return httpServices.post('quantityUnits', Data).then(resp => {
+        if (resp) {
+            return resp;
+        }
+    }).catch((error) => {
+        console.error("error", error.resp);
+    })
+
+}

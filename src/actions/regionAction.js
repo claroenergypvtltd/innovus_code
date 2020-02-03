@@ -23,5 +23,33 @@ export const getSpecificRegion = (obj) => dispatch => {
     }).catch((error) => {
         console.error("error", error);
         dispatch({ type: GET_ERRORS, payload: error });
+
     })
+
 }
+
+
+// export const SubmitDC = (regionData) => dispatch => {
+//     if (regionData && regionData.id) {  // Check whether the Id is empty or not then respectively hit Add and Update
+//         httpServices.put(endPoint.distributeCentre, regionData).then(resp => {
+//             if (resp) {
+//                 toastr.success(resp.message);
+//                 dispatch({ type: DC_UPDATE_SUCCESS, resp: resp.status })
+//             }
+//         }).catch((error) => {
+//             console.error("error", error);
+//             dispatch({ type: DC_CREATE_SUCCESS, resp: error.status })
+//         })
+
+//     } else {
+//         httpServices.post(endPoint.distributeCentre, regionData).then(resp => {
+//             if (resp) {
+//                 toastr.success(resp.message);
+//                 dispatch({ type: DC_CREATE_SUCCESS, resp: resp.status })
+//             }
+//         }).catch(error => {
+//             dispatch({ type: DC_CREATE_SUCCESS, resp: error.status })
+//             console.error("error", error);
+//         })
+//     }
+// }
