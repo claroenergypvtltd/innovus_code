@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-// import { CheckedSelect } from 'react-select-checked';
-import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import { getTypes } from '../../actions/priceAction'
 import { getPriceList } from '../../actions/priceAction'
 import { submitPool, getPoolList } from '../../actions/poolAction'
@@ -10,8 +8,7 @@ import store from '../../store/store';
 import { path } from '../../constants';
 import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr';
-import Select, { components } from "react-select";
-import createClass from "create-react-class";
+import Select from "react-select";
 
 class CreateRegion extends Component {
     constructor(props) {
@@ -19,12 +16,8 @@ class CreateRegion extends Component {
         this.state = {
             errors: {},
             submitted: false,
-            weightDatas: [],
-            weightId: 0,
-            weight: 0,
-            updateQuantity: '',
-            currentSelection: [],
-            quantityUnit: ''
+            name: '',
+            currentSelection: []
         }
     }
     componentDidMount() {
@@ -134,9 +127,7 @@ class CreateRegion extends Component {
 
             let obj = {
                 "name": this.state.name,
-                "quantity": (Number(this.state.weight) + Number(this.state.updateQuantity)),
-                "quantityUnit": rupeesUnit,
-                "pools": poolAry,
+                "regionDc": poolAry,
                 "id": this.props.location && this.props.location.state && this.props.location.state.poolId
             }
             this.props.submitPool(obj);
@@ -165,22 +156,6 @@ class CreateRegion extends Component {
             plcHolder = "Select"
         }
 
-        const Option = createClass({
-            render() {
-                return (
-                    <div>
-                        <components.Option {...this.props}>
-                            <input
-                                type="checkbox"
-                                checked={this.props.isSelected}
-                                onChange={e => null}
-                            />{" "}
-                            <label>{this.props.value} </label>
-                        </components.Option>
-                    </div>
-                );
-            }
-        });
 
         return (
             <div className="clearfix ">
@@ -218,8 +193,7 @@ class CreateRegion extends Component {
                                                 })
                                             }}
                                             closeMenuOnSelect={false}
-                                            isMulti
-                                            components={{ Option }}
+                                            isMulti={true}
                                             options={pollData}
                                             hideSelectedOptions={false}
                                             value={this.state.currentSelection}
@@ -227,37 +201,6 @@ class CreateRegion extends Component {
                                             onChange={(e) => this.handlePoolChange(e)}
                                         />
                                     </div>
-
-                                    {/* <div className="form-group col-md-6">
-                                        <label>{window.strings.CROP.TOTAL_QUANTITY} {" (Set)"}</label>
-                                        <input
-                                            type="number"
-                                            placeholder="Available Quantity"
-                                            className={classnames('form-control', {
-                                                'is-invalid': errors.weight
-                                            })}
-                                            name="weight"
-                                            onChange={this.handleInputChange}
-                                            value={this.state.weight}
-                                            required
-                                            disabled
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-6">
-                                        <label>{window.strings.CROP.UPDATE_QUANTITY}{" (Set)"}</label>
-                                        <input
-                                            type="number"
-                                            placeholder="Increase/Decrease Quantity"
-                                            className={classnames('form-control', {
-                                                'is-invalid': errors.updateQuantity
-                                            })}
-                                            name="updateQuantity"
-                                            onChange={this.handleInputChange}
-                                            onKeyPress={this.handleInputChange}
-                                            value={this.state.updateQuantity}
-                                            required
-                                        />
-                                    </div> */}
                                 </form>
                             </div>
                             <div className="col-md-12 bottom-section">
