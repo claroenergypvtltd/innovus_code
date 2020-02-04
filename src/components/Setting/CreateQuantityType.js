@@ -68,7 +68,7 @@ class CreateQuantityType extends Component {
                 <div className="col-md-12 content form-adjust">
                     <div className="col-md-10">
                         <form onSubmit={this.handleSubmit} >
-                            <div className="form-group col-md-12">
+                            <div className="form-group col-md-6">
 
                                 <label>{window.strings.APPSETTING.QUANTITY_NAME + '*'}</label>
 

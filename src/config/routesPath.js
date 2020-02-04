@@ -53,6 +53,11 @@ import CreateRegion from '../components/DCManagement/CreateRegion'
 import FetchQuantityType from '../components/Setting/FetchQuantityType'
 import CreateQuantityType from '../components/Setting/CreateQuantityType';
 
+import reports from '../components/ReportModule/report';
+import CustomerOnboard from '../components/ReportModule/CustomerOnboard';
+import ExecutivePerformace from '../components/ReportModule/ExecutivePerformance';
+import PlacingOrder from '../components/ReportModule/PlacingOrder';
+import report from '../components/ReportModule/report';
 
 
 
@@ -341,16 +346,25 @@ export const routesPath = [
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/reports/inprogress',
-                component: DummyFile,
+                path: process.env.PUBLIC_URL + '/reports',
+                component: report,
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/reports/inprogress',
-                component: DummyFile,
+                path: process.env.PUBLIC_URL + '/reports/customerOnboard',
+                component: CustomerOnboard,
                 exact: true
             },
-
+            {
+                path: process.env.PUBLIC_URL + '/reports/executivePerformance',
+                component: ExecutivePerformace,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/reports/placingOrder',
+                component: PlacingOrder,
+                exact: true
+            },
 
             {
                 path: process.env.PUBLIC_URL + '/vehicle/add',

@@ -124,7 +124,7 @@ export const Sidebar = [
                 {/* {Label.reportLabel} */}
             </span>
         ),
-        path: path.inprogress.reports,
+        path: path.reports.list,
     },
     // {
     //     name: (

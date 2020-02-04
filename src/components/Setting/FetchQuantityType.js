@@ -44,7 +44,7 @@ class FetchQuantityType extends Component {
             <div>
                 <div className="title-section row">
                     <div className="title-card col-md-7">
-                        <h4 className="user-title">{window.strings.APPSETTING.QUANTITY_TYPE_CONTROL}</h4>
+                        <h4 className="user-title">{window.strings.APPSETTING.QUANTITYTYPECONTROL}</h4>
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">

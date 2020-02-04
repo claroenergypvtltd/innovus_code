@@ -6,7 +6,7 @@ export const path = {
     },
     inprogress: {
         payment: '/payment/inprogress',
-        reports: '/reports/inprogress',
+        // reports: '/reports/inprogress',
         order: '/order/inprogress/page',
         // list: process.env.PUBLIC_URL + '/inprogress'
     },
