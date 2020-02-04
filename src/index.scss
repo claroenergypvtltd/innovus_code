@@ -2712,6 +2712,23 @@ display: flex;
   color: $white;
   text-decoration: none;
 }
+.import-btn{
+  background-image:  $gradient-1;
+  color: $white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 34px;
+  height: 34px;
+  width: 65px;
+  top: 12px;
+  right: 312px;
+  position: absolute;
+}
+.import-hide{
+  visibility: hidden;
+}
 .retail-reset{
   margin: 6px 6px 0 0;
 }

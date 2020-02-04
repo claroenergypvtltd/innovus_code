@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import DataTableDynamic from '../../shared/DataTableDynamic';
-import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers, fetchAllRetailers } from '../../actions/SubmitRetailerAction';
+import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers, fetchAllRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction';
 import { fetchSalesAgent } from '../../actions/salesAgentAction';
 import { RETAILER_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { connect } from 'react-redux';
@@ -26,9 +26,12 @@ import { imageBaseUrl } from '../../config/config';
 import { httpServices } from '../../services/http.services'
 import { CSVLink, CSVDownload } from "react-csv";
 import Geocode from "react-geocode";
+import XLSX from 'xlsx';
+import { make_cols } from './MakeColumns';
 
 class FetchRetailer extends React.Component {
     csvLink = React.createRef()
+    fileLink = React.createRef()
     static contextTypes = {
         router: PropTypes.object,
     };
@@ -561,6 +564,67 @@ class FetchRetailer extends React.Component {
         })
     }
 
+    xlImport = (e) => {
+
+        const files = e.target.files;
+        if (files && files[0]) {
+            this.setState({ file: files[0] }, () => {
+                this.handleFile()
+            });
+        }
+    }
+
+    handleFile = () => {
+        /* Boilerplate to set up FileReader */
+        const reader = new FileReader();
+        const rABS = !!reader.readAsBinaryString;
+
+        reader.onload = (e) => {
+            /* Parse data */
+            const bstr = e.target.result;
+            const wb = XLSX.read(bstr, { type: rABS ? 'binary' : 'array', bookVBA: true });
+            /* Get first worksheet */
+            const wsname = wb.SheetNames[0];
+            const ws = wb.Sheets[wsname];
+            /* Convert array of arrays */
+            const data = XLSX.utils.sheet_to_json(ws);
+            /* Update state */
+            this.setState({ data: data, cols: make_cols(ws['!ref']) }, () => {
+
+                let assignArray = [];
+                this.state.data.map(item => {
+                    let assignObj = {
+                        "customerId": item.CustomerId ? item.CustomerId : "null",
+                        "agentId": item.AgentId ? item.AgentId : "null"
+                    }
+
+                    assignArray.push(assignObj);
+
+                })
+
+                let obj = {
+                    "assignUser": assignArray
+                }
+
+                this.props.SubmitRetailer(obj, true);
+
+            });
+
+        };
+
+        if (rABS) {
+            reader.readAsBinaryString(this.state.file);
+        } else {
+            reader.readAsArrayBuffer(this.state.file);
+        };
+    }
+
+    callFile = (e) => {
+        e.preventDefault();
+
+        this.fileLink.current.click()
+    }
+
     render() {
         let dcData = [];
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
@@ -689,6 +753,7 @@ class FetchRetailer extends React.Component {
         return (
             <div className=" mt-4">
                 <button type="button" className="excel-btn export-file ml-2" onClick={() => this.getAllretailer()}>Export</button>
+                <input type="file" ref={this.fileLink} className="form-control import-hide" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="file" onChange={this.xlImport} />
                 <CSVLink ref={this.csvLink} handleLegacy={true} filename='Retailers.csv' data={PrintexcelDatas}></CSVLink >
                 <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
                 <div className="retailersearchdiv">
@@ -698,6 +763,7 @@ class FetchRetailer extends React.Component {
                 </div>
                 <div id="menu">
                     <div className="assign-box">
+                        <button className="import-btn ml-2" onClick={this.callFile}>Import</button>
                         <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>
@@ -872,5 +938,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
     mapStateToProps,
-    { fetchRetailers, deleteRetailer, fetchSalesAgent },
+    { fetchRetailers, deleteRetailer, fetchSalesAgent, SubmitRetailer },
 )(FetchRetailer);
