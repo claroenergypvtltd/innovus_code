@@ -23,6 +23,20 @@ export const SubmitRetailer = (retailerData, updateRetailer) => dispatch => {
         })
     }
 }
+
+
+export const UpdateUsers = (retailerData) => dispatch => {
+    httpServices.put(endPoint.assignUser, retailerData).then(resp => {
+        if (resp) {
+            // dispatch({ type: RETAILER_CREATE_SUCCESS, status: resp.status, message: resp.message })
+            toastr.success(resp.message);
+        }
+    }).catch((error) => {
+        console.log("error", error);
+    })
+}
+
+
 export const fetchRetailers = (user) => dispatch => {
     let httpMethod = "";
     if (user.isEdit) {
