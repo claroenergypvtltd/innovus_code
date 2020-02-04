@@ -4,6 +4,7 @@ import { path } from '../../constants';
 import { SubmitQuantityType } from '../../actions/appSettingAction';
 import { FAQ_CREATE_SUCCESS, FAQ_UPDATE_SUCCESS } from '../../constants/actionTypes'
 import classnames from 'classnames';
+import { toastr } from 'react-redux-toastr'
 
 class CreateQuantityType extends Component {
     constructor(props) {
@@ -53,6 +54,7 @@ class CreateQuantityType extends Component {
             SubmitQuantityType(obj).then(resp => {
                 if (resp && resp.status == "200") {
                     this.listPath();
+                    toastr.success(resp.message)
                 }
             });
         }
