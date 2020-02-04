@@ -429,7 +429,7 @@ export const Translation = {
             "QUANTITY_TYPE_CONTROL": "Quantity Type Control",
             "APP_VERSION_CONTROL": "App Version Control",
             "ADD_QUANTITY_TYPE_CONTROL": "Add Quantity Type Control",
-            "QUANTITY_NAME": "quantityName",
+            "QUANTITY_NAME": "Quantity Name",
             "CREATE_TYPE": "CREATE QUANTITY TYPE",
             "EDIT_TYPE": "EDIT QUANTITY TYPE"
         },
@@ -444,6 +444,16 @@ export const Translation = {
             "EDIT_REGION": "EDIT REGION",
             "REGION_NAME": "Region Name",
             "SELECT_DC": "Select DC"
+        },
+        "REPORT": {
+            "REPORTMANAGEMENT": "REPORT MANAGEMENT",
+            "CUSTOMER_ONBOARD": "CUSTOMER ONBOARD",
+            "PLACING_ORDER": "PLACING ORDER",
+            "EXECUTIVE_PERFORMANCE": "SALES EXECUTIVE PERFORMANCE",
+            "NUMBER_CUSTOMER_ONBOARD": "NUMBER OF CUSTOMERS ONBOARDED",
+            "NUMBER_CUSTOMER_PLACEORDER": "NUMBER OF CUSTOMERS PLACING ORDER",
+            "MAP_VIEW": "Map View",
+            "GRAPH_VIEW": "List/Graph View"
         }
 
     }

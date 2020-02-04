@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import classnames from 'classnames';
 import { toastr } from '../../services';
 import { path } from '../../constants';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Constant } from '../../constants';
+
 
 export default class setting extends Component {
     constructor() {
@@ -10,7 +13,8 @@ export default class setting extends Component {
         this.state = {
             errors: {},
             submitted: false,
-
+            tabIndex: Constant.CONSTANT.ZERO,
+            selectedRoleId: Constant.CONSTANT.THREE,
         }
     }
 
@@ -23,18 +27,49 @@ export default class setting extends Component {
     quantityPath = () => {
         this.props.history.push('/setting/fetchquantitytype')
     }
+    tabChange = tabIndex => {
+        sessionStorage.removeItem('retsearchDatas');
+        let roleId =
+            tabIndex == Constant.CONSTANT.ZERO
+                ? Constant.CONSTANT.THREE
+                : Constant.CONSTANT.TWO;
+        this.setState({ tabIndex: tabIndex, selectedRoleId: roleId });
+    };
     render() {
         return (
             <div>
                 <h4 className="user-title">{window.strings.APPSETTING.SETTING}</h4>
-                <div className="main-wrapper wrap-box">
-                    <ul className="set-title">
+                <div className="main-wrapper setting-tab">
+                    {/* <ul className="set-title">
                         <li><a href="#" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}</a></li>
                         <li><a href="#" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}</a></li>
-
-                    </ul>
+                    </ul> */}
+                    <section className="set-box">
+                        <button className="set-btn set-change set-select" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}</button>
+                        <span className="set-line"></span>
+                        <button className="set-btn set-change set-select" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}</button>
+                    </section>
                 </div>
             </div>
+
+            // <Tabs
+            //     selectedIndex={this.state.tabIndex}
+            //     onSelect={tabIndex => this.tabChange(tabIndex)}
+            // >
+            //     <TabList className="setting-tab main-wrapper">
+            //         <Tab className={this.state.tabIndex == "0" ? 'draw setting-select' : 'setting-change'}>{window.strings.APPSETTING.APPVERSIONCONTROL}</Tab>
+            //         <Tab className={this.state.tabIndex == "1" ? 'setting-select' : 'setting-change'}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}</Tab>
+
+            //     </TabList>
+            //     <TabPanel>
+
+            //     </TabPanel>
+            //     <TabPanel>
+
+            //     </TabPanel>
+            // </Tabs>
         );
     }
 }
+
+

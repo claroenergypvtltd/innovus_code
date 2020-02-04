@@ -2547,9 +2547,8 @@ bottom: 50%;
   z-index: 10;
   background-color: rgba(0,0,0,0.4);
 }
+
   /****************************Export-user management************************/
-
-
 .date-box{
   border: none;
   display: flex;
@@ -2693,7 +2692,6 @@ display: flex;
 .label-line{
   line-height: 28px;
 }
-
 .excel-btn{
   background-image:  $gradient-1;
   color: $white;
@@ -2897,6 +2895,13 @@ display: flex;
   color: $active-font-color;
   //text-decoration: none;
 }
+.set-line{
+  border-left: thin solid #ccc;
+  height: 100px;
+  position: absolute;
+  margin-left: -3px;
+  top: 127px;
+}
 .setting-tab{
   // border-bottom: 1px solid $inset-color;
   font-family: open sans;
@@ -2905,26 +2910,181 @@ display: flex;
   position: relative;
   bottom: 0;
   margin: 0% auto;
-  display: grid;
-  padding: 16em 0;
+  display: flex;
+  padding: 10em 0;
   justify-content: center;
 }
 .setting-tab li{
   padding: 15px 30px;
+  margin: 0 25px;
 }
-.setting-select {
-  display: inline-block;
-  border-bottom: 3px solid $select-border;
-  cursor: pointer;
-  font-family: open sans;
-  color: $primary-color;
-}
-.setting-change {
-  color: $secondary-color;
-  cursor: pointer;
-  outline: none;
+// .setting-select {
+//   display: inline-block;
+//   border: 2px solid $select-border;
+//   border-radius: 1px;
+//   cursor: pointer;
+//   font-family: open sans;
+//   color: $primary-color;
+// }
+// .setting-select:hover {
+//   background-color: #ddd;
+// }
+// .setting-change {
+//   color: $secondary-color;
+//   cursor: pointer;
+//   outline: none;
+//   border: 2px solid $select-border;
+//   border-radius: 1px;
+// }
+
+
+// Basic styles
+.set-btn {
+  background: none;
+  border: 0;
+  box-sizing: border-box;
+  margin: 0 26px;
+  padding: 1em 2em;
+  box-shadow: inset 0 0 0 2px $cyan;
+  color: $cyan;
+  font-size: inherit;
+  font-weight: 700;
+  position: relative;
+  vertical-align: middle;
+
+  &::before,
+  &::after {
+    box-sizing: inherit;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 }
 
+.set-change{
+    transition: color 0.25s;
+  &::before,
+  &::after {
+    // Set border to invisible, so we don't see a 4px border on a 0x0 element before the transition starts
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+  }
+  // This covers the top & right borders (expands right, then down)
+  &::before {
+    top: 0;
+    left: 0;
+  }
+  // And this the bottom & left borders (expands left, then up)
+  &::after {
+    bottom: 0;
+    right: 0;
+  }
+  &:hover {
+    color: $cyan;
+  }
+  // Hover styles
+  &:hover::before,
+  &:hover::after {
+    width: 100%;
+    height: 100%;
+  }
+  &:hover::before {
+    border-top-color: $cyan; // Make borders visible
+    border-right-color: $cyan;
+    transition:
+      width 0.25s ease-out, // Width expands first
+      height 0.25s ease-out 0.25s; // And then height
+  }
+  &:hover::after {
+    border-bottom-color: $cyan; // Make borders visible
+    border-left-color: $cyan;
+    transition:
+      border-color 0s ease-out 0.5s, // Wait for ::before to finish before showing border
+      width 0.25s ease-out 0.5s, // And then exanding width
+      height 0.25s ease-out 0.75s; // And finally height
+  }
+}
+
+// Inherits from .draw
+.set-select { 
+  &:hover {
+    color: $yellow;
+  }
+  // Start ::after in same position as ::before
+  &::after {
+    top: 0;
+    left: 0;
+  }
+  // Change colors
+  &:hover::before {
+    border-top-color: $yellow;
+    border-right-color: $yellow;
+  }
+  &:hover::after {
+    border-bottom-color: $yellow;
+    border-left-color: $yellow;
+    transition: // Animate height first, then width
+      height 0.25s ease-out,
+      width 0.25s ease-out 0.25s;
+  }
+}
+
+.set-box {
+  isolation: isolate;
+}
+
+
+// .setting-select:hover {
+// 	position: relative;
+// 	z-index: 0;
+// 	border-radius: 10px;
+// 	overflow: hidden;
+	
+// 	&::before {
+// 		content: '';
+// 		position: absolute;
+// 		z-index: -2;
+// 		left: -50%;
+// 		top: -50%;
+// 		width: 200%;
+// 		height: 200%;
+// 		//background-color: #399953;
+// 		background-repeat: no-repeat;
+// 		background-size: 50% 50%, 50% 50%;
+// 		background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+// 	  background-image:$gradient-2;
+// 		animation: rotate 4s linear infinite;
+// 	}
+	
+// 	&::after {
+// 		content: '';
+// 		position: absolute;
+// 		z-index: -1;
+// 		left: 6px;
+// 		top: 6px;
+// 		width: calc(100% - 12px);
+// 		height: calc(100% - 12px);
+// 		background: white;
+// 		border-radius: 5px;
+// 	}
+// }
+
+
+/****************************REPORT MANAGEMENT************************/
+.map-view{
+  padding:12px 10px;
+}
+.graph-view{
+  padding:12px 10px;
+}
+
+
+
+
+
+/****************************RESPONSIVE************************/
 
 @media (min-width: 1200px) { }
 @media (min-width: 991px) and (max-width: 1199px) { }
