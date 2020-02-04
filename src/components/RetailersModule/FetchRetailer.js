@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import DataTableDynamic from '../../shared/DataTableDynamic';
-import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers, fetchAllRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction';
+import { fetchRetailers, deleteRetailer, updateStatusRetailer, getStateCity, getStateUsers, fetchAllRetailers, UpdateUsers } from '../../actions/SubmitRetailerAction';
 import { fetchSalesAgent } from '../../actions/salesAgentAction';
 import { RETAILER_DELETE_SUCCESS } from '../../constants/actionTypes';
 import { connect } from 'react-redux';
@@ -606,7 +606,7 @@ class FetchRetailer extends React.Component {
                     "assignUser": assignArray
                 }
 
-                this.props.SubmitRetailer(obj, true);
+                this.props.UpdateUsers(obj, true);
 
             });
 
@@ -938,5 +938,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
     mapStateToProps,
-    { fetchRetailers, deleteRetailer, fetchSalesAgent, SubmitRetailer },
+    { fetchRetailers, deleteRetailer, fetchSalesAgent, UpdateUsers },
 )(FetchRetailer);

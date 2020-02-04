@@ -55,6 +55,7 @@ export const endPoint = {
     "order": "/order",
     "orderList": "/ordersList",
     "user": "/user",
+    "assignUser": "/assignUser",
     "certificate": "/certificate",
     "category": "/category",
     "settings": "/settings",
