@@ -1,5 +1,6 @@
 import { httpServices } from "../services"
 import toastr from 'react-redux-toastr'
+
 export const getVersionControl = (Data) => {
     return httpServices.get('configSettings').then(resp => {
         if (resp) {
@@ -40,9 +41,9 @@ export const getQuantityType = () => {
 }
 
 export const removeQuantityType = (Data) => {
-    httpServices.remove('quantityUnits', Data).then(response => {
-        if (response) {
-            toastr.success(response.message);
+    return httpServices.remove('quantityUnits', Data).then(resp => {
+        if (resp && resp.status == "200") {
+            return resp;
         }
     }).catch((error) => {
         console.error("error", error);

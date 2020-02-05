@@ -5,6 +5,7 @@ import { ReactPagination } from '../../shared'
 import { resorceJSON } from '../../libraries'
 import { path } from '../../constants';
 import { getQuantityType, removeQuantityType } from '../../actions/appSettingAction'
+import { toastr } from '../../services/toastr.services'
 
 class FetchQuantityType extends Component {
     constructor(props) {
@@ -28,8 +29,27 @@ class FetchQuantityType extends Component {
         })
     }
     handleDelete = (Data) => {
-        removeQuantityType(Data)
+
+        let message = window.strings.DELETEMESSAGE;
+        const toastrConfirmOptions = {
+            onOk: () => {
+                this.removeType(Data);
+            },
+            onCancel: () => { }
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
     }
+
+    removeType = (Data) => {
+        removeQuantityType(Data).then(resp => {
+            if (resp && resp.status == "200") {
+                toastr.success(resp.message)
+                this.getQuantityTypeList()
+            }
+        })
+    }
+
+
     formPath = () => {
         this.props.history.push({ pathname: path.appSetting.createQuantity })
     }

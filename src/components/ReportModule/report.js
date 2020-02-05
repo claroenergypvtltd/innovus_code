@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { path } from '../../constants';
 
 export default class report extends Component {
     constructor(props) {
@@ -7,6 +8,9 @@ export default class report extends Component {
         this.state = {
             errors: {}
         }
+    }
+    orderPath = () => {
+        this.props.history.push({ pathname: path.reports.placingOrder })
     }
 
     render() {
@@ -17,7 +21,7 @@ export default class report extends Component {
                     <section className="set-box">
                         <button className="set-btn set-change set-select" >{window.strings.REPORT.CUSTOMER_ONBOARD}</button>
                         <span className="set-line"></span>
-                        <button className="set-btn set-change set-select" >{window.strings.REPORT.PLACING_ORDER}</button>
+                        <button className="set-btn set-change set-select" onClick={this.orderPath}>{window.strings.REPORT.PLACING_ORDER}</button>
                         <span className="set-line"></span>
                         <button className="set-btn set-change set-select" >{window.strings.REPORT.EXECUTIVE_PERFORMANCE}</button>
                     </section>
