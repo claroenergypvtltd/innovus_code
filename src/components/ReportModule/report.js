@@ -17,14 +17,27 @@ export default class report extends Component {
         return (
             <div>
                 <h4 className="user-title">{window.strings.REPORT.REPORTMANAGEMENT}</h4>
-                <div className="main-wrapper setting-tab">
+                {/* <div className="main-wrapper setting-tab">
                     <section className="set-box">
-                        <button className="set-btn set-change set-select" >{window.strings.REPORT.CUSTOMER_ONBOARD}</button>
+                        <button className="set-btn set-change set-select">{window.strings.REPORT.CUSTOMER_ONBOARD}</button>
                         <span className="set-line"></span>
-                        <button className="set-btn set-change set-select" onClick={this.orderPath}>{window.strings.REPORT.PLACING_ORDER}</button>
+                        <button className="set-btn set-change set-select">{window.strings.REPORT.PLACING_ORDER}</button>
                         <span className="set-line"></span>
-                        <button className="set-btn set-change set-select" >{window.strings.REPORT.EXECUTIVE_PERFORMANCE}</button>
+                        <button className="set-btn set-change set-select">{window.strings.REPORT.EXECUTIVE_PERFORMANCE}</button>
                     </section>
+                </div> */}
+                <div className="main-wrapper">
+                    <div className="set-box">
+                        <button className="set-btn" onClick={this.redirectControlPage}>{window.strings.REPORT.CUSTOMER_ONBOARD}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button className="set-btn" onClick={this.quantityPath}>{window.strings.REPORT.PLACING_ORDER}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button className="set-btn">{window.strings.REPORT.EXECUTIVE_PERFORMANCE}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         )

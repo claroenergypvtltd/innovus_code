@@ -2937,20 +2937,22 @@ display: flex;
 //   border-radius: 1px;
 // }
 
-
-// Basic styles
-.set-btn {
-  background: none;
+ .set-btn {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  
+  background: $cyan;
   border: 0;
   box-sizing: border-box;
-  margin: 0 26px;
-  padding: 1em 2em;
-  box-shadow: inset 0 0 0 2px $cyan;
-  color: $cyan;
+  margin: 0 26px 24px 26px;
+  padding:10px 15px;
+  //box-shadow: inset 0 0 0 2px $cyan;
+  color: $white;
   font-size: inherit;
   font-weight: 700;
   position: relative;
-  vertical-align: middle;
+  //vertical-align: middle;
 
   &::before,
   &::after {
@@ -3032,7 +3034,8 @@ display: flex;
 }
 
 .set-box {
-  isolation: isolate;
+  //isolation: isolate;
+  padding: 25px 0;
 }
 
 
@@ -3079,8 +3082,14 @@ display: flex;
 .graph-view{
   padding:12px 10px;
 }
-
-
+.date-wrap{
+  width: 137px;
+  font-size: 13px;
+  border: 1px solid $input-status;
+  border-radius: 5px;
+  height: 30px;
+  padding: 4px;
+}
 
 
 

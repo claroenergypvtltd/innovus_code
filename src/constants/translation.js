@@ -453,7 +453,8 @@ export const Translation = {
             "NUMBER_CUSTOMER_ONBOARD": "NUMBER OF CUSTOMERS ONBOARDED",
             "NUMBER_CUSTOMER_PLACEORDER": "NUMBER OF CUSTOMERS PLACING ORDER",
             "MAP_VIEW": "Map View",
-            "GRAPH_VIEW": "List/Graph View"
+            "GRAPH_VIEW": "List/Graph View",
+            "SALES_EXECUTIVE_PERFORMANCE": "SALES EXECUTIVE PERFORMANCE"
         }
 
     }
