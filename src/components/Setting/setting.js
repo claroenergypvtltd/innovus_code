@@ -39,16 +39,23 @@ export default class setting extends Component {
         return (
             <div>
                 <h4 className="user-title">{window.strings.APPSETTING.SETTING}</h4>
-                <div className="main-wrapper setting-tab">
-                    {/* <ul className="set-title">
-                        <li><a href="#" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}</a></li>
-                        <li><a href="#" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}</a></li>
-                    </ul> */}
+                {/* <div className="main-wrapper setting-tab">
                     <section className="set-box">
                         <button className="set-btn set-change set-select" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}</button>
                         <span className="set-line"></span>
                         <button className="set-btn set-change set-select" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}</button>
                     </section>
+                </div> */}
+
+                <div className="main-wrapper">
+                    <div className="set-box">
+                        <button className="set-btn" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button className="set-btn" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
