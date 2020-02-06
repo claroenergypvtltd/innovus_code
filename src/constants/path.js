@@ -59,9 +59,9 @@ export const path = {
         edit: process.env.PUBLIC_URL + '/dc/region/edit/',
     },
     reports: {
-        placingOrder: process.env.PUBLIC_URL + '/reports/placingOrder',
         list: process.env.PUBLIC_URL + '/reports',
-        edit: process.env.PUBLIC_URL + '/reports/update/'
+        customerOnboard: process.env.PUBLIC_URL + '/reports/customerOnboard',
+        placingOrder: process.env.PUBLIC_URL + '/reports/placingOrder',
     },
     coupons: {
         add: process.env.PUBLIC_URL + '/coupon/add',
