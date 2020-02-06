@@ -13,13 +13,17 @@ export default class report extends Component {
         this.props.history.push({ pathname: path.reports.placingOrder })
     }
 
+    navigateOnboard = () => {
+        this.props.history.push(path.reports.customerOnboard);
+    }
+
     render() {
         return (
             <div>
                 <h4 className="user-title">{window.strings.REPORT.REPORTMANAGEMENT}</h4>
                 {/* <div className="main-wrapper setting-tab">
                     <section className="set-box">
-                        <button className="set-btn set-change set-select">{window.strings.REPORT.CUSTOMER_ONBOARD}</button>
+                        <button className="set-btn set-change set-select" onClick={this.navigateOnboard}>{window.strings.REPORT.CUSTOMER_ONBOARD}</button>
                         <span className="set-line"></span>
                         <button className="set-btn set-change set-select">{window.strings.REPORT.PLACING_ORDER}</button>
                         <span className="set-line"></span>
@@ -28,10 +32,10 @@ export default class report extends Component {
                 </div> */}
                 <div className="main-wrapper">
                     <div className="set-box">
-                        <button className="set-btn" onClick={this.redirectControlPage}>{window.strings.REPORT.CUSTOMER_ONBOARD}
+                        <button className="set-btn" onClick={this.navigateOnboard}>{window.strings.REPORT.CUSTOMER_ONBOARD}
                             <i class="fa fa-chevron-right"></i>
                         </button>
-                        <button className="set-btn" onClick={this.quantityPath}>{window.strings.REPORT.PLACING_ORDER}
+                        <button className="set-btn" onClick={this.orderPath}>{window.strings.REPORT.PLACING_ORDER}
                             <i class="fa fa-chevron-right"></i>
                         </button>
                         <button className="set-btn">{window.strings.REPORT.EXECUTIVE_PERFORMANCE}

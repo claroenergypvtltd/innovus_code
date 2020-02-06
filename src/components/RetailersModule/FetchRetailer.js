@@ -753,7 +753,6 @@ class FetchRetailer extends React.Component {
         return (
             <div className=" mt-4">
                 <button type="button" className="excel-btn export-file ml-2" onClick={() => this.getAllretailer()}>Export</button>
-                <input type="file" ref={this.fileLink} className="form-control import-hide" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="file" onChange={this.xlImport} />
                 <CSVLink ref={this.csvLink} handleLegacy={true} filename='Retailers.csv' data={PrintexcelDatas}></CSVLink >
                 <ModalData show={this.state.open} onHide={this.onCloseModal} modalData={TransferAgentData} ModalTitle="Update Agent" />
                 <div className="retailersearchdiv">
@@ -764,6 +763,7 @@ class FetchRetailer extends React.Component {
                 <div id="menu">
                     <div className="assign-box">
                         <button className="import-btn ml-2" onClick={this.callFile}>Import</button>
+                        <input type="file" ref={this.fileLink} className="form-control import-hide" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="file" onChange={this.xlImport} />
                         <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
                         </button>

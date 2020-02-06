@@ -96,13 +96,15 @@ class PlacingOrder extends Component {
                         <div className="col-md-6">
                             <div className="map-view main-wrapper">
                                 <h4 className="user-title">{window.strings.REPORT.MAP_VIEW}</h4>
-                                <div className="d-flex">
+                                <div className="d-flex justify-content-around">
                                     <div className="start-date mr-2">
                                         <label className="label-title">Choose Date:</label>
                                         <input type="date" className="form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
+                                    </div>
+                                    <div className="tree-box mt-3">
                                         <TreeSelect
                                             treeData={regionData}
-                                            style={{ width: 320, height: 100 }}
+                                            style={{ width: 210, height: 100 }}
                                             selectVal={this.state.selectVal}
                                             onSelect={this.onSelect}
                                             onExpand={false}
