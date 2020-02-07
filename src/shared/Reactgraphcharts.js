@@ -96,20 +96,12 @@ export class ReactBarLineChart extends Component {
             getBarChart: true
         }
     }
-    sendData = () => {
-        this.props.parentCallback(this.state.getBarChart);
+    sendData = (Data) => {
+        this.props.parentCallback(this.state.getBarChart, Data);
     }
     render() {
         const data = [
-            {
-                name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-            },
-            {
-                name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-            },
-            {
-                name: 'Page C', uv: 2000, pv: 3800, amt: 2290,
-            }
+
         ]
         return (
             <div>
@@ -120,8 +112,8 @@ export class ReactBarLineChart extends Component {
                     <Legend verticalAlign="top" height={36} />
                     <CartesianGrid stroke="#f5f5f5" />
                     {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
-                    <Bar dataKey="pv" barSize={20} fill="#413ea0" onClick={this.sendData} />
-                    <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+                    <Bar dataKey="uv" barSize={20} fill="#413ea0" onClick={this.sendData} />
+                    <Line type="monotone" dataKey="pv" stroke="#ff7300" />
                 </ComposedChart>
             </div>
         )
