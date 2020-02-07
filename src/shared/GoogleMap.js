@@ -38,7 +38,6 @@ export default class GoogleMap extends React.Component {
         //     lat: 28.42427390, lng: 77.06849550, name: 'Vizianagaram, Andhra Pradesh, India'
         // },
         // ]
-
         return (
             <div style={{ width: "100%", height: "450px", position: "relative" }}>
                 <Map google={window.google} zoom={5} initialCenter={{ lat: 26, lng: 80 }}>
