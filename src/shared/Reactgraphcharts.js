@@ -105,7 +105,7 @@ export class ReactBarLineChart extends Component {
         ]
         return (
             <div>
-                <ComposedChart width={500} height={450} data={data}>
+                <ComposedChart width={500} height={450} data={barChartdata}>
                     <XAxis dataKey="name" label={{ value: 'No of Customers Placing Orders', position: 'bottom', offset: 8 }} />
                     <YAxis />
                     <Tooltip />
