@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
-import { getCustomerMapView } from '../../actions/reportAction'
+import { getCustomerMapView, getCustomerGraphView } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
 import { path } from '../../constants';
-import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
+import { ReactBarChart } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
 
 class CustomerOnboard extends Component {
@@ -15,9 +15,12 @@ class CustomerOnboard extends Component {
             showlevel: 0,
             startDate: '',
             expiryDate: '',
+            startDate1: '',
+            expiryDate1: '',
             selectVal: [],
             selectVal1: [],
             mapData: [],
+            graphData: [],
             errors: {}
         }
     }
@@ -111,10 +114,7 @@ class CustomerOnboard extends Component {
     onChecked1 = (data, value) => {
         let regionArray = [];
         data.map(item => {
-            if (!item.includes('parent')) {
-                regionArray.push(item);
-
-            }
+            regionArray.push(item);
         })
         this.state.selectVal1 = regionArray
     }
@@ -157,16 +157,16 @@ class CustomerOnboard extends Component {
         this.setState({ graphSubmit: true })
         if (this.state.startDate1 && this.state.expiryDate1 && (this.state.startDate1 <= this.state.expiryDate1) && this.state.selectVal1.length > 0) {
             let obj = {
-                startDate1: this.state.startDate1,
-                expiryDate1: this.state.expiryDate1,
-                regionData1: this.state.selectVal1
+                startDate: this.state.startDate1,
+                expiryDate: this.state.expiryDate1,
+                regionData: this.state.selectVal1
             }
 
-            // getCustomerGraphView(obj).then(resp => {
-            //     if (resp) {
-
-            //     }
-            // })
+            getCustomerGraphView(obj).then(resp => {
+                if (resp && resp.data) {
+                    this.setState({ graphData: resp.data })
+                }
+            })
         }
 
     }
@@ -193,21 +193,11 @@ class CustomerOnboard extends Component {
         })
 
         let treeData1 = []
-        this.state.regionListData1 && this.state.regionListData1.map((item, index) => {
-            let childArray = [];
-            item.dcDatas && item.dcDatas.map((dcData, index) => {
-                let obj = {
-                    title: dcData.dcCode,
-                    value: dcData.dcCode,
-                }
-                childArray.push(obj)
-            })
-
-
+        this.state.regionListData && this.state.regionListData.map((item, index) => {
             let obj = {
                 title: item.name,
-                value: item.name + 'parent',
-                children: childArray,
+                value: item.id,
+                // children: childArray,
             }
             treeData1.push(obj)
         })
@@ -237,6 +227,17 @@ class CustomerOnboard extends Component {
             }
             latLongData.push(obj)
         })
+
+        let graphData = [];
+        this.state.graphData && this.state.graphData.map(item => {
+            let Data = item.split(',')
+            let obj = {
+                name: Data[0], Users: Data[1],
+            }
+            graphData.push(obj);
+        })
+
+
 
         return (
             <div className="customer-onboard">
@@ -290,12 +291,12 @@ class CustomerOnboard extends Component {
                                     <div className="d-block">
                                         <div className="start-date">
                                             <label className="label-title">Start Date * :</label>
-                                            <input type="date" value={this.state.startDate1} className="form-control date-wrap" />
+                                            <input type="date" value={this.state.startDate1} name="startDate1" onChange={this.dateChange} className="form-control date-wrap" />
                                             {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="end-date">
                                             <label className="label-title">End Date * :</label>
-                                            <input type="date" value={this.state.expiryDate1} className="form-control date-wrap" />
+                                            <input type="date" value={this.state.expiryDate1} name="expiryDate1" onChange={this.dateChange} className="form-control date-wrap" />
                                             {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                     </div>
@@ -320,7 +321,7 @@ class CustomerOnboard extends Component {
 
 
                                 <div className="pt-5">
-                                    <ReactBarLineChart />
+                                    <ReactBarChart barChartData={graphData} />
                                 </div>
                             </div>
                         </div>
