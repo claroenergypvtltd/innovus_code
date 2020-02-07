@@ -2729,6 +2729,7 @@ display: flex;
   width: 100px;
   position: absolute;
 }
+
 .retail-reset{
   margin: 6px 6px 0 0;
 }
@@ -3120,6 +3121,25 @@ display: flex;
 // .do-TreeSelect:hover {
 //   border: 1px solid $report-box;
 // }
+// .do-fadeIn{
+// opacity: 0;
+// }
+ 
+// .do-fadeIn:hover {
+//   opacity: 1;
+//   visibility:visible;
+//   z-index: 2;
+// }
+// .do-TreeNode{
+//   opacity: 0;
+//   }
+   
+//   .ddo-TreeNode:hover {
+//     opacity: 1;
+//     visibility:visible;
+//     z-index: 2;
+//   }
+
 /****************************RESPONSIVE************************/
 
 @media (min-width: 1200px) { }

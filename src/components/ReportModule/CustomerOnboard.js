@@ -1,25 +1,92 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-// import DropdownTreeSelect from 'react-dropdown-tree-select'
-// import 'react-dropdown-tree-select/dist/styles.css'
-// import DropdownTreeSelectHOC from "./HOC";
-// import TreeSelect, { TreeNode, SHOW_PARENT } from 'rc-tree-select';
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
+import { getCustomerMapView } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
 import { path } from '../../constants';
+import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
+import GoogleMap from '../../shared/GoogleMap'
 
 class CustomerOnboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showlevel: 0,
+            startDate: '',
+            expiryDate: '',
+            selectVal: [],
+            selectVal1: [],
             errors: {}
         }
     }
 
     componentDidMount() {
-        this.getRegion();
+        // this.getRegion();
+        let dData = [
+            {
+                name: 'parent 1',
+                name: 'parent 1',
+                dcDatas: [
+                    {
+                        dcCode: 'child 1',
+                        dcCode: 'child 1',
+                    }, {
+                        dcCode: 'child 2',
+                        dcCode: 'child 2',
+                    }, {
+                        dcCode: 'child 3',
+                        dcCode: 'child 3',
+                    }
+                ]
+            }, {
+                name: 'parent 2',
+                name: 'parent 2',
+                dcDatas: [
+                    {
+                        dcCode: 'child 4',
+                        dcCode: 'child 4',
+                    }, {
+                        dcCode: 'child 5',
+                        dcCode: 'child 5',
+                    }
+                ]
+            }
+        ]
+
+        let dData1 = [
+            {
+                name: 'parent 1',
+                name: 'parent 1',
+                dcDatas: [
+                    {
+                        dcCode: 'child 1',
+                        dcCode: 'child 1',
+                    }, {
+                        dcCode: 'child 2',
+                        dcCode: 'child 2',
+                    }, {
+                        dcCode: 'child 3',
+                        dcCode: 'child 3',
+                    }
+                ]
+            }, {
+                name: 'parent 2',
+                name: 'parent 2',
+                dcDatas: [
+                    {
+                        dcCode: 'child 4',
+                        dcCode: 'child 4',
+                    }, {
+                        dcCode: 'child 5',
+                        dcCode: 'child 5',
+                    }
+                ]
+            }
+        ]
+
+        this.setState({ regionListData: dData, regionListData1: dData1 })
+
     }
 
 
@@ -29,12 +96,28 @@ class CustomerOnboard extends Component {
         }
     }
 
-    onDropdownChange = (currentNode, selectedNodes) => {
-        console.log('onChange::', currentNode, selectedNodes)
+    onChecked = (data, value) => {
+        let regionArray = [];
+        debugger;
+        data.map(item => {
+            if (!item.includes('parent')) {
+                regionArray.push(item);
+
+            }
+        })
+        this.state.selectVal = regionArray
     }
 
-    onChecked(val, e) {
-        console.log(val);
+    onChecked1 = (data, value) => {
+        let regionArray = [];
+        debugger;
+        data.map(item => {
+            if (!item.includes('parent')) {
+                regionArray.push(item);
+
+            }
+        })
+        this.state.selectVal1 = regionArray
     }
 
     getRegion = () => {
@@ -49,6 +132,48 @@ class CustomerOnboard extends Component {
         this.props.history.push({ pathname: path.reports.list, state: { customerOnboardBack: 'customerOnboardSessionBack' } });
     }
 
+    dateChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    getMapView = () => {
+        debugger;
+        this.setState({ mapSubmit: true })
+        if (this.state.startDate && this.state.expiryDate && (this.state.startDate <= this.state.expiryDate) && this.state.selectVal.length > 0) {
+            let obj = {
+                startDate: this.state.startDate,
+                expiryDate: this.state.expiryDate,
+                regionData: this.state.selectVal
+            }
+
+            getCustomerMapView(obj).then(resp => {
+                if (resp) {
+
+                }
+            })
+        }
+
+    }
+
+    getGraphView = () => {
+        debugger;
+        this.setState({ graphSubmit: true })
+        if (this.state.startDate1 && this.state.expiryDate1 && (this.state.startDate1 <= this.state.expiryDate1) && this.state.selectVal1.length > 0) {
+            let obj = {
+                startDate1: this.state.startDate1,
+                expiryDate1: this.state.expiryDate1,
+                regionData1: this.state.selectVal1
+            }
+
+            // getCustomerGraphView(obj).then(resp => {
+            //     if (resp) {
+
+            //     }
+            // })
+        }
+
+    }
+
     render() {
         let treeData = []
         this.state.regionListData && this.state.regionListData.map((item, index) => {
@@ -61,12 +186,33 @@ class CustomerOnboard extends Component {
                 childArray.push(obj)
             })
 
+
             let obj = {
                 title: item.name,
-                value: item.name,
+                value: item.name + 'parent',
                 children: childArray,
             }
             treeData.push(obj)
+        })
+
+        let treeData1 = []
+        this.state.regionListData1 && this.state.regionListData1.map((item, index) => {
+            let childArray = [];
+            item.dcDatas && item.dcDatas.map((dcData, index) => {
+                let obj = {
+                    title: dcData.dcCode,
+                    value: dcData.dcCode,
+                }
+                childArray.push(obj)
+            })
+
+
+            let obj = {
+                title: item.name,
+                value: item.name + 'parent',
+                children: childArray,
+            }
+            treeData1.push(obj)
         })
 
         const checkbox = {
@@ -74,7 +220,15 @@ class CustomerOnboard extends Component {
             parentChain: true,              // child Affects parent nodes;
             childrenChain: true,            // parent Affects child nodes;
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
-            initCheckedList: []             // Initialize check multiple lists
+            initCheckedList: this.state.selectVal            // Initialize check multiple lists
+        }
+
+        const checkbox1 = {
+            enable: true,
+            parentChain: true,              // child Affects parent nodes;
+            childrenChain: true,            // parent Affects child nodes;
+            halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
+            initCheckedList: this.state.selectVal1           // Initialize check multiple lists
         }
 
         return (
@@ -89,11 +243,13 @@ class CustomerOnboard extends Component {
                                     <div className="d-block">
                                         <div className="start-date mr-2">
                                             <label className="label-title">Start Date:</label>
-                                            <input type="date" className="form-control date-wrap" />
+                                            <input type="date" value={this.state.startDate} name="startDate" onChange={this.dateChange} className="form-control date-wrap" />
+                                            {this.state.mapSubmit && !this.state.startDate && <div className="mandatory">{"Start Date" + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="end-date mr-2">
                                             <label className="label-title">End Date:</label>
-                                            <input type="date" className="form-control date-wrap" />
+                                            <input type="date" value={this.state.expiryDate} name="expiryDate" onChange={this.dateChange} className="form-control date-wrap" />
+                                            {this.state.mapSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date:" + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                     </div>
                                     <div className="tree-box">
@@ -102,22 +258,17 @@ class CustomerOnboard extends Component {
                                             style={{ width: 210, height: 100 }}
                                             selectVal={this.state.selectVal}
                                             onSelect={this.onSelect}
-                                            onExpand={false}
-                                            onChecked={this.onChecked}
                                             checkbox={checkbox}
-                                            showlevel={this.state.showlevel}
+                                            onChecked={this.onChecked}
                                             customTitleRender={this.customTitleRender} />
                                     </div>
-                                    {/* <div className=" view-box">
-                                        <button type="button" class="data-search">
-                                            <i class="fa fa-search" aria-hidden="true"></i>Search
-                                        </button>
-                                    </div> */}
+                                    {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
                                 </div>
                                 <div className=" view-box">
-                                    <button type="button" class="data-search">
-                                        <i class="fa fa-search" aria-hidden="true"></i>Search
-                                        </button>
+                                    <button onClick={this.getMapView} className="data-search" >Search</button>
+                                </div>
+                                <div className="pt-5">
+                                    <GoogleMap />
                                 </div>
                             </div>
                         </div>
@@ -128,34 +279,37 @@ class CustomerOnboard extends Component {
                                     <div className="d-block">
                                         <div className="start-date mr-2">
                                             <label className="label-title">Start Date:</label>
-                                            <input type="date" className="form-control date-wrap" />
+                                            <input type="date" value={this.state.startDate1} className="form-control date-wrap" />
+                                            {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="end-date mr-2">
                                             <label className="label-title">End Date:</label>
-                                            <input type="date" className="form-control date-wrap" />
+                                            <input type="date" value={this.state.expiryDate1} className="form-control date-wrap" />
+                                            {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                     </div>
                                     <div className="tree-box">
                                         <TreeSelect
-                                            treeData={treeData}
+                                            treeData={treeData1}
                                             style={{ width: 210, height: 100 }}
-                                            selectVal={this.state.selectVal}
-                                            onSelect={this.onSelect}
-                                            onExpand={false}
-                                            onChecked={this.onChecked}
-                                            checkbox={checkbox}
-                                            showlevel={this.state.showlevel}
+                                            selectVal={this.state.selectVal1}
+                                            onChecked={this.onChecked1}
+                                            checkbox={checkbox1}
                                             customTitleRender={this.customTitleRender} />
                                     </div>
-                                    {/* <div className=" view-box">
-                                        <button type="button" class="data-search">
-                                            <i class="fa fa-search" aria-hidden="true"></i>Search
-                                        </button> */}
+                                    {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
+
+
                                 </div>
                                 <div className=" view-box">
-                                    <button type="button" class="data-search">
+                                    <button type="button" class="data-search" onClick={this.getGraphView}>
                                         <i class="fa fa-search" aria-hidden="true"></i>Search
                                         </button>
+                                </div>
+
+
+                                <div >
+                                    <ReactBarLineChart />
                                 </div>
                             </div>
                         </div>
