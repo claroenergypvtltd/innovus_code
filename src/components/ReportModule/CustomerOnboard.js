@@ -17,12 +17,13 @@ class CustomerOnboard extends Component {
             expiryDate: '',
             selectVal: [],
             selectVal1: [],
+            mapData: [],
             errors: {}
         }
     }
 
     componentDidMount() {
-        // this.getRegion();
+        this.getRegion();
         let dData = [
             {
                 name: 'parent 1',
@@ -85,7 +86,7 @@ class CustomerOnboard extends Component {
             }
         ]
 
-        this.setState({ regionListData: dData, regionListData1: dData1 })
+        // this.setState({ regionListData: dData, regionListData1: dData1 })
 
     }
 
@@ -98,7 +99,6 @@ class CustomerOnboard extends Component {
 
     onChecked = (data, value) => {
         let regionArray = [];
-        debugger;
         data.map(item => {
             if (!item.includes('parent')) {
                 regionArray.push(item);
@@ -110,7 +110,6 @@ class CustomerOnboard extends Component {
 
     onChecked1 = (data, value) => {
         let regionArray = [];
-        debugger;
         data.map(item => {
             if (!item.includes('parent')) {
                 regionArray.push(item);
@@ -137,7 +136,6 @@ class CustomerOnboard extends Component {
     }
 
     getMapView = () => {
-        debugger;
         this.setState({ mapSubmit: true })
         if (this.state.startDate && this.state.expiryDate && (this.state.startDate <= this.state.expiryDate) && this.state.selectVal.length > 0) {
             let obj = {
@@ -148,7 +146,7 @@ class CustomerOnboard extends Component {
 
             getCustomerMapView(obj).then(resp => {
                 if (resp) {
-
+                    this.setState({ mapData: resp.data })
                 }
             })
         }
@@ -156,7 +154,6 @@ class CustomerOnboard extends Component {
     }
 
     getGraphView = () => {
-        debugger;
         this.setState({ graphSubmit: true })
         if (this.state.startDate1 && this.state.expiryDate1 && (this.state.startDate1 <= this.state.expiryDate1) && this.state.selectVal1.length > 0) {
             let obj = {
@@ -231,6 +228,16 @@ class CustomerOnboard extends Component {
             initCheckedList: this.state.selectVal1           // Initialize check multiple lists
         }
 
+        let latLongData = [];
+
+        this.state.mapData && this.state.mapData.map(item => {
+            let obj = {
+                lat: item.shopAddress.latitude,
+                lng: item.shopAddress.longitude
+            }
+            latLongData.push(obj)
+        })
+
         return (
             <div className="customer-onboard">
                 <h4 className="user-title">{window.strings.REPORT.NUMBER_CUSTOMER_ONBOARD}</h4>
@@ -268,7 +275,7 @@ class CustomerOnboard extends Component {
                                     <button onClick={this.getMapView} className="data-search" >Search</button>
                                 </div>
                                 <div className="pt-5">
-                                    <GoogleMap />
+                                    <GoogleMap latLongData={latLongData} />
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,7 @@ export const fetchOrderMap = (Data) => {
 }
 
 export const getCustomerMapView = (Data) => {
-    return httpServices.get('reports?ID=2&expiryDate=' + Data.expiryDate + '&startDate=' + Data.startDate + '&regionId=' + Data.regionData).then(resp => {
+    return httpServices.get('reports?Id=1&expiryDate=' + Data.expiryDate + '&startDate=' + Data.startDate + '&subregionId=' + Data.regionData).then(resp => {
         if (resp) {
             return resp
         }
