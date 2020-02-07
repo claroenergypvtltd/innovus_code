@@ -100,7 +100,7 @@ class FetchRetailer extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.list.datas && !this.state.popup) {
+        if (newProps.list.datas.length > 0 && !this.state.popup) {
             let selectlist = newProps.list.datas;
             this.getLocalty(selectlist);
             let Lists = selectlist && selectlist.map(item => {
@@ -110,6 +110,8 @@ class FetchRetailer extends React.Component {
             this.setState({
                 data: Lists, pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount
             })
+        } else {
+            this.setState({ data: [], exceldatas: [], pageCount: newProps.list.totalCount / this.state.itemPerPage, totalCount: newProps.list.totalCount })
         }
         if (newProps.deletedData && newProps.deletedData == "200") {
             store.dispatch({ type: RETAILER_DELETE_SUCCESS, resp: "" })
