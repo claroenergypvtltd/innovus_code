@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { path } from '../../constants';
 import GoogleMap from '../../shared/GoogleMap'
 import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
-import { fetchReportGraph, fetchReportMap } from '../../actions/reportAction'
+import { fetchOrderGraph, fetchOrderMap } from '../../actions/reportAction'
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
 
@@ -14,12 +14,13 @@ class PlacingOrder extends Component {
             errors: {},
             mapStartDate: '',
             graphStartDate: '',
-            regionId: ''
+            regionId: '',
+            mapSelectVal: [],
+            graphSelectVal: [],
+            getBarChart: false
         }
     }
     componentDidMount() {
-        this.getPlacingOrderGraph()
-        this.getPlacingOrderMap()
         this.getRegionList()
     }
     componentWillReceiveProps(newProps) {
@@ -28,24 +29,30 @@ class PlacingOrder extends Component {
         }
     }
     getPlacingOrderGraph = () => {
-        if (this.state.graphStartDate) {
+        if (this.state.graphStartDate && this.state.graphSelectVal.length > 0) {
             let obj = {
                 startDate: this.state.graphStartDate,
                 id: 1,
-                regionId: this.state.regionId
+                regionId: this.state.graphSelectVal
             }
-            fetchReportGraph(obj).then(resp => {
-                if (resp) {
-
+            fetchOrderGraph(obj).then(resp => {
+                if (resp && resp.data) {
+                    this.setState({ data: resp.data })
                 }
             })
         }
     }
     getPlacingOrderMap = () => {
+        if (this.state.mapStartDate && this.state.mapSelectVal.length > 0) {
+            let obj = {
+                startDate: this.state.mapStartDate,
+                id: 1,
+                regionId: this.state.mapSelectVal
+            }
+            fetchOrderMap(obj).then(resp => {
 
-        fetchReportMap().then(resp => {
-
-        })
+            })
+        }
     }
     getRegionList = () => {
         let obj = {
@@ -60,14 +67,50 @@ class PlacingOrder extends Component {
     redirectPage = () => {
         this.props.history.push({ pathname: path.reports.list })
     }
-
+    // onSelect = (e) => {
+    // }
+    onMapChecked = (Data) => {
+        if (Data) {
+            let dropDownValue = []
+            Data && Data.map((item => {
+                if (!item.includes('Parent')) {
+                    dropDownValue.push(item)
+                }
+            }))
+            this.state.mapSelectVal = dropDownValue
+        }
+    }
+    onGraphChecked = (Data) => {
+        if (Data) {
+            let dropDownValue = []
+            Data && Data.map((item => {
+                if (!item.includes('Parent')) {
+                    dropDownValue.push(item)
+                }
+            }))
+            this.state.graphSelectVal = dropDownValue
+        }
+    }
+    callbackFunction = (childData) => {
+        this.setState({ getBarChart: childData })
+    }
+    hideSubBar = () => {
+        this.setState({ getBarChart: false })
+    }
     render() {
-        const checkbox = {
+        const mapCheckbox = {
             enable: true,
             parentChain: true, // child Affects parent nodes;
             childrenChain: true, // parent Affects child nodes;
             halfChain: true, // The selection of child nodes affects the semi-selection of parent nodes.
-            initCheckedList: [] // Initialize check multiple lists
+            initCheckedList: this.state.mapSelectVal // Initialize check multiple lists
+        }
+        const graphCheckbox = {
+            enable: true,
+            parentChain: true, // child Affects parent nodes;
+            childrenChain: true, // parent Affects child nodes;
+            halfChain: true, // The selection of child nodes affects the semi-selection of parent nodes.
+            initCheckedList: this.state.graphSelectVal // Initialize check multiple lists
         }
         let regionData = []
         this.state.regionListData && this.state.regionListData.map((item, index) => {
@@ -82,12 +125,34 @@ class PlacingOrder extends Component {
 
             let obj = {
                 title: item.name,
-                value: item.name,
+                value: item.name + 'parent',
                 children: childArray,
             }
             regionData.push(obj)
 
         })
+
+        const treeData = [
+            {
+
+                children: [
+                    {
+                        title: 'south-mdu',
+                        value: 'south-mdu',
+                    },
+                    {
+                        title: 'agent 1',
+                        value: 'agent 1',
+                    }, {
+                        title: 'test',
+                        value: 'test',
+                    }
+                ],
+                title: 'Parent',
+                value: 'Parent',
+            }
+        ]
+
         return (
             <div className="customer-placeorder">
                 <h4 className="user-title">{window.strings.REPORT.NUMBER_CUSTOMER_PLACEORDER}</h4>
@@ -103,14 +168,14 @@ class PlacingOrder extends Component {
                                     </div>
                                     <div className="tree-box">
                                         <TreeSelect
-                                            treeData={regionData}
+                                            treeData={treeData}
                                             style={{ width: 210, height: 100 }}
-                                            selectVal={this.state.selectVal}
+                                            selectVal={this.state.mapSelectVal}
                                             onSelect={this.onSelect}
-                                            onExpand={false}
-                                            onChecked={this.onChecked}
-                                            checkbox={checkbox}
-                                            showlevel={this.state.showlevel}
+                                            // onExpand={false}
+                                            onChecked={this.onMapChecked}
+                                            checkbox={mapCheckbox}
+                                            // showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
                                     </div>
                                     {/* <div className="view-box">
@@ -120,7 +185,7 @@ class PlacingOrder extends Component {
                                     </div> */}
                                 </div>
                                 <div className="view-box">
-                                    <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
+                                    <button type="button" class="data-search" onClick={this.getPlacingOrderMap}>
                                         <i class="fa fa-search" aria-hidden="true"></i>Search
                                         </button>
                                 </div>
@@ -137,23 +202,18 @@ class PlacingOrder extends Component {
                                         <label className="label-title">Choose Date:</label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} name="graphStartDate" />
                                     </div>
-                                    <div className="tree-box">
+                                    <div className="tree-box mt-3">
                                         <TreeSelect
-                                            treeData={regionData}
-                                            style={{ width: 210, height: 100 }}
-                                            selectVal={this.state.selectVal}
+                                            treeData={treeData}
+                                            style={{ width: 320, height: 100 }}
+                                            selectVal={this.state.graphSelectVal}
                                             onSelect={this.onSelect}
-                                            onExpand={false}
-                                            onChecked={this.onChecked}
-                                            checkbox={checkbox}
-                                            showlevel={this.state.showlevel}
+                                            // onExpand={false}
+                                            onChecked={this.onGraphChecked}
+                                            checkbox={graphCheckbox}
+                                            // showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
                                     </div>
-                                    {/* <div className="view-box">
-                                        <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
-                                            <i class="fa fa-search" aria-hidden="true"></i>Search
-                                        </button>
-                                    </div> */}
                                 </div>
                                 <div className="view-box">
                                     <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
@@ -161,8 +221,12 @@ class PlacingOrder extends Component {
                                         </button>
                                 </div>
                                 <div className="mt-5">
-                                    <ReactBarLineChart />
+                                    <ReactBarLineChart data={this.state.data} parentCallback={this.callbackFunction} />
                                 </div>
+                                {this.state.getBarChart && <div className="pt-5">
+                                    <ReactBarLineChart data={this.state.data} parentCallback={this.callbackFunction} />
+                                    <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBar}>close</button></div>
+                                </div>}
                             </div>
                         </div>
                     </div>
