@@ -2564,6 +2564,7 @@ bottom: 50%;
     border-radius: 25px;
     height: 25px;
     margin-top: 6px;
+    font-size: 14px;
     // width:75px;
 }
 .data-search i.fa.fa-search {
@@ -3102,13 +3103,77 @@ display: flex;
   // right: -4px;
     position: relative;
     top: 20px;
-    right: 57px;
+    right: 62px;
     text-align: right;
 }
-.tree-box{
-  // position: relative;
-  // top: 44px;
+.region-holder{
+  position: relative;
+  top: 43px;
+  z-index: 2;
+  color: $form-color;
+  font-size: 13px;
+  padding: 0 4px;
+  margin-top: 7px;
 }
+.region-holder:focus,
+.region-holder:active,
+.region-holder:hover,
+.region-holder:visited,
+.region-holder:focus-within {
+  z-index: 0;
+}
+.holder{
+  position: relative;
+  top: 28px;
+  left: 10px;
+  border: 0;
+  z-index: 1;
+  font-size: 13px;
+  margin-top: 21px;
+}
+.holder::placeholder{
+  color: $form-color;
+
+}
+.tree-box .label-title{
+  position: absolute;
+}
+.do-TreeSelect{
+  height: 130px!important;
+  overflow: hidden;
+}
+input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color:    #909;
+  content: "content6";
+}
+input.do-SearchBox-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+ color:    #909;
+ opacity:  1;
+ content: "content5";
+}
+input.do-SearchBox-input::-moz-placeholder { /* Mozilla Firefox 19+ */
+ color:    #909;
+ opacity:  1;
+ content: "content4";
+}
+input.do-SearchBox-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color:    #909;
+ content: "content3";
+}
+input.do-SearchBox-input::-ms-input-placeholder { /* Microsoft Edge */
+ color:    #909;
+ content: "content2";
+}
+
+input.do-SearchBox-input::placeholder { /* Most modern browsers support this now. */
+ color:    #909;
+ content: "content1";
+}
+
+// .tree-box{
+//   position: relative;
+//   top: 44px;
+// }
 // .do-TreeSelect{
 //   border: none;
 // }

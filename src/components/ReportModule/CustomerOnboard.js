@@ -249,17 +249,19 @@ class CustomerOnboard extends Component {
                                 <div className="d-flex justify-content-around">
                                     <div className="d-block">
                                         <div className="start-date mr-2">
-                                            <label className="label-title">Start Date:</label>
+                                            <label className="label-title">Start Date * :</label>
                                             <input type="date" value={this.state.startDate} name="startDate" onChange={this.dateChange} className="form-control date-wrap" />
                                             {this.state.mapSubmit && !this.state.startDate && <div className="mandatory">{"Start Date" + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                         <div className="end-date mr-2">
-                                            <label className="label-title">End Date:</label>
+                                            <label className="label-title">End Date * :</label>
                                             <input type="date" value={this.state.expiryDate} name="expiryDate" onChange={this.dateChange} className="form-control date-wrap" />
                                             {this.state.mapSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date:" + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                     </div>
                                     <div className="tree-box">
+                                        <label className="label-title">Select Region * :</label>
+                                        <input className="holder" placeholder="Search here.." />
                                         <TreeSelect
                                             treeData={treeData}
                                             style={{ width: 210, height: 100 }}
@@ -268,11 +270,13 @@ class CustomerOnboard extends Component {
                                             checkbox={checkbox}
                                             onChecked={this.onChecked}
                                             customTitleRender={this.customTitleRender} />
+                                        {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
                                     </div>
-                                    {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
                                 </div>
                                 <div className=" view-box">
-                                    <button onClick={this.getMapView} className="data-search" >Search</button>
+                                    <button onClick={this.getMapView} className="data-search" >
+                                        <i class="fa fa-search" aria-hidden="true"></i>Search
+                                    </button>
                                 </div>
                                 <div className="pt-5">
                                     <GoogleMap latLongData={latLongData} />
@@ -284,18 +288,20 @@ class CustomerOnboard extends Component {
                                 <h4 className="user-title">{window.strings.REPORT.GRAPH_VIEW}</h4>
                                 <div className="d-flex justify-content-around">
                                     <div className="d-block">
-                                        <div className="start-date mr-2">
-                                            <label className="label-title">Start Date:</label>
+                                        <div className="start-date">
+                                            <label className="label-title">Start Date * :</label>
                                             <input type="date" value={this.state.startDate1} className="form-control date-wrap" />
                                             {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>}
                                         </div>
-                                        <div className="end-date mr-2">
-                                            <label className="label-title">End Date:</label>
+                                        <div className="end-date">
+                                            <label className="label-title">End Date * :</label>
                                             <input type="date" value={this.state.expiryDate1} className="form-control date-wrap" />
                                             {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>}
                                         </div>
                                     </div>
                                     <div className="tree-box">
+                                        <label className="label-title">Select Region * :</label>
+                                        <input className="holder" placeholder="Search here.." />
                                         <TreeSelect
                                             treeData={treeData1}
                                             style={{ width: 210, height: 100 }}
@@ -303,10 +309,8 @@ class CustomerOnboard extends Component {
                                             onChecked={this.onChecked1}
                                             checkbox={checkbox1}
                                             customTitleRender={this.customTitleRender} />
+                                        {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
                                     </div>
-                                    {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
-
-
                                 </div>
                                 <div className=" view-box">
                                     <button type="button" class="data-search" onClick={this.getGraphView}>
@@ -315,7 +319,7 @@ class CustomerOnboard extends Component {
                                 </div>
 
 
-                                <div >
+                                <div className="pt-5">
                                     <ReactBarLineChart />
                                 </div>
                             </div>
@@ -323,7 +327,7 @@ class CustomerOnboard extends Component {
                     </div>
 
                 </div>
-                <div className="back-btn mt-3">
+                <div className="back-btn my-3">
                     <button class="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
             </div>
