@@ -162,11 +162,13 @@ class PlacingOrder extends Component {
                             <div className="map-view main-wrapper">
                                 <h4 className="user-title">{window.strings.REPORT.MAP_VIEW}</h4>
                                 <div className="d-flex justify-content-around">
-                                    <div className="start-date mr-2">
-                                        <label className="label-title">Choose Date:</label>
+                                    <div className="start-date">
+                                        <label className="label-title">Choose Date * :</label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
                                     </div>
                                     <div className="tree-box">
+                                        <label className="label-title">Select Region * :</label>
+                                        <input className="holder" placeholder="Search here.." />
                                         <TreeSelect
                                             treeData={treeData}
                                             style={{ width: 210, height: 100 }}
@@ -199,13 +201,15 @@ class PlacingOrder extends Component {
                                 <h4 className="user-title">{window.strings.REPORT.GRAPH_VIEW}</h4>
                                 <div className="d-flex justify-content-around">
                                     <div className="start-date mr-2">
-                                        <label className="label-title">Choose Date:</label>
+                                        <label className="label-title">Choose Date * :</label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} name="graphStartDate" />
                                     </div>
-                                    <div className="tree-box mt-3">
+                                    <div className="tree-box">
+                                        <label className="label-title">Select Region * :</label>
+                                        <input className="holder" placeholder="Search here.." />
                                         <TreeSelect
                                             treeData={treeData}
-                                            style={{ width: 320, height: 100 }}
+                                            style={{ width: 210, height: 100 }}
                                             selectVal={this.state.graphSelectVal}
                                             onSelect={this.onSelect}
                                             // onExpand={false}

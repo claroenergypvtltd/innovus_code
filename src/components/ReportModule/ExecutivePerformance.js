@@ -142,19 +142,21 @@ class ExecutivePerformance extends Component {
         return (
             <div className="customer-onboard">
                 <h4 className="user-title">{window.strings.REPORT.SALES_EXECUTIVE_PERFORMANCE}</h4>
-                <div className="mt-3">
-                    <div className="map-view main-wrapper">
+                <div className="sales-report mt-3">
+                    <div className="main-wrapper pb-5">
                         <div className="d-flex justify-content-around">
-                            <div className="start-date mr-2">
-                                <label className="label-title">Start Date:</label>
+                            <div className="start-date">
+                                <label className="label-title">Start Date * :</label>
                                 <input type="date" className="date-wrap form-control" />
                             </div>
-                            <div className="end-date mr-2">
-                                <label className="label-title">End Date:</label>
+                            <div className="end-date">
+                                <label className="label-title">End Date * :</label>
                                 <input type="date" className="date-wrap form-control" />
                             </div>
 
                             <div className="tree-box">
+                                <label className="label-title">Select Region * :</label>
+                                <input className="holder" placeholder="Search here.." />
                                 <TreeSelect
                                     treeData={treeData}
                                     style={{ width: 210, height: 100 }}
@@ -162,32 +164,47 @@ class ExecutivePerformance extends Component {
                                     onChecked={this.onChecked}
                                     checkbox={checkbox}
                                     customTitleRender={this.customTitleRender} />
+                                {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
                             </div>
-                            {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
-
-
+                            <div className="tree-box">
+                                <label className="label-title">Select Region * :</label>
+                                <input className="holder" placeholder="Search here.." />
+                                <TreeSelect
+                                    treeData={treeData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.selectVal}
+                                    onChecked={this.onChecked}
+                                    checkbox={checkbox}
+                                    customTitleRender={this.customTitleRender} />
+                                {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
+                            </div>
                         </div>
-
-                        <div >
-                            <ReactBarLineChart />
-                        </div>
-
-                        <div >
-                            <ReactBarLineChart />
-                        </div>
-
-                        <div >
-                            <ReactBarLineChart />
-                        </div>
-
                         <div className="view-box">
                             <button type="button" class="data-search" onClick={this.getGraphView}>
                                 <i class="fa fa-search" aria-hidden="true"></i>Search
-                                </button>
+                            </button>
                         </div>
                     </div>
+                    <div className="row mt-5">
+                        <div className="col-md-6">
+                            <div className="main-wrapper py-3">
+                                <ReactBarLineChart />
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="main-wrapper py-3">
+                                <ReactBarLineChart />
+                            </div>
+                        </div>
+                        <div className="col-md-6 offset-md-3 mt-5">
+                            <div className="main-wrapper py-3">
+                                <ReactBarLineChart />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div className="back-btn mt-3">
+                <div className="back-btn my-3">
                     <button class="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
             </div>)
