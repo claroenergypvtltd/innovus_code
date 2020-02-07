@@ -447,9 +447,9 @@ export const Translation = {
         },
         "REPORT": {
             "REPORTMANAGEMENT": "REPORT MANAGEMENT",
-            "CUSTOMER_ONBOARD": "CUSTOMER ONBOARD",
-            "PLACING_ORDER": "PLACING ORDER",
-            "EXECUTIVE_PERFORMANCE": "SALES EXECUTIVE PERFORMANCE",
+            "CUSTOMER_ONBOARD": "Number Of Customers Onboarded",
+            "PLACING_ORDER": "Number Of Customers Placing Orders",
+            "EXECUTIVE_PERFORMANCE": "Sales Executive Performance",
             "NUMBER_CUSTOMER_ONBOARD": "NUMBER OF CUSTOMERS ONBOARDED",
             "NUMBER_CUSTOMER_PLACEORDER": "NUMBER OF CUSTOMERS PLACING ORDER",
             "MAP_VIEW": "Map View",
