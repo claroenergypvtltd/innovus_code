@@ -6,7 +6,7 @@ export default class GoogleMap extends React.Component {
     }
     render() {
         return (
-            <div style={{ width: "100%", height: "300px", position: "relative" }}>
+            <div style={{ width: "100%", height: "450px", position: "relative" }}>
                 <Map google={window.google} zoom={14} initialCenter={{ lat: 9.877503, lng: 78.061718 }}>
                     <Marker
                         name={'Dolores park'}

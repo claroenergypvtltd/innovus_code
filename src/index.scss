@@ -2726,6 +2726,8 @@ display: flex;
 }
 .import-hide{
   visibility: hidden;
+  width: 100px;
+  position: absolute;
 }
 .retail-reset{
   margin: 6px 6px 0 0;
@@ -3090,9 +3092,34 @@ display: flex;
   height: 30px;
   padding: 4px;
 }
-
-
-
+.view-box .data-search{
+  width: 83px;
+}
+.view-box{
+  // position: relative;
+  // top: 39px;
+  // right: -4px;
+    position: relative;
+    top: 20px;
+    right: 57px;
+    text-align: right;
+}
+.tree-box{
+  // position: relative;
+  // top: 44px;
+}
+// .do-TreeSelect{
+//   border: none;
+// }
+// .do-SearchBox{
+//   border: 1px solid $report-box;
+// }
+// .do-SearchBox-input{
+//   border-bottom: none;
+// }
+// .do-TreeSelect:hover {
+//   border: 1px solid $report-box;
+// }
 /****************************RESPONSIVE************************/
 
 @media (min-width: 1200px) { }

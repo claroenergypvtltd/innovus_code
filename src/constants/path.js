@@ -62,6 +62,8 @@ export const path = {
         list: process.env.PUBLIC_URL + '/reports',
         customerOnboard: process.env.PUBLIC_URL + '/reports/customerOnboard',
         placingOrder: process.env.PUBLIC_URL + '/reports/placingOrder',
+        executivePerformance: process.env.PUBLIC_URL + '/reports/executivePerformance',
+
     },
     coupons: {
         add: process.env.PUBLIC_URL + '/coupon/add',

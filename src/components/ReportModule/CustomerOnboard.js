@@ -89,14 +89,14 @@ class CustomerOnboard extends Component {
                                     <div className="d-block">
                                         <div className="start-date mr-2">
                                             <label className="label-title">Start Date:</label>
-                                            <input type="date" className="form-control" />
+                                            <input type="date" className="form-control date-wrap" />
                                         </div>
                                         <div className="end-date mr-2">
                                             <label className="label-title">End Date:</label>
-                                            <input type="date" className="form-control" />
+                                            <input type="date" className="form-control date-wrap" />
                                         </div>
                                     </div>
-                                    <div className="tree-box mt-3">
+                                    <div className="tree-box">
                                         <TreeSelect
                                             treeData={treeData}
                                             style={{ width: 210, height: 100 }}
@@ -108,7 +108,16 @@ class CustomerOnboard extends Component {
                                             showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
                                     </div>
-
+                                    {/* <div className=" view-box">
+                                        <button type="button" class="data-search">
+                                            <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button>
+                                    </div> */}
+                                </div>
+                                <div className=" view-box">
+                                    <button type="button" class="data-search">
+                                        <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button>
                                 </div>
                             </div>
                         </div>
@@ -119,14 +128,14 @@ class CustomerOnboard extends Component {
                                     <div className="d-block">
                                         <div className="start-date mr-2">
                                             <label className="label-title">Start Date:</label>
-                                            <input type="date" className="form-control" />
+                                            <input type="date" className="form-control date-wrap" />
                                         </div>
                                         <div className="end-date mr-2">
                                             <label className="label-title">End Date:</label>
-                                            <input type="date" className="form-control" />
+                                            <input type="date" className="form-control date-wrap" />
                                         </div>
                                     </div>
-                                    <div className="tree-box mt-3">
+                                    <div className="tree-box">
                                         <TreeSelect
                                             treeData={treeData}
                                             style={{ width: 210, height: 100 }}
@@ -138,7 +147,15 @@ class CustomerOnboard extends Component {
                                             showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
                                     </div>
-
+                                    {/* <div className=" view-box">
+                                        <button type="button" class="data-search">
+                                            <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button> */}
+                                </div>
+                                <div className=" view-box">
+                                    <button type="button" class="data-search">
+                                        <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button>
                                 </div>
                             </div>
                         </div>

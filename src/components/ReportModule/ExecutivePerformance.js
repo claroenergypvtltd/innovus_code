@@ -82,14 +82,14 @@ export default class CustomerOnboard extends Component {
                         <div className="d-flex justify-content-around">
                             <div className="start-date mr-2">
                                 <label className="label-title">Start Date:</label>
-                                <input type="date" className="form-control" />
+                                <input type="date" className="date-wrap form-control" />
                             </div>
                             <div className="end-date mr-2">
                                 <label className="label-title">End Date:</label>
-                                <input type="date" className="form-control" />
+                                <input type="date" className="date-wrap form-control" />
                             </div>
 
-                            <div className="tree-box mt-3">
+                            <div className="tree-box">
                                 <TreeSelect
                                     treeData={treeData}
                                     style={{ width: 210, height: 100 }}
@@ -101,6 +101,12 @@ export default class CustomerOnboard extends Component {
                                     showlevel={this.state.showlevel}
                                     customTitleRender={this.customTitleRender} />
                             </div>
+
+                        </div>
+                        <div className="view-box">
+                            <button type="button" class="data-search">
+                                <i class="fa fa-search" aria-hidden="true"></i>Search
+                                </button>
                         </div>
                     </div>
                 </div>

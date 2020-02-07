@@ -17,6 +17,9 @@ export default class report extends Component {
         this.props.history.push(path.reports.customerOnboard);
     }
 
+    salesPerformance = () => {
+        this.props.history.push(path.reports.executivePerformance);
+    }
     render() {
         return (
             <div>
@@ -38,7 +41,7 @@ export default class report extends Component {
                         <button className="set-btn" onClick={this.orderPath}>{window.strings.REPORT.PLACING_ORDER}
                             <i class="fa fa-chevron-right"></i>
                         </button>
-                        <button className="set-btn">{window.strings.REPORT.EXECUTIVE_PERFORMANCE}
+                        <button className="set-btn" onClick={this.salesPerformance}>{window.strings.REPORT.EXECUTIVE_PERFORMANCE}
                             <i class="fa fa-chevron-right"></i>
                         </button>
                     </div>

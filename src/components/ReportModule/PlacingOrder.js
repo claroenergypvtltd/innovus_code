@@ -99,9 +99,9 @@ class PlacingOrder extends Component {
                                 <div className="d-flex justify-content-around">
                                     <div className="start-date mr-2">
                                         <label className="label-title">Choose Date:</label>
-                                        <input type="date" className="form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
+                                        <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
                                     </div>
-                                    <div className="tree-box mt-3">
+                                    <div className="tree-box">
                                         <TreeSelect
                                             treeData={regionData}
                                             style={{ width: 210, height: 100 }}
@@ -113,8 +113,18 @@ class PlacingOrder extends Component {
                                             showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
                                     </div>
+                                    {/* <div className="view-box">
+                                        <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
+                                            <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button>
+                                    </div> */}
                                 </div>
-                                <div className="pt-5">
+                                <div className="view-box">
+                                    <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
+                                        <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button>
+                                </div>
+                                <div className="mt-5">
                                     <GoogleMap />
                                 </div>
                             </div>
@@ -122,14 +132,35 @@ class PlacingOrder extends Component {
                         <div className="col-md-6">
                             <div className="graph-view main-wrapper">
                                 <h4 className="user-title">{window.strings.REPORT.GRAPH_VIEW}</h4>
-                                <div className="d-flex">
+                                <div className="d-flex justify-content-around">
                                     <div className="start-date mr-2">
                                         <label className="label-title">Choose Date:</label>
-                                        <input type="date" className="form-control" onChange={this.handleChange} value={this.state.graphStartDate} name="graphStartDate" />
-                                        <div className="back-btn col-md-2"><button class="common-btn" onClick={this.getPlacingOrderGraph}>search</button></div>
+                                        <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} name="graphStartDate" />
                                     </div>
+                                    <div className="tree-box">
+                                        <TreeSelect
+                                            treeData={regionData}
+                                            style={{ width: 210, height: 100 }}
+                                            selectVal={this.state.selectVal}
+                                            onSelect={this.onSelect}
+                                            onExpand={false}
+                                            onChecked={this.onChecked}
+                                            checkbox={checkbox}
+                                            showlevel={this.state.showlevel}
+                                            customTitleRender={this.customTitleRender} />
+                                    </div>
+                                    {/* <div className="view-box">
+                                        <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
+                                            <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button>
+                                    </div> */}
                                 </div>
-                                <div >
+                                <div className="view-box">
+                                    <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
+                                        <i class="fa fa-search" aria-hidden="true"></i>Search
+                                        </button>
+                                </div>
+                                <div className="mt-5">
                                     <ReactBarLineChart />
                                 </div>
                             </div>
@@ -137,7 +168,7 @@ class PlacingOrder extends Component {
                     </div>
 
                 </div>
-                <div className="back-btn mt-3">
+                <div className="back-btn my-3">
                     <button class="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
             </div>
