@@ -6,6 +6,7 @@ import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
 import { fetchOrderGraph, fetchOrderMap } from '../../actions/reportAction'
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
+import { toastr } from 'react-redux-toastr';
 
 class PlacingOrder extends Component {
     constructor(props) {
@@ -17,7 +18,10 @@ class PlacingOrder extends Component {
             regionId: '',
             mapSelectVal: [],
             graphSelectVal: [],
-            getBarChart: false
+            getBarChart: false,
+            subRegionBarData: [],
+            graphSubmitted: false,
+            mapSubmitted: false
         }
     }
     componentDidMount() {
@@ -29,28 +33,32 @@ class PlacingOrder extends Component {
         }
     }
     getPlacingOrderGraph = () => {
+        this.setState({ graphSubmitted: true })
         if (this.state.graphStartDate && this.state.graphSelectVal.length > 0) {
             let obj = {
                 startDate: this.state.graphStartDate,
-                id: 1,
+                id: 2,
                 regionId: this.state.graphSelectVal
             }
             fetchOrderGraph(obj).then(resp => {
                 if (resp && resp.data) {
-                    this.setState({ data: resp.data })
+                    this.setState({ graphData: resp.data })
                 }
             })
         }
     }
     getPlacingOrderMap = () => {
+        this.setState({ mapSubmitted: true })
         if (this.state.mapStartDate && this.state.mapSelectVal.length > 0) {
             let obj = {
                 startDate: this.state.mapStartDate,
-                id: 1,
+                id: 2,
                 regionId: this.state.mapSelectVal
             }
             fetchOrderMap(obj).then(resp => {
-
+                if (resp && resp.data) {
+                    this.setState({ mapData: resp.data })
+                }
             })
         }
     }
@@ -78,6 +86,7 @@ class PlacingOrder extends Component {
                 }
             }))
             this.state.mapSelectVal = dropDownValue
+            // this.setState({ mapSelectVal: dropDownValue })
         }
     }
     onGraphChecked = (Data) => {
@@ -89,12 +98,13 @@ class PlacingOrder extends Component {
                 }
             }))
             this.state.graphSelectVal = dropDownValue
+            // this.setState({ graphSelectVal: dropDownValue })
         }
     }
-    callbackFunction = (childData) => {
-        this.setState({ getBarChart: childData })
+    callbackFunction = (childData, selectBarData) => {
+        this.setState({ getBarChart: childData, subRegionBarData: selectBarData })
     }
-    hideSubBar = () => {
+    hideSubBarChart = () => {
         this.setState({ getBarChart: false })
     }
     render() {
@@ -125,33 +135,33 @@ class PlacingOrder extends Component {
 
             let obj = {
                 title: item.name,
-                value: item.name + 'parent',
+                value: item.name + 'Parent',
                 children: childArray,
             }
             regionData.push(obj)
 
         })
 
-        const treeData = [
-            {
+        // const regionData = [
+        //     {
 
-                children: [
-                    {
-                        title: 'south-mdu',
-                        value: 'south-mdu',
-                    },
-                    {
-                        title: 'agent 1',
-                        value: 'agent 1',
-                    }, {
-                        title: 'test',
-                        value: 'test',
-                    }
-                ],
-                title: 'Parent',
-                value: 'Parent',
-            }
-        ]
+        //         children: [
+        //             {
+        //                 title: 'south-mdu',
+        //                 value: 'south-mdu',
+        //             },
+        //             {
+        //                 title: 'agent 1',
+        //                 value: 'agent 1',
+        //             }, {
+        //                 title: 'test',
+        //                 value: 'test',
+        //             }
+        //         ],
+        //         title: 'Parent',
+        //         value: 'Parent',
+        //     }
+        // ]
 
         return (
             <div className="customer-placeorder">
@@ -165,12 +175,14 @@ class PlacingOrder extends Component {
                                     <div className="start-date">
                                         <label className="label-title">Choose Date * :</label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
+                                        {/* {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length >= 1 && <div className='mandatory'>Date is required</div>}
+                                        {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Date is required</div>} */}
                                     </div>
                                     <div className="tree-box">
                                         <label className="label-title">Select Region * :</label>
                                         <input className="holder" placeholder="Search here.." />
                                         <TreeSelect
-                                            treeData={treeData}
+                                            treeData={regionData}
                                             style={{ width: 210, height: 100 }}
                                             selectVal={this.state.mapSelectVal}
                                             onSelect={this.onSelect}
@@ -179,6 +191,8 @@ class PlacingOrder extends Component {
                                             checkbox={mapCheckbox}
                                             // showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
+                                        {/* {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Region is required</div>}
+                                        {this.state.mapSubmitted && this.state.mapStartDate && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Region is required</div>} */}
                                     </div>
                                     {/* <div className="view-box">
                                         <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
@@ -203,12 +217,15 @@ class PlacingOrder extends Component {
                                     <div className="start-date mr-2">
                                         <label className="label-title">Choose Date * :</label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} name="graphStartDate" />
+                                        {/* {this.state.graphSubmitted && (!this.state.graphStartDate) && this.state.graphSelectVal.length < 1 && <div className='mandatory'>Date is required</div>}
+                                        {this.state.graphSubmitted && (!this.state.graphStartDate) && this.state.graphSelectVal.length >= 1 && <div className='mandatory'>Date is required</div>} */}
+
                                     </div>
                                     <div className="tree-box">
                                         <label className="label-title">Select Region * :</label>
                                         <input className="holder" placeholder="Search here.." />
                                         <TreeSelect
-                                            treeData={treeData}
+                                            treeData={regionData}
                                             style={{ width: 210, height: 100 }}
                                             selectVal={this.state.graphSelectVal}
                                             onSelect={this.onSelect}
@@ -217,6 +234,8 @@ class PlacingOrder extends Component {
                                             checkbox={graphCheckbox}
                                             // showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
+                                        {/* {this.state.graphSubmitted && (!this.state.graphStartDate) && this.state.graphSelectVal.length < 1 && <div className='mandatory'>Region is required</div>}
+                                        {this.state.graphSubmitted && this.state.graphStartDate && this.state.graphSelectVal.length < 1 && <div className='mandatory'>Region is required</div>} */}
                                     </div>
                                 </div>
                                 <div className="view-box">
@@ -225,11 +244,11 @@ class PlacingOrder extends Component {
                                         </button>
                                 </div>
                                 <div className="mt-5">
-                                    <ReactBarLineChart data={this.state.data} parentCallback={this.callbackFunction} />
+                                    <ReactBarLineChart graphData={this.state.graphData} parentCallback={this.callbackFunction} />
                                 </div>
                                 {this.state.getBarChart && <div className="pt-5">
-                                    <ReactBarLineChart data={this.state.data} parentCallback={this.callbackFunction} />
-                                    <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBar}>close</button></div>
+                                    <ReactBarLineChart subGraphData={this.state.subRegionBarData} parentCallback={this.callbackFunction} />
+                                    <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
                                 </div>}
                             </div>
                         </div>

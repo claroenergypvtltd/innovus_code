@@ -2,6 +2,13 @@ import React from 'react'
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 export default class GoogleMap extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            latLong: [],
+            data: false
+        }
+    }
     onMarkerClick = (props, marker, e) => {
     }
 
@@ -35,7 +42,7 @@ export default class GoogleMap extends React.Component {
         return (
             <div style={{ width: "100%", height: "450px", position: "relative" }}>
                 <Map google={window.google} zoom={5} initialCenter={{ lat: 26, lng: 80 }}>
-                    {latLong && latLong.map((item, index) => (
+                    {this.state.latLong && this.state.latLong.map((item, index) => (
                         <Marker
                             // name={item.name}
                             position={{ lat: item.lat, lng: item.lng }}
