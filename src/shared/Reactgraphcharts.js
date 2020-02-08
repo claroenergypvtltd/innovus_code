@@ -116,19 +116,19 @@ export class ReactBarLineChart extends Component {
         this.props.parentCallback(this.state.getBarChart, Data);
     }
     render() {
-        const data = [
+        const data = this.props.barChartData ? this.props.barChartData : [
 
         ]
         return (
             <div>
-                <ComposedChart width={500} height={450} data={barChartdata}>
+                <ComposedChart width={500} height={450} data={data}>
                     <XAxis dataKey="name" label={{ value: 'No of Customers Placing Orders', position: 'bottom', offset: 8 }} />
                     <YAxis />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
                     <CartesianGrid stroke="#f5f5f5" />
                     {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
-                    <Bar dataKey="pv" barSize={20} fill="#413ea0" onClick={this.sendData} />
+                    <Bar dataKey="Users" barSize={20} fill="#413ea0" onClick={this.sendData} />
                     {/* <Line type="monotone" dataKey="uv" stroke="#ff7300" /> */}
                 </ComposedChart>
             </div>
@@ -165,24 +165,24 @@ export function ReactPieChart(props) {
 
 
 export function LineChartView(props) {
-    // static jsfiddleUrl = 'https://jsfiddle.net/alidingling/xqjtetw0/';
 
-    // render() {
+    let value = props && props.label
+
     return (
         <div>
             <LineChart
                 width={500}
-                height={300}
+                height={400}
                 data={barChartdata}
                 margin={{
                     top: 5, right: 30, left: 20, bottom: 5,
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
                 <YAxis />
                 <Tooltip />
-                <Legend />
+                <Legend verticalAlign="top" height={36} />
                 <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
             </LineChart>

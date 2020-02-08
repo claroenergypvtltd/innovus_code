@@ -222,8 +222,8 @@ class CustomerOnboard extends Component {
 
         this.state.mapData && this.state.mapData.map(item => {
             let obj = {
-                lat: item.shopAddress.latitude,
-                lng: item.shopAddress.longitude
+                lat: Number(item.shopAddress.latitude),
+                lng: Number(item.shopAddress.longitude)
             }
             latLongData.push(obj)
         })

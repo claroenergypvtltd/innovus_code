@@ -5,7 +5,7 @@ import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
 import { getCustomerMapView } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
-import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
+import { ReactBarLineChart, LineChartView } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
 
 class ExecutivePerformance extends Component {
@@ -14,53 +14,54 @@ class ExecutivePerformance extends Component {
         this.state = {
             showlevel: 0,
             startDate: '',
-            expiryDate: '',
+            endDate: '',
             selectVal: [],
             selectVal1: [],
-            errors: {}
+            errors: {},
+            graphSubmit: false
         }
     }
 
     componentDidMount() {
         this.getRegion();
-        let dData = [
-            {
-                name: 'parent 1',
-                name: 'parent 1',
-                dcDatas: [
-                    {
-                        dcCode: 'child 1',
-                        dcCode: 'child 1',
-                    }, {
-                        dcCode: 'child 2',
-                        dcCode: 'child 2',
-                    }, {
-                        dcCode: 'child 3',
-                        dcCode: 'child 3',
-                    }
-                ]
-            }, {
-                name: 'parent 2',
-                name: 'parent 2',
-                dcDatas: [
-                    {
-                        dcCode: 'child 4',
-                        dcCode: 'child 4',
-                    }, {
-                        dcCode: 'child 5',
-                        dcCode: 'child 5',
-                    }
-                ]
-            }
-        ]
+        // let dData = [
+        //     {
+        //         name: 'parent 1',
+        //         name: 'parent 1',
+        //         dcDatas: [
+        //             {
+        //                 dcCode: 'child 1',
+        //                 dcCode: 'child 1',
+        //             }, {
+        //                 dcCode: 'child 2',
+        //                 dcCode: 'child 2',
+        //             }, {
+        //                 dcCode: 'child 3',
+        //                 dcCode: 'child 3',
+        //             }
+        //         ]
+        //     }, {
+        //         name: 'parent 2',
+        //         name: 'parent 2',
+        //         dcDatas: [
+        //             {
+        //                 dcCode: 'child 4',
+        //                 dcCode: 'child 4',
+        //             }, {
+        //                 dcCode: 'child 5',
+        //                 dcCode: 'child 5',
+        //             }
+        //         ]
+        //     }
+        // ]
 
-        this.setState({ regionListData: dData })
+        // this.setState({ regionListData: dData })
 
     }
 
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
-            this.setState({ regionListData: newProps.regionList.Lists.datas, totalCount: newProps.regionList.Lists.totalCount })
+            this.setState({ regionListData: newProps.regionList.Lists.datas })
         }
     }
 
@@ -86,10 +87,20 @@ class ExecutivePerformance extends Component {
         })
         this.state.selectVal = regionArray
     }
+    onChecked1 = (data, value) => {
+        let regionArray1 = [];
+        data.map(item => {
+            if (!item.includes('parent')) {
+                regionArray1.push(item);
+
+            }
+        })
+        this.state.selectVal1 = regionArray1
+    }
 
     getGraphView = () => {
         this.setState({ graphSubmit: true })
-        if (this.state.startDate1 && this.state.expiryDate1 && (this.state.startDate1 <= this.state.expiryDate1) && this.state.selectVal1.length > 0) {
+        if (this.state.startDate && this.state.endDate && this.state.selectVal.length > 0 && this.state.selectVal1.length > 0) {
             let obj = {
                 startDate1: this.state.startDate1,
                 expiryDate1: this.state.expiryDate1,
@@ -138,6 +149,13 @@ class ExecutivePerformance extends Component {
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.selectVal            // Initialize check multiple lists
         }
+        const checkbox1 = {
+            enable: true,
+            parentChain: true,              // child Affects parent nodes;
+            childrenChain: true,            // parent Affects child nodes;
+            halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
+            initCheckedList: this.state.selectVal1           // Initialize check multiple lists
+        }
 
         return (
             <div className="customer-onboard">
@@ -147,11 +165,13 @@ class ExecutivePerformance extends Component {
                         <div className="d-flex justify-content-around">
                             <div className="start-date">
                                 <label className="label-title">Start Date * :</label>
-                                <input type="date" className="date-wrap form-control" />
+                                <input type="date" className="date-wrap form-control" onchange={this.dateChange} name="startDate" />
+                                {this.state.graphSubmit && (!this.state.startDate) && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>}
                             </div>
                             <div className="end-date">
                                 <label className="label-title">End Date * :</label>
-                                <input type="date" className="date-wrap form-control" />
+                                <input type="date" className="date-wrap form-control" onchange={this.dateChange} name="endDate" />
+                                {this.state.graphSubmit && (!this.state.endDate) && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>}
                             </div>
 
                             <div className="tree-box">
@@ -164,7 +184,7 @@ class ExecutivePerformance extends Component {
                                     onChecked={this.onChecked}
                                     checkbox={checkbox}
                                     customTitleRender={this.customTitleRender} />
-                                {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
+                                {this.state.graphSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
                             </div>
                             <div className="tree-box">
                                 <label className="label-title">Select Region * :</label>
@@ -172,9 +192,9 @@ class ExecutivePerformance extends Component {
                                 <TreeSelect
                                     treeData={treeData}
                                     style={{ width: 210, height: 100 }}
-                                    selectVal={this.state.selectVal}
-                                    onChecked={this.onChecked}
-                                    checkbox={checkbox}
+                                    selectVal={this.state.selectVal1}
+                                    onChecked={this.onChecked1}
+                                    checkbox={checkbox1}
                                     customTitleRender={this.customTitleRender} />
                                 {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
                             </div>
@@ -188,17 +208,17 @@ class ExecutivePerformance extends Component {
                     <div className="row mt-5">
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                <ReactBarLineChart />
+                                <LineChartView label='No of Customers Onboard' />
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                <ReactBarLineChart />
+                                <LineChartView label='No of Orders' />
                             </div>
                         </div>
                         <div className="col-md-6 offset-md-3 mt-5">
                             <div className="main-wrapper py-3">
-                                <ReactBarLineChart />
+                                <LineChartView label='Order Value' />
                             </div>
                         </div>
                     </div>
@@ -213,6 +233,6 @@ class ExecutivePerformance extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    // regionList: state.region
+    regionList: state.region
 })
 export default connect(mapStateToProps, { getRegion })(ExecutivePerformance)
