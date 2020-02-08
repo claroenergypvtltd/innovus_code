@@ -6,7 +6,6 @@ import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
 import { fetchOrderGraph, fetchOrderMap } from '../../actions/reportAction'
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
-import { toastr } from 'react-redux-toastr';
 
 class PlacingOrder extends Component {
     constructor(props) {
@@ -93,9 +92,7 @@ class PlacingOrder extends Component {
         if (Data) {
             let dropDownValue = []
             Data && Data.map((item => {
-                if (!item.includes('Parent')) {
-                    dropDownValue.push(item)
-                }
+                dropDownValue.push(item)
             }))
             this.state.graphSelectVal = dropDownValue
             // this.setState({ graphSelectVal: dropDownValue })
@@ -122,6 +119,7 @@ class PlacingOrder extends Component {
             halfChain: true, // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.graphSelectVal // Initialize check multiple lists
         }
+
         let regionData = []
         this.state.regionListData && this.state.regionListData.map((item, index) => {
             let childArray = [];
@@ -139,29 +137,44 @@ class PlacingOrder extends Component {
                 children: childArray,
             }
             regionData.push(obj)
-
         })
 
-        // const regionData = [
-        //     {
+        let regionData1 = []
+        this.state.regionListData && this.state.regionListData.map((item, index) => {
+            let childArray = [];
+            item.dcDatas && item.dcDatas.map((dcData, index) => {
+                let obj = {
+                    title: dcData.dcCode,
+                    value: dcData.dcCode,
+                }
+                childArray.push(obj)
+            })
 
-        //         children: [
-        //             {
-        //                 title: 'south-mdu',
-        //                 value: 'south-mdu',
-        //             },
-        //             {
-        //                 title: 'agent 1',
-        //                 value: 'agent 1',
-        //             }, {
-        //                 title: 'test',
-        //                 value: 'test',
-        //             }
-        //         ],
-        //         title: 'Parent',
-        //         value: 'Parent',
-        //     }
-        // ]
+            let obj = {
+                title: item.name,
+                value: item.id,
+                // children: childArray,
+            }
+            regionData1.push(obj)
+        })
+
+        let latLongData = [];
+        this.state.mapData && this.state.mapData.map(item => {
+            let obj = {
+                lat: Number(item.shopAddress.latitude),
+                lng: Number(item.shopAddress.longitude)
+            }
+            latLongData.push(obj)
+        })
+
+        let graphData = [];
+        this.state.graphData && this.state.graphData.map(item => {
+            let Data = item.split(',')
+            let obj = {
+                name: Data[0], Users: Data[1],
+            }
+            graphData.push(obj);
+        })
 
         return (
             <div className="customer-placeorder">
@@ -206,7 +219,7 @@ class PlacingOrder extends Component {
                                         </button>
                                 </div>
                                 <div className="mt-5">
-                                    <GoogleMap />
+                                    <GoogleMap latLongData={latLongData} />
                                 </div>
                             </div>
                         </div>
@@ -225,7 +238,7 @@ class PlacingOrder extends Component {
                                         <label className="label-title">Select Region * :</label>
                                         <input className="holder" placeholder="Search here.." />
                                         <TreeSelect
-                                            treeData={regionData}
+                                            treeData={regionData1}
                                             style={{ width: 210, height: 100 }}
                                             selectVal={this.state.graphSelectVal}
                                             onSelect={this.onSelect}
@@ -244,7 +257,7 @@ class PlacingOrder extends Component {
                                         </button>
                                 </div>
                                 <div className="mt-5">
-                                    <ReactBarLineChart graphData={this.state.graphData} parentCallback={this.callbackFunction} />
+                                    <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} />
                                 </div>
                                 {this.state.getBarChart && <div className="pt-5">
                                     <ReactBarLineChart subGraphData={this.state.subRegionBarData} parentCallback={this.callbackFunction} />
