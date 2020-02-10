@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
-import { getCustomerMapView, getCustomerGraphView } from '../../actions/reportAction'
+import { getCustomerMapView, getCustomerGraphView, getReportRegion } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
 import { path } from '../../constants';
 import { ReactBarChart } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
+import { toastr } from 'react-redux-toastr'
 
 class CustomerOnboard extends Component {
     constructor(props) {
@@ -27,77 +28,25 @@ class CustomerOnboard extends Component {
 
     componentDidMount() {
         this.getRegion();
-        let dData = [
-            {
-                name: 'parent 1',
-                name: 'parent 1',
-                dcDatas: [
-                    {
-                        dcCode: 'child 1',
-                        dcCode: 'child 1',
-                    }, {
-                        dcCode: 'child 2',
-                        dcCode: 'child 2',
-                    }, {
-                        dcCode: 'child 3',
-                        dcCode: 'child 3',
-                    }
-                ]
-            }, {
-                name: 'parent 2',
-                name: 'parent 2',
-                dcDatas: [
-                    {
-                        dcCode: 'child 4',
-                        dcCode: 'child 4',
-                    }, {
-                        dcCode: 'child 5',
-                        dcCode: 'child 5',
-                    }
-                ]
-            }
-        ]
-
-        let dData1 = [
-            {
-                name: 'parent 1',
-                name: 'parent 1',
-                dcDatas: [
-                    {
-                        dcCode: 'child 1',
-                        dcCode: 'child 1',
-                    }, {
-                        dcCode: 'child 2',
-                        dcCode: 'child 2',
-                    }, {
-                        dcCode: 'child 3',
-                        dcCode: 'child 3',
-                    }
-                ]
-            }, {
-                name: 'parent 2',
-                name: 'parent 2',
-                dcDatas: [
-                    {
-                        dcCode: 'child 4',
-                        dcCode: 'child 4',
-                    }, {
-                        dcCode: 'child 5',
-                        dcCode: 'child 5',
-                    }
-                ]
-            }
-        ]
-
-        // this.setState({ regionListData: dData, regionListData1: dData1 })
-
+        this.getReportRegion();
     }
-
 
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
             this.setState({ regionListData: newProps.regionList.Lists.datas, totalCount: newProps.regionList.Lists.totalCount })
         }
+    }
+
+    getReportRegion = () => {
+        let obj = {
+            page: '',
+            rows: ''
+        }
+        getReportRegion(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ regionListData1: resp.datas })
+            }
+        })
     }
 
     onChecked = (data, value) => {
@@ -149,17 +98,28 @@ class CustomerOnboard extends Component {
                     this.setState({ mapData: resp.data })
                 }
             })
+        } else {
+            toastr.error("Mandatory fields are missing")
         }
-
     }
 
     getGraphView = () => {
         this.setState({ graphSubmit: true })
         if (this.state.startDate1 && this.state.expiryDate1 && (this.state.startDate1 <= this.state.expiryDate1) && this.state.selectVal1.length > 0) {
+
+            let selectVal1 = [];
+
+            this.state.selectVal1 && this.state.selectVal1.map(item => {
+                if (item.includes('-')) {
+                    let data = item.split('-');
+                    selectVal1.push(data[0]);
+                }
+            })
+
             let obj = {
                 startDate: this.state.startDate1,
                 expiryDate: this.state.expiryDate1,
-                regionData: this.state.selectVal1
+                regionData: selectVal1
             }
 
             getCustomerGraphView(obj).then(resp => {
@@ -167,10 +127,25 @@ class CustomerOnboard extends Component {
                     this.setState({ graphData: resp.data })
                 }
             })
+        } else {
+            toastr.error("Mandatory fields are missing")
         }
-
     }
 
+    resetMapSearch = () => {
+        this.setState({
+            startDate: "",
+            expiryDate: "",
+            selectVal: []
+        });
+    }
+    resetGraphSearch = () => {
+        this.setState({
+            startDate1: "",
+            expiryDate1: "",
+            selectVal1: []
+        });
+    }
     render() {
         let treeData = []
         this.state.regionListData && this.state.regionListData.map((item, index) => {
@@ -183,7 +158,6 @@ class CustomerOnboard extends Component {
                 childArray.push(obj)
             })
 
-
             let obj = {
                 title: item.name,
                 value: item.name + 'parent',
@@ -193,11 +167,10 @@ class CustomerOnboard extends Component {
         })
 
         let treeData1 = []
-        this.state.regionListData && this.state.regionListData.map((item, index) => {
+        this.state.regionListData1 && this.state.regionListData1.map((item, index) => {
             let obj = {
                 title: item.name,
-                value: item.id,
-                // children: childArray,
+                value: item.id + '-Parent'
             }
             treeData1.push(obj)
         })
@@ -209,7 +182,6 @@ class CustomerOnboard extends Component {
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.selectVal            // Initialize check multiple lists
         }
-
         const checkbox1 = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
@@ -222,8 +194,8 @@ class CustomerOnboard extends Component {
 
         this.state.mapData && this.state.mapData.map(item => {
             let obj = {
-                lat: Number(item.shopAddress.latitude),
-                lng: Number(item.shopAddress.longitude)
+                lat: item.shopAddress.latitude,
+                lng: item.shopAddress.longitude
             }
             latLongData.push(obj)
         })
@@ -236,9 +208,6 @@ class CustomerOnboard extends Component {
             }
             graphData.push(obj);
         })
-
-
-
         return (
             <div className="customer-onboard">
                 <h4 className="user-title">{window.strings.REPORT.NUMBER_CUSTOMER_ONBOARD}</h4>
@@ -250,19 +219,19 @@ class CustomerOnboard extends Component {
                                 <div className="d-flex justify-content-around">
                                     <div className="d-block">
                                         <div className="start-date mr-2">
-                                            <label className="label-title">Start Date * :</label>
+                                            <label className="label-title">Start Date * </label>
                                             <input type="date" value={this.state.startDate} name="startDate" onChange={this.dateChange} className="form-control date-wrap" />
-                                            {this.state.mapSubmit && !this.state.startDate && <div className="mandatory">{"Start Date" + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.mapSubmit && !this.state.startDate && <div className="mandatory">{"Start Date" + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         <div className="end-date mr-2">
-                                            <label className="label-title">End Date * :</label>
+                                            <label className="label-title">End Date * </label>
                                             <input type="date" value={this.state.expiryDate} name="expiryDate" onChange={this.dateChange} className="form-control date-wrap" />
-                                            {this.state.mapSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date:" + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.mapSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date:" + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * :</label>
-                                        <input className="holder" placeholder="Search here.." />
+                                        <label className="label-title">Select Region * </label>
+                                        {/* <input className="holder" placeholder="Search here.." /> */}
                                         <TreeSelect
                                             treeData={treeData}
                                             style={{ width: 210, height: 100 }}
@@ -271,12 +240,18 @@ class CustomerOnboard extends Component {
                                             checkbox={checkbox}
                                             onChecked={this.onChecked}
                                             customTitleRender={this.customTitleRender} />
-                                        {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
+                                        {/* {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                                     </div>
                                 </div>
                                 <div className=" view-box">
                                     <button onClick={this.getMapView} className="data-search" >
                                         <i class="fa fa-search" aria-hidden="true"></i>Search
+                                    </button>
+                                </div>
+                                <div className="reset-box retail-reset m-0">
+                                    <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
+                                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                                        <span className="tooltip-text">Reset</span>
                                     </button>
                                 </div>
                                 <div className="pt-5">
@@ -285,24 +260,24 @@ class CustomerOnboard extends Component {
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <div className="graph-view main-wrapper">
+                            <div className="graph-view main-wrapper pb-5">
                                 <h4 className="user-title">{window.strings.REPORT.GRAPH_VIEW}</h4>
                                 <div className="d-flex justify-content-around">
                                     <div className="d-block">
                                         <div className="start-date">
-                                            <label className="label-title">Start Date * :</label>
+                                            <label className="label-title">Start Date * </label>
                                             <input type="date" value={this.state.startDate1} name="startDate1" onChange={this.dateChange} className="form-control date-wrap" />
-                                            {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         <div className="end-date">
-                                            <label className="label-title">End Date * :</label>
+                                            <label className="label-title">End Date * </label>
                                             <input type="date" value={this.state.expiryDate1} name="expiryDate1" onChange={this.dateChange} className="form-control date-wrap" />
-                                            {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>}
+                                            {/* {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * :</label>
-                                        <input className="holder" placeholder="Search here.." />
+                                        <label className="label-title">Select Region * </label>
+                                        {/* <input className="holder" placeholder="Search here.." /> */}
                                         <TreeSelect
                                             treeData={treeData1}
                                             style={{ width: 210, height: 100 }}
@@ -310,7 +285,7 @@ class CustomerOnboard extends Component {
                                             onChecked={this.onChecked1}
                                             checkbox={checkbox1}
                                             customTitleRender={this.customTitleRender} />
-                                        {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>}
+                                        {/* {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                                     </div>
                                 </div>
                                 <div className=" view-box">
@@ -318,23 +293,25 @@ class CustomerOnboard extends Component {
                                         <i class="fa fa-search" aria-hidden="true"></i>Search
                                         </button>
                                 </div>
-
-
-                                <div className="pt-5">
-                                    <ReactBarChart barChartData={graphData} />
+                                <div className="reset-box retail-reset m-0">
+                                    <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
+                                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                                        <span className="tooltip-text">Reset</span>
+                                    </button>
                                 </div>
+                            </div>
+                            <div className="record-box">
+                                {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div className="back-btn my-3">
                     <button class="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
-            </div>
+            </div >
         )
     }
-
 }
 
 const mapStateToProps = (state) => ({

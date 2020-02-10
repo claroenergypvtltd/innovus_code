@@ -104,6 +104,18 @@ class PlacingOrder extends Component {
     hideSubBarChart = () => {
         this.setState({ getBarChart: false })
     }
+    resetMapSearch = () => {
+        this.setState({
+            mapStartDate: "",
+            mapSelectVal: []
+        });
+    }
+    resetGraphSearch = () => {
+        this.setState({
+            graphStartDate: "",
+            graphselectVal: []
+        });
+    }
     render() {
         const mapCheckbox = {
             enable: true,
@@ -186,14 +198,14 @@ class PlacingOrder extends Component {
                                 <h4 className="user-title">{window.strings.REPORT.MAP_VIEW}</h4>
                                 <div className="d-flex justify-content-around">
                                     <div className="start-date">
-                                        <label className="label-title">Choose Date * :</label>
+                                        <label className="label-title">Choose Date * </label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
                                         {/* {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length >= 1 && <div className='mandatory'>Date is required</div>}
                                         {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Date is required</div>} */}
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * :</label>
-                                        <input className="holder" placeholder="Search here.." />
+                                        <label className="label-title">Select Region * </label>
+                                        {/* <input className="holder" placeholder="Search here.." /> */}
                                         <TreeSelect
                                             treeData={regionData}
                                             style={{ width: 210, height: 100 }}
@@ -218,6 +230,12 @@ class PlacingOrder extends Component {
                                         <i class="fa fa-search" aria-hidden="true"></i>Search
                                         </button>
                                 </div>
+                                <div className="reset-box retail-reset m-0">
+                                    <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
+                                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                                        <span className="tooltip-text">Reset</span>
+                                    </button>
+                                </div>
                                 <div className="mt-5">
                                     <GoogleMap latLongData={latLongData} />
                                 </div>
@@ -228,15 +246,15 @@ class PlacingOrder extends Component {
                                 <h4 className="user-title">{window.strings.REPORT.GRAPH_VIEW}</h4>
                                 <div className="d-flex justify-content-around">
                                     <div className="start-date mr-2">
-                                        <label className="label-title">Choose Date * :</label>
+                                        <label className="label-title">Choose Date * </label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} name="graphStartDate" />
                                         {/* {this.state.graphSubmitted && (!this.state.graphStartDate) && this.state.graphSelectVal.length < 1 && <div className='mandatory'>Date is required</div>}
                                         {this.state.graphSubmitted && (!this.state.graphStartDate) && this.state.graphSelectVal.length >= 1 && <div className='mandatory'>Date is required</div>} */}
 
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * :</label>
-                                        <input className="holder" placeholder="Search here.." />
+                                        <label className="label-title">Select Region * </label>
+                                        {/* <input className="holder" placeholder="Search here.." /> */}
                                         <TreeSelect
                                             treeData={regionData1}
                                             style={{ width: 210, height: 100 }}
@@ -255,6 +273,12 @@ class PlacingOrder extends Component {
                                     <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
                                         <i class="fa fa-search" aria-hidden="true"></i>Search
                                         </button>
+                                </div>
+                                <div className="reset-box retail-reset m-0">
+                                    <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
+                                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                                        <span className="tooltip-text">Reset</span>
+                                    </button>
                                 </div>
                                 <div className="mt-5">
                                     <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} />
