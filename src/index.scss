@@ -3087,7 +3087,7 @@ display: flex;
   padding:12px 10px;
 }
 .date-wrap{
-  width: 137px;
+  width: 145px;
   font-size: 13px;
   border: 1px solid $input-status;
   border-radius: 5px;
@@ -3101,9 +3101,9 @@ display: flex;
   // position: relative;
   // top: 39px;
   // right: -4px;
-    position: relative;
+  position: relative;
     top: 20px;
-    right: 62px;
+    right:95px;
     text-align: right;
 }
 .region-holder{
@@ -3135,40 +3135,67 @@ display: flex;
   color: $form-color;
 
 }
-.tree-box .label-title{
-  position: absolute;
+// .tree-box .label-title{
+//   position: absolute;
+// }
+.record-box{
+  text-align: center;
+  font-size: 20px;
+  margin: 35px 0;
 }
+.reset-box{
+  position: absolute;
+  text-align: right;
+  top: 242px;
+  right: 83px;
+}
+.sale-box .reset-box{
+  top: 318px;
+  right: 70px;
+}
+.sidebar-container
+ .sale-box 
+   .reset-box {
+  top: 256px;
+  right: 85px;
+}
+.sidebar-container
+  .view-box
+    .data-search{
+  margin-right: 20px;
+}
+
 .do-TreeSelect{
   height: 130px!important;
   overflow: hidden;
 }
-input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-  color:    #909;
-  content: "content6";
-}
-input.do-SearchBox-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
- color:    #909;
- opacity:  1;
- content: "content5";
-}
-input.do-SearchBox-input::-moz-placeholder { /* Mozilla Firefox 19+ */
- color:    #909;
- opacity:  1;
- content: "content4";
-}
-input.do-SearchBox-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
- color:    #909;
- content: "content3";
-}
-input.do-SearchBox-input::-ms-input-placeholder { /* Microsoft Edge */
- color:    #909;
- content: "content2";
-}
+// input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+//   color:    #909;
+//   content: "content6";
+// }
+// input.do-SearchBox-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+//  color:    #909;
+//  opacity:  1;
+//  content: "content5";
+// }
+// input.do-SearchBox-input::-moz-placeholder { /* Mozilla Firefox 19+ */
+//  color:    #909;
+//  opacity:  1;
+//  content: "content4";
+// }
+// input.do-SearchBox-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+//  color:    #909;
+//  content: "content3";
+// }
+// input.do-SearchBox-input::-ms-input-placeholder { /* Microsoft Edge */
+//  color:    #909;
+//  content: "content2";
+// }
 
-input.do-SearchBox-input::placeholder { /* Most modern browsers support this now. */
- color:    #909;
- content: "content1";
-}
+// input.do-SearchBox-input::placeholder { /* Most modern browsers support this now. */
+//  color:    #909;
+//  content: "content1";
+// }
 
 // .tree-box{
 //   position: relative;
