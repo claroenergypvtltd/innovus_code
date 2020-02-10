@@ -5,7 +5,11 @@ import GoogleMap from '../../shared/GoogleMap'
 import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
 import { fetchOrderGraph, fetchOrderMap } from '../../actions/reportAction'
 import TreeSelect from 'react-do-tree-select';
-import { getRegion } from '../../actions/regionAction'
+import { getReportRegion } from '../../actions/reportAction'
+import { toastr } from 'react-redux-toastr';
+import { getDcCodeData } from '../../actions/salesAgentAction';
+// import { TreeSelect } from 'antd';
+// import { SHOW_PARENT } from TreeSelect;
 
 class PlacingOrder extends Component {
     constructor(props) {
@@ -20,24 +24,44 @@ class PlacingOrder extends Component {
             getBarChart: false,
             subRegionBarData: [],
             graphSubmitted: false,
-            mapSubmitted: false
+            mapSubmitted: false,
+            graphData: [],
+            mapData: [],
+            agentSelectVal: []
         }
     }
     componentDidMount() {
         this.getRegionList()
+        this.fetchAgents()
     }
-    componentWillReceiveProps(newProps) {
-        if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
-            this.setState({ regionListData: newProps.regionList.Lists.datas })
+    fetchAgents = () => {
+        let obj = {
+            roleId: 4,
+            flag: 2,
+            search: this.state.dcCode ? this.state.dcCode : ''
         }
+        getDcCodeData(obj, "retailer").then(resp => {
+            if (resp) {
+                this.setState({ agentDataList: resp })
+            }
+        })
     }
     getPlacingOrderGraph = () => {
         this.setState({ graphSubmitted: true })
+        if ((!this.state.graphStartDate) || this.state.graphSelectVal.length == 0) {
+            toastr.error("Mandatory fields are missing")
+        }
+        let value = []
+        let data = {}
+        this.state.graphSelectVal && this.state.graphSelectVal.map((item => {
+            data = item.split('-')
+            value.push(data[0])
+        }))
         if (this.state.graphStartDate && this.state.graphSelectVal.length > 0) {
             let obj = {
                 startDate: this.state.graphStartDate,
                 id: 2,
-                regionId: this.state.graphSelectVal
+                regionId: value
             }
             fetchOrderGraph(obj).then(resp => {
                 if (resp && resp.data) {
@@ -48,11 +72,15 @@ class PlacingOrder extends Component {
     }
     getPlacingOrderMap = () => {
         this.setState({ mapSubmitted: true })
-        if (this.state.mapStartDate && this.state.mapSelectVal.length > 0) {
+        if ((!this.state.mapStartDate) || this.state.mapSelectVal.length == 0 || this.state.agentSelectVal.length == 0) {
+            toastr.error("Mandatory fields are missing")
+        }
+        if (this.state.mapStartDate && this.state.mapSelectVal.length > 0 && this.state.agentSelectVal.length > 0) {
             let obj = {
                 startDate: this.state.mapStartDate,
                 id: 2,
-                regionId: this.state.mapSelectVal
+                regionId: this.state.mapSelectVal,
+                agentId: this.state.agentSelectVal
             }
             fetchOrderMap(obj).then(resp => {
                 if (resp && resp.data) {
@@ -66,7 +94,9 @@ class PlacingOrder extends Component {
             page: '',
             rows: ''
         }
-        this.props.getRegion(obj)
+        getReportRegion(obj).then(resp => {
+            this.setState({ regionListData2: resp && resp.datas })
+        })
     }
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
@@ -85,21 +115,32 @@ class PlacingOrder extends Component {
                 }
             }))
             this.state.mapSelectVal = dropDownValue
-            // this.setState({ mapSelectVal: dropDownValue })
         }
     }
     onGraphChecked = (Data) => {
         if (Data) {
             let dropDownValue = []
             Data && Data.map((item => {
+                // let value = item.split('-')
                 dropDownValue.push(item)
+
             }))
             this.state.graphSelectVal = dropDownValue
-            // this.setState({ graphSelectVal: dropDownValue })
+        }
+    }
+    onAgentChecked = (Data) => {
+        if (Data) {
+            let dropDownValue = []
+            Data && Data.map((item => {
+                dropDownValue.push(item)
+            }))
+            this.state.agentSelectVal = dropDownValue
         }
     }
     callbackFunction = (childData, selectBarData) => {
-        this.setState({ getBarChart: childData, subRegionBarData: selectBarData })
+        let subBarData = [];
+        subBarData.push(selectBarData && selectBarData.payload)
+        this.setState({ getBarChart: childData, subRegionBarData: subBarData })
     }
     hideSubBarChart = () => {
         this.setState({ getBarChart: false })
@@ -107,13 +148,14 @@ class PlacingOrder extends Component {
     resetMapSearch = () => {
         this.setState({
             mapStartDate: "",
-            mapSelectVal: []
+            mapSelectVal: [],
+            agentSelectVal: []
         });
     }
     resetGraphSearch = () => {
         this.setState({
             graphStartDate: "",
-            graphselectVal: []
+            graphSelectVal: []
         });
     }
     render() {
@@ -131,9 +173,17 @@ class PlacingOrder extends Component {
             halfChain: true, // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.graphSelectVal // Initialize check multiple lists
         }
+        const agentCheckBox = {
+            enable: true,
+            parentChain: true, // child Affects parent nodes;
+            childrenChain: true, // parent Affects child nodes;
+            halfChain: true, // The selection of child nodes affects the semi-selection of parent nodes.
+            initCheckedList: this.state.agentSelectVal // Initialize check multiple lists
+        }
+
 
         let regionData = []
-        this.state.regionListData && this.state.regionListData.map((item, index) => {
+        this.state.regionListData2 && this.state.regionListData2.map((item, index) => {
             let childArray = [];
             item.dcDatas && item.dcDatas.map((dcData, index) => {
                 let obj = {
@@ -152,41 +202,71 @@ class PlacingOrder extends Component {
         })
 
         let regionData1 = []
-        this.state.regionListData && this.state.regionListData.map((item, index) => {
-            let childArray = [];
-            item.dcDatas && item.dcDatas.map((dcData, index) => {
-                let obj = {
-                    title: dcData.dcCode,
-                    value: dcData.dcCode,
-                }
-                childArray.push(obj)
-            })
+        this.state.regionListData2 && this.state.regionListData2.map((item) => {
+            // let childArray = [];
+            // item.dcDatas && item.dcDatas.map((dcData, index) => {
+            //     let obj = {
+            //         title: dcData.dcCode,
+            //         value: dcData.dcCode,
+            //     }
+            //     childArray.push(obj)
+            // })
 
             let obj = {
                 title: item.name,
-                value: item.id,
-                // children: childArray,
+                value: item.id + "-ParentData",
+                // children: childArray
             }
             regionData1.push(obj)
         })
 
+        let agentData = []
+        this.state.agentDataList && this.state.agentDataList.map((item) => {
+            let Data = item.split(',');
+
+
+            let obj = {
+                title: Data[1],
+                value: Data[0]
+            }
+            agentData.push(obj)
+        })
+
         let latLongData = [];
-        this.state.mapData && this.state.mapData.map(item => {
+        this.state.mapData.orders && this.state.mapData.orders.map(item => {
             let obj = {
                 lat: Number(item.shopAddress.latitude),
-                lng: Number(item.shopAddress.longitude)
+                lng: Number(item.shopAddress.longitude),
+                order: 1
+            }
+            latLongData.push(obj)
+        })
+
+        this.state.mapData.users && this.state.mapData.users.map(item => {
+            let obj = {
+                lat: item.shopAddress && item.shopAddress.latitude ? Number(item.shopAddress.latitude) : '',
+                lng: item.shopAddress && item.shopAddress.longitude ? Number(item.shopAddress.longitude) : ''
             }
             latLongData.push(obj)
         })
 
         let graphData = [];
-        this.state.graphData && this.state.graphData.map(item => {
+        this.state.graphData.length > 0 && this.state.graphData.map(item => {
             let Data = item.split(',')
             let obj = {
-                name: Data[0], Users: Data[1],
+                name: Data[0], Users: Data[1], Order: Data[2]
             }
             graphData.push(obj);
         })
+
+        // let agentData = [];
+        // this.state.agentDataList.length > 0 && this.state.agentDataList.map(item => {
+        //     let Data = item.split(',')
+        //     let obj = {
+        //         name: Data[0], Users: Data[1], Order: Data[2]
+        //     }
+        //     graphData.push(obj);
+        // })
 
         return (
             <div className="customer-placeorder">
@@ -203,17 +283,18 @@ class PlacingOrder extends Component {
                                         {/* {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length >= 1 && <div className='mandatory'>Date is required</div>}
                                         {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Date is required</div>} */}
                                     </div>
+
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * </label>
+                                        <label className="label-title">Sales Agent * :</label>
                                         {/* <input className="holder" placeholder="Search here.." /> */}
                                         <TreeSelect
-                                            treeData={regionData}
+                                            treeData={agentData}
                                             style={{ width: 210, height: 100 }}
-                                            selectVal={this.state.mapSelectVal}
+                                            selectVal={this.state.agentSelectVal}
                                             onSelect={this.onSelect}
                                             // onExpand={false}
-                                            onChecked={this.onMapChecked}
-                                            checkbox={mapCheckbox}
+                                            onChecked={this.onAgentChecked}
+                                            checkbox={agentCheckBox}
                                             // showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
                                         {/* {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Region is required</div>}
@@ -236,6 +317,24 @@ class PlacingOrder extends Component {
                                         <span className="tooltip-text">Reset</span>
                                     </button>
                                 </div>
+                                <div className="d-flex">
+                                    <div className="tree-box">
+                                        <label className="label-title">Select Region * :</label>
+                                        <TreeSelect
+                                            treeData={regionData}
+                                            style={{ width: 210, height: 100 }}
+                                            selectVal={this.state.mapSelectVal}
+                                            onSelect={this.onSelect}
+                                            // onExpand={false}
+                                            onChecked={this.onMapChecked}
+                                            checkbox={mapCheckbox}
+                                            // showlevel={this.state.showlevel}
+                                            customTitleRender={this.customTitleRender} />
+                                        {/* {this.state.mapSubmitted && (!this.state.mapStartDate) && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Region is required</div>}
+                                        {this.state.mapSubmitted && this.state.mapStartDate && this.state.mapSelectVal.length < 1 && <div className='mandatory'>Region is required</div>} */}
+                                    </div>
+                                </div>
+
                                 <div className="mt-5">
                                     <GoogleMap latLongData={latLongData} />
                                 </div>
@@ -253,7 +352,7 @@ class PlacingOrder extends Component {
 
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * </label>
+                                        <label className="label-title">Select Region * :</label>
                                         {/* <input className="holder" placeholder="Search here.." /> */}
                                         <TreeSelect
                                             treeData={regionData1}
@@ -265,6 +364,7 @@ class PlacingOrder extends Component {
                                             checkbox={graphCheckbox}
                                             // showlevel={this.state.showlevel}
                                             customTitleRender={this.customTitleRender} />
+
                                         {/* {this.state.graphSubmitted && (!this.state.graphStartDate) && this.state.graphSelectVal.length < 1 && <div className='mandatory'>Region is required</div>}
                                         {this.state.graphSubmitted && this.state.graphStartDate && this.state.graphSelectVal.length < 1 && <div className='mandatory'>Region is required</div>} */}
                                     </div>
@@ -280,14 +380,20 @@ class PlacingOrder extends Component {
                                         <span className="tooltip-text">Reset</span>
                                     </button>
                                 </div>
-                                <div className="mt-5">
+                                {/* <div className="mt-5">
                                     <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} />
-                                </div>
-                                {this.state.getBarChart && <div className="pt-5">
-                                    <ReactBarLineChart subGraphData={this.state.subRegionBarData} parentCallback={this.callbackFunction} />
-                                    <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
-                                </div>}
+                                </div> */}
+
                             </div>
+                            {this.state.graphData.length > 0 ? <div className="mt-5">
+                                <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} />
+                            </div> : <div className="record-box">No record found</div>}
+
+
+                            {this.state.getBarChart && <div className="pt-5">
+                                <ReactBarLineChart barChartData={this.state.subRegionBarData} parentCallback={this.callbackFunction} />
+                                <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
+                            </div>}
                         </div>
                     </div>
 
@@ -303,4 +409,4 @@ class PlacingOrder extends Component {
 const mapStateToProps = (state) => ({
     regionList: state.region
 })
-export default connect(mapStateToProps, { getRegion })(PlacingOrder)
+export default connect(mapStateToProps, { getReportRegion })(PlacingOrder)

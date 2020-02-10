@@ -3138,10 +3138,18 @@ display: flex;
 // .tree-box .label-title{
 //   position: absolute;
 // }
-.record-box{
+.record-box {
   text-align: center;
   font-size: 20px;
   margin: 35px 0;
+  }
+.do-TreeSelect{
+  height: 130px!important;
+  overflow: hidden;
+}
+input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color:    #909;
+  content: "content6";
 }
 .reset-box{
   position: absolute;

@@ -42,11 +42,20 @@ export default class GoogleMap extends React.Component {
             <div style={{ width: "100%", height: "450px", position: "relative" }}>
                 <Map google={window.google} zoom={5} initialCenter={{ lat: 26, lng: 80 }}>
                     {latLong && latLong.map((item, index) => (
-                        <Marker
+
+                        item && item.order == 1 ? <Marker
                             // name={item.name}
+                            icon={{ url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }}
                             position={{ lat: item.lat, lng: item.lng }}
                             onClick={this.onMarkerClick}
-                        />
+                        /> :
+                            <Marker
+                                // name={item.name}
+                                position={{ lat: item.lat, lng: item.lng }}
+                                onClick={this.onMarkerClick}
+                            />
+
+
                     ))
                     }
                 </Map>

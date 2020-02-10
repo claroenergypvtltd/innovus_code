@@ -129,7 +129,7 @@ export class ReactBarLineChart extends Component {
                     <CartesianGrid stroke="#f5f5f5" />
                     {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
                     <Bar dataKey="Users" barSize={20} fill="#413ea0" onClick={this.sendData} />
-                    {/* <Line type="monotone" dataKey="uv" stroke="#ff7300" /> */}
+                    <Line type="monotone" dataKey="Order" stroke="#ff7300" />
                 </ComposedChart>
             </div>
         )
