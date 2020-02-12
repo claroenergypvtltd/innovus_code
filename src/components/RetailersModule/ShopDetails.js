@@ -242,22 +242,28 @@ class ShopDetails extends React.Component {
                                         }}
                                     />
                                 </div>
+                                <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                             </div>
                         </div>
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
-                            <h4 className="user-title m-0">Shop Name</h4>
-                            <p className="title">{profile.shopAddress && profile.shopAddress.name}</p>
+                            <div className="shop-mark">
+                                <h4 className="user-title m-0">Shop Name</h4>
+                                <div className="check-mark"><i class="fas fa-times-circle "></i></div>
+                                <p className="title">{profile.shopAddress && profile.shopAddress.name}</p>
+                            </div>
                             <div className="farmer-details row mt-3">
-                                <div className="farmer-address col-md-6 mb-2">
+                                <div className="farmer-address shop-address col-md-6 mb-2">
                                     <h4 className="user-title m-0">Shop Address</h4>
+                                    <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                                     <p className="centext title sub-farm">
                                         {profile.shopAddress && profile.shopAddress.address1}
                                     </p>
                                 </div>
-                                <div className="farmer-address col-md-6 mb-2">
+                                <div className="farmer-address shop-type col-md-6 mb-2">
                                     <h4 className="user-title m-0">Shop Type</h4>
+                                    <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                                     <p className="centext title sub-farm">
                                         {profile.shopType && profile.shopType.type}
                                     </p>
@@ -269,8 +275,9 @@ class ShopDetails extends React.Component {
                                         {/* {profile.shopAddress && profile.shopAddress.address2} */}
                                     </p>
                                 </div>
-                                <div className="farmer-address col-md-6 mb-2">
+                                <div className="farmer-address shop-type col-md-6 mb-2">
                                     <h4 className="user-title m-0">Shop Time</h4>
+                                    <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                                     <p className="centext title sub-farm">
                                         {profile.shopAddress && profile.shopAddress.shopOpeningTime}
                                     </p>

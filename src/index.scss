@@ -946,6 +946,12 @@ button.ant-btn.btn.btn-primary.ant-btn-primary:hover {
 .farm-image{
   text-align: center;
   display: block;
+
+  .check-mark{
+    position: absolute;
+    top: -21px;
+    right: -16px;
+  } 
 }
 .farm-title{
   color:$farm-title;
@@ -1330,6 +1336,45 @@ a.level-btn:hover {
     color:$secondary-tick;
     font-size: 27px;
     margin-top: 42px;
+}
+.check-mark{
+  position: relative;
+  top: -35px;
+  right: -40px;
+  font-size: 18px;
+  color:$gray;
+}
+
+.shop-mark{
+  h4{
+    position: absolute;
+  }
+  .check-mark{
+    right: -95px;
+    top: -12px;
+    }
+}
+.shop-address{
+  h4{
+    position: absolute;
+  }
+  .check-mark{
+    right: -113px;
+    top: -11px;
+  }
+}
+.shop-type{
+  h4{
+    position: absolute;
+  }
+  .check-mark{
+    right: -89px;
+    top:-10px;
+  }
+}
+.check-mark:hover,
+.check-mark:focus{
+  color:red
 }
 /****************************User Management-Advanced search************************/
 #menu #list {
@@ -2940,11 +2985,15 @@ display: flex;
 //   border: 2px solid $select-border;
 //   border-radius: 1px;
 // }
-
+.sidebar-container{
+  .set-btn{
+    width: 30%;
+  }
+}
  .set-btn {
   display: flex;
   justify-content: space-between;
-  width: 30%;
+  width: 36%;
   
   background: $cyan;
   border: 0;
@@ -3101,10 +3150,16 @@ display: flex;
   // position: relative;
   // top: 39px;
   // right: -4px;
-  position: relative;
-    top: 20px;
-    right:95px;
-    text-align: right;
+
+  // position: relative;
+  //   top: 20px;
+  //   right:95px;
+  //   text-align: right;
+
+  position: absolute;
+  top: 216px;
+  right: 58px;
+  bottom: 0;
 }
 .region-holder{
   position: relative;
@@ -3151,6 +3206,28 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color:    #909;
   content: "content6";
 }
+/* .do-SearchBox-input{ 
+  background: url(../src/assets/images/placeholder.png) no-repeat 5px center;
+} */
+/* input.do-SearchBox-input[value=""] {
+  background-color: red;
+} */
+
+// input.do-SearchBox-input:not(:empty) {
+//   background: none;
+// }
+// .hol:focus,
+// .hol:active,
+// .hol:hover,
+// .hol:visited,
+// .hol:focus-within{
+//  display: none;
+//  z-index: 0;
+// }
+
+// .tree-box .label-title{
+//   position: absolute;
+// }
 .reset-box{
   position: absolute;
   text-align: right;
@@ -3177,6 +3254,37 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   height: 130px!important;
   overflow: hidden;
 }
+
+.im-se {
+  background-image: url(../src/assets/images/placeholder.png) no-repeat 5px center;
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  border: 1px solid #ccc;
+  
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  
+  padding: 10px 5px;
+  text-indent: 20px;
+  
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 2s;
+  transition: all 0.2s;
+  
+  width: 90px;
+  z-index: 1;
+}
+
+.im-se:focus {
+  /* Picked a random icon from Google */
+  background-position: -20px center;
+  text-indent: 0;
+  z-index: 0;
+}
+
 // input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 //   color:    #909;
 //   content: "content6";
