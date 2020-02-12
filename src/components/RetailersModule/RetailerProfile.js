@@ -134,8 +134,9 @@ class RetailerProfile extends React.Component {
                                 <Image src={RetImg} className="centext" roundedCircle />
                             </div>
                             <div className="profile-title">
-                                <h5 className="centext title">{getname[0]} {getname[1]}</h5>
+                                <h5 className="centext title mb-1">{getname[0]} {getname[1]}</h5>
                                 <span className="centext color-title">{"Retailer"}</span>
+                                <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                             </div>
                         </div>
                     </Col>
