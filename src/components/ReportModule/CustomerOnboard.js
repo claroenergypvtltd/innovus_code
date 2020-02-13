@@ -299,10 +299,13 @@ class CustomerOnboard extends Component {
                                         <span className="tooltip-text">Reset</span>
                                     </button>
                                 </div>
+                                <div className="pt-5">
+                                    <ReactBarChart barChartData={graphData} />
+                                </div>
                             </div>
-                            <div className="record-box">
+                            {/* <div className="record-box">
                                 {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
