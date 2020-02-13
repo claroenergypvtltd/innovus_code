@@ -51,13 +51,14 @@ class CustomerOnboard extends Component {
 
     onChecked = (data, value) => {
         let regionArray = [];
-        data.map(item => {
+        data && data.map(item => {
             if (!item.includes('parent')) {
                 regionArray.push(item);
 
             }
         })
         this.state.selectVal = regionArray
+        // this.setState({ selectVal: regionArray })
     }
 
     onChecked1 = (data, value) => {
@@ -65,7 +66,8 @@ class CustomerOnboard extends Component {
         data.map(item => {
             regionArray.push(item);
         })
-        this.state.selectVal1 = regionArray
+        this.setState({ check: true, selectVal1: regionArray })
+        // this.state.selectVal1 = regionArray
     }
 
     getRegion = () => {
@@ -85,7 +87,7 @@ class CustomerOnboard extends Component {
     }
 
     getMapView = () => {
-        this.setState({ mapSubmit: true })
+        // this.setState({ mapSubmit: true })
         if (this.state.startDate && this.state.expiryDate && (this.state.startDate <= this.state.expiryDate) && this.state.selectVal.length > 0) {
             let obj = {
                 startDate: this.state.startDate,
@@ -108,7 +110,6 @@ class CustomerOnboard extends Component {
         if (this.state.startDate1 && this.state.expiryDate1 && (this.state.startDate1 <= this.state.expiryDate1) && this.state.selectVal1.length > 0) {
 
             let selectVal1 = [];
-
             this.state.selectVal1 && this.state.selectVal1.map(item => {
                 if (item.includes('-')) {
                     let data = item.split('-');
@@ -143,7 +144,8 @@ class CustomerOnboard extends Component {
         this.setState({
             startDate1: "",
             expiryDate1: "",
-            selectVal1: []
+            selectVal1: [],
+            graphData: []
         });
     }
     render() {
@@ -168,10 +170,39 @@ class CustomerOnboard extends Component {
 
         let treeData1 = []
         this.state.regionListData1 && this.state.regionListData1.map((item, index) => {
-            let obj = {
-                title: item.name,
-                value: item.id + '-Parent'
+            let obj = {}
+
+            let selectedVal = '';
+
+
+            this.state.selectVal1 && this.state.selectVal1.map(selectedItem => {
+                if (selectedItem) {
+                    selectedVal = selectedItem;
+                }
+            })
+
+            if (selectedVal) {
+
+                if ((item.id + '-Parent' == selectedVal) && this.state.check) {
+                    obj = {
+                        title: item.name,
+                        value: item.id + '-Parent',
+                        // disabled: true
+                    }
+                } else {
+                    obj = {
+                        title: item.name,
+                        value: item.id + '-Parent',
+                        disabled: true
+                    }
+                }
+            } else {
+                obj = {
+                    title: item.name,
+                    value: item.id + '-Parent',
+                }
             }
+
             treeData1.push(obj)
         })
 
@@ -179,13 +210,13 @@ class CustomerOnboard extends Component {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
             childrenChain: true,            // parent Affects child nodes;
-            halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
+            halfChain: false,                // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.selectVal            // Initialize check multiple lists
         }
         const checkbox1 = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
-            childrenChain: true,            // parent Affects child nodes;
+            childrenChain: false,            // parent Affects child nodes;
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.selectVal1           // Initialize check multiple lists
         }
@@ -299,13 +330,10 @@ class CustomerOnboard extends Component {
                                         <span className="tooltip-text">Reset</span>
                                     </button>
                                 </div>
-                                <div className="pt-5">
-                                    <ReactBarChart barChartData={graphData} />
+                                <div className="record-box">
+                                    {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
                                 </div>
                             </div>
-                            {/* <div className="record-box">
-                                {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
-                            </div> */}
                         </div>
                     </div>
                 </div>

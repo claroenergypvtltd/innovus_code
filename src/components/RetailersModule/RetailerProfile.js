@@ -85,6 +85,15 @@ class RetailerProfile extends React.Component {
     //     this.setState({ statusClass })
     // }
 
+    // buttonChange = (buttonName, value) => {
+    //     if (value) {
+    //         this.setState({ [buttonName]: buttonName })
+    //     } else {
+    //         this.setState({ [buttonName]: '' })
+    //     }
+    //     debugger;
+    // }
+
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
         const secName = profile && profile.userMobiles && profile.userMobiles[0] && profile.userMobiles[0].name;
@@ -136,7 +145,7 @@ class RetailerProfile extends React.Component {
                             <div className="profile-title">
                                 <h5 className="centext title mb-1">{getname[0]} {getname[1]}</h5>
                                 <span className="centext color-title">{"Retailer"}</span>
-                                <div className="check-mark"><i class="fas fa-times-circle "></i></div>
+                                {/* <button className="check-mark" onClick={this.buttonChange('profileName',true)}><i class="fas fa-times-circle "></i></button> */}
                             </div>
                         </div>
                     </Col>

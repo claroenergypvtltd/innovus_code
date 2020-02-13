@@ -52,6 +52,13 @@ export const fetchRetailers = (user) => dispatch => {
         dispatch({ type: RETAILER_FETCH_SUCCESS, error: error })
     })
 }
+export const fetchAgent = (user) => {
+    return httpServices.post(endPoint.user, user).then(resp => {
+        if (resp && resp.data) {
+            return resp.data
+        }
+    })
+}
 export const deleteRetailer = deleteId => dispatch => {
     httpServices.remove(endPoint.user, deleteId).then(res => {
         if (res) {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
-import { getSalesExecutiveGraphView } from '../../actions/reportAction'
+import { getSalesExecutiveGraphView, getReportRegion } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
 import { ReactBarLineChart, LineChartView } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
@@ -27,23 +27,38 @@ class ExecutivePerformance extends Component {
     }
 
     componentDidMount() {
-        this.getRegion();
-        this.fetchAgents()
+        // this.getRegion();
+        this.fetchAgents();
+        this.getReportRegion();
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
-            this.setState({ regionListData: newProps.regionList.Lists.datas })
-        }
+        // if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
+        //     this.setState({ regionListData: newProps.regionList.Lists.datas })
+        // }
     }
 
-    getRegion = () => {
+    // getRegion = () => {
+    //     let obj = {
+    //         page: '',
+    //         rows: ''
+    //     }
+    //     this.props.getRegion(obj)
+    // }
+
+    getReportRegion = () => {
         let obj = {
             page: '',
             rows: ''
         }
-        this.props.getRegion(obj)
+        getReportRegion(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ regionListData: resp.datas })
+            }
+        })
     }
+
+
     fetchAgents = () => {
         let obj = {
             roleId: 4,
@@ -69,7 +84,8 @@ class ExecutivePerformance extends Component {
 
             }
         })
-        this.state.selectVal = regionArray
+        this.setState({ selectVal: regionArray })
+        // this.state.selectVal = regionArray
     }
     onChecked1 = (data, value) => {
         let regionArray1 = [];
@@ -117,11 +133,11 @@ class ExecutivePerformance extends Component {
             startDate: "",
             expiryDate: "",
             selectVal1: [],
-            selectVal: []
+            selectVal: [],
+            lineChartData: []
         });
     }
     render() {
-
         let treeData = []
         this.state.regionListData && this.state.regionListData.map((item, index) => {
             let childArray = [];
