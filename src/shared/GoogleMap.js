@@ -45,17 +45,17 @@ export default class GoogleMap extends React.Component {
 
                         item && item.order == 1 ? <Marker
                             // name={item.name}
+                            title={item && item.title}
                             icon={{ url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }}
                             position={{ lat: item.lat, lng: item.lng }}
                             onClick={this.onMarkerClick}
                         /> :
                             <Marker
                                 // name={item.name}
+                                title={item && item.title}
                                 position={{ lat: item.lat, lng: item.lng }}
                                 onClick={this.onMarkerClick}
                             />
-
-
                     ))
                     }
                 </Map>

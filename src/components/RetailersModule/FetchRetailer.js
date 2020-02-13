@@ -830,7 +830,7 @@ class FetchRetailer extends React.Component {
                                                         }
                                                     })
                                                 }}
-                                                checked={this.state.dcCodeObj}
+                                                value={this.state.dcCodeObj}
                                                 onChange={(e) => this.handleDcCodeChange(e)}
                                                 options={dcData}
                                                 placeholder="--Select DC--"

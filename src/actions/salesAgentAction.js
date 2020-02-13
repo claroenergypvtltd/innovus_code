@@ -78,6 +78,9 @@ export const getDcCodeData = (dcData, type) => {
     if (type == 'retailer') {
         flag = '&flag=2';
     }
+    if (type == 'order') {
+        flag = '&flag=5'
+    }
     roleId = dcData.roleId ? '&roleId=' + dcData.roleId : ''
     return httpServices.get(endPoint.dcCodeSearch + '?search=' + dcData.search + roleId + flag).then(resp => {
         if (resp && resp.data) {
