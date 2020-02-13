@@ -261,16 +261,18 @@ class ExecutivePerformance extends Component {
                                 {/* {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                             </div>
                         </div>
-                        <div className="view-box">
-                            <button type="button" class="data-search" onClick={this.getGraphView}>
-                                <i class="fa fa-search" aria-hidden="true"></i>Search
+                        <div className="mr-5 pr-3 search-wrap">
+                            <div className="view-box">
+                                <button type="button" class="data-search" onClick={this.getGraphView}>
+                                    <i class="fa fa-search" aria-hidden="true"></i>Search
                             </button>
-                        </div>
-                        <div className="reset-box retail-reset m-0">
-                            <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
-                                <i className="fa fa-refresh" aria-hidden="true"></i>
-                                <span className="tooltip-text">Reset</span>
-                            </button>
+                            </div>
+                            <div className="retail-reset">
+                                <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
+                                    <i className="fa fa-refresh" aria-hidden="true"></i>
+                                    <span className="tooltip-text">Reset</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ? <div className="row mt-5">

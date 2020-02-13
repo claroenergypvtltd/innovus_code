@@ -320,16 +320,18 @@ class PlacingOrder extends Component {
                                                 customTitleRender={this.customTitleRender} />
                                         </div>
                                     </div>
-                                    <div className="view-box">
-                                        <button type="button" class="data-search" onClick={this.getPlacingOrderMap}>
-                                            <i class="fa fa-search" aria-hidden="true"></i>Search
+                                    <div className="col-md-11 search-wrap">
+                                        <div className="view-box">
+                                            <button type="button" class="data-search" onClick={this.getPlacingOrderMap}>
+                                                <i class="fa fa-search" aria-hidden="true"></i>Search
                                         </button>
-                                    </div>
-                                    <div className="reset-box retail-reset m-0">
-                                        <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
-                                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                                            <span className="tooltip-text">Reset</span>
-                                        </button>
+                                        </div>
+                                        <div className="retail-reset">
+                                            <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
+                                                <i className="fa fa-refresh" aria-hidden="true"></i>
+                                                <span className="tooltip-text">Reset</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -362,16 +364,18 @@ class PlacingOrder extends Component {
                                             customTitleRender={this.customTitleRender} />
                                     </div>
                                 </div>
-                                <div className="view-box">
-                                    <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
-                                        <i class="fa fa-search" aria-hidden="true"></i>Search
-                                        </button>
-                                </div>
-                                <div className="reset-box retail-reset m-0">
-                                    <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
-                                        <i className="fa fa-refresh" aria-hidden="true"></i>
-                                        <span className="tooltip-text">Reset</span>
+                                <div className="col-md-11 search-wrap">
+                                    <div className="view-box">
+                                        <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
+                                            <i class="fa fa-search" aria-hidden="true"></i>Search
                                     </button>
+                                    </div>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
+                                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                                            <span className="tooltip-text">Reset</span>
+                                        </button>
+                                    </div>
                                 </div>
                                 {this.state.graphData.length > 0 ? <div className="mt-5">
                                     <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} />

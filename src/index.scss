@@ -3169,24 +3169,20 @@ display: flex;
   height: 30px;
   padding: 4px;
 }
+.search-wrap{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
 .view-box .data-search{
   width: 83px;
 }
-.view-box{
-  // position: relative;
-  // top: 39px;
-  // right: -4px;
-
-  // position: relative;
-  //   top: 20px;
-  //   right:95px;
-  //   text-align: right;
-
-  position: absolute;
-  top: 216px;
-  right: 58px;
-  bottom: 0;
-}
+// .view-box{
+//   position: absolute;
+//   top: 216px;
+//   right: 58px;
+//   bottom: 0;
+// }
 .region-holder{
   position: relative;
   top: 43px;
@@ -3273,11 +3269,11 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   top: 256px;
   right: 85px;
 }
-.sidebar-container
-  .view-box
-    .data-search{
-  margin-right: 20px;
-}
+// .sidebar-container
+//   .view-box
+//     .data-search{
+//   margin-right: 20px;
+// }
 .main-container .order-report .start-date {
   margin-left: 9px;
 }
@@ -3352,6 +3348,33 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 //     z-index: 2;
 //   }
 
+
+/****************************ABOUT US--POLICIES************************/
+
+.tab-box{
+  border-bottom: 1px solid $inset-color;
+  button{
+    background-color: inherit;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    transition: 0.3s;
+  }
+}
+.tab-box:active{
+  border-bottom: 3px solid #BA7EF7;
+    cursor: pointer;
+    font-family: open sans;
+    color: #707070;
+}
+.about-text{
+  text-align:justify;
+  margin-top: 25px;
+}
+.reg-text .btn{
+  border:2px solid !important;
+  margin-left:5px;
+}
 /****************************RESPONSIVE************************/
 
 @media (min-width: 1200px) { }

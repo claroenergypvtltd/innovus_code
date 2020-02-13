@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
 import { getCustomerMapView, getCustomerGraphView, getReportRegion } from '../../actions/reportAction'
-import { fetchReportGraph } from '../../actions/reportAction'
+//import { fetchReportGraph } from '../../actions/reportAction'
 import { path } from '../../constants';
 import { ReactBarChart } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
@@ -261,9 +261,12 @@ class CustomerOnboard extends Component {
                                         </div>
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * </label>
+                                        <label className="label-title">Select Region * :</label>
                                         {/* <input className="holder" placeholder="Search here.." /> */}
+                                        {/* <span className="hol"></span> */}
+                                        {/* <input type="search" name="search" placeholder="search..." rel="search" className="im-se" /> */}
                                         <TreeSelect
+                                            wrapperClassName="text-hol"
                                             treeData={treeData}
                                             style={{ width: 210, height: 100 }}
                                             selectVal={this.state.selectVal}
@@ -274,17 +277,25 @@ class CustomerOnboard extends Component {
                                         {/* {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                                     </div>
                                 </div>
-                                <div className=" view-box">
-                                    <button onClick={this.getMapView} className="data-search" >
-                                        <i class="fa fa-search" aria-hidden="true"></i>Search
+                                <div className="col-md-11 search-wrap">
+                                    <div className="view-box">
+                                        <button onClick={this.getMapView} className="data-search" >
+                                            <i className="fa fa-search" aria-hidden="true"></i>Search
                                     </button>
+                                    </div>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
+                                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                                            <span className="tooltip-text">Reset</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="reset-box retail-reset m-0">
+                                {/* <div className="reset-box retail-reset m-0">
                                     <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
                                         <i className="fa fa-refresh" aria-hidden="true"></i>
                                         <span className="tooltip-text">Reset</span>
                                     </button>
-                                </div>
+                                </div> */}
                                 <div className="pt-5">
                                     <GoogleMap latLongData={latLongData} />
                                 </div>
@@ -319,16 +330,18 @@ class CustomerOnboard extends Component {
                                         {/* {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                                     </div>
                                 </div>
-                                <div className=" view-box">
-                                    <button type="button" class="data-search" onClick={this.getGraphView}>
-                                        <i class="fa fa-search" aria-hidden="true"></i>Search
-                                        </button>
-                                </div>
-                                <div className="reset-box retail-reset m-0">
-                                    <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
-                                        <i className="fa fa-refresh" aria-hidden="true"></i>
-                                        <span className="tooltip-text">Reset</span>
+                                <div className="col-md-11 search-wrap">
+                                    <div className=" view-box">
+                                        <button type="button" className="data-search" onClick={this.getGraphView}>
+                                            <i className="fa fa-search" aria-hidden="true"></i>Search
                                     </button>
+                                    </div>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
+                                            <i className="fa fa-refresh" aria-hidden="true"></i>
+                                            <span className="tooltip-text">Reset</span>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="record-box">
                                     {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
@@ -336,11 +349,11 @@ class CustomerOnboard extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="back-btn my-3">
-                    <button class="common-btn" onClick={this.redirectPage}>Back</button>
-                </div>
-            </div >
+                    <div className="back-btn my-3">
+                        <button className="common-btn" onClick={this.redirectPage}>Back</button>
+                    </div>
+                </div >
+            </div>
         )
     }
 }
