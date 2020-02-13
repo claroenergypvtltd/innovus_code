@@ -27,6 +27,7 @@ class ShopDetails extends React.Component {
             rotation: 0,
             profile: [],
             canvasImage: '',
+            resonForReject: [],
             TableHead: ['Shop Image', 'Shop Status', 'Shop Name', 'Distance', 'Shop Address', 'Agent Name', "Action"]
         };
     }
@@ -70,6 +71,29 @@ class ShopDetails extends React.Component {
                 } else {
                     formData.append("status", status);
                 }
+
+                let rejectArray = [];
+
+                if (this.state.image) {
+                    rejectArray.push(this.state.image)
+                }
+                if (this.state.name) {
+                    rejectArray.push(this.state.name)
+                }
+                if (this.state.address1) {
+                    rejectArray.push(this.state.address1)
+                }
+
+                if (this.state.type) {
+                    rejectArray.push(this.state.type)
+                }
+
+                if (this.state.shopOpeningTime) {
+                    rejectArray.push(this.state.shopOpeningTime)
+                }
+
+
+                formData.append("reasons", rejectArray)
                 updateStatusRetailer(formData).then(resp => {
                     if (resp && resp.status == 200) {
                         this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
@@ -175,6 +199,15 @@ class ShopDetails extends React.Component {
         }
         return statusClass;
     }
+
+    buttonChange = (buttonName, value) => {
+        if (value) {
+            this.setState({ [buttonName]: buttonName })
+        } else {
+            this.setState({ [buttonName]: '' })
+        }
+    }
+
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];
         let shopAddressLat = profile.shopAddress && profile.shopAddress.latitude ? profile.shopAddress.latitude : '';
@@ -211,6 +244,16 @@ class ShopDetails extends React.Component {
             return { "itemList": [imageZoom, status, item.name, distance, item.address1 + item.address2, item.agentName, transfer], "itemId": item.id }
         })
 
+        let disRejectBtn = false;
+        let disAcceptBtn = false;
+        if ((this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime)) {
+            disAcceptBtn = true
+        } else {
+            disRejectBtn = true;
+        }
+
+        let chkProfile = profile && profile.status == 0 && profile.isActive == 1
+
         return (
             <div className="farm-tab p-1 active-box" >
                 {
@@ -242,42 +285,47 @@ class ShopDetails extends React.Component {
                                         }}
                                     />
                                 </div>
-                                <div className="check-mark"><i class="fas fa-times-circle "></i></div>
+                                {chkProfile && !this.state.image && <button className="check-mark" onClick={() => this.buttonChange("image", true)}><i class="fas fa-times-circle "></i></button>}
+                                {chkProfile && this.state.image && <button className="check-mark mark-color" onClick={() => this.buttonChange("image", false)}><i class="fas fa-times-circle "></i></button>}
                             </div>
                         </div>
                     </div>
                     <div className="col-sm-8">
                         <div className="farm-box">
-                            <div className="shop-mark">
+                            <div className="shop-mark shop-name">
+                                {chkProfile && !this.state.name && <button className="check-mark" onClick={() => this.buttonChange("name", true)}><i class="fas fa-times-circle "></i></button>}
+                                {chkProfile && this.state.name && <button className="check-mark mark-color" onClick={() => this.buttonChange("name", false)}><i class="fas fa-times-circle "></i></button>}
                                 <h4 className="user-title m-0">Shop Name</h4>
-                                <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                                 <p className="title">{profile.shopAddress && profile.shopAddress.name}</p>
                             </div>
                             <div className="farmer-details row mt-3">
-                                <div className="farmer-address shop-address col-md-6 mb-2">
+                                <div className="farmer-address shop-address col-md-6 mb-3">
+                                    {chkProfile && !this.state.address1 && <button className="check-mark" onClick={() => this.buttonChange("address1", true)}><i class="fas fa-times-circle "></i></button>}
+                                    {chkProfile && this.state.address1 && <button className="check-mark mark-color" onClick={() => this.buttonChange("address1", false)}><i class="fas fa-times-circle "></i></button>}
                                     <h4 className="user-title m-0">Shop Address</h4>
-                                    <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                                     <p className="centext title sub-farm">
                                         {profile.shopAddress && profile.shopAddress.address1}
                                     </p>
                                 </div>
-                                <div className="farmer-address shop-type col-md-6 mb-2">
+                                <div className="farmer-address shop-type col-md-6 mb-3">
+                                    {chkProfile && !this.state.type && <button className="check-mark" onClick={() => this.buttonChange("type", true)}><i class="fas fa-times-circle "></i></button>}
+                                    {chkProfile && this.state.type && <button className="check-mark mark-color" onClick={() => this.buttonChange("type", false)}><i class="fas fa-times-circle "></i></button>}
                                     <h4 className="user-title m-0">Shop Type</h4>
-                                    <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                                     <p className="centext title sub-farm">
                                         {profile.shopType && profile.shopType.type}
                                     </p>
                                 </div>
-                                <div className="farmer-address col-md-6 mb-2">
+                                <div className="farmer-address shop-local col-md-6 mb-3">
                                     <h4 className="user-title m-0">Shop Locality</h4>
                                     <p className="centext title sub-farm">
                                         {profile.shopLocalty}
                                         {/* {profile.shopAddress && profile.shopAddress.address2} */}
                                     </p>
                                 </div>
-                                <div className="farmer-address shop-type col-md-6 mb-2">
+                                <div className="farmer-address shop-time col-md-6 mb-3">
+                                    {chkProfile && !this.state.shopOpeningTime && <button className="check-mark" onClick={() => this.buttonChange("shopOpeningTime", true)}><i class="fas fa-times-circle "></i></button>}
+                                    {chkProfile && this.state.shopOpeningTime && <button className="check-mark mark-color" onClick={() => this.buttonChange("shopOpeningTime", false)}><i class="fas fa-times-circle "></i></button>}
                                     <h4 className="user-title m-0">Shop Time</h4>
-                                    <div className="check-mark"><i class="fas fa-times-circle "></i></div>
                                     <p className="centext title sub-farm">
                                         {profile.shopAddress && profile.shopAddress.shopOpeningTime}
                                     </p>
@@ -300,8 +348,8 @@ class ShopDetails extends React.Component {
                         <button className="common-btn" onClick={this.redirectPage}>Back</button>
                     </div>
                     {this.state.showStatusBtn && profile.status == 0 && <div className="col-md-6 d-flex justify-content-end">
-                        <button className="reject-btn" onClick={(e) => this.updateStatus(profile.id, 2)}>Reject</button>
-                        <button className="accept-btn" onClick={(e) => this.updateStatus(profile.id, 1)}>Accept</button>
+                        <button className="reject-btn" onClick={(e) => this.updateStatus(profile.id, 2)} disabled={disRejectBtn}>Reject</button>
+                        <button className="accept-btn" onClick={(e) => this.updateStatus(profile.id, 1)} disabled={disAcceptBtn}>Accept</button>
                     </div>}
                 </div>
             </div >

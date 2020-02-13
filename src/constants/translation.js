@@ -251,7 +251,8 @@ export const Translation = {
             "SECONDARY_NAME": "Secondary Name",
             "SECONDARY_PHONE": "Secondary Phone",
             "SEND_OTP": "Send OTP",
-            "ENTER_OTP": "Enter OTP"
+            "ENTER_OTP": "Enter OTP",
+            "NILL": "Nill"
         },
         "ABOUTUS": {
             "TITLE": "About Us",

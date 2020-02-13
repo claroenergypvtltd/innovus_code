@@ -49,10 +49,10 @@ class FetchRegion extends Component {
     render() {
         const regionData = this.state.regionListData && this.state.regionListData.map((item) => {
             let dcCode = item.dcDatas && item.dcDatas.map((item) => {
-                return item.dcCode + " "
+                return item.dcCode + ", "
             })
             let dcName = item.dcDatas && item.dcDatas.map((item) => {
-                return item.name + " "
+                return item.name + ", "
             })
             return { "itemList": [item.name, dcCode, dcName], "itemId": item.id }
         })

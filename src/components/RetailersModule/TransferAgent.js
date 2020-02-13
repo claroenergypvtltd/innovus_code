@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import '../../assets/css/login.scss';
 import PropTypes from "prop-types";
 import store from '../../store/store';
-import { fetchRetailers, SubmitRetailer } from '../../actions/SubmitRetailerAction'
+import { fetchRetailers, SubmitRetailer, fetchAgent } from '../../actions/SubmitRetailerAction'
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr'
 import { path } from '../../constants';
@@ -24,42 +24,32 @@ class TransferAgent extends Component {
     }
 
     componentDidMount() {
-
         this.getAgentList();
     }
 
     componentWillReceiveProps(newProps) {
-
-        if (newProps && newProps.list && newProps.list.datas) {
-            let selectlist = newProps.list.datas;
-
-            this.setState({
-                agentData: selectlist
-            })
-
-        }
-
         if (newProps && newProps.status == "200") {
             let redrctpath = path.user.list;
             this.context.router.history.push(redrctpath);
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
-            toastr.success("User details modified successfully")
-            // this.props.getRetailerList();
             this.listPath('AgentAssignsuccess');
         }
-
     }
 
     getAgentList = () => {
         let user = {};
         user.roleId = 4;
-        this.props.fetchRetailers(user);
+        fetchAgent(user).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({
+                    agentData: resp.datas
+                })
+            }
+        });
     }
 
     handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     listPath = (type) => {
@@ -103,6 +93,7 @@ class TransferAgent extends Component {
                                 <label>{window.strings['USERMANAGEMENT']['AGENT_LABEL']}</label>
                                 <select required name="agentId" className="form-control" value={this.state.agentId} onChange={this.handleInputChange} >
                                     <option value="">{window.strings['USERMANAGEMENT']['SELECT_AGENT']}</option>
+                                    <option value="nill">{window.strings['USERMANAGEMENT']['NILL']}</option>
                                     {agentDropDown}
                                 </select>
                                 {this.state.submitted && !this.state.agentId && <div className="mandatory">{window.strings['USERMANAGEMENT']['AGENT_LABEL'] + window.strings['ISREQUIRED']}</div>}
@@ -127,4 +118,4 @@ const mapStateToProps = (state) => ({
     status: state.retailer.status,
 })
 
-export default connect(mapStateToProps, { fetchRetailers, SubmitRetailer })(TransferAgent)
+export default connect(mapStateToProps, { fetchRetailers, SubmitRetailer, fetchAgent })(TransferAgent)
