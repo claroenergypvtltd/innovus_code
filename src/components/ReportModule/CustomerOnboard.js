@@ -154,7 +154,7 @@ class CustomerOnboard extends Component {
             let childArray = [];
             item.dcDatas && item.dcDatas.map((dcData, index) => {
                 let obj = {
-                    title: dcData.dcCode,
+                    title: dcData.name,
                     value: dcData.dcCode,
                 }
                 childArray.push(obj)
