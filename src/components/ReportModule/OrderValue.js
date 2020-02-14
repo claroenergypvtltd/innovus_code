@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
-
+import { getReportRegion } from '../../actions/reportAction'
+import { LineChartView } from '../../shared/Reactgraphcharts'
 
 export default class OrderValue extends Component {
     constructor(props) {
@@ -11,11 +12,33 @@ export default class OrderValue extends Component {
             showlevel: 0,
             startDate: '',
             expiryDate: '',
-            selectVal: [],
-            selectVal1: [],
+            regionSelectVal: [],
+            subRegionSelectVal: [],
             lineChartData: [],
             errors: {},
             graphSubmit: false
+        }
+    }
+    componentDidMount() {
+        this.getReportRegion();
+    }
+    getReportRegion = () => {
+        let obj = {
+            page: '',
+            rows: ''
+        }
+        getReportRegion(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ regionListData2: resp.datas })
+            }
+        })
+    }
+    getSubRegion = (Data) => {
+
+    }
+    getGraphData = () => {
+        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
+
         }
     }
     redirectPage = () => {
@@ -25,32 +48,47 @@ export default class OrderValue extends Component {
         this.setState({
             startDate: "",
             expiryDate: "",
-            selectVal1: [],
-            selectVal: [],
+            regionSelectVal: [],
+            subRegionSelectVal: [],
             lineChartData: []
         });
     }
+    onRegionChecked = (Data) => {
+        let regionArray = [];
+        Data && Data.map(item => {
+            if (!item.includes('parent')) {
+                regionArray.push(item);
+
+            }
+        })
+        // this.setState({ regionSelectVal: regionArray })
+        if (this.state.regionSelectVal && this.state.regionSelectVal.length > 0) {
+            this.getSubRegion(Data)
+        }
+    }
+    onSkuChecked = (Data) => {
+
+    }
     render() {
-        let treeData = []
-        this.state.regionListData && this.state.regionListData.map((item, index) => {
+        let regionData = []
+        this.state.regionListData2 && this.state.regionListData2.map((item, index) => {
             let childArray = [];
             item.dcDatas && item.dcDatas.map((dcData, index) => {
                 let obj = {
-                    title: dcData.dcCode,
-                    value: dcData.dcCode,
+                    title: dcData.name,
+                    value: dcData.dcCode
                 }
                 childArray.push(obj)
             })
 
-
             let obj = {
                 title: item.name,
-                value: item.name + 'parent',
+                value: item.name + 'Parent',
                 children: childArray,
             }
-            treeData.push(obj)
+            regionData.push(obj)
         })
-        let agentData = []
+        let treeData = []
         this.state.salesAgentList && this.state.salesAgentList.map((item) => {
             let Data = item.split(',');
 
@@ -59,21 +97,21 @@ export default class OrderValue extends Component {
                 title: Data[1],
                 value: Data[0]
             }
-            agentData.push(obj)
+            treeData.push(obj)
         })
-        const checkbox = {
+        const regionCheckbox = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
             childrenChain: true,            // parent Affects child nodes;
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
-            initCheckedList: this.state.selectVal            // Initialize check multiple lists
+            initCheckedList: this.state.regionSelectVal            // Initialize check multiple lists
         }
-        const checkbox1 = {
+        const skuCheckbox = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
             childrenChain: true,            // parent Affects child nodes;
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
-            initCheckedList: this.state.selectVal1           // Initialize check multiple lists
+            initCheckedList: this.state.subRegionSelectVal           // Initialize check multiple lists
         }
         return (
             <div>
@@ -90,30 +128,31 @@ export default class OrderValue extends Component {
                                 <input type="date" className="date-wrap form-control" value={this.state.expiryDate} onChange={this.dateChange} name="expiryDate" />
                             </div>
 
+
+                            <div className="tree-box">
+                                <label className="label-title">Select Region * </label>
+                                <TreeSelect
+                                    treeData={regionData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.regionSelectVal}
+                                    onChecked={this.onRegionChecked}
+                                    checkbox={regionCheckbox}
+                                    customTitleRender={this.customTitleRender} />
+                            </div>
                             <div className="tree-box">
                                 <label className="label-title">Select SKU * </label>
                                 <TreeSelect
                                     treeData={treeData}
                                     style={{ width: 210, height: 100 }}
-                                    selectVal={this.state.selectVal}
-                                    onChecked={this.onChecked}
-                                    checkbox={checkbox}
-                                    customTitleRender={this.customTitleRender} />
-                            </div>
-                            <div className="tree-box">
-                                <label className="label-title">Select Region * </label>
-                                <TreeSelect
-                                    treeData={agentData}
-                                    style={{ width: 210, height: 100 }}
-                                    selectVal={this.state.selectVal1}
-                                    onChecked={this.onChecked1}
-                                    checkbox={checkbox1}
+                                    selectVal={this.state.skuSelectValue}
+                                    onChecked={this.onSkuChecked}
+                                    checkbox={skuCheckbox}
                                     customTitleRender={this.customTitleRender} />
                             </div>
                         </div>
                         <div className="mr-5 pr-3 search-wrap">
                             <div className="view-box">
-                                <button type="button" class="data-search" onClick={this.getGraphView}>
+                                <button type="button" class="data-search" onClick={this.getGraphData}>
                                     <i class="fa fa-search" aria-hidden="true"></i>Search
                             </button>
                             </div>
@@ -124,6 +163,9 @@ export default class OrderValue extends Component {
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <LineChartView />
                     </div>
                 </div>
                 <div className="back-btn my-3">
