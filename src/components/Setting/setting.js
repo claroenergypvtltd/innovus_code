@@ -27,6 +27,9 @@ export default class setting extends Component {
     quantityPath = () => {
         this.props.history.push('/setting/fetchquantitytype')
     }
+    aboutPolicy = () => {
+        this.props.history.push({ pathname: path.appSetting.appPolicy })
+    }
     tabChange = tabIndex => {
         sessionStorage.removeItem('retsearchDatas');
         let roleId =
@@ -53,6 +56,9 @@ export default class setting extends Component {
                             <i class="fa fa-chevron-right"></i>
                         </button>
                         <button className="set-btn" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITY_TYPE_CONTROL}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button className="set-btn" onClick={this.aboutPolicy}>{window.strings.APPSETTING.ABOUT_POLICIES}
                             <i class="fa fa-chevron-right"></i>
                         </button>
                     </div>
