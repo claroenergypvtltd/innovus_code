@@ -58,8 +58,16 @@ import CustomerOnboard from '../components/ReportModule/CustomerOnboard';
 import ExecutivePerformace from '../components/ReportModule/ExecutivePerformance';
 import PlacingOrder from '../components/ReportModule/PlacingOrder';
 import report from '../components/ReportModule/report';
+import OrderValue from '../components/ReportModule/OrderValue';
+import TonnesOrder from '../components/ReportModule/TonnesOrder';
+import PriceElasticity from '../components/ReportModule/PriceElasticity';
 
 
+import AboutPolicyTab from '../components/AboutModule/AboutPolicyTab';
+import PrivacyPolicy from '../components/AboutModule/PrivacyPolicy';
+import TermsConditions from '../components/AboutModule/TermsConditions';
+
+import ReturnCancellation from '../components/AboutModule/ReturnCancellation';
 
 
 const root = ({ route }) => (
@@ -365,7 +373,21 @@ export const routesPath = [
                 component: PlacingOrder,
                 exact: true
             },
-
+            {
+                path: process.env.PUBLIC_URL + '/reports/orderValue',
+                component: OrderValue,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/reports/tonnesOrder',
+                component: TonnesOrder,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/reports/reportPrice',
+                component: PriceElasticity,
+                exact: true
+            },
             {
                 path: process.env.PUBLIC_URL + '/vehicle/add',
                 component: CreateVehicle,
@@ -430,6 +452,27 @@ export const routesPath = [
                 component: CreateQuantityType,
                 exact: true
             },
+            {
+                path: process.env.PUBLIC_URL + '/aboutpolicy',
+                component: AboutPolicyTab,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/aboutpolicy/privacypolicy',
+                component: PrivacyPolicy,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/aboutpolicy/termscondition',
+                component: TermsConditions,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/aboutpolicy/return',
+                component: ReturnCancellation,
+                exact: true
+            },
+
             // {
             //     path: process.env.PUBLIC_URL + '/credit',
             //     component: CreateCredit,

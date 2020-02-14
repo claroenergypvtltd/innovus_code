@@ -49,10 +49,10 @@ export default class setting extends Component {
 
                 <div className="main-wrapper">
                     <div className="set-box">
-                        <button className="set-btn" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}
+                        <button className="set-btn" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APP_VERSION_CONTROL}
                             <i class="fa fa-chevron-right"></i>
                         </button>
-                        <button className="set-btn" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}
+                        <button className="set-btn" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITY_TYPE_CONTROL}
                             <i class="fa fa-chevron-right"></i>
                         </button>
                     </div>

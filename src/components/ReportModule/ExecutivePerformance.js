@@ -223,7 +223,7 @@ class ExecutivePerformance extends Component {
             <div className="customer-onboard">
                 <h4 className="user-title">{window.strings.REPORT.SALES_EXECUTIVE_PERFORMANCE}</h4>
                 <div className="sales-report mt-3">
-                    <div className="main-wrapper pb-5 sale-box">
+                    <div className="main-wrapper py-3 sale-box">
                         <div className="d-flex justify-content-around">
                             <div className="start-date">
                                 <label className="label-title">Start Date * </label>

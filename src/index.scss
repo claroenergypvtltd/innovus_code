@@ -3371,10 +3371,17 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   text-align:justify;
   margin-top: 25px;
 }
+.policy .about-text{
+  padding: 30px 10px;
+}
 .reg-text .btn{
   border:2px solid !important;
-  margin-left:5px;
+  margin-top: 5px;
 }
+.DraftEditor-root{
+  height: 100px;
+}
+
 /****************************RESPONSIVE************************/
 
 @media (min-width: 1200px) { }

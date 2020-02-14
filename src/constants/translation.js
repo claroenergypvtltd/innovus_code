@@ -451,11 +451,29 @@ export const Translation = {
             "CUSTOMER_ONBOARD": "Number Of Customers Onboarded",
             "PLACING_ORDER": "Number Of Customers Placing Orders",
             "EXECUTIVE_PERFORMANCE": "Sales Executive Performance",
+            "ORDER_VALUE_INR": "Order Value (INR)",
+            "TOTAL_TONNES_ORDERED": "Total Tonnes Ordered",
+            "PRICE_ELASTICITY": "Price Elasticity",
             "NUMBER_CUSTOMER_ONBOARD": "NUMBER OF CUSTOMERS ONBOARDED",
             "NUMBER_CUSTOMER_PLACEORDER": "NUMBER OF CUSTOMERS PLACING ORDER",
+            "ORDERVALUEINR": "ORDER VALUE (INR)(PER SKU, PER REGION)",
+            "TOTALTONNESORDERED": "TOTAL TONNES ORDERED (PER SKU, PER REGION)",
+            "PRICEELASTICITY": "TONNAGE VARIATION WITH CHANGE IN PRICE",
             "MAP_VIEW": "Map View",
             "GRAPH_VIEW": "List/Graph View",
             "SALES_EXECUTIVE_PERFORMANCE": "SALES EXECUTIVE PERFORMANCE"
+        },
+        "ABOUT": {
+            "ABOUT_US": "ABOUT US",
+            "ABOUTUS": "About Us",
+            "POLICIES": "Policies",
+            "REGISTERED_ADDRESS": "Registered Address",
+            "PRIVACY_POLICY": "Privacy Policy",
+            "TERMS_AND_CONDITIONS": "Terms and Conditions",
+            "RETURN_CANCELLATION_POLICY": "Return/Cancellation Policy",
+            "PRIVACYPOLICY": "PRIVACY POLICY",
+            "TERMSCONDITIONS": "TERMS AND CONDITIONS",
+            "RETURNCANCELLATIONPOLICY": "RETURN/CANCELLATION POLICY"
         }
 
     }
