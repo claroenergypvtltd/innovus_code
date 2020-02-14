@@ -23,43 +23,41 @@ class PlacingOrder extends Component {
             subRegionBarData: [],
             graphData: [],
             mapData: [],
-            agentSelectVal: []
+            agentSelectVal: [],
+            agentDataList: [],
+            regionListData2: []
         }
     }
     componentDidMount() {
         this.getRegionList()
-        this.fetchAgents()
     }
-    fetchAgents = () => {
+    fetchAgents = (Data) => {
+        let dcList = []
+        Data && Data.map((item) => {
+            if (!item.includes('Parent')) {
+                dcList.push(item)
+            }
+        })
         let obj = {
             roleId: 4,
-            flag: 2,
-            search: this.state.dcCode ? this.state.dcCode : ''
+            flag: 5,
+            search: dcList
         }
-        getDcCodeData(obj, "retailer").then(resp => {
+        getDcCodeData(obj, "order").then(resp => {
             if (resp) {
                 this.setState({ agentDataList: resp })
             }
         })
     }
-    // fetchAgents = (Data) => {
-    //     let dcList = []
-    //     Data && Data.map((item) => {
-    //         if (!item.includes('Parent')) {
-    //             dcList.push(item)
-    //         }
-    //     })
-    //     let obj = {
-    //         roleId: 4,
-    //         flag: 5,
-    //         search: dcList
-    //     }
-    //     getDcCodeData(obj, "order").then(resp => {
-    //         if (resp) {
-    //             this.setState({ agentDataList: resp })
-    //         }
-    //     })
-    // }
+    getRegionList = () => {
+        let obj = {
+            page: '',
+            rows: ''
+        }
+        getReportRegion(obj).then(resp => {
+            this.setState({ regionListData2: resp && resp.datas, resetRegionData: resp && resp.datas })
+        })
+    }
     getPlacingOrderGraph = () => {
         if ((!this.state.graphStartDate) || this.state.graphSelectVal.length == 0) {
             toastr.error("Mandatory fields are missing")
@@ -101,15 +99,7 @@ class PlacingOrder extends Component {
             })
         }
     }
-    getRegionList = () => {
-        let obj = {
-            page: '',
-            rows: ''
-        }
-        getReportRegion(obj).then(resp => {
-            this.setState({ regionListData2: resp && resp.datas })
-        })
-    }
+
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
@@ -124,11 +114,11 @@ class PlacingOrder extends Component {
                     dropDownValue.push(item)
                 }
             }))
-            // this.setState({ mapSelectVal: dropDownValue })
             this.state.mapSelectVal = dropDownValue
-            // if (this.state.mapSelectVal.length > 0) {
-            //     this.fetchAgents(Data)
-            // }
+            this.setState({ agentDropDown: true })
+            if (this.state.mapSelectVal.length > 0) {
+                this.fetchAgents(Data)
+            }
         }
     }
     onGraphChecked = (Data) => {
@@ -139,7 +129,7 @@ class PlacingOrder extends Component {
                 dropDownValue.push(item)
 
             }))
-            this.state.graphSelectVal = dropDownValue
+            this.setState({ graphSelectVal: dropDownValue, check: true })
         }
     }
     onAgentChecked = (Data) => {
@@ -161,16 +151,18 @@ class PlacingOrder extends Component {
     }
     resetMapSearch = () => {
         let data = this.state.mapSelectVal.splice(0)
+        let value = this.state.agentSelectVal.splice(0)
+
         this.setState({
+            reset: true,
             mapStartDate: "",
             mapSelectVal: [],
             agentSelectVal: [],
             mapData: [],
             agentSelectVal: [],
-            // agentDataList: []
+            agentDropDown: false,
+            agentDataList: []
         });
-        let value = this.state.agentSelectVal.splice(0)
-
     }
     resetGraphSearch = () => {
         let data = this.state.graphSelectVal.splice(0)
@@ -209,7 +201,7 @@ class PlacingOrder extends Component {
             let childArray = [];
             item.dcDatas && item.dcDatas.map((dcData, index) => {
                 let obj = {
-                    title: dcData.dcCode,
+                    title: dcData.name,
                     value: dcData.dcCode
                 }
                 childArray.push(obj)
@@ -223,12 +215,58 @@ class PlacingOrder extends Component {
             regionData.push(obj)
         })
 
-        let regionData1 = []
-        this.state.regionListData2 && this.state.regionListData2.map((item) => {
+        let resetRegionData = []
+        this.state.resetRegionData && this.state.resetRegionData.map((item, index) => {
+            let childArray = [];
+            item.dcDatas && item.dcDatas.map((dcData, index) => {
+                let obj = {
+                    title: dcData.name,
+                    value: dcData.dcCode
+                }
+                childArray.push(obj)
+            })
 
             let obj = {
                 title: item.name,
-                value: item.id + "-ParentData",
+                value: item.name + 'Parent',
+                children: childArray,
+            }
+            resetRegionData.push(obj)
+        })
+
+        let regionData1 = []
+        this.state.regionListData2 && this.state.regionListData2.map((item) => {
+            let obj = {}
+
+            let selectedVal = '';
+
+
+            this.state.graphSelectVal && this.state.graphSelectVal.map(selectedItem => {
+                if (selectedItem) {
+                    selectedVal = selectedItem;
+                }
+            })
+
+            if (selectedVal) {
+
+                if ((item.id + '-ParentData' == selectedVal) && this.state.check) {
+                    obj = {
+                        title: item.name,
+                        value: item.id + '-ParentData',
+                        // disabled: true
+                    }
+                } else {
+                    obj = {
+                        title: item.name,
+                        value: item.id + '-ParentData',
+                        disabled: true
+                    }
+                }
+            } else {
+                obj = {
+                    title: item.name,
+                    value: item.id + '-ParentData',
+                }
             }
             regionData1.push(obj)
         })
@@ -271,6 +309,12 @@ class PlacingOrder extends Component {
             }
             graphData.push(obj);
         })
+        const treeData = [
+            {
+                title: '',
+                value: ''
+            }
+        ]
 
         return (
             <div className="customer-placeorder">
@@ -291,11 +335,25 @@ class PlacingOrder extends Component {
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
                                     </div> */}
 
-
-                                        <div className="tree-box">
+                                        {!this.state.agentDropDown && <div className="tree-box">
                                             <label className="label-title">Select Region * :</label>
                                             <TreeSelect
+                                                // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
                                                 treeData={regionData}
+                                                style={{ width: 210, height: 100 }}
+                                                selectVal={this.state.mapSelectVal}
+                                                onSelect={this.onSelect}
+                                                // onExpand={this.onExpand}
+                                                onChecked={this.onMapChecked}
+                                                checkbox={mapCheckbox}
+                                                // showlevel={this.state.showlevel}
+                                                customTitleRender={this.customTitleRender} />
+                                        </div>}
+                                        {this.state.agentDropDown && <div className="tree-box">
+                                            <label className="label-title">Select Region * :</label>
+                                            <TreeSelect
+                                                // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
+                                                treeData={resetRegionData}
                                                 style={{ width: 210, height: 100 }}
                                                 selectVal={this.state.mapSelectVal}
                                                 onSelect={this.onSelect}
@@ -304,8 +362,8 @@ class PlacingOrder extends Component {
                                                 checkbox={mapCheckbox}
                                                 // showlevel={this.state.showlevel}
                                                 customTitleRender={this.customTitleRender} />
-                                        </div>
-                                        <div className="tree-box">
+                                        </div>}
+                                        {this.state.agentDropDown && <div className="tree-box">
                                             <label className="label-title">Sales Agent * :</label>
                                             {/* <input className="holder" placeholder="Search here.." /> */}
                                             <TreeSelect
@@ -318,7 +376,21 @@ class PlacingOrder extends Component {
                                                 checkbox={agentCheckBox}
                                                 // showlevel={this.state.showlevel}
                                                 customTitleRender={this.customTitleRender} />
-                                        </div>
+                                        </div>}
+                                        {!this.state.agentDropDown && <div className="tree-box">
+                                            <label className="label-title">Sales Agent * :</label>
+                                            {/* <input className="holder" placeholder="Search here.." /> */}
+                                            <TreeSelect
+                                                treeData={treeData}
+                                                style={{ width: 210, height: 100 }}
+                                                selectVal={this.state.agentSelectVal}
+                                                onSelect={this.onSelect}
+                                                // onExpand={false}
+                                                onChecked={this.onAgentChecked}
+                                                // checkbox={agentCheckBox}
+                                                // showlevel={this.state.showlevel}
+                                                customTitleRender={this.customTitleRender} />
+                                        </div>}
                                     </div>
                                     <div className="col-md-11 search-wrap">
                                         <div className="view-box">
