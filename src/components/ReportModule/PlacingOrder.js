@@ -34,7 +34,7 @@ class PlacingOrder extends Component {
     fetchAgents = (Data) => {
         let dcList = []
         Data && Data.map((item) => {
-            if (!item.includes('Parent')) {
+            if (item && !item.includes('Parent')) {
                 dcList.push(item)
             }
         })
@@ -116,7 +116,7 @@ class PlacingOrder extends Component {
             }))
             this.state.mapSelectVal = dropDownValue
             this.setState({ agentDropDown: true })
-            if (this.state.mapSelectVal.length > 0) {
+            if (this.state.mapSelectVal && this.state.mapSelectVal.length > 0) {
                 this.fetchAgents(Data)
             }
         }
