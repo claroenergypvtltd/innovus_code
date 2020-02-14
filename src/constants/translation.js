@@ -432,7 +432,8 @@ export const Translation = {
             "ADD_QUANTITY_TYPE_CONTROL": "Add Quantity Type Control",
             "QUANTITY_NAME": "Quantity Name",
             "CREATE_TYPE": "CREATE QUANTITY TYPE",
-            "EDIT_TYPE": "EDIT QUANTITY TYPE"
+            "EDIT_TYPE": "EDIT QUANTITY TYPE",
+            "ABOUT_POLICIES": "About US and Policies"
         },
         "DC_MANAGEMENT": {
             "STARTING_TIME": "Order Starting Time",
