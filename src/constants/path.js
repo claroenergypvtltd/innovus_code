@@ -63,7 +63,9 @@ export const path = {
         customerOnboard: process.env.PUBLIC_URL + '/reports/customerOnboard',
         placingOrder: process.env.PUBLIC_URL + '/reports/placingOrder',
         executivePerformance: process.env.PUBLIC_URL + '/reports/executivePerformance',
-
+        orderValue: process.env.PUBLIC_URL + '/reports/orderValue',
+        priceElasticitiy: process.env.PUBLIC_URL + '/reports/reportPrice',
+        tonnesOrder: process.env.PUBLIC_URL + '/reports/tonnesOrder',
     },
     coupons: {
         add: process.env.PUBLIC_URL + '/coupon/add',
@@ -166,6 +168,12 @@ export const path = {
         list: process.env.PUBLIC_URL + '/price/pool',
         add: process.env.PUBLIC_URL + '/price/pool/add',
         edit: process.env.PUBLIC_URL + '/price/pool/edit/',
-    }
+    },
+    policy: {
+        policytab: process.env.PUBLIC_URL + '/aboutpolicy/privacyPolicy',
+        list: process.env.PUBLIC_URL + '/aboutpolicy',
+        conditiontab: process.env.PUBLIC_URL + '/aboutpolicy/termscondition',
+        returntab: process.env.PUBLIC_URL + '/aboutpolicy/return',
+    },
 }
 
