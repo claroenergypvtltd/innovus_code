@@ -232,10 +232,13 @@ class CreatePrice extends Component {
             let quantityValue = '';
             if ((evt.target.value.includes('.'))) {
                 quantityValue = parseInt(evt.target.value)
-            } else {
-                quantityValue = Number(evt.target.value)
+            } else if ((evt.target.value.includes('-'))) {
+                evt.target.value = ''
             }
-            return { ...offerArrayolder, quantity: evt.target.value > 0 && evt.target.value.toString().length <= 6 ? quantityValue : '' };
+            else {
+                quantityValue = evt.target.value
+            }
+            return { ...offerArrayolder, quantity: evt.target.value.toString().length <= 6 ? quantityValue : '' };
         });
 
         this.setState({ offerArray: newContact });

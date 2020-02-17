@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { path } from '../../constants';
 import RichTextEditor from "react-rte";
 import classnames from 'classnames';
-
+import { SubmitEcom, getEcom } from '../../actions/appSettingAction'
 
 export default class PrivacyPolicy extends Component {
     constructor(props) {
@@ -20,6 +20,40 @@ export default class PrivacyPolicy extends Component {
         }
         this.setState({ description: description });
     };
+
+
+    componentDidMount() {
+
+
+        getEcom("privacy").then(resp => {
+        })
+
+        // let dataStr = RichTextEditor.createValueFromString("<p>&lt;html&gt;</p> <p>&lt;p&gt;</p> <p>gghghghg</p> <p>&lt;/html&gt;</p>", "html");
+
+        // this.setState({ description: dataStr })
+    }
+
+
+
+    handleSubmit = () => {
+        if (this.state.description && this.state.description._cache && this.state.description._cache.html) {
+            let obj = {
+                type: "privacy",
+                description: this.state.description._cache.html
+            }
+
+            SubmitEcom(obj).then(resp => {
+                if (resp) {
+
+                }
+            })
+        }
+
+    }
+
+    listPath = () => {
+        this.props.history.push(path.policy.list)
+    }
 
     render() {
         return (

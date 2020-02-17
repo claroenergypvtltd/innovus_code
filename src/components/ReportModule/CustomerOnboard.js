@@ -89,17 +89,22 @@ class CustomerOnboard extends Component {
     getMapView = () => {
         // this.setState({ mapSubmit: true })
         if (this.state.startDate && this.state.expiryDate && (this.state.startDate <= this.state.expiryDate) && this.state.selectVal.length > 0) {
-            let obj = {
-                startDate: this.state.startDate,
-                expiryDate: this.state.expiryDate,
-                regionData: this.state.selectVal
-            }
 
-            getCustomerMapView(obj).then(resp => {
-                if (resp) {
-                    this.setState({ mapData: resp.data })
+            if ((this.state.startDate1 <= this.state.expiryDate1)) {
+                let obj = {
+                    startDate: this.state.startDate,
+                    expiryDate: this.state.expiryDate,
+                    regionData: this.state.selectVal
                 }
-            })
+
+                getCustomerMapView(obj).then(resp => {
+                    if (resp) {
+                        this.setState({ mapData: resp.data })
+                    }
+                })
+            } else {
+                toastr.error("Date Invalid")
+            }
         } else {
             toastr.error("Mandatory fields are missing")
         }
@@ -107,27 +112,34 @@ class CustomerOnboard extends Component {
 
     getGraphView = () => {
         this.setState({ graphSubmit: true })
-        if (this.state.startDate1 && this.state.expiryDate1 && (this.state.startDate1 <= this.state.expiryDate1) && this.state.selectVal1.length > 0) {
+        if (this.state.startDate1 && this.state.expiryDate1 && this.state.selectVal1.length > 0) {
+            if ((this.state.startDate1 <= this.state.expiryDate1)) {
 
-            let selectVal1 = [];
-            this.state.selectVal1 && this.state.selectVal1.map(item => {
-                if (item.includes('-')) {
-                    let data = item.split('-');
-                    selectVal1.push(data[0]);
+
+                let selectVal1 = [];
+                this.state.selectVal1 && this.state.selectVal1.map(item => {
+                    if (item.includes('-')) {
+                        let data = item.split('-');
+                        selectVal1.push(data[0]);
+                    }
+                })
+
+                let obj = {
+                    startDate: this.state.startDate1,
+                    expiryDate: this.state.expiryDate1,
+                    regionData: selectVal1
                 }
-            })
 
-            let obj = {
-                startDate: this.state.startDate1,
-                expiryDate: this.state.expiryDate1,
-                regionData: selectVal1
+                getCustomerGraphView(obj).then(resp => {
+                    if (resp && resp.data) {
+                        this.setState({ graphData: resp.data })
+                    }
+                })
+
+            } else {
+                toastr.error("Date Invalid")
             }
 
-            getCustomerGraphView(obj).then(resp => {
-                if (resp && resp.data) {
-                    this.setState({ graphData: resp.data })
-                }
-            })
         } else {
             toastr.error("Mandatory fields are missing")
         }
@@ -137,7 +149,8 @@ class CustomerOnboard extends Component {
         this.setState({
             startDate: "",
             expiryDate: "",
-            selectVal: []
+            selectVal: [],
+            mapData: []
         });
     }
     resetGraphSearch = () => {
