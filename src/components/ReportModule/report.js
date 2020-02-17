@@ -49,9 +49,6 @@ export default class report extends Component {
                             <button className="set-btn" onClick={this.orderPath}>{window.strings.REPORT.PLACING_ORDER}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
-                            <button className="set-btn" onClick={this.salesPerformance}>{window.strings.REPORT.EXECUTIVE_PERFORMANCE}
-                                <i class="fa fa-chevron-right"></i>
-                            </button>
                             <button className="set-btn" onClick={this.navigateOrder}>{window.strings.REPORT.ORDER_VALUE_INR}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
@@ -59,6 +56,9 @@ export default class report extends Component {
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                             <button className="set-btn" onClick={this.navigateElasticitiy}>{window.strings.REPORT.PRICE_ELASTICITY}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                            <button className="set-btn" onClick={this.salesPerformance}>{window.strings.REPORT.EXECUTIVE_PERFORMANCE}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
