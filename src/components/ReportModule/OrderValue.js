@@ -63,7 +63,7 @@ class OrderValue extends Component {
             if (this.state.startDate <= this.state.expiryDate) {
                 let regionData = []
                 this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
-                    if (!item.includes('Select All')) {
+                    if (item && !item.includes('Select All')) {
                         regionData.push(item)
                     }
                 })
