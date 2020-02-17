@@ -172,9 +172,10 @@ class FetchRetailer extends React.Component {
     }
 
     setApiKey = () => {
+        // AIzaSyAHsNiCWANHwz9j7vrYA70c37dOgHQyAvU
         Geocode.setApiKey("AIzaSyAHsNiCWANHwz9j7vrYA70c37dOgHQyAvU");
         Geocode.setLanguage("en");
-        Geocode.setRegion("es");
+        Geocode.setRegion("in");
         Geocode.enableDebug();
     }
 

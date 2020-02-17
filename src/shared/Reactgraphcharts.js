@@ -175,6 +175,7 @@ export class LineChartView extends Component {
 
     render() {
         let value = this.props && this.props.label
+        let data = this.props.Data
         const reactbarChartdata = this.props.barChartData ? this.props.barChartData :
             [
                 {
@@ -203,7 +204,7 @@ export class LineChartView extends Component {
                     <YAxis />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
-                    <Line type="monotone" dataKey="Users" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey={data} stroke="#8884d8" activeDot={{ r: 8 }} />
                     {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
                 </LineChart>
             </div>

@@ -19,32 +19,20 @@ class ExecutivePerformance extends Component {
             startDate: '',
             expiryDate: '',
             selectVal: [],
+            selectsubVal: [],
             selectVal1: [],
             lineChartData: [],
+            subRegionData: [],
             errors: {},
             graphSubmit: false
         }
     }
 
     componentDidMount() {
-        // this.getRegion();
         this.fetchAgents();
         this.getReportRegion();
     }
 
-    componentWillReceiveProps(newProps) {
-        // if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
-        //     this.setState({ regionListData: newProps.regionList.Lists.datas })
-        // }
-    }
-
-    // getRegion = () => {
-    //     let obj = {
-    //         page: '',
-    //         rows: ''
-    //     }
-    //     this.props.getRegion(obj)
-    // }
 
     getReportRegion = () => {
         let obj = {
@@ -57,7 +45,6 @@ class ExecutivePerformance extends Component {
             }
         })
     }
-
 
     fetchAgents = () => {
         let obj = {
@@ -79,14 +66,27 @@ class ExecutivePerformance extends Component {
     onChecked = (data, value) => {
         let regionArray = [];
         data.map(item => {
-            if (!item.includes('parent')) {
-                regionArray.push(item);
-
-            }
+            regionArray.push(item);
         })
-        this.setState({ selectVal: regionArray })
-        // this.state.selectVal = regionArray
+        this.setState({ selectVal: regionArray, subEnable: false })
+
+        if (data && data[0]) {
+            let Data = data[0].split('##');
+            let subRegionData = JSON.parse(Data[1]);
+            this.setState({ subRegionData, selectsubVal: [] })
+        } else {
+            this.setState({ subRegionData: [{ "title": "No Data", "value": "No Data" }], subEnable: true, selectsubVal: [] })
+        }
     }
+
+    onCheckedSub = (data) => {
+        let regionArray = [];
+        data.map(item => {
+            regionArray.push(item);
+        })
+        this.setState({ selectsubVal: regionArray })
+    }
+
     onChecked1 = (data, value) => {
         let regionArray1 = [];
         data.map(item => {
@@ -100,29 +100,32 @@ class ExecutivePerformance extends Component {
 
     getGraphView = () => {
         this.setState({ graphSubmit: true })
-        if (this.state.startDate && this.state.expiryDate && this.state.selectVal.length > 0 && this.state.selectVal1.length > 0) {
+        if (this.state.startDate && this.state.expiryDate && this.state.selectVal.length > 0 && this.state.selectsubVal.length > 0 && this.state.selectVal1.length > 0) {
+
+            let subRegionVal = "";
+
+            this.state.selectsubVal && this.state.selectsubVal.map(item => {
+                if (item) {
+                    let splitData = item.split('##');
+                    subRegionVal = splitData[0];
+                }
+            })
+
             let obj = {
                 startDate: this.state.startDate,
                 expiryDate: this.state.expiryDate,
-                regionData: this.state.selectVal,
+                regionData: subRegionVal,
                 agentData: this.state.selectVal1,
             }
-            // return httpServices.get('reports?Id=6&flag=0&expiryDate=' + Data.expiryDate + '&startDate=' + Data.startDate + '&subregionId=' + Data.regionData+'&agentId='+Data.agentData).then(resp => {
 
             getSalesExecutiveGraphView(obj).then(resp => {
                 if (resp && resp.data) {
                     this.setState({ lineChartData: resp.data })
-                    // let lineChartData = [{
-                    //     "user": ["DC80,0", "DC81,3", "DC82,0", "DC70,0"], "orderValue": ["DC80,0", "DC81,32090", "DC82,0", "DC70,0"],
-                    //     "order": ["DC80,0", "DC81,36", "DC82,0", "DC70,0"]
-                    // }]
-                    // this.setState({ lineChartData: lineChartData })
                 }
             })
         } else {
             toastr.error("Mandatory Fields are missing");
         }
-
     }
 
     redirectPage = () => {
@@ -134,28 +137,80 @@ class ExecutivePerformance extends Component {
             expiryDate: "",
             selectVal1: [],
             selectVal: [],
-            lineChartData: []
+            lineChartData: [],
+            selectsubVal: []
         });
     }
     render() {
         let treeData = []
         this.state.regionListData && this.state.regionListData.map((item, index) => {
+            let obj = {}
+            let selectedVal = '';
+            this.state.selectVal && this.state.selectVal.map(selectedItem => {
+                if (selectedItem) {
+                    selectedVal = selectedItem;
+                }
+            })
             let childArray = [];
             item.dcDatas && item.dcDatas.map((dcData, index) => {
                 let obj = {
-                    title: dcData.dcCode,
+                    title: dcData.name,
                     value: dcData.dcCode,
                 }
                 childArray.push(obj)
             })
-
-
-            let obj = {
-                title: item.name,
-                value: item.name + 'parent',
-                children: childArray,
+            if (selectedVal) {
+                if ((item.id + 'Parent##' + JSON.stringify(childArray) == selectedVal)) {
+                    obj = {
+                        title: item.name,
+                        value: item.id + 'Parent##' + JSON.stringify(childArray),
+                        // disabled: true
+                    }
+                } else {
+                    obj = {
+                        title: item.name,
+                        value: item.id + 'Parent##' + JSON.stringify(childArray),
+                        disabled: true
+                    }
+                }
+            } else {
+                obj = {
+                    title: item.name,
+                    value: item.id + 'Parent##' + JSON.stringify(childArray)
+                }
             }
             treeData.push(obj)
+        })
+
+        let subtreeData = []
+        this.state.subRegionData && this.state.subRegionData.map((item, index) => {
+            let obj = {}
+            let selectedVal = '';
+            this.state.selectsubVal && this.state.selectsubVal.map(selectedItem => {
+                if (selectedItem) {
+                    selectedVal = selectedItem;
+                }
+            })
+            if (selectedVal) {
+                if ((item.value + '##Parent' == selectedVal)) {
+                    obj = {
+                        title: item.title,
+                        value: item.value + '##Parent',
+                    }
+                } else {
+                    obj = {
+                        title: item.title,
+                        value: item.value + '##Parent',
+                        disabled: true
+                    }
+                }
+            } else {
+                obj = {
+                    title: item.title,
+                    value: item.value + '##Parent'
+                }
+            }
+            subtreeData.push(obj)
         })
 
         let agentData = []
@@ -178,6 +233,15 @@ class ExecutivePerformance extends Component {
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.selectVal            // Initialize check multiple lists
         }
+
+        const subcheckbox = {
+            enable: true,
+            parentChain: true,              // child Affects parent nodes;
+            childrenChain: true,            // parent Affects child nodes;
+            halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
+            initCheckedList: this.state.selectsubVal            // Initialize check multiple lists
+        }
+
         const checkbox1 = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
@@ -198,8 +262,7 @@ class ExecutivePerformance extends Component {
         this.state.lineChartData && this.state.lineChartData.order && this.state.lineChartData.order.map(item => {
             let Data = item.split(',');
             let obj = {
-                name: Data[0], Users: Data[1],
-                // name: 'Page A', uv: 4000, pv: 2400, amt: 5000,
+                name: Data[0], Order: Data[1],
             }
             noOfOrders.push(obj);
         })
@@ -209,16 +272,10 @@ class ExecutivePerformance extends Component {
         this.state.lineChartData && this.state.lineChartData.orderValue && this.state.lineChartData.orderValue.map(item => {
             let Data = item.split(',');
             let obj = {
-                name: Data[0], Users: Data[1],
-                // name: 'Page A', uv: 4000, pv: 2400, amt: 5000,
+                name: Data[0], Value: Data[1],
             }
             orderValue.push(obj);
         })
-        // let LineChatView = this.state.lineChartData && this.state.lineChartData.map(item => {
-
-        // })
-
-
         return (
             <div className="customer-onboard">
                 <h4 className="user-title">{window.strings.REPORT.SALES_EXECUTIVE_PERFORMANCE}</h4>
@@ -248,6 +305,27 @@ class ExecutivePerformance extends Component {
                                     customTitleRender={this.customTitleRender} />
                                 {/* {this.state.graphSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                             </div>
+
+                            {this.state.subEnable && <div className="tree-box">
+                                <label className="label-title">Select Sub Region * </label>
+                                <TreeSelect
+                                    treeData={subtreeData}
+                                    style={{ width: 210, height: 100 }}
+                                />
+                            </div>}
+
+                            {!this.state.subEnable && <div className="tree-box">
+                                <label className="label-title">Select Sub Region * </label>
+                                <TreeSelect
+                                    treeData={subtreeData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.selectsubVal}
+                                    onChecked={this.onCheckedSub}
+                                    checkbox={subcheckbox}
+                                    customTitleRender={this.customTitleRender} />
+                                {/* {this.state.graphSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
+                            </div>}
+
                             <div className="tree-box">
                                 <label className="label-title">Sales Agent * </label>
                                 {/* <input className="holder" placeholder="Search here.." /> */}
@@ -278,17 +356,17 @@ class ExecutivePerformance extends Component {
                     {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ? <div className="row mt-5">
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineChartView label='No of Customers Onboard' barChartData={CustomerOnBoard} />}
+                                {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />}
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineChartView label='No of Orders' barChartData={noOfOrders} />}
+                                {<LineChartView label='No of Orders' Data='Order' barChartData={noOfOrders} />}
                             </div>
                         </div>
                         <div className="col-md-6 offset-md-3 mt-5">
                             <div className="main-wrapper py-3">
-                                {<LineChartView label='Order Value' barChartData={orderValue} />}
+                                {<LineChartView label='Order Value' Data='Value' barChartData={orderValue} />}
                             </div>
                         </div>
                     </div> :

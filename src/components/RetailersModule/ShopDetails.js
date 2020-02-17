@@ -75,21 +75,21 @@ class ShopDetails extends React.Component {
                 let rejectArray = [];
 
                 if (this.state.image) {
-                    rejectArray.push(this.state.image)
+                    rejectArray.push("shopImage")
                 }
                 if (this.state.name) {
-                    rejectArray.push(this.state.name)
+                    rejectArray.push("Shop Name")
                 }
                 if (this.state.address1) {
-                    rejectArray.push(this.state.address1)
+                    rejectArray.push("Shop Address")
                 }
 
                 if (this.state.type) {
-                    rejectArray.push(this.state.type)
+                    rejectArray.push("Shop Type")
                 }
 
                 if (this.state.shopOpeningTime) {
-                    rejectArray.push(this.state.shopOpeningTime)
+                    rejectArray.push("Shop open time")
                 }
 
 
