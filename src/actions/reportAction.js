@@ -54,10 +54,26 @@ export const getReportRegion = (obj) => {
     })
 }
 
-// localhost:8001/api/reports?Id=6&startDate=2019-01-09&flag=0&expiryDate=2020-02-30&subregionId=DC81,DC02&agentId=S0141
+export const getOrderValue = (Data) => {
+    return httpServices.get('reports?flag=0&Id=3&subRegionId=' + Data.subRegionId + '&productId=' + Data.productId).then(resp => {
+        if (resp && resp.data) {
+            // dispatch({ type: REGION_FETCH_SUCCESS, List: resp.data })
+            return resp.data
+        }
+    }).catch((error) => {
+        console.error("error", error);
+        // dispatch({ type: GET_ERRORS, payload: error });
+    })
+}
 
-
-
-
-
-// reports?Id=1&expiryDate=2020-01-10&startDate=2020-01-08&regionId=DC70
+export const getProductList = (Data) => {
+    return httpServices.get('products?dcCode=' + Data.dcCode).then(resp => {
+        if (resp && resp.data) {
+            // dispatch({ type: REGION_FETCH_SUCCESS, List: resp.data })
+            return resp.data
+        }
+    }).catch((error) => {
+        console.error("error", error);
+        // dispatch({ type: GET_ERRORS, payload: error });
+    })
+}
