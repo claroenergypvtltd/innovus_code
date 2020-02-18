@@ -297,37 +297,12 @@ class CreatePrice extends Component {
         let isDuplicateCheck = true;
         this.state.offerArray.map((item, index) => {
             if (this.state.price && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.boxQuantity) {
-                if (item.quantity || item.offer || item.type) {
-                    if (!item.quantity || !item.offer || !item.type) {
+                if ((item.quantity || item.quantity == 0) || item.offer || item.type) {
+                    if ((!item.quantity && item.quantity != 0) || !item.offer || !item.type) {
                         isValid = false
                         return;
                     }
                 }
-                // let multipleVal = Number(this.state.updateQuantity) * this.state.boxQuantity;
-                // if (this.state.updateQuantity || item.offer || item.type != '') {
-                // if (this.state.updateQuantity && item.offer == '' && !item.type) {
-                //     if (multipleVal + this.state.weight < 0) {
-                //         toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
-                //         isValid = false
-                //         return;
-                //     }
-                // }
-                // else if (this.state.updateQuantity && item.type != '' && item.offer) {
-                //     if (multipleVal + this.state.weight < 0) {
-                //         isValid = false;
-                //         isQuantityValid = false;
-                //         return;
-                //     }
-                // }
-                // else if (item.type == 0 && this.state.updateQuantity && !item.offer) {
-                //     if (multipleVal + this.state.weight < 0) {
-                //         isValid = false
-                //         toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
-                //         return;
-                //     }
-                // }
-
-
                 if (item.offer) {
                     if (item.type == 2) {
                         if (parseInt(item.offer) > 100) {
@@ -366,10 +341,6 @@ class CreatePrice extends Component {
             }
         })
 
-        // if (!isQuantityValid) {
-        //     toastr.error("Multiple of increment/decrement and Set Quantity must be greater than zero")
-        // }
-        // debugger;
         if (!isDuplicateCheck) {
             toastr.error("Any one of Checkbox or Set End Quantity must be required");
         }
@@ -387,8 +358,8 @@ class CreatePrice extends Component {
             this.state.offerArray && this.state.offerArray.map(item => {
                 let sendObj = {}
                 sendObj.id = item.id;
-                if (item.quantity && item.offer && item.type) {
-                    sendObj.quantity = item.quantity;
+                if ((item.quantity || item.quantity == 0) && item.offer && item.type) {
+                    sendObj.quantity = Number(item.quantity);
                     sendObj.discountValue = item.offer;
                     sendObj.discountUnit = item.type;
                     sendObj.quantityUnit = this.state.weightId
@@ -400,7 +371,7 @@ class CreatePrice extends Component {
 
             var isDuplicate = false;
             var valueArr = this.state.offerArray.map(function (item) {
-                if (item.quantity) {
+                if (item.quantity != '') {
                     return parseInt(item.quantity)
                 }
             });
@@ -430,7 +401,6 @@ class CreatePrice extends Component {
                 "dcCode": this.state.dcCode,
                 "offer": arrayData
             }
-
             if (!isDuplicate) {
                 this.props.submitPrice(obj, isUpdate);
             } else {
@@ -638,7 +608,7 @@ class CreatePrice extends Component {
                                                             onChange={this.handleChangeQuantity(idx)}
                                                             required
                                                         />
-                                                        {this.state.submitted && (offerArray.type || offerArray.offer) && !offerArray.quantity && <div className="mandatory">{window.strings['PRICE']['QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                                        {this.state.submitted && (offerArray.type || offerArray.offer) && (!offerArray.quantity && offerArray.quantity != 0) && <div className="mandatory">{window.strings['PRICE']['QUANTITY'] + window.strings['ISREQUIRED']}</div>}
                                                         {/* {this.state.submitted && offerArray.type == 1 && offerArray.quantity && <div className="mandatory">Please enter valid Quantity</div>} */}
                                                         {this.state.submitted && offerArray.type == 2 && offerArray.quantity > 100 && <div className="mandatory">Please enter valid Quantity</div>}
 

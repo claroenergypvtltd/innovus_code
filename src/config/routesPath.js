@@ -63,7 +63,7 @@ import TonnesOrder from '../components/ReportModule/TonnesOrder';
 import PriceElasticity from '../components/ReportModule/PriceElasticity';
 
 
-import AboutPolicyTab from '../components/AboutModule/AboutPolicyTab';
+import Policy from '../components/AboutModule/Policy';
 import PrivacyPolicy from '../components/AboutModule/PrivacyPolicy';
 import TermsConditions from '../components/AboutModule/TermsConditions';
 
@@ -453,25 +453,30 @@ export const routesPath = [
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/aboutpolicy',
-                component: AboutPolicyTab,
+                path: process.env.PUBLIC_URL + '/setting/policyList',
+                component: Policy,
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/aboutpolicy/privacypolicy',
+                path: process.env.PUBLIC_URL + '/setting/policy',
                 component: PrivacyPolicy,
                 exact: true
             },
-            {
-                path: process.env.PUBLIC_URL + '/aboutpolicy/termscondition',
-                component: TermsConditions,
-                exact: true
-            },
-            {
-                path: process.env.PUBLIC_URL + '/aboutpolicy/return',
-                component: ReturnCancellation,
-                exact: true
-            },
+            // {
+            //     path: process.env.PUBLIC_URL + '/aboutpolicy/privacypolicy',
+            //     component: PrivacyPolicy,
+            //     exact: true
+            // },
+            // {
+            //     path: process.env.PUBLIC_URL + '/aboutpolicy/termscondition',
+            //     component: TermsConditions,
+            //     exact: true
+            // },
+            // {
+            //     path: process.env.PUBLIC_URL + '/aboutpolicy/return',
+            //     component: ReturnCancellation,
+            //     exact: true
+            // },
 
             // {
             //     path: process.env.PUBLIC_URL + '/credit',

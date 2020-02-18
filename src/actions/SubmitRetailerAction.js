@@ -8,7 +8,7 @@ import { RET_USER_FETCH_SUCCESS, RET_COUNTRY_FETCH_SUCCESS, RET_KYC_FETCH_SUCCES
 export const SubmitRetailer = (retailerData, updateRetailer) => dispatch => {
     if (updateRetailer) {
         httpServices.put(endPoint.user, retailerData).then(resp => {
-            if (resp) {
+            if (resp && resp.status == "200") {
                 dispatch({ type: RETAILER_CREATE_SUCCESS, status: resp.status, message: resp.message })
                 toastr.success(resp.message);
             }

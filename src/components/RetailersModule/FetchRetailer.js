@@ -610,7 +610,7 @@ class FetchRetailer extends React.Component {
                 }
 
                 this.props.UpdateUsers(obj, true);
-
+                this.callAllUserAPis();
             });
 
         };
