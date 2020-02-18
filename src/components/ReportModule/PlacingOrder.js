@@ -25,7 +25,11 @@ class PlacingOrder extends Component {
             mapData: [],
             agentSelectVal: [],
             agentDataList: [],
-            regionListData2: []
+            regionListData2: [],
+            agentResetData: [{
+                title: '',
+                value: ''
+            }]
         }
     }
     componentDidMount() {
@@ -55,7 +59,7 @@ class PlacingOrder extends Component {
             rows: ''
         }
         getReportRegion(obj).then(resp => {
-            this.setState({ regionListData2: resp && resp.datas, resetRegionData: resp && resp.datas })
+            this.setState({ regionListData2: resp && resp.datas })
         })
     }
     getPlacingOrderGraph = () => {
@@ -150,22 +154,17 @@ class PlacingOrder extends Component {
         this.setState({ getBarChart: false })
     }
     resetMapSearch = () => {
-        let data = this.state.mapSelectVal.splice(0)
-        let value = this.state.agentSelectVal.splice(0)
-
         this.setState({
             reset: true,
             mapStartDate: "",
             mapSelectVal: [],
             agentSelectVal: [],
             mapData: [],
-            agentSelectVal: [],
             agentDropDown: false,
             agentDataList: []
         });
     }
     resetGraphSearch = () => {
-        let data = this.state.graphSelectVal.splice(0)
         this.setState({
             graphStartDate: "",
             graphSelectVal: [],
@@ -213,25 +212,6 @@ class PlacingOrder extends Component {
                 children: childArray,
             }
             regionData.push(obj)
-        })
-
-        let resetRegionData = []
-        this.state.resetRegionData && this.state.resetRegionData.map((item, index) => {
-            let childArray = [];
-            item.dcDatas && item.dcDatas.map((dcData, index) => {
-                let obj = {
-                    title: dcData.name,
-                    value: dcData.dcCode
-                }
-                childArray.push(obj)
-            })
-
-            let obj = {
-                title: item.name,
-                value: item.name + 'Parent',
-                children: childArray,
-            }
-            resetRegionData.push(obj)
         })
 
         let regionData1 = []
@@ -309,12 +289,6 @@ class PlacingOrder extends Component {
             }
             graphData.push(obj);
         })
-        const treeData = [
-            {
-                title: '',
-                value: ''
-            }
-        ]
 
         return (
             <div className="customer-placeorder">
@@ -353,7 +327,7 @@ class PlacingOrder extends Component {
                                             <label className="label-title">Select Region * :</label>
                                             <TreeSelect
                                                 // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
-                                                treeData={resetRegionData}
+                                                treeData={regionData}
                                                 style={{ width: 210, height: 100 }}
                                                 selectVal={this.state.mapSelectVal}
                                                 onSelect={this.onSelect}
@@ -381,7 +355,7 @@ class PlacingOrder extends Component {
                                             <label className="label-title">Sales Agent * :</label>
                                             {/* <input className="holder" placeholder="Search here.." /> */}
                                             <TreeSelect
-                                                treeData={treeData}
+                                                treeData={this.state.agentResetData}
                                                 style={{ width: 210, height: 100 }}
                                                 selectVal={this.state.agentSelectVal}
                                                 onSelect={this.onSelect}
@@ -452,7 +426,6 @@ class PlacingOrder extends Component {
                                 {this.state.graphData.length > 0 ? <div className="mt-5">
                                     <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} />
                                 </div> : <div className="record-box">No record found</div>}
-
 
                                 {this.state.getBarChart && <div className="pt-5">
                                     <ReactBarLineChart barChartData={this.state.subRegionBarData} parentCallback={this.callbackFunction} />

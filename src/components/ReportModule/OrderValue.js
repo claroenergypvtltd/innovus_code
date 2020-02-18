@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
-import { getReportRegion } from '../../actions/reportAction'
+import { getReportRegion, getProductList, getOrderValue } from '../../actions/reportAction'
 import { LineChartView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
 import { getPriceList } from '../../actions/priceAction'
@@ -15,12 +15,13 @@ class OrderValue extends Component {
             startDate: '',
             expiryDate: '',
             regionSelectVal: [],
-            subRegionSelectVal: [],
+            skuSelectValue: [],
             lineChartData: [],
             errors: {},
             graphSubmit: false,
             reset: true,
             deSelect: false,
+            productList: [],
             selectAll: {
                 title: 'Select All',
                 value: 'Select All'
@@ -29,7 +30,7 @@ class OrderValue extends Component {
     }
     componentDidMount() {
         this.getReportRegion();
-        this.getPriceList();
+        // this.getPriceList();
     }
     componentWillReceiveProps(newProps) {
         if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
@@ -37,13 +38,13 @@ class OrderValue extends Component {
             this.setState({ PriceLists: respData })
         }
     }
-    getPriceList() {
-        let obj = {
-            pages: '',
-            rows: ''
-        }
-        this.props.getPriceList(obj)
-    }
+    // getPriceList() {
+    //     let obj = {
+    //         pages: '',
+    //         rows: ''
+    //     }
+    //     this.props.getPriceList(obj)
+    // }
     getReportRegion = () => {
         let obj = {
             page: '',
@@ -55,17 +56,34 @@ class OrderValue extends Component {
             }
         })
     }
+    getProductData = (Data) => {
+        let obj = {
+            'dcCode': Data
+        }
+        getProductList(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ productList: resp.datas })
+            }
+        })
+    }
     dateChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
     getGraphData = () => {
-        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0) {
+        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
             if (this.state.startDate <= this.state.expiryDate) {
                 let regionData = []
                 this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
                     if (item && !item.includes('Select All')) {
                         regionData.push(item)
                     }
+                })
+                let obj = {
+                    'subRegionId': regionData,
+                    'productId': this.state.skuSelectValue
+                }
+                getOrderValue(obj).then(resp => {
+
                 })
             }
             else {
@@ -85,6 +103,7 @@ class OrderValue extends Component {
             expiryDate: "",
             regionSelectVal: [],
             lineChartData: [],
+            skuSelectValue: [],
             deSelect: true
         });
     }
@@ -109,12 +128,22 @@ class OrderValue extends Component {
             })
             let resetStatus = regionArray.includes('Select All') ? false : true
             this.state.regionSelectVal = regionArray
+            if (this.state.regionSelectVal.length > 0) {
+                this.getProductData(regionArray)
+            }
             this.setState({ regionSelectVal: regionArray, reset: resetStatus, deSelect: false })
         }
 
     }
     onSkuChecked = (Data) => {
-
+        if (Data) {
+            let dropDownValue = []
+            Data && Data.map((item => {
+                dropDownValue.push(item)
+            }))
+            this.state.skuSelectValue = dropDownValue
+            // this.setState({ skuSelectValue: dropDownValue })
+        }
     }
     onSelectAll = () => {
         let childArray = ['Select All'];
@@ -149,16 +178,23 @@ class OrderValue extends Component {
             }
             regionData.push(obj)
         })
-        let treeData = []
-        this.state.salesAgentList && this.state.salesAgentList.map((item) => {
-            let Data = item.split(',');
-
+        let productData = []
+        this.state.productList && this.state.productList.map((item) => {
 
             let obj = {
-                title: Data[1],
-                value: Data[0]
+                title: item.name,
+                value: item && item.productDetailsao && item.productDetailsao.productId
             }
-            treeData.push(obj)
+            productData.push(obj)
+        })
+        let productResetData = []
+        this.state.productList && this.state.productList.map((item) => {
+
+            let obj = {
+                title: item.name,
+                value: item && item.productDetail && item.productDetail.productId
+            }
+            productResetData.push(obj)
         })
         const regionCheckbox = {
             enable: true,
@@ -172,7 +208,7 @@ class OrderValue extends Component {
             parentChain: true,              // child Affects parent nodes;
             childrenChain: true,            // parent Affects child nodes;
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
-            initCheckedList: this.state.subRegionSelectVal           // Initialize check multiple lists
+            initCheckedList: this.state.skuSelectValue           // Initialize check multiple lists
         }
         return (
             <div>
@@ -210,16 +246,26 @@ class OrderValue extends Component {
                                     checkbox={regionCheckbox}
                                     customTitleRender={this.customTitleRender} />
                             </div>}
-                            <div className="tree-box">
+                            {!this.state.deSelect && <div className="tree-box">
                                 <label className="label-title">Select SKU * </label>
                                 <TreeSelect
-                                    treeData={treeData}
+                                    treeData={!this.state.deSelect ? productData : productResetData}
                                     style={{ width: 210, height: 100 }}
                                     selectVal={this.state.skuSelectValue}
                                     onChecked={this.onSkuChecked}
                                     checkbox={skuCheckbox}
                                     customTitleRender={this.customTitleRender} />
-                            </div>
+                            </div>}
+                            {this.state.deSelect && <div className="tree-box">
+                                <label className="label-title">Select SKU * </label>
+                                <TreeSelect
+                                    treeData={productResetData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.skuSelectValue}
+                                    onChecked={this.onSkuChecked}
+                                    checkbox={skuCheckbox}
+                                    customTitleRender={this.customTitleRender} />
+                            </div>}
                         </div>
                         <div className="mr-5 pr-3 search-wrap">
                             <div className="view-box">

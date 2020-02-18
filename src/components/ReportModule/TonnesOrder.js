@@ -5,8 +5,9 @@ import TreeSelect from 'react-do-tree-select';
 import { getReportRegion } from '../../actions/reportAction'
 import { LineChartView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
+import { getPriceList } from '../../actions/priceAction'
 
-export default class TonnesOrder extends Component {
+class TonnesOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +28,13 @@ export default class TonnesOrder extends Component {
     }
     componentDidMount() {
         this.getReportRegion();
+        this.getPriceList();
+    }
+    componentWillReceiveProps(newProps) {
+        if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
+            let respData = newProps.priceData.Lists.datas;
+            this.setState({ PriceLists: respData })
+        }
     }
     getReportRegion = () => {
         let obj = {
@@ -38,6 +46,13 @@ export default class TonnesOrder extends Component {
                 this.setState({ regionListData2: resp.datas })
             }
         })
+    }
+    getPriceList() {
+        let obj = {
+            pages: '',
+            rows: ''
+        }
+        this.props.getPriceList(obj)
     }
     dateChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
@@ -128,16 +143,14 @@ export default class TonnesOrder extends Component {
             }
             regionData.push(obj)
         })
-        let treeData = []
-        this.state.salesAgentList && this.state.salesAgentList.map((item) => {
-            let Data = item.split(',');
-
+        let productData = []
+        this.state.PriceLists && this.state.PriceLists.map((item) => {
 
             let obj = {
-                title: Data[1],
-                value: Data[0]
+                title: item.name,
+                value: item && item.productDetail && item.productDetail.productId
             }
-            treeData.push(obj)
+            productData.push(obj)
         })
         const regionCheckbox = {
             enable: true,
@@ -190,7 +203,7 @@ export default class TonnesOrder extends Component {
                             <div className="tree-box">
                                 <label className="label-title">Select SKU * </label>
                                 <TreeSelect
-                                    treeData={treeData}
+                                    treeData={productData}
                                     style={{ width: 210, height: 100 }}
                                     selectVal={this.state.skuSelectValue}
                                     onChecked={this.onSkuChecked}
@@ -223,3 +236,7 @@ export default class TonnesOrder extends Component {
         )
     }
 }
+const mapStateToProps = (state) => ({
+    priceData: state.price ? state.price : {}
+})
+export default connect(mapStateToProps, { getPriceList })(TonnesOrder)
