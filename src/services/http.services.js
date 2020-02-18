@@ -63,7 +63,7 @@ axios.interceptors.response.use(
 function get(url) {
   PubSub.publish('msg', true);
   return axios.get(url).then(response => {
-    if (response.data) {
+    if (response) {
       PubSub.publish('msg', false);
       return response;
     }

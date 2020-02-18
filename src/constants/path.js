@@ -171,10 +171,8 @@ export const path = {
         edit: process.env.PUBLIC_URL + '/price/pool/edit/',
     },
     policy: {
-        policytab: process.env.PUBLIC_URL + '/aboutpolicy/privacyPolicy',
-        list: process.env.PUBLIC_URL + '/aboutpolicy',
-        conditiontab: process.env.PUBLIC_URL + '/aboutpolicy/termscondition',
-        returntab: process.env.PUBLIC_URL + '/aboutpolicy/return',
+        form: process.env.PUBLIC_URL + '/setting/policy',
+        policyList: process.env.PUBLIC_URL + '/setting/policyList'
     },
 }
 

@@ -24,12 +24,13 @@ class ExecutivePerformance extends Component {
             lineChartData: [],
             subRegionData: [],
             errors: {},
+            salesAgentList: [],
             graphSubmit: false
         }
     }
 
     componentDidMount() {
-        this.fetchAgents();
+        // this.fetchAgents();
         this.getReportRegion();
     }
 
@@ -46,14 +47,20 @@ class ExecutivePerformance extends Component {
         })
     }
 
-    fetchAgents = () => {
+    fetchAgents = (Data) => {
+        let dcList = []
+        Data && Data.map((item) => {
+            let splitData = item.split('##');
+            let subRegionVal = splitData[0];
+            dcList.push(subRegionVal)
+        })
         let obj = {
             roleId: 4,
-            flag: 2,
-            search: this.state.dcCode ? this.state.dcCode : ''
+            flag: 5,
+            search: dcList
         }
-        getDcCodeData(obj, "retailer").then(resp => {
-            if (resp && resp) {
+        getDcCodeData(obj, "order").then(resp => {
+            if (resp) {
                 this.setState({ salesAgentList: resp })
             }
         })
@@ -68,14 +75,14 @@ class ExecutivePerformance extends Component {
         data.map(item => {
             regionArray.push(item);
         })
-        this.setState({ selectVal: regionArray, subEnable: false })
+        this.setState({ selectVal: regionArray, subEnable: false, salesEnable: false })
 
         if (data && data[0]) {
             let Data = data[0].split('##');
             let subRegionData = JSON.parse(Data[1]);
             this.setState({ subRegionData, selectsubVal: [] })
         } else {
-            this.setState({ subRegionData: [{ "title": "No Data", "value": "No Data" }], subEnable: true, selectsubVal: [] })
+            this.setState({ subRegionData: [{ "title": "No Data", "value": "No Data" }], salesAgentList: [{ "title": "No Data", "value": "No Data,No Data" }], subEnable: true, salesEnable: true, selectsubVal: [], selectVal1: [] })
         }
     }
 
@@ -84,7 +91,15 @@ class ExecutivePerformance extends Component {
         data.map(item => {
             regionArray.push(item);
         })
-        this.setState({ selectsubVal: regionArray })
+        if (data && data[0]) {
+            this.setState({ selectsubVal: regionArray, salesEnable: false }, () => {
+                this.fetchAgents(this.state.selectsubVal)
+            })
+        }
+        else {
+            this.setState({ selectsubVal: [], salesAgentList: [{ "title": "No Data", "value": "No Data,No Data" }], selectVal1: [], subEnable: false, salesEnable: true })
+        }
+
     }
 
     onChecked1 = (data, value) => {
@@ -212,17 +227,21 @@ class ExecutivePerformance extends Component {
             }
             subtreeData.push(obj)
         })
-
         let agentData = []
         this.state.salesAgentList && this.state.salesAgentList.map((item) => {
-            let Data = item.split(',');
-
-
-            let obj = {
-                title: Data[1],
-                value: Data[0]
+            if (item) {
+                let Data;
+                if (item.value) {
+                    Data = item.value.split(',');
+                } else {
+                    Data = item.split(',');
+                }
+                let obj = {
+                    title: Data[1],
+                    value: Data[0]
+                }
+                agentData.push(obj)
             }
-            agentData.push(obj)
         })
 
 
@@ -254,7 +273,6 @@ class ExecutivePerformance extends Component {
             let Data = item.split(',');
             let obj = {
                 name: Data[0], Users: Data[1],
-                // name: 'Page A', uv: 4000, pv: 2400, amt: 5000,
             }
             CustomerOnBoard.push(obj);
         })
@@ -326,7 +344,16 @@ class ExecutivePerformance extends Component {
                                 {/* {this.state.graphSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                             </div>}
 
-                            <div className="tree-box">
+
+                            {this.state.salesEnable && <div className="tree-box">
+                                <label className="label-title">Sales Agent * </label>
+                                <TreeSelect
+                                    treeData={agentData}
+                                    style={{ width: 210, height: 100 }}
+                                />
+                            </div>}
+
+                            {!this.state.salesEnable && <div className="tree-box">
                                 <label className="label-title">Sales Agent * </label>
                                 {/* <input className="holder" placeholder="Search here.." /> */}
                                 <TreeSelect
@@ -338,6 +365,7 @@ class ExecutivePerformance extends Component {
                                     customTitleRender={this.customTitleRender} />
                                 {/* {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                             </div>
+                            }
                         </div>
                         <div className="mr-5 pr-3 search-wrap">
                             <div className="view-box">

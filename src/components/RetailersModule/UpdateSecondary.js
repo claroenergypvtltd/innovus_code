@@ -27,7 +27,7 @@ class UpdateSecondary extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.status == 200) {
             store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
-            toastr.success(newProps.message);
+            // toastr.success(newProps.message);
             this.props.redirect()
             // this.props.onHide();
         }
