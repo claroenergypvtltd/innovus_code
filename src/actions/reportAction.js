@@ -55,10 +55,12 @@ export const getReportRegion = (obj) => {
 }
 
 export const getOrderValue = (Data) => {
-    return httpServices.get('reports?flag=0&Id=3&subRegionId=' + Data.subRegionId + '&productId=' + Data.productId).then(resp => {
-        if (resp && resp.data) {
+    let report = Data.regionId && Data.regionId.length > 1 ? 'reports?flag=0&Id=3&regionId=' : 'reports?flag=0&Id=3&subregionId='
+    let regionData = Data.regionId && Data.regionId.length > 1 ? Data.regionId : Data.subRegionId
+    return httpServices.get(report + regionData + '&productId=' + Data.productId + '&startDate=' + Data.startDate + '&expiryDate=' + Data.expiryDate).then(resp => {
+        if (resp && resp) {
             // dispatch({ type: REGION_FETCH_SUCCESS, List: resp.data })
-            return resp.data
+            return resp
         }
     }).catch((error) => {
         console.error("error", error);

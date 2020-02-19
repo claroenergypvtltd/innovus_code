@@ -1,50 +1,28 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
 import { getReportRegion, getProductList, getOrderValue } from '../../actions/reportAction'
 import { LineChartView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
-import { getPriceList } from '../../actions/priceAction'
 
-class OrderValue extends Component {
+export default class OrderValue extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showlevel: 0,
             startDate: '',
             expiryDate: '',
             regionSelectVal: [],
             skuSelectValue: [],
             lineChartData: [],
-            errors: {},
-            graphSubmit: false,
             reset: true,
             deSelect: false,
             productList: [],
-            selectAll: {
-                title: 'Select All',
-                value: 'Select All'
-            }
+            selectAll: { title: 'Select All', value: 'Select All' }
         }
     }
     componentDidMount() {
         this.getReportRegion();
-        // this.getPriceList();
     }
-    componentWillReceiveProps(newProps) {
-        if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
-            let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData })
-        }
-    }
-    // getPriceList() {
-    //     let obj = {
-    //         pages: '',
-    //         rows: ''
-    //     }
-    //     this.props.getPriceList(obj)
-    // }
     getReportRegion = () => {
         let obj = {
             page: '',
@@ -57,8 +35,14 @@ class OrderValue extends Component {
         })
     }
     getProductData = (Data) => {
+        let regionData = []
+        Data && Data.map((item) => {
+            if (item && !item.includes('Select All') && !item.includes("Parent")) {
+                regionData.push(item)
+            }
+        })
         let obj = {
-            'dcCode': Data
+            'dcCode': regionData
         }
         getProductList(obj).then(resp => {
             if (resp && resp.datas) {
@@ -72,18 +56,34 @@ class OrderValue extends Component {
     getGraphData = () => {
         if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
             if (this.state.startDate <= this.state.expiryDate) {
-                let regionData = []
+                let childArray = []
+                let parentArray = []
                 this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
-                    if (item && !item.includes('Select All')) {
-                        regionData.push(item)
+                    if (item.includes("Parent")) {
+                        let data = item.split('Parent')
+                        parentArray.push(data[0])
+                    }
+                    if (!item.includes("Parent")) {
+                        childArray.push(item)
                     }
                 })
+                let skuData = []
+                this.state.skuSelectValue && this.state.skuSelectValue.map((item) => {
+                    let value = item.split('Parent')
+                    skuData.push(value[0])
+                })
                 let obj = {
-                    'subRegionId': regionData,
-                    'productId': this.state.skuSelectValue
+                    'subRegionId': childArray,
+                    'regionId': parentArray,
+                    'productId': skuData,
+                    'startDate': this.state.startDate,
+                    'expiryDate': this.state.expiryDate,
+                    'id': 3
                 }
                 getOrderValue(obj).then(resp => {
-
+                    if (resp && resp.data) {
+                        this.setState({ lineChartData: resp.data })
+                    }
                 })
             }
             else {
@@ -117,14 +117,13 @@ class OrderValue extends Component {
         }
         else if (!Data.includes('Select All') && !this.state.reset) {
             this.setState({ regionSelectVal: [], reset: true, deSelect: true })
-
         }
         else {
             let regionArray = [];
             Data && Data.map(item => {
-                if (!item.includes('Parent')) {
-                    regionArray.push(item);
-                }
+                // if (!item.includes('Parent')) {
+                regionArray.push(item);
+                // }
             })
             let resetStatus = regionArray.includes('Select All') ? false : true
             this.state.regionSelectVal = regionArray
@@ -133,7 +132,6 @@ class OrderValue extends Component {
             }
             this.setState({ regionSelectVal: regionArray, reset: resetStatus, deSelect: false })
         }
-
     }
     onSkuChecked = (Data) => {
         if (Data) {
@@ -141,8 +139,7 @@ class OrderValue extends Component {
             Data && Data.map((item => {
                 dropDownValue.push(item)
             }))
-            this.state.skuSelectValue = dropDownValue
-            // this.setState({ skuSelectValue: dropDownValue })
+            this.setState({ skuSelectValue: dropDownValue })
         }
     }
     onSelectAll = () => {
@@ -153,7 +150,7 @@ class OrderValue extends Component {
                 childArray.push(obj)
             })
 
-            let obj = item.name + 'Parent'
+            let obj = item.id + 'Parent'
             childArray.push(obj)
         })
         this.onRegionChecked(childArray)
@@ -173,28 +170,39 @@ class OrderValue extends Component {
 
             let obj = {
                 title: item.name,
-                value: item.name + 'Parent',
+                value: item.id + 'Parent',
                 children: childArray
             }
             regionData.push(obj)
         })
+
         let productData = []
         this.state.productList && this.state.productList.map((item) => {
 
             let obj = {
                 title: item.name,
-                value: item && item.productDetailsao && item.productDetailsao.productId
+                value: item.productDetailsao.productId + 'Parent'
             }
             productData.push(obj)
         })
-        let productResetData = []
-        this.state.productList && this.state.productList.map((item) => {
 
+        const skuResetData = [{ title: '', value: '' }]
+
+        let chartData = []
+        this.state.lineChartData.orderValue && this.state.lineChartData.orderValue.map((item, index) => {
+
+            let region = item.regionDetails && item.regionDetails[0]
             let obj = {
-                title: item.name,
-                value: item && item.productDetail && item.productDetail.productId
+                region: region ? region : ''
             }
-            productResetData.push(obj)
+            index > 0 && item && item.regionDetails && item.regionDetails.map((item) => {
+                let value = item == region ? '' : item
+                let data = value && value.split(',')
+                obj.name = data[0] ? data[0] : '';
+                obj.orderValue = data[1] ? data[1] : '';
+            })
+
+            chartData.push(obj)
         })
         const regionCheckbox = {
             enable: true,
@@ -225,7 +233,6 @@ class OrderValue extends Component {
                                 <input type="date" className="date-wrap form-control" value={this.state.expiryDate} onChange={this.dateChange} name="expiryDate" />
                             </div>
 
-
                             {!this.state.deSelect && <div className="tree-box">
                                 <label className="label-title">Select Region * </label>
                                 <TreeSelect
@@ -249,7 +256,7 @@ class OrderValue extends Component {
                             {!this.state.deSelect && <div className="tree-box">
                                 <label className="label-title">Select SKU * </label>
                                 <TreeSelect
-                                    treeData={!this.state.deSelect ? productData : productResetData}
+                                    treeData={productData}
                                     style={{ width: 210, height: 100 }}
                                     selectVal={this.state.skuSelectValue}
                                     onChecked={this.onSkuChecked}
@@ -259,11 +266,11 @@ class OrderValue extends Component {
                             {this.state.deSelect && <div className="tree-box">
                                 <label className="label-title">Select SKU * </label>
                                 <TreeSelect
-                                    treeData={productResetData}
+                                    treeData={skuResetData}
                                     style={{ width: 210, height: 100 }}
                                     selectVal={this.state.skuSelectValue}
                                     onChecked={this.onSkuChecked}
-                                    checkbox={skuCheckbox}
+                                    // checkbox={skuCheckbox}
                                     customTitleRender={this.customTitleRender} />
                             </div>}
                         </div>
@@ -280,21 +287,16 @@ class OrderValue extends Component {
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-6 offset-md-3 mt-3">
-                        <div className="main-wrapper d-flex justify-content-center">
-                            <LineChartView />
-                        </div>
+                        {chartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
+                            <div className="main-wrapper d-flex justify-content-center">
+                                <LineChartView barChartData={chartData} /> </div>
+                        </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>
                 <div className="back-btn my-3">
                     <button class="common-btn" onClick={this.redirectPage}>Back</button>
                 </div>
-            </div>
+            </div >
         )
     }
 }
-const mapStateToProps = (state) => ({
-    priceData: state.price ? state.price : {}
-})
-export default connect(mapStateToProps, { getPriceList })(OrderValue)

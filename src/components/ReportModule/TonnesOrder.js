@@ -1,40 +1,26 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
-import { getReportRegion } from '../../actions/reportAction'
+import { getReportRegion, getProductList, getOrderValue } from '../../actions/reportAction'
 import { LineChartView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
-import { getPriceList } from '../../actions/priceAction'
 
-class TonnesOrder extends Component {
+export default class TonnesOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showlevel: 0,
             startDate: '',
             expiryDate: '',
             regionSelectVal: [],
-            subRegionSelectVal: [],
             lineChartData: [],
-            errors: {},
+            skuSelectValue: [],
             reset: true,
             deSelect: false,
-            selectAll: {
-                title: 'Select All',
-                value: 'Select All'
-            }
+            selectAll: { title: 'Select All', value: 'Select All' }
         }
     }
     componentDidMount() {
         this.getReportRegion();
-        this.getPriceList();
-    }
-    componentWillReceiveProps(newProps) {
-        if (newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
-            let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData })
-        }
     }
     getReportRegion = () => {
         let obj = {
@@ -47,20 +33,35 @@ class TonnesOrder extends Component {
             }
         })
     }
-    getPriceList() {
-        let obj = {
-            pages: '',
-            rows: ''
-        }
-        this.props.getPriceList(obj)
-    }
     dateChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
     getGraphData = () => {
-        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0) {
+        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
             if (this.state.startDate <= this.state.expiryDate) {
-
+                let regionData = []
+                this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
+                    if (item && !item.includes('Select All')) {
+                        regionData.push(item)
+                    }
+                })
+                let skuData = []
+                this.state.skuSelectValue && this.state.skuSelectValue.map((item) => {
+                    let value = item.split('Parent')
+                    skuData.push(value[0])
+                })
+                let obj = {
+                    'subRegionId': regionData,
+                    'productId': skuData,
+                    'startDate': this.state.startDate,
+                    'expiryDate': this.state.expiryDate,
+                    'id': 4
+                }
+                getOrderValue(obj).then(resp => {
+                    if (resp) {
+                        this.setState({ lineChartData: resp })
+                    }
+                })
             }
             else {
                 toastr.error("Invalid Date")
@@ -73,15 +74,31 @@ class TonnesOrder extends Component {
     redirectPage = () => {
         this.props.history.push({ pathname: path.reports.list, state: { executivePerfomanceBack: 'executivePerfomanceSessionBack' } });
     }
-
     onReset = () => {
         this.setState({
             startDate: "",
             expiryDate: "",
             regionSelectVal: [],
             lineChartData: [],
+            skuSelectValue: [],
             deSelect: true
         });
+    }
+    getProductData = (Data) => {
+        let regionData = []
+        Data && Data.map((item) => {
+            if (item && !item.includes('Select All')) {
+                regionData.push(item)
+            }
+        })
+        let obj = {
+            'dcCode': regionData
+        }
+        getProductList(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ productList: resp.datas })
+            }
+        })
     }
     onRegionChecked = (Data) => {
         let enter;
@@ -104,11 +121,20 @@ class TonnesOrder extends Component {
             })
             let resetStatus = regionArray.includes('Select All') ? false : true
             this.state.regionSelectVal = regionArray
+            if (this.state.regionSelectVal.length > 0) {
+                this.getProductData(regionArray)
+            }
             this.setState({ regionSelectVal: regionArray, reset: resetStatus, deSelect: false })
         }
     }
     onSkuChecked = (Data) => {
-
+        if (Data) {
+            let dropDownValue = []
+            Data && Data.map((item => {
+                dropDownValue.push(item)
+            }))
+            this.setState({ skuSelectValue: dropDownValue })
+        }
     }
     onSelectAll = () => {
         let childArray = ['Select All'];
@@ -143,15 +169,19 @@ class TonnesOrder extends Component {
             }
             regionData.push(obj)
         })
+
         let productData = []
-        this.state.PriceLists && this.state.PriceLists.map((item) => {
+        this.state.productList && this.state.productList.map((item) => {
 
             let obj = {
                 title: item.name,
-                value: item && item.productDetail && item.productDetail.productId
+                value: item.productDetailsao.productId + 'Parent'
             }
             productData.push(obj)
         })
+
+        const skuResetData = [{ title: '', value: '' }]
+
         const regionCheckbox = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
@@ -164,7 +194,7 @@ class TonnesOrder extends Component {
             parentChain: true,              // child Affects parent nodes;
             childrenChain: true,            // parent Affects child nodes;
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
-            initCheckedList: this.state.subRegionSelectVal           // Initialize check multiple lists
+            initCheckedList: this.state.skuSelectValue           // Initialize check multiple lists
         }
         return (
             <div>
@@ -200,7 +230,7 @@ class TonnesOrder extends Component {
                                     checkbox={regionCheckbox}
                                     customTitleRender={this.customTitleRender} />
                             </div>}
-                            <div className="tree-box">
+                            {!this.state.deSelect && <div className="tree-box">
                                 <label className="label-title">Select SKU * </label>
                                 <TreeSelect
                                     treeData={productData}
@@ -209,7 +239,17 @@ class TonnesOrder extends Component {
                                     onChecked={this.onSkuChecked}
                                     checkbox={skuCheckbox}
                                     customTitleRender={this.customTitleRender} />
-                            </div>
+                            </div>}
+                            {this.state.deSelect && <div className="tree-box">
+                                <label className="label-title">Select SKU * </label>
+                                <TreeSelect
+                                    treeData={skuResetData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.skuSelectValue}
+                                    onChecked={this.onSkuChecked}
+                                    // checkbox={skuCheckbox}
+                                    customTitleRender={this.customTitleRender} />
+                            </div>}
                         </div>
                         <div className="mr-5 pr-3 search-wrap">
                             <div className="view-box">
@@ -224,9 +264,10 @@ class TonnesOrder extends Component {
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <LineChartView />
+                        {this.state.lineChartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
+                            <div className="main-wrapper d-flex justify-content-center">
+                                <LineChartView /> </div>
+                        </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>
                 <div className="back-btn my-3">
@@ -236,7 +277,3 @@ class TonnesOrder extends Component {
         )
     }
 }
-const mapStateToProps = (state) => ({
-    priceData: state.price ? state.price : {}
-})
-export default connect(mapStateToProps, { getPriceList })(TonnesOrder)
