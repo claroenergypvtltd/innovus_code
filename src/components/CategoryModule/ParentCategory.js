@@ -12,12 +12,13 @@ import { Form, Row, Col } from 'react-bootstrap';
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { resorceJSON } from '../../libraries'
 import { TableData } from '../../shared/Table'
-class CategoryList extends Component {
+
+class ParentCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
             columns: resorceJSON.CategoryList,
-            TableHead: ["Category Name", "Image", 'Description', "Crop", "Actions"],
+            TableHead: ["Category Name", "Image", 'Description', "Crop"],
             CategoryCount: props.getCount,
             search: '',
             dcCode: '',
@@ -50,7 +51,7 @@ class CategoryList extends Component {
         this.setState({ search: e.target.value })
     }
     viewCrop(Data) {
-        let ViewPage = <button className="view-btn" onClick={() => this.itemView(Data)}>View Crop</button>
+        let ViewPage = <button className="common-btn" onClick={() => this.itemView(Data)}>View Sub Category</button>
         return ViewPage;
     }
     componentWillReceiveProps(newProps) {
@@ -87,7 +88,7 @@ class CategoryList extends Component {
             "limit": this.state.itemPerPage
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
-        this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id, categoryName: Data.name } });
+        this.props.history.push({ pathname: path.category.list, state: { categoryId: Data.id, categoryName: Data.name } });
     }
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
@@ -137,51 +138,36 @@ class CategoryList extends Component {
     formPath = () => {
         this.props.history.push(path.category.add);
     }
-    redirectPage = () => {
-        this.props.history.push({ pathname: path.category.parent, state: { categoryBack: 'categorySessionBack' } });
-    }
     render() {
         let CategoryList = this.state.data && this.state.data.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
-            let viewCrop = <button className="view-btn" onClick={() => this.itemView(item)}>View Crop</button>
+            let viewCrop = <button className="common-btn px-2" onClick={() => this.itemView(item)}>View Sub Category</button>
             return { "itemList": [item.name, catImg, item.description ? item.description : '-', viewCrop], "itemId": item.id }
         })
 
         return (
             <div className="category-table">
-                {/* <div className="category-title right-title">
-                    <button className="common-btn" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
-                    {window.strings.CATEGORY.ADDBUTTON}</button>
-                </div> */}
-
-
                 <Row className="clearfix title-section">
                     <Col md={7} className="title-card ">
-                        <h4 className="user-title">{window.strings.CATEGORY.LISTTITLE}</h4>
+                        <h4 className="user-title">{window.strings.CATEGORY.PARENT_CATEGORY}</h4>
                     </Col>
                     <Col md={5} className="right-title">
-                        <Row>
-                            <Col md={7} className="pr-0">
+                        <Row className="m-0">
+                            <Col md={12} className="pr-0">
                                 <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                             </Col>
-                            <Col md={5} className="pl-0">
+                            {/* <Col md={5} className="pl-0">
                                 <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
                                     {window.strings.CATEGORY.ADDBUTTON}</button>
-                            </Col>
+                            </Col> */}
                         </Row>
                     </Col>
                 </Row>
 
                 <div className="sub-category">
-                    {/* <DataTableDynamic title="Category List" tableHead={this.state.columns} tableDatas={this.state.data} handleEdit={this.itemEdit} pagination={true} /> */}
-                    <TableData TableHead={this.state.TableHead} TableContent={CategoryList} handleEdit={this.itemEdit} />
-                    {/* {CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />} */}
-                </div>
-                <div className="row">
-                    <div className="back-btn col-md-2"><button class="common-btn" onClick={this.redirectPage}>Back</button></div>
-                    <div className="col-md-10">
-                        {CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />}
-                    </div>
+                    <TableData TableHead={this.state.TableHead} TableContent={CategoryList} />
+                    {CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />}
+
                 </div>
             </div>
 
@@ -198,4 +184,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getCategoryList, DeleteCategory })(CategoryList);
+export default connect(mapStateToProps, { getCategoryList, DeleteCategory })(ParentCategory);

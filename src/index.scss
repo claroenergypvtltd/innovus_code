@@ -3220,10 +3220,6 @@ display: flex;
   font-size: 20px;
   margin: 35px 0;
   }
-.do-TreeSelect{
-  height: 130px!important;
-  overflow: hidden;
-}
 input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color:    #909;
   content: "content6";
@@ -3281,11 +3277,12 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   margin-left: 31px;
 }
 .do-TreeSelect{
-  height: 138px!important;
-  overflow: hidden;
+  height: 140px!important;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .do-SearchBox-input{
-  height: 38px;
+  height: 39px;
 }
 // .form-label-group{
 //   position: relative;
@@ -3314,68 +3311,144 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 //   padding-bottom: calc(var(--input-padding-y) / 3);
 // }
 
+// :root {
+//   --input-padding-x: 8px;
+//   --input-padding-y: 7px;
+// }
 
-.form-label-group {
+
+// .form-label-group {
+//   position: relative;
+//   margin-bottom: 1rem;
+// }
+
+// .form-label-group > div > div > input.do-SearchBox-input,
+// .form-label-group > label {
+//   padding: var(--input-padding-y) var(--input-padding-x);
+// }
+
+// .form-label-group > label {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   display: block;
+//   width: 100%;
+//   margin-bottom: 0; /* Override default `<label>` margin */
+//   line-height: 1.5;
+//   color: #495057;
+//   border: 1px solid transparent;
+//   border-radius: .25rem;
+//   transition: all .1s ease-in-out;
+// }
+
+// .form-label-group input.do-SearchBox-input::-webkit-input-placeholder {
+//   color: transparent;
+// }
+
+// .form-label-group input.do-SearchBox-input:-ms-input-placeholder {
+//   color: transparent;
+// }
+
+// .form-label-group input.do-SearchBox-input::-ms-input-placeholder {
+//   color: transparent;
+// }
+
+// .form-label-group input.do-SearchBox-input::-moz-placeholder {
+//   color: transparent;
+// }
+
+// .form-label-group input.do-SearchBox-input::placeholder {
+//   color: transparent;
+// }
+
+// .form-label-group > div > div > input.do-SearchBox-input:not(:placeholder-shown) {
+//   padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (1 / 8));
+//   padding-bottom: calc(var(--input-padding-y) / 1);
+// }
+// .form-label-group input.do-SearchBox-input:not(:placeholder-shown) ~ label {
+//   padding-top: calc(var(--input-padding-y) / 1);
+//   padding-bottom: calc(var(--input-padding-y) / 1);
+//   font-size: 12px;
+//   color: #777;
+// }
+/***********************************************************************************/
+
+.floating-label-wrap
+{
+    position: relative;
+}
+
+.floating-label-field {
+    position: relative;
+font: inherit;
+    line-height: 1;
+    display: block;
+    width: 100%;
+color: rgba(44, 62, 80, .75);
+    border-width: 0;
+    z-index: 2000;
+}
+
+.floating-label-field--s1{
+    max-height: 4em;
+    padding: 1.5em;
+transition: border-color .25s ease-in-out;
+    color: rgba(255, 255, 255, .75);
+    border-bottom: 3px solid rgba(255, 255, 255, .05);
+    background-color: transparent;
+}
+
+.floating-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    user-select: none;
+    z-index: 1500;
+}
+.floating-label-field--s1 + .floating-label{
+    z-index: 1500;
+    padding: 1.5em;
+    transition: transform .25s, opacity .25s ease-in-out;
+    transform-origin: 0 0;
+    opacity: .5;
+}
+.floating-label-field--s1:focus + .floating-label{
+  transform: translate(.25em, -30%) scale(.8);
+    opacity: .25;
+}
+.go-bottom{
   position: relative;
-  margin-bottom: 1rem;
+}
+.do-SearchBox-input{
+  z-index: 2000;
+  background: transparent;
 }
 
-.form-label-group > div > div > input.do-SearchBox-input,
-.form-label-group > label {
-  padding: var(--input-padding-y) var(--input-padding-x);
-}
-
-.form-label-group > label {
+.search-label-field{
+  transition: transform .25s, opacity .25s ease-in-out;
+  transform-origin: 0 0;
+  opacity: .5;
   position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  margin-bottom: 0; /* Override default `<label>` margin */
-  line-height: 1.5;
-  color: #495057;
-  border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+  top: 7px;
+  left: 10px;
+  z-index: 1500;
 }
+.do-TreeSelect:empty ~ .search-label-field{
+  color: red;
+ }
+.do-TreeSelect:focus-within ~ .search-label-field{
+  display: none;
+ }
+//  input[type="text"]:empty {
+//   background-color : #d1d1d1;
+//   }
+  
+//   input[type="text"]:not(:empty) {
+//   background-color : #FFFFFF;
+//   }
+//  input[value=""], input:not([value]){ background: red; }
+/***********************************************************************************/
 
-.form-label-group input.do-SearchBox-input::-webkit-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input.do-SearchBox-input:-ms-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input.do-SearchBox-input::-ms-input-placeholder {
-  color: transparent;
-}
-
-.form-label-group input.do-SearchBox-input::-moz-placeholder {
-  color: transparent;
-}
-
-.form-label-group input.do-SearchBox-input::placeholder {
-  color: transparent;
-}
-
-.form-label-group > div > div > input.do-SearchBox-input:not(:placeholder-shown) {
-  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
-  padding-bottom: calc(var(--input-padding-y) / 3);
-}
-
-.form-label-group > div > div > input.do-SearchBox-input:not(:placeholder-shown) ~ label:active {
-  padding-top: calc(var(--input-padding-y) / 3);
-  padding-bottom: calc(var(--input-padding-y) / 3);
-  font-size: 12px;
-  color: #777;
-}
-.form-label-group > div > div > input:not(:placeholder-shown) ~ label {
-  padding-top: calc(var(--input-padding-y) / 3);
-  padding-bottom: calc(var(--input-padding-y) / 3);
-  font-size: 12px;
-  color: #777;
-}
 // input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 //   color:    #909;
 //   content: "content6";

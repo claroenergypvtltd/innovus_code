@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
 import Login from '../components/Login';
+import ParentCategory from '../components/CategoryModule/ParentCategory';
 import CreateCategory from '../components/CategoryModule/CreateCategory';
 import FetchCategory from '../components/CategoryModule/FetchCategory';
 import CreateFarmers from '../components/FarmersModule/CreateFarmers';
@@ -121,22 +122,27 @@ export const routesPath = [
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/category/add',
+                path: process.env.PUBLIC_URL + '/category/parent/add',
                 component: CreateCategory,
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/category',
+                path: process.env.PUBLIC_URL + '/category/parent/list',
                 component: FetchCategory,
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/category/edit/:categoryId?',
+                path: process.env.PUBLIC_URL + '/category/parent',
+                component: ParentCategory,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/category/parent/edit/:categoryId?',
                 component: CreateCategory,
                 exact: true
             },
             {
-                path: process.env.PUBLIC_URL + '/category/view/:categoryId?',
+                path: process.env.PUBLIC_URL + '/category/parent/view/:categoryId?',
                 component: ViewCategory,
                 exact: true
             },
@@ -233,12 +239,12 @@ export const routesPath = [
                 exact: true,
             },
             {
-                path: process.env.PUBLIC_URL + '/category/crop/add',
+                path: process.env.PUBLIC_URL + '/category/parent/crop/add',
                 component: CreateCrop,
                 exact: true,
             },
             {
-                path: process.env.PUBLIC_URL + '/category/crop/edit/:categoryId?',
+                path: process.env.PUBLIC_URL + '/category/parent/crop/edit/:categoryId?',
                 component: CreateCrop,
                 exact: true
             },
@@ -452,6 +458,11 @@ export const routesPath = [
                 component: CreateQuantityType,
                 exact: true
             },
+            // {
+            //     path: process.env.PUBLIC_URL + '/aboutpolicy',
+            //     component: AboutPolicyTab,
+            //     exact: true
+            // },
             {
                 path: process.env.PUBLIC_URL + '/setting/policyList',
                 component: Policy,

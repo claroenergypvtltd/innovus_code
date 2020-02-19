@@ -68,6 +68,7 @@ export const Translation = {
         "DISABLE_CONFIRM": "Confirm disable",
         "CATEGORY": {
             "LISTTITLE": "CATEGORY LIST",
+            "PARENT_CATEGORY": "PARENT CATEGORY",
             "ADDBUTTON": "Add Category",
             "VIEWTITLE": "View Category",
             "CREATETITLE": "ADD CATEGORY",
@@ -433,7 +434,7 @@ export const Translation = {
             "QUANTITY_NAME": "Quantity Name",
             "CREATE_TYPE": "CREATE QUANTITY TYPE",
             "EDIT_TYPE": "EDIT QUANTITY TYPE",
-            "ABOUT_POLICIES": "About US and Policies"
+            "ABOUT_POLICIES": "Policies"
         },
         "DC_MANAGEMENT": {
             "STARTING_TIME": "Order Starting Time",
