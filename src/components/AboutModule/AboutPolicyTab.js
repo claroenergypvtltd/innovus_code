@@ -20,7 +20,7 @@ export default class AboutPolicyTab extends React.Component {
         let ProfileData = this.props.profileData && this.props.profileData.id ? this.props.profileData.id : '';
         return (
             <div className="main-wrapper">
-                <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.tabChange(tabIndex)}
+                {/* <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.tabChange(tabIndex)}
                 >
                     <TabList className="change-tab">
                         <Tab className={this.state.tabIndex == "0" ? 'sub-select' : 'sub-change'}>{window.strings.ABOUT.ABOUTUS}</Tab>
@@ -35,7 +35,7 @@ export default class AboutPolicyTab extends React.Component {
                         <Policy profileID={ProfileData} />
                     </TabPanel>
 
-                </Tabs>
+                </Tabs> */}
             </div>
         )
     }

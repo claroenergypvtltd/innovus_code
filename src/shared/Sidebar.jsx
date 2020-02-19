@@ -76,7 +76,7 @@ export const Sidebar = [
                 {/* {Label.categoryLabel} */}
             </span>
         ),
-        path: path.category.list,
+        path: path.category.parent,
     },
     {
         name: (

@@ -9,12 +9,7 @@ export default class About extends Component {
     render() {
         return (
             <div>
-                {/* <h4 className="user-title">{window.strings.ABOUT.ABOUT_US}</h4> */}
                 <div className="main-wrapper">
-                    {/* <div className="tab-box">
-                        <button className="tab-line">{window.strings.ABOUT.ABOUTUS}</button>
-                        <button className="tab-change">{window.strings.ABOUT.POLICIES}</button>
-                    </div> */}
                     <div className="about-text d-flex col-md-7">
                         <div className="container ml-0">
                             <p>It is a long established fact that a reader will be distracted by

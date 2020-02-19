@@ -281,8 +281,10 @@ class OrderValue extends Component {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <LineChartView />
+                    <div className="col-md-6 offset-md-3 mt-3">
+                        <div className="main-wrapper d-flex justify-content-center">
+                            <LineChartView />
+                        </div>
                     </div>
                 </div>
                 <div className="back-btn my-3">

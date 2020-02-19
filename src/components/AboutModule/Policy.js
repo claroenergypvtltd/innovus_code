@@ -20,6 +20,7 @@ export default class Policy extends Component {
     render() {
         return (
             <div>
+                <h4 className="user-title">{window.strings.ABOUT.PRIVACYPOLICY}</h4>
                 <div className="main-wrapper">
                     <div className="set-box">
                         <button className="set-btn" onClick={() => this.navigatePolicy("privacy", window.strings.ABOUT.PRIVACYPOLICY)}>{window.strings.ABOUT.PRIVACY_POLICY}

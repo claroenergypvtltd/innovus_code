@@ -15,15 +15,16 @@ export const path = {
         list: process.env.PUBLIC_URL + '/dashboard'
     },
     category: {
-        add: process.env.PUBLIC_URL + '/category/add',
-        list: process.env.PUBLIC_URL + '/category',
-        edit: process.env.PUBLIC_URL + '/category/edit/',
-        view: process.env.PUBLIC_URL + '/category/view/'
+        parent: process.env.PUBLIC_URL + '/category/parent',
+        add: process.env.PUBLIC_URL + '/category/parent/add',
+        list: process.env.PUBLIC_URL + '/category/parent/list',
+        edit: process.env.PUBLIC_URL + '/category/parent/edit/',
+        view: process.env.PUBLIC_URL + '/category/parent/view/'
     },
     crop: {
-        add: process.env.PUBLIC_URL + '/category/crop/add',
+        add: process.env.PUBLIC_URL + '/category/parent/crop/add',
         list: process.env.PUBLIC_URL + '/crop',
-        edit: process.env.PUBLIC_URL + '/category/crop/edit/',
+        edit: process.env.PUBLIC_URL + '/category/parent/crop/edit/',
     },
     cart: {
         add: process.env.PUBLIC_URL + '/cart/add',
