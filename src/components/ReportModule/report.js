@@ -43,22 +43,22 @@ export default class report extends Component {
                 <div className="main-wrapper">
                     <div className="set-box">
                         <div className="row">
-                            <button className="set-btn" onClick={this.navigateOnboard}>{window.strings.REPORT.CUSTOMER_ONBOARD}
+                            <button className="set-tab" onClick={this.navigateOnboard}>{window.strings.REPORT.CUSTOMER_ONBOARD}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
-                            <button className="set-btn" onClick={this.orderPath}>{window.strings.REPORT.PLACING_ORDER}
+                            <button className="set-tab" onClick={this.orderPath}>{window.strings.REPORT.PLACING_ORDER}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
-                            <button className="set-btn" onClick={this.navigateOrder}>{window.strings.REPORT.ORDER_VALUE_INR}
+                            <button className="set-tab" onClick={this.navigateOrder}>{window.strings.REPORT.ORDER_VALUE_INR}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
-                            <button className="set-btn" onClick={this.navigateTonnes}>{window.strings.REPORT.TOTAL_TONNES_ORDERED}
+                            <button className="set-tab" onClick={this.navigateTonnes}>{window.strings.REPORT.TOTAL_TONNES_ORDERED}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
-                            <button className="set-btn" onClick={this.navigateElasticitiy}>{window.strings.REPORT.PRICE_ELASTICITY}
+                            <button className="set-tab" onClick={this.navigateElasticitiy}>{window.strings.REPORT.PRICE_ELASTICITY}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
-                            <button className="set-btn" onClick={this.salesPerformance}>{window.strings.REPORT.EXECUTIVE_PERFORMANCE}
+                            <button className="set-tab" onClick={this.salesPerformance}>{window.strings.REPORT.EXECUTIVE_PERFORMANCE}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                         </div>

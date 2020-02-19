@@ -5,6 +5,7 @@ import { toastr } from '../../services';
 import { path } from '../../constants';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Constant } from '../../constants';
+import PropTypes from "prop-types";
 
 
 export default class setting extends Component {
@@ -17,7 +18,9 @@ export default class setting extends Component {
             selectedRoleId: Constant.CONSTANT.THREE,
         }
     }
-
+    static contextTypes = {
+        router: PropTypes.object
+    }
     // appVersion
     redirectControlPage = () => {
 
@@ -29,6 +32,9 @@ export default class setting extends Component {
     }
     policyList = () => {
         this.props.history.push({ pathname: path.policy.policyList })
+    }
+    navigatePolicy = (heading, title) => {
+        this.context.router.history.push({ pathname: path.policy.form, state: { heading: heading, title: title } });
     }
     tabChange = tabIndex => {
         sessionStorage.removeItem('retsearchDatas');
@@ -42,25 +48,28 @@ export default class setting extends Component {
         return (
             <div>
                 <h4 className="user-title">{window.strings.APPSETTING.SETTING}</h4>
-                {/* <div className="main-wrapper setting-tab">
-                    <section className="set-box">
-                        <button className="set-btn set-change set-select" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APPVERSIONCONTROL}</button>
-                        <span className="set-line"></span>
-                        <button className="set-btn set-change set-select" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITYTYPECONTROL}</button>
-                    </section>
-                </div> */}
-
                 <div className="main-wrapper">
                     <div className="set-box">
-                        <button className="set-btn" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APP_VERSION_CONTROL}
+                        <div className="row">
+                            <button className="set-tab" onClick={this.redirectControlPage}>{window.strings.APPSETTING.APP_VERSION_CONTROL}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                            <button className="set-tab" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITY_TYPE_CONTROL}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                            {/* <button className="set-tab" onClick={this.policyList}>{window.strings.APPSETTING.ABOUT_POLICIES}
                             <i class="fa fa-chevron-right"></i>
-                        </button>
-                        <button className="set-btn" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITY_TYPE_CONTROL}
-                            <i class="fa fa-chevron-right"></i>
-                        </button>
-                        <button className="set-btn" onClick={this.policyList}>{window.strings.APPSETTING.ABOUT_POLICIES}
-                            <i class="fa fa-chevron-right"></i>
-                        </button>
+                        </button> */}
+                            <button className="set-tab" onClick={() => this.navigatePolicy("privacy", window.strings.ABOUT.PRIVACYPOLICY)}>{window.strings.ABOUT.PRIVACY_POLICY}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                            <button className="set-tab" onClick={() => this.navigatePolicy("terms", window.strings.ABOUT.TERMSCONDITIONS)}>{window.strings.ABOUT.TERMS_AND_CONDITIONS}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                            <button className="set-tab" onClick={() => this.navigatePolicy("cancellation", window.strings.ABOUT.RETURNCANCELLATIONPOLICY)}>{window.strings.ABOUT.RETURN_CANCELLATION_POLICY}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

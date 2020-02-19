@@ -56,7 +56,7 @@ export default class PrivacyPolicy extends Component {
     }
 
     listPath = () => {
-        this.props.history.push(path.policy.policyList)
+        this.props.history.push(path.appSetting.list)
     }
 
     render() {
