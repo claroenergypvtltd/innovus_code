@@ -22,7 +22,7 @@ export default class Policy extends Component {
             <div>
                 <h4 className="user-title">{window.strings.ABOUT.PRIVACYPOLICY}</h4>
                 <div className="main-wrapper">
-                    <div className="set-box">
+                    {/* <div className="set-box">
                         <button className="set-btn" onClick={() => this.navigatePolicy("privacy", window.strings.ABOUT.PRIVACYPOLICY)}>{window.strings.ABOUT.PRIVACY_POLICY}
                             <i class="fa fa-chevron-right"></i>
                         </button>
@@ -32,7 +32,19 @@ export default class Policy extends Component {
                         <button className="set-btn" onClick={() => this.navigatePolicy("cancellation", window.strings.ABOUT.RETURNCANCELLATIONPOLICY)}>{window.strings.ABOUT.RETURN_CANCELLATION_POLICY}
                             <i class="fa fa-chevron-right"></i>
                         </button>
-                    </div>
+                    </div> */}
+                    {/* <div className="main-wrapper setting-tab">
+                        <section className="set-box">
+                            <button className="set-btn set-change set-select" onClick={() => this.navigatePolicy("privacy", window.strings.ABOUT.PRIVACYPOLICY)}>{window.strings.ABOUT.PRIVACY_POLICY}
+                            </button>
+                            <span className="set-line"></span>
+                            <button className="set-btn set-change set-select" onClick={() => this.navigatePolicy("terms", window.strings.ABOUT.TERMSCONDITIONS)}>{window.strings.ABOUT.TERMS_AND_CONDITIONS}
+                            </button>
+                            <span className="set-line"></span>
+                            <button className="set-btn set-change set-select" onClick={() => this.navigatePolicy("cancellation", window.strings.ABOUT.RETURNCANCELLATIONPOLICY)}>{window.strings.ABOUT.RETURN_CANCELLATION_POLICY}
+                            </button>
+                        </section>
+                    </div> */}
                 </div>
             </div>
         )

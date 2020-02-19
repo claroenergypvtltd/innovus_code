@@ -37,6 +37,7 @@ class AppSetting extends React.Component {
                 SubmitSetting(obj).then(resp => {
                     if (resp && resp.status == 200) {
                         toastr.success(resp.message);
+                        this.redirect();
                     }
                 });
             }
@@ -48,6 +49,7 @@ class AppSetting extends React.Component {
     redirect = () => {
         this.props.history.push({ pathname: path.appSetting.list })
     }
+
     render() {
         const { errors } = this.state;
         return (

@@ -2975,7 +2975,7 @@ display: flex;
   height: 100px;
   position: absolute;
   margin-left: -3px;
-  top: 127px;
+  top: 153px;
 }
 .setting-tab{
   // border-bottom: 1px solid $inset-color;
@@ -3012,26 +3012,35 @@ display: flex;
 //   border-radius: 1px;
 // }
 .sidebar-container{
-  .set-btn{
+  .set-tab{
     width: 32%;
   }
 }
- .set-btn {
+.set-tab{
   display: flex;
   justify-content: space-between;
   width: 36%;
-  
   background: $cyan;
   border: 0;
   box-sizing: border-box;
   margin: 0 26px 24px 26px;
-  padding:10px 15px;
-  //box-shadow: inset 0 0 0 2px $cyan;
-  color: $white;
+  padding: 10px 15px;
+  color: #ffffff;
   font-size: inherit;
   font-weight: 700;
+}
+ .set-btn {
+  background: $white;
+  border: 0;
+  box-sizing: border-box;
+  margin: 0 26px 24px 26px;
+  padding:15px 25px;
+  box-shadow: inset 0 0 0 2px $cyan;
+  color: $cyan;
+  font-size: 16px;
+  font-weight: 700;
   position: relative;
-  //vertical-align: middle;
+  vertical-align: middle;
 
   &::before,
   &::after {
@@ -3439,78 +3448,7 @@ transition: border-color .25s ease-in-out;
 .do-TreeSelect:focus-within ~ .search-label-field{
   display: none;
  }
-//  input[type="text"]:empty {
-//   background-color : #d1d1d1;
-//   }
-  
-//   input[type="text"]:not(:empty) {
-//   background-color : #FFFFFF;
-//   }
-//  input[value=""], input:not([value]){ background: red; }
-/***********************************************************************************/
 
-// input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-//   color:    #909;
-//   content: "content6";
-// }
-// input.do-SearchBox-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-//  color:    #909;
-//  opacity:  1;
-//  content: "content5";
-// }
-// input.do-SearchBox-input::-moz-placeholder { /* Mozilla Firefox 19+ */
-//  color:    #909;
-//  opacity:  1;
-//  content: "content4";
-// }
-// input.do-SearchBox-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-//  color:    #909;
-//  content: "content3";
-// }
-// input.do-SearchBox-input::-ms-input-placeholder { /* Microsoft Edge */
-//  color:    #909;
-//  content: "content2";
-// }
-
-// input.do-SearchBox-input::placeholder { /* Most modern browsers support this now. */
-//  color:    #909;
-//  content: "content1";
-// }
-
-// .tree-box{
-//   position: relative;
-//   top: 44px;
-// }
-// .do-TreeSelect{
-//   border: none;
-// }
-// .do-SearchBox{
-//   border: 1px solid $report-box;
-// }
-// .do-SearchBox-input{
-//   border-bottom: none;
-// }
-// .do-TreeSelect:hover {
-//   border: 1px solid $report-box;
-// }
-// .do-fadeIn{
-// opacity: 0;
-// }
- 
-// .do-fadeIn:hover {
-//   opacity: 1;
-//   visibility:visible;
-//   z-index: 2;
-// }
-// .do-TreeNode{
-//   opacity: 0;
-//   }
-   
-//   .ddo-TreeNode:hover {
-//     opacity: 1;
-//     visibility:visible;
-//     z-index: 2;
-//   }
 
 
 /****************************ABOUT US--POLICIES************************/
