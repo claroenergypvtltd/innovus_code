@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
-import { getReportRegion, getProductList, getOrderValue } from '../../actions/reportAction'
-import { LineChartView } from '../../shared/Reactgraphcharts'
+import { getReportRegion, getProductList, getTonValue } from '../../actions/reportAction'
+import { LineGraphView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
 
 export default class TonnesOrder extends Component {
@@ -39,10 +39,15 @@ export default class TonnesOrder extends Component {
     getGraphData = () => {
         if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
             if (this.state.startDate <= this.state.expiryDate) {
-                let regionData = []
+                let childArray = []
+                let parentArray = []
                 this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
-                    if (item && !item.includes('Select All')) {
-                        regionData.push(item)
+                    if (item.includes("Parent")) {
+                        let data = item.split('Parent')
+                        parentArray.push(data[0])
+                    }
+                    if (!item.includes("Parent")) {
+                        childArray.push(item)
                     }
                 })
                 let skuData = []
@@ -51,15 +56,16 @@ export default class TonnesOrder extends Component {
                     skuData.push(value[0])
                 })
                 let obj = {
-                    'subRegionId': regionData,
+                    'subRegionId': childArray,
+                    'regionId': parentArray,
                     'productId': skuData,
                     'startDate': this.state.startDate,
                     'expiryDate': this.state.expiryDate,
-                    'id': 4
+                    'id': 3
                 }
-                getOrderValue(obj).then(resp => {
-                    if (resp) {
-                        this.setState({ lineChartData: resp })
+                getTonValue(obj).then(resp => {
+                    if (resp && resp.data) {
+                        this.setState({ lineChartData: resp.data })
                     }
                 })
             }
@@ -115,16 +121,19 @@ export default class TonnesOrder extends Component {
         else {
             let regionArray = [];
             Data && Data.map(item => {
-                if (!item.includes('Parent')) {
-                    regionArray.push(item);
-                }
+                // if (!item.includes('Parent')) {
+                regionArray.push(item);
+                // }
             })
             let resetStatus = regionArray.includes('Select All') ? false : true
             this.state.regionSelectVal = regionArray
-            if (this.state.regionSelectVal.length > 0) {
+            this.setState({ regionSelectVal: regionArray, reset: resetStatus, deSelect: false })
+            if (Data.length > 0) {
                 this.getProductData(regionArray)
             }
-            this.setState({ regionSelectVal: regionArray, reset: resetStatus, deSelect: false })
+            else {
+                this.setState({ productList: [{ "title": "No Data", "value": "No Data" }], skuSelectValue: [], deSelect: true })
+            }
         }
     }
     onSkuChecked = (Data) => {
@@ -144,7 +153,7 @@ export default class TonnesOrder extends Component {
                 childArray.push(obj)
             })
 
-            let obj = item.name + 'Parent'
+            let obj = item.id + 'Parent'
             childArray.push(obj)
         })
         this.onRegionChecked(childArray)
@@ -164,7 +173,7 @@ export default class TonnesOrder extends Component {
 
             let obj = {
                 title: item.name,
-                value: item.name + 'Parent',
+                value: item.id + 'Parent',
                 children: childArray
             }
             regionData.push(obj)
@@ -172,16 +181,46 @@ export default class TonnesOrder extends Component {
 
         let productData = []
         this.state.productList && this.state.productList.map((item) => {
-
-            let obj = {
-                title: item.name,
-                value: item.productDetailsao.productId + 'Parent'
+            let obj = {}
+            if (item.name) {
+                obj.title = item.name
+                obj.value = item.productDetailsao.productId + 'Parent'
+            }
+            else {
+                obj.title = item.title
+                obj.value = item.value + 'ParentDAta'
             }
             productData.push(obj)
         })
 
         const skuResetData = [{ title: '', value: '' }]
+        let chartData = []
+        this.state.lineChartData.orderQuantity && this.state.lineChartData.orderQuantity.map((item, index) => {
+            let regionName = "";
+            item && item.regionDetails && item.regionDetails.map((regionList, regionIndex) => {
+                if (regionIndex > 0) {
+                    let data = regionList.split(',')
 
+
+
+                    let obj = {
+                        name: data[0],
+                        orderValue: data[1],
+                        // regionName : data[1]
+                        // lineName: regionName
+                    }
+                    obj[`${regionName}`] = data[1];
+                    chartData.push(obj)
+                }
+                else {
+                    let obj = {
+                        region: regionList,
+                    }
+                    regionName = obj.region
+                    chartData.push(obj)
+                }
+            })
+        })
         const regionCheckbox = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
@@ -264,9 +303,9 @@ export default class TonnesOrder extends Component {
                                 </button>
                             </div>
                         </div>
-                        {this.state.lineChartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
+                        {chartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
                             <div className="main-wrapper d-flex justify-content-center">
-                                <LineChartView /> </div>
+                                <LineGraphView barChartData={chartData} /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>
