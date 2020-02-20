@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DataTableDynamic from '../../shared/DataTableDynamic';
-import { getCategoryList, DeleteCategory } from '../../actions/categoryAction';
+import { getCategoryList, getParentCategoryList, DeleteCategory } from '../../actions/categoryAction';
 import { SearchBar, ReactPagination } from '../../shared'
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
@@ -70,7 +70,7 @@ class ParentCategory extends Component {
             "search": this.state.search,
             "limit": this.state.itemPerPage,
         }
-        this.props.getCategoryList(obj);
+        this.props.getParentCategoryList(obj);
     }
     itemEdit = (itemId) => {
         let obj = {
@@ -88,7 +88,7 @@ class ParentCategory extends Component {
             "limit": this.state.itemPerPage
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
-        this.props.history.push({ pathname: path.category.list, state: { categoryId: Data.id, categoryName: Data.name } });
+        this.props.history.push({ pathname: path.category.list, state: { parentCategoryId: Data.id, parentCategoryName: Data.name } });
     }
     handleDelete = (data) => {
         let message = window.strings.DELETEMESSAGE;
@@ -114,7 +114,7 @@ class ParentCategory extends Component {
                     "search": this.state.search,
                     "limit": this.state.itemPerPage,
                 };
-                this.props.getCategoryList(serObj);
+                this.props.getParentCategoryList(serObj);
             })
         }
     }
@@ -127,7 +127,7 @@ class ParentCategory extends Component {
                     "search": this.state.search,
                     "limit": this.state.itemPerPage,
                 };
-                this.props.getCategoryList(serObj);
+                this.props.getParentCategoryList(serObj);
             });
         }
     }
@@ -184,4 +184,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getCategoryList, DeleteCategory })(ParentCategory);
+export default connect(mapStateToProps, { getParentCategoryList, DeleteCategory })(ParentCategory);

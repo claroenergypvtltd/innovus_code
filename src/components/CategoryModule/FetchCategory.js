@@ -25,6 +25,8 @@ class CategoryList extends Component {
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
+            parentCategoryId: '',
+            parentCategoryName: '',
             // PriceLists: props.getLists,
             data: [],
         }
@@ -33,12 +35,20 @@ class CategoryList extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.retlrbckTrack == "backTrue") {
             this.props.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
         }
+
+        if (this.props.location && this.props.location.state &&
+            (this.props.location.state.parentCategoryId && this.props.location.state.parentCategoryName)) {
+            this.setState({ parentCategoryId: this.props.location.state.parentCategoryId, parentCategoryName: this.props.location.state.parentCategoryName })
+        }
     }
     componentDidMount() {
         if (sessionStorage.categorySessionData && this.props.location && this.props.location.state &&
             this.props.location.state.categoryBack == "categorySessionBack") {
             var categorySesData = JSON.parse(sessionStorage.categorySessionData)
-            this.setState({ currentPage: categorySesData.page, search: categorySesData.search, itemPerPage: categorySesData.limit },
+            this.setState({
+                currentPage: categorySesData.page, search: categorySesData.search, itemPerPage: categorySesData.limit,
+                parentCategoryId: categorySesData.parentCategoryId, parentCategoryName: categorySesData.parentCategoryName
+            },
                 () => { this.getCategoryList() })
 
         }
@@ -68,6 +78,8 @@ class CategoryList extends Component {
             "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
+            "parentCategoryId": this.state.parentCategoryId,
+            "parentCategoryName": this.state.parentCategoryName
         }
         this.props.getCategoryList(obj);
     }
@@ -75,10 +87,12 @@ class CategoryList extends Component {
         let obj = {
             "page": this.state.currentPage,
             "search": this.state.search,
-            "limit": this.state.itemPerPage
+            "limit": this.state.itemPerPage,
+            "parentCategoryId": this.state.parentCategoryId,
+            "parentCategoryName": this.state.parentCategoryName
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
-        this.props.history.push({ pathname: path.category.edit + itemId, state: { categoryId: itemId } });
+        this.props.history.push({ pathname: path.category.edit + itemId, state: { categoryId: itemId, parentCategoryId: this.state.parentCategoryId } });
     }
     itemView = (Data) => {
         let obj = {
@@ -135,7 +149,9 @@ class CategoryList extends Component {
     }
 
     formPath = () => {
-        this.props.history.push(path.category.add);
+        this.props.history.push({ pathname: path.category.add, state: { parentCategoryId: this.state.parentCategoryId } });
+
+        // this.props.history.push(path.category.add);
     }
     redirectPage = () => {
         this.props.history.push({ pathname: path.category.parent, state: { categoryBack: 'categorySessionBack' } });
@@ -157,7 +173,7 @@ class CategoryList extends Component {
 
                 <Row className="clearfix title-section">
                     <Col md={7} className="title-card ">
-                        <h4 className="user-title">{window.strings.CATEGORY.LISTTITLE}</h4>
+                        <h4 className="user-title">SUB CATEGORY -  {this.state.parentCategoryName}</h4>
                     </Col>
                     <Col md={5} className="right-title">
                         <Row>

@@ -22,10 +22,19 @@ class CategoryForm extends Component {
             description: '',
             image: '',
             categoryId: '',
+            parentCategoryId: '',
             farmDatas: this.props.getFarmData,
             categoryData: this.props.categoryData,
             errors: {}
         }
+    }
+
+    componentWillMount() {
+        if (this.props.location && this.props.location.state && this.props.location.state.parentCategoryId) {
+            this.setState({ parentCategoryId: this.props.location.state.parentCategoryId })
+        }
+
+
     }
 
     componentDidMount() {
@@ -33,6 +42,9 @@ class CategoryForm extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             this.getSpecificCategory();
         }
+
+
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -84,7 +96,8 @@ class CategoryForm extends Component {
             this.setState({ categoryId: cId });
 
             let obj = {
-                "categoryId": this.props.location.state.categoryId
+                "categoryId": this.props.location.state.categoryId,
+                "parentCategoryId": this.state.parentCategoryId
             }
             this.props.getSpecificCategory(obj)
         }
@@ -101,6 +114,7 @@ class CategoryForm extends Component {
             formData.append("description", this.state.description ? this.state.description : "");
             formData.append("image", this.state.file);
             formData.append("categoryId", this.state.categoryId);
+            formData.append("mCategoryId", this.state.parentCategoryId);
 
             this.props.SubmitCategory(formData, this.state.categoryId);
         }

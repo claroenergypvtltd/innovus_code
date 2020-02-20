@@ -29,7 +29,8 @@ class PlacingOrder extends Component {
             agentResetData: [{
                 title: '',
                 value: ''
-            }]
+            }],
+            selectAll: { title: 'Select All', value: 'Select All' }
         }
     }
     componentDidMount() {
@@ -38,7 +39,7 @@ class PlacingOrder extends Component {
     fetchAgents = (Data) => {
         let dcList = []
         Data && Data.map((item) => {
-            if (item && !item.includes('Parent')) {
+            if (item && !item.includes('Parent') && !item.includes('Select All')) {
                 dcList.push(item)
             }
         })
@@ -111,19 +112,48 @@ class PlacingOrder extends Component {
         this.props.history.push({ pathname: path.reports.list })
     }
     onMapChecked = (Data) => {
-        if (Data) {
-            let dropDownValue = []
+        let enter;
+        Data && Data.map(item => {
+            enter = item == 'Select All' ? true : false
+        })
+        if (enter) {
+            this.onSelectAll()
+        }
+        else if (!Data.includes('Select All') && !this.state.reset) {
+            this.setState({ mapSelectVal: [], reset: true, agentDropDown: false })
+        }
+        else {
+            let regionArray = []
             Data && Data.map((item => {
                 if (!item.includes('Parent')) {
-                    dropDownValue.push(item)
+                    regionArray.push(item)
                 }
             }))
-            this.state.mapSelectVal = dropDownValue
-            this.setState({ agentDropDown: true })
-            if (this.state.mapSelectVal && this.state.mapSelectVal.length > 0) {
+            let resetStatus = regionArray.includes('Select All') ? false : true
+            this.state.mapSelectVal = regionArray
+            this.setState({ agentDropDown: true, reset: resetStatus })
+            if (Data && Data.length > 0) {
                 this.fetchAgents(Data)
             }
+            else {
+                this.setState({ agentDropDown: true, agentDataList: [{ "title": "No Data", "value": "No Data,No Data" }], agentSelectVal: [], }, () => {
+                    this.getRegionList()
+                })
+            }
         }
+    }
+    onSelectAll = () => {
+        let childArray = ['Select All'];
+        this.state.regionListData2 && this.state.regionListData2.map((item, index) => {
+            item.dcDatas && item.dcDatas.map((dcData, index) => {
+                let obj = dcData.dcCode
+                childArray.push(obj)
+            })
+
+            let obj = item.name + 'Parent'
+            childArray.push(obj)
+        })
+        this.onMapChecked(childArray)
     }
     onGraphChecked = (Data) => {
         if (Data) {
@@ -196,6 +226,8 @@ class PlacingOrder extends Component {
 
 
         let regionData = []
+        this.state.regionListData2 ? regionData.push(this.state.selectAll) : regionData = []
+        // regionData.push({ title: 'Select All', name: 'Select All' })
         this.state.regionListData2 && this.state.regionListData2.map((item, index) => {
             let childArray = [];
             item.dcDatas && item.dcDatas.map((dcData, index) => {
