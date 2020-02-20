@@ -64,7 +64,20 @@ export const getReportRegion = (obj) => {
 }
 
 export const getOrderValue = (Data) => {
-    let report = Data.regionId && Data.regionId.length > 1 ? 'reports?flag=0&Id=3&regionId=' : 'reports?flag=0&Id=3&subregionId='
+    let report = Data.regionId && Data.regionId.length > 1 ? 'reports?flag=1&Id=3&regionId=' : 'reports?flag=0&Id=3&subregionId='
+    let regionData = Data.regionId && Data.regionId.length > 1 ? Data.regionId : Data.subRegionId
+    return httpServices.get(report + regionData + '&productId=' + Data.productId + '&startDate=' + Data.startDate + '&expiryDate=' + Data.expiryDate).then(resp => {
+        if (resp && resp) {
+            // dispatch({ type: REGION_FETCH_SUCCESS, List: resp.data })
+            return resp
+        }
+    }).catch((error) => {
+        console.error("error", error);
+        // dispatch({ type: GET_ERRORS, payload: error });
+    })
+}
+export const getTonValue = (Data) => {
+    let report = Data.regionId && Data.regionId.length > 1 ? 'reports?flag=1&Id=4&regionId=' : 'reports?flag=0&Id=4&subregionId='
     let regionData = Data.regionId && Data.regionId.length > 1 ? Data.regionId : Data.subRegionId
     return httpServices.get(report + regionData + '&productId=' + Data.productId + '&startDate=' + Data.startDate + '&expiryDate=' + Data.expiryDate).then(resp => {
         if (resp && resp) {

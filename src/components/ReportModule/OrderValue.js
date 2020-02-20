@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
 import { getReportRegion, getProductList, getOrderValue } from '../../actions/reportAction'
-import { LineChartView } from '../../shared/Reactgraphcharts'
+import { LineGraphView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
 
 export default class OrderValue extends Component {
@@ -127,10 +127,13 @@ export default class OrderValue extends Component {
             })
             let resetStatus = regionArray.includes('Select All') ? false : true
             this.state.regionSelectVal = regionArray
-            if (this.state.regionSelectVal.length > 0) {
+            this.setState({ regionSelectVal: regionArray, reset: resetStatus, deSelect: false })
+            if (Data.length > 0) {
                 this.getProductData(regionArray)
             }
-            this.setState({ regionSelectVal: regionArray, reset: resetStatus, deSelect: false })
+            else {
+                this.setState({ productList: [{ "title": "No Data", "value": "No Data" }], skuSelectValue: [], deSelect: true })
+            }
         }
     }
     onSkuChecked = (Data) => {
@@ -178,10 +181,14 @@ export default class OrderValue extends Component {
 
         let productData = []
         this.state.productList && this.state.productList.map((item) => {
-
-            let obj = {
-                title: item.name,
-                value: item.productDetailsao.productId + 'Parent'
+            let obj = {}
+            if (item.name) {
+                obj.title = item.name
+                obj.value = item.productDetailsao.productId + 'Parent'
+            }
+            else {
+                obj.title = item.title
+                obj.value = item.value + 'ParentDAta'
             }
             productData.push(obj)
         })
@@ -190,19 +197,33 @@ export default class OrderValue extends Component {
 
         let chartData = []
         this.state.lineChartData.orderValue && this.state.lineChartData.orderValue.map((item, index) => {
+            // let obj = {
+            //     region: item.regionDetails[0]
+            // }
+            let regionName = "";
+            item && item.regionDetails && item.regionDetails.map((regionList, regionIndex) => {
+                if (regionIndex > 0) {
+                    let data = regionList.split(',')
 
-            let region = item.regionDetails && item.regionDetails[0]
-            let obj = {
-                region: region ? region : ''
-            }
-            index > 0 && item && item.regionDetails && item.regionDetails.map((item) => {
-                let value = item == region ? '' : item
-                let data = value && value.split(',')
-                obj.name = data[0] ? data[0] : '';
-                obj.orderValue = data[1] ? data[1] : '';
+
+
+                    let obj = {
+                        name: data[0],
+                        orderValue: data[1],
+                        // regionName : data[1]
+                        // lineName: regionName
+                    }
+                    obj[`${regionName}`] = data[1];
+                    chartData.push(obj)
+                }
+                else {
+                    let obj = {
+                        region: regionList,
+                    }
+                    regionName = obj.region
+                    chartData.push(obj)
+                }
             })
-
-            chartData.push(obj)
         })
         const regionCheckbox = {
             enable: true,
@@ -289,7 +310,7 @@ export default class OrderValue extends Component {
                         </div>
                         {chartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
                             <div className="main-wrapper d-flex justify-content-center">
-                                <LineChartView barChartData={chartData} /> </div>
+                                <LineGraphView barChartData={chartData} label='Order Value' /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>
