@@ -68,31 +68,6 @@ class RetailerProfile extends React.Component {
         this.props.redirectViewPage();
         this.onCloseModal();
     }
-    // getStatus() {
-    //     let profileData = this.props.profileData
-    //     if (profileData.isActive == 0) {
-    //         statusClass = window.strings.RETAILERS.INACTIVE
-    //     }
-    //     else if (profileData.status == 0 && profileData.isActive == 1) {
-    //         statusClass = window.strings.RETAILERS.PENDING
-    //     }
-    //     else if (profileData.status == 1 && profileData.isActive == 1) {
-    //         statusClass = window.strings.RETAILERS.ACCEPTED
-    //     }
-    //     else if (profileData.status == 2 && profileData.isActive == 1) {
-    //         statusClass = window.strings.RETAILERS.REJECTED
-    //     }
-    //     this.setState({ statusClass })
-    // }
-
-    // buttonChange = (buttonName, value) => {
-    //     if (value) {
-    //         this.setState({ [buttonName]: buttonName })
-    //     } else {
-    //         this.setState({ [buttonName]: '' })
-    //     }
-    //     debugger;
-    // }
 
     render() {
         const profile = this.props.profileData ? this.props.profileData : [];

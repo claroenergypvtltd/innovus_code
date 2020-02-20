@@ -463,7 +463,7 @@ export const Translation = {
             "PRICEELASTICITY": "TONNAGE VARIATION WITH CHANGE IN PRICE",
             "MAP_VIEW": "Map View",
             "GRAPH_VIEW": "List/Graph View",
-            "SALES_EXECUTIVE_PERFORMANCE": "SALES EXECUTIVE PERFORMANCE"
+            "SALES_EXECUTIVE_PERFORMANCE": "SALES EXECUTIVE PERFORMANCE",
         },
         "ABOUT": {
             "ABOUT_US": "ABOUT US",

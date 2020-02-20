@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
-import { getSalesExecutiveGraphView, getReportRegion } from '../../actions/reportAction'
+import { getReportRegion, getPriceElasticityGraphView } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
 import { ReactBarLineChart, LineChartView } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
 import { fetchSalesAgent } from '../../actions/salesAgentAction';
-import { getDcCodeData } from '../../actions/salesAgentAction';
+import { getProductList } from '../../actions/reportAction';
 import { toastr } from 'react-redux-toastr'
 
 class PriceElasticity extends Component {
@@ -55,15 +55,13 @@ class PriceElasticity extends Component {
             dcList.push(subRegionVal)
         })
         let obj = {
-            roleId: 4,
-            flag: 5,
-            search: dcList
+            dcCode: dcList
         }
-        // getDcCodeData(obj, "order").then(resp => {
-        //     if (resp) {
-        //         this.setState({ salesAgentList: resp })
-        //     }
-        // })
+        getProductList(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ salesAgentList: resp.datas })
+            }
+        })
     }
 
     dateChange = (e) => {
@@ -106,10 +104,9 @@ class PriceElasticity extends Component {
     onChecked1 = (data, value) => {
         let regionArray1 = [];
         data.map(item => {
-            if (!item.includes('parent')) {
-                regionArray1.push(item);
-
-            }
+            // if (item.includes('parent')) {
+            regionArray1.push(item);
+            // }
         })
         this.state.selectVal1 = regionArray1
     }
@@ -127,16 +124,25 @@ class PriceElasticity extends Component {
                 }
             })
 
+            let selectVal1arry = []
+
+            this.state.selectVal1 && this.state.selectVal1.map(item => {
+                if (item) {
+                    let splitData = item.split('##');
+                    selectVal1arry.push(splitData[0]);
+                }
+            })
             let obj = {
                 startDate: this.state.startDate,
                 expiryDate: this.state.expiryDate,
                 regionData: subRegionVal,
-                agentData: this.state.selectVal1,
+                productId: selectVal1arry,
+
             }
 
-            getSalesExecutiveGraphView(obj).then(resp => {
-                if (resp && resp.data) {
-                    this.setState({ lineChartData: resp.data })
+            getPriceElasticityGraphView(obj).then(resp => {
+                if (resp && resp.data && resp.data.orderPrice && resp.data.orderPrice) {
+                    this.setState({ lineChartData: resp.data.orderPrice })
                 }
             })
         } else {
@@ -154,7 +160,10 @@ class PriceElasticity extends Component {
             selectVal1: [],
             selectVal: [],
             lineChartData: [],
-            selectsubVal: []
+            selectsubVal: [],
+            subRegionData: [],
+            salesAgentList: [],
+            subEnable: true, salesEnable: true
         });
     }
     render() {
@@ -232,20 +241,23 @@ class PriceElasticity extends Component {
         this.state.salesAgentList && this.state.salesAgentList.map((item) => {
             if (item) {
                 let Data;
+                let obj = {};
                 if (item.value) {
                     Data = item.value.split(',');
+                    obj = {
+                        title: Data[1],
+                        value: Data[0]
+                    }
                 } else {
-                    Data = item.split(',');
+                    obj = {
+                        title: item.name,
+                        value: item.id + '##parent'
+                    }
                 }
-                let obj = {
-                    title: Data[1],
-                    value: Data[0]
-                }
+
                 agentData.push(obj)
             }
         })
-
-
         const checkbox = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;
@@ -270,35 +282,23 @@ class PriceElasticity extends Component {
             initCheckedList: this.state.selectVal1           // Initialize check multiple lists
         }
         let CustomerOnBoard = [];
-        this.state.lineChartData && this.state.lineChartData.user && this.state.lineChartData.user.map(item => {
-            let Data = item.split(',');
-            let obj = {
-                name: Data[0], Users: Data[1],
-                // name: 'Page A', uv: 4000, pv: 2400, amt: 5000,
+        this.state.lineChartData && this.state.lineChartData.map((item, index) => {
+            if (index == 0) {
+                item.regionDetails && item.regionDetails.map((regionItem, regionIndex) => {
+                    if (regionIndex > 0) {
+                        let Data = regionItem.split(',');
+                        let obj = {
+                            name: Data[0], Price: Data[1], "Tones Ordered": Data[2]
+                        }
+                        CustomerOnBoard.push(obj);
+                    }
+                })
             }
-            CustomerOnBoard.push(obj);
-        })
-        let noOfOrders = [];
-        this.state.lineChartData && this.state.lineChartData.order && this.state.lineChartData.order.map(item => {
-            let Data = item.split(',');
-            let obj = {
-                name: Data[0], Order: Data[1],
-            }
-            noOfOrders.push(obj);
         })
 
-        let orderValue = [];
-
-        this.state.lineChartData && this.state.lineChartData.orderValue && this.state.lineChartData.orderValue.map(item => {
-            let Data = item.split(',');
-            let obj = {
-                name: Data[0], Value: Data[1],
-            }
-            orderValue.push(obj);
-        })
         return (
             <div className="customer-onboard">
-                <h4 className="user-title">{window.strings.REPORT.SALES_EXECUTIVE_PERFORMANCE}</h4>
+                <h4 className="user-title">{window.strings.REPORT.PRICEELASTICITY}</h4>
                 <div className="sales-report mt-3">
                     <div className="main-wrapper py-3 sale-box">
                         <div className="d-flex justify-content-around">
@@ -383,22 +383,15 @@ class PriceElasticity extends Component {
                             </div>
                         </div>
                     </div>
-                    {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ? <div className="row mt-5">
-                        <div className="col-md-6">
+                    {CustomerOnBoard.length > 0 ? <div className="row mt-5">
+                        <div className="col-md-12">
                             <div className="main-wrapper py-3">
-                                {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />}
+                                {/* {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />} */}
+
+                                <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" chartName="Price Elasticity" />
+
                             </div>
                         </div>
-                        {/* <div className="col-md-6">
-                            <div className="main-wrapper py-3">
-                                {<LineChartView label='No of Orders' Data='Order' barChartData={noOfOrders} />}
-                            </div>
-                        </div>
-                        <div className="col-md-6 offset-md-3 mt-5">
-                            <div className="main-wrapper py-3">
-                                {<LineChartView label='Order Value' Data='Value' barChartData={orderValue} />}
-                            </div>
-                        </div> */}
                     </div> :
                         <div className="record-box">
                             No record found
@@ -417,4 +410,4 @@ class PriceElasticity extends Component {
 const mapStateToProps = (state) => ({
     regionList: state.region
 })
-export default connect(mapStateToProps, { getRegion, fetchSalesAgent, getSalesExecutiveGraphView })(PriceElasticity)
+export default connect(mapStateToProps, { getRegion, fetchSalesAgent, getPriceElasticityGraphView })(PriceElasticity)

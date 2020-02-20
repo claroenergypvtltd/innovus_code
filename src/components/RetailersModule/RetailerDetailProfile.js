@@ -4,6 +4,7 @@ import Shops from './Shops'
 import { connect } from 'react-redux';
 import { fetchRetailers } from '../../actions/SubmitRetailerAction';
 import Geocode from "react-geocode";
+import { apiKey } from '../../config/config';
 
 class RetailerDetailProfile extends React.Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class RetailerDetailProfile extends React.Component {
         }
     }
     componentWillReceiveProps(newProps) {
-        Geocode.setApiKey("AIzaSyAHsNiCWANHwz9j7vrYA70c37dOgHQyAvU");
+        Geocode.setApiKey(apiKey);
         Geocode.setLanguage("en");
         Geocode.setRegion("es");
         Geocode.enableDebug();

@@ -22,7 +22,7 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import TransferAgent from './TransferAgent'
 import { SearchBar, ReactPagination } from '../../shared'
 import { getDcCodeData } from '../../actions/salesAgentAction';
-import { imageBaseUrl } from '../../config/config';
+import { imageBaseUrl, apiKey } from '../../config/config';
 import { httpServices } from '../../services/http.services'
 import { CSVLink, CSVDownload } from "react-csv";
 import Geocode from "react-geocode";
@@ -172,8 +172,7 @@ class FetchRetailer extends React.Component {
     }
 
     setApiKey = () => {
-        // AIzaSyAHsNiCWANHwz9j7vrYA70c37dOgHQyAvU
-        Geocode.setApiKey("AIzaSyAHsNiCWANHwz9j7vrYA70c37dOgHQyAvU");
+        Geocode.setApiKey(apiKey);
         Geocode.setLanguage("en");
         Geocode.setRegion("in");
         Geocode.enableDebug();
