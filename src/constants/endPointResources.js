@@ -14,6 +14,8 @@ export const endPoint = {
     "instructionId": "instructionId",
     "category": "/category",
     "categoryId": "categoryId",
+    "mCategory": "/mCategory",
+    "mCategoryId": "/mCategoryId",
     "signup": "/signup",
     "farm": "/farm",
     "crop": "/crop",
