@@ -122,14 +122,14 @@ export class ReactBarLineChart extends Component {
         return (
             <div>
                 <ComposedChart width={500} height={450} data={data}>
-                    <XAxis dataKey="name" label={{ value: 'No of Customers Placing Orders', position: 'bottom', offset: 8 }} />
+                    <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} />
                     <YAxis />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
                     <CartesianGrid stroke="#f5f5f5" />
                     {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
-                    <Bar dataKey="Users" barSize={20} fill="#413ea0" onClick={this.sendData} />
-                    <Line type="monotone" dataKey="Order" stroke="#ff7300" />
+                    <Bar dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />
+                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" />
                 </ComposedChart>
             </div>
         )

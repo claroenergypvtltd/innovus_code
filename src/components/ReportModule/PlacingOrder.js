@@ -424,11 +424,11 @@ class PlacingOrder extends Component {
                                     </div>
                                 </div>
                                 {this.state.graphData.length > 0 ? <div className="mt-5">
-                                    <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} />
+                                    <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} barKey="Users" lineKey="Order" chartName="No of Customers Placing Orders" />
                                 </div> : <div className="record-box">No record found</div>}
 
                                 {this.state.getBarChart && <div className="pt-5">
-                                    <ReactBarLineChart barChartData={this.state.subRegionBarData} parentCallback={this.callbackFunction} />
+                                    <ReactBarLineChart barChartData={this.state.subRegionBarData} parentCallback={this.callbackFunction} barKey="Users" lineKey="Order" chartName="No of Customers Placing Orders" />
                                     <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
                                 </div>}
                             </div>

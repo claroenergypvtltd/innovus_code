@@ -42,6 +42,15 @@ export const getSalesExecutiveGraphView = (Data) => {
     })
 }
 
+export const getPriceElasticityGraphView = (Data) => {
+    return httpServices.get('reports?Id=5&flag=0&expiryDate=' + Data.expiryDate + '&startDate=' + Data.startDate + '&subregionId=' + Data.regionData + '&productId=' + Data.productId).then(resp => {
+        // /reports?flag=0&Id=5&startDate=2020-02-14&expiryDate=2020-02-18&subregionId=DC93,DC87&productId=335,320,339
+        if (resp) {
+            return resp
+        }
+    })
+}
+
 export const getReportRegion = (obj) => {
     return httpServices.get('regionDcs?page=' + obj.page + '&rows=' + obj.rows).then(resp => {
         if (resp && resp.data) {
