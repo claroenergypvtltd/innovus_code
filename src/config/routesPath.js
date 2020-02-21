@@ -69,6 +69,7 @@ import PrivacyPolicy from '../components/AboutModule/PrivacyPolicy';
 import TermsConditions from '../components/AboutModule/TermsConditions';
 
 import ReturnCancellation from '../components/AboutModule/ReturnCancellation';
+import About from '../components/AboutModule/About';
 
 
 const root = ({ route }) => (
@@ -471,6 +472,11 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/setting/policy',
                 component: PrivacyPolicy,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/setting/about',
+                component: About,
                 exact: true
             },
             // {

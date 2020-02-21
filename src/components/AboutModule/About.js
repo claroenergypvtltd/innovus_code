@@ -6,9 +6,15 @@ export default class About extends Component {
     constructor(props) {
         super(props);
     }
+
+    redirectPage = () => {
+        this.props.history.push({ pathname: path.appSetting.list })
+    }
+
     render() {
         return (
             <div>
+                <h4 className="user-title">{window.strings.ABOUT.ABOUT_US}</h4>
                 <div className="main-wrapper">
                     <div className="about-text d-flex col-md-7">
                         <div className="container ml-0">
@@ -30,10 +36,13 @@ export default class About extends Component {
                             <p className="reg-text">In case of any query or complaint, write us at
                                 mail@gmail.com or call<button type="button" class="btn btn-outline-info"><i class="fas fa-phone pr-2"></i>Customer Support</button>
                             </p>
-
                         </div>
                     </div>
                 </div>
+                <div className="back-btn mt-3">
+                    <button class="common-btn" onClick={this.redirectPage}>Back</button>
+                </div>
+
             </div>
         )
     }
