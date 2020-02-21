@@ -36,6 +36,9 @@ export default class setting extends Component {
     aboutList = () => {
         this.props.history.push({ pathname: path.aboutUs.about })
     }
+    tollFree = () => {
+        this.props.history.push({ pathname: path.appSetting.listTollFree })
+    }
     navigatePolicy = (heading, title) => {
         this.context.router.history.push({ pathname: path.policy.form, state: { heading: heading, title: title } });
     }
@@ -70,6 +73,9 @@ export default class setting extends Component {
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                             <button className="set-tab" onClick={() => this.navigatePolicy("cancellation", window.strings.ABOUT.RETURNCANCELLATIONPOLICY)}>{window.strings.ABOUT.RETURN_CANCELLATION_POLICY}
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                            <button className="set-tab" onClick={this.tollFree}>{window.strings.APPSETTING.TOLL_FREE_NUMBER}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                         </div>

@@ -166,7 +166,10 @@ export const path = {
         list: process.env.PUBLIC_URL + '/setting',
         createQuantity: process.env.PUBLIC_URL + '/setting/createquantitytype',
         fetchQuantity: process.env.PUBLIC_URL + '/setting/fetchquantitytype',
-        appPolicy: process.env.PUBLIC_URL + '/aboutpolicy'
+        appPolicy: process.env.PUBLIC_URL + '/aboutpolicy',
+        listTollFree: process.env.PUBLIC_URL + '/setting/tollfree',
+        addTollFree: process.env.PUBLIC_URL + '/setting/tollfree/add'
+
     },
     pool: {
         list: process.env.PUBLIC_URL + '/price/pool',

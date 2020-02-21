@@ -53,6 +53,9 @@ import AppSetting from '../components/Setting/AppSetting';
 import CreateRegion from '../components/DCManagement/CreateRegion'
 import FetchQuantityType from '../components/Setting/FetchQuantityType'
 import CreateQuantityType from '../components/Setting/CreateQuantityType';
+import FetchTollFree from '../components/Setting/FetchTollFree';
+import CreateTollFree from '../components/Setting/CreateTollFree';
+
 
 import reports from '../components/ReportModule/report';
 import CustomerOnboard from '../components/ReportModule/CustomerOnboard';
@@ -477,6 +480,16 @@ export const routesPath = [
             {
                 path: process.env.PUBLIC_URL + '/setting/about',
                 component: About,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/setting/tollfree',
+                component: FetchTollFree,
+                exact: true
+            },
+            {
+                path: process.env.PUBLIC_URL + '/setting/tollfree/add',
+                component: CreateTollFree,
                 exact: true
             },
             // {
