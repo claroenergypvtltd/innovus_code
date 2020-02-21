@@ -434,7 +434,11 @@ export const Translation = {
             "QUANTITY_NAME": "Quantity Name",
             "CREATE_TYPE": "CREATE QUANTITY TYPE",
             "EDIT_TYPE": "EDIT QUANTITY TYPE",
-            "ABOUT_POLICIES": "Policies"
+            "ABOUT_POLICIES": "Policies",
+            "TOLL_FREE_NUMBER": "Toll Free Number",
+            "TOLLFREENUMBER": "TOLL FREE NUMBER",
+            "ADD_TOLL_FREE_NUMBER": "Add Toll Free Number",
+            "ADDTOLLFREENUMBER": "ADD TOLL FREE NUMBER"
         },
         "DC_MANAGEMENT": {
             "STARTING_TIME": "Order Starting Time",

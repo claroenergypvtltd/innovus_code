@@ -64,7 +64,7 @@ export default class PrivacyPolicy extends Component {
             <div className="policy">
                 <h4 className="user-title">{this.state.title}</h4>
                 <div className="main-wrapper">
-                    <div className="col-md-6">
+                    <div className="col-md-7">
                         <div className="container">
                             <form onSubmit={this.handleSubmit} noValidate className="row m-0">
                                 <div className="form-group pt-3 col-md-12">
