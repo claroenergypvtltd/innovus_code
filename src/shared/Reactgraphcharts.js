@@ -201,7 +201,7 @@ export class LineGraphView extends Component {
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
-                    <YAxis />
+                    <YAxis dataKey='amount' />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
                     {this.props.barChartData && this.props.barChartData.map((item) => (
@@ -209,13 +209,6 @@ export class LineGraphView extends Component {
                         <Line type="monotone" dataKey={item.region} stroke="#8884d8" activeDot={{ r: 8 }} />
 
                     ))}
-
-                    {/* <Line type="monotone" dataKey="orderValue" stroke="#8884d8" activeDot={{ r: 8 }} /> */}
-
-
-
-                    {/* <Line type="monotone" dataKey={data} stroke="#8884d8" activeDot={{ r: 8 }} /> */}
-                    {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
                 </LineChart>
             </div>
         );

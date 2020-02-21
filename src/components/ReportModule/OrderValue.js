@@ -46,7 +46,7 @@ export default class OrderValue extends Component {
         }
         getProductList(obj).then(resp => {
             if (resp && resp.datas) {
-                this.setState({ productList: resp.datas })
+                this.setState({ productList: resp.datas, deSelect: true })
             }
         })
     }
@@ -104,7 +104,7 @@ export default class OrderValue extends Component {
             regionSelectVal: [],
             lineChartData: [],
             skuSelectValue: [],
-            deSelect: true
+            deSelect: false
         });
     }
     onRegionChecked = (Data) => {
@@ -116,7 +116,7 @@ export default class OrderValue extends Component {
             this.onSelectAll()
         }
         else if (!Data.includes('Select All') && !this.state.reset) {
-            this.setState({ regionSelectVal: [], reset: true, deSelect: true })
+            this.setState({ regionSelectVal: [], skuSelectValue: [], reset: true, deSelect: false })
         }
         else {
             let regionArray = [];
@@ -132,7 +132,7 @@ export default class OrderValue extends Component {
                 this.getProductData(regionArray)
             }
             else {
-                this.setState({ productList: [{ "title": "No Data", "value": "No Data" }], skuSelectValue: [], deSelect: true })
+                this.setState({ skuSelectValue: [], deSelect: false })
             }
         }
     }
@@ -193,7 +193,7 @@ export default class OrderValue extends Component {
             productData.push(obj)
         })
 
-        const skuResetData = [{ title: '', value: '' }]
+        const skuResetData = [{ title: 'No data', value: 'No data' }]
 
         let chartData = []
         this.state.lineChartData.orderValue && this.state.lineChartData.orderValue.map((item, index) => {
@@ -201,15 +201,18 @@ export default class OrderValue extends Component {
             //     region: item.regionDetails[0]
             // }
             let regionName = "";
+            let amount = 0
             item && item.regionDetails && item.regionDetails.map((regionList, regionIndex) => {
                 if (regionIndex > 0) {
                     let data = regionList.split(',')
 
 
-
+                    let amountValue = data && data[1] ? Number(data[1]) : 0
+                    amount = amount + amountValue
                     let obj = {
                         name: data[0],
                         orderValue: data[1],
+                        amount: amount
                         // regionName : data[1]
                         // lineName: regionName
                     }
@@ -277,21 +280,21 @@ export default class OrderValue extends Component {
                             {!this.state.deSelect && <div className="tree-box">
                                 <label className="label-title">Select SKU * </label>
                                 <TreeSelect
-                                    treeData={productData}
-                                    style={{ width: 210, height: 100 }}
-                                    selectVal={this.state.skuSelectValue}
-                                    onChecked={this.onSkuChecked}
-                                    checkbox={skuCheckbox}
-                                    customTitleRender={this.customTitleRender} />
-                            </div>}
-                            {this.state.deSelect && <div className="tree-box">
-                                <label className="label-title">Select SKU * </label>
-                                <TreeSelect
                                     treeData={skuResetData}
                                     style={{ width: 210, height: 100 }}
                                     selectVal={this.state.skuSelectValue}
                                     onChecked={this.onSkuChecked}
                                     // checkbox={skuCheckbox}
+                                    customTitleRender={this.customTitleRender} />
+                            </div>}
+                            {this.state.deSelect && <div className="tree-box">
+                                <label className="label-title">Select SKU * </label>
+                                <TreeSelect
+                                    treeData={productData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.skuSelectValue}
+                                    onChecked={this.onSkuChecked}
+                                    checkbox={skuCheckbox}
                                     customTitleRender={this.customTitleRender} />
                             </div>}
                         </div>

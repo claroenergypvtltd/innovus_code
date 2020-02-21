@@ -27,10 +27,12 @@ class PlacingOrder extends Component {
             agentDataList: [],
             regionListData2: [],
             agentResetData: [{
-                title: '',
-                value: ''
+                title: 'No Data',
+                value: 'No Data'
             }],
-            selectAll: { title: 'Select All', value: 'Select All' }
+            selectAll: { title: 'Select All', value: 'Select All' },
+            agentDropDown: false,
+            reset: true
         }
     }
     componentDidMount() {
@@ -50,7 +52,7 @@ class PlacingOrder extends Component {
         }
         getDcCodeData(obj, "order").then(resp => {
             if (resp) {
-                this.setState({ agentDataList: resp })
+                this.setState({ agentDataList: resp, agentDropDown: true })
             }
         })
     }
@@ -120,7 +122,7 @@ class PlacingOrder extends Component {
             this.onSelectAll()
         }
         else if (!Data.includes('Select All') && !this.state.reset) {
-            this.setState({ mapSelectVal: [], reset: true, agentDropDown: false })
+            this.setState({ mapSelectVal: [], agentSelectVal: [], reset: true, agentDropDown: false })
         }
         else {
             let regionArray = []
@@ -136,7 +138,7 @@ class PlacingOrder extends Component {
                 this.fetchAgents(Data)
             }
             else {
-                this.setState({ agentDropDown: true, agentDataList: [{ "title": "No Data", "value": "No Data,No Data" }], agentSelectVal: [], }, () => {
+                this.setState({ agentDropDown: false, agentSelectVal: [], }, () => {
                     this.getRegionList()
                 })
             }

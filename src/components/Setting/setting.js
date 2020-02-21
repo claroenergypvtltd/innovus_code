@@ -33,8 +33,8 @@ export default class setting extends Component {
     policyList = () => {
         this.props.history.push({ pathname: path.policy.policyList })
     }
-    aboutList = () => {
-        this.props.history.push({ pathname: path.aboutUs.about })
+    aboutList = (heading, title) => {
+        this.props.history.push({ pathname: path.policy.form, state: { heading: heading, title: title } })
     }
     tollFree = () => {
         this.props.history.push({ pathname: path.appSetting.listTollFree })
@@ -63,7 +63,7 @@ export default class setting extends Component {
                             <button className="set-tab" onClick={this.quantityPath}>{window.strings.APPSETTING.QUANTITY_TYPE_CONTROL}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
-                            <button className="set-tab" onClick={this.aboutList}>{window.strings.ABOUT.ABOUTUS}
+                            <button className="set-tab" onClick={() => this.aboutList('aboutus', window.strings.ABOUT.ABOUT_US)}>{window.strings.ABOUT.ABOUTUS}
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                             <button className="set-tab" onClick={() => this.navigatePolicy("privacy", window.strings.ABOUT.PRIVACYPOLICY)}>{window.strings.ABOUT.PRIVACY_POLICY}
