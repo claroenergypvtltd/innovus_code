@@ -116,7 +116,9 @@ export const path = {
     },
     aboutUs: {
         list: process.env.PUBLIC_URL + '/aboutus',
-        template: process.env.PUBLIC_URL + '/template/aboutus/update/'
+        template: process.env.PUBLIC_URL + '/template/aboutus/update/',
+        about: process.env.PUBLIC_URL + '/setting/about'
+
     },
     contactUs: {
         list: process.env.PUBLIC_URL + '/contactus',
