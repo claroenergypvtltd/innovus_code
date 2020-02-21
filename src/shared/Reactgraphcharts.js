@@ -188,7 +188,6 @@ export class LineGraphView extends Component {
                     name: 'Page C', uv: 2000, pv: 3800, amt: 2290,
                 },
             ];
-
         return (
             <div>
                 <LineChart

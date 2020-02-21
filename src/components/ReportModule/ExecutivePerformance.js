@@ -5,7 +5,7 @@ import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
 import { getSalesExecutiveGraphView, getReportRegion } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
-import { ReactBarLineChart, LineChartView } from '../../shared/Reactgraphcharts'
+import { ReactBarLineChart, LineGraphView } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
 import { fetchSalesAgent } from '../../actions/salesAgentAction';
 import { getDcCodeData } from '../../actions/salesAgentAction';
@@ -153,7 +153,10 @@ class ExecutivePerformance extends Component {
             selectVal1: [],
             selectVal: [],
             lineChartData: [],
-            selectsubVal: []
+            selectsubVal: [],
+            salesAgentList: [],
+            subRegionData: []
+
         });
     }
     render() {
@@ -270,29 +273,93 @@ class ExecutivePerformance extends Component {
         }
         let CustomerOnBoard = [];
         this.state.lineChartData && this.state.lineChartData.user && this.state.lineChartData.user.map(item => {
-            let Data = item.split(',');
-            let obj = {
-                name: Data[0], Users: Data[1],
-            }
-            CustomerOnBoard.push(obj);
+            let regionName = "";
+            item && item.usersCount.map((userList, userIndex) => {
+
+                if (userIndex > 1) {
+                    let value = userList.split(',')
+                    let obj = {
+                        name: value[0],
+                        // orderValue: value[1]
+                    }
+                    obj[`${regionName}`] = value[1];
+                    CustomerOnBoard.push(obj)
+                }
+                else {
+                    if (userIndex == 0) {
+                        let obj = {
+                            region: userList
+                        }
+                        regionName = obj.region
+                        CustomerOnBoard.push(obj)
+                    }
+                }
+            })
+            // let Data = item.split(',');
+            // let obj = {
+            //     name: Data[0], Users: Data[1],
+            // }
+            // CustomerOnBoard.push(obj);
         })
         let noOfOrders = [];
         this.state.lineChartData && this.state.lineChartData.order && this.state.lineChartData.order.map(item => {
-            let Data = item.split(',');
-            let obj = {
-                name: Data[0], Order: Data[1],
-            }
-            noOfOrders.push(obj);
+            let regionName = "";
+            item && item.ordersCount && item.ordersCount.map((userList, userIndex) => {
+                if (userIndex > 1) {
+                    let value = userList.split(',')
+                    let obj = {
+                        name: value[0],
+                        // orderValue: value[1]
+                    }
+                    obj[`${regionName}`] = value[1];
+                    noOfOrders.push(obj)
+                }
+                else {
+                    if (userIndex == 0) {
+                        let obj = {
+                            region: userList
+                        }
+                        regionName = obj.region
+                        noOfOrders.push(obj)
+                    }
+                }
+            })
+            // let Data = item.split(',');
+            // let obj = {
+            //     name: Data[0], Order: Data[1],
+            // }
+            // noOfOrders.push(obj);
         })
 
         let orderValue = [];
 
         this.state.lineChartData && this.state.lineChartData.orderValue && this.state.lineChartData.orderValue.map(item => {
-            let Data = item.split(',');
-            let obj = {
-                name: Data[0], Value: Data[1],
-            }
-            orderValue.push(obj);
+            let regionName = "";
+            item && item.ordersValue && item.ordersValue.map((userList, userIndex) => {
+                if (userIndex > 1) {
+                    let value = userList.split(',')
+                    let obj = {
+                        name: value[0],
+                        // orderValue: value[1]
+                    }
+                    obj[`${regionName}`] = value[1];
+                    orderValue.push(obj)
+                }
+                else {
+                    if (userIndex == 0) {
+                        let obj = {
+                            region: userList
+                        }
+                        regionName = obj.region
+                        orderValue.push(obj)
+                    }
+                }
+            })
+            // let Data = item.split(',');
+            // let obj = {
+            //     name: Data[0], Value: Data[1],
+            // }
+            // orderValue.push(obj);
         })
         return (
             <div className="customer-onboard">
@@ -384,17 +451,17 @@ class ExecutivePerformance extends Component {
                     {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ? <div className="row mt-5">
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />}
+                                {<LineGraphView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />}
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineChartView label='No of Orders' Data='Order' barChartData={noOfOrders} />}
+                                {<LineGraphView label='No of Orders' Data='Order' barChartData={noOfOrders} />}
                             </div>
                         </div>
                         <div className="col-md-6 offset-md-3 mt-5">
                             <div className="main-wrapper py-3">
-                                {<LineChartView label='Order Value' Data='Value' barChartData={orderValue} />}
+                                {<LineGraphView label='Order Value' Data='Value' barChartData={orderValue} />}
                             </div>
                         </div>
                     </div> :
