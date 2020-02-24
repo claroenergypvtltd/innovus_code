@@ -151,7 +151,9 @@ export class LineGraphView extends Component {
         }
     }
     render() {
-        let value = this.props && this.props.label
+        let value = this.props && this.props.label;
+        let yAxis = this.props && this.props.yAxis
+
         const reactbarChartdata = this.props.barChartData ? this.props.barChartData :
             [
                 {
@@ -176,7 +178,7 @@ export class LineGraphView extends Component {
         return (
             <div>
                 <LineChart
-                    width={1000}
+                    width={600}
                     height={500}
                     data={reactbarChartdata}
                     margin={{
@@ -185,7 +187,8 @@ export class LineGraphView extends Component {
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
-                    <YAxis dataKey='amount' />
+                    {/* <XAxis dataKey="name" /> */}
+                    <YAxis dataKey='amount' label={{ value: yAxis, position: 'left', angle: -90 }} />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
 
@@ -193,56 +196,6 @@ export class LineGraphView extends Component {
                         (item && item.region) &&
                         <Line type="monotone" dataKey={item.region} stroke={item.colorCode} activeDot={{ r: 8 }} />
                     ))}
-                </LineChart>
-            </div>
-        );
-    }
-}
-
-export class LineChartView extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            getBarChart: true
-        }
-    }
-
-    render() {
-        let value = this.props && this.props.label
-        let data = this.props.Data
-        const reactbarChartdata = this.props.barChartData ? this.props.barChartData :
-            [
-                {
-                    name: 'Page A', uv: 4000, pv: 2400, amt: 5000,
-                },
-                {
-                    name: 'Page B', uv: 3000, pv: 1398, amt: 6500,
-                },
-                {
-                    name: 'Page C', uv: 2000, pv: 3800, amt: 2290,
-                },
-            ];
-        return (
-            <div>
-                <LineChart
-                    width={500}
-                    height={400}
-                    data={reactbarChartdata}
-                    margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
-                    }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
-                    <YAxis dataKey="orderValue" />
-                    <Tooltip />
-                    <Legend verticalAlign="top" height={36} />
-                    {/* {this.props.barChartData && this.props.barChartData.map((item) => (
-    <Line type="monotone" dataKey={item.region} stroke="#8884d8" activeDot={{ r: 8 }} />
-    ))} */}
-                    <Line type="monotone" dataKey={data} stroke="#8884d8" activeDot={{ r: 8 }} />
-                    {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
                 </LineChart>
             </div>
         );
