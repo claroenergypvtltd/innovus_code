@@ -125,12 +125,17 @@ class ExecutivePerformance extends Component {
                     subRegionVal = splitData[0];
                 }
             })
+            let selectVal1 = [];
+            this.state.selectVal1 && this.state.selectVal1.map(item => {
+                let selectVal1Data = item.split('-');
+                selectVal1.push(selectVal1Data[0]);
+            })
 
             let obj = {
                 startDate: this.state.startDate,
                 expiryDate: this.state.expiryDate,
                 regionData: subRegionVal,
-                agentData: this.state.selectVal1,
+                agentData: selectVal1,
             }
 
             getSalesExecutiveGraphView(obj).then(resp => {
@@ -231,7 +236,7 @@ class ExecutivePerformance extends Component {
             subtreeData.push(obj)
         })
         let agentData = []
-        this.state.salesAgentList && this.state.salesAgentList.map((item) => {
+        this.state.salesAgentList && this.state.salesAgentList.map((item, index) => {
             if (item) {
                 let Data;
                 if (item.value) {
@@ -241,7 +246,7 @@ class ExecutivePerformance extends Component {
                 }
                 let obj = {
                     title: Data[1],
-                    value: Data[0]
+                    value: Data[0] + '-' + index
                 }
                 agentData.push(obj)
             }
@@ -280,7 +285,7 @@ class ExecutivePerformance extends Component {
                     let value = userList.split(',')
                     let obj = {
                         name: value[0],
-                        // orderValue: value[1]
+                        amount: value[1]
                     }
                     obj[`${regionName}`] = value[1];
                     CustomerOnBoard.push(obj)
@@ -309,6 +314,7 @@ class ExecutivePerformance extends Component {
                     let value = userList.split(',')
                     let obj = {
                         name: value[0],
+                        amount: value[1]
                         // orderValue: value[1]
                     }
                     obj[`${regionName}`] = value[1];
@@ -340,6 +346,7 @@ class ExecutivePerformance extends Component {
                     let value = userList.split(',')
                     let obj = {
                         name: value[0],
+                        amount: value[1]
                         // orderValue: value[1]
                     }
                     obj[`${regionName}`] = value[1];

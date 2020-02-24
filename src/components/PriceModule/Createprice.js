@@ -18,6 +18,7 @@ class CreatePrice extends Component {
             price: '',
             boxQuantity: '',
             categoryId: '',
+            parentCategoryId: '',
             parentId: '',
             offer: '',
             priceData: {},
@@ -297,8 +298,8 @@ class CreatePrice extends Component {
         let isDuplicateCheck = true;
         this.state.offerArray.map((item, index) => {
             if (this.state.price && parseInt(this.state.categoryId) && this.state.weightId != 0 && this.state.boxQuantity) {
-                if ((item.quantity || item.quantity == 0) || item.offer || item.type) {
-                    if ((!item.quantity && item.quantity != 0) || !item.offer || !item.type) {
+                if ((item.quantity || item.quantity == "0") || item.offer || item.type) {
+                    if ((!item.quantity && item.quantity != "0") || !item.offer || !item.type) {
                         isValid = false
                         return;
                     }
@@ -358,7 +359,7 @@ class CreatePrice extends Component {
             this.state.offerArray && this.state.offerArray.map(item => {
                 let sendObj = {}
                 sendObj.id = item.id;
-                if ((item.quantity || item.quantity == 0) && item.offer && item.type) {
+                if ((item.quantity || item.quantity == "0") && item.offer && item.type) {
                     sendObj.quantity = Number(item.quantity);
                     sendObj.discountValue = item.offer;
                     sendObj.discountUnit = item.type;
@@ -416,6 +417,12 @@ class CreatePrice extends Component {
 
     render() {
         const { errors } = this.state;
+
+        // const parentCategoryDropDown = this.state.parentCategoryData && this.state.parentCategoryData.map((item, index) => {
+        //     return <option key={index}
+        //         value={item.id}> {item.name}</option>
+        // });
+
         const categoryDropDown = this.state.categoryData && this.state.categoryData.map((item, index) => {
             return <option key={index}
                 value={item.id}> {item.name}</option>
@@ -450,6 +457,18 @@ class CreatePrice extends Component {
                             <div className="main-wrapper pt-3">
                                 <div className="col-md-10 add-price ml-4">
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0">
+
+
+                                        {/* <div className="form-group col-md-4">
+                                            <label>{window.strings['CATEGORY']['PARENT_CATEGORY'] + ' *'}</label>
+                                            <select required name="parentCategoryId" className="form-control" value={this.state.parentCategoryId} onChange={this.handleCategoryChange} disabled={this.state.priceId}>
+                                                <option value="0">Select Parent Category</option>
+                                                {parentCategoryDropDown}
+                                            </select>
+                                            {this.state.submitted && !this.state.parentCategoryId && <div className="mandatory">{window.strings['CATEGORY']['PARENT_CATEGORY'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.priceId && this.state.submitted && this.state.parentCategoryId == 0 && <div className="mandatory">{window.strings['CATEGORY']['PARENT_CATEGORY'] + window.strings['ISREQUIRED']}</div>}
+                                        </div> */}
+
 
                                         {/* <div className="col-md-4 row"> */}
                                         <div className="form-group col-md-4">

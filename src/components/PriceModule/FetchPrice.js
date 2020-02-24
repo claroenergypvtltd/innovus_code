@@ -175,7 +175,7 @@ class FetchPrice extends Component {
                     totWeight.includes("null") ? '-' : totWeight,
                     amount.includes("null") ? '-' : amount,
                     boxQuantity.includes("null") ? '-' : boxQuantity,
-                ], "itemId": item.id
+                ], "itemId": item.productDetail && item.productDetail.id
             }
         })
 
