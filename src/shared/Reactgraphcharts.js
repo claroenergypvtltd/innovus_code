@@ -177,8 +177,8 @@ export class LineGraphView extends Component {
         return (
             <div>
                 <LineChart
-                    width={500}
-                    height={400}
+                    width={1000}
+                    height={500}
                     data={reactbarChartdata}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 5,
