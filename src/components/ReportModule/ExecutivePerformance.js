@@ -458,17 +458,17 @@ class ExecutivePerformance extends Component {
                     {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ? <div className="row mt-5">
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineGraphView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />}
+                                {<LineGraphView label='Date' Data='Users' yAxis="No of customers" barChartData={CustomerOnBoard} />}
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineGraphView label='No of Orders' Data='Order' barChartData={noOfOrders} />}
+                                {<LineGraphView label='Date' Data='Order' yAxis="No of orders" barChartData={noOfOrders} />}
                             </div>
                         </div>
                         <div className="col-md-6 offset-md-3 mt-5">
                             <div className="main-wrapper py-3">
-                                {<LineGraphView label='Order Value' Data='Value' barChartData={orderValue} />}
+                                {<LineGraphView label='Date' Data='Value' yAxis="INR" barChartData={orderValue} />}
                             </div>
                         </div>
                     </div> :

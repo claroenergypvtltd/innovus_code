@@ -5,7 +5,7 @@ import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
 import { getReportRegion, getPriceElasticityGraphView } from '../../actions/reportAction'
 import { fetchReportGraph } from '../../actions/reportAction'
-import { ReactBarLineChart, LineChartView } from '../../shared/Reactgraphcharts'
+import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
 import GoogleMap from '../../shared/GoogleMap'
 import { fetchSalesAgent } from '../../actions/salesAgentAction';
 import { getProductList } from '../../actions/reportAction';
