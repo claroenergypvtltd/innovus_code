@@ -85,6 +85,7 @@ export const Translation = {
             "DESCRIPTION": "Description",
             "IMAGE": "Image",
             "DESCRIPTION": "Description",
+            "PARENT_CATEGORY": "Parent Category",
             "CATEGORY_NAME": "Category",
             "DC_CODE": "DC Code",
             "UPDATE_QUANTITY": "Update Quantity",
