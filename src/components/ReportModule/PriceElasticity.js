@@ -382,22 +382,21 @@ class PriceElasticity extends Component {
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    {CustomerOnBoard.length > 0 ? <div className="row mt-5">
-                        <div className="col-md-12">
-                            <div className="main-wrapper py-3">
-                                {/* {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />} */}
+                        {CustomerOnBoard.length > 0 ? <div>
+                            <div className="mt-3">
+                                <div className="d-flex justify-content-center">
+                                    {/* {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />} */}
 
-                                <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" chartName="Price Elasticity" />
+                                    <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" chartName="Price Elasticity" />
 
+                                </div>
                             </div>
+                        </div> :
+                            <div className="record-box">
+                                No record found
                         </div>
-                    </div> :
-                        <div className="record-box">
-                            No record found
-                        </div>
-                    }
-
+                        }
+                    </div>
                 </div>
                 <div className="back-btn my-3">
                     <button class="common-btn" onClick={this.redirectPage}>Back</button>
