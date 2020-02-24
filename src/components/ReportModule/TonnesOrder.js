@@ -4,6 +4,7 @@ import TreeSelect from 'react-do-tree-select';
 import { getReportRegion, getProductList, getTonValue } from '../../actions/reportAction'
 import { LineGraphView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
+import { getDcCodeData } from '../../actions/salesAgentAction';
 
 export default class TonnesOrder extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ export default class TonnesOrder extends Component {
             lineChartData: [],
             skuSelectValue: [],
             reset: true,
+            skuReset: true,
             deSelect: false,
             selectAll: { title: 'Select All', value: 'Select All' }
         }
@@ -35,47 +37,6 @@ export default class TonnesOrder extends Component {
     }
     dateChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
-    }
-    getGraphData = () => {
-        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
-            if (this.state.startDate <= this.state.expiryDate) {
-                let childArray = []
-                let parentArray = []
-                this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
-                    if (item.includes("Parent")) {
-                        let data = item.split('Parent')
-                        parentArray.push(data[0])
-                    }
-                    if (!item.includes("Parent")) {
-                        childArray.push(item)
-                    }
-                })
-                let skuData = []
-                this.state.skuSelectValue && this.state.skuSelectValue.map((item) => {
-                    let value = item.split('Parent')
-                    skuData.push(value[0])
-                })
-                let obj = {
-                    'subRegionId': childArray,
-                    'regionId': parentArray,
-                    'productId': skuData,
-                    'startDate': this.state.startDate,
-                    'expiryDate': this.state.expiryDate,
-                    'id': 3
-                }
-                getTonValue(obj).then(resp => {
-                    if (resp && resp.data) {
-                        this.setState({ lineChartData: resp.data })
-                    }
-                })
-            }
-            else {
-                toastr.error("Invalid Date")
-            }
-        }
-        else {
-            toastr.error("Mandatory Fields are Mising")
-        }
     }
     redirectPage = () => {
         this.props.history.push({ pathname: path.reports.list, state: { executivePerfomanceBack: 'executivePerfomanceSessionBack' } });
@@ -98,11 +59,13 @@ export default class TonnesOrder extends Component {
             }
         })
         let obj = {
-            'dcCode': regionData
+            roleId: 4,
+            flag: 5,
+            search: regionData
         }
-        getProductList(obj).then(resp => {
-            if (resp && resp.datas) {
-                this.setState({ productList: resp.datas, deSelect: true })
+        getDcCodeData(obj, "order").then(resp => {
+            if (resp) {
+                this.setState({ productList: resp, deSelect: true })
             }
         })
     }
@@ -137,12 +100,35 @@ export default class TonnesOrder extends Component {
         }
     }
     onSkuChecked = (Data) => {
-        if (Data) {
+        let enter;
+        Data && Data.map(item => {
+            enter = item == 'Select All' ? true : false
+        })
+        if (enter) {
+            this.onSkuSelectAll(Data)
+        }
+        else if (!Data.includes('Select All') && !this.state.skuReset) {
+            this.setState({ skuSelectValue: [], skuReset: true, deSelect: false }, () => { this.getProductData(this.state.regionSelectVal) })
+        }
+        else {
             let dropDownValue = []
             Data && Data.map((item => {
                 dropDownValue.push(item)
             }))
-            this.setState({ skuSelectValue: dropDownValue })
+            let resetStatus = dropDownValue.includes('Select All') ? false : true
+            this.setState({ skuSelectValue: dropDownValue, skuReset: resetStatus })
+        }
+    }
+    onSkuSelectAll = (Data) => {
+        if (Data.includes('Select All')) {
+            let dataArray = ['Select All']
+            this.state.productList && this.state.productList.map((item) => {
+                let productData = item.split(',')
+                let value = productData[3]
+                // item && item.productDetailsao && item.productDetailsao.productId + 'Parent'
+                dataArray.push(value)
+            })
+            this.onSkuChecked(dataArray)
         }
     }
     onSelectAll = () => {
@@ -157,6 +143,49 @@ export default class TonnesOrder extends Component {
             childArray.push(obj)
         })
         this.onRegionChecked(childArray)
+    }
+    getGraphData = () => {
+        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
+            if (this.state.startDate <= this.state.expiryDate) {
+                let childArray = []
+                let parentArray = []
+                this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
+                    if (item.includes("Parent")) {
+                        let data = item.split('Parent')
+                        parentArray.push(data[0])
+                    }
+                    if (!item.includes("Parent")) {
+                        childArray.push(item)
+                    }
+                })
+                let skuData = []
+                this.state.skuSelectValue && this.state.skuSelectValue.map((item) => {
+                    if (item != 'Select All') {
+                        let value = item.split('Parent')
+                        skuData.push(value[0])
+                    }
+                })
+                let obj = {
+                    'subRegionId': childArray,
+                    'regionId': parentArray,
+                    'productId': skuData,
+                    'startDate': this.state.startDate,
+                    'expiryDate': this.state.expiryDate,
+                    'id': 3
+                }
+                getTonValue(obj).then(resp => {
+                    if (resp && resp.data) {
+                        this.setState({ lineChartData: resp.data })
+                    }
+                })
+            }
+            else {
+                toastr.error("Invalid Date")
+            }
+        }
+        else {
+            toastr.error("Mandatory Fields are Mising")
+        }
     }
     render() {
         let regionData = []
@@ -179,36 +208,36 @@ export default class TonnesOrder extends Component {
             regionData.push(obj)
         })
 
-        let productData = []
+        let productData = [this.state.selectAll]
         this.state.productList && this.state.productList.map((item) => {
-            let obj = {}
-            if (item.name) {
-                obj.title = item.name
-                obj.value = item.productDetailsao.productId + 'Parent'
+            let Data = item.split(',')
+            let productList = Data[2] + ' - ' + Data[4]
+            let productName = []
+            productName = productData && productData.map((productItem) => {
+                return productItem.title
+            })
+            if (!productName.includes(productList)) {
+                let Data = item.split(',');
+                let obj = {
+                    title: Data[2] + ' - ' + Data[4],
+                    value: Data[3]
+                }
+                productData.push(obj)
             }
-            else {
-                obj.title = item.title
-                obj.value = item.value + 'ParentDAta'
-            }
-            productData.push(obj)
         })
 
         const skuResetData = [{ title: 'No Data', value: 'No Data' }]
         let chartData = []
         this.state.lineChartData.orderQuantity && this.state.lineChartData.orderQuantity.map((item, index) => {
             let regionName = "";
-            let amount = 0
             item && item.regionDetails && item.regionDetails.map((regionList, regionIndex) => {
                 if (regionIndex > 0) {
                     let data = regionList.split(',')
 
-                    let amountValue = data && data[1] ? Number(data[1]) : 0
-                    amount = amount + amountValue
-
                     let obj = {
                         name: data[0],
                         orderValue: data[1],
-                        amount: amount
+                        amount: Math.max(Number(data[1]))
                         // regionName : data[1]
                         // lineName: regionName
                     }
@@ -306,9 +335,9 @@ export default class TonnesOrder extends Component {
                                 </button>
                             </div>
                         </div>
-                        {chartData.length > 0 ? < div className="mt-3">
-                            <div className="d-flex justify-content-center">
-                                <LineGraphView barChartData={chartData} /> </div>
+                        {chartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
+                            <div className="main-wrapper d-flex justify-content-center">
+                                <LineGraphView barChartData={chartData} label='Tonnes' /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>

@@ -150,7 +150,6 @@ export class LineGraphView extends Component {
             getBarChart: true
         }
     }
-
     render() {
         let value = this.props && this.props.label
         const reactbarChartdata = this.props.barChartData ? this.props.barChartData :
