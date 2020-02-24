@@ -4,6 +4,7 @@ import TreeSelect from 'react-do-tree-select';
 import { getReportRegion, getProductList, getOrderValue } from '../../actions/reportAction'
 import { LineGraphView } from '../../shared/Reactgraphcharts'
 import { toastr } from 'react-redux-toastr';
+import { getDcCodeData } from '../../actions/salesAgentAction';
 
 export default class OrderValue extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ export default class OrderValue extends Component {
             skuSelectValue: [],
             lineChartData: [],
             reset: true,
+            skuReset: true,
             deSelect: false,
             productList: [],
             selectAll: { title: 'Select All', value: 'Select All' }
@@ -42,57 +44,18 @@ export default class OrderValue extends Component {
             }
         })
         let obj = {
-            'dcCode': regionData
+            roleId: 4,
+            flag: 5,
+            search: regionData
         }
-        getProductList(obj).then(resp => {
-            if (resp && resp.datas) {
-                this.setState({ productList: resp.datas, deSelect: true })
+        getDcCodeData(obj, "order").then(resp => {
+            if (resp) {
+                this.setState({ productList: resp, deSelect: true })
             }
         })
     }
     dateChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
-    }
-    getGraphData = () => {
-        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
-            if (this.state.startDate <= this.state.expiryDate) {
-                let childArray = []
-                let parentArray = []
-                this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
-                    if (item.includes("Parent")) {
-                        let data = item.split('Parent')
-                        parentArray.push(data[0])
-                    }
-                    if (!item.includes("Parent")) {
-                        childArray.push(item)
-                    }
-                })
-                let skuData = []
-                this.state.skuSelectValue && this.state.skuSelectValue.map((item) => {
-                    let value = item.split('Parent')
-                    skuData.push(value[0])
-                })
-                let obj = {
-                    'subRegionId': childArray,
-                    'regionId': parentArray,
-                    'productId': skuData,
-                    'startDate': this.state.startDate,
-                    'expiryDate': this.state.expiryDate,
-                    'id': 3
-                }
-                getOrderValue(obj).then(resp => {
-                    if (resp && resp.data) {
-                        this.setState({ lineChartData: resp.data })
-                    }
-                })
-            }
-            else {
-                toastr.error("Invalid Date")
-            }
-        }
-        else {
-            toastr.error("Mandatory Fields are Mising")
-        }
     }
     redirectPage = () => {
         this.props.history.push({ pathname: path.reports.list, state: { executivePerfomanceBack: 'executivePerfomanceSessionBack' } });
@@ -137,12 +100,35 @@ export default class OrderValue extends Component {
         }
     }
     onSkuChecked = (Data) => {
-        if (Data) {
+        let enter;
+        Data && Data.map(item => {
+            enter = item == 'Select All' ? true : false
+        })
+        if (enter) {
+            this.onSkuSelectAll(Data)
+        }
+        else if (!Data.includes('Select All') && !this.state.skuReset) {
+            this.setState({ skuSelectValue: [], skuReset: true, deSelect: false }, () => { this.getProductData(this.state.regionSelectVal) })
+        }
+        else {
             let dropDownValue = []
             Data && Data.map((item => {
                 dropDownValue.push(item)
             }))
-            this.setState({ skuSelectValue: dropDownValue })
+            let resetStatus = dropDownValue.includes('Select All') ? false : true
+            this.setState({ skuSelectValue: dropDownValue, skuReset: resetStatus })
+        }
+    }
+    onSkuSelectAll = (Data) => {
+        if (Data.includes('Select All')) {
+            let dataArray = ['Select All']
+            this.state.productList && this.state.productList.map((item) => {
+                let productData = item.split(',')
+                let value = productData[3]
+                // item && item.productDetailsao && item.productDetailsao.productId + 'Parent'
+                dataArray.push(value)
+            })
+            this.onSkuChecked(dataArray)
         }
     }
     onSelectAll = () => {
@@ -157,6 +143,49 @@ export default class OrderValue extends Component {
             childArray.push(obj)
         })
         this.onRegionChecked(childArray)
+    }
+    getGraphData = () => {
+        if (this.state.startDate && this.state.expiryDate && this.state.regionSelectVal.length > 0 && this.state.skuSelectValue.length > 0) {
+            if (this.state.startDate <= this.state.expiryDate) {
+                let childArray = []
+                let parentArray = []
+                this.state.regionSelectVal && this.state.regionSelectVal.map((item) => {
+                    if (item.includes("Parent")) {
+                        let data = item.split('Parent')
+                        parentArray.push(data[0])
+                    }
+                    if (!item.includes("Parent")) {
+                        childArray.push(item)
+                    }
+                })
+                let skuData = []
+                this.state.skuSelectValue && this.state.skuSelectValue.map((item) => {
+                    if (item != 'Select All') {
+                        let value = item.split('Parent')
+                        skuData.push(value[0])
+                    }
+                })
+                let obj = {
+                    'subRegionId': childArray,
+                    'regionId': parentArray,
+                    'productId': skuData,
+                    'startDate': this.state.startDate,
+                    'expiryDate': this.state.expiryDate,
+                    'id': 3
+                }
+                getOrderValue(obj).then(resp => {
+                    if (resp && resp.data) {
+                        this.setState({ lineChartData: resp.data })
+                    }
+                })
+            }
+            else {
+                toastr.error("Invalid Date")
+            }
+        }
+        else {
+            toastr.error("Mandatory Fields are Mising")
+        }
     }
     render() {
         let regionData = []
@@ -179,18 +208,32 @@ export default class OrderValue extends Component {
             regionData.push(obj)
         })
 
-        let productData = []
-        this.state.productList && this.state.productList.map((item) => {
-            let obj = {}
-            if (item.name) {
-                obj.title = item.name
-                obj.value = item.productDetailsao.productId + 'Parent'
+        let productData = [this.state.selectAll]
+        this.state.productList && this.state.productList.map((item, index) => {
+            // let obj = {}
+            // if (item.name) {
+            //     obj.title = item.name
+            //     obj.value = item.productDetailsao.productId + 'Parent'
+            // }
+            // else {
+            //     obj.title = item.title
+            //     obj.value = item.value + 'ParentDAta'
+            // }
+            // productData.push(obj)
+            let Data = item.split(',')
+            let productList = Data[2] + ' - ' + Data[4]
+            let productName = []
+            productName = productData && productData.map((productItem) => {
+                return productItem.title
+            })
+            if (!productName.includes(productList)) {
+                let Data = item.split(',');
+                let obj = {
+                    title: Data[2] + ' - ' + Data[4],
+                    value: Data[3]
+                }
+                productData.push(obj)
             }
-            else {
-                obj.title = item.title
-                obj.value = item.value + 'ParentDAta'
-            }
-            productData.push(obj)
         })
 
         const skuResetData = [{ title: 'No data', value: 'No data' }]
@@ -201,18 +244,14 @@ export default class OrderValue extends Component {
             //     region: item.regionDetails[0]
             // }
             let regionName = "";
-            let amount = 0
             item && item.regionDetails && item.regionDetails.map((regionList, regionIndex) => {
                 if (regionIndex > 0) {
                     let data = regionList.split(',')
 
-
-                    let amountValue = data && data[1] ? Number(data[1]) : 0
-                    amount = amount + amountValue
                     let obj = {
                         name: data[0],
                         orderValue: data[1],
-                        amount: amount
+                        amount: Math.max(Number(data[1]))
                         // regionName : data[1]
                         // lineName: regionName
                     }
@@ -227,6 +266,7 @@ export default class OrderValue extends Component {
                     chartData.push(obj)
                 }
             })
+
         })
         const regionCheckbox = {
             enable: true,
@@ -311,9 +351,9 @@ export default class OrderValue extends Component {
                                 </button>
                             </div>
                         </div>
-                        {chartData.length > 0 ? < div className="mt-3">
-                            <div className="d-flex justify-content-center">
-                                <LineGraphView barChartData={chartData} label='Order Value' /> </div>
+                        {chartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
+                            <div className="main-wrapper d-flex justify-content-center">
+                                <LineGraphView barChartData={chartData} label='Order Value' label='Order Value (INR)' /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>

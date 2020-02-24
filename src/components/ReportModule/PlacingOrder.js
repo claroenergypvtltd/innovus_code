@@ -286,13 +286,22 @@ class PlacingOrder extends Component {
         })
 
         let agentData = []
-        this.state.agentDataList && this.state.agentDataList.map((item) => {
+        this.state.agentDataList && this.state.agentDataList.map((item, index) => {
             let Data = item.split(',');
-            let obj = {
-                title: Data[1],
-                value: Data[0]
+            let agentList = Data[1] + ' - ' + Data[4]
+            let agentName = []
+            agentName = agentData && agentData.map((agentItem) => {
+                return agentItem.title
+            })
+            if (!agentName.includes(agentList)) {
+                let Data = item.split(',');
+                let obj = {
+                    title: Data[1] + ' - ' + Data[4],
+                    value: Data[0]
+                }
+                agentData.push(obj)
             }
-            agentData.push(obj)
+
         })
 
         let latLongData = [];
@@ -390,14 +399,7 @@ class PlacingOrder extends Component {
                                             {/* <input className="holder" placeholder="Search here.." /> */}
                                             <TreeSelect
                                                 treeData={this.state.agentResetData}
-                                                style={{ width: 210, height: 100 }}
-                                                selectVal={this.state.agentSelectVal}
-                                                onSelect={this.onSelect}
-                                                // onExpand={false}
-                                                onChecked={this.onAgentChecked}
-                                                // checkbox={agentCheckBox}
-                                                // showlevel={this.state.showlevel}
-                                                customTitleRender={this.customTitleRender} />
+                                                style={{ width: 210, height: 100 }} />
                                         </div>}
                                     </div>
                                     <div className="col-md-11 search-wrap">
