@@ -160,7 +160,12 @@ export default class OrderValue extends Component {
                 })
                 let skuData = []
                 this.state.skuSelectValue && this.state.skuSelectValue.map((item) => {
-                    if (item != 'Select All') {
+                    let agentList = item
+                    let agentName = []
+                    agentName = skuData && skuData.map((agentItem) => {
+                        return agentItem
+                    })
+                    if (item != 'Select All' && !agentName.includes(agentList)) {
                         let value = item.split('Parent')
                         skuData.push(value[0])
                     }
