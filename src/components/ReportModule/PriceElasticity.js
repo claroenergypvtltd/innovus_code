@@ -387,8 +387,8 @@ class PriceElasticity extends Component {
                                 <div className="d-flex justify-content-center">
                                     {/* {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />} */}
 
-                                    <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" chartName="Price Elasticity" />
-
+                                    <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" />
+                                    <label className="d-flex justify-content-center">Price Elasticity</label>
                                 </div>
                             </div>
                         </div> :

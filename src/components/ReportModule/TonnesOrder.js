@@ -338,8 +338,8 @@ export default class TonnesOrder extends Component {
                                 </button>
                             </div>
                         </div>
-                        {chartData.length > 0 ? < div className="col-md-6 offset-md-3 mt-3">
-                            <div className="main-wrapper d-flex justify-content-center">
+                        {chartData.length > 0 ? < div className="mt-3">
+                            <div className="d-flex justify-content-center">
                                 <LineGraphView barChartData={chartData} label='Tonnes' /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}
                     </div>

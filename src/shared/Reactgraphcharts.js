@@ -109,6 +109,7 @@ export class ReactBarLineChart extends Component {
                     <Bar dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />
                     <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" />
                 </ComposedChart>
+                <label class="d-flex justify-content-center">Price Elasticity</label>
             </div>
         )
     }
@@ -179,7 +180,7 @@ export class LineGraphView extends Component {
             <div>
                 <LineChart
                     width={600}
-                    height={500}
+                    height={400}
                     data={reactbarChartdata}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 5,
