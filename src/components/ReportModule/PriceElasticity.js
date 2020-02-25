@@ -25,7 +25,8 @@ class PriceElasticity extends Component {
             subRegionData: [],
             errors: {},
             salesAgentList: [],
-            graphSubmit: false
+            graphSubmit: false,
+            check: false,
         }
     }
 
@@ -70,17 +71,19 @@ class PriceElasticity extends Component {
 
     onChecked = (data, value) => {
         let regionArray = [];
-        data.map(item => {
-            regionArray.push(item);
+        data.map((item, index) => {
+            if (data.length - 1 == index) {
+                regionArray.push(item);
+            }
         })
         this.setState({ selectVal: regionArray, subEnable: false, salesEnable: false })
 
-        if (data && data[0]) {
-            let Data = data[0].split('##');
+        if (regionArray && regionArray[0]) {
+            let Data = regionArray[0].split('##');
             let subRegionData = JSON.parse(Data[1]);
             this.setState({ subRegionData, selectsubVal: [] })
         } else {
-            this.setState({ subRegionData: [{ "title": "No Data", "value": "No Data" }], salesAgentList: [{ "title": "No Data", "value": "No Data,No Data" }], subEnable: true, salesEnable: true, selectsubVal: [], selectVal1: [] })
+            this.setState({ subRegionData: [{ "title": "No Data", "value": "No Data" }], salesAgentList: [{ "name": "No Data", "id": "No Data" }], subEnable: true, salesEnable: true, selectsubVal: [], selectVal1: [] })
         }
     }
 
@@ -95,7 +98,7 @@ class PriceElasticity extends Component {
             })
         }
         else {
-            this.setState({ selectsubVal: [], salesAgentList: [{ "title": "No Data", "value": "No Data,No Data" }], selectVal1: [], subEnable: false, salesEnable: true })
+            this.setState({ selectsubVal: [], salesAgentList: [{ "name": "No Data", "id": "No Data" }], selectVal1: [], subEnable: false, salesEnable: true })
 
         }
 
@@ -108,7 +111,8 @@ class PriceElasticity extends Component {
             regionArray1.push(item);
             // }
         })
-        this.state.selectVal1 = regionArray1
+        this.setState({ selectVal1: regionArray1, check: true, })
+        // this.state.selectVal1 = regionArray1
     }
 
     getGraphView = () => {
@@ -237,27 +241,47 @@ class PriceElasticity extends Component {
             }
             subtreeData.push(obj)
         })
+
         let agentData = []
-        this.state.salesAgentList && this.state.salesAgentList.map((item) => {
-            if (item) {
-                let Data;
-                let obj = {};
-                if (item.value) {
-                    Data = item.value.split(',');
+        this.state.salesAgentList && this.state.salesAgentList.map((item, index) => {
+            let obj = {}
+
+            let selectedVal = '';
+
+
+            this.state.selectVal1 && this.state.selectVal1.map(selectedItem => {
+                if (selectedItem) {
+                    selectedVal = selectedItem;
+                }
+            })
+
+            if (selectedVal) {
+                if ((item.id + '-Parent' == selectedVal) && this.state.check) {
                     obj = {
-                        title: Data[1],
-                        value: Data[0]
+                        title: item.name,
+                        value: item.id + '-Parent',
+                        // disabled: true
                     }
                 } else {
                     obj = {
                         title: item.name,
-                        value: item.id + '##parent'
+                        value: item.id + '-Parent',
+                        disabled: true
                     }
                 }
-
-                agentData.push(obj)
+            } else {
+                obj = {
+                    title: item.name,
+                    value: item.id + '-Parent',
+                }
             }
+
+            agentData.push(obj)
         })
+
+
+
+
         const checkbox = {
             enable: true,
             parentChain: true,              // child Affects parent nodes;

@@ -8,6 +8,7 @@ import { fetchRetailers, SubmitRetailer, fetchAgent } from '../../actions/Submit
 import { RETAILER_CREATE_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr'
 import { path } from '../../constants';
+import { SubmitEcom, getEcom } from '../../actions/appSettingAction'
 
 
 class CreateTollFree extends Component {
@@ -19,6 +20,7 @@ class CreateTollFree extends Component {
         this.state = {
             submitted: false,
             agentId: '',
+            phoneNumber: '',
             errors: {}
         }
     }
@@ -54,25 +56,28 @@ class CreateTollFree extends Component {
 
 
     listPath = (e) => {
-        this.props.history.push(path.appSetting.tollFree);
+        this.props.history.push(path.appSetting.listTollFree);
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
+    handleSubmit = () => {
         this.setState({ submitted: true })
-
-        let userData = [];
-
-        this.props.selectedDatas && this.props.selectedDatas.map(item => {
-            userData.push(item.id)
-        })
-
-        if (this.state.agentId && userData) {
+        if (this.state.phoneNumber) {
+            // if (this.state.phoneNumber.length = 10) {
             const formData = new FormData();
-            formData.append("agentId", this.state.agentId);
-            formData.append("flag", 1);
-            formData.append("userId", userData);
-            this.props.SubmitRetailer(formData, true)
+            formData.append("type", "contact");
+            formData.append("fileName", "contact");
+            formData.append("file", this.state.phoneNumber);
+            SubmitEcom(formData).then(resp => {
+                if (resp) {
+                    toastr.success(resp.message);
+                    this.listPath();
+                }
+            })
+            // } else {
+            //     toastr.error("Phone number must be 10 Digit")
+            // }
+        } else {
+            toastr.error("Mandatory Field Missing")
         }
     }
 
@@ -97,9 +102,11 @@ class CreateTollFree extends Component {
                                     placeholder="Phone Number"
                                     className={classnames('form-control')}
                                     name="phoneNumber"
+                                    onChange={this.handleInputChange}
+                                    value={this.state.phoneNumber}
                                     required
                                 />
-                                {this.state.submitted && !this.state.agentId && <div className="mandatory">{window.strings['USERMANAGEMENT']['PHONE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
+                                {this.state.submitted && !this.state.phoneNumber && <div className="mandatory">{window.strings['USERMANAGEMENT']['PHONE_NUMBER'] + window.strings['ISREQUIRED']}</div>}
                             </div>
                         </form>
 
