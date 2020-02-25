@@ -75,13 +75,15 @@ class ExecutivePerformance extends Component {
 
     onChecked = (data, value) => {
         let regionArray = [];
-        data.map(item => {
-            regionArray.push(item);
+        data.map((item, index) => {
+            if (data.length - 1 == index) {
+                regionArray.push(item);
+            }
         })
         this.setState({ selectVal: regionArray, subEnable: false })
 
-        if (data && data[0]) {
-            let Data = data[0].split('##');
+        if (regionArray && regionArray[0]) {
+            let Data = regionArray[0].split('##');
             let subRegionData = JSON.parse(Data[1]);
             this.setState({ subRegionData, selectsubVal: [] })
         } else {
