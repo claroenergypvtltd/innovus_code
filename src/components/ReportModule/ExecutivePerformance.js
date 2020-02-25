@@ -25,7 +25,10 @@ class ExecutivePerformance extends Component {
             subRegionData: [],
             errors: {},
             salesAgentList: [],
-            graphSubmit: false
+            graphSubmit: false,
+            salesEnable: true,
+            subEnable: true,
+            skuReset: true
         }
     }
 
@@ -61,7 +64,7 @@ class ExecutivePerformance extends Component {
         }
         getDcCodeData(obj, "order").then(resp => {
             if (resp) {
-                this.setState({ salesAgentList: resp })
+                this.setState({ salesAgentList: resp, salesEnable: false })
             }
         })
     }
@@ -75,7 +78,7 @@ class ExecutivePerformance extends Component {
         data.map(item => {
             regionArray.push(item);
         })
-        this.setState({ selectVal: regionArray, subEnable: false, salesEnable: false })
+        this.setState({ selectVal: regionArray, subEnable: false })
 
         if (data && data[0]) {
             let Data = data[0].split('##');
@@ -102,17 +105,37 @@ class ExecutivePerformance extends Component {
 
     }
 
-    onChecked1 = (data, value) => {
-        let regionArray1 = [];
-        data.map(item => {
-            if (!item.includes('parent')) {
-                regionArray1.push(item);
-
-            }
+    onChecked1 = (Data) => {
+        let enter;
+        Data && Data.map(item => {
+            enter = item == 'Select All' ? true : false
         })
-        this.state.selectVal1 = regionArray1
+        if (enter) {
+            this.onSkuSelectAll(Data)
+        }
+        else if (!Data.includes('Select All') && !this.state.skuReset) {
+            this.setState({ selectVal1: [], skuReset: true, salesEnable: true }, () => { this.fetchAgents(this.state.selectsubVal) })
+        }
+        else {
+            let dropDownValue = []
+            Data && Data.map((item => {
+                dropDownValue.push(item)
+            }))
+            let resetStatus = dropDownValue && dropDownValue.includes('Select All') ? false : true
+            this.setState({ selectVal1: dropDownValue, skuReset: resetStatus })
+        }
     }
-
+    onSkuSelectAll = (Data) => {
+        if (Data.includes('Select All')) {
+            let dataArray = ['Select All']
+            this.state.salesAgentList && this.state.salesAgentList.map((item) => {
+                let productData = item.split(',')
+                let value = productData[0]
+                dataArray.push(value)
+            })
+            this.onChecked1(dataArray)
+        }
+    }
     getGraphView = () => {
         this.setState({ graphSubmit: true })
         if (this.state.startDate && this.state.expiryDate && this.state.selectVal.length > 0 && this.state.selectsubVal.length > 0 && this.state.selectVal1.length > 0) {
@@ -127,8 +150,15 @@ class ExecutivePerformance extends Component {
             })
             let selectVal1 = [];
             this.state.selectVal1 && this.state.selectVal1.map(item => {
-                let selectVal1Data = item.split('-');
-                selectVal1.push(selectVal1Data[0]);
+                let agentList = item
+                let agentName = []
+                agentName = selectVal1 && selectVal1.map((agentItem) => {
+                    return agentItem
+                })
+                if (!agentName.includes(agentList) && !item.includes('Select All')) {
+                    selectVal1.push(item);
+                }
+
             })
 
             let obj = {
@@ -160,7 +190,9 @@ class ExecutivePerformance extends Component {
             lineChartData: [],
             selectsubVal: [],
             salesAgentList: [],
-            subRegionData: []
+            subRegionData: [],
+            salesEnable: true,
+            subEnable: true
 
         });
     }
@@ -235,7 +267,10 @@ class ExecutivePerformance extends Component {
             }
             subtreeData.push(obj)
         })
-        let agentData = []
+
+        let subResetTreeData = [{ title: 'No data', value: 'No data' }]
+
+        let agentData = [{ title: 'Select All', value: 'Select All' }]
         this.state.salesAgentList && this.state.salesAgentList.map((item, index) => {
             if (item) {
                 let Data;
@@ -244,14 +279,22 @@ class ExecutivePerformance extends Component {
                 } else {
                     Data = item.split(',');
                 }
-                let obj = {
-                    title: Data[1],
-                    value: Data[0] + '-' + index
+                let agentList = Data[1]
+                let agentName = []
+                agentName = agentData && agentData.map((agentItem) => {
+                    return agentItem.title
+                })
+                if (!agentName.includes(agentList)) {
+                    let obj = {
+                        title: Data[1],
+                        value: Data[0]
+                    }
+                    agentData.push(obj)
                 }
-                agentData.push(obj)
             }
         })
 
+        let agentResetData = [{ title: 'No data', value: 'No data' }]
 
         const checkbox = {
             enable: true,
@@ -300,11 +343,7 @@ class ExecutivePerformance extends Component {
                     }
                 }
             })
-            // let Data = item.split(',');
-            // let obj = {
-            //     name: Data[0], Users: Data[1],
-            // }
-            // CustomerOnBoard.push(obj);
+
         })
         let noOfOrders = [];
         this.state.lineChartData && this.state.lineChartData.order && this.state.lineChartData.order.map(item => {
@@ -330,11 +369,6 @@ class ExecutivePerformance extends Component {
                     }
                 }
             })
-            // let Data = item.split(',');
-            // let obj = {
-            //     name: Data[0], Order: Data[1],
-            // }
-            // noOfOrders.push(obj);
         })
 
         let orderValue = [];
@@ -362,11 +396,6 @@ class ExecutivePerformance extends Component {
                     }
                 }
             })
-            // let Data = item.split(',');
-            // let obj = {
-            //     name: Data[0], Value: Data[1],
-            // }
-            // orderValue.push(obj);
         })
         return (
             <div className="customer-onboard">
@@ -401,7 +430,7 @@ class ExecutivePerformance extends Component {
                             {this.state.subEnable && <div className="tree-box">
                                 <label className="label-title">Select Sub Region * </label>
                                 <TreeSelect
-                                    treeData={subtreeData}
+                                    treeData={subResetTreeData}
                                     style={{ width: 210, height: 100 }}
                                 />
                             </div>}
@@ -422,7 +451,7 @@ class ExecutivePerformance extends Component {
                             {this.state.salesEnable && <div className="tree-box">
                                 <label className="label-title">Sales Agent * </label>
                                 <TreeSelect
-                                    treeData={agentData}
+                                    treeData={agentResetData}
                                     style={{ width: 210, height: 100 }}
                                 />
                             </div>}
