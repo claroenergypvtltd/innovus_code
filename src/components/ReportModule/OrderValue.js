@@ -115,7 +115,7 @@ export default class OrderValue extends Component {
             Data && Data.map((item => {
                 dropDownValue.push(item)
             }))
-            let resetStatus = dropDownValue.includes('Select All') ? false : true
+            let resetStatus = dropDownValue && dropDownValue.includes('Select All') ? false : true
             this.setState({ skuSelectValue: dropDownValue, skuReset: resetStatus })
         }
     }
@@ -125,7 +125,6 @@ export default class OrderValue extends Component {
             this.state.productList && this.state.productList.map((item) => {
                 let productData = item.split(',')
                 let value = productData[3]
-                // item && item.productDetailsao && item.productDetailsao.productId + 'Parent'
                 dataArray.push(value)
             })
             this.onSkuChecked(dataArray)
@@ -165,7 +164,7 @@ export default class OrderValue extends Component {
                     agentName = skuData && skuData.map((agentItem) => {
                         return agentItem
                     })
-                    if (item != 'Select All' && !agentName.includes(agentList)) {
+                    if (item != 'Select All' && agentName && !agentName.includes(agentList)) {
                         let value = item.split('Parent')
                         skuData.push(value[0])
                     }
@@ -215,16 +214,7 @@ export default class OrderValue extends Component {
 
         let productData = [this.state.selectAll]
         this.state.productList && this.state.productList.map((item, index) => {
-            // let obj = {}
-            // if (item.name) {
-            //     obj.title = item.name
-            //     obj.value = item.productDetailsao.productId + 'Parent'
-            // }
-            // else {
-            //     obj.title = item.title
-            //     obj.value = item.value + 'ParentDAta'
-            // }
-            // productData.push(obj)
+
             let Data = item.split(',')
             let productList = Data[2] + ' - ' + Data[4]
             let productName = []
@@ -245,9 +235,7 @@ export default class OrderValue extends Component {
 
         let chartData = []
         this.state.lineChartData.orderValue && this.state.lineChartData.orderValue.map((item, index) => {
-            // let obj = {
-            //     region: item.regionDetails[0]
-            // }
+
             let regionName = "";
             item && item.regionDetails && item.regionDetails.map((regionList, regionIndex) => {
                 if (regionIndex > 0) {
@@ -257,8 +245,6 @@ export default class OrderValue extends Component {
                         name: data[0],
                         orderValue: data[1],
                         amount: Math.max(Number(data[1]))
-                        // regionName : data[1]
-                        // lineName: regionName
                     }
                     obj[`${regionName}`] = data[1];
                     chartData.push(obj)

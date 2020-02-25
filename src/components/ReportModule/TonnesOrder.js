@@ -115,7 +115,7 @@ export default class TonnesOrder extends Component {
             Data && Data.map((item => {
                 dropDownValue.push(item)
             }))
-            let resetStatus = dropDownValue.includes('Select All') ? false : true
+            let resetStatus = dropDownValue && dropDownValue.includes('Select All') ? false : true
             this.setState({ skuSelectValue: dropDownValue, skuReset: resetStatus })
         }
     }
@@ -165,7 +165,7 @@ export default class TonnesOrder extends Component {
                     agentName = skuData && skuData.map((agentItem) => {
                         return agentItem
                     })
-                    if (item != 'Select All' && !agentName.includes(agentList)) {
+                    if (item != 'Select All' && agentName && !agentName.includes(agentList)) {
                         let value = item.split('Parent')
                         skuData.push(value[0])
                     }
@@ -243,8 +243,6 @@ export default class TonnesOrder extends Component {
                         name: data[0],
                         orderValue: data[1],
                         amount: Math.max(Number(data[1]))
-                        // regionName : data[1]
-                        // lineName: regionName
                     }
                     obj[`${regionName}`] = data[1];
                     chartData.push(obj)

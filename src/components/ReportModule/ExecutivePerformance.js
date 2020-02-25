@@ -121,17 +121,9 @@ class ExecutivePerformance extends Component {
             Data && Data.map((item => {
                 dropDownValue.push(item)
             }))
-            let resetStatus = dropDownValue.includes('Select All') ? false : true
+            let resetStatus = dropDownValue && dropDownValue.includes('Select All') ? false : true
             this.setState({ selectVal1: dropDownValue, skuReset: resetStatus })
         }
-        // let regionArray1 = [];
-        // data.map(item => {
-        //     if (!item.includes('parent')) {
-        //         regionArray1.push(item);
-
-        //     }
-        // })
-        // this.state.selectVal1 = regionArray1
     }
     onSkuSelectAll = (Data) => {
         if (Data.includes('Select All')) {
@@ -139,7 +131,6 @@ class ExecutivePerformance extends Component {
             this.state.salesAgentList && this.state.salesAgentList.map((item) => {
                 let productData = item.split(',')
                 let value = productData[0]
-                // item && item.productDetailsao && item.productDetailsao.productId + 'Parent'
                 dataArray.push(value)
             })
             this.onChecked1(dataArray)
@@ -352,11 +343,7 @@ class ExecutivePerformance extends Component {
                     }
                 }
             })
-            // let Data = item.split(',');
-            // let obj = {
-            //     name: Data[0], Users: Data[1],
-            // }
-            // CustomerOnBoard.push(obj);
+
         })
         let noOfOrders = [];
         this.state.lineChartData && this.state.lineChartData.order && this.state.lineChartData.order.map(item => {
@@ -382,11 +369,6 @@ class ExecutivePerformance extends Component {
                     }
                 }
             })
-            // let Data = item.split(',');
-            // let obj = {
-            //     name: Data[0], Order: Data[1],
-            // }
-            // noOfOrders.push(obj);
         })
 
         let orderValue = [];
@@ -414,11 +396,6 @@ class ExecutivePerformance extends Component {
                     }
                 }
             })
-            // let Data = item.split(',');
-            // let obj = {
-            //     name: Data[0], Value: Data[1],
-            // }
-            // orderValue.push(obj);
         })
         return (
             <div className="customer-onboard">
