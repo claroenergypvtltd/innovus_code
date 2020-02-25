@@ -487,17 +487,20 @@ class ExecutivePerformance extends Component {
                     {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ? <div className="row mt-5">
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineGraphView label='Date' Data='Users' yAxis="No of customers" barChartData={CustomerOnBoard} />}
+                                {<LineGraphView label='Date' Data='Users' yAxis="" barChartData={CustomerOnBoard} />}
+                                <label className="d-flex justify-content-center mt-2">No of customers</label>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="main-wrapper py-3">
-                                {<LineGraphView label='Date' Data='Order' yAxis="No of orders" barChartData={noOfOrders} />}
+                                {<LineGraphView label='Date' Data='Order' yAxis="" barChartData={noOfOrders} />}
+                                <label className="d-flex justify-content-center mt-2">No of orders</label>
                             </div>
                         </div>
                         <div className="col-md-6 offset-md-3 mt-5">
                             <div className="main-wrapper py-3">
-                                {<LineGraphView label='Date' Data='Value' yAxis="INR" barChartData={orderValue} />}
+                                {<LineGraphView label='Date' Data='Value' yAxis="" barChartData={orderValue} />}
+                                <label className="d-flex justify-content-center mt-2">INR</label>
                             </div>
                         </div>
                     </div> :
