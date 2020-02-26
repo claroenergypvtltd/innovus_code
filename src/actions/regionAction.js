@@ -3,7 +3,7 @@ import { REGION_FETCH_SUCCESS, REGION_FETCH_SPECIFIC_DATA, GET_ERRORS, REGION_UP
 import { toastr } from 'react-redux-toastr'
 
 export const getRegion = (obj) => dispatch => {
-    httpServices.get('regionDcs?page=' + obj.page + '&rows=' + obj.rows).then(resp => {
+    httpServices.get('regionDcs?page=' + obj.page + '&rows=' + obj.rows + '&search=' + obj.search).then(resp => {
         if (resp && resp.data) {
             dispatch({ type: REGION_FETCH_SUCCESS, List: resp.data })
         }

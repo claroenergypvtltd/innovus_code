@@ -12,6 +12,10 @@ import { getDcCodeData } from '../../actions/salesAgentAction';
 class PlacingOrder extends Component {
     constructor(props) {
         super(props);
+        var today = new Date(),
+            dateValue = today.getDate() >= 10 ? today.getDate() : ('0' + today.getDate()),
+            monthValue = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1)),
+            date = today.getFullYear() + '-' + monthValue + '-' + dateValue
         this.state = {
             errors: {},
             mapStartDate: '',
@@ -32,7 +36,8 @@ class PlacingOrder extends Component {
             }],
             selectAll: { title: 'Select All', value: 'Select All' },
             agentDropDown: false,
-            reset: true
+            reset: true,
+            dateValidation: date
         }
     }
     componentDidMount() {
@@ -344,7 +349,7 @@ class PlacingOrder extends Component {
                                 <div className="order-report">
                                     <div className="start-date">
                                         <label className="label-title">Choose Date * </label>
-                                        <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
+                                        <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} max={this.state.dateValidation} name="mapStartDate" />
                                     </div>
                                     <div className="d-flex justify-content-around">
                                         {/* <div className="start-date">
@@ -428,7 +433,7 @@ class PlacingOrder extends Component {
                                 <div className="d-flex justify-content-around">
                                     <div className="start-date mr-2">
                                         <label className="label-title">Choose Date * </label>
-                                        <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} name="graphStartDate" />
+                                        <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} max={this.state.dateValidation} name="graphStartDate" />
 
                                     </div>
                                     <div className="tree-box">
