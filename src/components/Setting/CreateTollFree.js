@@ -26,7 +26,10 @@ class CreateTollFree extends Component {
     }
 
     componentDidMount() {
-        this.getAgentList();
+        if (this.props.location && this.props.location.state && this.props.location.state.id) {
+            this.getTollFreeData(this.props.location.state.id);
+        }
+
     }
 
     componentWillReceiveProps(newProps) {
@@ -38,16 +41,12 @@ class CreateTollFree extends Component {
         }
     }
 
-    getAgentList = () => {
-        let user = {};
-        user.roleId = 4;
-        fetchAgent(user).then(resp => {
-            if (resp && resp.datas) {
-                this.setState({
-                    agentData: resp.datas
-                })
+    getTollFreeData = (id) => {
+        getEcom('contact', id).then(resp => {
+            if (resp) {
+                //    this.setState({ tollFreeList : resp.data }) 
             }
-        });
+        })
     }
 
     handleInputChange = (e) => {
@@ -62,32 +61,26 @@ class CreateTollFree extends Component {
     handleSubmit = () => {
         this.setState({ submitted: true })
         if (this.state.phoneNumber) {
-            // if (this.state.phoneNumber.length = 10) {
-            const formData = new FormData();
-            formData.append("type", "contact");
-            formData.append("fileName", "contact");
-            formData.append("file", this.state.phoneNumber);
-            SubmitEcom(formData).then(resp => {
-                if (resp) {
-                    toastr.success(resp.message);
-                    this.listPath();
-                }
-            })
-            // } else {
-            //     toastr.error("Phone number must be 10 Digit")
-            // }
+            var phNumber = this.state.phoneNumber
+            if (phNumber.length == 10) {
+                const formData = new FormData();
+                formData.append("type", "contact");
+                formData.append("fileName", this.state.phoneNumber);
+                SubmitEcom(formData).then(resp => {
+                    if (resp) {
+                        toastr.success(resp.message);
+                        this.listPath();
+                    }
+                })
+            } else {
+                toastr.error("Phone number must be 10 Digit")
+            }
         } else {
             toastr.error("Mandatory Field Missing")
         }
     }
 
     render() {
-        const { errors } = this.state;
-
-        const agentDropDown = this.state.agentData && this.state.agentData.map((item, index) => {
-            return <option key={index}
-                value={item.agentId}> {item.name}</option>
-        });
 
         return (
             <div>

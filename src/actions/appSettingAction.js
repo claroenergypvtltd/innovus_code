@@ -72,8 +72,14 @@ export const SubmitEcom = (Data) => {
     })
 }
 
-export const getEcom = (type) => {
-    return httpServices.get('privacypolicy?type=' + type).then(resp => {
+export const getEcom = (type, id) => {
+
+    let Id = '';
+    if (id) {
+        Id = '&id=' + id
+    }
+
+    return httpServices.get('privacypolicy?type=' + type + Id).then(resp => {
         if (resp) {
             return resp;
         }

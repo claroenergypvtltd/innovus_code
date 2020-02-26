@@ -339,6 +339,8 @@ class CreatePrice extends Component {
                     isDuplicateCheck = false
                     return
                 }
+            } else {
+                isValid = false
             }
         })
 
@@ -409,7 +411,7 @@ class CreatePrice extends Component {
             }
 
         } else {
-            if (isValid == true) {
+            if (isValid == false) {
                 toastr.error("Mandatory fields are mising")
             }
         }
@@ -627,7 +629,7 @@ class CreatePrice extends Component {
                                                             onChange={this.handleChangeQuantity(idx)}
                                                             required
                                                         />
-                                                        {this.state.submitted && (offerArray.type || offerArray.offer) && (!offerArray.quantity && offerArray.quantity != 0) && <div className="mandatory">{window.strings['PRICE']['QUANTITY'] + window.strings['ISREQUIRED']}</div>}
+                                                        {this.state.submitted && (offerArray.type || offerArray.offer) && offerArray.quantity != '0' && !offerArray.quantity && <div className="mandatory">{window.strings['PRICE']['QUANTITY'] + window.strings['ISREQUIRED']}</div>}
                                                         {/* {this.state.submitted && offerArray.type == 1 && offerArray.quantity && <div className="mandatory">Please enter valid Quantity</div>} */}
                                                         {this.state.submitted && offerArray.type == 2 && offerArray.quantity > 100 && <div className="mandatory">Please enter valid Quantity</div>}
 
