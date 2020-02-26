@@ -41,12 +41,10 @@ class CreateCrop extends Component {
             this.setState({ editId: this.props.location.state.categoryId })
         }
     }
-
     componentDidMount() {
         this.getSpecificCategory();
         this.getDCData();
     }
-
     componentWillReceiveProps(nextProps) {
         this.setState({ categoryData: nextProps.getCategory.datas })
         if (this.state.editId && nextProps && nextProps.categoryData && nextProps.categoryData.specificData
@@ -56,7 +54,6 @@ class CreateCrop extends Component {
             let dcCodeObj = { "label": Data.productDetailsao.dcCode, "value": Data.productDetailsao.dcCode };
             this.setState({ quality: Data.quality, name: Data.name, image: Data.image, parentId: Data.parentId, dcCodeObj: dcCodeObj, dcCode: Data.productDetailsao.dcCode, disableStatus: Data.inventoryStatus });
         }
-
 
         if (nextProps.categoryData && nextProps.categoryData.createdStatus == "200") {
             store.dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: "" })
@@ -71,19 +68,15 @@ class CreateCrop extends Component {
             this.setState({ dcCodeData: nextProps.dcDatas.Lists.datas })
         }
     }
-
     redirectPage = () => {
         this.context.router.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId, cropSessionData: 'cropSessionBack' } });
     }
-
     handleInputChange = (e) => {
         e.target.value && e.target.value[0].includes(" ") ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value });
     }
     listPage = () => {
         this.context.router.history.goBack();
-
     }
-
     onhandleImageChange = (e) => {
 
         e.preventDefault();
@@ -101,9 +94,7 @@ class CreateCrop extends Component {
         if (e.target.files && e.target.files[0]) {
             reader.readAsDataURL(file)
         }
-
     }
-
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
@@ -142,11 +133,9 @@ class CreateCrop extends Component {
             this.props.history.goBack();
         }
     }
-
     handleDcCodeChange = (Data) => {
         this.setState({ dcCodeObj: Data, dcCode: Data.value })
     }
-
     getSalesAgentList = () => {
         let obj = {
             roleId: "4",
@@ -155,10 +144,8 @@ class CreateCrop extends Component {
             search: this.state.search,
             dcCode: this.state.dcCode
         }
-
         this.props.fetchSalesAgent(obj);
     }
-
     getDCData = () => {
         let pages = 0;
         let obj = {
@@ -175,10 +162,8 @@ class CreateCrop extends Component {
         let imagePreview;
 
         if (imagePreviewUrl) {
-
             imagePreview = <img className="pre-view" src={imagePreviewUrl} />
         } else if (this.state.image) {
-
             imagePreview = <img className="pre-view" src={imageBaseUrl + this.state.image} />
         }
         else {
@@ -206,10 +191,8 @@ class CreateCrop extends Component {
                             <div className="create-crop col-md-6">
                                 <form onSubmit={this.handleSubmit} noValidate className="row m-0 pt-3">
 
-
                                     <div className="form-group col-md-12">
                                         <label>{window.strings.CROP.CROP_NAME + ' *'}</label>
-
                                         <input
                                             type="text"
                                             placeholder="Crop Name"
@@ -226,7 +209,6 @@ class CreateCrop extends Component {
                                     </div>
 
                                     <div className="form-group col-md-12">
-
                                         <label>{window.strings.SALES_AGENT.DC_CODE + ' *'}</label>
                                         <Select className="state-box"
                                             styles={{
@@ -253,7 +235,6 @@ class CreateCrop extends Component {
 
                                     <div className="form-group col-md-12">
                                         <label>{window.strings.CATEGORY.QUALITY}</label>
-
                                         <input
                                             type="text"
                                             placeholder="Quality"
@@ -264,6 +245,7 @@ class CreateCrop extends Component {
                                             onChange={this.handleInputChange}
                                             value={this.state.quality}
                                             disabled={this.state.disableStatus == 1}
+                                            maxLength='30'
                                             required
                                         />
                                         {/* {this.state.submitted && !this.state.quality && <div className="mandatory">{window.strings['CATEGORY']['QUALITY'] + window.strings['ISREQUIRED']}</div>} */}
@@ -271,7 +253,6 @@ class CreateCrop extends Component {
 
                                     <div className="form-group col-md-12">
                                         <label>{window.strings.CATEGORY.IMAGE + ' *'}</label>
-
                                         <input
                                             type="file"
                                             placeholder="Image"
@@ -282,7 +263,6 @@ class CreateCrop extends Component {
                                             accept="image/*"
                                             onChange={this.onhandleImageChange}
                                             required
-
                                         />
                                         {imagePreview}
                                         {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
@@ -306,5 +286,4 @@ const mapStateToProps = (state) => ({
     getCategory: state.category && state.category.Lists ? state.category.Lists : [],
     dcDatas: state && state.dc
 })
-
 export default connect(mapStateToProps, { SubmitCategory, getCategoryList, getSpecificCategory, fetchSalesAgent, fetchDcList })(CreateCrop)

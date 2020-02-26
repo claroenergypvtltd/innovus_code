@@ -48,12 +48,19 @@ export class BaseContainer extends Component {
     // }
 
     handleClick = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('jwtToken');
-        // this.context.router.history.push(path.login.login)
-        this.context.router.history.push({
-            pathname: path.login.login
-        });
+        let message = "Are you sure you want to SignOut ?";
+        const toastrConfirmOptions = {
+            onOk: () => {
+                localStorage.removeItem('user');
+                localStorage.removeItem('jwtToken');
+                this.context.router.history.push({
+                    pathname: path.login.login
+                });
+            },
+            onCancel: () => {
+            }
+        };
+        toastr.customConfirm(message, toastrConfirmOptions, "SignOut")
     }
 
 

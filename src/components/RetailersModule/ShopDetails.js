@@ -61,64 +61,72 @@ class ShopDetails extends React.Component {
     }
     updateStatus(RetId, status, isActive) {
         let message = window.strings.UPDATEMESSAGE;
-        const toastrConfirmOptions = {
-            onOk: () => {
-                const formData = new FormData();
-                formData.append("userId", RetId);
-                formData.append("roleId", 2);
-                if (isActive == "isActive") {
-                    formData.append("isActive", status);
-                } else {
-                    formData.append("status", status);
-                }
-
-                let rejectArray = [];
-
-                if (this.state.image) {
-                    rejectArray.push("shopImage")
-                }
-                if (this.state.name) {
-                    rejectArray.push("Shop Name")
-                }
-                if (this.state.address1) {
-                    rejectArray.push("Shop Address")
-                }
-
-                if (this.state.type) {
-                    rejectArray.push("Shop Type")
-                }
-
-                if (this.state.shopOpeningTime) {
-                    rejectArray.push("Shop open time")
-                }
-
-
-                formData.append("reasons", rejectArray)
-                updateStatusRetailer(formData).then(resp => {
-                    if (resp && resp.status == 200) {
-                        this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
-                        let activeKey;
-                        if (this.state.activeButton) {
-                            activeKey = false
-                        } else {
-                            activeKey = true
-                        }
-                        if (isActive) {
-                            this.setState({
-                                activeButton: activeKey
-                            })
-                        } else {
-                            this.setState({ showStatusBtn: false });
-                        }
-                        if (resp.data && resp.data.status == "2") {
-                            this.setState({ rejectKey: true });
-                        }
+        if (status == 1 && this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime) {
+            toastr.error("Cross should be Unselect")
+        }
+        else if (status == 2 && !this.state.image && !this.state.name && !this.state.address1 && !this.state.type && !this.state.shopOpeningTime) {
+            toastr.error("Select a Cross")
+        }
+        else {
+            const toastrConfirmOptions = {
+                onOk: () => {
+                    const formData = new FormData();
+                    formData.append("userId", RetId);
+                    formData.append("roleId", 2);
+                    if (isActive == "isActive") {
+                        formData.append("isActive", status);
+                    } else {
+                        formData.append("status", status);
                     }
-                })
-            },
-            onCancel: () => { }
-        };
-        toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
+
+                    let rejectArray = [];
+
+                    if (this.state.image) {
+                        rejectArray.push("shopImage")
+                    }
+                    if (this.state.name) {
+                        rejectArray.push("Shop Name")
+                    }
+                    if (this.state.address1) {
+                        rejectArray.push("Shop Address")
+                    }
+
+                    if (this.state.type) {
+                        rejectArray.push("Shop Type")
+                    }
+
+                    if (this.state.shopOpeningTime) {
+                        rejectArray.push("Shop open time")
+                    }
+
+
+                    formData.append("reasons", rejectArray)
+                    updateStatusRetailer(formData).then(resp => {
+                        if (resp && resp.status == 200) {
+                            this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
+                            let activeKey;
+                            if (this.state.activeButton) {
+                                activeKey = false
+                            } else {
+                                activeKey = true
+                            }
+                            if (isActive) {
+                                this.setState({
+                                    activeButton: activeKey
+                                })
+                            } else {
+                                this.setState({ showStatusBtn: false });
+                            }
+                            if (resp.data && resp.data.status == "2") {
+                                this.setState({ rejectKey: true });
+                            }
+                        }
+                    })
+                },
+                onCancel: () => { }
+            };
+            toastr.customConfirm(message, toastrConfirmOptions, window.strings.UPDATERETSTATUS);
+        }
     }
 
     rotateleft = () => {
@@ -348,8 +356,8 @@ class ShopDetails extends React.Component {
                         <button className="common-btn" onClick={this.redirectPage}>Back</button>
                     </div>
                     {this.state.showStatusBtn && profile.status == 0 && <div className="col-md-6 d-flex justify-content-end">
-                        <button className="reject-btn" onClick={(e) => this.updateStatus(profile.id, 2)} disabled={disRejectBtn}>Reject</button>
-                        <button className="accept-btn" onClick={(e) => this.updateStatus(profile.id, 1)} disabled={disAcceptBtn}>Accept</button>
+                        <button className="reject-btn" onClick={(e) => this.updateStatus(profile.id, 2)} >Reject</button>
+                        <button className="accept-btn" onClick={(e) => this.updateStatus(profile.id, 1)} >Accept</button>
                     </div>}
                 </div>
             </div >

@@ -33,24 +33,16 @@ class CategoryForm extends Component {
         if (this.props.location && this.props.location.state && this.props.location.state.parentCategoryId) {
             this.setState({ parentCategoryId: this.props.location.state.parentCategoryId })
         }
-
-
     }
-
     componentDidMount() {
-
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             this.getSpecificCategory();
         }
-
-
-
     }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.categoryData && nextProps.categoryData.createdStatus == "200") {
             store.dispatch({ type: CATEGORY_CREATE_SUCCESS, resp: "" })
-            this.props.history.goBack();
+            this.props.history.push({ pathname: path.category.list, state: { categoryBack: 'categorySessionBack' } })
         }
         if (nextProps.categoryData && nextProps.categoryData.updatedStatus == "200") {
             store.dispatch({ type: CATEGORY_UPDATE_SUCCESS, resp: "" })
@@ -64,13 +56,10 @@ class CategoryForm extends Component {
             let Data = nextProps.categoryData.specificData.data.datas[0];
             this.setState({ description: Data.description ? Data.description : '', name: Data.name, image: Data.image });
         }
-
     }
-
     handleInputChange = (e) => {
         e.target.value && e.target.value[0].includes(" ") ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value });
     }
-
     onhandleImageChange = (e) => {
 
         e.preventDefault();
@@ -88,9 +77,7 @@ class CategoryForm extends Component {
             reader.readAsDataURL(file)
         }
     }
-
     getSpecificCategory() {
-
         if (this.props.location && this.props.location.state && this.props.location.state.categoryId) {
             let cId = this.props.location.state.categoryId;
             this.setState({ categoryId: cId });
@@ -102,7 +89,6 @@ class CategoryForm extends Component {
             this.props.getSpecificCategory(obj)
         }
     }
-
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
@@ -119,11 +105,9 @@ class CategoryForm extends Component {
             this.props.SubmitCategory(formData, this.state.categoryId);
         }
     }
-
     listPath = () => {
         this.props.history.push({ pathname: path.category.list, state: { categoryBack: 'categorySessionBack' } })
     }
-
     render() {
         const { errors } = this.state;
         let { imagePreviewUrl } = this.state;
@@ -163,38 +147,12 @@ class CategoryForm extends Component {
                                                 onChange={this.handleInputChange}
                                                 value={this.state.name}
                                                 required
-
                                             />
-
                                             {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
-
-
-                                        {/* <div className="form-group pt-3 col-md-12">
-
-                                            <label>{window.strings.CATEGORY.IMAGE}</label>
-
-                                            <input
-                                                type="file"
-                                                placeholder="Image"
-                                                className={classnames('form-control form-control-lg', {
-                                                    'is-invalid': errors.image
-                                                })}
-                                                name="image"
-                                                onChange={this.onhandleImageChange}
-                                                required
-
-                                            />
-                                            {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-                                            {imagePreview}
-                                        </div> */}
-
-
                                         <div className="form-group pt-3 col-md-12">
-
                                             <label>{window.strings.CATEGORY.DESCRIPTION}</label>
-
                                             <textarea
                                                 placeholder="Description"
                                                 className={classnames('form-control form-control-lg', {
@@ -205,15 +163,12 @@ class CategoryForm extends Component {
                                                 value={this.state.description}
                                                 maxLength="150"
                                                 required
-
                                             ></textarea>
                                             {/* {this.state.submitted && !this.state.description && <div className="mandatory">{window.strings['CATEGORY']['DESCRIPTION'] + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
 
                                         <div className="form-group pt-3 col-md-12">
-
                                             <label>{window.strings.CATEGORY.IMAGE + ' *'}</label>
-
                                             <input
                                                 type="file"
                                                 placeholder="Image"
@@ -224,17 +179,10 @@ class CategoryForm extends Component {
                                                 accept="image/*"
                                                 onChange={this.onhandleImageChange}
                                                 required
-
                                             />
                                             {imagePreview}
                                             {this.state.submitted && !this.state.image && <div className="mandatory">{window.strings['CATEGORY']['IMAGE'] + window.strings['ISREQUIRED']}</div>}
-
                                         </div>
-
-                                        {/* <div className="col-md-12 bottom-section">
-                                            <button type="button" className="btn btn-default" onClick={this.listPath}>{window.strings.CANCEL}</button>
-                                            <button type="submit" className="btn btn-primary">{window.strings.SUBMIT}</button>
-                                        </div> */}
 
                                     </form>
                                 </div>
@@ -251,11 +199,8 @@ class CategoryForm extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => ({
     getCategory: state.category && state.category.Lists ? state.category.Lists : [],
     categoryData: state.category
 })
-
-
 export default connect(mapStateToProps, { getSpecificCategory, SubmitCategory })(CategoryForm)
