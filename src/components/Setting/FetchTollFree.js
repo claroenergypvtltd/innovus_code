@@ -1,13 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { path } from '../../constants';
+import { SubmitEcom, getEcom } from '../../actions/appSettingAction'
+import { TableData } from '../../shared/Table'
 
 export default class FetchTollFree extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            TableHead: ["Phone Number", "Action"],
+            tollFreeList: [],
             errors: {}
         }
+    }
+
+    componentDidMount() {
+        getEcom('contact').then(resp => {
+            if (resp) {
+
+                this.setState({ tollFreeList: resp.data })
+            }
+        })
+    }
+
+    itemEdit = (id) => {
+        this.props.history.push({ pathname: path.appSetting.edit + id, state: { id: id } });
     }
 
     tollFreeNumber = () => {
@@ -20,6 +37,13 @@ export default class FetchTollFree extends Component {
 
     }
     render() {
+
+        let tollFreeData = this.state.tollFreeList && this.state.tollFreeList.map((item, index) => {
+            return {
+                "itemList": [item.description], "itemId": item.id
+            }
+        })
+
         return (
             <div>
                 <div className="title-section row">
@@ -33,7 +57,9 @@ export default class FetchTollFree extends Component {
                     </div>
                 </div>
                 <div className="main-wrapper">
-                    List
+                    <TableData TableHead={this.state.TableHead} TableContent={tollFreeData}
+                        handleEdit={this.itemEdit}
+                    />
                 </div>
                 <div className="back-btn mt-3">
                     <button class="common-btn" onClick={this.redirectPage}>Back</button>

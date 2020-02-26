@@ -492,6 +492,11 @@ export const routesPath = [
                 component: CreateTollFree,
                 exact: true
             },
+            {
+                path: process.env.PUBLIC_URL + '/setting/tollfree/edit/:id?',
+                component: CreateTollFree,
+                exact: true
+            },
             // {
             //     path: process.env.PUBLIC_URL + '/aboutpolicy/privacypolicy',
             //     component: PrivacyPolicy,

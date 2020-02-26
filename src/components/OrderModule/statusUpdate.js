@@ -67,7 +67,7 @@ class StatusUpdate extends Component {
             "location": this.state.location,
             "status": this.state.status,
         }
-        if (this.props.orderId && this.state.activity && this.state.location && this.state.status) {
+        if (this.props.orderId && this.state.activity && this.state.status) {
             SubmitOrderStatus(obj).then(resp => {
                 if (resp) {
                     this.props.onCloseModal();
@@ -146,7 +146,7 @@ class StatusUpdate extends Component {
                                     </div>
 
                                     <div className="form-group col-md-12">
-                                        <label>{window.strings.ORDER.LOCATION} *</label>
+                                        <label>{window.strings.ORDER.LOCATION}</label>
                                         <input
                                             type="text"
                                             placeholder={window.strings.ORDER.LOCATION}
@@ -158,7 +158,7 @@ class StatusUpdate extends Component {
                                             value={this.state.location}
                                             required
                                         />
-                                        {this.state.submitted && !this.state.location && <div className="mandatory">{window.strings['ORDER']['LOCATION'] + window.strings['ISREQUIRED']}</div>}
+                                        {/* {this.state.submitted && !this.state.location && <div className="mandatory">{window.strings['ORDER']['LOCATION'] + window.strings['ISREQUIRED']}</div>} */}
                                     </div>
 
                                     <div className="form-group col-md-12">

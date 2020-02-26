@@ -168,7 +168,9 @@ export const path = {
         fetchQuantity: process.env.PUBLIC_URL + '/setting/fetchquantitytype',
         appPolicy: process.env.PUBLIC_URL + '/aboutpolicy',
         listTollFree: process.env.PUBLIC_URL + '/setting/tollfree',
-        addTollFree: process.env.PUBLIC_URL + '/setting/tollfree/add'
+        addTollFree: process.env.PUBLIC_URL + '/setting/tollfree/add',
+        edit: process.env.PUBLIC_URL + '/setting/tollfree/edit/'
+
 
     },
     pool: {
