@@ -65,11 +65,11 @@ export function ReactBarChart(props) {
     return (
         <div>
             <BarChart
-                width={500}
-                height={400}
+                width={300}
+                height={300}
                 data={reactbarChartdata}
                 margin={{
-                    top: 5, right: 30, left: 20, bottom: 5,
+                    top: 5, right: 0, left: -50, bottom: 5,
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />

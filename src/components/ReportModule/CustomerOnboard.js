@@ -274,7 +274,7 @@ class CustomerOnboard extends Component {
                                         </div>
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * :</label>
+                                        <label className="label-title">Select Region * </label>
                                         {/* <input className="holder" placeholder="Search here.." /> */}
                                         {/* <span className="hol"></span> */}
                                         {/* <input type="search" name="search" placeholder="search..." rel="search" className="im-se" /> */}
