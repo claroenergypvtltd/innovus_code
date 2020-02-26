@@ -14,6 +14,10 @@ import { toastr } from 'react-redux-toastr'
 class ExecutivePerformance extends Component {
     constructor(props) {
         super(props);
+        var today = new Date(),
+            dateValue = today.getDate() >= 10 ? today.getDate() : ('0' + today.getDate()),
+            monthValue = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1)),
+            date = today.getFullYear() + '-' + monthValue + '-' + dateValue
         this.state = {
             showlevel: 0,
             startDate: '',
@@ -28,7 +32,8 @@ class ExecutivePerformance extends Component {
             graphSubmit: false,
             salesEnable: true,
             subEnable: true,
-            skuReset: true
+            skuReset: true,
+            dateValidation: date
         }
     }
 
@@ -407,12 +412,12 @@ class ExecutivePerformance extends Component {
                         <div className="d-flex justify-content-around">
                             <div className="start-date">
                                 <label className="label-title">Start Date * </label>
-                                <input type="date" className="date-wrap form-control" value={this.state.startDate} onChange={this.dateChange} name="startDate" />
+                                <input type="date" className="date-wrap form-control" value={this.state.startDate} onChange={this.dateChange} max={this.state.dateValidation} name="startDate" />
                                 {/* {this.state.graphSubmit && !this.state.startDate && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>} */}
                             </div>
                             <div className="end-date">
                                 <label className="label-title">End Date * </label>
-                                <input type="date" className="date-wrap form-control" value={this.state.expiryDate} onChange={this.dateChange} name="expiryDate" />
+                                <input type="date" className="date-wrap form-control" value={this.state.expiryDate} onChange={this.dateChange} max={this.state.dateValidation} name="expiryDate" />
                                 {/* {this.state.graphSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>} */}
                             </div>
 
@@ -448,7 +453,6 @@ class ExecutivePerformance extends Component {
                                     customTitleRender={this.customTitleRender} />
                                 {/* {this.state.graphSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                             </div>}
-
 
                             {this.state.salesEnable && <div className="tree-box">
                                 <label className="label-title">Sales Agent * </label>
@@ -517,7 +521,6 @@ class ExecutivePerformance extends Component {
                 </div>
             </div>)
     }
-
 }
 
 const mapStateToProps = (state) => ({

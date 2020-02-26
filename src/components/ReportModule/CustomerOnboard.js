@@ -12,6 +12,11 @@ import { toastr } from 'react-redux-toastr'
 class CustomerOnboard extends Component {
     constructor(props) {
         super(props);
+        var today = new Date(),
+            dateValue = today.getDate() >= 10 ? today.getDate() : ('0' + today.getDate()),
+            monthValue = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1)),
+            date = today.getFullYear() + '-' + monthValue + '-' + dateValue
+
         this.state = {
             showlevel: 0,
             startDate: '',
@@ -22,12 +27,13 @@ class CustomerOnboard extends Component {
             selectVal1: [],
             mapData: [],
             graphData: [],
-            errors: {}
+            errors: {},
+            dateValidation: date
         }
     }
 
     componentDidMount() {
-        this.getRegion();
+        // this.getRegion();
         this.getReportRegion();
     }
 
@@ -44,7 +50,7 @@ class CustomerOnboard extends Component {
         }
         getReportRegion(obj).then(resp => {
             if (resp && resp.datas) {
-                this.setState({ regionListData1: resp.datas })
+                this.setState({ regionListData1: resp.datas, regionListData: resp.datas })
             }
         })
     }
@@ -70,13 +76,13 @@ class CustomerOnboard extends Component {
         // this.state.selectVal1 = regionArray
     }
 
-    getRegion = () => {
-        let obj = {
-            page: '',
-            rows: ''
-        }
-        this.props.getRegion(obj)
-    }
+    // getRegion = () => {
+    //     let obj = {
+    //         page: '',
+    //         rows: ''
+    //     }
+    //     this.props.getRegion(obj)
+    // }
 
     redirectPage = () => {
         this.props.history.push({ pathname: path.reports.list, state: { customerOnboardBack: 'customerOnboardSessionBack' } });
@@ -87,10 +93,9 @@ class CustomerOnboard extends Component {
     }
 
     getMapView = () => {
-        // this.setState({ mapSubmit: true })
-        if (this.state.startDate && this.state.expiryDate && (this.state.startDate <= this.state.expiryDate) && this.state.selectVal.length > 0) {
+        if (this.state.startDate && this.state.expiryDate && this.state.selectVal.length > 0) {
 
-            if ((this.state.startDate1 <= this.state.expiryDate1)) {
+            if ((this.state.startDate <= this.state.expiryDate)) {
                 let obj = {
                     startDate: this.state.startDate,
                     expiryDate: this.state.expiryDate,
@@ -114,7 +119,6 @@ class CustomerOnboard extends Component {
         this.setState({ graphSubmit: true })
         if (this.state.startDate1 && this.state.expiryDate1 && this.state.selectVal1.length > 0) {
             if ((this.state.startDate1 <= this.state.expiryDate1)) {
-
 
                 let selectVal1 = [];
                 this.state.selectVal1 && this.state.selectVal1.map(item => {
@@ -186,7 +190,6 @@ class CustomerOnboard extends Component {
             let obj = {}
 
             let selectedVal = '';
-
 
             this.state.selectVal1 && this.state.selectVal1.map(selectedItem => {
                 if (selectedItem) {
@@ -264,12 +267,12 @@ class CustomerOnboard extends Component {
                                     <div className="d-block">
                                         <div className="start-date mr-2">
                                             <label className="label-title">Start Date * </label>
-                                            <input type="date" value={this.state.startDate} name="startDate" onChange={this.dateChange} className="form-control date-wrap" />
+                                            <input type="date" value={this.state.startDate} name="startDate" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
                                             {/* {this.state.mapSubmit && !this.state.startDate && <div className="mandatory">{"Start Date" + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         <div className="end-date mr-2">
                                             <label className="label-title">End Date * </label>
-                                            <input type="date" value={this.state.expiryDate} name="expiryDate" onChange={this.dateChange} className="form-control date-wrap" />
+                                            <input type="date" value={this.state.expiryDate} name="expiryDate" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
                                             {/* {this.state.mapSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date:" + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                     </div>
@@ -321,12 +324,12 @@ class CustomerOnboard extends Component {
                                     <div className="d-block">
                                         <div className="start-date">
                                             <label className="label-title">Start Date * </label>
-                                            <input type="date" value={this.state.startDate1} name="startDate1" onChange={this.dateChange} className="form-control date-wrap" />
+                                            <input type="date" value={this.state.startDate1} name="startDate1" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
                                             {/* {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                         <div className="end-date">
                                             <label className="label-title">End Date * </label>
-                                            <input type="date" value={this.state.expiryDate1} name="expiryDate1" onChange={this.dateChange} className="form-control date-wrap" />
+                                            <input type="date" value={this.state.expiryDate1} name="expiryDate1" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
                                             {/* {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>} */}
                                         </div>
                                     </div>
