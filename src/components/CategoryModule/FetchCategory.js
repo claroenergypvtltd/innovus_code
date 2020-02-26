@@ -98,7 +98,8 @@ class CategoryList extends Component {
         let obj = {
             "page": this.state.currentPage,
             "search": this.state.search,
-            "limit": this.state.itemPerPage
+            "limit": this.state.itemPerPage,
+            "parentCategoryName": this.state.parentCategoryName
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id, categoryName: Data.name } });
@@ -147,11 +148,15 @@ class CategoryList extends Component {
     itemDelete = (id) => {
         this.props.DeleteCategory(id);
     }
-
     formPath = () => {
+        let obj = {
+            "page": this.state.currentPage,
+            "search": this.state.search,
+            "limit": this.state.itemPerPage,
+            "parentCategoryName": this.state.parentCategoryName
+        }
+        sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.category.add, state: { parentCategoryId: this.state.parentCategoryId } });
-
-        // this.props.history.push(path.category.add);
     }
     redirectPage = () => {
         this.props.history.push({ pathname: path.category.parent, state: { categoryBack: 'categorySessionBack' } });
@@ -170,7 +175,6 @@ class CategoryList extends Component {
                     {window.strings.CATEGORY.ADDBUTTON}</button>
                 </div> */}
 
-
                 <Row className="clearfix title-section">
                     <Col md={7} className="title-card ">
                         <h4 className="user-title">SUB CATEGORY -  {this.state.parentCategoryName}</h4>
@@ -182,7 +186,7 @@ class CategoryList extends Component {
                             </Col>
                             <Col md={5} className="pl-0">
                                 <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
-                                    {window.strings.CATEGORY.ADDBUTTON}</button>
+                                    {window.strings.CATEGORY.ADDSUBBUTTON}</button>
                             </Col>
                         </Row>
                     </Col>
@@ -200,12 +204,9 @@ class CategoryList extends Component {
                     </div>
                 </div>
             </div>
-
         );
     }
 }
-
-
 
 function mapStateToProps(state) {
     return {
@@ -213,5 +214,4 @@ function mapStateToProps(state) {
         categoryData: state.category
     };
 }
-
 export default connect(mapStateToProps, { getCategoryList, DeleteCategory })(CategoryList);
