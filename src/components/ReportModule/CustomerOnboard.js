@@ -58,13 +58,13 @@ class CustomerOnboard extends Component {
     onChecked = (data, value) => {
         let regionArray = [];
         data && data.map(item => {
-            if (!item.includes('parent')) {
-                regionArray.push(item);
+            // if (!item.includes('parent')) {
+            regionArray.push(item);
 
-            }
+            // }
         })
-        this.state.selectVal = regionArray
-        // this.setState({ selectVal: regionArray })
+        // this.state.selectVal = regionArray
+        this.setState({ selectVal: regionArray })
     }
 
     onChecked1 = (data, value) => {
@@ -76,14 +76,6 @@ class CustomerOnboard extends Component {
         // this.state.selectVal1 = regionArray
     }
 
-    // getRegion = () => {
-    //     let obj = {
-    //         page: '',
-    //         rows: ''
-    //     }
-    //     this.props.getRegion(obj)
-    // }
-
     redirectPage = () => {
         this.props.history.push({ pathname: path.reports.list, state: { customerOnboardBack: 'customerOnboardSessionBack' } });
     }
@@ -94,18 +86,27 @@ class CustomerOnboard extends Component {
 
     getMapView = () => {
         if (this.state.startDate && this.state.expiryDate && this.state.selectVal.length > 0) {
+            let selectVal = [];
+            this.state.selectVal && this.state.selectVal.map(item => {
+                if (!item.includes('-parent')) {
+                    selectVal.push(item);
+                }
+            })
 
             if ((this.state.startDate <= this.state.expiryDate)) {
                 let obj = {
                     startDate: this.state.startDate,
                     expiryDate: this.state.expiryDate,
-                    regionData: this.state.selectVal
+                    regionData: selectVal
                 }
 
                 getCustomerMapView(obj).then(resp => {
-                    if (resp) {
+                    if (resp && resp.data) {
                         this.setState({ mapData: resp.data })
                     }
+                    // else {
+                    //     toastr.error("No records found")
+                    // }
                 })
             } else {
                 toastr.error("Date Invalid")
@@ -179,7 +180,7 @@ class CustomerOnboard extends Component {
 
             let obj = {
                 title: item.name,
-                value: item.name + 'parent',
+                value: item.name + '-parent',
                 children: childArray,
             }
             treeData.push(obj)
@@ -241,8 +242,8 @@ class CustomerOnboard extends Component {
 
         this.state.mapData && this.state.mapData.map(item => {
             let obj = {
-                lat: item.shopAddress.latitude,
-                lng: item.shopAddress.longitude
+                lat: Number(item.shopAddress.latitude),
+                lng: Number(item.shopAddress.longitude)
             }
             latLongData.push(obj)
         })
