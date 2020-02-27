@@ -349,7 +349,7 @@ export default class OrderValue extends Component {
                         </div>
                         {chartData.length > 0 ? < div className="mt-3">
                             <div className="d-flex justify-content-center">
-                                <LineGraphView barChartData={chartData} label='Order Value' label='Order Value (INR)' /> </div>
+                                <LineGraphView barChartData={chartData} label='Date' yAxis='Order Value (INR)' /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>

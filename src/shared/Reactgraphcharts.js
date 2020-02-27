@@ -189,7 +189,7 @@ export class LineGraphView extends Component {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
                     {/* <XAxis dataKey="name" /> */}
-                    <YAxis dataKey='amount' label={{ value: yAxis, position: 'left', angle: -90 }} />
+                    <YAxis dataKey='amount' label={{ value: yAxis, position: 'center', angle: -90 }} />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
 
