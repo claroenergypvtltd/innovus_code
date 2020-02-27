@@ -9,6 +9,10 @@ import { getDcCodeData } from '../../actions/salesAgentAction';
 export default class TonnesOrder extends Component {
     constructor(props) {
         super(props);
+        var today = new Date(),
+            dateValue = today.getDate() >= 10 ? today.getDate() : ('0' + today.getDate()),
+            monthValue = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : ('0' + (today.getMonth() + 1)),
+            date = today.getFullYear() + '-' + monthValue + '-' + dateValue
         this.state = {
             startDate: '',
             expiryDate: '',
@@ -18,7 +22,8 @@ export default class TonnesOrder extends Component {
             reset: true,
             skuReset: true,
             deSelect: false,
-            selectAll: { title: 'Select All', value: 'Select All' }
+            selectAll: { title: 'Select All', value: 'Select All' },
+            dateValidation: date
         }
     }
     componentDidMount() {
@@ -278,11 +283,11 @@ export default class TonnesOrder extends Component {
                         <div className="d-flex justify-content-around">
                             <div className="start-date">
                                 <label className="label-title">Start Date * </label>
-                                <input type="date" className="date-wrap form-control" value={this.state.startDate} onChange={this.dateChange} name="startDate" />
+                                <input type="date" className="date-wrap form-control" value={this.state.startDate} onChange={this.dateChange} max={this.state.dateValidation} name="startDate" />
                             </div>
                             <div className="end-date">
                                 <label className="label-title">End Date * </label>
-                                <input type="date" className="date-wrap form-control" value={this.state.expiryDate} onChange={this.dateChange} name="expiryDate" />
+                                <input type="date" className="date-wrap form-control" value={this.state.expiryDate} onChange={this.dateChange} max={this.state.dateValidation} name="expiryDate" />
                             </div>
                             {!this.state.deSelect && <div className="tree-box">
                                 <label className="label-title">Select Region * </label>
@@ -340,7 +345,7 @@ export default class TonnesOrder extends Component {
                         </div>
                         {chartData.length > 0 ? < div className="mt-3">
                             <div className="d-flex justify-content-center">
-                                <LineGraphView barChartData={chartData} label='Tonnes' /> </div>
+                                <LineGraphView barChartData={chartData} label='Date' yAxis='Tonnes' /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}
                     </div>
                 </div>
