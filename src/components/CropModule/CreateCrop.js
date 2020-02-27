@@ -202,6 +202,7 @@ class CreateCrop extends Component {
                                             name="name"
                                             onChange={this.handleInputChange}
                                             value={this.state.name}
+                                            maxLength='200'
                                             disabled={this.state.disableStatus == 1}
                                             required
                                         />

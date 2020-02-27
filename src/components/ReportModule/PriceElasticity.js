@@ -4,12 +4,10 @@ import { path } from '../../constants';
 import TreeSelect from 'react-do-tree-select';
 import { getRegion } from '../../actions/regionAction'
 import { getReportRegion, getPriceElasticityGraphView } from '../../actions/reportAction'
-import { fetchReportGraph } from '../../actions/reportAction'
 import { ReactBarLineChart } from '../../shared/Reactgraphcharts'
-import GoogleMap from '../../shared/GoogleMap'
 import { fetchSalesAgent } from '../../actions/salesAgentAction';
-import { getProductList } from '../../actions/reportAction';
 import { toastr } from 'react-redux-toastr'
+import { getDcCodeData } from '../../actions/salesAgentAction';
 
 class PriceElasticity extends Component {
     constructor(props) {
@@ -61,11 +59,13 @@ class PriceElasticity extends Component {
             dcList.push(subRegionVal)
         })
         let obj = {
-            dcCode: dcList
+            roleId: 4,
+            flag: 5,
+            search: dcList
         }
-        getProductList(obj).then(resp => {
-            if (resp && resp.datas) {
-                this.setState({ salesAgentList: resp.datas })
+        getDcCodeData(obj, "order").then(resp => {
+            if (resp) {
+                this.setState({ salesAgentList: resp })
             }
         })
     }
@@ -81,7 +81,7 @@ class PriceElasticity extends Component {
                 regionArray.push(item);
             }
         })
-        this.setState({ selectVal: regionArray, subEnable: false, salesEnable: false })
+        this.setState({ selectVal: regionArray, subEnable: false })
 
         if (regionArray && regionArray[0]) {
             let Data = regionArray[0].split('##');
@@ -137,7 +137,7 @@ class PriceElasticity extends Component {
 
             this.state.selectVal1 && this.state.selectVal1.map(item => {
                 if (item) {
-                    let splitData = item.split('##');
+                    let splitData = item.split('-Parent');
                     selectVal1arry.push(splitData[0]);
                 }
             })
@@ -247,45 +247,59 @@ class PriceElasticity extends Component {
             subtreeData.push(obj)
         })
 
-        let agentData = []
+        let productData = []
         this.state.salesAgentList && this.state.salesAgentList.map((item, index) => {
-            let obj = {}
 
             let selectedVal = '';
-
-
             this.state.selectVal1 && this.state.selectVal1.map(selectedItem => {
                 if (selectedItem) {
                     selectedVal = selectedItem;
                 }
             })
-
             if (selectedVal) {
-                if ((item.id + '-Parent' == selectedVal) && this.state.check) {
-                    obj = {
-                        title: item.name,
-                        value: item.id + '-Parent',
+                let Data = item.split(',')
+                if ((Data[3] + '-Parent' == selectedVal) && this.state.check) {
+                    let obj = {
+                        title: Data[2] + ' - ' + Data[4],
+                        value: Data[3] + '-Parent',
                         // disabled: true
                     }
+                    productData.push(obj)
                 } else {
-                    obj = {
-                        title: item.name,
-                        value: item.id + '-Parent',
+                    let obj = {
+                        title: Data[2] + ' - ' + Data[4],
+                        value: Data[3] + '-Parent',
                         disabled: true
                     }
-                }
-            } else {
-                obj = {
-                    title: item.name,
-                    value: item.id + '-Parent',
+                    productData.push(obj)
                 }
             }
-
-            agentData.push(obj)
+            else {
+                if (item && item.name) {
+                    let obj = {
+                        title: item.name,
+                        value: item.id + '-Parent',
+                    }
+                    productData.push(obj)
+                }
+                else {
+                    let Data = item.split(',')
+                    let productList = Data[2] + ' - ' + Data[4]
+                    let productName = []
+                    productName = productData && productData.map((productItem) => {
+                        return productItem.title
+                    })
+                    if (!productName.includes(productList)) {
+                        let Data = item.split(',');
+                        let obj = {
+                            title: Data[2] + ' - ' + Data[4],
+                            value: Data[3] + '-Parent'
+                        }
+                        productData.push(obj)
+                    }
+                }
+            }
         })
-
-
-
 
         const checkbox = {
             enable: true,
@@ -379,7 +393,7 @@ class PriceElasticity extends Component {
                             {this.state.salesEnable && <div className="tree-box">
                                 <label className="label-title">Select SKU *  </label>
                                 <TreeSelect
-                                    treeData={agentData}
+                                    treeData={productData}
                                     style={{ width: 210, height: 100 }}
                                 />
                             </div>}
@@ -388,7 +402,7 @@ class PriceElasticity extends Component {
                                 <label className="label-title">Select SKU * </label>
                                 {/* <input className="holder" placeholder="Search here.." /> */}
                                 <TreeSelect
-                                    treeData={agentData}
+                                    treeData={productData}
                                     style={{ width: 210, height: 100 }}
                                     selectVal={this.state.selectVal1}
                                     onChecked={this.onChecked1}
@@ -416,8 +430,7 @@ class PriceElasticity extends Component {
                                 <div className="d-flex justify-content-center">
                                     {/* {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />} */}
 
-                                    <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" />
-                                    <label className="d-flex justify-content-center">Price Elasticity</label>
+                                    <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" chartName='Price Elasticity' />
                                 </div>
                             </div>
                         </div> :

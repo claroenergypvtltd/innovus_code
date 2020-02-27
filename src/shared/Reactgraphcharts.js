@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import {
     PieChart, Pie, Sector, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
     BarChart, Bar, ComposedChart, Area
@@ -107,14 +107,22 @@ export class ReactBarLineChart extends Component {
                     <CartesianGrid stroke="#f5f5f5" />
                     {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
                     <Bar dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />
-                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" />
+                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" label={this.props.percentageLabel && <CustomizedLabel />} />
                 </ComposedChart>
-                <label class="d-flex justify-content-center">Price Elasticity</label>
+                <label class="d-flex justify-content-center">{this.props.chartName}</label>
             </div>
         )
     }
 }
+class CustomizedLabel extends PureComponent {
+    render() {
+        const {
+            x, y, stroke, value,
+        } = this.props;
 
+        return <text x={x} y={y} dy={-8} fill='orange' fontSize={15} textAnchor="middle">{value + '%'}</text>;
+    }
+}
 export function ReactPieChart(props) {
     const PieChartdata = [
         { name: 'RETAILERS', value: parseInt(props.userdata.retailerCount) },
@@ -189,7 +197,7 @@ export class LineGraphView extends Component {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
                     {/* <XAxis dataKey="name" /> */}
-                    <YAxis dataKey='amount' label={{ value: yAxis, position: 'center', angle: -90 }} />
+                    <YAxis dataKey='amount' label={{ value: yAxis, angle: -90 }} padding={{ top: 40 }} />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
 

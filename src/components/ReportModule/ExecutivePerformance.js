@@ -146,40 +146,45 @@ class ExecutivePerformance extends Component {
     getGraphView = () => {
         this.setState({ graphSubmit: true })
         if (this.state.startDate && this.state.expiryDate && this.state.selectVal.length > 0 && this.state.selectsubVal.length > 0 && this.state.selectVal1.length > 0) {
+            if (this.state.startDate <= this.state.expiryDate) {
 
-            let subRegionVal = "";
+                let subRegionVal = "";
 
-            this.state.selectsubVal && this.state.selectsubVal.map(item => {
-                if (item) {
-                    let splitData = item.split('##');
-                    subRegionVal = splitData[0];
-                }
-            })
-            let selectVal1 = [];
-            this.state.selectVal1 && this.state.selectVal1.map(item => {
-                let agentList = item
-                let agentName = []
-                agentName = selectVal1 && selectVal1.map((agentItem) => {
-                    return agentItem
+                this.state.selectsubVal && this.state.selectsubVal.map(item => {
+                    if (item) {
+                        let splitData = item.split('##');
+                        subRegionVal = splitData[0];
+                    }
                 })
-                if (!agentName.includes(agentList) && !item.includes('Select All')) {
-                    selectVal1.push(item);
+                let selectVal1 = [];
+                this.state.selectVal1 && this.state.selectVal1.map(item => {
+                    let agentList = item
+                    let agentName = []
+                    agentName = selectVal1 && selectVal1.map((agentItem) => {
+                        return agentItem
+                    })
+                    if (!agentName.includes(agentList) && !item.includes('Select All')) {
+                        selectVal1.push(item);
+                    }
+
+                })
+
+                let obj = {
+                    startDate: this.state.startDate,
+                    expiryDate: this.state.expiryDate,
+                    regionData: subRegionVal,
+                    agentData: selectVal1,
                 }
 
-            })
-
-            let obj = {
-                startDate: this.state.startDate,
-                expiryDate: this.state.expiryDate,
-                regionData: subRegionVal,
-                agentData: selectVal1,
+                getSalesExecutiveGraphView(obj).then(resp => {
+                    if (resp && resp.data) {
+                        this.setState({ lineChartData: resp.data })
+                    }
+                })
             }
-
-            getSalesExecutiveGraphView(obj).then(resp => {
-                if (resp && resp.data) {
-                    this.setState({ lineChartData: resp.data })
-                }
-            })
+            else {
+                toastr.error("Invalid Date");
+            }
         } else {
             toastr.error("Mandatory Fields are missing");
         }
@@ -277,7 +282,7 @@ class ExecutivePerformance extends Component {
 
         let subResetTreeData = [{ title: 'No data', value: 'No data' }]
 
-        let agentData = [{ title: 'Select All', value: 'Select All' }]
+        let agentData = this.state.salesAgentList.length > 0 ? [{ title: 'Select All', value: 'Select All' }] : []
         this.state.salesAgentList && this.state.salesAgentList.map((item, index) => {
             if (item) {
                 let Data;
@@ -506,7 +511,7 @@ class ExecutivePerformance extends Component {
                         <div className="col-md-6 offset-md-3 mt-5">
                             <div className="main-wrapper py-3">
                                 {<LineGraphView label='Date' Data='Value' yAxis="" barChartData={orderValue} />}
-                                <label className="d-flex justify-content-center mt-2">INR</label>
+                                <label className="d-flex justify-content-center mt-2">Order Value (INR)</label>
                             </div>
                         </div>
                     </div> :
