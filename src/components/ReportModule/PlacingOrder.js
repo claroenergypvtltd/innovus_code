@@ -358,7 +358,7 @@ class PlacingOrder extends Component {
                                     </div> */}
 
                                         {!this.state.agentDropDown && <div className="tree-box">
-                                            <label className="label-title">Select Region * :</label>
+                                            <label className="label-title">Select Region * </label>
                                             <TreeSelect
                                                 // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
                                                 treeData={regionData}
@@ -372,7 +372,7 @@ class PlacingOrder extends Component {
                                                 customTitleRender={this.customTitleRender} />
                                         </div>}
                                         {this.state.agentDropDown && <div className="tree-box">
-                                            <label className="label-title">Select Region * :</label>
+                                            <label className="label-title">Select Region * </label>
                                             <TreeSelect
                                                 // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
                                                 treeData={regionData}
@@ -386,7 +386,7 @@ class PlacingOrder extends Component {
                                                 customTitleRender={this.customTitleRender} />
                                         </div>}
                                         {this.state.agentDropDown && <div className="tree-box">
-                                            <label className="label-title">Sales Agent * :</label>
+                                            <label className="label-title">Sales Agent * </label>
                                             {/* <input className="holder" placeholder="Search here.." /> */}
                                             <TreeSelect
                                                 treeData={agentData}
@@ -400,7 +400,7 @@ class PlacingOrder extends Component {
                                                 customTitleRender={this.customTitleRender} />
                                         </div>}
                                         {!this.state.agentDropDown && <div className="tree-box">
-                                            <label className="label-title">Sales Agent * :</label>
+                                            <label className="label-title">Sales Agent * </label>
                                             {/* <input className="holder" placeholder="Search here.." /> */}
                                             <TreeSelect
                                                 treeData={this.state.agentResetData}
@@ -437,7 +437,7 @@ class PlacingOrder extends Component {
 
                                     </div>
                                     <div className="tree-box">
-                                        <label className="label-title">Select Region * :</label>
+                                        <label className="label-title">Select Region * </label>
                                         {/* <input className="holder" placeholder="Search here.." /> */}
                                         <TreeSelect
                                             treeData={regionData1}
