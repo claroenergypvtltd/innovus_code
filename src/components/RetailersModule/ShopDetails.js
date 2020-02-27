@@ -62,10 +62,10 @@ class ShopDetails extends React.Component {
     updateStatus(RetId, status, isActive) {
         let message = window.strings.UPDATEMESSAGE;
         if (status == 1 && (this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime)) {
-            toastr.error("Cross should be Unselect")
+            toastr.error("Unmark the reason for Accept")
         }
         else if (status == 2 && !this.state.image && !this.state.name && !this.state.address1 && !this.state.type && !this.state.shopOpeningTime) {
-            toastr.error("Select a Cross")
+            toastr.error("Mark any one reason for rejection")
         }
         else {
             const toastrConfirmOptions = {

@@ -145,6 +145,7 @@ class CategoryForm extends Component {
                                                 })}
                                                 name="name"
                                                 onChange={this.handleInputChange}
+                                                maxLength='200'
                                                 value={this.state.name}
                                                 required
                                             />
