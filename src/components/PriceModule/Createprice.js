@@ -114,7 +114,7 @@ class CreatePrice extends Component {
                             // "boxEndQuantity": Number(this.state.boxEndQuantity)
                             // "triggerQuantity" : this.state.triggerQuantity,
                             this.setState({
-                                weight: respData.totalQuantity, price: respData.amount,
+                                weight: parseInt(respData.totalQuantity), price: respData.amount,
                                 weightId: respData.rupeesize, boxQuantity: respData.boxQuantity,
                                 offer: respData.discountValue == 0 ? '' : respData.discountValue,
                                 offerId: respData.discountUnit, subCategoryLabel: response.datas[0].name,

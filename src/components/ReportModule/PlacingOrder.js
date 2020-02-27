@@ -338,6 +338,29 @@ class PlacingOrder extends Component {
             graphData.push(obj);
         })
 
+        // let showChart = false
+        // // let chart = chartData && chartData[0].split(',')
+
+        // if (graphData && graphData.Order > 0 || graphData && graphData.Users > 0) {
+        //     showChart = true
+        // }
+
+        let showChart = false
+        graphData && graphData.map(item => {
+            if (Number(item.Order) || Number(item.Users)) {
+                showChart = true;
+            }
+        })
+
+
+        // showChart = graphData && graphData.Order > 0 &&  true
+
+        //    && true;
+        //   .map(item => {
+        //         showChart = true;
+
+        // })
+
         return (
             <div className="customer-placeorder">
                 <h4 className="user-title">{window.strings.REPORT.NUMBER_CUSTOMER_PLACEORDER}</h4>
@@ -464,7 +487,7 @@ class PlacingOrder extends Component {
                                         </button>
                                     </div>
                                 </div>
-                                {this.state.graphData.length > 0 ? <div className="mt-5">
+                                {this.state.graphData.length > 0 && showChart ? <div className="mt-5">
                                     <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders" percentageLabel={true} />
                                 </div> : <div className="record-box">No record found</div>}
 

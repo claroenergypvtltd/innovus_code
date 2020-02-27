@@ -275,6 +275,13 @@ export default class TonnesOrder extends Component {
             halfChain: true,                // The selection of child nodes affects the semi-selection of parent nodes.
             initCheckedList: this.state.skuSelectValue           // Initialize check multiple lists
         }
+
+        let showChart = false
+        chartData && chartData.map(item => {
+            if (item.orderValue && item.amount) {
+                showChart = true;
+            }
+        })
         return (
             <div>
                 <h4 className="user-title">{window.strings.REPORT.TOTALTONNESORDERED}</h4>
@@ -343,7 +350,7 @@ export default class TonnesOrder extends Component {
                                 </button>
                             </div>
                         </div>
-                        {chartData.length > 0 ? < div className="mt-3">
+                        {chartData.length > 0 && showChart ? < div className="mt-3">
                             <div className="d-flex justify-content-center">
                                 <LineGraphView barChartData={chartData} label='Date' yAxis='Tonnes' /> </div>
                         </div> : <div className="record-box">  No Record Found </div>}

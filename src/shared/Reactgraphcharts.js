@@ -175,7 +175,6 @@ export class LineGraphView extends Component {
                     name: 'Page C', uv: 2000, pv: 3800, amt: 2290,
                 },
             ];
-
         let colorCodesData = ColorCodes;
         let colorCount = 0
         this.props.barChartData && this.props.barChartData.map(item => {
@@ -197,7 +196,7 @@ export class LineGraphView extends Component {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
                     {/* <XAxis dataKey="name" /> */}
-                    <YAxis dataKey='amount' label={{ value: yAxis, angle: -90 }} padding={{ top: 40 }} />
+                    <YAxis dataKey='amount' label={{ value: yAxis, position: 'insideLeft', angle: -90 }} />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
 

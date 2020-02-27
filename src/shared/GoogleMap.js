@@ -19,9 +19,16 @@ class GoogleMap extends React.Component {
         // {
         //     lat: 12.120000, lng: 76.680000, name: 'Nanjangud, Mysore, Karnataka, India'
         // ]
+        let initialData = '';
+        if (latLong && latLong[0]) {
+            initialData = latLong[0]
+        } else {
+            initialData = { lat: 26, lng: 80 };
+        }
+
         return (
             <div style={{ width: "100%", height: "450px", position: "relative" }}>
-                <Map google={window.google} zoom={5} initialCenter={{ lat: 26, lng: 80 }}>
+                <Map google={window.google} zoom={5} center={initialData} >
                     {latLong && latLong.map((item, index) => (
 
                         item && item.order == 1 ? <Marker
