@@ -28,13 +28,21 @@ class CustomerOnboard extends Component {
             mapData: [],
             graphData: [],
             errors: {},
-            dateValidation: date
+            dateValidation: date,
+            map: false,
+            graph: false
         }
     }
 
     componentDidMount() {
         // this.getRegion();
         this.getReportRegion();
+        if (this.props.view == "map") {
+            this.setState({ map: true })
+        }
+        if (this.props.view == "graph") {
+            this.setState({ graph: true })
+        }
     }
 
     componentWillReceiveProps(newProps) {
@@ -258,118 +266,103 @@ class CustomerOnboard extends Component {
         })
         return (
             <div className="customer-onboard">
-                <h4 className="user-title">{window.strings.REPORT.NUMBER_CUSTOMER_ONBOARD}</h4>
-                <div className="mt-3">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="map-view main-wrapper">
-                                <h4 className="user-title">{window.strings.REPORT.MAP_VIEW}</h4>
-                                <div className="d-flex justify-content-around">
-                                    <div className="d-block">
-                                        <div className="start-date mr-2">
-                                            <label className="label-title">Start Date * </label>
-                                            <input type="date" value={this.state.startDate} name="startDate" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
-                                            {/* {this.state.mapSubmit && !this.state.startDate && <div className="mandatory">{"Start Date" + window.strings['ISREQUIRED']}</div>} */}
-                                        </div>
-                                        <div className="end-date mr-2">
-                                            <label className="label-title">End Date * </label>
-                                            <input type="date" value={this.state.expiryDate} name="expiryDate" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
-                                            {/* {this.state.mapSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date:" + window.strings['ISREQUIRED']}</div>} */}
-                                        </div>
-                                    </div>
-                                    <div className="tree-box">
-                                        <label className="label-title">Select Region * </label>
-                                        {/* <input className="holder" placeholder="Search here.." /> */}
-                                        {/* <span className="hol"></span> */}
-                                        {/* <input type="search" name="search" placeholder="search..." rel="search" className="im-se" /> */}
-                                        <TreeSelect
-                                            wrapperClassName="text-hol"
-                                            treeData={treeData}
-                                            style={{ width: 210, height: 100 }}
-                                            selectVal={this.state.selectVal}
-                                            onSelect={this.onSelect}
-                                            checkbox={checkbox}
-                                            onChecked={this.onChecked}
-                                            customTitleRender={this.customTitleRender} />
-                                        {/* {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
-                                    </div>
-                                </div>
-                                <div className="col-md-11 search-wrap">
-                                    <div className="view-box">
-                                        <button onClick={this.getMapView} className="data-search" >
-                                            <i className="fa fa-search" aria-hidden="true"></i>Search
+                {this.state.map && <div className="map-view">
+                    <div className="d-flex justify-content-around">
+                        <div className="start-date mr-2">
+                            <label className="label-title">Start Date * </label>
+                            <input type="date" value={this.state.startDate} name="startDate" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
+                            {/* {this.state.mapSubmit && !this.state.startDate && <div className="mandatory">{"Start Date" + window.strings['ISREQUIRED']}</div>} */}
+                        </div>
+                        <div className="end-date mr-2">
+                            <label className="label-title">End Date * </label>
+                            <input type="date" value={this.state.expiryDate} name="expiryDate" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
+                            {/* {this.state.mapSubmit && !this.state.expiryDate && <div className="mandatory">{"End Date:" + window.strings['ISREQUIRED']}</div>} */}
+                        </div>
+                        <div className="tree-box">
+                            <label className="label-title">Select Region * </label>
+                            {/* <input className="holder" placeholder="Search here.." /> */}
+                            {/* <span className="hol"></span> */}
+                            {/* <input type="search" name="search" placeholder="search..." rel="search" className="im-se" /> */}
+                            <TreeSelect
+                                wrapperClassName="text-hol"
+                                treeData={treeData}
+                                style={{ width: 210, height: 100 }}
+                                selectVal={this.state.selectVal}
+                                onSelect={this.onSelect}
+                                checkbox={checkbox}
+                                onChecked={this.onChecked}
+                                customTitleRender={this.customTitleRender} />
+                            {/* {this.state.mapSubmit && this.state.selectVal.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
+                        </div>
+                    </div>
+                    <div className="col-md-11 search-wrap">
+                        <div className="view-box">
+                            <button onClick={this.getMapView} className="data-search" >
+                                <i className="fa fa-search" aria-hidden="true"></i>Search
                                     </button>
-                                    </div>
-                                    <div className="retail-reset">
-                                        <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
-                                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                                            <span className="tooltip-text">Reset</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                {/* <div className="reset-box retail-reset m-0">
+                        </div>
+                        <div className="retail-reset">
+                            <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
+                                <i className="fa fa-refresh" aria-hidden="true"></i>
+                                <span className="tooltip-text">Reset</span>
+                            </button>
+                        </div>
+                    </div>
+                    {/* <div className="reset-box retail-reset m-0">
                                     <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
                                         <i className="fa fa-refresh" aria-hidden="true"></i>
                                         <span className="tooltip-text">Reset</span>
                                     </button>
                                 </div> */}
-                                <div className="pt-5">
-                                    <GoogleMap latLongData={latLongData} />
-                                </div>
+                    <div className="pt-5">
+                        <GoogleMap latLongData={latLongData} />
+                    </div>
+                </div>}
+                {this.state.graph &&
+                    <div className="graph-view pb-5">
+                        <div className="d-flex justify-content-around">
+                            <div className="start-date col-md-2">
+                                <label className="label-title">Start Date * </label>
+                                <input type="date" value={this.state.startDate1} name="startDate1" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
+                                {/* {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>} */}
+                            </div>
+                            <div className="end-date col-md-2">
+                                <label className="label-title">End Date * </label>
+                                <input type="date" value={this.state.expiryDate1} name="expiryDate1" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
+                                {/* {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>} */}
+                            </div>
+                            <div className="tree-box">
+                                <label className="label-title">Select Region * </label>
+                                <TreeSelect
+                                    treeData={treeData1}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.selectVal1}
+                                    onChecked={this.onChecked1}
+                                    checkbox={checkbox1}
+                                    customTitleRender={this.customTitleRender} />
+                                {/* {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
                             </div>
                         </div>
-                        <div className="col-md-6">
-                            <div className="graph-view main-wrapper pb-5">
-                                <h4 className="user-title">{window.strings.REPORT.GRAPH_VIEW}</h4>
-                                <div className="d-flex justify-content-around">
-                                    <div className="d-block">
-                                        <div className="start-date">
-                                            <label className="label-title">Start Date * </label>
-                                            <input type="date" value={this.state.startDate1} name="startDate1" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
-                                            {/* {this.state.graphSubmit && !this.state.startDate1 && <div className="mandatory">{"Start Date " + window.strings['ISREQUIRED']}</div>} */}
-                                        </div>
-                                        <div className="end-date">
-                                            <label className="label-title">End Date * </label>
-                                            <input type="date" value={this.state.expiryDate1} name="expiryDate1" onChange={this.dateChange} max={this.state.dateValidation} className="form-control date-wrap" />
-                                            {/* {this.state.graphSubmit && !this.state.expiryDate1 && <div className="mandatory">{"End Date " + window.strings['ISREQUIRED']}</div>} */}
-                                        </div>
-                                    </div>
-                                    <div className="tree-box">
-                                        <label className="label-title">Select Region * </label>
-                                        {/* <input className="holder" placeholder="Search here.." /> */}
-                                        <TreeSelect
-                                            treeData={treeData1}
-                                            style={{ width: 210, height: 100 }}
-                                            selectVal={this.state.selectVal1}
-                                            onChecked={this.onChecked1}
-                                            checkbox={checkbox1}
-                                            customTitleRender={this.customTitleRender} />
-                                        {/* {this.state.graphSubmit && this.state.selectVal1.length < 1 && <div className="mandatory">{"Region " + window.strings['ISREQUIRED']}</div>} */}
-                                    </div>
-                                </div>
-                                <div className="col-md-11 search-wrap">
-                                    <div className=" view-box">
-                                        <button type="button" className="data-search" onClick={this.getGraphView}>
-                                            <i className="fa fa-search" aria-hidden="true"></i>Search
+                        <div className="col-md-11 search-wrap">
+                            <div className=" view-box">
+                                <button type="button" className="data-search" onClick={this.getGraphView}>
+                                    <i className="fa fa-search" aria-hidden="true"></i>Search
                                     </button>
-                                    </div>
-                                    <div className="retail-reset">
-                                        <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
-                                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                                            <span className="tooltip-text">Reset</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="record-box">
-                                    {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
-                                </div>
+                            </div>
+                            <div className="retail-reset">
+                                <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
+                                    <i className="fa fa-refresh" aria-hidden="true"></i>
+                                    <span className="tooltip-text">Reset</span>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div className="back-btn my-3">
-                        <button className="common-btn" onClick={this.redirectPage}>Back</button>
-                    </div>
-                </div >
+                        <div className="record-box">
+                            {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
+                        </div>
+                    </div>}
+                {/* <div className="back-btn my-3">
+                    <button className="common-btn" onClick={this.redirectPage}>Back</button>
+                </div> */}
             </div>
         )
     }
