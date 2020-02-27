@@ -58,6 +58,7 @@ import CreateTollFree from '../components/Setting/CreateTollFree';
 
 
 import reports from '../components/ReportModule/report';
+import OnboardTab from '../components/ReportModule/OnboardTab';
 import CustomerOnboard from '../components/ReportModule/CustomerOnboard';
 import ExecutivePerformace from '../components/ReportModule/ExecutivePerformance';
 import PlacingOrder from '../components/ReportModule/PlacingOrder';
@@ -73,6 +74,7 @@ import TermsConditions from '../components/AboutModule/TermsConditions';
 
 import ReturnCancellation from '../components/AboutModule/ReturnCancellation';
 import About from '../components/AboutModule/About';
+import PlacingOrderTab from '../components/ReportModule/PlacingOrderTab';
 
 
 const root = ({ route }) => (
@@ -368,9 +370,14 @@ export const routesPath = [
                 component: report,
                 exact: true
             },
+            // {
+            //     path: process.env.PUBLIC_URL + '/reports/onboardTab',
+            //     component: OnboardTab,
+            //     exact: true
+            // },
             {
                 path: process.env.PUBLIC_URL + '/reports/customerOnboard',
-                component: CustomerOnboard,
+                component: OnboardTab,
                 exact: true
             },
             {
@@ -380,7 +387,7 @@ export const routesPath = [
             },
             {
                 path: process.env.PUBLIC_URL + '/reports/placingOrder',
-                component: PlacingOrder,
+                component: PlacingOrderTab,
                 exact: true
             },
             {

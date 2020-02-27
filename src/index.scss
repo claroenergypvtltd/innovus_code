@@ -3168,6 +3168,10 @@ display: flex;
 //   top:-10px!important;
 //   margin-bottom: 10px;
 // }
+li.recharts-legend-item {
+  position: relative;
+  left: 55px;
+}
 input[type=date]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   display: none;
@@ -3584,7 +3588,8 @@ transition: border-color .25s ease-in-out;
 }
 .recharts-wrapper  {
   > .recharts-surface{
-    width: 570px;
+   // width: 570px;
+  // width: 466px;
   }
 }
 .sidebar-toggle{

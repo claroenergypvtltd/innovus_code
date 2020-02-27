@@ -63,13 +63,13 @@ export function ReactBarChart(props) {
         ];
 
     return (
-        <div>
+        <div className="d-flex justify-content-center">
             <BarChart
-                width={300}
-                height={300}
+                width={800}
+                height={400}
                 data={reactbarChartdata}
                 margin={{
-                    top: 5, right: 0, left: -50, bottom: 5,
+                    top: 5, right: 30, left: 20, bottom: 5,
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -98,8 +98,8 @@ export class ReactBarLineChart extends Component {
 
         ]
         return (
-            <div>
-                <ComposedChart width={500} height={450} data={data}>
+            <div className="d-flex justify-content-center">
+                <ComposedChart width={800} height={500} data={data}>
                     <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} />
                     <YAxis />
                     <Tooltip />
