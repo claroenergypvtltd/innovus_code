@@ -264,6 +264,15 @@ class CustomerOnboard extends Component {
             }
             graphData.push(obj);
         })
+
+        let showData = false;
+
+        graphData && graphData.map(item => {
+            if (item && item.Users != 0) {
+                showData = true
+            }
+        })
+
         return (
             <div className="customer-onboard">
                 {this.state.map && <div className="map-view">
@@ -361,7 +370,7 @@ class CustomerOnboard extends Component {
                             </div>
                         </div>
                         <div className="record-box">
-                            {graphData.length > 0 ? <ReactBarChart barChartData={graphData} yAxisLabel=' Customers Onboard' xAxisLabel='Sub-Region' /> : "No record Found"}
+                            {graphData.length > 0 && showData ? <ReactBarChart barChartData={graphData} yAxisLabel=' Customers Onboard' xAxisLabel='Sub-Region' /> : "No record Found"}
                         </div>
                     </div>}
                 {/* <div className="back-btn my-3">

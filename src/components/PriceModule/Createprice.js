@@ -320,7 +320,7 @@ class CreatePrice extends Component {
                     }
                 }
                 if (this.state.boxEndQuantity) {
-                    if (parseInt(this.state.boxQuantity) > parseInt(this.state.boxEndQuantity)) {
+                    if (Number(this.state.boxQuantity) > Number(this.state.boxEndQuantity)) {
                         toastr.error("Set End Quantity must be greater or equal to Set start quantity");
                         isValid = false
                         return
