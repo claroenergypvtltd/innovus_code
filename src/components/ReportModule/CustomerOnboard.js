@@ -357,7 +357,7 @@ class CustomerOnboard extends Component {
                             </div>
                         </div>
                         <div className="record-box">
-                            {graphData.length > 0 ? <ReactBarChart barChartData={graphData} /> : "No record Found"}
+                            {graphData.length > 0 ? <ReactBarChart barChartData={graphData} yAxisLabel=' Customers Onboard' xAxisLabel='Sub-Region' /> : "No record Found"}
                         </div>
                     </div>}
                 {/* <div className="back-btn my-3">

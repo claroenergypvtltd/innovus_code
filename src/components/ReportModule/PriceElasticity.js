@@ -258,20 +258,38 @@ class PriceElasticity extends Component {
             })
             if (selectedVal) {
                 let Data = item.split(',')
-                if ((Data[3] + '-Parent' == selectedVal) && this.state.check) {
-                    let obj = {
-                        title: Data[2] + ' - ' + Data[4],
-                        value: Data[3] + '-Parent',
-                        // disabled: true
+                if ((Data[2] + '-Parent' == selectedVal) && this.state.check) {
+                    let productList = Data[4] + ' - ' + Data[3]
+                    let productName = []
+                    productName = productData && productData.map((productItem) => {
+                        return productItem.title
+                    })
+                    if (!productName.includes(productList)) {
+                        let Data = item.split(',');
+                        let obj = {
+                            title: Data[4] + ' - ' + Data[3],
+                            value: Data[2] + '-Parent',
+                            // disabled: true
+                        }
+                        productData.push(obj)
                     }
-                    productData.push(obj)
+
                 } else {
-                    let obj = {
-                        title: Data[2] + ' - ' + Data[4],
-                        value: Data[3] + '-Parent',
-                        disabled: true
+                    let Data = item.split(',')
+                    let productList = Data[4] + ' - ' + Data[3]
+                    let productName = []
+                    productName = productData && productData.map((productItem) => {
+                        return productItem.title
+                    })
+                    if (!productName.includes(productList)) {
+                        let Data = item.split(',');
+                        let obj = {
+                            title: Data[4] + ' - ' + Data[3],
+                            value: Data[2] + '-Parent',
+                            disabled: true
+                        }
+                        productData.push(obj)
                     }
-                    productData.push(obj)
                 }
             }
             else {
@@ -284,7 +302,7 @@ class PriceElasticity extends Component {
                 }
                 else {
                     let Data = item.split(',')
-                    let productList = Data[2] + ' - ' + Data[4]
+                    let productList = Data[4] + ' - ' + Data[3]
                     let productName = []
                     productName = productData && productData.map((productItem) => {
                         return productItem.title
@@ -292,8 +310,8 @@ class PriceElasticity extends Component {
                     if (!productName.includes(productList)) {
                         let Data = item.split(',');
                         let obj = {
-                            title: Data[2] + ' - ' + Data[4],
-                            value: Data[3] + '-Parent'
+                            title: Data[4] + ' - ' + Data[3],
+                            value: Data[2] + '-Parent'
                         }
                         productData.push(obj)
                     }
