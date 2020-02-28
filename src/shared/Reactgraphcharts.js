@@ -136,7 +136,8 @@ export class ReactBarLineChart extends Component {
         return (
             <div className="d-flex justify-content-center">
                 <ComposedChart width={800} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 25, }}>
-                    <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} />
+                    {/* <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} /> */}
+                    <XAxis dataKey="name" tick={<CustomizedXLabel />} />
                     <YAxis />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
@@ -221,15 +222,16 @@ export class LineGraphView extends Component {
         return (
             <div>
                 <LineChart
-                    width={700}
-                    height={500}
+                    width={800}
+                    height={600}
                     data={reactbarChartdata}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 25,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} />
+                    {/* <XAxis dataKey="name" label={{ value: value, position: 'bottom', offset: 5 }} /> */}
+                    <XAxis dataKey="name" tick={<CustomizedXLabel />} />
                     {/* <XAxis dataKey="name" /> */}
                     <YAxis dataKey='amount' label={{ value: yAxis, position: 'insideLeft', angle: -90 }} />
                     <Tooltip />
@@ -241,6 +243,31 @@ export class LineGraphView extends Component {
                     ))}
                 </LineChart>
             </div>
+        );
+    }
+}
+
+// class CustomizedXLabel extends PureComponent {
+//     debugger;
+//     render() {
+//         const {
+//             x, y, stroke, value,
+//         } = this.props;
+
+//         return <text x={x} y={y} dy={-4} fill={stroke} fontSize={10} textAnchor="middle">{value}</text>;
+//     }
+// }
+
+class CustomizedXLabel extends PureComponent {
+    render() {
+        const {
+            x, y, stroke, payload,
+        } = this.props;
+
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-25)">{payload.value}</text>
+            </g>
         );
     }
 }
