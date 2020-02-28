@@ -360,118 +360,121 @@ class PlacingOrder extends Component {
         return (
             <div className="customer-placeorder">
                 {this.state.map && <div className="map-view">
-                    <div className="order-report d-flex justify-content-around">
-                        <div className="start-date">
-                            <label className="label-title">Choose Date * </label>
-                            <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} max={this.state.dateValidation} name="mapStartDate" />
-                        </div>
-                        {/* <div className="start-date">
+                    <div className="col-md-10 offset-md-1">
+                        <div className="order-report d-flex justify-content-between">
+                            <div className="start-date">
+                                <label className="label-title">Choose Date * </label>
+                                <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} max={this.state.dateValidation} name="mapStartDate" />
+                            </div>
+                            {/* <div className="start-date">
                                         <label className="label-title">Choose Date * </label>
                                         <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
                                     </div> */}
 
-                        {!this.state.agentDropDown && <div className="tree-box">
-                            <label className="label-title">Select Region * </label>
-                            <TreeSelect
-                                // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
-                                treeData={regionData}
-                                style={{ width: 210, height: 100 }}
-                                selectVal={this.state.mapSelectVal}
-                                onSelect={this.onSelect}
-                                // onExpand={this.onExpand}
-                                onChecked={this.onMapChecked}
-                                checkbox={mapCheckbox}
-                                // showlevel={this.state.showlevel}
-                                customTitleRender={this.customTitleRender} />
-                        </div>}
-                        {this.state.agentDropDown && <div className="tree-box">
-                            <label className="label-title">Select Region * </label>
-                            <TreeSelect
-                                // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
-                                treeData={regionData}
-                                style={{ width: 210, height: 100 }}
-                                selectVal={this.state.mapSelectVal}
-                                onSelect={this.onSelect}
-                                // onExpand={false}
-                                onChecked={this.onMapChecked}
-                                checkbox={mapCheckbox}
-                                // showlevel={this.state.showlevel}
-                                customTitleRender={this.customTitleRender} />
-                        </div>}
-                        {this.state.agentDropDown && <div className="tree-box">
-                            <label className="label-title">Sales Agent * </label>
-                            {/* <input className="holder" placeholder="Search here.." /> */}
-                            <TreeSelect
-                                treeData={agentData}
-                                style={{ width: 210, height: 100 }}
-                                selectVal={this.state.agentSelectVal}
-                                onSelect={this.onSelect}
-                                // onExpand={false}
-                                onChecked={this.onAgentChecked}
-                                checkbox={agentCheckBox}
-                                // showlevel={this.state.showlevel}
-                                customTitleRender={this.customTitleRender} />
-                        </div>}
-                        {!this.state.agentDropDown && <div className="tree-box">
-                            <label className="label-title">Sales Agent * </label>
-                            {/* <input className="holder" placeholder="Search here.." /> */}
-                            <TreeSelect
-                                treeData={agentResetData}
-                                style={{ width: 210, height: 100 }} />
-                        </div>}
-                    </div>
-                    <div className="col-md-11 search-wrap">
-                        <div className="view-box">
-                            <button type="button" class="data-search" onClick={this.getPlacingOrderMap}>
-                                <i class="fa fa-search" aria-hidden="true"></i>Search
+                            {!this.state.agentDropDown && <div className="tree-box">
+                                <label className="label-title">Select Region * </label>
+                                <TreeSelect
+                                    // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
+                                    treeData={regionData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.mapSelectVal}
+                                    onSelect={this.onSelect}
+                                    // onExpand={this.onExpand}
+                                    onChecked={this.onMapChecked}
+                                    checkbox={mapCheckbox}
+                                    // showlevel={this.state.showlevel}
+                                    customTitleRender={this.customTitleRender} />
+                            </div>}
+                            {this.state.agentDropDown && <div className="tree-box">
+                                <label className="label-title">Select Region * </label>
+                                <TreeSelect
+                                    // treeData={!this.state.agentDropDown ? { regionData } : { resetRegionData }}
+                                    treeData={regionData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.mapSelectVal}
+                                    onSelect={this.onSelect}
+                                    // onExpand={false}
+                                    onChecked={this.onMapChecked}
+                                    checkbox={mapCheckbox}
+                                    // showlevel={this.state.showlevel}
+                                    customTitleRender={this.customTitleRender} />
+                            </div>}
+                            {this.state.agentDropDown && <div className="tree-box">
+                                <label className="label-title">Sales Agent * </label>
+                                {/* <input className="holder" placeholder="Search here.." /> */}
+                                <TreeSelect
+                                    treeData={agentData}
+                                    style={{ width: 210, height: 100 }}
+                                    selectVal={this.state.agentSelectVal}
+                                    onSelect={this.onSelect}
+                                    // onExpand={false}
+                                    onChecked={this.onAgentChecked}
+                                    checkbox={agentCheckBox}
+                                    // showlevel={this.state.showlevel}
+                                    customTitleRender={this.customTitleRender} />
+                            </div>}
+                            {!this.state.agentDropDown && <div className="tree-box">
+                                <label className="label-title">Sales Agent * </label>
+                                {/* <input className="holder" placeholder="Search here.." /> */}
+                                <TreeSelect
+                                    treeData={agentResetData}
+                                    style={{ width: 210, height: 100 }} />
+                            </div>}
+                        </div>
+                        <div className="search-wrap">
+                            <div className="view-box">
+                                <button type="button" class="data-search" onClick={this.getPlacingOrderMap}>
+                                    <i class="fa fa-search" aria-hidden="true"></i>Search
                                         </button>
-                        </div>
-                        <div className="retail-reset">
-                            <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
-                                <i className="fa fa-refresh" aria-hidden="true"></i>
-                                <span className="tooltip-text">Reset</span>
-                            </button>
+                            </div>
+                            <div className="retail-reset">
+                                <button type="button" className="reset ml-1" onClick={this.resetMapSearch}>
+                                    <i className="fa fa-refresh" aria-hidden="true"></i>
+                                    <span className="tooltip-text">Reset</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-
-                    <div className="mt-5">
+                    <div className="mt-5 col-md-10 offset-md-1">
                         <GoogleMap latLongData={latLongData} />
                     </div>
                 </div>}
                 {this.state.graph &&
                     <div className="graph-view">
-                        <div className="d-flex">
-                            <div className="start-date col-md-2">
-                                <label className="label-title">Choose Date * </label>
-                                <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} max={this.state.dateValidation} name="graphStartDate" />
+                        <div className="col-md-7 offset-md-2">
+                            <div className="d-flex justify-content-between">
+                                <div className="start-date">
+                                    <label className="label-title">Choose Date * </label>
+                                    <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} max={this.state.dateValidation} name="graphStartDate" />
 
+                                </div>
+                                <div className="tree-box">
+                                    <label className="label-title">Select Region * </label>
+                                    {/* <input className="holder" placeholder="Search here.." /> */}
+                                    <TreeSelect
+                                        treeData={regionData1}
+                                        style={{ width: 210, height: 100 }}
+                                        selectVal={this.state.graphSelectVal}
+                                        onSelect={this.onSelect}
+                                        // onExpand={false}
+                                        onChecked={this.onGraphChecked}
+                                        checkbox={graphCheckbox}
+                                        // showlevel={this.state.showlevel}
+                                        customTitleRender={this.customTitleRender} />
+                                </div>
                             </div>
-                            <div className="tree-box col-md-2">
-                                <label className="label-title">Select Region * </label>
-                                {/* <input className="holder" placeholder="Search here.." /> */}
-                                <TreeSelect
-                                    treeData={regionData1}
-                                    style={{ width: 210, height: 100 }}
-                                    selectVal={this.state.graphSelectVal}
-                                    onSelect={this.onSelect}
-                                    // onExpand={false}
-                                    onChecked={this.onGraphChecked}
-                                    checkbox={graphCheckbox}
-                                    // showlevel={this.state.showlevel}
-                                    customTitleRender={this.customTitleRender} />
-                            </div>
-                        </div>
-                        <div className="col-md-5 search-wrap">
-                            <div className="view-box">
-                                <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
-                                    <i class="fa fa-search" aria-hidden="true"></i>Search
+                            <div className="search-wrap">
+                                <div className="view-box">
+                                    <button type="button" class="data-search" onClick={this.getPlacingOrderGraph}>
+                                        <i class="fa fa-search" aria-hidden="true"></i>Search
                                     </button>
-                            </div>
-                            <div className="retail-reset">
-                                <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
-                                    <i className="fa fa-refresh" aria-hidden="true"></i>
-                                    <span className="tooltip-text">Reset</span>
-                                </button>
+                                </div>
+                                <div className="retail-reset">
+                                    <button type="button" className="reset ml-1" onClick={this.resetGraphSearch}>
+                                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                                        <span className="tooltip-text">Reset</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         {this.state.graphData.length > 0 && showChart ? <div className="mt-5">

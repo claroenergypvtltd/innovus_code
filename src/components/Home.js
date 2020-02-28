@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ReactBarChart, ReactPieChart } from '../shared/Reactgraphcharts';
+import { ReactBarChartDash, ReactPieChart } from '../shared/Reactgraphcharts';
 import { getUsersDetails, getOrderReports } from '../actions/SubmitRetailerAction';
 import DatesCalculation from '../shared/DatesCalculation'
 import { SearchBar } from '../../src/shared'
@@ -88,7 +88,7 @@ class Home extends Component {
                                     <span className="order-graph">Orders</span>
                                     <span className="chart-graph">Estimate</span>
                                 </div>
-                                <ReactBarChart />
+                                <ReactBarChartDash />
                             </div>
                         </div>
                     </div>
