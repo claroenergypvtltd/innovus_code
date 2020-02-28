@@ -99,7 +99,8 @@ class CategoryList extends Component {
             "page": this.state.currentPage,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
-            "parentCategoryName": this.state.parentCategoryName
+            "parentCategoryName": this.state.parentCategoryName,
+            "parentCategoryId": this.state.parentCategoryId,
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.category.view + Data.id, state: { categoryId: Data.id, categoryName: Data.name } });
@@ -127,6 +128,8 @@ class CategoryList extends Component {
                     "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
                     "search": this.state.search,
                     "limit": this.state.itemPerPage,
+                    "parentCategoryName": this.state.parentCategoryName,
+                    "parentCategoryId": this.state.parentCategoryId,
                 };
                 this.props.getCategoryList(serObj);
             })
@@ -140,6 +143,8 @@ class CategoryList extends Component {
                     "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
                     "search": this.state.search,
                     "limit": this.state.itemPerPage,
+                    "parentCategoryName": this.state.parentCategoryName,
+                    "parentCategoryId": this.state.parentCategoryId,
                 };
                 this.props.getCategoryList(serObj);
             });
@@ -153,7 +158,8 @@ class CategoryList extends Component {
             "page": this.state.currentPage,
             "search": this.state.search,
             "limit": this.state.itemPerPage,
-            "parentCategoryName": this.state.parentCategoryName
+            "parentCategoryName": this.state.parentCategoryName,
+            "parentCategoryId": this.state.parentCategoryId,
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.category.add, state: { parentCategoryId: this.state.parentCategoryId } });

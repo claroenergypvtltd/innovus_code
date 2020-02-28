@@ -23,12 +23,11 @@ class GoogleMap extends React.Component {
         if (latLong && latLong[0]) {
             initialData = latLong[0]
         } else {
-            initialData = { lat: 26, lng: 80 };
+            initialData = { lat: 28.7041, lng: 77.1025 };
         }
-
         return (
             <div style={{ width: "100%", height: "450px", position: "relative" }}>
-                <Map google={window.google} zoom={5} center={initialData} >
+                <Map google={window.google} zoom={5} center={initialData} initialCenter={initialData}>
                     {latLong && latLong.map((item, index) => (
 
                         item && item.order == 1 ? <Marker

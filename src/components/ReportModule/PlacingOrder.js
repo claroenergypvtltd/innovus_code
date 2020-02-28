@@ -99,6 +99,15 @@ class PlacingOrder extends Component {
         if ((!this.state.mapStartDate) || this.state.mapSelectVal.length == 0 || this.state.agentSelectVal.length == 0) {
             toastr.error("Mandatory fields are missing")
         }
+
+        let mapSelectVal = []
+        this.state.mapSelectVal && this.state.mapSelectVal.map(item => {
+            if (item) {
+                if (!item.includes('Parent') && !item.includes('Select All')) {
+                    mapSelectVal.push(item);
+                }
+            }
+        })
         if (this.state.mapStartDate && this.state.mapSelectVal.length > 0 && this.state.agentSelectVal.length > 0) {
             let obj = {
                 startDate: this.state.mapStartDate,
@@ -134,9 +143,9 @@ class PlacingOrder extends Component {
         else {
             let regionArray = []
             Data && Data.map((item => {
-                if (!item.includes('Parent')) {
-                    regionArray.push(item)
-                }
+                // if (!item.includes('Parent')) {
+                regionArray.push(item)
+                // }
             }))
             let resetStatus = regionArray.includes('Select All') ? false : true
             this.state.mapSelectVal = regionArray
@@ -233,9 +242,8 @@ class PlacingOrder extends Component {
             initCheckedList: this.state.agentSelectVal // Initialize check multiple lists
         }
 
-
         let regionData = []
-        this.state.regionListData2.length > 0 ? regionData.push(this.state.selectAll) : regionData = []
+        this.state.regionListData2 && this.state.regionListData2.length > 0 ? regionData.push(this.state.selectAll) : regionData = []
         // regionData.push({ title: 'Select All', name: 'Select All' })
         this.state.regionListData2 && this.state.regionListData2.map((item, index) => {
             let childArray = [];
@@ -342,28 +350,12 @@ class PlacingOrder extends Component {
             graphData.push(obj);
         })
 
-        // let showChart = false
-        // // let chart = chartData && chartData[0].split(',')
-
-        // if (graphData && graphData.Order > 0 || graphData && graphData.Users > 0) {
-        //     showChart = true
-        // }
-
         let showChart = false
         graphData && graphData.map(item => {
             if (Number(item.Order) || Number(item.Users)) {
                 showChart = true;
             }
         })
-
-
-        // showChart = graphData && graphData.Order > 0 &&  true
-
-        //    && true;
-        //   .map(item => {
-        //         showChart = true;
-
-        // })
 
         return (
             <div className="customer-placeorder">

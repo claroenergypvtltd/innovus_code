@@ -29,7 +29,7 @@ export const getSpecificRegion = (obj) => dispatch => {
 export const submitRegion = (regionData) => dispatch => {
     if (regionData && regionData.id) {  // Check whether the Id is empty or not then respectively hit Add and Update
         httpServices.put("regionDc", regionData).then(resp => {
-            if (resp) {
+            if (resp && resp.status == "200") {
                 toastr.success(resp.message);
                 dispatch({ type: REGION_UPDATE_SUCCESS, resp: resp.status })
             }

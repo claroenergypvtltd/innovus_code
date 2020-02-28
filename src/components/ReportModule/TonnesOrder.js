@@ -200,7 +200,7 @@ export default class TonnesOrder extends Component {
     }
     render() {
         let regionData = []
-        this.state.regionListData2 ? regionData.push(this.state.selectAll) : regionData = []
+        this.state.regionListData2 && this.state.regionListData2.length > 0 ? regionData.push(this.state.selectAll) : regionData = []
         this.state.regionListData2 && this.state.regionListData2.map((item, index) => {
             let childArray = [];
             item.dcDatas && item.dcDatas.map((dcData, index) => {

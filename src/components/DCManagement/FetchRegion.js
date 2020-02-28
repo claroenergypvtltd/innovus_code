@@ -85,11 +85,21 @@ class FetchRegion extends Component {
     }
     render() {
         const regionData = this.state.regionListData && this.state.regionListData.map((item) => {
-            let dcCode = item.dcDatas && item.dcDatas.map((item) => {
-                return item.dcCode + ", "
+            let dcCode = item.dcDatas && item.dcDatas.map((codeItem, index) => {
+                if (index == item.dcDatas.length - 1) {
+                    return codeItem.dcCode
+                } else {
+                    return codeItem.dcCode + ", "
+                }
+
             })
-            let dcName = item.dcDatas && item.dcDatas.map((item) => {
-                return item.name + ", "
+            let dcName = item.dcDatas && item.dcDatas.map((dcItem, dcIndex) => {
+                if (dcIndex == item.dcDatas.length - 1) {
+                    return dcItem.name
+                } else {
+                    return dcItem.name + ", "
+                }
+
             })
             return { "itemList": [item.name, dcCode, dcName], "itemId": item.id }
         })
