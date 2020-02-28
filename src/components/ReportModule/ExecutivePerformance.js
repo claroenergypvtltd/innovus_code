@@ -412,8 +412,8 @@ class ExecutivePerformance extends Component {
         return (
             <div className="customer-onboard">
                 <h4 className="user-title">{window.strings.REPORT.SALES_EXECUTIVE_PERFORMANCE}</h4>
-                <div className="sales-report mt-3">
-                    <div className="main-wrapper py-3 sale-box">
+                <div className="sales-report mt-3 main-wrapper">
+                    <div className=" py-3 sale-box">
                         <div className="d-flex justify-content-around">
                             <div className="start-date">
                                 <label className="label-title">Start Date * </label>
@@ -495,26 +495,23 @@ class ExecutivePerformance extends Component {
                             </div>
                         </div>
                     </div>
-                    {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ? <div className="row mt-5">
-                        <div className="col-md-6">
-                            <div className="main-wrapper py-3">
-                                {<LineGraphView label='Date' Data='Users' yAxis="" barChartData={CustomerOnBoard} />}
-                                <label className="d-flex justify-content-center mt-2">No of customers</label>
+                    {CustomerOnBoard.length > 0 || noOfOrders.length > 0 || orderValue.length > 0 ?
+                        <div className="mt-5">
+                            <div className="col-md-10 offset-md-2">
+                                <div className="py-3">
+                                    {<LineGraphView label='Date' Data='Users' yAxis="" barChartData={CustomerOnBoard} />}
+                                    <label className="offset-md-4 report-label">No of customers</label>
+                                </div>
+                                <div className="py-3">
+                                    {<LineGraphView label='Date' Data='Order' yAxis="" barChartData={noOfOrders} />}
+                                    <label className="offset-md-4 report-label">No of orders</label>
+                                </div>
+                                <div className="py-3">
+                                    {<LineGraphView label='Date' Data='Value' yAxis="" barChartData={orderValue} />}
+                                    <label className="offset-md-4 report-label">Order Value (INR)</label>
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="main-wrapper py-3">
-                                {<LineGraphView label='Date' Data='Order' yAxis="" barChartData={noOfOrders} />}
-                                <label className="d-flex justify-content-center mt-2">No of orders</label>
-                            </div>
-                        </div>
-                        <div className="col-md-6 offset-md-3 mt-5">
-                            <div className="main-wrapper py-3">
-                                {<LineGraphView label='Date' Data='Value' yAxis="" barChartData={orderValue} />}
-                                <label className="d-flex justify-content-center mt-2">Order Value (INR)</label>
-                            </div>
-                        </div>
-                    </div> :
+                        </div> :
                         <div className="record-box">
                             No record found
                         </div>
