@@ -2,7 +2,9 @@ import { httpServices } from "../services"
 
 
 export const fetchOrderGraph = (Data) => {
-    return httpServices.get('reports?flag=1&Id=' + Data.id + '&startDate=' + Data.startDate + '&regionId=' + Data.regionId).then(resp => {
+    let region = Data.subregionId ? '&subregionId=' : '&regionId='
+    let regionId = Data.subregionId ? Data.subregionId : Data.regionId
+    return httpServices.get('reports?flag=1&Id=' + Data.id + '&startDate=' + Data.startDate + region + regionId).then(resp => {
         if (resp) {
             return resp
         }
