@@ -90,11 +90,13 @@ class CreateRegion extends Component {
         if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0) {
             let poolAry = [];
             this.state.currentSelection && this.state.currentSelection.map(item => {
-                let dcId = item.label && item.label.split('DC');
-                let obj = {
-                    dcId: dcId[1]
+                if (item) {
+                    let dcId = item.label && item.label.split('DC');
+                    let obj = {
+                        dcId: dcId[1]
+                    }
+                    poolAry.push(obj);
                 }
-                poolAry.push(obj);
             })
 
             let obj = {
@@ -103,6 +105,8 @@ class CreateRegion extends Component {
                 "id": this.props.location && this.props.location.state && this.props.location.state.id
             }
             this.props.submitRegion(obj);
+        } else {
+            toastr.error("Mandatory Fields are missing");
         }
     }
     redirectPage = () => {
