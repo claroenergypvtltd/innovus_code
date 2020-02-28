@@ -110,7 +110,7 @@ export function ReactBarChart(props) {
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" label={{ value: props.xAxisLabel, offset: 5, position: "bottom" }} />
-                <YAxis label={{ value: props.yAxisLabel, angle: -90, position: 'center' }} />
+                <YAxis label={{ value: props.yAxisLabel, angle: -90, position: 'insideLeft' }} />
                 <Tooltip />
                 <Legend verticalAlign="top" height={36} />
                 <Bar dataKey="Users" fill="#8884d8" />
@@ -143,9 +143,8 @@ export class ReactBarLineChart extends Component {
                     <CartesianGrid stroke="#f5f5f5" />
                     {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
                     <Bar dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />
-                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" label={this.props.percentageLabel && <CustomizedLabel />} />
+                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" transform="rotate(-90, 40, 253)" label={this.props.percentageLabel && <CustomizedLabel />} />
                 </ComposedChart>
-                <label class="d-flex justify-content-center">{this.props.chartName}</label>
             </div>
         )
     }
@@ -156,7 +155,7 @@ class CustomizedLabel extends PureComponent {
             x, y, stroke, value,
         } = this.props;
 
-        return <text x={x} y={y} dy={-8} fill='orange' fontSize={15} textAnchor="middle">{value + '%'}</text>;
+        return <text x={40} y={253} transform="rotate(-90, 40, 253)" fill='orange' fontSize={15} textAnchor="middle">{value + '%'}</text>;
     }
 }
 export function ReactPieChart(props) {
@@ -222,8 +221,8 @@ export class LineGraphView extends Component {
         return (
             <div>
                 <LineChart
-                    width={600}
-                    height={400}
+                    width={700}
+                    height={500}
                     data={reactbarChartdata}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 25,
