@@ -69,14 +69,14 @@ export function ReactBarChart(props) {
                 height={400}
                 data={reactbarChartdata}
                 margin={{
-                    top: 5, right: 30, left: 20, bottom: 5,
+                    top: 5, right: 30, left: 20, bottom: 25,
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="name" label={{ value: props.xAxisLabel, offset: 5, position: "bottom" }} />
+                <YAxis label={{ value: props.yAxisLabel, angle: -90, position: 'center' }} />
                 <Tooltip />
-                <Legend />
+                <Legend verticalAlign="top" height={36} />
                 <Bar dataKey="Users" fill="#8884d8" />
                 {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
             </BarChart></div>
@@ -99,7 +99,7 @@ export class ReactBarLineChart extends Component {
         ]
         return (
             <div className="d-flex justify-content-center">
-                <ComposedChart width={800} height={500} data={data}>
+                <ComposedChart width={800} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 25, }}>
                     <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} />
                     <YAxis />
                     <Tooltip />
@@ -190,7 +190,7 @@ export class LineGraphView extends Component {
                     height={400}
                     data={reactbarChartdata}
                     margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
+                        top: 5, right: 30, left: 20, bottom: 25,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />

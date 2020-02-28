@@ -30,10 +30,6 @@ class PlacingOrder extends Component {
             agentSelectVal: [],
             agentDataList: [],
             regionListData2: [],
-            agentResetData: [{
-                title: 'No Data',
-                value: 'No Data'
-            }],
             selectAll: { title: 'Select All', value: 'Select All' },
             agentDropDown: false,
             reset: true,
@@ -239,7 +235,7 @@ class PlacingOrder extends Component {
 
 
         let regionData = []
-        this.state.regionListData2 ? regionData.push(this.state.selectAll) : regionData = []
+        this.state.regionListData2.length > 0 ? regionData.push(this.state.selectAll) : regionData = []
         // regionData.push({ title: 'Select All', name: 'Select All' })
         this.state.regionListData2 && this.state.regionListData2.map((item, index) => {
             let childArray = [];
@@ -299,7 +295,7 @@ class PlacingOrder extends Component {
         let agentData = []
         this.state.agentDataList && this.state.agentDataList.map((item, index) => {
             let Data = item.split(',');
-            let agentList = Data[1] + ' - ' + Data[4]
+            let agentList = Data[1] + ' - ' + Data[3]
             let agentName = []
             agentName = agentData && agentData.map((agentItem) => {
                 return agentItem.title
@@ -307,13 +303,15 @@ class PlacingOrder extends Component {
             if (!agentName.includes(agentList)) {
                 let Data = item.split(',');
                 let obj = {
-                    title: Data[1] + ' - ' + Data[4],
+                    title: Data[1] + ' - ' + Data[3],
                     value: Data[0]
                 }
                 agentData.push(obj)
             }
-
         })
+
+
+        let agentResetData = [{ title: 'No Data', value: 'No Data' }]
 
         let latLongData = [];
         this.state.mapData.orders && this.state.mapData.orders.map(item => {
@@ -426,7 +424,7 @@ class PlacingOrder extends Component {
                             <label className="label-title">Sales Agent * </label>
                             {/* <input className="holder" placeholder="Search here.." /> */}
                             <TreeSelect
-                                treeData={this.state.agentResetData}
+                                treeData={agentResetData}
                                 style={{ width: 210, height: 100 }} />
                         </div>}
                     </div>

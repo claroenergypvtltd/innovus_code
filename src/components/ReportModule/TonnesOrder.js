@@ -23,7 +23,8 @@ export default class TonnesOrder extends Component {
             skuReset: true,
             deSelect: false,
             selectAll: { title: 'Select All', value: 'Select All' },
-            dateValidation: date
+            dateValidation: date,
+            productList: []
         }
     }
     componentDidMount() {
@@ -59,7 +60,7 @@ export default class TonnesOrder extends Component {
     getProductData = (Data) => {
         let regionData = []
         Data && Data.map((item) => {
-            if (item && !item.includes('Select All')) {
+            if (item && !item.includes('Select All') && !item.includes("Parent")) {
                 regionData.push(item)
             }
         })
@@ -129,7 +130,7 @@ export default class TonnesOrder extends Component {
             let dataArray = ['Select All']
             this.state.productList && this.state.productList.map((item) => {
                 let productData = item.split(',')
-                let value = productData[3]
+                let value = productData[2]
                 // item && item.productDetailsao && item.productDetailsao.productId + 'Parent'
                 dataArray.push(value)
             })
@@ -218,10 +219,10 @@ export default class TonnesOrder extends Component {
             regionData.push(obj)
         })
 
-        let productData = [this.state.selectAll]
+        let productData = this.state.productList.length > 0 ? [this.state.selectAll] : []
         this.state.productList && this.state.productList.map((item) => {
             let Data = item.split(',')
-            let productList = Data[2] + ' - ' + Data[4]
+            let productList = Data[4] + ' - ' + Data[3]
             let productName = []
             productName = productData && productData.map((productItem) => {
                 return productItem.title
@@ -229,8 +230,8 @@ export default class TonnesOrder extends Component {
             if (!productName.includes(productList)) {
                 let Data = item.split(',');
                 let obj = {
-                    title: Data[2] + ' - ' + Data[4],
-                    value: Data[3]
+                    title: Data[4] + ' - ' + Data[3],
+                    value: Data[2]
                 }
                 productData.push(obj)
             }
