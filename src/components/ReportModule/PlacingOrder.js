@@ -24,7 +24,6 @@ class PlacingOrder extends Component {
             mapSelectVal: [],
             graphSelectVal: [],
             getBarChart: false,
-            subRegionBarData: [],
             graphData: [],
             subGraphData: [],
             mapData: [],
@@ -202,19 +201,9 @@ class PlacingOrder extends Component {
         }
         fetchOrderGraph(obj).then(resp => {
             if (resp && resp.data) {
-                this.setState({ subGraphData: resp.data })
+                this.setState({ subGraphData: resp.data, getBarChart: childData })
             }
         })
-
-        let subGraphData = [];
-        this.state.subGraphData && this.state.subGraphData.map(item => {
-            let Data = item.split(',')
-            let obj = {
-                name: Data[0], Users: Data[1], Order: Data[2], dcCode: Data[3]
-            }
-            subGraphData.push(obj);
-        })
-        this.setState({ getBarChart: childData, subRegionBarData: subGraphData })
     }
     hideSubBarChart = () => {
         this.setState({ getBarChart: false })
@@ -234,7 +223,9 @@ class PlacingOrder extends Component {
         this.setState({
             graphStartDate: "",
             graphSelectVal: [],
-            graphData: []
+            graphData: [],
+            subGraphData: [],
+            getBarChart: false
         });
     }
     render() {
@@ -368,6 +359,15 @@ class PlacingOrder extends Component {
             graphData.push(obj);
         })
 
+        let subGraphData = [];
+        this.state.subGraphData && this.state.subGraphData.map(item => {
+            let Data = item.split(',')
+            let obj = {
+                name: Data[0], Users: Data[1], Order: Data[2], dcCode: Data[3]
+            }
+            subGraphData.push(obj);
+        })
+
         let showChart = false
         graphData && graphData.map(item => {
             if (Number(item.Order) || Number(item.Users)) {
@@ -376,7 +376,7 @@ class PlacingOrder extends Component {
         })
 
         let showSubChart = false
-        graphData && graphData.map(item => {
+        subGraphData && subGraphData.map(item => {
             if (Number(item.Order) || Number(item.Users)) {
                 showSubChart = true;
             }
@@ -506,20 +506,16 @@ class PlacingOrder extends Component {
                             <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders" percentageLabel={true} />
                         </div> : <div className="record-box">No record found</div>}
 
-                        {this.state.subRegionBarData.length > 0 && showSubChart && <div className="pt-5">
-                            <ReactBarLineChart barChartData={this.state.subRegionBarData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders" percentageLabel={true} />
+                        {this.state.subGraphData.length > 0 && showSubChart && this.state.getBarChart && <div className="pt-5">
+                            <ReactBarLineChart barChartData={subGraphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders ( Sales agent wise )" percentageLabel={true} />
                             <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
                         </div>}
                     </div>
 
                 }
-                {/* <div className="back-btn my-3">
-                    <button class="common-btn" onClick={this.redirectPage}>Back</button>
-                </div> */}
             </div>
         )
     }
-
 }
 const mapStateToProps = (state) => ({
     regionList: state.region
