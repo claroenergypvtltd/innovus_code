@@ -117,7 +117,7 @@ class FetchRegion extends Component {
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">
-                            <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.DC_MANAGEMENT.ADD_REGION}</button>
+                            <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>{window.strings.DC_MANAGEMENT.ADDREGION}</button>
                         </div>
                     </div>
                 </div>
