@@ -215,7 +215,6 @@ class PlacingOrder extends Component {
         }
     }
     onAgentSelectAll = () => {
-        this.fetchAgents(this.state.mapSelectVal)
         let Data = ['Select All']
         this.state.agentDataList && this.state.agentDataList.map((item, index) => {
             let value = item.split(',')
