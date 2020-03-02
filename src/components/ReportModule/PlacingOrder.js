@@ -33,7 +33,8 @@ class PlacingOrder extends Component {
             selectAll: { title: 'Select All', value: 'Select All' },
             agentDropDown: false,
             reset: true,
-            dateValidation: date
+            dateValidation: date,
+            agentReset: true
         }
     }
     componentDidMount() {
@@ -108,12 +109,20 @@ class PlacingOrder extends Component {
                 }
             }
         })
+        let agentSelectVal = []
+        this.state.agentSelectVal && this.state.agentSelectVal.map(item => {
+            if (item) {
+                if (!item.includes('Parent') && !item.includes('Select All')) {
+                    agentSelectVal.push(item);
+                }
+            }
+        })
         if (this.state.mapStartDate && this.state.mapSelectVal.length > 0 && this.state.agentSelectVal.length > 0) {
             let obj = {
                 startDate: this.state.mapStartDate,
                 id: 2,
-                regionId: this.state.mapSelectVal,
-                agentId: this.state.agentSelectVal
+                regionId: mapSelectVal,
+                agentId: agentSelectVal
             }
             fetchOrderMap(obj).then(resp => {
                 if (resp && resp.data) {
@@ -185,13 +194,36 @@ class PlacingOrder extends Component {
         }
     }
     onAgentChecked = (Data) => {
-        if (Data) {
+        let enter;
+        Data && Data.map(item => {
+            enter = item == 'Select All' ? true : false
+        })
+        if (enter) {
+            this.onAgentSelectAll(Data)
+        }
+        else if (!Data.includes('Select All') && !this.state.agentReset) {
+            this.setState({ agentSelectVal: [], agentReset: true, agentDropDown: false }, () => { this.fetchAgents(this.state.mapSelectVal) })
+        }
+        else {
             let dropDownValue = []
             Data && Data.map((item => {
                 dropDownValue.push(item)
             }))
+            let resetStatus = dropDownValue && dropDownValue.includes('Select All') ? false : true
             this.state.agentSelectVal = dropDownValue
+            this.setState({ agentSelectVal: dropDownValue, agentReset: resetStatus })
         }
+    }
+    onAgentSelectAll = () => {
+        this.fetchAgents(this.state.mapSelectVal)
+        let Data = ['Select All']
+        this.state.agentDataList && this.state.agentDataList.map((item, index) => {
+            let value = item.split(',')
+            if (!Data.includes(value[0])) {
+                Data.push(value[0])
+            }
+        })
+        this.onAgentChecked(Data)
     }
     callbackFunction = (childData, selectBarData) => {
         let obj = {
@@ -511,7 +543,6 @@ class PlacingOrder extends Component {
                             <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
                         </div>}
                     </div>
-
                 }
             </div>
         )
