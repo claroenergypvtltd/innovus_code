@@ -306,13 +306,13 @@ class CreatePrice extends Component {
                 }
                 if (item.offer) {
                     if (item.type == 2) {
-                        if (parseInt(item.offer) > 100) {
+                        if (parseInt(item.offer) >= 100) {
                             isValid = false
                             toastr.error("Select valid offer type")
                             return;
                         }
                     } else if (item.type == 1) {
-                        if (Number(item.offer) > Number(this.state.price)) {
+                        if (Number(item.offer) >= Number(this.state.price)) {
                             isValid = false
                             toastr.error("Select valid offer")
                             return;
@@ -646,8 +646,8 @@ class CreatePrice extends Component {
                                                             required
                                                         />
                                                         {this.state.submitted && (offerArray.quantity || offerArray.type) && !offerArray.offer && <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['ISREQUIRED']}</div>}
-                                                        {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.offer) > parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
-                                                        {this.state.submitted && offerArray.type == 2 && offerArray.offer > 100 && <div className="mandatory">Please enter valid offer</div>}
+                                                        {this.state.submitted && offerArray.type == 1 && (parseInt(offerArray.offer) >= parseInt(this.state.price)) && <div className="mandatory">Please enter valid offer</div>}
+                                                        {this.state.submitted && offerArray.type == 2 && offerArray.offer >= 100 && <div className="mandatory">Please enter valid offer</div>}
 
                                                     </div>
                                                     <div className="col-md-4">
