@@ -106,7 +106,7 @@ class FetchPool extends Component {
                     </div>
                     <div className="right-title col-md-5">
                         <div className="d-flex justify-content-end">
-                            <button className="common-btn float-right" onClick={this.addPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADD_POOL}</button>
+                            <button className="common-btn float-right" onClick={this.addPath}><i className="fa fa-plus sub-plus"></i>{window.strings.PRICE.ADDPOOL}</button>
                         </div>
                     </div>
                 </div>

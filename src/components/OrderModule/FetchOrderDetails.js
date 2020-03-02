@@ -307,7 +307,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 4 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label m-0">shipped</span>
+                                <span class="bs-stepper-label m-0">Shipped</span>
                             </div>
                         </div>
                         <div class="bs-stepper-line"></div>
@@ -331,7 +331,7 @@ class FetchOrderDetails extends Component {
                         <div class="step active">
                             <div className="step-trigger">
                                 {status == 7 ? <span class="tick-color"></span> : <span class="tick-light"></span>}
-                                <span class="bs-stepper-label m-0">cancel</span>
+                                <span class="bs-stepper-label m-0">Cancel</span>
                             </div>
                         </div>
                         {/* <div class="bs-stepper-line"></div> */}
