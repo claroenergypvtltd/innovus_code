@@ -127,7 +127,7 @@ export class ReactBarLineChart extends Component {
         }
     }
     sendData = (Data) => {
-        this.props.parentCallback(this.state.getBarChart, Data);
+        this.props && this.props.parentCallback && this.props.parentCallback(this.state.getBarChart, Data);
     }
     render() {
         const data = this.props.barChartData ? this.props.barChartData : [
@@ -136,15 +136,14 @@ export class ReactBarLineChart extends Component {
         return (
             <div className="d-flex justify-content-center">
                 <ComposedChart width={800} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 25, }}>
-                    {/* <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} /> */}
-                    <XAxis dataKey="name" tick={<CustomizedXLabel />} />
+                    <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} />
                     <YAxis />
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
                     <CartesianGrid stroke="#f5f5f5" />
                     {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
                     <Bar dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />
-                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" transform="rotate(-90, 40, 253)" label={this.props.percentageLabel && <CustomizedLabel />} />
+                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" label={this.props.percentageLabel && <CustomizedLabel />} />
                 </ComposedChart>
             </div>
         )
@@ -156,7 +155,7 @@ class CustomizedLabel extends PureComponent {
             x, y, stroke, value,
         } = this.props;
 
-        return <text x={40} y={253} transform="rotate(-90, 40, 253)" fill='orange' fontSize={15} textAnchor="middle">{value + '%'}</text>;
+        return <text x={x} y={y} dy={-8} fill='orange' fontSize={15} textAnchor="middle">{value + '%'}</text>;
     }
 }
 export function ReactPieChart(props) {
