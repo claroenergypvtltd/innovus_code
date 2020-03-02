@@ -62,14 +62,24 @@ export const SubmitQuantityType = (Data) => {
 
 }
 
-export const SubmitEcom = (Data) => {
-    return httpServices.post('privacypolicy', Data).then(resp => {
-        if (resp) {
-            return resp;
-        }
-    }).catch((error) => {
-        console.error("error", error.resp);
-    })
+export const SubmitEcom = (Data, isEdit) => {
+    if (isEdit) {
+        return httpServices.put('privacypolicy', Data).then(resp => {
+            if (resp) {
+                return resp;
+            }
+        }).catch((error) => {
+            console.error("error", error.resp);
+        })
+    } else {
+        return httpServices.post('privacypolicy', Data).then(resp => {
+            if (resp) {
+                return resp;
+            }
+        }).catch((error) => {
+            console.error("error", error.resp);
+        })
+    }
 }
 
 export const getEcom = (type, id) => {

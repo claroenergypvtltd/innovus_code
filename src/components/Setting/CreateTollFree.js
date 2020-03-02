@@ -32,25 +32,21 @@ class CreateTollFree extends Component {
 
     }
 
-    componentWillReceiveProps(newProps) {
-        if (newProps && newProps.status == "200") {
-            let redrctpath = path.user.list;
-            this.context.router.history.push(redrctpath);
-            store.dispatch({ type: RETAILER_CREATE_SUCCESS, status: '' })
-            this.listPath('AgentAssignsuccess');
-        }
-    }
-
     getTollFreeData = (id) => {
         getEcom('contact', id).then(resp => {
-            if (resp) {
-                //    this.setState({ tollFreeList : resp.data }) 
+            if (resp && resp.data) {
+                this.setState({ phoneNumber: resp.data.description })
             }
         })
     }
 
     handleInputChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+        if (e.target.value > 0) {
+            this.setState({ [e.target.name]: e.target.value })
+        } else {
+            this.setState({ [e.target.name]: '' })
+        }
+
     }
 
 
@@ -61,12 +57,17 @@ class CreateTollFree extends Component {
     handleSubmit = () => {
         this.setState({ submitted: true })
         if (this.state.phoneNumber) {
-            var phNumber = this.state.phoneNumber
+            var phNumber = this.state.phoneNumber;
+            let edit = false
             if (phNumber.length == 10) {
                 const formData = new FormData();
                 formData.append("type", "contact");
                 formData.append("fileName", this.state.phoneNumber);
-                SubmitEcom(formData).then(resp => {
+                if (this.props.location && this.props.location.state && this.props.location.state.id) {
+                    formData.append("id", this.props.location.state.id);
+                    edit = true;
+                }
+                SubmitEcom(formData, edit).then(resp => {
                     if (resp) {
                         toastr.success(resp.message);
                         this.listPath();
@@ -116,8 +117,8 @@ class CreateTollFree extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    list: state.retailer.Lists ? state.retailer.Lists : [],
-    status: state.retailer.status,
+    // list: state.retailer.Lists ? state.retailer.Lists : [],
+    // status: state.retailer.status,
 })
 
 export default connect(mapStateToProps, { fetchRetailers, SubmitRetailer, fetchAgent })(CreateTollFree)

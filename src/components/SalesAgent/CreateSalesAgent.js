@@ -75,7 +75,12 @@ class CreateSalesAgent extends React.Component {
     }
 
     handleInputChange = (e) => {
-        e.target.value && e.target.value[0].includes(" ") ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value });
+        if (e.target.name == "mobileNumber") {
+            let mNo = e.target.value > 0 ? e.target.value : '';
+            this.setState({ [e.target.name]: mNo })
+        } else {
+            e.target.value && e.target.value[0].includes(" ") ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value });
+        }
     }
 
     redirectPage = () => {
