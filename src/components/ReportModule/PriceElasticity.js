@@ -29,7 +29,9 @@ class PriceElasticity extends Component {
             salesAgentList: [],
             graphSubmit: false,
             check: false,
-            dateValidation: date
+            dateValidation: date,
+            salesEnable: true,
+            subEnable: true
         }
     }
 
@@ -37,7 +39,6 @@ class PriceElasticity extends Component {
         // this.fetchAgents();
         this.getReportRegion();
     }
-
 
     getReportRegion = () => {
         let obj = {
@@ -65,7 +66,8 @@ class PriceElasticity extends Component {
         }
         getDcCodeData(obj, "order").then(resp => {
             if (resp) {
-                this.setState({ salesAgentList: resp })
+                let value = resp.length < 1 && true
+                this.setState({ salesAgentList: resp, salesEnable: value })
             }
         })
     }
@@ -104,9 +106,7 @@ class PriceElasticity extends Component {
         }
         else {
             this.setState({ selectsubVal: [], salesAgentList: [{ "name": "No Data", "id": "No Data" }], selectVal1: [], subEnable: false, salesEnable: true })
-
         }
-
     }
 
     onChecked1 = (data, value) => {
@@ -218,7 +218,7 @@ class PriceElasticity extends Component {
             treeData.push(obj)
         })
 
-        let subtreeData = []
+        let subtreeData = this.state.subRegionData.length < 1 ? [{ title: "No Data", value: "No Data" }] : []
         this.state.subRegionData && this.state.subRegionData.map((item, index) => {
             let obj = {}
             let selectedVal = '';
@@ -249,7 +249,7 @@ class PriceElasticity extends Component {
             subtreeData.push(obj)
         })
 
-        let productData = []
+        let productData = this.state.salesAgentList.length < 1 ? [{ title: "No Data", value: "No Data" }] : []
         this.state.salesAgentList && this.state.salesAgentList.map((item, index) => {
 
             let selectedVal = '';
@@ -464,7 +464,6 @@ class PriceElasticity extends Component {
                 </div>
             </div>)
     }
-
 }
 
 const mapStateToProps = (state) => ({

@@ -71,7 +71,8 @@ export default class TonnesOrder extends Component {
         }
         getDcCodeData(obj, "order").then(resp => {
             if (resp) {
-                this.setState({ productList: resp, deSelect: true })
+                let value = resp.length < 1 ? false : true
+                this.setState({ productList: resp, deSelect: value })
             }
         })
     }

@@ -60,7 +60,8 @@ class PlacingOrder extends Component {
         }
         getDcCodeData(obj, "order").then(resp => {
             if (resp) {
-                this.setState({ agentDataList: resp, agentDropDown: true })
+                let value = resp.length < 1 ? false : true
+                this.setState({ agentDataList: resp, agentDropDown: value })
             }
         })
     }
