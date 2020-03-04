@@ -11,7 +11,7 @@ class FetchQuantityType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            TableHead: ["QUANTITY TYPE CONTROL"],
+            TableHead: ["Id", "QUANTITY TYPE(English)", "QUANTITY TYPE(Hindi)"],
             currentPage: 0,
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
@@ -58,7 +58,7 @@ class FetchQuantityType extends Component {
     }
     render() {
         const quantityList = this.state.quantityTypeList && this.state.quantityTypeList.map((item) => {
-            return { "itemList": [item.name], "itemId": item.id }
+            return { "itemList": [item.id, item.name, item.nameHindi], "itemId": item.id }
         })
         return (
             <div>

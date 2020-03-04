@@ -130,20 +130,23 @@ export class ReactBarLineChart extends Component {
         this.props && this.props.parentCallback && this.props.parentCallback(this.state.getBarChart, Data);
     }
     render() {
-        const data = this.props.barChartData ? this.props.barChartData : [
-
-        ]
+        const data = this.props.barChartData ? this.props.barChartData : []
         return (
             <div className="d-flex justify-content-center">
                 <ComposedChart width={800} height={500} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 25, }}>
                     <XAxis dataKey="name" label={{ value: this.props.chartName, position: 'bottom', offset: 8 }} />
-                    <YAxis />
+                    {this.props.Y1Axis && <YAxis yAxisId="left" label={{ value: this.props.yAxis, position: 'left', angle: -90 }} />}
+                    {this.props.Y1Axis && <YAxis yAxisId="right" orientation='right' label={{ value: this.props.Y1Axis, position: 'right', angle: -90 }} tickCount={10} tickLine={false} axisLine={true} />}
+
+                    {!this.props.Y1Axis && <YAxis label={{ value: this.props.yAxis, position: 'left', angle: -90 }} />}
                     <Tooltip />
                     <Legend verticalAlign="top" height={36} />
                     <CartesianGrid stroke="#f5f5f5" />
-                    {/* <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
-                    <Bar dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />
-                    <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" label={this.props.percentageLabel && <CustomizedLabel />} />
+                    {this.props.Y1Axis && <Bar yAxisId="left" dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />}
+                    {this.props.Y1Axis && <Line type="monotone" yAxisId="right" dataKey={this.props.lineKey} stroke="#ff7300" label={this.props.percentageLabel && <CustomizedLabel />} />}
+
+                    {!this.props.Y1Axis && <Bar dataKey={this.props.barKey} barSize={20} fill="#413ea0" onClick={this.sendData} />}
+                    {!this.props.Y1Axis && <Line type="monotone" dataKey={this.props.lineKey} stroke="#ff7300" label={this.props.percentageLabel && <CustomizedLabel />} />}
                 </ComposedChart>
             </div>
         )

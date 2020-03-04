@@ -11,23 +11,29 @@ class CreateQuantityType extends Component {
         super(props);
         this.state = {
             quantityName: '',
+            quantityNameHindi: '',
             submitted: false,
             errors: {}
         }
     }
 
     componentDidMount() {
-
         if (this.props.location && this.props.location.state && this.props.location.state.instructionId) {
             this.getSpecificFaq();
         }
     }
 
     handleChange = (e) => {
+        if (e.target.name == "quantityName") {
+            this.setState({
+                [e.target.name]: e.target.value.replace(/[^A-Za-z]/ig, '')
+            })
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
 
-        this.setState({
-            [e.target.name]: e.target.value
-        })
     }
 
     getSpecificFaq() {
@@ -49,7 +55,8 @@ class CreateQuantityType extends Component {
 
         if (this.state.quantityName) {
             let obj = {
-                quantityName: this.state.quantityName
+                quantityName: this.state.quantityName,
+                quantityNameHindi: this.state.quantityNameHindi
             }
             SubmitQuantityType(obj).then(resp => {
                 if (resp && resp.status == "200") {
@@ -76,7 +83,7 @@ class CreateQuantityType extends Component {
 
                                 <input
                                     type="text"
-                                    placeholder="quantityName"
+                                    placeholder="quantity Name (English)"
                                     className={classnames('form-control', {
                                         'is-invalid': errors.name
                                     })}
@@ -86,6 +93,24 @@ class CreateQuantityType extends Component {
                                     required
                                 />
                                 {this.state.submitted && !this.state.quantityName && <div className="mandatory">{window.strings['APPSETTING']['QUANTITY_NAME'] + window.strings['ISREQUIRED']}</div>}
+                            </div>
+
+                            <div className="form-group col-md-6">
+
+                                <label>{window.strings.APPSETTING.QUANTITY_NAME_HINDI + '*'}</label>
+
+                                <input
+                                    type="text"
+                                    placeholder="quantity Name (Hindi)"
+                                    className={classnames('form-control', {
+                                        'is-invalid': errors.name
+                                    })}
+                                    name="quantityNameHindi"
+                                    onChange={this.handleChange}
+                                    value={this.state.quantityNameHindi}
+                                    required
+                                />
+                                {this.state.submitted && !this.state.quantityNameHindi && <div className="mandatory">{window.strings['APPSETTING']['QUANTITY_NAME_HINDI'] + window.strings['ISREQUIRED']}</div>}
                             </div>
                         </form>
                     </div>

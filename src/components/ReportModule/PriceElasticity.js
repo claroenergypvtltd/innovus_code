@@ -112,48 +112,50 @@ class PriceElasticity extends Component {
     onChecked1 = (data, value) => {
         let regionArray1 = [];
         data.map(item => {
-            // if (item.includes('parent')) {
             regionArray1.push(item);
-            // }
         })
         this.setState({ selectVal1: regionArray1, check: true, })
-        // this.state.selectVal1 = regionArray1
     }
 
     getGraphView = () => {
         this.setState({ graphSubmit: true })
         if (this.state.startDate && this.state.expiryDate && this.state.selectVal.length > 0 && this.state.selectsubVal.length > 0 && this.state.selectVal1.length > 0) {
 
-            let subRegionVal = "";
+            if (this.state.startDate <= this.state.expiryDate) {
+                let subRegionVal = "";
 
-            this.state.selectsubVal && this.state.selectsubVal.map(item => {
-                if (item) {
-                    let splitData = item.split('##');
-                    subRegionVal = splitData[0];
+                this.state.selectsubVal && this.state.selectsubVal.map(item => {
+                    if (item) {
+                        let splitData = item.split('##');
+                        subRegionVal = splitData[0];
+                    }
+                })
+
+                let selectVal1arry = []
+
+                this.state.selectVal1 && this.state.selectVal1.map(item => {
+                    if (item) {
+                        let splitData = item.split('-Parent');
+                        selectVal1arry.push(splitData[0]);
+                    }
+                })
+                let obj = {
+                    startDate: this.state.startDate,
+                    expiryDate: this.state.expiryDate,
+                    regionData: subRegionVal,
+                    productId: selectVal1arry,
+
                 }
-            })
 
-            let selectVal1arry = []
+                getPriceElasticityGraphView(obj).then(resp => {
+                    if (resp && resp.data && resp.data.orderPrice && resp.data.orderPrice) {
+                        this.setState({ lineChartData: resp.data.orderPrice })
+                    }
+                })
 
-            this.state.selectVal1 && this.state.selectVal1.map(item => {
-                if (item) {
-                    let splitData = item.split('-Parent');
-                    selectVal1arry.push(splitData[0]);
-                }
-            })
-            let obj = {
-                startDate: this.state.startDate,
-                expiryDate: this.state.expiryDate,
-                regionData: subRegionVal,
-                productId: selectVal1arry,
-
+            } else {
+                toastr.error("Invalid Date");
             }
-
-            getPriceElasticityGraphView(obj).then(resp => {
-                if (resp && resp.data && resp.data.orderPrice && resp.data.orderPrice) {
-                    this.setState({ lineChartData: resp.data.orderPrice })
-                }
-            })
         } else {
             toastr.error("Mandatory Fields are missing");
         }
@@ -349,7 +351,7 @@ class PriceElasticity extends Component {
                     if (regionIndex > 0) {
                         let Data = regionItem.split(',');
                         let obj = {
-                            name: Data[0], Price: Data[1], "Tones Ordered": Data[2]
+                            name: Data[0], Price: Data[1], "Tonnes Ordered": Data[2]
                         }
                         CustomerOnBoard.push(obj);
                     }
@@ -447,8 +449,7 @@ class PriceElasticity extends Component {
                             <div className="mt-3">
                                 <div className="d-flex justify-content-center">
                                     {/* {<LineChartView label='No of Customers Onboard' Data='Users' barChartData={CustomerOnBoard} />} */}
-
-                                    <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Price" lineKey="Tones Ordered" chartName='Price Elasticity' />
+                                    <ReactBarLineChart barChartData={CustomerOnBoard} barKey="Tonnes Ordered" lineKey="Price" chartName='Price Elasticity' yAxis="Tonnes" Y1Axis="Price" />
                                 </div>
                             </div>
                         </div> :
