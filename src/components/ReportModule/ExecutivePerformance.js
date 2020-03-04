@@ -69,7 +69,8 @@ class ExecutivePerformance extends Component {
         }
         getDcCodeData(obj, "order").then(resp => {
             if (resp) {
-                this.setState({ salesAgentList: resp, salesEnable: false })
+                let value = resp.length < 1 ? true : false
+                this.setState({ salesAgentList: resp, salesEnable: value })
             }
         })
     }
