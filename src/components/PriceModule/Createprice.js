@@ -166,6 +166,10 @@ class CreatePrice extends Component {
         }
     }
 
+    handleTypeChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
     handleChangeUpdateQuantity = (e) => {
         if (e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || e.target.value.includes('.')) {
             e.target.value = ''
@@ -609,7 +613,7 @@ class CreatePrice extends Component {
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label>{window.strings.PRICE.SET_QUANTITY_TYPE + ' *'}</label>
-                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleInputChange} disabled={this.state.priceId}>
+                                            <select required name="weightId" className="form-control" value={this.state.weightId} onChange={this.handleTypeChange} disabled={this.state.priceId}>
                                                 <option value="0">Select</option>
                                                 {weightDropDown}
                                             </select>
