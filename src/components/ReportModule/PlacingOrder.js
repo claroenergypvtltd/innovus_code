@@ -493,6 +493,12 @@ class PlacingOrder extends Component {
                         </div>
                     </div>
                     <div className="pt-5 col-md-10 offset-md-1">
+                        <div className="color-box">
+                            <ul>
+                                <li>Users</li>
+                                <li>Orders</li>
+                            </ul>
+                        </div>
                         <GoogleMap latLongData={latLongData} />
                     </div>
                 </div>}
