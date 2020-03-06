@@ -22,8 +22,18 @@ class FetchRegion extends Component {
         }
     }
     componentDidMount() {
-        this.getRegionList()
-        this.getDcCodeData()
+        if (this.props && this.props.location && this.props.location.state && this.props.location.state.regionSessionData == 'regionSessionBack' && sessionStorage.regionSessionData) {
+            var regionSessionData = JSON.parse(sessionStorage.getItem('regionSessionData'))
+            this.setState({ currentPage: regionSessionData.page, search: regionSessionData.search, itemPerPage: regionSessionData.rows, dcCode: regionSessionData.dcCode, dcCodeObj: regionSessionData.dcCodeObj, advanceSearch: true },
+                () => {
+                    this.getRegionList()
+                    this.getDcCodeData()
+                })
+        }
+        else {
+            this.getRegionList()
+            this.getDcCodeData()
+        }
     }
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.regionList && newProps.regionList.Lists && newProps.regionList.Lists.datas) {
@@ -48,6 +58,14 @@ class FetchRegion extends Component {
         })
     }
     itemEdit = (Data) => {
+        let obj = {
+            page: this.state.currentPage,
+            search: this.state.search,
+            dcCode: this.state.dcCode,
+            dcCodeObj: this.state.dcCodeObj,
+            rows: this.state.itemPerPage
+        }
+        sessionStorage.setItem('regionSessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.region.edit + Data, state: { id: Data } })
     }
     formPath = () => {
@@ -82,6 +100,7 @@ class FetchRegion extends Component {
         this.setState({ search: '', currentPage: 0, dcCodeObj: '', dcCode: '' }, () => {
             this.getRegionList();
         });
+        sessionStorage.removeItem('regionSessionData')
     }
     render() {
         const regionData = this.state.regionListData && this.state.regionListData.map((item) => {
