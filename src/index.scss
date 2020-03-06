@@ -3248,28 +3248,6 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color:    #909;
   content: "content6";
 }
-/* .do-SearchBox-input{ 
-  background: url(../src/assets/images/placeholder.png) no-repeat 5px center;
-} */
-/* input.do-SearchBox-input[value=""] {
-  background-color: red;
-} */
-
-// input.do-SearchBox-input:not(:empty) {
-//   background: none;
-// }
-// .hol:focus,
-// .hol:active,
-// .hol:hover,
-// .hol:visited,
-// .hol:focus-within{
-//  display: none;
-//  z-index: 0;
-// }
-
-// .tree-box .label-title{
-//   position: absolute;
-// }
 .reset-box{
   position: absolute;
   text-align: right;
@@ -3308,12 +3286,26 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 .do-SearchBox-input{
   height: 39px;
 }
-// .do-TreeSelect:hover{
-//   border-color: $active-font-color;
-// }
-// .do-SearchBox-input:hover{
-//   border-color: $active-font-color;
-// }
+.color-box{
+  margin-bottom: 15px;
+  ul{
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    li::before{
+      content:'';
+      padding: 0 10px 0;
+      margin-left:20px;
+      margin-right:3px;
+    }
+    li:first-child::before{
+      background-color: $map-red;
+    }
+    li:last-child::before{
+      background-color: $map-blue;
+    }
+  }
+}
 
 /****************************ABOUT US--POLICIES************************/
 
