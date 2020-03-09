@@ -55,11 +55,19 @@ class CreatePool extends Component {
             let editData = newProps.poolData.Lists.datas[0];
             let poolAry = [];
             let rupeesUnit = editData.quantityUnit
+            let dcName = []
+            let dcCode = []
+            dcName = editData.dcCodeDetails && editData.dcCodeDetails.map((item) => {
+                return item.name
+            })
+            dcCode = editData.dcCodeDetails && editData.dcCodeDetails.map((item) => {
+                return item.dcCode
+            })
             editData.pools && editData.pools.forEach((item, index) => {
                 let obj = {
-                    "value": editData.productName[index] + '-' + item.dcCode,
-                    "label": editData.productName[index] + '-' + item.dcCode,
-                    "parentQuantityData": { "parentId": item.productId, "rupeesUnit": rupeesUnit }
+                    "value": editData.productName[index] + ' - ' + dcName[index],
+                    "label": editData.productName[index] + ' - ' + dcName[index],
+                    "parentQuantityData": { "parentId": item.productId, "rupeesUnit": rupeesUnit, "dcCode": dcCode[index] }
                 }
                 poolAry.push(obj);
             })
@@ -123,11 +131,12 @@ class CreatePool extends Component {
         if (this.state.name && this.state.currentSelection && this.state.currentSelection.length > 0) {
             let poolAry = [];
             this.state.currentSelection && this.state.currentSelection.map(item => {
-                let poolData = item.label && item.label.split('-');
+                // let poolData = item.label && item.label.split('-');
                 rupeesUnit = item.parentQuantityData.rupeesUnit;
                 let obj = {
                     productId: item.parentQuantityData && item.parentQuantityData.parentId,
-                    dcCode: poolData[1]
+                    // dcCode: poolData[1],
+                    dcCode: item.parentQuantityData && item.parentQuantityData.dcCode
                 }
                 poolAry.push(obj);
             })
@@ -155,7 +164,7 @@ class CreatePool extends Component {
         })
         let pollData = [];
         this.state.PriceLists && this.state.PriceLists.map((item) => {
-            let obj = { "value": item.name + '-' + item.productDetail.dcCode, "label": item.name + '-' + item.productDetail.dcCode, indeterminate: true, "parentQuantityData": { "parentId": item.id, "rupeesUnit": item.productDetail.rupeesUnit } };
+            let obj = { "value": item.name + ' - ' + item.dcCodeDetails.name, "label": item.name + ' - ' + item.dcCodeDetails.name, indeterminate: true, "parentQuantityData": { "parentId": item.id, "rupeesUnit": item.productDetail.rupeesUnit, "dcCode": item.productDetail.dcCode } };
             pollData.push(obj);
         })
         let plcHolder = "";
@@ -278,3 +287,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, { getPriceList, submitPool, getPoolList })(CreatePool);
+
