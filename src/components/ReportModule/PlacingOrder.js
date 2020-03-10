@@ -184,7 +184,7 @@ class PlacingOrder extends Component {
         this.onMapChecked(childArray)
     }
     onGraphChecked = (Data) => {
-        if (Data) {
+        if (Data.length > 0) {
             let dropDownValue = []
             Data && Data.map((item => {
                 // let value = item.split('-')
@@ -192,6 +192,9 @@ class PlacingOrder extends Component {
 
             }))
             this.setState({ graphSelectVal: dropDownValue, check: true })
+        }
+        else {
+            this.setState({ graphData: [], subGraphData: [], graphSelectVal: [] })
         }
     }
     onAgentChecked = (Data) => {
