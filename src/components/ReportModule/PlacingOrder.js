@@ -362,7 +362,6 @@ class PlacingOrder extends Component {
             }
         })
 
-
         let agentResetData = [{ title: 'No Data', value: 'No Data' }]
 
         let latLongData = [];
@@ -389,7 +388,7 @@ class PlacingOrder extends Component {
         this.state.graphData.length > 0 && this.state.graphData.map(item => {
             let Data = item.split(',')
             let obj = {
-                name: Data[0], Users: Number(Data[1]), Order: Data[2], dcCode: Data[3]
+                name: Data[0], Users: Number(Data[1]), Order: Number(Data[2]), dcCode: Data[3]
             }
             graphData.push(obj);
         })
@@ -398,7 +397,7 @@ class PlacingOrder extends Component {
         this.state.subGraphData && this.state.subGraphData.map(item => {
             let Data = item.split(',')
             let obj = {
-                name: Data[0], Users: Number(Data[1]), Order: Data[2], dcCode: Data[3]
+                name: Data[0], Users: Number(Data[1]), Order: Number(Data[2]), dcCode: Data[3]
             }
             subGraphData.push(obj);
         })
@@ -426,10 +425,6 @@ class PlacingOrder extends Component {
                                 <label className="label-title">Choose Date * </label>
                                 <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} max={this.state.dateValidation} name="mapStartDate" />
                             </div>
-                            {/* <div className="start-date">
-                                        <label className="label-title">Choose Date * </label>
-                                        <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.mapStartDate} name="mapStartDate" />
-                                    </div> */}
 
                             {!this.state.agentDropDown && <div className="tree-box">
                                 <label className="label-title">Select Region * </label>
@@ -512,7 +507,6 @@ class PlacingOrder extends Component {
                                 <div className="start-date col-md-4">
                                     <label className="label-title">Choose Date * </label>
                                     <input type="date" className="date-wrap form-control" onChange={this.handleChange} value={this.state.graphStartDate} max={this.state.dateValidation} name="graphStartDate" />
-
                                 </div>
                                 <div className="tree-box col-md-4">
                                     <label className="label-title">Select Region * </label>
@@ -548,7 +542,7 @@ class PlacingOrder extends Component {
                         </div> : <div className="record-box">No record found</div>}
 
                         {subGraphData.length > 0 && showSubChart && this.state.getBarChart && <div className="pt-5">
-                            <ReactBarLineChart barChartData={subGraphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders ( Sales agent wise )" percentageLabel={true} yAxis="Order" Y1Axis="Users" />
+                            <ReactBarLineChart barChartData={subGraphData} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders ( Sales agent wise )" percentageLabel={true} yAxis="Order" Y1Axis="Users" />
                             <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
                         </div>}
                     </div>

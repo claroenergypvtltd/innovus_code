@@ -60,7 +60,7 @@ class ShopDetails extends React.Component {
         this.context.router.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
     }
     updateStatus(RetId, status, isActive) {
-        let message = window.strings.UPDATEMESSAGE;
+        let message = status == 1 ? "Are you sure you wish to accept this shop?" : "Are you sure you wish to reject this shop?";
         if (status == 1 && (this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime || this.state.shopLocality)) {
             toastr.error("Unmark the reason for Accept")
         }
