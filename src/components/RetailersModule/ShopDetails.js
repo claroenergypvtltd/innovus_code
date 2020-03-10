@@ -61,10 +61,10 @@ class ShopDetails extends React.Component {
     }
     updateStatus(RetId, status, isActive) {
         let message = window.strings.UPDATEMESSAGE;
-        if (status == 1 && (this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime)) {
+        if (status == 1 && (this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime || this.state.shopLocality)) {
             toastr.error("Unmark the reason for Accept")
         }
-        else if (status == 2 && !this.state.image && !this.state.name && !this.state.address1 && !this.state.type && !this.state.shopOpeningTime) {
+        else if (status == 2 && !this.state.image && !this.state.name && !this.state.address1 && !this.state.type && !this.state.shopOpeningTime && !this.state.shopLocality) {
             toastr.error("Mark any one reason for rejection")
         }
         else {
@@ -99,6 +99,9 @@ class ShopDetails extends React.Component {
                         rejectArray.push("Shop open time")
                     }
 
+                    if (this.state.shopLocality) {
+                        rejectArray.push("Shop Locality")
+                    }
 
                     formData.append("reasons", rejectArray)
                     updateStatusRetailer(formData).then(resp => {
@@ -254,7 +257,7 @@ class ShopDetails extends React.Component {
 
         let disRejectBtn = false;
         let disAcceptBtn = false;
-        if ((this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime)) {
+        if ((this.state.image || this.state.name || this.state.address1 || this.state.type || this.state.shopOpeningTime || this.state.shopLocality)) {
             disAcceptBtn = true
         } else {
             disRejectBtn = true;
@@ -324,6 +327,8 @@ class ShopDetails extends React.Component {
                                     </p>
                                 </div>
                                 <div className="farmer-address shop-local col-md-6 mb-3">
+                                    {chkProfile && !this.state.shopLocality && <button className="check-mark" onClick={() => this.buttonChange("shopLocality", true)}><i class="fas fa-times-circle "></i></button>}
+                                    {chkProfile && this.state.shopLocality && <button className="check-mark mark-color" onClick={() => this.buttonChange("shopLocality", false)}><i class="fas fa-times-circle "></i></button>}
                                     <h4 className="user-title m-0">Shop Locality</h4>
                                     <p className="centext title sub-farm">
                                         {profile.shopLocalty}
