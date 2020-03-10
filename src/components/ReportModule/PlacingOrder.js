@@ -159,7 +159,7 @@ class PlacingOrder extends Component {
             }))
             let resetStatus = regionArray.includes('Select All') ? false : true
             this.state.mapSelectVal = regionArray
-            this.setState({ agentDropDown: true, reset: resetStatus })
+            this.setState({ agentDropDown: false, reset: resetStatus })
             if (Data && Data.length > 0) {
                 this.fetchAgents(Data)
             }
@@ -386,7 +386,7 @@ class PlacingOrder extends Component {
         this.state.graphData.length > 0 && this.state.graphData.map(item => {
             let Data = item.split(',')
             let obj = {
-                name: Data[0], Users: Data[1], Order: Data[2], dcCode: Data[3]
+                name: Data[0], Users: Number(Data[1]), Order: Data[2], dcCode: Data[3]
             }
             graphData.push(obj);
         })
@@ -395,7 +395,7 @@ class PlacingOrder extends Component {
         this.state.subGraphData && this.state.subGraphData.map(item => {
             let Data = item.split(',')
             let obj = {
-                name: Data[0], Users: Data[1], Order: Data[2], dcCode: Data[3]
+                name: Data[0], Users: Number(Data[1]), Order: Data[2], dcCode: Data[3]
             }
             subGraphData.push(obj);
         })
@@ -540,12 +540,12 @@ class PlacingOrder extends Component {
                                 </div>
                             </div>
                         </div>
-                        {this.state.graphData.length > 0 && showChart ? <div className="mt-5">
-                            <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders" percentageLabel={true} />
+                        {graphData.length > 0 && showChart ? <div className="mt-5">
+                            <ReactBarLineChart barChartData={graphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders" percentageLabel={true} yAxis="Order" Y1Axis="Users" />
                         </div> : <div className="record-box">No record found</div>}
 
-                        {this.state.subGraphData.length > 0 && showSubChart && this.state.getBarChart && <div className="pt-5">
-                            <ReactBarLineChart barChartData={subGraphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders ( Sales agent wise )" percentageLabel={true} />
+                        {subGraphData.length > 0 && showSubChart && this.state.getBarChart && <div className="pt-5">
+                            <ReactBarLineChart barChartData={subGraphData} parentCallback={this.callbackFunction} barKey="Order" lineKey="Users" chartName="No of Customers Placing Orders ( Sales agent wise )" percentageLabel={true} yAxis="Order" Y1Axis="Users" />
                             <div className="back-btn col-md-2"><button class="common-btn" onClick={this.hideSubBarChart}>close</button></div>
                         </div>}
                     </div>
