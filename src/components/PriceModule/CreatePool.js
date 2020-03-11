@@ -8,7 +8,7 @@ import { getPriceList } from '../../actions/priceAction'
 import { submitPool, getPoolList } from '../../actions/poolAction'
 import store from '../../store/store';
 import { path } from '../../constants';
-import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS } from '../../constants/actionTypes';
+import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS, PRICE_FETCH_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr';
 import Select, { components } from "react-select";
 import createClass from "create-react-class";
@@ -19,28 +19,60 @@ class CreatePool extends Component {
         this.state = {
             errors: {},
             submitted: false,
-            weightDatas: [],
             weightId: 0,
             weight: 0,
             updateQuantity: '',
             currentSelection: [],
-            quantityUnit: ''
+            quantityUnit: '',
+            PriceLists: []
         }
     }
+
     componentDidMount() {
-        this.getWeightDatas();
         this.getPriceList();
-        if (this.props.location && this.props.location.state && this.props.location.state.poolId) {
-            this.setState({ poolId: this.props.location.state.poolId })
-            this.getPoolList();
-        }
     }
 
     componentWillReceiveProps(newProps) {
         if (newProps && newProps.priceData && newProps.priceData.Lists && newProps.priceData.Lists.datas) {
+            store.dispatch({ type: PRICE_FETCH_SUCCESS, List: [] })
             let respData = newProps.priceData.Lists.datas;
-            this.setState({ PriceLists: respData })
+            this.setState({ PriceLists: respData }, () => {
+                if (this.props.location && this.props.location.state && this.props.location.state.poolId) {
+                    this.setState({ poolId: this.props.location.state.poolId })
+                    this.getPoolList();
+                }
+            })
         }
+
+        if (this.props.location && this.props.location.state && this.props.location.state.poolId && newProps && newProps.poolData && newProps.poolData.Lists && newProps.poolData.Lists.datas && newProps.poolData.Lists.datas[0]) {
+            let editData = newProps.poolData.Lists.datas[0];
+            let poolAry = [];
+            let rupeesUnit = editData.quantityUnit
+            let dcName = []
+            let dcCode = []
+
+            editData.dcCodeDetails && editData.dcCodeDetails.map((item) => {
+                if (item) {
+                    dcName.push(item.name)
+                    dcCode.push(item.dcCode)
+                }
+                return item.name
+            })
+
+            editData.pools && editData.pools.forEach((item, index) => {
+                let dcName = editData.dcCodeDetails && editData.dcCodeDetails[index] && editData.dcCodeDetails[index].name ? editData.dcCodeDetails[index].name : '';
+                let dcCode = editData.dcCodeDetails && editData.dcCodeDetails[index] && editData.dcCodeDetails[index].dcCode ? editData.dcCodeDetails[index].dcCode : '';
+                let obj = {
+                    "value": editData.productName[index] + ' - ' + dcName,
+                    "label": editData.productName[index] + ' - ' + dcCode,
+                    "parentQuantityData": { "parentId": item.productId, "rupeesUnit": rupeesUnit, "dcCode": dcCode }
+                }
+                poolAry.push(obj);
+            })
+
+            this.setState({ name: editData.name, quantityUnit: editData.quantityUnit, weight: editData.quantity, currentSelection: poolAry })
+        }
+
         if (newProps && newProps.poolData) {
             if (newProps.poolData.createdStatus == "200") {
                 store.dispatch({ type: POOL_CREATE_SUCCESS, createdStatus: "" })
@@ -51,28 +83,6 @@ class CreatePool extends Component {
                 this.redirectPage();
             }
         }
-        if (this.props.location && this.props.location.state && this.props.location.state.poolId && newProps && newProps.poolData && newProps.poolData.Lists && newProps.poolData.Lists.datas && newProps.poolData.Lists.datas[0]) {
-            let editData = newProps.poolData.Lists.datas[0];
-            let poolAry = [];
-            let rupeesUnit = editData.quantityUnit
-            let dcName = []
-            let dcCode = []
-            dcName = editData.dcCodeDetails && editData.dcCodeDetails.map((item) => {
-                return item.name
-            })
-            dcCode = editData.dcCodeDetails && editData.dcCodeDetails.map((item) => {
-                return item.dcCode
-            })
-            editData.pools && editData.pools.forEach((item, index) => {
-                let obj = {
-                    "value": editData.productName[index] + ' - ' + dcName[index],
-                    "label": editData.productName[index] + ' - ' + dcName[index],
-                    "parentQuantityData": { "parentId": item.productId, "rupeesUnit": rupeesUnit, "dcCode": dcCode[index] }
-                }
-                poolAry.push(obj);
-            })
-            this.setState({ name: editData.name, quantityUnit: editData.quantityUnit, weight: editData.quantity, currentSelection: poolAry })
-        }
     }
 
     getPoolList = () => {
@@ -82,16 +92,6 @@ class CreatePool extends Component {
         this.props.getPoolList(obj);
     }
 
-    getWeightDatas = () => {
-        getTypes().then(resp => {
-            if (resp) {
-                this.setState({ typeDatas: resp }, () => {
-                    this.setWeightData();
-                })
-            }
-        })
-    }
-
     getPriceList(type) {
         let obj = {
             pages: 0
@@ -99,17 +99,6 @@ class CreatePool extends Component {
         this.props.getPriceList(obj)
     }
 
-    setWeightData() {
-        let typeArray = [];
-        this.state.typeDatas && this.state.typeDatas.map(item => {
-            let obj = {
-                "name": item.name,
-                "id": item.id,
-            }
-            typeArray.push(obj);
-        })
-        this.setState({ weightDatas: typeArray });
-    }
     listPath = () => {
         this.props.history.push({ pathname: path.pool.list, state: { poolSessionData: 'poolSessionBack' } })
     }
@@ -124,6 +113,19 @@ class CreatePool extends Component {
     handlePoolChange = (Data) => {
         this.setState({ currentSelection: Data });
     }
+
+    DDInputChange = (inputValue, isTrue) => {
+        this.setState({
+            inputValue
+        })
+    }
+
+    selectAllFunc = (pollData, inputValue) => {
+        if (this.state.inputValue) {
+
+        }
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
@@ -162,6 +164,7 @@ class CreatePool extends Component {
             let obj = { "label": item.name, "value": item.id };
             dropDownData.push(obj);
         })
+        // let pollData = [{ "value": "SelectAll", "label": <button onClick={() => this.selectAllFunc()}>{"Select All"}</button> }];
         let pollData = [];
         this.state.PriceLists && this.state.PriceLists.map((item) => {
             let obj = { "value": item.name + ' - ' + item.dcCodeDetails.name, "label": item.name + ' - ' + item.dcCodeDetails.name, indeterminate: true, "parentQuantityData": { "parentId": item.id, "rupeesUnit": item.productDetail.rupeesUnit, "dcCode": item.productDetail.dcCode } };
@@ -190,7 +193,6 @@ class CreatePool extends Component {
                 );
             }
         });
-
         return (
             <div className="clearfix ">
                 <div className="row clearfix">
@@ -228,14 +230,21 @@ class CreatePool extends Component {
                                             }}
                                             closeMenuOnSelect={false}
                                             isMulti
-                                            components={{ Option }}
+                                            // components={{ Option }}
                                             options={pollData}
                                             hideSelectedOptions={false}
                                             value={this.state.currentSelection}
                                             backspaceRemovesValue={false}
+                                            inputValue={this.state.inputValue}
+                                            onInputChange={(data) => this.DDInputChange(data, false)}
                                             onChange={(e) => this.handlePoolChange(e)}
+                                            isClearable={true}
+                                        // onBlur={() => this.selectAllFunc(pollData, this.state.inputValue, false)}
                                         />
+                                        {/* <span className="input-group-append">
+                                        </span> */}
                                     </div>
+                                    {/* <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button> */}
 
                                     <div className="form-group col-md-6">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY} {" (Set)"}</label>

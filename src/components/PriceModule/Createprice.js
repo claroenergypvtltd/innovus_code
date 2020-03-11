@@ -664,7 +664,7 @@ class CreatePrice extends Component {
                                                         {(this.state.submitted && (offerArray.offer || offerArray.quantity) && !offerArray.type) ? <div className="mandatory">{window.strings['PRICE']['OFFER'] + window.strings['PRICE']['TYPE'] + window.strings['ISREQUIRED']}</div> : ''}
                                                         <div className="add-del">
                                                             {idx == 0 && this.state.offerArray.length <= 3 && <button type="button" onClick={this.handleAddofferArray} className="btn-outline-success rounded-circle add-btn mr-2"><i class="fa fa-plus" aria-hidden="true"></i></button>}
-                                                            {this.state.offerArray.length !== 1 && <button type="button" onClick={this.handleRemoveContact(idx, offerArray.id)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
+                                                            {this.state.offerArray.length >= 1 && <button type="button" onClick={this.handleRemoveContact(idx, offerArray.id)} className="btn-outline-danger rounded-circle del-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>}
                                                         </div>
                                                     </div>
                                                 </div>
