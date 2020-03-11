@@ -12,6 +12,8 @@ import { Form, Row, Col } from 'react-bootstrap';
 import noimg from '../../assets/noimage/Avatar_farmer.png'
 import { resorceJSON } from '../../libraries'
 import { TableData } from '../../shared/Table'
+import Select from 'react-select';
+import { fetchDcList, SubmitDC, DeleteDC, fetchDcCodeList } from '../../actions/dcAction';
 
 class ParentCategory extends Component {
     constructor(props) {
@@ -40,11 +42,16 @@ class ParentCategory extends Component {
             this.props.location.state.categoryBack == "categorySessionBack") {
             var categorySesData = JSON.parse(sessionStorage.categorySessionData)
             this.setState({ currentPage: categorySesData.page, search: categorySesData.search, itemPerPage: categorySesData.limit },
-                () => { this.getCategoryList() })
+                () => {
+                    this.getCategoryList()
+                    this.getDcCodeData()
+                })
 
         }
         else {
             this.getCategoryList()
+            this.getDcCodeData()
+
         }
     }
     handleChange = (e) => {
@@ -138,11 +145,56 @@ class ParentCategory extends Component {
     formPath = () => {
         this.props.history.push(path.category.add);
     }
+    getDcCodeData = () => {
+        let obj = { search: this.state.search }
+        fetchDcCodeList(obj).then(resp => {
+            if (resp && resp.datas) {
+                this.setState({ dcDropData: resp.datas })
+            }
+        })
+    }
+    handleSearch = (e) => {
+        this.setState({ search: e.target.value })
+    }
+
+    searchResult = (e) => {
+        e.preventDefault();
+        if (this.state.search) {
+            this.setState({ currentPage: 0 }, () => {
+                this.getDcList();
+            })
+        }
+    }
+    searchSubmit = (e) => {
+        e.preventDefault();
+        this.getDcList('onSearch');
+    }
+
+    resetSearch = () => {
+        this.setState({ search: '', currentPage: 0, dcCodeObj: '', dcCode: '' }, () => {
+            this.getDcList();
+        });
+    }
+    enableAdvanceSearch = (e) => {
+        e.preventDefault();
+        let enableSearch = this.state.advanceSearch ? false : true
+        this.setState({ advanceSearch: enableSearch })
+    }
+    handleDcCodeChange = (Data) => {
+        this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 0 }, () => {
+            // this.getDcList()
+        })
+    };
     render() {
         let CategoryList = this.state.data && this.state.data.map((item, index) => {
             let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
             let viewCrop = <button className="common-btn px-2" onClick={() => this.itemView(item)}>View Sub Category</button>
             return { "itemList": [item.name, catImg, item.description ? item.description : '-', viewCrop], "itemId": item.id }
+        })
+        let dcDropData = [];
+        this.state.dcDropData && this.state.dcDropData.map((item) => {
+            let obj = { "label": item.dcCode, "value": item.dcCode };
+            dcDropData.push(obj);
         })
 
         return (
@@ -151,19 +203,71 @@ class ParentCategory extends Component {
                     <Col md={7} className="title-card ">
                         <h4 className="user-title">{window.strings.CATEGORY.PARENT_CATEGORY}</h4>
                     </Col>
-                    <Col md={5} className="right-title">
+                    {/* <Col md={5} className="right-title">
                         <Row className="m-0">
                             <Col md={12} className="pr-0">
                                 <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
                             </Col>
-                            {/* <Col md={5} className="pl-0">
+                             <Col md={5} className="pl-0">
                                 <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
                                     {window.strings.CATEGORY.ADDBUTTON}</button>
-                            </Col> */}
+                            </Col> 
                         </Row>
-                    </Col>
+                    </Col> */}
                 </Row>
+                <div className="mb-2">
+                    <div className="retailersearchdiv">
+                        <button className="advance-search" onClick={this.enableAdvanceSearch} > {this.state.advanceSearch ? '- Search' : '+ Search'}
+                            <span className="tooltip-text">Click to Search</span>
+                        </button>
+                    </div>
+                    <div id="menu">
+                        {this.state.advanceSearch &&
+                            <div className="sub-filter ml-4">
+                                <div className="row">
+                                    <div className="search-tip">
+                                        <form onSubmit={(e) => this.searchSubmit(e)}>
+                                            <input placeholder="Custom Search"
+                                                class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
+                                            />
+                                            <button type="submit" hidden></button>
+                                        </form>
+                                        <span className="tooltip-text">Custom Search</span>
+                                    </div>
+                                    <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
+                                        <Select className="state-box"
+                                            styles={{
+                                                control: base => ({
+                                                    ...base,
+                                                    borderColor: 'hsl(0,0%,80%)',
+                                                    boxShadow: '#FE988D',
+                                                    '&:hover': {
+                                                        borderColor: '#FE988D'
+                                                    }
+                                                })
+                                            }}
+                                            value={this.state.dcCodeObj}
+                                            onChange={(e) => this.handleDcCodeChange(e)}
+                                            options={dcDropData}
+                                            placeholder="--Select DC Code--"
+                                        />
+                                    </div>
+                                    <button type="button" className="data-search" onClick={(e) => this.getDcList("onSearch")}>
+                                        <i className="fa fa-search" aria-hidden="true"></i>Search
+                                        <span className="tooltip-text">Click to Search</span>
+                                    </button>
+                                    <div className="retail-reset">
+                                        <button type="button" className="reset ml-2" onClick={this.resetSearch}>
+                                            <i className="fa fa-refresh mrr5" aria-hidden="true"></i>
+                                            <span className="tooltip-text">Reset</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
 
+                    </div>
+                </div>
                 <div className="sub-category">
                     <TableData TableHead={this.state.TableHead} TableContent={CategoryList} />
                     {CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />}
