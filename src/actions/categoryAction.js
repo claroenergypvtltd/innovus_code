@@ -105,13 +105,14 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 	} else {
 		IdText = endPoint.id;
 	}
-	let rows = ''; let page = ''; let searchData = ''; let dcCode = ""; let parentCategoryId = "";
-	if (Data && Data.limit) {
+	let rows = ''; let page = ''; let searchData = ''; let dcCode = ""; let parentCategoryId = ""; let flag = "";
+	if (Data) {
 		page = (Data.page || Data.page == 0) ? '&page=' + Data.page : '';
 		rows = Data.limit ? '&rows=' + Data.limit : '';
 		searchData = Data.search ? '&search=' + Data.search : '';
 		dcCode = Data.dcCode ? '&dcCode=' + Data.dcCode : '';
 		parentCategoryId = Data.parentCategoryId ? '&mCategoryId=' + Data.parentCategoryId : '';
+		flag = Data.flag ? '&flag=' + Data.flag : '';
 	}
 	let headerName;
 	if (Data.name == "subCategory") {
@@ -119,7 +120,7 @@ export const getSpecificCategory = (Data, isSubCategory) => dispatch => { //getS
 	} else {
 		headerName = endPoint.category
 	}
-	httpServices.get(headerName + '?' + IdText + '=' + Data.categoryId + parentCategoryId + searchData + page + rows + dcCode).then(resp => {
+	httpServices.get(headerName + '?' + IdText + '=' + Data.categoryId + parentCategoryId + searchData + page + rows + dcCode + flag).then(resp => {
 		if (resp.data) {
 			dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp })
 		} else {

@@ -69,7 +69,11 @@ class CreateCrop extends Component {
         }
     }
     redirectPage = () => {
-        this.context.router.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId, cropSessionData: 'cropSessionBack' } });
+        if (this.props.location.state && this.props.location.state.parentCrop) {
+            this.context.router.history.push({ pathname: path.category.parent, state: { categoryBack: 'categorySessionBack' } });
+        } else {
+            this.context.router.history.push({ pathname: path.category.view + this.state.cropId, state: { categoryId: this.state.cropId, cropSessionData: 'cropSessionBack' } });
+        }
     }
     handleInputChange = (e) => {
         e.target.value && e.target.value[0].includes(" ") ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value });

@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DataTableDynamic from '../../shared/DataTableDynamic';
-import { getCategoryList, getParentCategoryList, DeleteCategory } from '../../actions/categoryAction';
-import { SearchBar, ReactPagination } from '../../shared'
+import { getParentCategoryList, DeleteCategory, getSpecificCategory, SubmitCategory } from '../../actions/categoryAction';
+import { ReactPagination } from '../../shared'
 import { path } from '../../constants';
 import { imageBaseUrl } from '../../config'
 import { toastr } from '../../services/toastr.services'
 import store from '../../store/store';
-import { CATEGORY_DELETE_SUCCESS } from '../../constants/actionTypes';
-import { Form, Row, Col } from 'react-bootstrap';
-import noimg from '../../assets/noimage/Avatar_farmer.png'
+import { CATEGORY_DELETE_SUCCESS, CATEGORY_FETCH_SUCCESS, CATEGORY_SPECIFIC_DATA_SUCCESS } from '../../constants/actionTypes';
+import { Row, Col } from 'react-bootstrap';
 import { resorceJSON } from '../../libraries'
 import { TableData } from '../../shared/Table'
 import Select from 'react-select';
-import { fetchDcList, SubmitDC, DeleteDC, fetchDcCodeList } from '../../actions/dcAction';
+import { fetchDcCodeList } from '../../actions/dcAction';
 
 class ParentCategory extends Component {
     constructor(props) {
@@ -21,6 +19,7 @@ class ParentCategory extends Component {
         this.state = {
             columns: resorceJSON.CategoryList,
             TableHead: ["Category Name", "Image", 'Description', "Crop"],
+            TableHead1: ["Sub Category", "Crop Name", "Image", "Quality", "DC Code", "status", "Action"],
             CategoryCount: props.getCount,
             search: '',
             dcCode: '',
@@ -28,7 +27,7 @@ class ParentCategory extends Component {
             itemPerPage: resorceJSON.TablePageData.itemPerPage,
             pageCount: resorceJSON.TablePageData.pageCount,
             limitValue: resorceJSON.TablePageData.paginationLength,
-            // PriceLists: props.getLists,
+            searchCrop: false,
             data: [],
         }
     }
@@ -41,15 +40,24 @@ class ParentCategory extends Component {
         if (sessionStorage.categorySessionData && this.props.location && this.props.location.state &&
             this.props.location.state.categoryBack == "categorySessionBack") {
             var categorySesData = JSON.parse(sessionStorage.categorySessionData)
-            this.setState({ currentPage: categorySesData.page, search: categorySesData.search, itemPerPage: categorySesData.limit },
+            this.setState({ currentPage: categorySesData.page, search: categorySesData.search, dcCode: categorySesData.dcCode, itemPerPage: categorySesData.limit },
                 () => {
-                    this.getCategoryList()
+                    if (this.state.search || this.state.dcCode) {
+                        this.getCropList();
+                        this.setState({ searchCrop: true, advanceSearch: true })
+                    } else {
+                        this.getCategoryList()
+                    }
                     this.getDcCodeData()
                 })
-
         }
         else {
-            this.getCategoryList()
+            if (this.state.search || this.state.dcCode) {
+                this.getCropList()
+                this.setState({ searchCrop: true, advanceSearch: true })
+            } else {
+                this.getCategoryList()
+            }
             this.getDcCodeData()
 
         }
@@ -62,7 +70,14 @@ class ParentCategory extends Component {
         return ViewPage;
     }
     componentWillReceiveProps(newProps) {
-        if (newProps.getLists) {
+        if (newProps.categoryData && newProps.categoryData.specificData && newProps.categoryData.specificData.data && newProps.categoryData.specificData.data.datas) {
+            store.dispatch({ type: CATEGORY_SPECIFIC_DATA_SUCCESS, resp: [] })
+            let Data = newProps.categoryData.specificData.data;
+            this.setState({ CategoryListDatas: Data.datas, pageCount: Data.totalCount / this.state.itemPerPage, totalCount: Data.totalCount })
+        }
+
+        if (newProps.getLists && newProps.getLists.datas) {
+            store.dispatch({ type: CATEGORY_FETCH_SUCCESS, List: [] })
             this.setState({ data: newProps.getLists.datas, pageCount: newProps.getLists.totalCount / this.state.itemPerPage, totalCount: newProps.getLists.totalCount });
         }
         if (newProps.categoryData && newProps.categoryData.deletedStatus == "200") {
@@ -79,15 +94,31 @@ class ParentCategory extends Component {
         }
         this.props.getParentCategoryList(obj);
     }
-    itemEdit = (itemId) => {
+
+    getCropList = () => {
+        let obj = {
+            page: this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
+            search: this.state.search,
+            limit: this.state.itemPerPage,
+            categoryId: '',
+            dcCode: this.state.dcCode,
+            name: "subCategory",
+            "flag": 3
+        }
+        this.props.getSpecificCategory(obj, true);
+    }
+
+    itemEdit = (catId) => {
         let obj = {
             "page": this.state.currentPage,
             "search": this.state.search,
-            "limit": this.state.itemPerPage
+            "dcCode": this.state.dcCode,
+            "limit": this.state.itemPerPage,
         }
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
-        this.props.history.push({ pathname: path.category.edit + itemId, state: { categoryId: itemId } });
+        this.props.history.push({ pathname: path.crop.edit + catId, state: { categoryId: catId, parentCrop: true } });
     }
+
     itemView = (Data) => {
         let obj = {
             "page": this.state.currentPage,
@@ -97,14 +128,7 @@ class ParentCategory extends Component {
         sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
         this.props.history.push({ pathname: path.category.list, state: { parentCategoryId: Data.id, parentCategoryName: Data.name } });
     }
-    handleDelete = (data) => {
-        let message = window.strings.DELETEMESSAGE;
-        const toastrConfirmOptions = {
-            onOk: () => { this.itemDelete(data.id) },
-            onCancel: () => console.log('CANCEL: clicked')
-        };
-        toastr.customConfirm(message, toastrConfirmOptions, window.strings.DELETE_CONFIRM);
-    }
+
     onChange = (data) => {
         if (this.state.currentPage !== (data.selected)) {
             this.setState({ currentPage: data.selected }, () => {
@@ -112,29 +136,61 @@ class ParentCategory extends Component {
             });
         }
     }
-    searchResult = (e) => {
-        e.preventDefault();
-        if (this.state.search) {
-            this.setState({ currentPage: 0 }, () => {
-                let serObj = {
-                    "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
-                    "search": this.state.search,
-                    "limit": this.state.itemPerPage,
-                };
-                this.props.getParentCategoryList(serObj);
-            })
+
+    cropOnChange = (data) => {
+        if (this.state.currentPage !== (data.selected)) {
+            this.setState({ currentPage: data.selected }, () => {
+                this.getCropList();
+            });
         }
     }
+
+    searchResult = (e) => {
+        e.preventDefault();
+        this.getCropList();
+        this.setState({ searchCrop: true })
+    }
+
+    handleStatusUpdate = (isActive, subcategoryId, dcCode, parentId) => {
+        const formData = new FormData();
+        formData.append("isActive", isActive);
+        formData.append("id", subcategoryId);
+        formData.append("dcCode", dcCode);
+        this.props.SubmitCategory(formData, parentId, "isProduct")
+    }
+
+    handleStatusChange = (e, data, dcCode, parentId) => {
+        let message = "Are you sure you want to update ?";
+        var statusValue = e.target.name
+        let value = e.target.value
+        const toastrConfirmOptions = {
+            onOk: () => { this.handleStatusUpdate(value, data, dcCode, parentId) },
+            onCancel: () => {
+                let obj = {
+                    "page": this.state.currentPage,
+                    "search": this.state.search,
+                    "dcCode": this.state.dcCode,
+                    "limit": this.state.itemPerPage,
+                }
+                sessionStorage.setItem('categorySessionData', JSON.stringify(obj))
+                this.props.history.push({ pathname: path.category.list, state: { parentCropActive: "categorySessionBack" } })
+                this.props.history.goBack()
+            }
+        };
+        toastr.confirm(message, toastrConfirmOptions, "Update Status")
+    }
+
     resetSearch = () => {
         if (this.state.search || (!this.state.search)) {
             sessionStorage.removeItem('categorySessionData')
-            this.setState({ search: '', currentPage: 0 }, () => {
+            this.setState({ search: '', currentPage: 0, dcCodeObj: '', dcCode: '' }, () => {
                 let serObj = {
                     "page": this.state.currentPage ? this.state.currentPage : window.constant.ZERO,
                     "search": this.state.search,
                     "limit": this.state.itemPerPage,
                 };
                 this.props.getParentCategoryList(serObj);
+                this.setState({ searchCrop: false })
             });
         }
     }
@@ -157,24 +213,6 @@ class ParentCategory extends Component {
         this.setState({ search: e.target.value })
     }
 
-    searchResult = (e) => {
-        e.preventDefault();
-        if (this.state.search) {
-            this.setState({ currentPage: 0 }, () => {
-                this.getDcList();
-            })
-        }
-    }
-    searchSubmit = (e) => {
-        e.preventDefault();
-        this.getDcList('onSearch');
-    }
-
-    resetSearch = () => {
-        this.setState({ search: '', currentPage: 0, dcCodeObj: '', dcCode: '' }, () => {
-            this.getDcList();
-        });
-    }
     enableAdvanceSearch = (e) => {
         e.preventDefault();
         let enableSearch = this.state.advanceSearch ? false : true
@@ -182,7 +220,6 @@ class ParentCategory extends Component {
     }
     handleDcCodeChange = (Data) => {
         this.setState({ dcCodeObj: Data, dcCode: Data.value, currentPage: 0 }, () => {
-            // this.getDcList()
         })
     };
     render() {
@@ -197,23 +234,28 @@ class ParentCategory extends Component {
             dcDropData.push(obj);
         })
 
+        let cropList = this.state.CategoryListDatas && this.state.CategoryListDatas.map((item, index) => {
+            let catImg = <img src={imageBaseUrl + item.image} className="table-img" />
+
+            let selectedValue = item.isActive;
+            let status = item.id;
+            const statusDropdown = resorceJSON.cropStatusOptions.map((item, index) => {
+                return <option value={index} selected={selectedValue == index ? true : false} className="drop-option">{item}</option>
+            })
+            let dcCode = item.dcCode && item.productDetailsao.dcCode == '' ? '-' : item.productDetailsao.dcCode;
+            let statusChange = <select className="active-inactive" value={this.state.status} name={status} onChange={(e) => this.handleStatusChange(e, item.id, dcCode, item.parentId)}>
+                {statusDropdown}
+            </select >
+            let quality = item.quality == '' ? '-' : item.quality;
+            return { "itemList": [item.categoryName, item.name, catImg, quality, dcCode, statusChange], "itemId": item.id }
+        })
+
         return (
             <div className="category-table">
                 <Row className="clearfix title-section">
                     <Col md={7} className="title-card ">
                         <h4 className="user-title">{window.strings.CATEGORY.PARENT_CATEGORY}</h4>
                     </Col>
-                    {/* <Col md={5} className="right-title">
-                        <Row className="m-0">
-                            <Col md={12} className="pr-0">
-                                <SearchBar SearchDetails={{ filterText: this.state.search, onChange: this.handleChange, onClickSearch: this.searchResult, onClickReset: this.resetSearch }} />
-                            </Col>
-                             <Col md={5} className="pl-0">
-                                <button className="common-btn float-right" onClick={this.formPath}><i className="fa fa-plus sub-plus"></i>
-                                    {window.strings.CATEGORY.ADDBUTTON}</button>
-                            </Col> 
-                        </Row>
-                    </Col> */}
                 </Row>
                 <div className="mb-2">
                     <div className="retailersearchdiv">
@@ -226,13 +268,13 @@ class ParentCategory extends Component {
                             <div className="sub-filter ml-4">
                                 <div className="row">
                                     <div className="search-tip">
-                                        <form onSubmit={(e) => this.searchSubmit(e)}>
-                                            <input placeholder="Custom Search"
+                                        <form onSubmit={(e) => this.searchResult(e)}>
+                                            <input placeholder="Search by Crop Name"
                                                 class="form-control" name="search" value={this.state.search} onChange={(e) => this.handleSearch(e)}
                                             />
                                             <button type="submit" hidden></button>
                                         </form>
-                                        <span className="tooltip-text">Custom Search</span>
+                                        <span className="tooltip-text">Search Crop</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                         <Select className="state-box"
@@ -252,7 +294,7 @@ class ParentCategory extends Component {
                                             placeholder="--Select DC Code--"
                                         />
                                     </div>
-                                    <button type="button" className="data-search" onClick={(e) => this.getDcList("onSearch")}>
+                                    <button type="button" className="data-search" onClick={(e) => this.searchResult(e)}>
                                         <i className="fa fa-search" aria-hidden="true"></i>Search
                                         <span className="tooltip-text">Click to Search</span>
                                     </button>
@@ -268,24 +310,29 @@ class ParentCategory extends Component {
 
                     </div>
                 </div>
-                <div className="sub-category">
+                {!this.state.searchCrop && <div className="sub-category">
                     <TableData TableHead={this.state.TableHead} TableContent={CategoryList} />
-                    {CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />}
+                    {CategoryList && CategoryList.length > 0 && < ReactPagination PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.onChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />}
 
-                </div>
+                </div>}
+                {this.state.searchCrop &&
+                    <div className="sub-category">
+                        <TableData TableHead={this.state.TableHead1} TableContent={cropList}
+                            handleEdit={this.itemEdit}
+                        />
+                        {this.state.CategoryListDatas && this.state.CategoryListDatas.length != 0 && < ReactPagination className="m-0" PageDetails={{ pageCount: this.state.pageCount, onPageChange: this.cropOnChange, activePage: this.state.currentPage, perPage: this.state.limitValue, totalCount: this.state.totalCount }} />}
+                    </div>}
             </div>
-
         );
     }
 }
 
-
-
 function mapStateToProps(state) {
     return {
         getLists: state && state.category && state.category.Lists ? state.category.Lists : [],
-        categoryData: state.category
+        categoryData: state.category,
+        cropData: state.crop,
     };
 }
 
-export default connect(mapStateToProps, { getParentCategoryList, DeleteCategory })(ParentCategory);
+export default connect(mapStateToProps, { getParentCategoryList, DeleteCategory, getSpecificCategory, SubmitCategory })(ParentCategory);
