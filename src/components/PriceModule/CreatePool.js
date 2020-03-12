@@ -24,7 +24,9 @@ class CreatePool extends Component {
             updateQuantity: '',
             currentSelection: [],
             quantityUnit: '',
-            PriceLists: []
+            PriceLists: [],
+            inputValue: '',
+            menuIsOpen: false
         }
     }
 
@@ -113,17 +115,17 @@ class CreatePool extends Component {
     handlePoolChange = (Data) => {
         this.setState({ currentSelection: Data });
     }
-
-    DDInputChange = (inputValue, isTrue) => {
-        this.setState({
-            inputValue
+    selectAllFunc = (data, inputValue) => {
+        let searchData = []
+        data && data.map((item) => {
+            if (item) {
+                let searchValue = item.value ? item.value.toLowerCase() : ''
+                if (searchValue && searchValue.includes(inputValue.toLowerCase())) {
+                    searchData.push(item)
+                }
+            }
         })
-    }
-
-    selectAllFunc = (pollData, inputValue) => {
-        if (this.state.inputValue) {
-
-        }
+        this.handlePoolChange(searchData)
     }
 
     handleSubmit = (e) => {
@@ -156,7 +158,22 @@ class CreatePool extends Component {
     redirectPage = () => {
         this.props.history.push({ pathname: path.pool.list, state: { poolSessionData: 'poolSessionBack' } });
     }
-
+    inputChange = (inputValue, { action }) => {
+        switch (action) {
+            case 'input-change':
+                this.setState({ inputValue });
+                return;
+            case 'menu-close':
+                let menuIsOpen = undefined;
+                if (this.state.inputValue) {
+                    menuIsOpen = true;
+                }
+                this.setState({ menuIsOpen });
+                return;
+            default:
+                return;
+        }
+    }
     render() {
         const { errors } = this.state;
         let dropDownData = [];
@@ -228,7 +245,7 @@ class CreatePool extends Component {
                                                     }
                                                 })
                                             }}
-                                            closeMenuOnSelect={false}
+                                            // closeMenuOnSelect={false}
                                             isMulti
                                             // components={{ Option }}
                                             options={pollData}
@@ -236,15 +253,16 @@ class CreatePool extends Component {
                                             value={this.state.currentSelection}
                                             backspaceRemovesValue={false}
                                             inputValue={this.state.inputValue}
-                                            onInputChange={(data) => this.DDInputChange(data, false)}
+                                            onInputChange={this.inputChange}
                                             onChange={(e) => this.handlePoolChange(e)}
                                             isClearable={true}
-                                        // onBlur={() => this.selectAllFunc(pollData, this.state.inputValue, false)}
+                                            menuIsOpen={this.state.menuIsOpen}
                                         />
-                                        {/* <span className="input-group-append">
-                                        </span> */}
+                                        <span className="input-group-append">
+                                            <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button>
+
+                                        </span>
                                     </div>
-                                    {/* <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button> */}
 
                                     <div className="form-group col-md-6">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY} {" (Set)"}</label>
