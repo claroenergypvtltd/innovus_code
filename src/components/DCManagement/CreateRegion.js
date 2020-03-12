@@ -18,7 +18,8 @@ class CreateRegion extends Component {
             name: '',
             currentSelection: [],
             currentPage: 0,
-            itemPerPage: 10
+            itemPerPage: 10,
+            inputValue: ''
         }
     }
     componentDidMount() {
@@ -112,6 +113,22 @@ class CreateRegion extends Component {
     redirectPage = () => {
         this.props.history.push({ pathname: path.region.list, state: { poolSessionData: 'poolSessionBack' } });
     }
+    inputChange = (inputValue, { action }) => {
+        switch (action) {
+            case 'input-change':
+                this.setState({ inputValue });
+                return;
+            case 'menu-close':
+                let menuIsOpen = undefined;
+                if (this.state.inputValue) {
+                    menuIsOpen = true;
+                }
+                this.setState({ menuIsOpen });
+                return;
+            default:
+                return;
+        }
+    }
 
     render() {
         const { errors } = this.state;
@@ -175,6 +192,9 @@ class CreateRegion extends Component {
                                             value={this.state.currentSelection}
                                             backspaceRemovesValue={false}
                                             onChange={(e) => this.handlePoolChange(e)}
+                                            isClearable={true}
+                                            inputValue={this.state.inputValue}
+                                            onInputChange={this.inputChange}
                                         />
                                     </div>
                                 </form>

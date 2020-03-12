@@ -25,8 +25,7 @@ class CreatePool extends Component {
             currentSelection: [],
             quantityUnit: '',
             PriceLists: [],
-            inputValue: '',
-            menuIsOpen: false
+            inputValue: ''
         }
     }
 
@@ -66,7 +65,7 @@ class CreatePool extends Component {
                 let dcCode = editData.dcCodeDetails && editData.dcCodeDetails[index] && editData.dcCodeDetails[index].dcCode ? editData.dcCodeDetails[index].dcCode : '';
                 let obj = {
                     "value": editData.productName[index] + ' - ' + dcName,
-                    "label": editData.productName[index] + ' - ' + dcCode,
+                    "label": editData.productName[index] + ' - ' + dcName,
                     "parentQuantityData": { "parentId": item.productId, "rupeesUnit": rupeesUnit, "dcCode": dcCode }
                 }
                 poolAry.push(obj);
@@ -245,9 +244,9 @@ class CreatePool extends Component {
                                                     }
                                                 })
                                             }}
-                                            // closeMenuOnSelect={false}
+                                            closeMenuOnSelect={false}
                                             isMulti
-                                            // components={{ Option }}
+                                            components={{ Option }}
                                             options={pollData}
                                             hideSelectedOptions={false}
                                             value={this.state.currentSelection}
@@ -256,7 +255,6 @@ class CreatePool extends Component {
                                             onInputChange={this.inputChange}
                                             onChange={(e) => this.handlePoolChange(e)}
                                             isClearable={true}
-                                            menuIsOpen={this.state.menuIsOpen}
                                         />
                                         <span className="input-group-append">
                                             <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button>
