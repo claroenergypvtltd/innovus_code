@@ -118,9 +118,11 @@ class CreatePool extends Component {
     selectAllFunc = (data, inputValue) => {
         let searchData = []
         data && data.map((item) => {
-            let searchValue = item.value.toLowerCase()
-            if (searchValue && searchValue.includes(inputValue.toLowerCase())) {
-                searchData.push(item)
+            if (item) {
+                let searchValue = item.value ? item.value.toLowerCase() : ''
+                if (searchValue && searchValue.includes(inputValue.toLowerCase())) {
+                    searchData.push(item)
+                }
             }
         })
         this.handlePoolChange(searchData)
