@@ -272,7 +272,7 @@ class ViewCategory extends Component {
                                             />
                                             <button type="submit" hidden></button>
                                         </form>
-                                        <span className="tooltip-text">Custom Search</span>
+                                        <span className="tooltip-text">Search Crop</span>
                                     </div>
                                     <div className="col-md-4 code-filter"><label className="label-title">DC Code:</label>
                                         <Select className="state-box"

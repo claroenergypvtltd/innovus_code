@@ -36,6 +36,10 @@ class CategoryList extends Component {
             this.props.history.push({ pathname: path.user.list, state: { retlrbckTrack: "backTrue" } })
         }
 
+        if (this.props.location && this.props.location.state && this.props.location.state.parentCropActive == "categorySessionBack") {
+            this.props.history.push({ pathname: path.category.parent, state: { categoryBack: "categorySessionBack" } })
+        }
+
         if (this.props.location && this.props.location.state &&
             (this.props.location.state.parentCategoryId && this.props.location.state.parentCategoryName)) {
             this.setState({ parentCategoryId: this.props.location.state.parentCategoryId, parentCategoryName: this.props.location.state.parentCategoryName })

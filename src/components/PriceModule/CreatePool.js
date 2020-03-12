@@ -10,7 +10,7 @@ import store from '../../store/store';
 import { path } from '../../constants';
 import { POOL_CREATE_SUCCESS, POOL_UPDATE_SUCCESS, PRICE_FETCH_SUCCESS } from '../../constants/actionTypes';
 import { toastr } from 'react-redux-toastr';
-import Select, { components } from "react-select";
+import SelectField, { components } from "react-select";
 import createClass from "create-react-class";
 
 class CreatePool extends Component {
@@ -232,7 +232,7 @@ class CreatePool extends Component {
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label>{window.strings.PRICE.SELECT_POOL} *</label>
-                                        <Select
+                                        <SelectField
 
                                             styles={{
                                                 control: base => ({
@@ -257,7 +257,7 @@ class CreatePool extends Component {
                                             isClearable={true}
                                         />
                                         <span className="input-group-append">
-                                            <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button>
+                                            {/* <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button> */}
 
                                         </span>
                                     </div>
