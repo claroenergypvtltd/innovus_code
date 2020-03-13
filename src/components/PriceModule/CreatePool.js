@@ -230,38 +230,41 @@ class CreatePool extends Component {
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
-                                    <div className="form-group col-md-6">
-                                        <label>{window.strings.PRICE.SELECT_POOL} *</label>
-                                        <SelectField
+                                    <div className="form-group d-flex col-md-6">
+                                        <div className="col-md-9 px-0">
+                                            <label>{window.strings.PRICE.SELECT_POOL} *</label>
+                                            <SelectField
 
-                                            styles={{
-                                                control: base => ({
-                                                    ...base,
-                                                    borderColor: 'hsl(0,0%,80%)',
-                                                    boxShadow: '#FE988D',
-                                                    '&:hover': {
-                                                        borderColor: '#FE988D'
-                                                    }
-                                                })
-                                            }}
-                                            closeMenuOnSelect={false}
-                                            isMulti
-                                            components={{ Option }}
-                                            options={pollData}
-                                            hideSelectedOptions={false}
-                                            value={this.state.currentSelection}
-                                            backspaceRemovesValue={false}
-                                            inputValue={this.state.inputValue}
-                                            onInputChange={this.inputChange}
-                                            onChange={(e) => this.handlePoolChange(e)}
-                                            isClearable={true}
-                                        />
-                                        <span className="input-group-append">
-                                            {/* <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button> */}
-
-                                        </span>
+                                                styles={{
+                                                    control: base => ({
+                                                        ...base,
+                                                        borderColor: 'hsl(0,0%,80%)',
+                                                        boxShadow: '#FE988D',
+                                                        '&:hover': {
+                                                            borderColor: '#FE988D'
+                                                        }
+                                                    })
+                                                }}
+                                                closeMenuOnSelect={false}
+                                                isMulti
+                                                components={{ Option }}
+                                                options={pollData}
+                                                hideSelectedOptions={false}
+                                                value={this.state.currentSelection}
+                                                backspaceRemovesValue={false}
+                                                inputValue={this.state.inputValue}
+                                                onInputChange={this.inputChange}
+                                                onChange={(e) => this.handlePoolChange(e)}
+                                                isClearable={true}
+                                            />
+                                            {/* <span className="input-group-append">
+                                            <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button>
+                                        </span> */}
+                                        </div>
+                                        <div className="col-md-2 mt-3 pt-3">
+                                            <button type="button" onClick={() => this.selectAllFunc(pollData, this.state.inputValue)} className="btn btn-primary">Select All</button>
+                                        </div>
                                     </div>
-
                                     <div className="form-group col-md-6">
                                         <label>{window.strings.CROP.TOTAL_QUANTITY} {" (Set)"}</label>
                                         <input
