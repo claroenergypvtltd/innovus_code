@@ -1904,47 +1904,7 @@ select:focus {
   font-size: 14px;
   color:$primary-color;
 }
-// [data-tip] {
-// 	position:relative;
-// }
-// // [data-tip]:before {
-// // 	content:'';
-// // 	/* hides the tooltip when not hovered */
-// // 	display:none;
-// // 	content:'';
-// // 	border-left: 5px solid transparent;
-// // 	border-right: 5px solid transparent;
-// // 	border-bottom: 5px solid $tooltip-color;	
-// // 	position:absolute;
-// //   top: 35px;
-// //   left: 76px;
-// //   z-index: 8;
-// //   font-size: 0;
-// //   line-height: 0;
-// //   width: 0;
-// //   height: 0;
-// // }
-// [data-tip]:after {
-// 	display:none;
-// 	content:attr(data-tip);
-// 	position:absolute;
-// 	top:40px;
-// 	left:42px;
-// 	padding:0 3px;
-// 	background:$tooltip-color;
-// 	color:$white;
-// 	z-index:9;
-// 	font-size: 0.75em;
-// 	-webkit-border-radius: 3px;
-// 	-moz-border-radius: 3px;
-// 	border-radius: 3px;
-// 	white-space:nowrap;
-// 	word-wrap:normal;
-// }
-// // [data-tip]:hover:before,
-// [data-tip]:hover:after {
-// 	display:block;
-// }
+
 /****************************Vehicle Management Section************************/
 
 .vehicle-box{
@@ -2623,6 +2583,20 @@ bottom: 50%;
 }
 
   /****************************Export-user management************************/
+  .map-btn{
+    background-image:  $gradient-1;
+    color: $white;
+    border: none;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 15px;
+    line-height: 34px;
+    height: 34px;
+    width: 65px;
+    top: 12px;
+    right: 365px;
+    position: absolute;
+    }
 .date-box{
   border: none;
   display: flex;
@@ -2680,7 +2654,7 @@ text-align: right;
   font-size: 15px;
   position: absolute;
   top: 10px;
-  right:102px;
+  right:90px;
   // position: relative;
   // bottom: 72px;
 }
@@ -2796,7 +2770,7 @@ display: flex;
   height: 34px;
   width: 65px;
   top: 12px;
-  right: 312px;
+  right: 294px;
   position: absolute;
 }
 .import-hide{
@@ -3341,6 +3315,13 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 }
 .DraftEditor-root{
   height: 150px;
+}
+/****************************POOL************************/
+.key-count{
+  position: absolute;
+  z-index: 1;
+  left:10px;
+  top:37px;
 }
 
 /****************************RESPONSIVE************************/

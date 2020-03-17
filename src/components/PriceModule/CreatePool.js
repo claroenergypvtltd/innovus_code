@@ -187,9 +187,12 @@ class CreatePool extends Component {
             pollData.push(obj);
         })
         let plcHolder = "";
+        let showSelected = false;
         if (this.state.currentSelection && this.state.currentSelection.length > 0) {
+            showSelected = true;
             plcHolder = this.state.currentSelection.length + ' ' + 'Selected'
         } else {
+            showSelected = false;
             plcHolder = "Select"
         }
 
@@ -233,8 +236,8 @@ class CreatePool extends Component {
                                     <div className="form-group d-flex col-md-6">
                                         <div className="col-md-9 px-0">
                                             <label>{window.strings.PRICE.SELECT_POOL} *</label>
+                                            <div className="key-count">{plcHolder}</div>
                                             <SelectField
-
                                                 styles={{
                                                     control: base => ({
                                                         ...base,
@@ -243,8 +246,14 @@ class CreatePool extends Component {
                                                         '&:hover': {
                                                             borderColor: '#FE988D'
                                                         }
+                                                    }),
+                                                    // showSelected &&
+                                                    multiValue: base => ({
+                                                        ...base,
+                                                        display: 'none'
                                                     })
                                                 }}
+                                                placeholder={false}
                                                 closeMenuOnSelect={false}
                                                 isMulti
                                                 components={{ Option }}

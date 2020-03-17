@@ -764,7 +764,8 @@ class FetchRetailer extends React.Component {
                 </div>
                 <div id="menu">
                     <div className="assign-box">
-                        <button className="import-btn ml-2" onClick={this.callFile}>Import</button>
+                        <button className="map-btn"><i class="fa fa-map-marker pr-1" aria-hidden="true"></i>Map</button>
+                        <button className="import-btn" onClick={this.callFile}>Import</button>
                         <input type="file" ref={this.fileLink} className="form-control import-hide" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="file" onChange={this.xlImport} />
                         <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
                             {window.strings.USERMANAGEMENT.ASSIGN_TRANSFER_AGENT}
