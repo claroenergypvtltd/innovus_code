@@ -94,7 +94,7 @@ export const path = {
         add: process.env.PUBLIC_URL + '/user/add',
         edit: process.env.PUBLIC_URL + '/user/update/',
         view: process.env.PUBLIC_URL + '/user/view/',
-
+        mapView: process.env.PUBLIC_URL + '/user/map/',
     },
     farm: {
         add: process.env.PUBLIC_URL + '/farm/add',

@@ -76,6 +76,9 @@ import ReturnCancellation from '../components/AboutModule/ReturnCancellation';
 import About from '../components/AboutModule/About';
 import PlacingOrderTab from '../components/ReportModule/PlacingOrderTab';
 
+import ViewMap from '../components/UserManagement/ViewMap'
+
+
 
 const root = ({ route }) => (
     <div>
@@ -189,7 +192,11 @@ export const routesPath = [
                 component: User,
                 exact: true
             },
-
+            {
+                path: process.env.PUBLIC_URL + '/user/map',
+                component: ViewMap,
+                exact: true
+            },
 
             {
                 path: process.env.PUBLIC_URL + '/farm/add',

@@ -119,10 +119,9 @@ function put(url, data) {
 }
 
 function uploadImage(params) {
-  const { storeId, Type, file } = params;
+  const { Type, file } = params;
   var formData = new FormData();
   formData.append("image", file);
-  axios.defaults.headers.common["storeid"] = storeId;
   axios.defaults.headers.common["type"] = Type;
   axios.defaults.headers.common["Content-Type"] = "multipart/form-data";
   PubSub.publish('msg', true);

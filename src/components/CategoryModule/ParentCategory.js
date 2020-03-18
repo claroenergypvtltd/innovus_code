@@ -242,7 +242,7 @@ class ParentCategory extends Component {
             const statusDropdown = resorceJSON.cropStatusOptions.map((item, index) => {
                 return <option value={index} selected={selectedValue == index ? true : false} className="drop-option">{item}</option>
             })
-            let dcCode = item.dcCode && item.productDetailsao.dcCode == '' ? '-' : item.productDetailsao.dcCode;
+            let dcCode = item.productDetailsao && item.productDetailsao.dcCode ? item.productDetailsao.dcCode : '-';
             let statusChange = <select className="active-inactive" value={this.state.status} name={status} onChange={(e) => this.handleStatusChange(e, item.id, dcCode, item.parentId)}>
                 {statusDropdown}
             </select >

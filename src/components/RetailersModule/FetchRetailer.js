@@ -627,6 +627,11 @@ class FetchRetailer extends React.Component {
         this.fileLink.current.click()
     }
 
+    mapPage = (e) => {
+        e.preventDefault();
+        this.context.router.history.push({ pathname: path.user.mapView, state: { mapData: "" } });
+    }
+
     render() {
         let dcData = [];
         this.state.dcCodeData && this.state.dcCodeData.map((item) => {
@@ -764,7 +769,7 @@ class FetchRetailer extends React.Component {
                 </div>
                 <div id="menu">
                     <div className="assign-box">
-                        <button className="map-btn"><i class="fa fa-map-marker pr-1" aria-hidden="true"></i>Map</button>
+                        <button className="map-btn" onClick={(e) => this.mapPage(e)}><i class="fa fa-map-marker pr-1" aria-hidden="true"></i>Map</button>
                         <button className="import-btn" onClick={this.callFile}>Import</button>
                         <input type="file" ref={this.fileLink} className="form-control import-hide" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="file" onChange={this.xlImport} />
                         <button type="button" className="assign-btn" onClick={this.onOpenModal} ><i className="fa fa-plus sub-plus"></i>
