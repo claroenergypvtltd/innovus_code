@@ -299,7 +299,7 @@ class FetchRetailer extends React.Component {
             this.setState({
                 cityData: [], startDate: moment(), endDate: moment(), dateChanged: false, cityId: 0, stateId: 0,
                 StatusfilterId: '', selectedCityOption: '', selectedStateOption: '', selectedAgentOption: '',
-                agentId: '', search: '', dcCode: '', dcCodeObj: '', currentPage: 0, selectedDatas: []
+                agentId: '', search: '', dcCode: '', dcCodeObj: '', currentPage: 0, selectedDatas: [], itemPerPage: 10
             }, () => {
                 sessionStorage.removeItem('retsearchDatas');
                 user.roleId = 2;
@@ -499,7 +499,7 @@ class FetchRetailer extends React.Component {
     }
     handleSearch = (e) => {
         e.preventDefault();
-        this.setState({ search: e.target.value })
+        e.target.value && e.target.value[0] == ' ' ? this.setState({ search: '' }) : this.setState({ search: e.target.value })
     }
     searchSubmit = (e) => {
         e.preventDefault();

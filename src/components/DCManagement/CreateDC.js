@@ -289,7 +289,7 @@ class CreateDC extends Component {
                                             }
                                         })
                                     }}
-                                    closeMenuOnSelect={false}
+                                    closeMenuOnSelect={true}
                                     options={timeData}
                                     hideSelectedOptions={false}
                                     value={this.state.deliverySlot}
