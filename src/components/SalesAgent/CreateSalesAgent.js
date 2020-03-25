@@ -173,6 +173,7 @@ class CreateSalesAgent extends React.Component {
                                         })}
                                         name="name"
                                         onChange={this.handleInputChange}
+                                        maxLength='50'
                                         value={this.state.name}
                                         required
                                     />

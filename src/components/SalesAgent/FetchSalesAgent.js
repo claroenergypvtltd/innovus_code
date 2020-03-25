@@ -153,7 +153,7 @@ class FetchSalesAgent extends React.Component {
     };
     handleSearch = (e) => {
         e.preventDefault();
-        this.setState({ search: e.target.value })
+        e.target.value[0] == ' ' ? this.setState({ search: '' }) : this.setState({ search: e.target.value })
     }
 
     render() {
