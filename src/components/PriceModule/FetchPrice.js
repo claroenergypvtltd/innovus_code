@@ -87,7 +87,6 @@ class FetchPrice extends Component {
                 };
                 this.getPriceList(serObj);
             });
-
         }
     }
     resetSearch = () => {
@@ -166,7 +165,7 @@ class FetchPrice extends Component {
             let productName = item.name;
             // let totSet = (item.productDetail.totalQuantity / item.productDetail.boxQuantity)
             // let totWeight = ((item.productDetail && item.productDetail.totalQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize) + ' (' + parseInt(totSet) + ' set)');
-            let totWeight = (item.productDetail.totalQuantity * item.productDetail.boxQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize) + " (" + (item.productDetail && item.productDetail.totalQuantity) + " set)"
+            let totWeight = (item.productDetail.totalQuantity * item.productDetail.boxQuantity).toFixed(1) + ' ' + (item.productDetail && item.productDetail.rupeesize) + " (" + (item.productDetail && item.productDetail.totalQuantity) + " set)"
             let amount = ((item.productDetail && item.productDetail.amount) + " Rs/set");
             // " Rs/" + (item.productDetail && item.productDetail.rupeesize));
             let boxQuantity = ((item.productDetail && item.productDetail.boxQuantity) + ' ' + (item.productDetail && item.productDetail.rupeesize));
@@ -265,8 +264,6 @@ class FetchPrice extends Component {
         );
     }
 }
-
-
 
 function mapStateToProps(state) {
     return {
