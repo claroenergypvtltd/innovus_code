@@ -186,11 +186,19 @@ class CreatePrice extends Component {
         if (e.charCode == 45 || e.charCode == 43) {
             e.target.value = ''
         } else {
-            if (e.target.value.includes('.')) {
+            if (e.target.value && e.target.value.includes('.')) {
                 let value = Number(e.target.value).toFixed(1)
-                e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+                if (e.target.name == "boxQuantity") {
+                    e.target.value < 1 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+                } else {
+                    e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+                }
             } else {
-                e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
+                if (e.target.name == "boxQuantity") {
+                    e.target.value < 1 || e.target.value.toString().length >= 6 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
+                } else {
+                    e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
+                }
             }
         }
     }
@@ -338,11 +346,11 @@ class CreatePrice extends Component {
                     }
                 }
 
-                if (!this.state.boxEndQuantity && !this.state.prioritys || this.state.boxEndQuantity && this.state.prioritys) {
-                    isValid = false
-                    isDuplicateCheck = false
-                    return
-                }
+                // if (!this.state.boxEndQuantity && !this.state.prioritys || this.state.boxEndQuantity && this.state.prioritys) {
+                //     isValid = false
+                //     isDuplicateCheck = false
+                //     return
+                // }
             } else {
                 isValid = false
             }
@@ -416,7 +424,7 @@ class CreatePrice extends Component {
 
         } else {
             if (isValid == false) {
-                toastr.error("Mandatory fields are mising")
+                toastr.error("Mandatory fields are missing")
             }
         }
     }
@@ -587,8 +595,8 @@ class CreatePrice extends Component {
                                                     'is-invalid': errors.boxQuantity
                                                 })}
                                                 name="boxQuantity"
-                                                onChange={this.handleBoxQuantityChange}
                                                 onKeyPress={this.handleBoxQuantityChange}
+                                                onChange={this.handleBoxQuantityChange}
                                                 value={this.state.boxQuantity}
                                                 required
                                                 disabled={this.state.priceId}
