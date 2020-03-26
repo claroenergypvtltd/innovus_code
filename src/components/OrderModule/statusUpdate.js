@@ -68,9 +68,10 @@ class StatusUpdate extends Component {
             "status": this.state.status,
         }
         if (this.props.orderId && this.state.activity && this.state.status) {
+            this.props.onCloseModal();
             SubmitOrderStatus(obj).then(resp => {
                 if (resp) {
-                    this.props.onCloseModal();
+                    // this.props.onCloseModal();
                 }
             });
         }
@@ -81,7 +82,6 @@ class StatusUpdate extends Component {
     }
 
     getStatus = () => {
-
         let statusData = [
             {
                 "id": "1",
@@ -192,6 +192,4 @@ class StatusUpdate extends Component {
 const mapStateToProps = (state) => ({
     orderDetails: state.order ? state.order : {}
 })
-
-
 export default connect(mapStateToProps, { getTrackDetails, SubmitOrderStatus })(StatusUpdate)
