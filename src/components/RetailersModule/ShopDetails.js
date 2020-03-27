@@ -251,8 +251,9 @@ class ShopDetails extends React.Component {
             let transfer = <button onClick={() => this.handleTransferChange(item.userId, mobileNumbers)} className="trans-btn">Transfer</button>
             let distance = item.distance ? item.distance.toFixed(2) : '-';
             let status = this.viewCrop(item.status, item.isActive)
+            let agentName = item.agentName ? item.agentName : '-'
             // item.status == 1 && item.isActive == 1 ? <p> Accepted </p> : item.isActive == 0 ? <p> InActive</p> : item.status == 0 ? <p>Pending</p> : <p>Rejected</p>
-            return { "itemList": [imageZoom, status, item.name, distance, item.address1 + item.address2, item.agentName, transfer], "itemId": item.id }
+            return { "itemList": [imageZoom, status, item.name, distance, item.address1 + item.address2, agentName, transfer], "itemId": item.id }
         })
 
         let disRejectBtn = false;

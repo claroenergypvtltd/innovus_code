@@ -1,7 +1,7 @@
 import { httpServices } from '../services/http.services'
 import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
-import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS, GET_ERRORS } from '../constants/actionTypes';
+import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS, GET_ERRORS, ORDER_STATUS_UPDATE_SUCCESS } from '../constants/actionTypes';
 
 import { endPoint } from "../constants";
 
@@ -42,11 +42,10 @@ export const getTrackDetails = (orderId) => dispatch => {
 }
 
 
-export const SubmitOrderStatus = (statusData) => {
-    return httpServices.post('orderWareHouse', statusData).then(resp => {
-        if (resp) {
-            toastr.success(resp.message);
-            return resp
+export const SubmitOrderStatus = (statusData) => dispatch => {
+    httpServices.post('orderWareHouse', statusData).then(resp => {
+        if (resp && resp.status == '200') {
+            dispatch({ type: ORDER_STATUS_UPDATE_SUCCESS, status: resp.status })
         }
     }).catch(error => {
         console.error("error", error);

@@ -69,11 +69,12 @@ class StatusUpdate extends Component {
         }
         if (this.props.orderId && this.state.activity && this.state.status) {
             this.props.onCloseModal();
-            SubmitOrderStatus(obj).then(resp => {
-                if (resp) {
-                    // this.props.onCloseModal();
-                }
-            });
+            this.props.SubmitOrderStatus(obj)
+            // SubmitOrderStatus(obj).then(resp => {
+            //     if (resp) {
+            //         // this.props.onCloseModal();
+            //     }
+            // });
         }
     }
 

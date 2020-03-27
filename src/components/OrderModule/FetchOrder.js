@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TableData } from '../../shared/Table'
-import { confirmAlert } from 'react-confirm-alert';
 import { resorceJSON, ModalData } from '../../libraries'
 import { ReactPagination, SearchBar } from '../../shared'
 import { path } from '../../constants';
 import { getOrderList } from '../../actions/orderAction'
 import { toastr } from '../../services/toastr.services'
-import { Link } from 'react-router-dom'
 import { Form, Row, Col } from 'react-bootstrap';
 import { formatDate } from '../../shared/DateFormat'
 import StatusUpdate from './statusUpdate'
-import { getTwoToneColor } from 'antd/lib/icon/twoTonePrimaryColor';
+import { ORDER_STATUS_UPDATE_SUCCESS } from '../../constants/actionTypes'
+import store from '../../store/store';
 import PropTypes from 'prop-types';
 
 class FetchOrder extends Component {
@@ -48,6 +47,10 @@ class FetchOrder extends Component {
         if (newProps.orderData && newProps.orderData.Lists && newProps.orderData.Lists.datas) {
             let respData = newProps.orderData.Lists.datas;
             this.setState({ OrderLists: respData, pageCount: newProps.orderData.Lists.totalCount / this.state.itemPerPage, totalCount: newProps.orderData.Lists.totalCount })
+        }
+        if (newProps && newProps.orderData && newProps.orderData.status == '200') {
+            store.dispatch({ type: ORDER_STATUS_UPDATE_SUCCESS, status: '' });
+            this.getOrderList();
         }
     }
 
