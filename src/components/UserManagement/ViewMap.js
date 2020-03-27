@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchRetailers } from '../../actions/SubmitRetailerAction';
 import { apiKey } from '../../config/config';
 import { toastr } from '../../services/toastr.services'
+import { path } from '../../constants';
 
 
 import { GoogleMap, LoadScript, MarkerClusterer, Marker, Polygon } from '@react-google-maps/api'
@@ -60,6 +61,10 @@ class ViewMap extends Component {
 
     markerOnClick = (e) => {
         // debugger
+    }
+
+    redirectPage = (e) => {
+        this.props.history.push(path.user.list);
     }
 
     render() {
@@ -183,6 +188,10 @@ class ViewMap extends Component {
                         </GoogleMap>
                     </LoadScript>
                 </div >
+                <div className="back-btn my-3">
+                    <button class="common-btn" onClick={this.redirectPage}>Back</button>
+                </div>
+
             </div >
         )
     }
