@@ -99,6 +99,36 @@ export const toastr = {
                 )
             }
         })
-    }
-};
-// onClickOutside: () => {},
+    },
+
+
+
+    mapConfirm(message, props, title) {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='delete-popup'>
+                        <h4 className="delete-popup-header">{title}</h4>
+                        <div className="delete-popup-message p-2">
+                            <p>{message}</p>
+                            <button className="btn btn-default popup-cancel mt-3" onClick={() => {
+                                props.onCancel()
+                                onClose()
+                            }}>{"Null"}</button>
+                            <button className="btn btn-primary delete-btn ml-2 mt-3" onClick={() => {
+                                props.onOk()
+                                onClose()
+                            }}>{"New Polygon"}</button>
+                            <button className="btn btn-primary delete-btn ml-2 mt-3" onClick={() => {
+                                props.onOk()
+                                onClose()
+                            }}>{"Split"}</button>
+                        </div>
+                    </div>
+                )
+            }
+        })
+    },
+}
+
+
