@@ -35,7 +35,7 @@ class CreateSalesAgent extends React.Component {
     getEditData = () => {
         let obj = {
             roleId: "4",
-            agentId: this.props.location.state.salesAgentId,
+            agentId: this.props.location.state && this.props.location.state.salesAgentId,
             isEdit: true
         }
 
@@ -72,7 +72,18 @@ class CreateSalesAgent extends React.Component {
             this.setState({ dcCodeData: newProps.dcData.Lists.datas })
         }
 
+        setTimeout(() => {
+
+            let stateName = this.state.name ? "" : "test";
+
+            this.setState({ name: stateName }, () => {
+                // this.getDcData()
+                window.location.reload();
+            })
+        }, 2000);
     }
+
+
 
     handleInputChange = (e) => {
         if (e.target.name == "mobileNumber") {

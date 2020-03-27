@@ -24,6 +24,8 @@ class IrrigationSetting extends Component {
             shopAddress: '',
             shopTime: '',
             shopType: '',
+            shopLatitude: '',
+            shopLongitude: '',
             errors: {},
             shopTypeDatas: [],
         }
@@ -38,8 +40,11 @@ class IrrigationSetting extends Component {
             // console.log('getTimeformat', getTimeformat);
             // console.log('getTimeformat', getHoursFormat);
             this.setState({
-                name: this.props.location.state.name, shopName: this.props.location.state.shopAddress.name, shopAddress: this.props.location.state.shopAddress.address1,
-                min: getTimeformat[0], sec: getHoursFormat[0], a: getHoursFormat[1], shopType: this.props.location.state.shopAddress.shopType, userId: this.props.location.state.id
+                name: this.props.location.state.name, shopName: this.props.location.state.shopAddress.name,
+                shopAddress: this.props.location.state.shopAddress.address1, min: getTimeformat[0],
+                sec: getHoursFormat[0], a: getHoursFormat[1], shopType: this.props.location.state.shopAddress.shopType,
+                userId: this.props.location.state.id, shopLatitude: this.props.location.state.shopAddress.latitude,
+                shopLongitude: this.props.location.state.shopAddress.longitude
             })
         }
     }
@@ -97,7 +102,7 @@ class IrrigationSetting extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true })
-        if (this.state.name && this.state.shopName && this.state.shopAddress && this.state.min && this.state.shopType != 0) {
+        if (this.state.name && this.state.shopName && this.state.shopAddress && this.state.shopLatitude && this.state.shopLongitude && this.state.min && this.state.shopType != 0) {
             if (this.state.a == 'pm') {
                 let message = window.strings.TIMEAMPMFORAMT;
                 const toastrConfirmOptions = {
@@ -113,6 +118,8 @@ class IrrigationSetting extends Component {
                 formData.append("shopOpeningTime", this.state.min + ':' + this.state.sec + ' ' + this.state.a);
                 formData.append("shopType", this.state.shopType);
                 formData.append("userId", this.state.userId);
+                formData.append("shopLatitude", this.state.shopLatitude);
+                formData.append("shopLongitude", this.state.shopLongitude);
                 let updateRetailer = false;
                 if (this.state.userId) {
                     updateRetailer = true;
@@ -225,6 +232,38 @@ class IrrigationSetting extends Component {
                                     {shopTypeData}
                                 </select>
                                 {this.state.submitted && !this.state.shopType && <div className="mandatory">Shop Type {window.strings['ISREQUIRED']}</div>}
+                            </div>
+
+                            <div className="form-group col-md-6">
+                                <label>Latitude *</label>
+                                <input
+                                    type="text"
+                                    placeholder="latitude"
+                                    className={classnames('form-control time-form', {
+                                        'is-invalid': errors.amount
+                                    })}
+                                    name="shopLatitude"
+                                    onChange={this.handleInputChange}
+                                    value={this.state.shopLatitude}
+                                    required
+                                />
+                                {this.state.submitted && !this.state.shopLatitude && <div className="mandatory">Latitude  {window.strings['ISREQUIRED']}</div>}
+                            </div>
+
+                            <div className="form-group col-md-6">
+                                <label> Longitude *</label>
+                                <input
+                                    type="text"
+                                    placeholder=" longitude"
+                                    className={classnames('form-control time-form', {
+                                        'is-invalid': errors.amount
+                                    })}
+                                    name="shopLongitude"
+                                    onChange={this.handleInputChange}
+                                    value={this.state.shopLongitude}
+                                    required
+                                />
+                                {this.state.submitted && !this.state.shopLongitude && <div className="mandatory">Longitude  {window.strings['ISREQUIRED']}</div>}
                             </div>
                         </form>
 

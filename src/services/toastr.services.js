@@ -116,17 +116,17 @@ export const toastr = {
                                 onClose()
                             }}>{"Cancel"}</button>
                             <button className="btn btn-primary" onClick={() => {
-                                props.onCancel()
+                                props.nullPolygon()
                                 onClose()
                             }}>{"Null"}</button>
                             <button className="btn btn-primary" onClick={() => {
-                                props.onOk()
+                                props.newPolygon()
                                 onClose()
                             }}>{"New Polygon"}</button>
-                            <button className="btn btn-primary" onClick={() => {
-                                props.onOk()
+                            {/* <button className="btn btn-primary" onClick={() => {
+                                props.splitUp()  
                                 onClose()
-                            }}>{"Split"}</button>
+                            }}>{"Split"}</button> */}
                         </div>
                     </div>
                 )
