@@ -78,7 +78,8 @@ class ViewMap extends Component {
 
         const mapContainerStyle = {
             height: '600px',
-            width: '1200px'
+            // width: '1200px'
+            width: 'auto'
         };
 
         const center = { lat: 28.7041, lng: 77.1025 };
@@ -145,11 +146,9 @@ class ViewMap extends Component {
 
         return (
             <div>
-                GOOGLE MAP :
+                <h4 className="user-title"> GOOGLE MAP : </h4>
                 <div>
                     {/* <GoogleMap latLongData={latLongData} /> */}
-
-
 
                     <LoadScript googleMapsApiKey={apiKey}>
                         <GoogleMap

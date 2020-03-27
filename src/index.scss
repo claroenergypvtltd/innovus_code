@@ -386,6 +386,12 @@ button:focus {
  .popup-cancel:hover{
    color:$btn-text;
  }
+ .map-box{
+   width: 400px;
+  .btn-primary{
+    margin: 3px 3px 0;
+  }
+ }
 /****************************Header Section************************/
 li {
   list-style: none;
@@ -3451,5 +3457,3 @@ input.do-SearchBox-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
    
 //   }
 // }
-
-
