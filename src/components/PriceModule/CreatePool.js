@@ -190,10 +190,10 @@ class CreatePool extends Component {
         let showSelected = false;
         if (this.state.currentSelection && this.state.currentSelection.length > 0) {
             showSelected = true;
-            plcHolder = this.state.currentSelection.length + ' ' + 'Selected'
+            plcHolder = this.state.inputValue + ' ' + this.state.currentSelection.length + ' ' + 'Selected'
         } else {
             showSelected = false;
-            plcHolder = "Select"
+            plcHolder = !this.state.inputValue ? "Select" : ''
         }
 
         const Option = createClass({
@@ -322,6 +322,4 @@ const mapStateToProps = (state) => ({
     priceData: state.price ? state.price : {},
     poolData: state.pool
 })
-
 export default connect(mapStateToProps, { getPriceList, submitPool, getPoolList })(CreatePool);
-

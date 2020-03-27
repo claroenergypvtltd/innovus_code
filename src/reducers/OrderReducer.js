@@ -1,10 +1,11 @@
-import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS, CUSIDLIST_FETCH_SUCCESS } from '../constants/actionTypes';
+import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS, CUSIDLIST_FETCH_SUCCESS, ORDER_STATUS_UPDATE_SUCCESS } from '../constants/actionTypes';
 
 
 const initialState = {
     Lists: {},
     DetailsList: {},
-    trackLists: {}
+    trackLists: {},
+    status: ''
 }
 
 export default function (state = initialState, action) {
@@ -29,6 +30,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 CusIdLists: action.CusIdLists
+            }
+        case ORDER_STATUS_UPDATE_SUCCESS:
+            return {
+                ...state,
+                status: action.status
             }
         default:
             return state;
