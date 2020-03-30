@@ -162,7 +162,11 @@ class CreatePrice extends Component {
         if (e.target.value < 0 || e.charCode == 45 || e.charCode == 43 || e.charCode == 46 || e.target.value.includes('.')) {
             e.target.value = ''
         } else {
-            e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
+            if (e.target.name == "price") {
+                (e.target.value >= 1 && e.target.value.toString().length <= 6) ? this.setState({ [e.target.name]: e.target.value }) : this.setState({ [e.target.name]: '' })
+            } else {
+                e.target.value.toString().length <= 6 ? this.setState({ [e.target.name]: e.target.value }) : e.target.value = ''
+            }
         }
     }
 
@@ -554,7 +558,7 @@ class CreatePrice extends Component {
                                                     'is-invalid': errors.price
                                                 })}
                                                 name="price"
-                                                min="0"
+                                                min="1"
                                                 onKeyPress={this.handleInputChange}
                                                 onChange={this.handleInputChange}
                                                 value={this.state.price}

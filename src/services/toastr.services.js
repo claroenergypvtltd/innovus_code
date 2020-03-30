@@ -123,10 +123,10 @@ export const toastr = {
                                 props.newPolygon()
                                 onClose()
                             }}>{"New Polygon"}</button>
-                            {/* <button className="btn btn-primary" onClick={() => {
-                                props.splitUp()  
+                            <button className="btn btn-primary" onClick={() => {
+                                props.splitUp()
                                 onClose()
-                            }}>{"Split"}</button> */}
+                            }}>{"Assign"}</button>
                         </div>
                     </div>
                 )

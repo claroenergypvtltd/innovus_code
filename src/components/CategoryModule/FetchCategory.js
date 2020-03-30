@@ -17,7 +17,7 @@ class CategoryList extends Component {
         super(props);
         this.state = {
             columns: resorceJSON.CategoryList,
-            TableHead: ["Category Name", "Image", 'Description', "Crop", "Actions"],
+            TableHead: ["Sub Category Name", "Image", 'Description', "Crop", "Actions"],
             CategoryCount: props.getCount,
             search: '',
             dcCode: '',
