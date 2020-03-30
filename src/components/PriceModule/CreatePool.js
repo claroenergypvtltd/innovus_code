@@ -160,7 +160,7 @@ class CreatePool extends Component {
     inputChange = (inputValue, { action }) => {
         switch (action) {
             case 'input-change':
-                this.setState({ inputValue });
+                inputValue.length < 24 ? this.setState({ inputValue }) : inputValue = ''
                 return;
             case 'menu-close':
                 let menuIsOpen = undefined;
