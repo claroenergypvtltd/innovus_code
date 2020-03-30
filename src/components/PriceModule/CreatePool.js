@@ -229,7 +229,7 @@ class CreatePool extends Component {
                                             onChange={this.handleInputChange}
                                             value={this.state.name}
                                             className={classnames('form-control')}
-                                        // disabled={this.state.poolId}
+                                            disabled={this.state.poolId}
                                         />
                                         {this.state.submitted && !this.state.name && <div className="mandatory">Name is required</div>}
                                     </div>
