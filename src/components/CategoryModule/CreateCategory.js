@@ -135,11 +135,11 @@ class CategoryForm extends Component {
                                     <form onSubmit={this.handleSubmit} noValidate className="row m-0">
                                         <div className="form-group pt-3 col-md-12">
 
-                                            <label>{window.strings.CATEGORY.NAME + ' *'}</label>
+                                            <label>{window.strings.CATEGORY.SUB_CATEGORY_NAME + ' *'}</label>
 
                                             <input
                                                 type="text"
-                                                placeholder="Category Name"
+                                                placeholder="Sub Category Name"
                                                 className={classnames('form-control form-control-lg', {
                                                     'is-invalid': errors.name
                                                 })}
@@ -149,7 +149,7 @@ class CategoryForm extends Component {
                                                 value={this.state.name}
                                                 required
                                             />
-                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['CATE_NAME'] + window.strings['ISREQUIRED']}</div>}
+                                            {this.state.submitted && !this.state.name && <div className="mandatory">{window.strings['CATEGORY']['SUB_CATEGORY_NAME'] + window.strings['ISREQUIRED']}</div>}
                                         </div>
 
                                         <div className="form-group pt-3 col-md-12">

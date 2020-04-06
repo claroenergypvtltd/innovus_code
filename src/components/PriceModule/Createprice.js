@@ -118,7 +118,8 @@ class CreatePrice extends Component {
                                 weightId: respData.rupeesize, boxQuantity: respData.boxQuantity,
                                 offer: respData.discountValue == 0 ? '' : respData.discountValue,
                                 offerId: respData.discountUnit, subCategoryLabel: response.datas[0].name,
-                                prioritys: respData.prioritys, boxEndQuantity: respData.boxEndQuantity, triggerQuantity: respData.triggerQuantity
+                                prioritys: respData.prioritys, boxEndQuantity: respData.boxEndQuantity ? respData.boxEndQuantity : '',
+                                triggerQuantity: respData.triggerQuantity
                             })
                         }
                     })
@@ -192,17 +193,17 @@ class CreatePrice extends Component {
         } else {
             if (e.target.value && e.target.value.includes('.')) {
                 let value = Number(e.target.value).toFixed(1)
-                if (e.target.name == "boxQuantity") {
-                    e.target.value < 1 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
-                } else {
-                    e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
-                }
+                // if (e.target.name == "boxQuantity") {
+                e.target.value < 1 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+                // } else {
+                //     e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: value })
+                // }
             } else {
-                if (e.target.name == "boxQuantity") {
-                    e.target.value < 1 || e.target.value.toString().length >= 6 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
-                } else {
-                    e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
-                }
+                // if (e.target.name == "boxQuantity") {
+                e.target.value < 1 || e.target.value.toString().length >= 6 ? this.setState({ [e.target.name]: '' }) : this.setState({ [e.target.name]: e.target.value })
+                // } else {
+                //     e.target.value < 0 || e.target.value.toString().length >= 6 ? e.target.value = '' : this.setState({ [e.target.name]: e.target.value })
+                // }
             }
         }
     }
