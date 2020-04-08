@@ -1,0 +1,199 @@
+
+body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+.card-container.card {
+    max-width: 350px;
+    padding: 40px 40px;
+}
+/*
+ * Card component
+ */
+.card {
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/*
+ * Form styles
+ */
+.profile-name-card {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 1em;
+}
+
+.reauth-email {
+    display: block;
+    color: #404040;
+    line-height: 2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-adjust{
+    background-color: #fff;
+    padding-top : 20px;
+}
+
+.form-signin #inputEmail,
+.form-signin #inputPassword {
+    direction: ltr;
+}
+.form-title {
+    color: #6a6c6f;
+    font-weight: 600;
+}
+.form-signin input[type=email],
+.form-signin input[type=password],
+.form-signin input[type=text],
+.form-signin button {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    border-color: rgb(104, 145, 162);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+}
+
+.btn-primary {
+    /* background-color: #4d90fe; */
+    /* background-color: rgb(104, 145, 162); */
+    // padding: 0px;
+    // font-weight: 500;
+    // font-size: 15px; 
+    // width:155px;
+    // padding: 9px 20px;
+
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+}
+
+
+/*.btn.btn-signin:hover,
+.btn.btn-signin:active,
+.btn.btn-signin:focus {
+    background-color: #4d90fe;
+}*/
+.btn.btn-signin:hover, .btn.btn-signin:active, .btn.btn-signin:focus {
+    background-color: #5d1d5d;
+}
+.forgot-password {
+    color: rgb(104, 145, 162);
+}
+
+.forgot-password:hover,
+.forgot-password:active,
+.forgot-password:focus{
+    color: rgb(12, 97, 33);
+}
+
+.mandatory{
+    color: red;
+}
+.checkbox{
+    float: left;
+}
+.simple-page-footer a{
+    color: #000;
+}
+
+.loginForm{
+    box-shadow:-1px 5px 8px 2px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow:-1px 5px 8px 2px rgba(0, 0, 0, 0.05);
+    padding: 20px 30px 25px;
+    width: 470px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0;
+    .input-group-text{
+      background: none;
+      border:none;
+      color: #878787;
+      font-size: 18px;
+    }
+    .form-control{
+      border:none;
+      color: #878787;
+      font-size: 18px;
+    }
+    .form-control:focus{
+      border:none;
+      box-shadow: none;
+    }
+    input:-internal-autofill-selected { 
+    font-size: 18px;
+    color: #878787 !important;
+    background-color: #fff !important;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+  }
+  }
+  .mandatory{
+      text-align: left;
+      margin-top: 3px;
+      font-size: 13px;
+  }
+  .s-text{font-size: 24px;}
+  .btn{
+       font-size: 10px;
+       font-weight: 700;
+       height: auto;
+       -moz-user-select: none;
+       -webkit-user-select: none;
+       user-select: none;
+       cursor: default;
+  }
+  .RetpersonalInfo{ 
+      padding: 10px;
+      font-size: 18px;
+  }
+  .EditRetailerInfo{
+    position: relative;
+    left: 500px;
+  }
+  .react-tabs__tab-list{
+    margin: 21px 9px 1px !important
+  }

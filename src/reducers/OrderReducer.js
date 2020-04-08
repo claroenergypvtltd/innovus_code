@@ -1,0 +1,42 @@
+import { ORDER_FETCH_SUCCESS, ORDERDETAILS_FETCH_SUCCESS, ORDERTRACK_FETCH_SUCCESS, CUSIDLIST_FETCH_SUCCESS, ORDER_STATUS_UPDATE_SUCCESS } from '../constants/actionTypes';
+
+
+const initialState = {
+    Lists: {},
+    DetailsList: {},
+    trackLists: {},
+    status: ''
+}
+
+export default function (state = initialState, action) {
+    switch (action.type) {
+        case ORDER_FETCH_SUCCESS:
+            return {
+                ...state,
+                Lists: action.Lists
+            }
+        case ORDERDETAILS_FETCH_SUCCESS:
+            return {
+                ...state,
+                DetailsList: action.Lists
+            }
+
+        case ORDERTRACK_FETCH_SUCCESS:
+            return {
+                ...state,
+                trackLists: action.trackLists
+            }
+        case CUSIDLIST_FETCH_SUCCESS:
+            return {
+                ...state,
+                CusIdLists: action.CusIdLists
+            }
+        case ORDER_STATUS_UPDATE_SUCCESS:
+            return {
+                ...state,
+                status: action.status
+            }
+        default:
+            return state;
+    }
+}
