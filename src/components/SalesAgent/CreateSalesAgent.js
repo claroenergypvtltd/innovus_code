@@ -71,16 +71,6 @@ class CreateSalesAgent extends React.Component {
         if (newProps && newProps.dcData && newProps.dcData.Lists && newProps.dcData.Lists.datas) {
             this.setState({ dcCodeData: newProps.dcData.Lists.datas })
         }
-
-        setTimeout(() => {
-
-            let stateName = this.state.name ? "" : "test";
-
-            this.setState({ name: stateName }, () => {
-                // this.getDcData()
-                window.location.reload();
-            })
-        }, 2000);
     }
 
 
